@@ -1,2 +1,3 @@
-# react-interpose
-Inject components and elements into interpolated React strings.
+# Interweave
+
+Interweave components and elements into interpolated React strings.

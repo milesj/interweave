@@ -1,0 +1,31 @@
+{
+  "name": "interweave",
+  "version": "0.0.1",
+  "description": "Interweave components and elements into interpolated React strings.",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/milesj/interweave.git"
+  },
+  "keywords": [
+    "interweave",
+    "inject",
+    "interpolate",
+    "react",
+    "string",
+    "component",
+    "element"
+  ],
+  "author": "Miles Johnson",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/milesj/interweave/issues"
+  },
+  "homepage": "https://github.com/milesj/interweave#readme",
+  "peerDependencies": {
+    "react": "^15.2.0"
+  },
+  "devDependencies": {
+    "react": "^15.2.0"
+  }
+}
