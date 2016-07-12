@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <script type="text/javascript" src="./lib/helpers/parseHtml.js"></script>
+</head>
+<body>
+  <script type="text/javascript">
+    var html = `
+      This is a <b>string</b> with HTML in the middle.\
+      HTML entities. &nbsp; &hearts; &diamond; &clubs; &spades;\
+      Script block with alert. <script>alert("foo");<` + `/script>
+      Remote resource script block. <script src="https://code.jquery.com/jquery-3.1.0.js"><` + `/script>
+      Remote image. <img src="http://lorempixel.com/400/200/" alt="Foo" />\
+      Local broken image. <img src="images/foo.jpg" alt="" />\
+      Remote CSS. <link href="https://code.jquery.com/ui/1.12.0/themes/base/jquery-ui.css" type="text/css" rel="stylesheet" />\
+      Local CSS. <link href="./style.css" type="text/css" rel="stylesheet" />\
+      Remote audio file. <audio src="http://www.kozco.com/tech/LRMonoPhase4.wav"></audio>\
+      Remote video file. <video src="http://download.wavetla.com/SVV/Media/HTTP/H264/Talkinghead_Media/H264_test1_Talkinghead_mp4_480x360.mp4"></video>\
+    `;
+
+    console.log(html);
+
+    // parseHtmlWithFragment(html); // X - Loads remote resources
+    // parseHtmlWithDomParser(html); // IE10 and unknown mobile support / Error handling
+    // parseHtmlWithXmlDomParser(html); // X - Invalid syntax
+    // parseHtmlWithDocImpl(html); // X - Loads remote resources
+    parseHtmlWithHtmlImpl(html); // IE9 and mobile support / No error handling
+  </script>
+</body>
+</html>
