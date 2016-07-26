@@ -17,9 +17,9 @@ import {
 } from './constants';
 
 export default class Parser {
-  constructor(markup) {
+  constructor(markup, props) {
     this.content = [];
-    this.markup = markup;
+    this.props = props;
     this.doc = this.createDocument(markup);
   }
 
@@ -33,10 +33,16 @@ export default class Parser {
    */
   applyMatchers(string) {
     const components = [];
+    const props = this.props;
     let matchedString = string;
     let parts = {};
 
     Interweave.getMatchers().forEach(({ matcher }) => {
+      // Skip matchers that have been disabled from props
+      if (props[matcher.inverseName]) {
+        return;
+      }
+
       // Continuously trigger the matcher until no matches are found
       do {
         const { match, ...props } = parts;
@@ -82,7 +88,7 @@ export default class Parser {
    * @returns {HTMLDocument}
    */
   createDocument(markup) {
-    const doc = document.implementation.createHTMLDocument('');
+    const doc = document.implementation.createHTMLDocument('Interweave');
 
     if (markup.substr(0, 9).toUpperCase() === '<!DOCTYPE') {
       doc.documentElement.innerHTML = markup;

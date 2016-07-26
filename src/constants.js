@@ -1,16 +1,20 @@
 /* eslint-disable no-useless-escape */
 
-export const ALNUM_PATTERN = '[a-z0-9]+';
+export const HASHTAG_PATTERN = '#([a-z0-9-_]+)';
 
 // https://blog.codinghorror.com/the-problem-with-urls/
-export const URL_SCHEME_PATTERN = '(?:https?://)?';
-export const URL_DOMAIN_PATTERN = '(?:www\.)?[-a-z0-9\.]*[-a-z0-9]+';
-export const URL_TLD_PATTERN = '\.[a-z]{2,63}';
-export const URL_PATTERN = `${URL_SCHEME_PATTERN}${URL_DOMAIN_PATTERN}${URL_TLD_PATTERN}`;
+export const URL_CHAR_PART = 'a-z0-9-._~%!$&\'()*+,;:@';
+export const URL_SCHEME_PATTERN = '(https?://)?';
+export const URL_TLD_PATTERN = '(\.[a-z]{2,63})';
+export const URL_DOMAIN_PATTERN = `((?:www\.)?[-a-z0-9\.]*[-a-z0-9]+${URL_TLD_PATTERN})`;
+export const URL_PATH_PATTERN = `(/[${URL_CHAR_PART}/]*)?`;
+export const URL_QUERY_PATTERN = `(\?[${URL_CHAR_PART}=\[\]]*)?`;
+export const URL_FRAGMENT_PATTERN = `(${HASHTAG_PATTERN})?`;
+export const URL_PATTERN = `${URL_SCHEME_PATTERN}${URL_DOMAIN_PATTERN}${URL_PATH_PATTERN}${URL_QUERY_PATTERN}${URL_FRAGMENT_PATTERN}`;
 
 // http://www.regular-expressions.info/email.html
 export const EMAIL_CLASS_PART = '[a-z0-9!#$%&\'*+/=?^_`{|}~-]';
-export const EMAIL_USERNAME_PATTERN = `${EMAIL_CLASS_PART}+(?:\.${EMAIL_CLASS_PART}+)*`;
+export const EMAIL_USERNAME_PATTERN = `(${EMAIL_CLASS_PART}+(?:\.${EMAIL_CLASS_PART}+)*)`;
 export const EMAIL_PATTERN = `${EMAIL_USERNAME_PATTERN}@${URL_DOMAIN_PATTERN}`;
 
 // Filters to apply to tags and attributes

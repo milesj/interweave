@@ -7,7 +7,7 @@ import React, { PropTypes } from 'react';
 
 export default function Element({ attributes = {}, children, tagName: Tag }) {
   return (
-    <Tag {...attributes}>
+    <Tag data-interweave {...attributes}>
       {children}
     </Tag>
   );

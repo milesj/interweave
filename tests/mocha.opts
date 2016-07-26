@@ -1,0 +1,4 @@
+--compilers js:babel-register
+--ui bdd
+--reporter nyan
+--colors

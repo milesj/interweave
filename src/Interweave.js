@@ -16,11 +16,29 @@ export default class Interweave extends React.Component {
     tagName: 'span',
   };
 
-  static addMatcher(matcher, priority) {
+  /**
+   * Add a matcher class that will be used to match and replace tokens with components.
+   *
+   * @param {String} name
+   * @param {Matcher} matcher
+   * @param {Number} [priority]
+   */
+  static addMatcher(name, matcher, priority) {
     if (!matcher instanceof Matcher) {
       throw new Error('Matcher must be an instance of the `Matcher` class.');
     }
 
+    // Add a prop type so we can disable per instance
+    const capName = name.charAt(0).toUpperCase() + name.substr(1);
+    const inverseName = `no${capName}`;
+
+    Interweave.propTypes[inverseName] = PropTypes.bool;
+
+    // Persist the names
+    matcher.propName = name;
+    matcher.inverseName = inverseName;
+
+    // Append and sort matchers
     matchers.push({
       matcher,
       priority: priority || (DEFAULT_PRIORITY + matchers.length),
@@ -29,16 +47,26 @@ export default class Interweave extends React.Component {
     matchers.sort((a, b) => a.priority - b.priority);
   }
 
+  /**
+   * Return all the defined matchers.
+   *
+   * @returns {Matcher[]}
+   */
   static getMatchers() {
     return matchers;
   }
 
+  /**
+   * Render the component by parsing the markup.
+   *
+   * @returns {JSX}
+   */
   render() {
-    const { children, tagName } = this.props;
+    const { children, tagName, ...props } = this.props;
 
     return (
       <Element tagName={tagName}>
-        {new Parser(children).parse()}
+        {new Parser(children, props).parse()}
       </Element>
     );
   }
@@ -46,5 +74,5 @@ export default class Interweave extends React.Component {
 
 Interweave.propTypes = {
   children: PropTypes.string.isRequired,
-  tagName: PropTypes.oneOf(['span', 'div']).isRequired,
+  tagName: PropTypes.oneOf(['span', 'div', 'p']).isRequired,
 };

@@ -4,6 +4,13 @@
  */
 
 export default class Matcher {
+  constructor() {
+    super();
+
+    this.propName = '';
+    this.inverseName = '';
+  }
+
   /**
    * Create a React component based on the matched token
    * and optional props.
