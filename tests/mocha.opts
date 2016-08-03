@@ -1,4 +1,8 @@
 --compilers js:babel-register
---ui bdd
+--require ./tests/setup.js
+--require chai
 --reporter nyan
+--ui bdd
 --colors
+--check-leaks
+--full-trace

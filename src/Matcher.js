@@ -4,11 +4,10 @@
  */
 
 export default class Matcher {
-  constructor() {
-    super();
-
+  constructor(factory) {
     this.propName = '';
     this.inverseName = '';
+    this.customFactory = factory;
   }
 
   /**

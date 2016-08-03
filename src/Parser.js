@@ -166,6 +166,7 @@ export default class Parser {
    */
   parseNode(parentNode) {
     let content = [];
+    let mergedText = '';
 
     Array.from(parentNode.childNodes).forEach((node) => {
       // Create components for HTML elements
@@ -173,9 +174,15 @@ export default class Parser {
         const tagName = node.nodeName.toLowerCase();
         const filter = TAGS[tagName];
 
+        // Persist any previous text
+        if (mergedText) {
+          content.push(mergedText);
+          mergedText = '';
+        }
+
         // Skip over elements in the blacklist
-        if (!filter || filter === FILTER_DENY) {
-          return null;
+        if (typeof filter === 'undefined' || filter === FILTER_DENY) {
+          return;
 
         // Only pass through the text content
         } else if (filter === FILTER_PASS_THROUGH) {
@@ -197,13 +204,16 @@ export default class Parser {
         if (Array.isArray(text)) {
           content = content.concat(text);
         } else {
-          content.push(text);
+          mergedText += text;
         }
       }
 
       // TODO clean
-      return true;
     });
+
+    if (mergedText) {
+      content.push(mergedText);
+    }
 
     return content;
   }

@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import formatName from '../../lib/matchers/Email';
+import EmailMatcher from '../../lib/matchers/Email';
 
 describe('matchers/Email', () => {
   const EMAIL_TYPES = [
@@ -18,4 +18,17 @@ describe('matchers/Email', () => {
     'user~with$special&chars@domain.com',
     'user#with?more|chars@domain.com',
   ];
+
+  const patterns = [
+    '{token}',
+    ' {token} ',
+    '{token} Pattern at beginning.',
+    'Pattern at end {token}.',
+    'Pattern in {token} middle.',
+    '{token} Pattern at beginning and end {token}.',
+    '{token} Pattern on {token} all sides {token}.',
+    'Pattern {token} used {token} multiple {token} times.',
+  ];
+
+  const matcher = new EmailMatcher();
 });

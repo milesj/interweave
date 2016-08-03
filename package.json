@@ -17,7 +17,9 @@
   "scripts": {
     "build": "babel ./src -d ./lib",
     "watch": "babel --watch ./src -d ./lib",
-    "lint": "eslint ./src ./tests"
+    "lint": "eslint ./src ./tests",
+    "mocha": "mocha --opts ./tests/mocha.opts ./tests/*.test.js ./tests/**/*.test.js",
+    "test": "npm run build && npm run lint && npm run mocha"
   },
   "repository": {
     "type": "git",
@@ -42,11 +44,14 @@
     "babel-preset-es2015": "^6.9.0",
     "babel-preset-react": "^6.11.1",
     "babel-preset-stage-2": "^6.11.0",
+    "chai": "^3.5.0",
     "eslint": "^2.13.0",
     "eslint-config-airbnb": "^9.0.1",
     "eslint-plugin-import": "^1.11.1",
     "eslint-plugin-jsx-a11y": "^1.5.5",
     "eslint-plugin-react": "^5.2.2",
+    "jsdom": "^9.4.1",
+    "mocha": "^2.5.3",
     "react": "^15.2.1"
   },
   "engines": {
