@@ -16,7 +16,7 @@ export default class UrlMatcher extends Matcher {
     let url = match;
 
     if (!url.match(/^https?:\/\//)) {
-      url = 'http://' + url;
+      url = `http://${url}`;
     }
 
     return (

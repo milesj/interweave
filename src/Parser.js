@@ -16,6 +16,9 @@ import {
   ATTRIBUTES,
 } from './constants';
 
+const ELEMENT_NODE = 1;
+const TEXT_NODE = 3;
+
 export default class Parser {
   constructor(markup, props) {
     this.content = [];
@@ -45,13 +48,13 @@ export default class Parser {
 
       // Continuously trigger the matcher until no matches are found
       do {
-        const { match, ...props } = parts;
+        const { match, ...partProps } = parts;
 
         // Replace the matched portion with a placeholder
         matchedString = matchedString.replace(match, `#{{${components.length}}}#`);
 
         // Create a component through the matchers factory
-        components.push(matcher.factory(match, props));
+        components.push(matcher.factory(match, partProps));
 
       } while (parts = matcher.match(matchedString));
     });
@@ -114,17 +117,17 @@ export default class Parser {
 
       name = name.toLowerCase();
 
-      // Do not allow blacklisted attributes except for ARIA attributes
-      if (name.substr(0, 5) !== 'aria-' || !filter || filter === FILTER_DENY) {
-        return;
-
-      // Do not allow events
-      } else if (name.match(/^on/)) {
-        return;
-
-      // Do not allow injections
-      } else if (value.match(/(javascript|script|xss):/i)) {
-        return;
+      // Do not allow blacklisted attributes excluding ARIA attributes
+      // Do not allow events or XSS injections
+      if (name.substr(0, 5) !== 'aria-') {
+        if (
+          typeof filter === 'undefined' ||
+          filter === FILTER_DENY ||
+          name.match(/^on/) ||
+          value.match(/(javascript|script|xss):/i)
+        ) {
+          return;
+        }
       }
 
       // Cast to boolean
@@ -134,9 +137,11 @@ export default class Parser {
       // Cast to number
       } else if (filter === FILTER_CAST_NUMBER) {
         value = parseFloat(value);
-      }
 
-      // TODO clean
+      // Cast to string
+      } else {
+        value = String(value);
+      }
 
       attributes[name] = value;
     });
@@ -161,7 +166,7 @@ export default class Parser {
    * Loop over the nodes children and generate a
    * list of text nodes and React components.
    *
-   * @param {HTMLElement} parentNode
+   * @param {Node} parentNode
    * @returns {String[]|ReactComponent[]}
    */
   parseNode(parentNode) {
@@ -170,7 +175,7 @@ export default class Parser {
 
     Array.from(parentNode.childNodes).forEach((node) => {
       // Create components for HTML elements
-      if (node.nodeType === 1) {
+      if (node.nodeType === ELEMENT_NODE) {
         const tagName = node.nodeName.toLowerCase();
         const filter = TAGS[tagName];
 
@@ -198,7 +203,7 @@ export default class Parser {
         }
 
       // Apply matchers if a text node
-      } else if (node.nodeType === 3) {
+      } else if (node.nodeType === TEXT_NODE) {
         const text = this.applyMatchers(node.textContent);
 
         if (Array.isArray(text)) {
@@ -207,8 +212,6 @@ export default class Parser {
           mergedText += text;
         }
       }
-
-      // TODO clean
     });
 
     if (mergedText) {
