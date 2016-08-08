@@ -14,6 +14,7 @@ import {
   FILTER_CAST_BOOL,
   TAGS,
   ATTRIBUTES,
+  ATTRIBUTES_TO_REACT,
 } from './constants';
 
 const ELEMENT_NODE = 1;
@@ -143,7 +144,7 @@ export default class Parser {
         value = String(value);
       }
 
-      attributes[name] = value;
+      attributes[ATTRIBUTES_TO_REACT[name] || name] = value;
     });
 
     return attributes;

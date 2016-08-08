@@ -191,3 +191,10 @@ export const ATTRIBUTES = {
   target: FILTER_ALLOW,
   width: FILTER_ALLOW,
 };
+
+// Attributes to camel case for React props
+export const ATTRIBUTES_TO_REACT = {
+  colspan: 'colSpan',
+  datetime: 'dateTime',
+  rowspan: 'rowSpan',
+};
