@@ -18,7 +18,7 @@ export default class Matcher {
    * @param {Object} [props]
    * @returns {ReactComponent}
    */
-  factory() {
+  factory(match, props = {}) {
     throw new Error(`${this.constructor.name} must return a React component.`);
   }
 
@@ -30,7 +30,7 @@ export default class Matcher {
    * @param {String} string
    * @returns {Object|null}
    */
-  match() {
+  match(string) {
     throw new Error(`${this.constructor.name} must define a pattern matcher.`);
   }
 }

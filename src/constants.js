@@ -18,17 +18,16 @@ export const EMAIL_USERNAME_PATTERN = `(${EMAIL_CLASS_PART}+(?:\.${EMAIL_CLASS_P
 export const EMAIL_PATTERN = `${EMAIL_USERNAME_PATTERN}@${URL_DOMAIN_PATTERN}`;
 
 // Filters to apply to tags and attributes
-export const FILTER_ALLOW = 0;
-export const FILTER_DENY = 1;
-export const FILTER_PASS_THROUGH = 2;
-export const FILTER_CLEAN = 3;
+export const FILTER_ALLOW = 1;
+export const FILTER_DENY = 2;
+export const FILTER_PASS_THROUGH = 3;
 export const FILTER_CAST_NUMBER = 4;
 export const FILTER_CAST_BOOL = 5;
 
 // Tags not listed here will be denied
 // https://developer.mozilla.org/en-US/docs/Web/HTML/Element
 export const TAGS = {
-  a: FILTER_CLEAN,
+  a: FILTER_ALLOW,
   abbr: FILTER_ALLOW,
   acronym: FILTER_PASS_THROUGH,
   address: FILTER_ALLOW,
@@ -36,7 +35,7 @@ export const TAGS = {
   area: FILTER_DENY,
   article: FILTER_ALLOW,
   aside: FILTER_ALLOW,
-  audio: FILTER_CLEAN,
+  audio: FILTER_ALLOW,
   b: FILTER_ALLOW,
   base: FILTER_DENY,
   basefont: FILTER_DENY,
@@ -88,7 +87,7 @@ export const TAGS = {
   i: FILTER_ALLOW,
   iframe: FILTER_DENY,
   image: FILTER_DENY,
-  img: FILTER_CLEAN,
+  img: FILTER_ALLOW,
   input: FILTER_DENY,
   ins: FILTER_ALLOW,
   isindex: FILTER_DENY,
@@ -120,7 +119,7 @@ export const TAGS = {
   output: FILTER_ALLOW,
   p: FILTER_ALLOW,
   param: FILTER_DENY,
-  picture: FILTER_CLEAN,
+  picture: FILTER_ALLOW,
   plaintext: FILTER_DENY,
   pre: FILTER_ALLOW,
   progress: FILTER_DENY,
@@ -136,7 +135,7 @@ export const TAGS = {
   select: FILTER_DENY,
   shadow: FILTER_DENY,
   small: FILTER_PASS_THROUGH,
-  source: FILTER_CLEAN,
+  source: FILTER_ALLOW,
   spacer: FILTER_DENY,
   span: FILTER_ALLOW,
   strike: FILTER_DENY,
@@ -155,12 +154,12 @@ export const TAGS = {
   thead: FILTER_ALLOW,
   time: FILTER_ALLOW,
   tr: FILTER_ALLOW,
-  track: FILTER_CLEAN,
+  track: FILTER_ALLOW,
   tt: FILTER_DENY,
   u: FILTER_ALLOW,
   ul: FILTER_ALLOW,
   var: FILTER_ALLOW,
-  video: FILTER_CLEAN,
+  video: FILTER_ALLOW,
   wbr: FILTER_DENY,
   xmp: FILTER_DENY,
 };
@@ -169,7 +168,7 @@ export const TAGS = {
 // https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes
 export const ATTRIBUTES = {
   alt: FILTER_ALLOW,
-  cite: FILTER_CLEAN,
+  cite: FILTER_ALLOW,
   class: FILTER_ALLOW,
   colspan: FILTER_CAST_NUMBER,
   controls: FILTER_CAST_BOOL,
@@ -178,22 +177,25 @@ export const ATTRIBUTES = {
   disabled: FILTER_CAST_BOOL,
   dir: FILTER_ALLOW,
   height: FILTER_ALLOW,
-  href: FILTER_CLEAN,
+  href: FILTER_ALLOW,
   id: FILTER_ALLOW,
   kind: FILTER_ALLOW,
   label: FILTER_ALLOW,
   lang: FILTER_ALLOW,
   loop: FILTER_CAST_BOOL,
   muted: FILTER_CAST_BOOL,
+  poster: FILTER_ALLOW,
   rowspan: FILTER_CAST_NUMBER,
   span: FILTER_CAST_NUMBER,
-  src: FILTER_CLEAN,
+  src: FILTER_ALLOW,
   target: FILTER_ALLOW,
+  title: FILTER_ALLOW,
   width: FILTER_ALLOW,
 };
 
 // Attributes to camel case for React props
 export const ATTRIBUTES_TO_REACT = {
+  class: 'className',
   colspan: 'colSpan',
   datetime: 'dateTime',
   rowspan: 'rowSpan',

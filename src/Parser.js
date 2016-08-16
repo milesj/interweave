@@ -28,6 +28,29 @@ export default class Parser {
   }
 
   /**
+   * Loop through and apply all registered attribute cleaners to the
+   * provided value.
+   *
+   * @param {String} attribute
+   * @param {String} value
+   * @returns {String}
+   */
+  applyCleaners(attribute, value) {
+    const cleaners = Interweave.getCleaners(attribute);
+    let cleanValue = value;
+
+    if (!cleaners.length) {
+      return cleanValue;
+    }
+
+    cleaners.forEach(({ cleaner }) => {
+      cleanValue = cleaner.clean(cleanValue);
+    });
+
+    return cleanValue;
+  }
+
+  /**
    * Loop through and apply all registered matchers to the string.
    * If a match is found, create a React component, and build a new array.
    * This array allows React to interpolate and render accordingly.
@@ -131,6 +154,9 @@ export default class Parser {
           return;
         }
       }
+
+      // Apply cleaners
+      value = this.applyCleaners(name, value);
 
       // Cast to boolean
       if (filter === FILTER_CAST_BOOL) {

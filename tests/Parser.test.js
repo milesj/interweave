@@ -160,6 +160,7 @@ describe('Parser', () => {
       element.setAttribute('datetime', '2016-01-01');
       element.setAttribute('colspan', '3');
       element.setAttribute('rowspan', 6);
+      element.setAttribute('class', 'foo-bar');
       element.setAttribute('alt', 'Foo');
       element.setAttribute('disabled', 'disabled');
 
@@ -167,6 +168,7 @@ describe('Parser', () => {
         dateTime: '2016-01-01',
         colSpan: 3,
         rowSpan: 6,
+        className: 'foo-bar',
         alt: 'Foo',
         disabled: true,
       });
