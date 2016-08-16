@@ -1,5 +1,9 @@
 import React from 'react';
 import { expect } from 'chai';
+import { TOKEN_LOCATIONS } from './mocks';
+import Interweave from '../lib/Interweave';
+import Cleaner from '../lib/Cleaner';
+import Matcher from '../lib/Matcher';
 import Parser from '../lib/Parser';
 import Element from '../lib/components/Element';
 import {
@@ -9,7 +13,6 @@ import {
   FILTER_ALLOW,
   FILTER_DENY,
   FILTER_PASS_THROUGH,
-  FILTER_CLEAN,
   FILTER_CAST_BOOL,
   FILTER_CAST_NUMBER,
 } from '../lib/constants';
@@ -21,12 +24,100 @@ function createChild(tag, text) {
   return child;
 }
 
+class HrefCleaner extends Cleaner {
+  clean(value) {
+    return value.replace('foo.com', 'bar.net');
+  }
+}
+
+class BBCodeMatcher extends Matcher {
+  factory(match, props = {}) {
+    const { children } = props;
+
+    return (
+      <Element tagName={children} {...props}>
+        {children}
+      </Element>
+    );
+  }
+
+  match(string) {
+    const matches = string.match(/\[(\w+)\]/);
+
+    if (!matches) {
+      return null;
+    }
+
+    return {
+      match: matches[0],
+      children: matches[1],
+      customProp: 'foo',
+    };
+  }
+}
+
+Interweave.addCleaner('href', new HrefCleaner());
+Interweave.addMatcher('bbcode', new BBCodeMatcher());
+
 describe('Parser', () => {
   const instance = new Parser('');
   let element;
 
-  describe('applyMatchers()', () => {
+  describe('applyCleaners()', () => {
+    it('applies filters for the attribute name', () => {
+      expect(instance.applyCleaners('src', 'foo.com')).to.equal('foo.com');
+      expect(instance.applyCleaners('href', 'foo.com')).to.equal('bar.net');
+    });
+  });
 
+  describe('applyMatchers()', () => {
+    const createElement = () => <Element tagName="a" customProp="foo">a</Element>;
+    const expectedTokenMatches = [
+      'no tokens',
+      [createElement()],
+      [' ', createElement(), ' '],
+      [createElement(), ' pattern at beginning'],
+      ['pattern at end ', createElement()],
+      ['pattern in ', createElement(), ' middle'],
+      [createElement(), ' pattern at beginning and end ', createElement()],
+      [createElement(), ' pattern on ', createElement(), ' all sides ', createElement()],
+      ['pattern ', createElement(), ' used ', createElement(), ' multiple ', createElement(), ' times'],
+      ['tokens next ', createElement(), ' ', createElement(), ' ', createElement(), ' to each other'],
+      ['tokens without ', createElement(), createElement(), createElement(), ' spaces'],
+    ];
+
+    TOKEN_LOCATIONS.forEach((location, i) => {
+      it(`applies matcher to: ${location}`, () => {
+        const tokenString = location.replace(/\{token\}/g, '[a]');
+        const actual = instance.applyMatchers(tokenString);
+
+        if (i === 0) {
+          expect(actual).to.equal(expectedTokenMatches[0]);
+        } else {
+          expect(actual).to.deep.equal(expectedTokenMatches[i]);
+        }
+      });
+    });
+
+    it('ignores matcher if the inverse prop is enabled', () => {
+      instance.props.noBbcode = true;
+
+      TOKEN_LOCATIONS.forEach((location, i) => {
+        it(`applies matcher to: ${location}`, () => {
+          const tokenString = location.replace(/\{token\}/g, '[a]');
+          const actual = instance.applyMatchers(tokenString);
+
+          expect(actual).to.equal(TOKEN_LOCATIONS[i]);
+        });
+      });
+
+      instance.props = {};
+    });
+
+    // TODO
+    it('handles no matches or tokens correctly');
+
+    it('allows for multiple matchers');
   });
 
   describe('createDocument()', () => {
@@ -67,10 +158,6 @@ describe('Parser', () => {
               [attrName]: 'Foo',
             });
           });
-          break;
-
-        case FILTER_CLEAN:
-          // TODO
           break;
 
         case FILTER_CAST_BOOL:
@@ -173,10 +260,18 @@ describe('Parser', () => {
         disabled: true,
       });
     });
+
+    it('applies cleaners to attributes', () => {
+      element.setAttribute('href', 'http://foo.com/hello/world');
+
+      expect(instance.extractAttributes(element)).to.deep.equal({
+        href: 'http://bar.net/hello/world',
+      });
+    });
   });
 
   describe('parse()', () => {
-
+    // TODO
   });
 
   describe('parseNode()', () => {
@@ -225,10 +320,6 @@ describe('Parser', () => {
               `${i}`,
             ]);
           });
-          break;
-
-        case FILTER_CLEAN:
-          // TODO
           break;
 
         default:

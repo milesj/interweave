@@ -21,7 +21,7 @@ const ELEMENT_NODE = 1;
 const TEXT_NODE = 3;
 
 export default class Parser {
-  constructor(markup, props) {
+  constructor(markup, props = {}) {
     this.content = [];
     this.props = props;
     this.doc = this.createDocument(markup);
@@ -71,16 +71,15 @@ export default class Parser {
       }
 
       // Continuously trigger the matcher until no matches are found
-      do {
+      while (parts = matcher.match(matchedString)) {
         const { match, ...partProps } = parts;
 
         // Replace the matched portion with a placeholder
         matchedString = matchedString.replace(match, `#{{${components.length}}}#`);
 
         // Create a component through the matchers factory
-        components.push(matcher.factory(match, partProps));
-
-      } while (parts = matcher.match(matchedString));
+        components.push(matcher.createElement(match, partProps));
+      }
     });
 
     if (!components.length) {
@@ -91,17 +90,28 @@ export default class Parser {
     const matchedArray = [];
     let lastIndex = 0;
 
-    do {
+    while (parts = matchedString.match(/#\{\{(\d+)\}\}#/)) {
+      const no = parts[1];
+
       // Extract the previous string
-      matchedArray.push(matchedString.substring(lastIndex, parts.index));
+      if (lastIndex !== parts.index) {
+        matchedArray.push(matchedString.substring(lastIndex, parts.index));
+      }
 
       // Inject the component
-      matchedArray.push(components[parts[1]]);
+      matchedArray.push(components[no]);
 
       // Set the next index
       lastIndex = parts.index + parts[0].length;
 
-    } while (parts = matchedString.match(/#\{\{(\d+)\}\}#/));
+      // Replace the token so it won't be matched again
+      matchedString = matchedString.replace(`#{{${no}}}#`, `%{{${no}}}%`);
+    }
+
+    // Extra the remaining string
+    if (lastIndex < matchedString.length) {
+      matchedArray.push(matchedString.substring(lastIndex));
+    }
 
     return matchedArray;
   }

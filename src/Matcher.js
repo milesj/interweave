@@ -3,6 +3,8 @@
  * @license     https://opensource.org/licenses/MIT
  */
 
+import React from 'react';
+
 export default class Matcher {
   constructor(factory) {
     this.propName = '';
@@ -11,15 +13,38 @@ export default class Matcher {
   }
 
   /**
-   * Create a React component based on the matched token
-   * and optional props.
+   * Attempts to create a React element using a custom user provided factory,
+   * or the default matcher factory.
+   *
+   * @param {String} match
+   * @param {Object} [props]
+   * @returns {ReactComponent}
+   */
+  createElement(match, props = {}) {
+    let element = null;
+
+    if (typeof this.customFactory === 'function') {
+      element = this.customFactory(match, props);
+    } else {
+      element = this.factory(match, props);
+    }
+
+    if (!React.isValidElement(element)) {
+      throw new Error(`Invalid React element created from ${this.constructor.name}.`);
+    }
+
+    return element;
+  }
+
+  /**
+   * Create a React element based on the matched token and optional props.
    *
    * @param {String} match
    * @param {Object} [props]
    * @returns {ReactComponent}
    */
   factory(match, props = {}) {
-    throw new Error(`${this.constructor.name} must return a React component.`);
+    throw new Error(`${this.constructor.name} must return a React element.`);
   }
 
   /**
