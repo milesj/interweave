@@ -24,7 +24,7 @@ export default class Interweave extends React.Component {
    * @param {Number} [priority]
    */
   static addMatcher(name, matcher, priority) {
-    if (!matcher instanceof Matcher) {
+    if (!(matcher instanceof Matcher)) {
       throw new Error('Matcher must be an instance of the `Matcher` class.');
     }
 

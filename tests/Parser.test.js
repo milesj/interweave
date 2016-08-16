@@ -22,7 +22,7 @@ function createChild(tag, text) {
 }
 
 describe('Parser', () => {
-  let instance = new Parser('');
+  const instance = new Parser('');
   let element;
 
   describe('applyMatchers()', () => {
@@ -147,9 +147,11 @@ describe('Parser', () => {
     });
 
     it('denies sources that have injections', () => {
+      /* eslint-disable no-script-url */
       element.setAttribute('href', 'javascript:alert();');
       element.setAttribute('src', 'javaScript:void(0);');
       element.setAttribute('source', 'xss:confirm();');
+      /* eslint-enable no-script-url */
 
       expect(instance.extractAttributes(element)).to.deep.equal({});
     });

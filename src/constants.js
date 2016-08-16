@@ -1,4 +1,4 @@
-/* eslint-disable no-useless-escape */
+/* eslint-disable no-useless-escape, max-len */
 
 export const HASHTAG_PATTERN = '#([a-z0-9-_]+)';
 

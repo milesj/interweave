@@ -92,6 +92,7 @@ export default class Parser {
    * @returns {HTMLDocument}
    */
   createDocument(markup) {
+    // eslint-disable-next-line no-undef
     const doc = document.implementation.createHTMLDocument('Interweave');
 
     if (markup.substr(0, 9).toUpperCase() === '<!DOCTYPE') {

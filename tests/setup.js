@@ -1,4 +1,4 @@
-/* eslint-disable no-restricted-syntax, prefer-const */
+/* eslint-disable */
 
 import jsdom from 'jsdom';
 
