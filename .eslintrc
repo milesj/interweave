@@ -9,7 +9,6 @@
   "rules": {
     "no-param-reassign": 0,
     "padded-blocks": 0,
-    "react/jsx-filename-extension": 0,
-    "no-unused-vars": 1
+    "react/jsx-filename-extension": 0
   }
 }

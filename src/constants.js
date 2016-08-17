@@ -185,6 +185,7 @@ export const ATTRIBUTES = {
   loop: FILTER_CAST_BOOL,
   muted: FILTER_CAST_BOOL,
   poster: FILTER_ALLOW,
+  role: FILTER_ALLOW,
   rowspan: FILTER_CAST_NUMBER,
   span: FILTER_CAST_NUMBER,
   src: FILTER_ALLOW,

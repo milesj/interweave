@@ -105,6 +105,7 @@ export default class Parser {
       lastIndex = parts.index + parts[0].length;
 
       // Replace the token so it won't be matched again
+      // And so that the string length doesn't change
       matchedString = matchedString.replace(`#{{${no}}}#`, `%{{${no}}}%`);
     }
 
@@ -195,7 +196,9 @@ export default class Parser {
    * @returns {String[]|ReactComponent[]}
    */
   parse() {
-    this.content = this.parseNode(this.doc.body);
+    if (!this.content.length) {
+      this.content = this.parseNode(this.doc.body);
+    }
 
     return this.content;
   }
@@ -211,7 +214,7 @@ export default class Parser {
     let content = [];
     let mergedText = '';
 
-    Array.from(parentNode.childNodes).forEach((node) => {
+    Array.from(parentNode.childNodes).forEach((node, i) => {
       // Create components for HTML elements
       if (node.nodeType === ELEMENT_NODE) {
         const tagName = node.nodeName.toLowerCase();
@@ -234,7 +237,7 @@ export default class Parser {
         // Convert the element to a component
         } else {
           content.push(
-            <Element tagName={tagName} attributes={this.extractAttributes(node)}>
+            <Element key={i} tagName={tagName} attributes={this.extractAttributes(node)}>
               {this.parseNode(node)}
             </Element>
           );

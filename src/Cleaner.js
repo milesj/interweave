@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /**
  * @copyright   2016, Miles Johnson
  * @license     https://opensource.org/licenses/MIT

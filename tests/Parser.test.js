@@ -1,9 +1,8 @@
 import React from 'react';
 import { expect } from 'chai';
-import { TOKEN_LOCATIONS } from './mocks';
+import { CodeTagMatcher, TOKEN_LOCATIONS, MOCK_MARKUP } from './mocks';
 import Interweave from '../lib/Interweave';
 import Cleaner from '../lib/Cleaner';
-import Matcher from '../lib/Matcher';
 import Parser from '../lib/Parser';
 import Element from '../lib/components/Element';
 import {
@@ -30,37 +29,13 @@ class HrefCleaner extends Cleaner {
   }
 }
 
-class BBCodeMatcher extends Matcher {
-  factory(match, props = {}) {
-    const { children } = props;
-
-    return (
-      <Element tagName={children} {...props}>
-        {children}
-      </Element>
-    );
-  }
-
-  match(string) {
-    const matches = string.match(/\[(\w+)\]/);
-
-    if (!matches) {
-      return null;
-    }
-
-    return {
-      match: matches[0],
-      children: matches[1],
-      customProp: 'foo',
-    };
-  }
-}
-
 Interweave.addCleaner('href', new HrefCleaner());
-Interweave.addMatcher('bbcode', new BBCodeMatcher());
+Interweave.addMatcher('foo', new CodeTagMatcher('foo'));
+Interweave.addMatcher('bar', new CodeTagMatcher('bar'));
+Interweave.addMatcher('baz', new CodeTagMatcher('baz'));
 
 describe('Parser', () => {
-  const instance = new Parser('');
+  let instance = new Parser('');
   let element;
 
   describe('applyCleaners()', () => {
@@ -71,40 +46,102 @@ describe('Parser', () => {
   });
 
   describe('applyMatchers()', () => {
-    const createElement = () => <Element tagName="a" customProp="foo">a</Element>;
-    const expectedTokenMatches = [
-      'no tokens',
-      [createElement()],
-      [' ', createElement(), ' '],
-      [createElement(), ' pattern at beginning'],
-      ['pattern at end ', createElement()],
-      ['pattern in ', createElement(), ' middle'],
-      [createElement(), ' pattern at beginning and end ', createElement()],
-      [createElement(), ' pattern on ', createElement(), ' all sides ', createElement()],
-      ['pattern ', createElement(), ' used ', createElement(), ' multiple ', createElement(), ' times'],
-      ['tokens next ', createElement(), ' ', createElement(), ' ', createElement(), ' to each other'],
-      ['tokens without ', createElement(), createElement(), createElement(), ' spaces'],
-    ];
+    const createFoo = () => <Element tagName="foo" customProp="foo">FOO</Element>;
+    const createBar = () => <Element tagName="bar" customProp="foo">BAR</Element>;
+    const createBaz = () => <Element tagName="baz" customProp="foo">BAZ</Element>;
 
-    TOKEN_LOCATIONS.forEach((location, i) => {
-      it(`applies matcher to: ${location}`, () => {
-        const tokenString = location.replace(/\{token\}/g, '[a]');
-        const actual = instance.applyMatchers(tokenString);
+    it('handles matchers correctly', () => {
+      const expected = [
+        'no tokens',
+        [createFoo()],
+        [' ', createFoo(), ' '],
+        [createFoo(), ' pattern at beginning'],
+        ['pattern at end ', createFoo()],
+        ['pattern in ', createFoo(), ' middle'],
+        [createFoo(), ' pattern at beginning and end ', createFoo()],
+        [createFoo(), ' pattern on ', createFoo(), ' all sides ', createFoo()],
+        ['pattern ', createFoo(), ' used ', createFoo(), ' multiple ', createFoo(), ' times'],
+        ['tokens next ', createFoo(), ' ', createFoo(), ' ', createFoo(), ' to each other'],
+        ['tokens without ', createFoo(), createFoo(), createFoo(), ' spaces'],
+      ];
 
-        if (i === 0) {
-          expect(actual).to.equal(expectedTokenMatches[0]);
-        } else {
-          expect(actual).to.deep.equal(expectedTokenMatches[i]);
-        }
+      TOKEN_LOCATIONS.forEach((location, i) => {
+        it(`for: ${location}`, () => {
+          const tokenString = location.replace(/\{token\}/g, '[foo]');
+          const actual = instance.applyMatchers(tokenString);
+
+          if (i === 0) {
+            expect(actual).to.equal(expected[0]);
+          } else {
+            expect(actual).to.deep.equal(expected[i]);
+          }
+        });
+      });
+    });
+
+    it('handles multiple matchers correctly', () => {
+      const expected = [
+        'no tokens',
+        [createBaz()],
+        [' ', createBaz(), ' '],
+        [createBaz(), ' pattern at beginning'],
+        ['pattern at end ', createBaz()],
+        ['pattern in ', createBaz(), ' middle'],
+        [createBaz(), ' pattern at beginning and end ', createFoo()],
+        [createBaz(), ' pattern on ', createFoo(), ' all sides ', createBar()],
+        ['pattern ', createBaz(), ' used ', createFoo(), ' multiple ', createBar(), ' times'],
+        ['tokens next ', createBaz(), ' ', createFoo(), ' ', createBar(), ' to each other'],
+        ['tokens without ', createBaz(), createFoo(), createBar(), ' spaces'],
+      ];
+
+      TOKEN_LOCATIONS.forEach((location, i) => {
+        it(`for: ${location}`, () => {
+          const tokenString = location
+            .replace('{token}', '[baz]')
+            .replace('{token}', '[foo]')
+            .replace('{token}', '[bar]');
+          const actual = instance.applyMatchers(tokenString);
+
+          if (i === 0) {
+            expect(actual).to.equal(expected[0]);
+          } else {
+            expect(actual).to.deep.equal(expected[i]);
+          }
+        });
+      });
+    });
+
+    it('handles no matchers correctly', () => {
+      const expected = [
+        'no tokens',
+        '[qux]',
+        ' [qux] ',
+        '[qux] pattern at beginning',
+        'pattern at end [qux]',
+        'pattern in [qux] middle',
+        '[qux] pattern at beginning and end [qux]',
+        '[qux] pattern on [qux] all sides [qux]',
+        'pattern [qux] used [qux] multiple [qux] times',
+        'tokens next [qux] [qux] [qux] to each other',
+        'tokens without [qux][qux][qux] spaces',
+      ];
+
+      TOKEN_LOCATIONS.forEach((location, i) => {
+        it(`for: ${location}`, () => {
+          const tokenString = location.replace(/\{token\}/g, '[qux]');
+          const actual = instance.applyMatchers(tokenString);
+
+          expect(actual).to.equal(expected[i]);
+        });
       });
     });
 
     it('ignores matcher if the inverse prop is enabled', () => {
-      instance.props.noBbcode = true;
+      instance.props.noFoo = true;
 
       TOKEN_LOCATIONS.forEach((location, i) => {
-        it(`applies matcher to: ${location}`, () => {
-          const tokenString = location.replace(/\{token\}/g, '[a]');
+        it(`for: ${location}`, () => {
+          const tokenString = location.replace(/\{token\}/g, '[foo]');
           const actual = instance.applyMatchers(tokenString);
 
           expect(actual).to.equal(TOKEN_LOCATIONS[i]);
@@ -113,11 +150,6 @@ describe('Parser', () => {
 
       instance.props = {};
     });
-
-    // TODO
-    it('handles no matches or tokens correctly');
-
-    it('allows for multiple matchers');
   });
 
   describe('createDocument()', () => {
@@ -271,7 +303,37 @@ describe('Parser', () => {
   });
 
   describe('parse()', () => {
-    // TODO
+    it('parses the entire document starting from the body', () => {
+      instance = new Parser(MOCK_MARKUP);
+
+      expect(instance.parse()).to.deep.equal([
+        '\n  ',
+        <Element key="1" tagName="main" attributes={{ role: 'main' }}>
+          {[
+            '\n    Main content\n    ',
+            <Element key="1" tagName="div" attributes={{}}>
+              {[
+                '\n      ',
+                <Element key="1" tagName="a" attributes={{ href: '#' }}>
+                  {['Link']}
+                </Element>,
+                '\n      ',
+                <Element key="3" tagName="span" attributes={{ className: 'foo' }}>
+                  {['String']}
+                </Element>,
+                '\n    ',
+              ]}
+            </Element>,
+            '\n  ',
+          ]}
+        </Element>,
+        '\n  ',
+        <Element key="3" tagName="aside" attributes={{ id: 'sidebar' }}>
+          {['\n    Sidebar content\n  ']}
+        </Element>,
+        '\n\n',
+      ]);
+    });
   });
 
   describe('parseNode()', () => {
@@ -299,7 +361,7 @@ describe('Parser', () => {
             element.appendChild(createChild(tag, i));
 
             expect(instance.parseNode(element)).to.deep.equal([
-              <Element tagName={tag} attributes={{}}>{[`${i}`]}</Element>,
+              <Element key="0" tagName={tag} attributes={{}}>{[`${i}`]}</Element>,
             ]);
           });
           break;
@@ -340,7 +402,7 @@ describe('Parser', () => {
 
       expect(instance.parseNode(element)).to.deep.equal([
         'Foo',
-        <Element tagName="div" attributes={{}}>{['Bar']}</Element>,
+        <Element key="1" tagName="div" attributes={{}}>{['Bar']}</Element>,
         'Baz',
       ]);
     });
@@ -354,9 +416,9 @@ describe('Parser', () => {
 
       expect(instance.parseNode(element)).to.deep.equal([
         'Foo',
-        <Element tagName="div" attributes={{}}>{['Bar']}</Element>,
+        <Element key="1" tagName="div" attributes={{}}>{['Bar']}</Element>,
         'BazQux',
-        <Element tagName="div" attributes={{}}>{['Bar']}</Element>,
+        <Element key="4" tagName="div" attributes={{}}>{['Bar']}</Element>,
       ]);
     });
 
