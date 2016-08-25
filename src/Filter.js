@@ -4,15 +4,15 @@
  * @license     https://opensource.org/licenses/MIT
  */
 
-export default class Cleaner {
+export default class Filter {
   /**
-   * Clean an attribute value if applicable.
+   * Filter and clean an attribute value if applicable.
    * Can return an empty value to omit the attribute.
    *
    * @param {String} value
    * @returns {String}
    */
-  clean(value) {
-    throw new Error(`${this.constructor.name} must define a "clean" method.`);
+  filter(value) {
+    throw new Error(`${this.constructor.name} must define a filter.`);
   }
 }

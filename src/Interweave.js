@@ -4,14 +4,14 @@
  */
 
 import React, { PropTypes } from 'react';
-import Cleaner from './Cleaner';
+import Filter from './Filter';
 import Matcher from './Matcher';
 import Parser from './Parser';
 import Element from './components/Element';
 import { ATTRIBUTES } from './constants';
 
 const DEFAULT_PRIORITY = 100;
-const cleaners = {};
+const filters = {};
 const matchers = [];
 
 function prioritySort(a, b) {
@@ -24,31 +24,31 @@ export default class Interweave extends React.Component {
   };
 
   /**
-   * Add a cleaner class that will be used to cleanse HTML attributes.
+   * Add a filter class that will be used to cleanse HTML attributes.
    *
    * @param {String} attr
-   * @param {Cleaner} cleaner
+   * @param {Filter} filter
    * @param {Number} [priority]
    */
-  static addCleaner(attr, cleaner, priority) {
-    if (!(cleaner instanceof Cleaner)) {
-      throw new Error('Cleaner must be an instance of the `Cleaner` class.');
+  static addFilter(attr, filter, priority) {
+    if (!(filter instanceof Filter)) {
+      throw new Error('Filter must be an instance of the `Filter` class.');
 
     } else if (!ATTRIBUTES[attr]) {
       throw new Error(`Attribute "${attr}" is not supported.`);
     }
 
-    if (!cleaners[attr]) {
-      cleaners[attr] = [];
+    if (!filters[attr]) {
+      filters[attr] = [];
     }
 
-    // Apply and sort cleaners
-    cleaners[attr].push({
-      cleaner,
-      priority: priority || (DEFAULT_PRIORITY + cleaners[attr].length),
+    // Apply and sort filters
+    filters[attr].push({
+      filter,
+      priority: priority || (DEFAULT_PRIORITY + filters[attr].length),
     });
 
-    cleaners[attr].sort(prioritySort);
+    filters[attr].sort(prioritySort);
   }
 
   /**
@@ -83,13 +83,13 @@ export default class Interweave extends React.Component {
   }
 
   /**
-   * Return all defined cleaners for an attribute.
+   * Return all defined filters for an attribute.
    *
    * @param {String} attr
-   * @returns {{ cleaner: Cleaner }[]}
+   * @returns {{ filter: Filter }[]}
    */
-  static getCleaners(attr) {
-    return cleaners[attr] || [];
+  static getFilters(attr) {
+    return filters[attr] || [];
   }
 
   /**

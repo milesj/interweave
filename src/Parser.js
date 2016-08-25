@@ -28,26 +28,26 @@ export default class Parser {
   }
 
   /**
-   * Loop through and apply all registered attribute cleaners to the
+   * Loop through and apply all registered attribute filters to the
    * provided value.
    *
    * @param {String} attribute
    * @param {String} value
    * @returns {String}
    */
-  applyCleaners(attribute, value) {
-    const cleaners = Interweave.getCleaners(attribute);
-    let cleanValue = value;
+  applyFilters(attribute, value) {
+    const filters = Interweave.getFilters(attribute);
+    let filterValue = value;
 
-    if (!cleaners.length) {
-      return cleanValue;
+    if (!filters.length) {
+      return filterValue;
     }
 
-    cleaners.forEach(({ cleaner }) => {
-      cleanValue = cleaner.clean(cleanValue);
+    filters.forEach(({ filter }) => {
+      filterValue = filter.filter(filterValue);
     });
 
-    return cleanValue;
+    return filterValue;
   }
 
   /**
@@ -166,8 +166,8 @@ export default class Parser {
         }
       }
 
-      // Apply cleaners
-      value = this.applyCleaners(name, value);
+      // Apply filters
+      value = this.applyFilters(name, value);
 
       // Cast to boolean
       if (filter === FILTER_CAST_BOOL) {

@@ -2,7 +2,7 @@ import React from 'react';
 import { expect } from 'chai';
 import { CodeTagMatcher, TOKEN_LOCATIONS, MOCK_MARKUP } from './mocks';
 import Interweave from '../lib/Interweave';
-import Cleaner from '../lib/Cleaner';
+import Filter from '../lib/Filter';
 import Parser from '../lib/Parser';
 import Element from '../lib/components/Element';
 import {
@@ -23,13 +23,13 @@ function createChild(tag, text) {
   return child;
 }
 
-class HrefCleaner extends Cleaner {
-  clean(value) {
+class HrefFilter extends Filter {
+  filter(value) {
     return value.replace('foo.com', 'bar.net');
   }
 }
 
-Interweave.addCleaner('href', new HrefCleaner());
+Interweave.addFilter('href', new HrefFilter());
 Interweave.addMatcher('foo', new CodeTagMatcher('foo'));
 Interweave.addMatcher('bar', new CodeTagMatcher('bar'));
 Interweave.addMatcher('baz', new CodeTagMatcher('baz'));
@@ -38,10 +38,10 @@ describe('Parser', () => {
   let instance = new Parser('');
   let element;
 
-  describe('applyCleaners()', () => {
+  describe('applyFilters()', () => {
     it('applies filters for the attribute name', () => {
-      expect(instance.applyCleaners('src', 'foo.com')).to.equal('foo.com');
-      expect(instance.applyCleaners('href', 'foo.com')).to.equal('bar.net');
+      expect(instance.applyFilters('src', 'foo.com')).to.equal('foo.com');
+      expect(instance.applyFilters('href', 'foo.com')).to.equal('bar.net');
     });
   });
 
@@ -293,7 +293,7 @@ describe('Parser', () => {
       });
     });
 
-    it('applies cleaners to attributes', () => {
+    it('applies filters to attributes', () => {
       element.setAttribute('href', 'http://foo.com/hello/world');
 
       expect(instance.extractAttributes(element)).to.deep.equal({
