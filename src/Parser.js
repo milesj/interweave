@@ -37,17 +37,17 @@ export default class Parser {
    */
   applyFilters(attribute, value) {
     const filters = Interweave.getFilters(attribute);
-    let filterValue = value;
+    let newValue = value;
 
     if (!filters.length) {
-      return filterValue;
+      return newValue;
     }
 
     filters.forEach(({ filter }) => {
-      filterValue = filter.filter(filterValue);
+      newValue = filter.filter(newValue);
     });
 
-    return filterValue;
+    return newValue;
   }
 
   /**
@@ -211,6 +211,7 @@ export default class Parser {
    * @returns {String[]|ReactComponent[]}
    */
   parseNode(parentNode) {
+    const { noHtml } = this.props;
     let content = [];
     let mergedText = '';
 
@@ -231,7 +232,7 @@ export default class Parser {
           return;
 
         // Only pass through the text content
-        } else if (filter === FILTER_PASS_THROUGH) {
+        } else if (filter === FILTER_PASS_THROUGH || noHtml) {
           content = content.concat(this.parseNode(node));
 
         // Convert the element to a component

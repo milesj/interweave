@@ -19,6 +19,14 @@ function prioritySort(a, b) {
 }
 
 export default class Interweave extends React.Component {
+  static propTypes = {
+    children: PropTypes.string.isRequired,
+    noHtml: PropTypes.bool,
+    onBeforeParse: PropTypes.func,
+    onAfterParse: PropTypes.func,
+    tagName: PropTypes.oneOf(['span', 'div', 'p']).isRequired,
+  };
+
   static defaultProps = {
     tagName: 'span',
   };
@@ -61,6 +69,9 @@ export default class Interweave extends React.Component {
   static addMatcher(name, matcher, priority) {
     if (!(matcher instanceof Matcher)) {
       throw new Error('Matcher must be an instance of the `Matcher` class.');
+
+    } else if (name === 'html') {
+      throw new Error(`The matcher name "${name}" is not allowed.`);
     }
 
     // Add a prop type so we can disable per instance
@@ -102,22 +113,43 @@ export default class Interweave extends React.Component {
   }
 
   /**
+   * Parse the markup and apply hooks.
+   */
+  parseMarkup() {
+    const { children, onBeforeParse, onAfterParse, ...props } = this.props;
+    let content = children;
+
+    if (onBeforeParse) {
+      content = onBeforeParse(content);
+
+      if (typeof content !== 'string') {
+        throw new Error('`onBeforeParse` must return a valid HTML string.');
+      }
+    }
+
+    content = new Parser(content, props).parse();
+
+    if (onAfterParse) {
+      content = onAfterParse(content);
+
+      if (!Array.isArray(content)) {
+        throw new Error('`onAfterParse` must return an array of strings and React elements.');
+      }
+    }
+
+    return content;
+  }
+
+  /**
    * Render the component by parsing the markup.
    *
    * @returns {JSX}
    */
   render() {
-    const { children, tagName, ...props } = this.props;
-
     return (
-      <Element tagName={tagName}>
-        {new Parser(children, props).parse()}
+      <Element tagName={this.props.tagName}>
+        {this.parseMarkup()}
       </Element>
     );
   }
 }
-
-Interweave.propTypes = {
-  children: PropTypes.string.isRequired,
-  tagName: PropTypes.oneOf(['span', 'div', 'p']).isRequired,
-};

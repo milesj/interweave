@@ -439,5 +439,25 @@ describe('Parser', () => {
 
       expect(instance.parseNode(element)).to.deep.equal([]);
     });
+
+    it('passes through elements if `noHtml` prop is set', () => {
+      instance = new Parser('', {
+        noHtml: true,
+      });
+
+      element.appendChild(document.createTextNode('Foo'));
+      element.appendChild(createChild('div', 'Bar'));
+      element.appendChild(document.createTextNode('Baz'));
+      element.appendChild(createChild('div', 'Qux'));
+      element.appendChild(createChild('div', 'Wat'));
+
+      expect(instance.parseNode(element)).to.deep.equal([
+        'Foo',
+        'Bar',
+        'Baz',
+        'Qux',
+        'Wat',
+      ]);
+    });
   });
 });
