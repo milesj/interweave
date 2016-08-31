@@ -1,4 +1,5 @@
 import React from 'react';
+import Filter from '../lib/Filter';
 import Matcher from '../lib/Matcher';
 import Element from '../lib/components/Element';
 
@@ -65,5 +66,11 @@ export class CodeTagMatcher extends Matcher {
       children: tag,
       customProp: 'foo',
     };
+  }
+}
+
+export class HrefFilter extends Filter {
+  filter(value) {
+    return value.replace('foo.com', 'bar.net');
   }
 }

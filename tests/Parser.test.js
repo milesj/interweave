@@ -1,8 +1,7 @@
 import React from 'react';
 import { expect } from 'chai';
-import { CodeTagMatcher, TOKEN_LOCATIONS, MOCK_MARKUP } from './mocks';
+import { CodeTagMatcher, HrefFilter, TOKEN_LOCATIONS, MOCK_MARKUP } from './mocks';
 import Interweave from '../lib/Interweave';
-import Filter from '../lib/Filter';
 import Parser from '../lib/Parser';
 import Element from '../lib/components/Element';
 import {
@@ -21,12 +20,6 @@ function createChild(tag, text) {
   child.appendChild(document.createTextNode(text));
 
   return child;
-}
-
-class HrefFilter extends Filter {
-  filter(value) {
-    return value.replace('foo.com', 'bar.net');
-  }
 }
 
 Interweave.addFilter('href', new HrefFilter());
