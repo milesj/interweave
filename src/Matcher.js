@@ -1,13 +1,19 @@
-/* eslint-disable no-unused-vars */
 /**
  * @copyright   2016, Miles Johnson
  * @license     https://opensource.org/licenses/MIT
+ * @flow
  */
 
 import React from 'react';
 
+import type { MatcherFactory, MatchResponse } from './types';
+
 export default class Matcher {
-  constructor(factory) {
+  propName: string;
+  inverseName: string;
+  customFactory: ?MatcherFactory;
+
+  constructor(factory: ?MatcherFactory = null) {
     this.propName = '';
     this.inverseName = '';
     this.customFactory = factory;
@@ -21,7 +27,7 @@ export default class Matcher {
    * @param {Object} [props]
    * @returns {ReactComponent}
    */
-  createElement(match, props = {}) {
+  createElement(match: string, props: Object = {}): ReactElement {
     let element = null;
 
     if (typeof this.customFactory === 'function') {
@@ -44,7 +50,7 @@ export default class Matcher {
    * @param {Object} [props]
    * @returns {ReactComponent}
    */
-  factory(match, props = {}) {
+  factory(match: string, props: Object = {}): ReactElement {
     throw new Error(`${this.constructor.name} must return a React element.`);
   }
 
@@ -56,7 +62,7 @@ export default class Matcher {
    * @param {String} string
    * @returns {Object|null}
    */
-  match(string) {
+  match(string: string): ?MatchResponse {
     throw new Error(`${this.constructor.name} must define a pattern matcher.`);
   }
 }

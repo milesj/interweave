@@ -1,8 +1,10 @@
-/* eslint-disable no-cond-assign */
 /**
  * @copyright   2016, Miles Johnson
  * @license     https://opensource.org/licenses/MIT
+ * @flow
  */
+
+/* eslint-disable no-cond-assign */
 
 import React from 'react';
 import Interweave from './Interweave';
@@ -17,11 +19,17 @@ import {
   ATTRIBUTES_TO_REACT,
 } from './constants';
 
-const ELEMENT_NODE = 1;
-const TEXT_NODE = 3;
+import type { Attributes, PrimitiveType, ParsedNodes } from './types';
+
+const ELEMENT_NODE: number = 1;
+const TEXT_NODE: number = 3;
 
 export default class Parser {
-  constructor(markup, props = {}) {
+  content: ParsedNodes;
+  props: Object;
+  doc: Document;
+
+  constructor(markup: string, props: Object = {}) {
     this.content = [];
     this.props = props;
     this.doc = this.createDocument(markup);
@@ -35,7 +43,7 @@ export default class Parser {
    * @param {String} value
    * @returns {String}
    */
-  applyFilters(attribute, value) {
+  applyFilters(attribute: string, value: string): string {
     const filters = Interweave.getFilters(attribute);
     let newValue = value;
 
@@ -58,7 +66,7 @@ export default class Parser {
    * @param {String} string
    * @returns {String|String[]}
    */
-  applyMatchers(string) {
+  applyMatchers(string: string): string | string[] {
     const components = [];
     const props = this.props;
     let matchedString = string;
@@ -99,7 +107,7 @@ export default class Parser {
       }
 
       // Inject the component
-      matchedArray.push(components[no]);
+      matchedArray.push(components[parseFloat(no)]);
 
       // Set the next index
       lastIndex = parts.index + parts[0].length;
@@ -125,8 +133,7 @@ export default class Parser {
    * @param {String} markup
    * @returns {HTMLDocument}
    */
-  createDocument(markup) {
-    // eslint-disable-next-line no-undef
+  createDocument(markup: string): Document {
     const doc = document.implementation.createHTMLDocument('Interweave');
 
     if (markup.substr(0, 9).toUpperCase() === '<!DOCTYPE') {
@@ -141,14 +148,18 @@ export default class Parser {
   /**
    * Convert an elements attribute map to an object map.
    *
-   * @param {HTMLElement} element
+   * @param {Element} element
    * @returns {Object}
    */
-  extractAttributes(element) {
+  extractAttributes(element: Node): Attributes {
     const attributes = {};
 
+    if (!(element instanceof Element)) {
+      return attributes;
+    }
+
     Array.from(element.attributes).forEach((attr) => {
-      let { name, value } = attr;
+      let { name, value }: { name: string, value: string } = attr;
       const filter = ATTRIBUTES[name];
 
       name = name.toLowerCase();
@@ -167,22 +178,22 @@ export default class Parser {
       }
 
       // Apply filters
-      value = this.applyFilters(name, value);
+      let newValue: PrimitiveType = this.applyFilters(name, value);
 
       // Cast to boolean
       if (filter === FILTER_CAST_BOOL) {
-        value = (value === 'true' || value === name);
+        newValue = (newValue === 'true' || newValue === name);
 
       // Cast to number
       } else if (filter === FILTER_CAST_NUMBER) {
-        value = parseFloat(value);
+        newValue = parseFloat(newValue);
 
       // Cast to string
       } else {
-        value = String(value);
+        newValue = String(newValue);
       }
 
-      attributes[ATTRIBUTES_TO_REACT[name] || name] = value;
+      attributes[ATTRIBUTES_TO_REACT[name] || name] = newValue;
     });
 
     return attributes;
@@ -195,7 +206,7 @@ export default class Parser {
    *
    * @returns {String[]|ReactComponent[]}
    */
-  parse() {
+  parse(): ParsedNodes {
     if (!this.content.length) {
       this.content = this.parseNode(this.doc.body);
     }
@@ -207,10 +218,10 @@ export default class Parser {
    * Loop over the nodes children and generate a
    * list of text nodes and React components.
    *
-   * @param {Node} parentNode
+   * @param {Element} parentNode
    * @returns {String[]|ReactComponent[]}
    */
-  parseNode(parentNode) {
+  parseNode(parentNode: Node): ParsedNodes {
     const { noHtml } = this.props;
     let content = [];
     let mergedText = '';

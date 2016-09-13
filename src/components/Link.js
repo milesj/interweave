@@ -1,11 +1,21 @@
 /**
  * @copyright   2016, Miles Johnson
  * @license     https://opensource.org/licenses/MIT
+ * @flow
  */
 
 import React, { PropTypes } from 'react';
 
-export default function Link({ children, href, onClick, newWindow = false }) {
+type LinkProps = {
+  children: any,
+  href: string,
+  onClick: () => void,
+  newWindow: boolean,
+};
+
+export default function Link(props: LinkProps) {
+  const { children, href, onClick, newWindow = false } = props;
+
   return (
     <a
       href={href}

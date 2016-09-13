@@ -1,32 +1,40 @@
+/**
+ * @copyright   2016, Miles Johnson
+ * @license     https://opensource.org/licenses/MIT
+ * @flow
+ */
+
 /* eslint-disable no-useless-escape, max-len */
 
-export const HASHTAG_PATTERN = '#([a-z0-9-_]+)';
+type FilterMap = { [key: string]: number };
+
+export const HASHTAG_PATTERN: string = '#([a-z0-9-_]+)';
 
 // https://blog.codinghorror.com/the-problem-with-urls/
-export const URL_CHAR_PART = 'a-z0-9-._~%!$&\'()*+,;:@';
-export const URL_SCHEME_PATTERN = '(https?://)?';
-export const URL_TLD_PATTERN = '(\.[a-z]{2,63})';
-export const URL_DOMAIN_PATTERN = `((?:www\.)?[-a-z0-9\.]*[-a-z0-9]+${URL_TLD_PATTERN})`;
-export const URL_PATH_PATTERN = `(/[${URL_CHAR_PART}/]*)?`;
-export const URL_QUERY_PATTERN = `(\?[${URL_CHAR_PART}=\[\]]*)?`;
-export const URL_FRAGMENT_PATTERN = `(${HASHTAG_PATTERN})?`;
-export const URL_PATTERN = `${URL_SCHEME_PATTERN}${URL_DOMAIN_PATTERN}${URL_PATH_PATTERN}${URL_QUERY_PATTERN}${URL_FRAGMENT_PATTERN}`;
+export const URL_CHAR_PART: string = 'a-z0-9-._~%!$&\'()*+,;:@';
+export const URL_SCHEME_PATTERN: string = '(https?://)?';
+export const URL_TLD_PATTERN: string = '(\.[a-z]{2,63})';
+export const URL_DOMAIN_PATTERN: string = `((?:www\.)?[-a-z0-9\.]*[-a-z0-9]+${URL_TLD_PATTERN})`;
+export const URL_PATH_PATTERN: string = `(/[${URL_CHAR_PART}/]*)?`;
+export const URL_QUERY_PATTERN: string = `(\?[${URL_CHAR_PART}=\[\]]*)?`;
+export const URL_FRAGMENT_PATTERN: string = `(${HASHTAG_PATTERN})?`;
+export const URL_PATTERN: string = `${URL_SCHEME_PATTERN}${URL_DOMAIN_PATTERN}${URL_PATH_PATTERN}${URL_QUERY_PATTERN}${URL_FRAGMENT_PATTERN}`;
 
 // http://www.regular-expressions.info/email.html
-export const EMAIL_CLASS_PART = '[a-z0-9!#$%&\'*+/=?^_`{|}~-]';
-export const EMAIL_USERNAME_PATTERN = `(${EMAIL_CLASS_PART}+(?:\.${EMAIL_CLASS_PART}+)*)`;
-export const EMAIL_PATTERN = `${EMAIL_USERNAME_PATTERN}@${URL_DOMAIN_PATTERN}`;
+export const EMAIL_CLASS_PART: string = '[a-z0-9!#$%&\'*+/=?^_`{|}~-]';
+export const EMAIL_USERNAME_PATTERN: string = `(${EMAIL_CLASS_PART}+(?:\.${EMAIL_CLASS_PART}+)*)`;
+export const EMAIL_PATTERN: string = `${EMAIL_USERNAME_PATTERN}@${URL_DOMAIN_PATTERN}`;
 
 // Filters to apply to tags and attributes
-export const FILTER_ALLOW = 1;
-export const FILTER_DENY = 2;
-export const FILTER_PASS_THROUGH = 3;
-export const FILTER_CAST_NUMBER = 4;
-export const FILTER_CAST_BOOL = 5;
+export const FILTER_ALLOW: number = 1;
+export const FILTER_DENY: number = 2;
+export const FILTER_PASS_THROUGH: number = 3;
+export const FILTER_CAST_NUMBER: number = 4;
+export const FILTER_CAST_BOOL: number = 5;
 
 // Tags not listed here will be denied
 // https://developer.mozilla.org/en-US/docs/Web/HTML/Element
-export const TAGS = {
+export const TAGS: FilterMap = {
   a: FILTER_ALLOW,
   abbr: FILTER_ALLOW,
   acronym: FILTER_PASS_THROUGH,
@@ -166,7 +174,7 @@ export const TAGS = {
 
 // Attributes not listed here will be denied
 // https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes
-export const ATTRIBUTES = {
+export const ATTRIBUTES: FilterMap = {
   alt: FILTER_ALLOW,
   cite: FILTER_ALLOW,
   class: FILTER_ALLOW,
@@ -195,7 +203,7 @@ export const ATTRIBUTES = {
 };
 
 // Attributes to camel case for React props
-export const ATTRIBUTES_TO_REACT = {
+export const ATTRIBUTES_TO_REACT: { [key: string]: string } = {
   class: 'className',
   colspan: 'colSpan',
   datetime: 'dateTime',

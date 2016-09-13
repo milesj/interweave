@@ -1,7 +1,7 @@
-/* eslint-disable no-unused-vars */
 /**
  * @copyright   2016, Miles Johnson
  * @license     https://opensource.org/licenses/MIT
+ * @flow
  */
 
 export default class Filter {
@@ -12,7 +12,7 @@ export default class Filter {
    * @param {String} value
    * @returns {String}
    */
-  filter(value) {
+  filter(value: string): string {
     throw new Error(`${this.constructor.name} must define a filter.`);
   }
 }

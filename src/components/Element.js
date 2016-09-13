@@ -1,11 +1,22 @@
 /**
  * @copyright   2016, Miles Johnson
  * @license     https://opensource.org/licenses/MIT
+ * @flow
  */
 
 import React, { PropTypes } from 'react';
 
-export default function Element({ attributes = {}, children, tagName: Tag }) {
+import type { Attributes } from '../types';
+
+type ElementProps = {
+  attributes: ?Attributes,
+  children: any,
+  tagName: string,
+};
+
+export default function Element(props: ElementProps) {
+  const { attributes = {}, children, tagName: Tag } = props;
+
   return (
     <Tag {...attributes} data-interweave>
       {children}

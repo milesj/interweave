@@ -1,6 +1,7 @@
 /**
  * @copyright   2016, Miles Johnson
  * @license     https://opensource.org/licenses/MIT
+ * @flow
  */
 
 import React, { PropTypes } from 'react';
@@ -10,15 +11,36 @@ import Parser from './Parser';
 import Element from './components/Element';
 import { ATTRIBUTES } from './constants';
 
-const DEFAULT_PRIORITY = 100;
-const filters = {};
-const matchers = [];
+import type {
+  FilterStructure,
+  FilterList,
+  MatcherStructure,
+  MatcherList,
+  ParsedNodes,
+} from './types';
 
-function prioritySort(a, b) {
+const DEFAULT_PRIORITY: number = 100;
+const filters: { [key: string]: FilterList } = {};
+const matchers: MatcherList = [];
+
+function prioritySort(
+  a: MatcherStructure | FilterStructure,
+  b: MatcherStructure | FilterStructure
+): number {
   return a.priority - b.priority;
 }
 
+type InterweaveProps = {
+  children: string,
+  noHtml: boolean,
+  onBeforeParse: () => void,
+  onAfterParse: () => void,
+  tagName: string,
+};
+
 export default class Interweave extends React.Component {
+  props: InterweaveProps;
+
   static propTypes = {
     children: PropTypes.string.isRequired,
     noHtml: PropTypes.bool,
@@ -38,7 +60,7 @@ export default class Interweave extends React.Component {
    * @param {Filter} filter
    * @param {Number} [priority]
    */
-  static addFilter(attr, filter, priority) {
+  static addFilter(attr: string, filter: Filter, priority: number = 0) {
     if (!(filter instanceof Filter)) {
       throw new Error('Filter must be an instance of the `Filter` class.');
 
@@ -66,7 +88,7 @@ export default class Interweave extends React.Component {
    * @param {Matcher} matcher
    * @param {Number} [priority]
    */
-  static addMatcher(name, matcher, priority) {
+  static addMatcher(name: string, matcher: Matcher, priority: number = 0) {
     if (!(matcher instanceof Matcher)) {
       throw new Error('Matcher must be an instance of the `Matcher` class.');
 
@@ -99,7 +121,7 @@ export default class Interweave extends React.Component {
    * @param {String} attr
    * @returns {{ filter: Filter }[]}
    */
-  static getFilters(attr) {
+  static getFilters(attr: string): FilterList {
     return filters[attr] || [];
   }
 
@@ -108,14 +130,14 @@ export default class Interweave extends React.Component {
    *
    * @returns {{ matcher: Matcher }[]}
    */
-  static getMatchers() {
+  static getMatchers(): MatcherList {
     return matchers;
   }
 
   /**
    * Parse the markup and apply hooks.
    */
-  parseMarkup() {
+  parseMarkup(): ParsedNodes {
     const { children, onBeforeParse, onAfterParse, ...props } = this.props;
     let content = children;
 
