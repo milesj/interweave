@@ -8,7 +8,7 @@
 
 import React from 'react';
 import Interweave from './Interweave';
-import Element from './components/Element';
+import ElementComponent from './components/Element';
 import {
   FILTER_DENY,
   FILTER_PASS_THROUGH,
@@ -19,7 +19,7 @@ import {
   ATTRIBUTES_TO_REACT,
 } from './constants';
 
-import type { Attributes, PrimitiveType, ParsedNodes } from './types';
+import type { Attributes, PrimitiveType, ParsedNodes, NodeInterface } from './types';
 
 const ELEMENT_NODE: number = 1;
 const TEXT_NODE: number = 3;
@@ -150,17 +150,21 @@ export default class Parser {
   /**
    * Convert an elements attribute map to an object map.
    *
-   * @param {Element} element
+   * @param {Node} node
    * @returns {Object}
    */
-  extractAttributes(element: Node): Attributes {
+  extractAttributes(node: NodeInterface): Attributes {
     const attributes = {};
 
-    if (!(element instanceof Element)) {
+    if (node.nodeType !== ELEMENT_NODE || !node.attributes) {
       return attributes;
     }
 
-    Array.from(element.attributes).forEach((attr) => {
+    Array.from(node.attributes).forEach((attr) => {
+      if (!attr) {
+        return;
+      }
+
       let name: string = attr.name;
       const value: string = attr.value;
       const filter: number = ATTRIBUTES[name];
@@ -221,10 +225,10 @@ export default class Parser {
    * Loop over the nodes children and generate a
    * list of text nodes and React components.
    *
-   * @param {Element} parentNode
+   * @param {Node} parentNode
    * @returns {String[]|ReactComponent[]}
    */
-  parseNode(parentNode: Node): ParsedNodes {
+  parseNode(parentNode: NodeInterface): ParsedNodes {
     const { noHtml } = this.props;
     let content = [];
     let mergedText = '';
@@ -252,9 +256,9 @@ export default class Parser {
         // Convert the element to a component
         } else {
           content.push(
-            <Element key={i} tagName={tagName} attributes={this.extractAttributes(node)}>
+            <ElementComponent key={i} tagName={tagName} attributes={this.extractAttributes(node)}>
               {this.parseNode(node)}
-            </Element>
+            </ElementComponent>
           );
         }
 

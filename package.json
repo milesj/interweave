@@ -21,10 +21,10 @@
     "watch": "babel --watch ./src -d ./lib",
     "lint": "eslint ./src ./tests",
     "flow": "flow check",
-    "mocha": "mocha --opts ./mocha.opts ./tests/*.test.js",
+    "mocha": "mocha --opts ./mocha.opts ./tests/*.test.js ./tests/**/*.test.js",
     "pretest": "npm run clean && npm run build && npm run lint",
     "test": "npm run mocha",
-    "posttest": "npm run check",
+    "posttest": "npm run flow",
     "preversion": "npm test"
   },
   "repository": {
@@ -63,6 +63,8 @@
     "jsdom": "^9.5.0",
     "mocha": "^3.0.2",
     "react": "^15.3.1",
+    "react-addons-test-utils": "^15.3.1",
+    "react-dom": "^15.3.1",
     "rimraf": "^2.5.4"
   }
 }

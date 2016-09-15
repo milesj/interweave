@@ -4,9 +4,19 @@
  * @flow
  */
 
+/* eslint-disable no-undef */
+
 import React from 'react';
 import Filter from './Filter';
 import Matcher from './Matcher';
+
+export interface NodeInterface {
+  attributes?: NamedNodeMap,
+  childNodes: NodeList<Node>,
+  nodeType: number,
+  nodeName: string,
+  textContent: string,
+}
 
 export type PrimitiveType = string | number | boolean;
 
