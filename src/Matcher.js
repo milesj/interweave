@@ -27,7 +27,7 @@ export default class Matcher {
    * @param {Object} [props]
    * @returns {ReactComponent}
    */
-  createElement(match: string, props: Object = {}): ReactElement {
+  createElement(match: string, props: Object = {}): React.Element<*> {
     let element = null;
 
     if (typeof this.customFactory === 'function') {
@@ -50,7 +50,7 @@ export default class Matcher {
    * @param {Object} [props]
    * @returns {ReactComponent}
    */
-  factory(match: string, props: Object = {}): ReactElement {
+  factory(match: string, props: Object = {}): React.Element<*> {
     throw new Error(`${this.constructor.name} must return a React element.`);
   }
 

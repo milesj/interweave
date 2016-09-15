@@ -39,10 +39,12 @@ type InterweaveProps = {
 };
 
 export default class Interweave extends React.Component {
+  // eslint-disable-next-line react/sort-comp
   props: InterweaveProps;
 
   static propTypes = {
     children: PropTypes.string.isRequired,
+    // eslint-disable-next-line react/no-unused-prop-types
     noHtml: PropTypes.bool,
     onBeforeParse: PropTypes.func,
     onAfterParse: PropTypes.func,

@@ -4,7 +4,7 @@
  * @flow
  */
 
-/* eslint-disable no-cond-assign */
+/* eslint-disable no-cond-assign, no-undef */
 
 import React from 'react';
 import Interweave from './Interweave';
@@ -66,7 +66,7 @@ export default class Parser {
    * @param {String} string
    * @returns {String|String[]}
    */
-  applyMatchers(string: string): string | string[] {
+  applyMatchers(string: string): string | Array<string | React.Element<*>> {
     const components = [];
     const props = this.props;
     let matchedString = string;
@@ -100,17 +100,19 @@ export default class Parser {
 
     while (parts = matchedString.match(/#\{\{(\d+)\}\}#/)) {
       const no = parts[1];
+      // $FlowIssue https://github.com/facebook/flow/issues/2450
+      const index = parts.index;
 
       // Extract the previous string
-      if (lastIndex !== parts.index) {
-        matchedArray.push(matchedString.substring(lastIndex, parts.index));
+      if (lastIndex !== index) {
+        matchedArray.push(matchedString.substring(lastIndex, index));
       }
 
       // Inject the component
       matchedArray.push(components[parseFloat(no)]);
 
       // Set the next index
-      lastIndex = parts.index + parts[0].length;
+      lastIndex = index + parts[0].length;
 
       // Replace the token so it won't be matched again
       // And so that the string length doesn't change
@@ -159,8 +161,9 @@ export default class Parser {
     }
 
     Array.from(element.attributes).forEach((attr) => {
-      let { name, value }: { name: string, value: string } = attr;
-      const filter = ATTRIBUTES[name];
+      let name: string = attr.name;
+      const value: string = attr.value;
+      const filter: number = ATTRIBUTES[name];
 
       name = name.toLowerCase();
 

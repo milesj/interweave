@@ -9,13 +9,13 @@ import Matcher from '../Matcher';
 import Link from '../components/Link';
 import { URL_PATTERN } from '../constants';
 
-import type { MatchResponse } from '../types';
+import type { MatchResponse, LinkProps } from '../types';
 
 export default class UrlMatcher extends Matcher {
   /**
    * {@inheritDoc}
    */
-  factory(match: string, props: Object = {}): ReactElement {
+  factory(match: string, props: Object = {}): React.Element<LinkProps> {
     let url = match;
 
     if (!url.match(/^https?:\/\//)) {

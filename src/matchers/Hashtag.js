@@ -9,13 +9,13 @@ import Matcher from '../Matcher';
 import Link from '../components/Link';
 import { HASHTAG_PATTERN } from '../constants';
 
-import type { MatchResponse } from '../types';
+import type { MatchResponse, LinkProps } from '../types';
 
 export default class HashtagMatcher extends Matcher {
   /**
    * {@inheritDoc}
    */
-  factory(match: string, props: Object = {}): ReactElement {
+  factory(match: string, props: Object = {}): React.Element<LinkProps> {
     return (
       <Link href={match} {...props}>
         {match}

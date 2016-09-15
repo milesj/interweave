@@ -4,6 +4,7 @@
  * @flow
  */
 
+import React from 'react';
 import Filter from './Filter';
 import Matcher from './Matcher';
 
@@ -25,11 +26,24 @@ export type MatcherStructure = {
 
 export type MatcherList = MatcherStructure[];
 
-export type MatcherFactory = (match: string, props: Object) => ReactElement;
+export type MatcherFactory = (match: string, props: Object) => React.Element<*>;
 
 export type MatchResponse = {
   match: string,
   [key: string]: any
 };
 
-export type ParsedNodes = Array<string | ReactElement>;
+export type ParsedNodes = Array<string | React.Element<*>>;
+
+export type LinkProps = {
+  children?: any,
+  href: string,
+  onClick?: () => void,
+  newWindow?: boolean,
+};
+
+export type ElementProps = {
+  attributes?: Attributes,
+  children?: any,
+  tagName: string,
+};

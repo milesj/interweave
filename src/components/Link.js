@@ -6,12 +6,7 @@
 
 import React, { PropTypes } from 'react';
 
-type LinkProps = {
-  children: any,
-  href: string,
-  onClick: () => void,
-  newWindow: boolean,
-};
+import type { LinkProps } from '../types';
 
 export default function Link(props: LinkProps) {
   const { children, href, onClick, newWindow = false } = props;

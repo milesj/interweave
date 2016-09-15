@@ -6,13 +6,7 @@
 
 import React, { PropTypes } from 'react';
 
-import type { Attributes } from '../types';
-
-type ElementProps = {
-  attributes: ?Attributes,
-  children: any,
-  tagName: string,
-};
+import type { ElementProps } from '../types';
 
 export default function Element(props: ElementProps) {
   const { attributes = {}, children, tagName: Tag } = props;
