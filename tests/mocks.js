@@ -69,6 +69,14 @@ export class CodeTagMatcher extends Matcher {
   }
 }
 
+export class MockMatcher extends Matcher {
+  constructor(key) {
+    super();
+
+    this.key = key;
+  }
+}
+
 export class HrefFilter extends Filter {
   filter(value) {
     return value.replace('foo.com', 'bar.net');

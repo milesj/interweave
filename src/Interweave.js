@@ -4,6 +4,8 @@
  * @flow
  */
 
+/* eslint-disable react/no-unused-prop-types */
+
 import React, { PropTypes } from 'react';
 import Filter from './Filter';
 import Matcher from './Matcher';
@@ -20,8 +22,8 @@ import type {
 } from './types';
 
 const DEFAULT_PRIORITY: number = 100;
-const filters: { [key: string]: FilterList } = {};
-const matchers: MatcherList = [];
+let filters: { [key: string]: FilterList } = {};
+let matchers: MatcherList = [];
 
 function prioritySort(
   a: MatcherStructure | FilterStructure,
@@ -32,9 +34,11 @@ function prioritySort(
 
 type InterweaveProps = {
   children: string,
+  filters: FilterList,
+  matchers: MatcherList,
   noHtml: boolean,
-  onBeforeParse: () => void,
-  onAfterParse: () => void,
+  onBeforeParse: (content: string) => string,
+  onAfterParse: (content: ParsedNodes) => ParsedNodes,
   tagName: string,
 };
 
@@ -44,14 +48,17 @@ export default class Interweave extends React.Component {
 
   static propTypes = {
     children: PropTypes.string.isRequired,
-    // eslint-disable-next-line react/no-unused-prop-types
+    filters: PropTypes.arrayOf(PropTypes.instanceOf(Filter)),
+    matchers: PropTypes.arrayOf(PropTypes.instanceOf(Matcher)),
     noHtml: PropTypes.bool,
     onBeforeParse: PropTypes.func,
     onAfterParse: PropTypes.func,
-    tagName: PropTypes.oneOf(['span', 'div', 'p']).isRequired,
+    tagName: PropTypes.oneOf(['span', 'div', 'p']),
   };
 
   static defaultProps = {
+    filters: [],
+    matchers: [],
     tagName: 'span',
   };
 
@@ -64,7 +71,7 @@ export default class Interweave extends React.Component {
    */
   static addFilter(attr: string, filter: Filter, priority: number = 0) {
     if (!(filter instanceof Filter)) {
-      throw new Error('Filter must be an instance of the `Filter` class.');
+      throw new TypeError('Filter must be an instance of the `Filter` class.');
 
     } else if (!ATTRIBUTES[attr]) {
       throw new Error(`Attribute "${attr}" is not supported.`);
@@ -92,9 +99,9 @@ export default class Interweave extends React.Component {
    */
   static addMatcher(name: string, matcher: Matcher, priority: number = 0) {
     if (!(matcher instanceof Matcher)) {
-      throw new Error('Matcher must be an instance of the `Matcher` class.');
+      throw new TypeError('Matcher must be an instance of the `Matcher` class.');
 
-    } else if (name === 'html') {
+    } else if (name.toLowerCase() === 'html') {
       throw new Error(`The matcher name "${name}" is not allowed.`);
     }
 
@@ -115,6 +122,20 @@ export default class Interweave extends React.Component {
     });
 
     matchers.sort(prioritySort);
+  }
+
+  /**
+   * Reset all global filters.
+   */
+  static clearFilters() {
+    filters = {};
+  }
+
+  /**
+   * Reset all global matchers.
+   */
+  static clearMatchers() {
+    matchers = [];
   }
 
   /**
@@ -147,7 +168,7 @@ export default class Interweave extends React.Component {
       content = onBeforeParse(content);
 
       if (typeof content !== 'string') {
-        throw new Error('`onBeforeParse` must return a valid HTML string.');
+        throw new TypeError('Interweave `onBeforeParse` must return a valid HTML string.');
       }
     }
 
@@ -157,7 +178,7 @@ export default class Interweave extends React.Component {
       content = onAfterParse(content);
 
       if (!Array.isArray(content)) {
-        throw new Error('`onAfterParse` must return an array of strings and React elements.');
+        throw new TypeError('Interweave `onAfterParse` must return an array of strings and React elements.');
       }
     }
 

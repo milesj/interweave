@@ -22,14 +22,19 @@ function createChild(tag, text) {
   return child;
 }
 
-Interweave.addFilter('href', new HrefFilter());
-Interweave.addMatcher('foo', new CodeTagMatcher('foo'));
-Interweave.addMatcher('bar', new CodeTagMatcher('bar'));
-Interweave.addMatcher('baz', new CodeTagMatcher('baz'));
-
 describe('Parser', () => {
   let instance = new Parser('');
   let element;
+
+  beforeEach(() => {
+    Interweave.clearFilters();
+    Interweave.clearMatchers();
+
+    Interweave.addFilter('href', new HrefFilter());
+    Interweave.addMatcher('foo', new CodeTagMatcher('foo'));
+    Interweave.addMatcher('bar', new CodeTagMatcher('bar'));
+    Interweave.addMatcher('baz', new CodeTagMatcher('baz'));
+  });
 
   describe('applyFilters()', () => {
     it('applies filters for the attribute name', () => {
