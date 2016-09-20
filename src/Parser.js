@@ -19,20 +19,42 @@ import {
   ATTRIBUTES_TO_REACT,
 } from './constants';
 
-import type { Attributes, PrimitiveType, ParsedNodes, NodeInterface } from './types';
+import type {
+  Attributes,
+  PrimitiveType,
+  ParsedNodes,
+  NodeInterface,
+  MatcherList,
+  FilterList,
+} from './types';
 
 const ELEMENT_NODE: number = 1;
 const TEXT_NODE: number = 3;
 
 export default class Parser {
+  doc: Document;
   content: ParsedNodes;
   props: Object;
-  doc: Document;
+  matchers: MatcherList;
+  filters: FilterList;
 
-  constructor(markup: string, props: Object = {}) {
+  constructor(
+    markup: string,
+    props: Object = {},
+    matchers: MatcherList = [],
+    filters: FilterList = []
+  ) {
+    this.doc = this.createDocument(markup);
     this.content = [];
     this.props = props;
-    this.doc = this.createDocument(markup);
+    this.matchers = [
+      ...Interweave.getMatchers().map(row => row.matcher),
+      ...matchers,
+    ];
+    this.filters = [
+      ...Interweave.getFilters().map(row => row.filter),
+      ...filters,
+    ];
   }
 
   /**
@@ -44,18 +66,9 @@ export default class Parser {
    * @returns {String}
    */
   applyFilters(attribute: string, value: string): string {
-    const filters = Interweave.getFilters(attribute);
-    let newValue = value;
-
-    if (!filters.length) {
-      return newValue;
-    }
-
-    filters.forEach(({ filter }) => {
-      newValue = filter.filter(newValue);
-    });
-
-    return newValue;
+    return this.filters.reduce((newValue, filter) => (
+      (filter.attribute === attribute) ? filter.filter(newValue) : newValue
+    ), value);
   }
 
   /**
@@ -72,7 +85,7 @@ export default class Parser {
     let matchedString = string;
     let parts = {};
 
-    Interweave.getMatchers().forEach(({ matcher }) => {
+    this.matchers.forEach((matcher) => {
       // Skip matchers that have been disabled from props
       if (props[matcher.inverseName]) {
         return;

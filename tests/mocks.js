@@ -78,7 +78,17 @@ export class MockMatcher extends Matcher {
 }
 
 export class HrefFilter extends Filter {
+  constructor() {
+    super('href');
+  }
+
   filter(value) {
     return value.replace('foo.com', 'bar.net');
+  }
+}
+
+export class MockFilter extends Filter {
+  filter(value) {
+    return value;
   }
 }

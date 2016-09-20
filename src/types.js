@@ -46,8 +46,8 @@ export type MatchResponse = {
 export type ParsedNodes = Array<string | React.Element<*>>;
 
 export type LinkProps = {
-  children?: any,
   href: string,
+  children?: any,
   onClick?: () => void,
   newWindow?: boolean,
 };

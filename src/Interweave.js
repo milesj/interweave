@@ -11,7 +11,6 @@ import Filter from './Filter';
 import Matcher from './Matcher';
 import Parser from './Parser';
 import Element from './components/Element';
-import { ATTRIBUTES } from './constants';
 
 import type {
   FilterStructure,
@@ -22,8 +21,8 @@ import type {
 } from './types';
 
 const DEFAULT_PRIORITY: number = 100;
-let filters: { [key: string]: FilterList } = {};
-let matchers: MatcherList = [];
+let globalFilters: FilterList = [];
+let globalMatchers: MatcherList = [];
 
 function prioritySort(
   a: MatcherStructure | FilterStructure,
@@ -65,29 +64,21 @@ export default class Interweave extends React.Component {
   /**
    * Add a filter class that will be used to cleanse HTML attributes.
    *
-   * @param {String} attr
    * @param {Filter} filter
    * @param {Number} [priority]
    */
-  static addFilter(attr: string, filter: Filter, priority: number = 0) {
+  static addFilter(filter: Filter, priority: number = 0) {
     if (!(filter instanceof Filter)) {
       throw new TypeError('Filter must be an instance of the `Filter` class.');
-
-    } else if (!ATTRIBUTES[attr]) {
-      throw new Error(`Attribute "${attr}" is not supported.`);
-    }
-
-    if (!filters[attr]) {
-      filters[attr] = [];
     }
 
     // Apply and sort filters
-    filters[attr].push({
+    globalFilters.push({
       filter,
-      priority: priority || (DEFAULT_PRIORITY + filters[attr].length),
+      priority: priority || (DEFAULT_PRIORITY + globalFilters.length),
     });
 
-    filters[attr].sort(prioritySort);
+    globalFilters.sort(prioritySort);
   }
 
   /**
@@ -116,36 +107,35 @@ export default class Interweave extends React.Component {
     matcher.inverseName = inverseName;
 
     // Append and sort matchers
-    matchers.push({
+    globalMatchers.push({
       matcher,
-      priority: priority || (DEFAULT_PRIORITY + matchers.length),
+      priority: priority || (DEFAULT_PRIORITY + globalMatchers.length),
     });
 
-    matchers.sort(prioritySort);
+    globalMatchers.sort(prioritySort);
   }
 
   /**
    * Reset all global filters.
    */
   static clearFilters() {
-    filters = {};
+    globalFilters = [];
   }
 
   /**
    * Reset all global matchers.
    */
   static clearMatchers() {
-    matchers = [];
+    globalMatchers = [];
   }
 
   /**
    * Return all defined filters for an attribute.
    *
-   * @param {String} attr
    * @returns {{ filter: Filter }[]}
    */
-  static getFilters(attr: string): FilterList {
-    return filters[attr] || [];
+  static getFilters(): FilterList {
+    return globalFilters;
   }
 
   /**
@@ -154,14 +144,14 @@ export default class Interweave extends React.Component {
    * @returns {{ matcher: Matcher }[]}
    */
   static getMatchers(): MatcherList {
-    return matchers;
+    return globalMatchers;
   }
 
   /**
    * Parse the markup and apply hooks.
    */
   parseMarkup(): ParsedNodes {
-    const { children, onBeforeParse, onAfterParse, ...props } = this.props;
+    const { children, onBeforeParse, onAfterParse, matchers, filters, ...props } = this.props;
     let content = children;
 
     if (onBeforeParse) {
@@ -172,7 +162,7 @@ export default class Interweave extends React.Component {
       }
     }
 
-    content = new Parser(content, props).parse();
+    content = new Parser(content, props, matchers, filters).parse();
 
     if (onAfterParse) {
       content = onAfterParse(content);

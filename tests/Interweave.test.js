@@ -3,7 +3,7 @@ import { expect } from 'chai';
 import { shallow } from 'enzyme';
 import Interweave from '../lib/Interweave';
 import Element from '../lib/components/Element';
-import { HrefFilter, MockMatcher } from './mocks';
+import { MockFilter, MockMatcher, HrefFilter } from './mocks';
 
 describe('Interweave', () => {
   beforeEach(() => {
@@ -11,36 +11,52 @@ describe('Interweave', () => {
     Interweave.clearMatchers();
   });
 
+  it('can pass filters through props', () => {
+    const wrapper = shallow(
+      <Interweave
+        filters={[new HrefFilter()]}
+      >
+        {'Foo <a href="foo.com">Bar</a> Baz'}
+      </Interweave>
+    ).shallow();
+
+    expect(wrapper.prop('children')).to.deep.equal([
+      'Foo ',
+      <Element tagName="a" key="1" attributes={{ href: 'bar.net' }}>{['Bar']}</Element>,
+      ' Baz',
+    ]);
+  });
+
   describe('addFilter()', () => {
     it('errors if not a filter', () => {
       expect(() => {
-        Interweave.addFilter('href', 'notafilter');
+        Interweave.addFilter('notafilter');
       }).to.throw(TypeError, 'Filter must be an instance of the `Filter` class.');
     });
 
     it('errors if not a supported attribute', () => {
       expect(() => {
-        Interweave.addFilter('onclick', new HrefFilter());
+        Interweave.addFilter(new MockFilter('onclick'));
       }).to.throw(Error, 'Attribute "onclick" is not supported.');
     });
 
     it('adds a filter with a priority', () => {
-      Interweave.addFilter('href', new HrefFilter(), 5);
+      Interweave.addFilter(new MockFilter('href'), 5);
 
-      expect(Interweave.getFilters('href')).to.deep.equal([
-        { filter: new HrefFilter(), priority: 5 },
+      expect(Interweave.getFilters()).to.deep.equal([
+        { filter: new MockFilter('href'), priority: 5 },
       ]);
     });
 
     it('adds a filter with an incrementing priority and sorts', () => {
-      Interweave.addFilter('href', new HrefFilter());
-      Interweave.addFilter('href', new HrefFilter(), 10);
-      Interweave.addFilter('href', new HrefFilter());
+      Interweave.addFilter(new MockFilter('href'));
+      Interweave.addFilter(new MockFilter('href'), 10);
+      Interweave.addFilter(new MockFilter('href'));
 
-      expect(Interweave.getFilters('href')).to.deep.equal([
-        { filter: new HrefFilter(), priority: 10 },
-        { filter: new HrefFilter(), priority: 100 },
-        { filter: new HrefFilter(), priority: 102 },
+      expect(Interweave.getFilters()).to.deep.equal([
+        { filter: new MockFilter('href'), priority: 10 },
+        { filter: new MockFilter('href'), priority: 100 },
+        { filter: new MockFilter('href'), priority: 102 },
       ]);
     });
   });
