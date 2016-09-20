@@ -31,9 +31,9 @@ describe('Parser', () => {
     Interweave.clearMatchers();
 
     Interweave.addFilter(new HrefFilter());
-    Interweave.addMatcher('foo', new CodeTagMatcher('foo'));
-    Interweave.addMatcher('bar', new CodeTagMatcher('bar'));
-    Interweave.addMatcher('baz', new CodeTagMatcher('baz'));
+    Interweave.addMatcher(new CodeTagMatcher('foo'));
+    Interweave.addMatcher(new CodeTagMatcher('bar'));
+    Interweave.addMatcher(new CodeTagMatcher('baz'));
 
     instance = new Parser('');
   });

@@ -3,7 +3,7 @@ import { expect } from 'chai';
 import { shallow } from 'enzyme';
 import Interweave from '../lib/Interweave';
 import Element from '../lib/components/Element';
-import { MockFilter, MockMatcher, HrefFilter } from './mocks';
+import { MockFilter, MockMatcher, HrefFilter, CodeTagMatcher } from './mocks';
 
 describe('Interweave', () => {
   beforeEach(() => {
@@ -24,6 +24,22 @@ describe('Interweave', () => {
       'Foo ',
       <Element tagName="a" key="1" attributes={{ href: 'bar.net' }}>{['Bar']}</Element>,
       ' Baz',
+    ]);
+  });
+
+  it('can pass matchers through props', () => {
+    const wrapper = shallow(
+      <Interweave
+        matchers={[new CodeTagMatcher('b', '1')]}
+      >
+        {'Foo [b] Bar Baz'}
+      </Interweave>
+    ).shallow();
+
+    expect(wrapper.prop('children')).to.deep.equal([
+      'Foo ',
+      <Element tagName="b" key="1" customProp="foo">B</Element>,
+      ' Bar Baz',
     ]);
   });
 
@@ -64,56 +80,32 @@ describe('Interweave', () => {
   describe('addMatcher()', () => {
     it('errors if not a matcher', () => {
       expect(() => {
-        Interweave.addMatcher('foo', 'notamatcher');
+        Interweave.addMatcher('notamatcher');
       }).to.throw(TypeError, 'Matcher must be an instance of the `Matcher` class.');
     });
 
     it('errors if using the html name', () => {
       expect(() => {
-        Interweave.addMatcher('html', new MockMatcher('html'));
+        Interweave.addMatcher(new MockMatcher('html'));
       }).to.throw(Error, 'The matcher name "html" is not allowed.');
     });
 
-    it('adds a matcher and sets names', () => {
-      const matcher = new MockMatcher('emoji');
-      matcher.propName = 'emoji';
-      matcher.inverseName = 'noEmoji';
-
-      Interweave.addMatcher('emoji', matcher, 100);
-
-      expect(Interweave.getMatchers()).to.deep.equal([
-        { matcher, priority: 100 },
-      ]);
-    });
-
     it('adds a matcher with an incrementing priority and sorts', () => {
-      const emoji = new MockMatcher('emoji');
-      emoji.propName = 'emoji';
-      emoji.inverseName = 'noEmoji';
-
-      const email = new MockMatcher('email');
-      email.propName = 'email';
-      email.inverseName = 'noEmail';
-
-      const url = new MockMatcher('url');
-      url.propName = 'url';
-      url.inverseName = 'noUrl';
-
-      Interweave.addMatcher('emoji', emoji);
-      Interweave.addMatcher('email', email, 10);
-      Interweave.addMatcher('url', url);
+      Interweave.addMatcher(new MockMatcher('emoji'));
+      Interweave.addMatcher(new MockMatcher('email'), 10);
+      Interweave.addMatcher(new MockMatcher('url'));
 
       expect(Interweave.getMatchers()).to.deep.equal([
-        { matcher: email, priority: 10 },
-        { matcher: emoji, priority: 100 },
-        { matcher: url, priority: 102 },
+        { matcher: new MockMatcher('email'), priority: 10 },
+        { matcher: new MockMatcher('emoji'), priority: 100 },
+        { matcher: new MockMatcher('url'), priority: 102 },
       ]);
     });
 
     it('sets an inverse named prop types', () => {
       expect(Interweave.propTypes.noBazQux).to.be.an('undefined');
 
-      Interweave.addMatcher('bazQux', new MockMatcher('bazQux'));
+      Interweave.addMatcher(new MockMatcher('bazQux'));
 
       expect(Interweave.propTypes.noBazQux).to.be.a('function');
     });

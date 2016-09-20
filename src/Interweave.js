@@ -84,27 +84,16 @@ export default class Interweave extends React.Component {
   /**
    * Add a matcher class that will be used to match and replace tokens with components.
    *
-   * @param {String} name
    * @param {Matcher} matcher
    * @param {Number} [priority]
    */
-  static addMatcher(name: string, matcher: Matcher, priority: number = 0) {
+  static addMatcher(matcher: Matcher, priority: number = 0) {
     if (!(matcher instanceof Matcher)) {
       throw new TypeError('Matcher must be an instance of the `Matcher` class.');
-
-    } else if (name.toLowerCase() === 'html') {
-      throw new Error(`The matcher name "${name}" is not allowed.`);
     }
 
     // Add a prop type so we can disable per instance
-    const capName = name.charAt(0).toUpperCase() + name.substr(1);
-    const inverseName = `no${capName}`;
-
-    Interweave.propTypes[inverseName] = PropTypes.bool;
-
-    // Persist the names
-    matcher.propName = name;
-    matcher.inverseName = inverseName;
+    Interweave.propTypes[matcher.inverseName] = PropTypes.bool;
 
     // Append and sort matchers
     globalMatchers.push({

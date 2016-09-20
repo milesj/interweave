@@ -37,17 +37,18 @@ export const MOCK_MARKUP = `<!DOCTYPE>
 </html>`;
 
 export class CodeTagMatcher extends Matcher {
-  constructor(tag) {
-    super();
+  constructor(tag, key = null) {
+    super(tag);
 
     this.tag = tag;
+    this.key = key;
   }
 
   factory(match, props = {}) {
     const { children } = props;
 
     return (
-      <Element tagName={children} {...props}>
+      <Element tagName={children} key={this.key} {...props}>
         {children.toUpperCase()}
       </Element>
     );
@@ -71,7 +72,7 @@ export class CodeTagMatcher extends Matcher {
 
 export class MockMatcher extends Matcher {
   constructor(key) {
-    super();
+    super(key);
 
     this.key = key;
   }

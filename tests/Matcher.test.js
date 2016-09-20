@@ -5,17 +5,28 @@ import Element from '../lib/components/Element';
 import { CodeTagMatcher } from './mocks';
 
 describe('Matcher', () => {
-  const matcher = new CodeTagMatcher('foo');
+  const matcher = new CodeTagMatcher('foo', '1');
+
+  it('errors for html name', () => {
+    expect(() => { new Matcher('html').match(); }).to.throw(Error);
+  });
+
+  it('sets names', () => {
+    const nameMatcher = new Matcher('barBaz');
+
+    expect(nameMatcher.propName).to.equal('barBaz');
+    expect(nameMatcher.inverseName).to.equal('noBarBaz');
+  });
 
   describe('createElement()', () => {
     it('returns a React element from factory', () => {
       expect(matcher.factory('[foo]', { children: 'foo' })).to.deep.equal(
-        <Element tagName="foo">FOO</Element>
+        <Element tagName="foo" key="1">FOO</Element>
       );
     });
 
     it('returns a React element from custom factory', () => {
-      const customMatcher = new Matcher((match, p) => (
+      const customMatcher = new Matcher('foo', (match, p) => (
         <Element tagName={p.tagName}>{match}</Element>
       ));
 
@@ -25,7 +36,7 @@ describe('Matcher', () => {
     });
 
     it('errors if not a React element', () => {
-      const customMatcher = new Matcher(() => 123);
+      const customMatcher = new Matcher('foo', () => 123);
 
       expect(() => { customMatcher.createElement(); }).to.throw(Error);
     });
@@ -38,7 +49,7 @@ describe('Matcher', () => {
 
     it('returns a React element', () => {
       expect(matcher.factory('[foo]', { children: 'foo' })).to.deep.equal(
-        <Element tagName="foo">FOO</Element>
+        <Element tagName="foo" key="1">FOO</Element>
       );
     });
   });

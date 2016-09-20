@@ -13,9 +13,13 @@ export default class Matcher {
   inverseName: string;
   customFactory: ?MatcherFactory;
 
-  constructor(factory: ?MatcherFactory = null) {
-    this.propName = '';
-    this.inverseName = '';
+  constructor(name: string, factory: ?MatcherFactory = null) {
+    if (!name || name.toLowerCase() === 'html') {
+      throw new Error(`The matcher name "${name}" is not allowed.`);
+    }
+
+    this.propName = name;
+    this.inverseName = `no${name.charAt(0).toUpperCase() + name.substr(1)}`;
     this.customFactory = factory;
   }
 
