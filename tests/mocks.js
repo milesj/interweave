@@ -47,8 +47,12 @@ export class CodeTagMatcher extends Matcher {
   factory(match, props = {}) {
     const { children } = props;
 
+    if (this.key) {
+      props.key = this.key;
+    }
+
     return (
-      <Element tagName={children} key={this.key} {...props}>
+      <Element tagName={children} {...props}>
         {children.toUpperCase()}
       </Element>
     );

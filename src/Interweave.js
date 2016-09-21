@@ -33,8 +33,8 @@ function prioritySort(
 
 type InterweaveProps = {
   children: string,
-  filters: FilterList,
-  matchers: MatcherList,
+  filters: Filter[],
+  matchers: Matcher[],
   noHtml: boolean,
   onBeforeParse: (content: string) => string,
   onAfterParse: (content: ParsedNodes) => ParsedNodes,

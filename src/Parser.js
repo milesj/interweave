@@ -8,6 +8,8 @@
 
 import React from 'react';
 import Interweave from './Interweave';
+import Matcher from './Matcher';
+import Filter from './Filter';
 import ElementComponent from './components/Element';
 import {
   FILTER_DENY,
@@ -24,8 +26,6 @@ import type {
   PrimitiveType,
   ParsedNodes,
   NodeInterface,
-  MatcherList,
-  FilterList,
 } from './types';
 
 const ELEMENT_NODE: number = 1;
@@ -35,14 +35,14 @@ export default class Parser {
   doc: Document;
   content: ParsedNodes;
   props: Object;
-  matchers: MatcherList;
-  filters: FilterList;
+  matchers: Matcher[];
+  filters: Filter[];
 
   constructor(
     markup: string,
     props: Object = {},
-    matchers: MatcherList = [],
-    filters: FilterList = []
+    matchers: Matcher[] = [],
+    filters: Filter[] = []
   ) {
     this.doc = this.createDocument(markup);
     this.content = [];

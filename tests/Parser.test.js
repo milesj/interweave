@@ -50,7 +50,7 @@ describe('Parser', () => {
     const createBar = () => <Element tagName="bar" customProp="foo">BAR</Element>;
     const createBaz = () => <Element tagName="baz" customProp="foo">BAZ</Element>;
 
-    it('handles matchers correctly', () => {
+    describe('handles matchers correctly', () => {
       const expected = [
         'no tokens',
         [createFoo()],
@@ -79,7 +79,7 @@ describe('Parser', () => {
       });
     });
 
-    it('handles multiple matchers correctly', () => {
+    describe('handles multiple matchers correctly', () => {
       const expected = [
         'no tokens',
         [createBaz()],
@@ -111,7 +111,7 @@ describe('Parser', () => {
       });
     });
 
-    it('handles no matchers correctly', () => {
+    describe('handles no matchers correctly', () => {
       const expected = [
         'no tokens',
         '[qux]',
@@ -136,19 +136,19 @@ describe('Parser', () => {
       });
     });
 
-    it('ignores matcher if the inverse prop is enabled', () => {
-      instance.props.noFoo = true;
-
+    describe('ignores matcher if the inverse prop is enabled', () => {
       TOKEN_LOCATIONS.forEach((location, i) => {
         it(`for: ${location}`, () => {
+          instance.props.noFoo = true;
+
           const tokenString = location.replace(/\{token\}/g, '[foo]');
           const actual = instance.applyMatchers(tokenString);
 
-          expect(actual).to.equal(TOKEN_LOCATIONS[i]);
+          expect(actual).to.equal(tokenString);
+
+          instance.props = {};
         });
       });
-
-      instance.props = {};
     });
   });
 

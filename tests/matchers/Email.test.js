@@ -1,8 +1,8 @@
 import { expect } from 'chai';
-import Parser from '../../lib/Parser';
+// import Parser from '../../lib/Parser';
 import EmailMatcher from '../../lib/matchers/Email';
-import { EMAIL_PATTERN } from '../../lib/constants';
-import { TOKEN_LOCATIONS } from '../mocks';
+// import { EMAIL_PATTERN } from '../../lib/constants';
+// import { TOKEN_LOCATIONS } from '../mocks';
 
 const VALID_EMAILS = [
   'user@domain.com',
@@ -57,13 +57,13 @@ const INVALID_EMAILS = [
   'email@111.222.333.44444',
   'email@example..com',
   'Abc..123@example.com',
-  '"(),:;<>[\]@example.com',
-  'this\ is\"really\"not\\\\allowed@example.com'
+  '"(),:;<>[]@example.com',
+  'this is"really"not\\\\allowed@example.com',
 ];
 
 describe('matchers/Email', () => {
   const matcher = new EmailMatcher('email');
-  const pattern = new RegExp(EMAIL_PATTERN);
+  // const pattern = new RegExp(EMAIL_PATTERN);
 
   /*
   describe('does match valid email:', () => {
