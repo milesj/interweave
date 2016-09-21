@@ -1,0 +1,9 @@
+./src
+./tests
+./.babelrc
+./.eslintignore
+./.eslintrc
+./.flowconfig
+./.gitignore
+./.travis.yml
+./mocha.opts
