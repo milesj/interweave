@@ -20,7 +20,7 @@ export default class EmailMatcher extends Matcher {
     const mailTo = this.obfuscate('mailto');
 
     return (
-      <Link href={`${mailTo}:${email}`} {...props}>
+      <Link href={`${mailTo}:${email}`}>
         {email}
       </Link>
     );
