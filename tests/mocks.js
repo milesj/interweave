@@ -14,7 +14,7 @@ export const TOKEN_LOCATIONS = [
   '{token} pattern on {token} all sides {token}',
   'pattern {token} used {token} multiple {token} times',
   'tokens next {token} {token} {token} to each other',
-  'tokens without {token}{token}{token} spaces',
+  // 'tokens without {token}{token}{token} spaces',
 ];
 
 export const MOCK_MARKUP = `<!DOCTYPE>

@@ -1,8 +1,8 @@
 import { expect } from 'chai';
-// import Parser from '../../lib/Parser';
+import Parser from '../../lib/Parser';
 import EmailMatcher from '../../lib/matchers/Email';
-// import { EMAIL_PATTERN } from '../../lib/constants';
-// import { TOKEN_LOCATIONS } from '../mocks';
+import { EMAIL_PATTERN } from '../../lib/constants';
+import { TOKEN_LOCATIONS } from '../mocks';
 
 const VALID_EMAILS = [
   'user@domain.com',
@@ -15,31 +15,24 @@ const VALID_EMAILS = [
   'user@domain.superlongtld',
   'user@www.domain.net',
   'user@domain-name.com',
-  'user@domain123.com',
+  'USER@DOMAIN123.com',
   'username@sub.domain123.whattldisthis',
   'user~with$special&chars@domain.com',
   'user#with?more|chars@domain.com',
   'email@example.com',
   'firstname.lastname@example.com',
   'email@subdomain.example.com',
+  'email@sub-domain.example.com',
   'first.name+lastname@example.com',
-  'an"email"here@example.com',
   '1234567890@example.com',
   'email@example-one.com',
-  '_______@example.com',
   'email@example.name',
   'email@example.museum',
   'email@example.co.jp',
   'firstname-lastname@example.com',
-
-  // These are valid emails but I do not want to support them.
-  // 'email@123.123.123.123',
-  // 'email@[123.123.123.123]',
-  // 'much."more\ unusual"@example.com',
-  // 'very.unusual."@".unusual.com@example.com',
-  // 'very."(),:;<>[]".VERY."very@\\\\\\ \"very".unusual@strange.example.com',
 ];
 
+// Some of these are valid emails but I do not want to support them.
 const INVALID_EMAILS = [
   'plainaddress',
   '#@%^%#$@#$@#.com',
@@ -53,19 +46,22 @@ const INVALID_EMAILS = [
   'email@example.com (Joe Smith)',
   'email@example',
   'email@-example.com',
-  'email@example.web',
   'email@111.222.333.44444',
   'email@example..com',
   'Abc..123@example.com',
   '"(),:;<>[]@example.com',
   'this is"really"not\\\\allowed@example.com',
+  'an"email"here@example.com',
+  '_______@example.com',
+  'much."more unusual"@example.com',
+  'very.unusual."@".unusual.com@example.com',
+  'very."(),:;<>[]".VERY."very@\\\\\\ "very".unusual@strange.example.com',
 ];
 
 describe('matchers/Email', () => {
   const matcher = new EmailMatcher('email');
-  // const pattern = new RegExp(EMAIL_PATTERN);
+  const pattern = new RegExp(`^${EMAIL_PATTERN}$`, 'i');
 
-  /*
   describe('does match valid email:', () => {
     VALID_EMAILS.forEach((email) => {
       it(email, () => {
@@ -124,20 +120,17 @@ describe('matchers/Email', () => {
       });
     });
   });
-  */
 
   describe('match()', () => {
     it('returns null for invalid match', () => {
-      expect(matcher.match(INVALID_EMAILS[0])).to.equal(null);
+      expect(matcher.match('notanemail')).to.equal(null);
     });
 
     it('returns object for valid match', () => {
-      const parts = VALID_EMAILS[0].split('@');
-
-      expect(matcher.match(VALID_EMAILS[0])).to.deep.equal({
-        match: VALID_EMAILS[0],
-        username: parts[0],
-        domain: parts[1],
+      expect(matcher.match('user@domain.com')).to.deep.equal({
+        match: 'user@domain.com',
+        username: 'user',
+        domain: 'domain.com',
       });
     });
   });
