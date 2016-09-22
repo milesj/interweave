@@ -9,7 +9,7 @@
 type FilterMap = { [key: string]: number };
 
 export const ALNUM_CHAR: string = '[a-z0-9]{1}';
-export const HASHTAG_PATTERN: string = '#([a-z0-9-_]+)';
+export const HASHTAG_PATTERN: string = '#([-a-z0-9_]+)';
 
 // https://blog.codinghorror.com/the-problem-with-urls/
 export const URL_CHAR_PART: string = 'a-z0-9-._~%!$&\'()*+,;:@';
