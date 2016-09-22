@@ -6,26 +6,18 @@
 
 import React from 'react';
 import Matcher from '../Matcher';
-import Link from '../components/Link';
+import Url from '../components/Url';
 import { URL_PATTERN } from '../constants';
 
-import type { MatchResponse, LinkProps } from '../types';
+import type { MatchResponse, UrlProps } from '../types';
 
 export default class UrlMatcher extends Matcher {
   /**
    * {@inheritDoc}
    */
-  factory(match: string, props: Object = {}): React.Element<LinkProps> {
-    let url = match;
-
-    if (!url.match(/^https?:\/\//)) {
-      url = `http://${url}`;
-    }
-
+  factory(match: string, props: Object = {}): React.Element<UrlProps> {
     return (
-      <Link href={url} {...props}>
-        {url}
-      </Link>
+      <Url {...props}>{match}</Url>
     );
   }
 
@@ -41,6 +33,13 @@ export default class UrlMatcher extends Matcher {
 
     return {
       match: matches[0],
+      scheme: matches[1] ? matches[1].replace('://', '') : '',
+      auth: matches[2] ? matches[2].substr(0, matches[2].length - 1) : '',
+      host: matches[3],
+      port: matches[4] ? matches[4].substr(1) : '',
+      path: matches[5] || '',
+      query: matches[6] || '',
+      fragment: matches[7] || '',
     };
   }
 }

@@ -14,17 +14,26 @@ export const HASHTAG_PATTERN: string = '#([-a-z0-9_]+)';
 // https://blog.codinghorror.com/the-problem-with-urls/
 export const URL_CHAR_PART: string = 'a-z0-9-._~%!$&\'()*+,;:@';
 export const URL_SCHEME_PATTERN: string = '(https?://)?';
-export const URL_TLD_PATTERN: string = '\\.[a-z]{2,63}';
-export const URL_DOMAIN_PATTERN: string = `((?:www\\.)?${ALNUM_CHAR}[-a-z0-9.]*[-a-z0-9]+${URL_TLD_PATTERN})`;
+export const URL_AUTH_PATTERN: string = `([${URL_CHAR_PART}]+@)?`;
+export const URL_PORT_PATTERN: string = '(:[0-9]+)?';
+export const URL_HOST_PATTERN: string = `((?:www\\.)?${ALNUM_CHAR}[-a-z0-9.]*[-a-z0-9]+(?:\\.[a-z]{2,63})?)`;
 export const URL_PATH_PATTERN: string = `(/[${URL_CHAR_PART}/]*)?`;
-export const URL_QUERY_PATTERN: string = `(\?[${URL_CHAR_PART}=\[\]]*)?`;
+export const URL_QUERY_PATTERN: string = `(\\?[${URL_CHAR_PART}=\\[\\]]*)?`;
 export const URL_FRAGMENT_PATTERN: string = `(${HASHTAG_PATTERN})?`;
-export const URL_PATTERN: string = `${URL_SCHEME_PATTERN}${URL_DOMAIN_PATTERN}${URL_PATH_PATTERN}${URL_QUERY_PATTERN}${URL_FRAGMENT_PATTERN}`;
+export const URL_PATTERN: string = [
+  URL_SCHEME_PATTERN,
+  URL_AUTH_PATTERN,
+  URL_HOST_PATTERN,
+  URL_PORT_PATTERN,
+  URL_PATH_PATTERN,
+  URL_QUERY_PATTERN,
+  URL_FRAGMENT_PATTERN
+].join('');
 
 // http://www.regular-expressions.info/email.html
 export const EMAIL_CLASS_PART: string = '[a-z0-9!#$%&?*+=_{|}~-]+';
 export const EMAIL_USERNAME_PATTERN: string = `(${ALNUM_CHAR}${EMAIL_CLASS_PART}(?:\\.${EMAIL_CLASS_PART})*${ALNUM_CHAR})`;
-export const EMAIL_PATTERN: string = `${EMAIL_USERNAME_PATTERN}@${URL_DOMAIN_PATTERN}`;
+export const EMAIL_PATTERN: string = `${EMAIL_USERNAME_PATTERN}@${URL_HOST_PATTERN}`;
 
 // Filters to apply to tags and attributes
 export const FILTER_ALLOW: number = 1;

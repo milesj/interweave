@@ -70,3 +70,7 @@ export type HashtagProps = {
   hashtagUrl?: string,
   encodeHashtag?: boolean,
 };
+
+export type UrlProps = {
+  children: string,
+};
