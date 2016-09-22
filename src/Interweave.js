@@ -140,7 +140,16 @@ export default class Interweave extends React.Component {
    * Parse the markup and apply hooks.
    */
   parseMarkup(): ParsedNodes {
-    const { children, onBeforeParse, onAfterParse, matchers, filters, ...props } = this.props;
+    const {
+      tagName, // eslint-disable-line
+      children,
+      onBeforeParse,
+      onAfterParse,
+      matchers,
+      filters,
+      ...props,
+    } = this.props;
+
     let content = children;
 
     if (onBeforeParse) {

@@ -9,14 +9,14 @@ import React, { PropTypes } from 'react';
 import type { LinkProps } from '../types';
 
 export default function Link(props: LinkProps) {
-  const { children, href, onClick, newWindow = false } = props;
+  const { children, href, onClick, newWindow } = props;
 
   return (
     <a
       href={href}
       className="interweave__link"
       target={newWindow ? '_blank' : null}
-      onClick={onClick}
+      onClick={onClick || null}
     >
       {children}
     </a>

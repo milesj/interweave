@@ -6,23 +6,18 @@
 
 import React from 'react';
 import Matcher from '../Matcher';
-import Link from '../components/Link';
+import Email from '../components/Email';
 import { EMAIL_PATTERN } from '../constants';
 
-import type { MatchResponse, LinkProps } from '../types';
+import type { MatchResponse, EmailProps } from '../types';
 
 export default class EmailMatcher extends Matcher {
   /**
    * {@inheritDoc}
    */
-  factory(match: string, props: Object = {}): React.Element<LinkProps> {
-    const email = this.obfuscate(match);
-    const mailTo = this.obfuscate('mailto');
-
+  factory(match: string, props: Object = {}): React.Element<EmailProps> {
     return (
-      <Link href={`${mailTo}:${email}`}>
-        {email}
-      </Link>
+      <Email {...props}>{match}</Email>
     );
   }
 
@@ -41,21 +36,5 @@ export default class EmailMatcher extends Matcher {
       username: matches[1],
       domain: matches[2],
     };
-  }
-
-  /**
-   * Obfuscate the email by converting ASCII characters to entities.
-   *
-   * @param {String} email
-   * @returns {String}
-   */
-  obfuscate(email: string): string {
-    let scrambled = '';
-
-    for (const char of email) {
-      scrambled += `&#${char.charCodeAt(0)};`;
-    }
-
-    return scrambled;
   }
 }

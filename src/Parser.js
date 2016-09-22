@@ -99,7 +99,10 @@ export default class Parser {
         matchedString = matchedString.replace(match, `#{{${components.length}}}#`);
 
         // Create a component through the matchers factory
-        components.push(matcher.createElement(match, partProps));
+        components.push(matcher.createElement(match, {
+          ...props,
+          ...(partProps || {}),
+        }));
       }
     });
 

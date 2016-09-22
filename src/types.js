@@ -45,6 +45,8 @@ export type MatchResponse = {
 
 export type ParsedNodes = Array<string | React.Element<*>>;
 
+// Component Props
+
 export type LinkProps = {
   href: string,
   children?: any,
@@ -56,4 +58,9 @@ export type ElementProps = {
   attributes?: Attributes,
   children?: any,
   tagName: string,
+};
+
+export type EmailProps = {
+  children: string,
+  obfuscateEmail: boolean,
 };

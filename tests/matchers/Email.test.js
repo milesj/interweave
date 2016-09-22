@@ -88,8 +88,15 @@ describe('matchers/Email', () => {
   });
 
   describe('matches all emails in a string', () => {
-    const create = email => matcher.factory(email);
     const parser = new Parser('', {}, [matcher]);
+    const create = (email) => {
+      const parts = email.split('@');
+
+      return matcher.factory(email, {
+        username: parts[0],
+        domain: parts[1],
+      });
+    };
 
     VALID_EMAILS.forEach((email) => {
       const expected = [
@@ -132,12 +139,6 @@ describe('matchers/Email', () => {
         username: 'user',
         domain: 'domain.com',
       });
-    });
-  });
-
-  describe('obfuscate()', () => {
-    it('scrambles emails', () => {
-      expect(matcher.obfuscate(VALID_EMAILS[0])).to.equal('&#117;&#115;&#101;&#114;&#64;&#100;&#111;&#109;&#97;&#105;&#110;&#46;&#99;&#111;&#109;');
     });
   });
 });

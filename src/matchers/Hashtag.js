@@ -16,8 +16,10 @@ export default class HashtagMatcher extends Matcher {
    * {@inheritDoc}
    */
   factory(match: string, props: Object = {}): React.Element<LinkProps> {
+    const url = props.hashtagUrl || '{{hashtag}}';
+
     return (
-      <Link href={match} {...props}>
+      <Link href={url.replace('{{hashtag}}', match)}>
         {match}
       </Link>
     );
@@ -35,7 +37,7 @@ export default class HashtagMatcher extends Matcher {
 
     return {
       match: matches[0],
-      tag: matches[1],
+      hashtag: matches[1],
     };
   }
 }
