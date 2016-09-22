@@ -6,22 +6,18 @@
 
 import React from 'react';
 import Matcher from '../Matcher';
-import Link from '../components/Link';
+import Hashtag from '../components/Hashtag';
 import { HASHTAG_PATTERN } from '../constants';
 
-import type { MatchResponse, LinkProps } from '../types';
+import type { MatchResponse, HashtagProps } from '../types';
 
 export default class HashtagMatcher extends Matcher {
   /**
    * {@inheritDoc}
    */
-  factory(match: string, props: Object = {}): React.Element<LinkProps> {
-    const url = props.hashtagUrl || '{{hashtag}}';
-
+  factory(match: string, props: Object = {}): React.Element<HashtagProps> {
     return (
-      <Link href={url.replace('{{hashtag}}', match)}>
-        {match}
-      </Link>
+      <Hashtag {...props}>{match}</Hashtag>
     );
   }
 
@@ -37,7 +33,7 @@ export default class HashtagMatcher extends Matcher {
 
     return {
       match: matches[0],
-      hashtag: matches[1],
+      tag: matches[1],
     };
   }
 }

@@ -62,5 +62,11 @@ export type ElementProps = {
 
 export type EmailProps = {
   children: string,
-  obfuscateEmail: boolean,
+  obfuscateEmail?: boolean,
+};
+
+export type HashtagProps = {
+  children: string,
+  hashtagUrl?: string,
+  encodeHashtag?: boolean,
 };
