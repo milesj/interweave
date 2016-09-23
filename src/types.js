@@ -74,3 +74,8 @@ export type HashtagProps = {
 export type UrlProps = {
   children: string,
 };
+
+export type EmojiProps = {
+  children: string[],
+  emojiPath?: string,
+};
