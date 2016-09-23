@@ -18,7 +18,7 @@ export default function Url({ children, ...props }: UrlProps) {
 
   return (
     <Link {...props} href={url}>
-      {url}
+      {children}
     </Link>
   );
 }

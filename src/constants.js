@@ -30,6 +30,18 @@ export const URL_PATTERN: string = [
   URL_FRAGMENT_PATTERN,
 ].join('');
 
+export const IP_V4_PART: string = '(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)';
+export const IP_V4_PATTERN: string = `(${IP_V4_PART}\\.${IP_V4_PART}\\.${IP_V4_PART}\\.${IP_V4_PART})`;
+export const IP_PATTERN: string = [
+  URL_SCHEME_PATTERN,
+  URL_AUTH_PATTERN,
+  IP_V4_PATTERN,
+  URL_PORT_PATTERN,
+  URL_PATH_PATTERN,
+  URL_QUERY_PATTERN,
+  URL_FRAGMENT_PATTERN,
+].join('');
+
 // http://www.regular-expressions.info/email.html
 export const EMAIL_CLASS_PART: string = '[a-z0-9!#$%&?*+=_{|}~-]+';
 export const EMAIL_USERNAME_PATTERN: string = `(${ALNUM_CHAR}${EMAIL_CLASS_PART}(?:\\.${EMAIL_CLASS_PART})*${ALNUM_CHAR})`;

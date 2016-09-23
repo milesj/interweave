@@ -14,7 +14,7 @@ describe('components/Url', () => {
   it('automatically prepends http://', () => {
     const wrapper = shallow(<Url>domain.com/some/url</Url>);
 
-    expect(wrapper.prop('children')).to.equal('http://domain.com/some/url');
+    expect(wrapper.prop('children')).to.equal('domain.com/some/url');
     expect(wrapper.prop('href')).to.equal('http://domain.com/some/url');
   });
 

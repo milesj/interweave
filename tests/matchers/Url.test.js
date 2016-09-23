@@ -65,7 +65,9 @@ const VALID_URLS = [
 ];
 
 const INVALID_URLS = [
+  { url: 'someword' },
   { url: 'http://' },
+  { url: 'http://foo' },
   { url: 'http://example.com./' },
   { url: 'http://example.com:%38%30/' },
   { url: 'http://www.詹姆斯.com/' },

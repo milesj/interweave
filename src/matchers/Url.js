@@ -12,6 +12,8 @@ import { URL_PATTERN } from '../constants';
 import type { MatchResponse, UrlProps } from '../types';
 
 export default class UrlMatcher extends Matcher {
+  static pattern = URL_PATTERN;
+
   /**
    * {@inheritDoc}
    */
@@ -25,7 +27,7 @@ export default class UrlMatcher extends Matcher {
    * {@inheritDoc}
    */
   match(string: string): ?MatchResponse {
-    const matches = string.match(new RegExp(URL_PATTERN, 'i'));
+    const matches = string.match(new RegExp(this.constructor.pattern, 'i'));
 
     if (!matches) {
       return null;
