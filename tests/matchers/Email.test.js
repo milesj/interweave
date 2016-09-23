@@ -94,7 +94,7 @@ describe('matchers/Email', () => {
 
       return matcher.factory(email, {
         username: parts[0],
-        domain: parts[1],
+        host: parts[1],
       });
     };
 
@@ -137,7 +137,7 @@ describe('matchers/Email', () => {
       expect(matcher.match('user@domain.com')).to.deep.equal({
         match: 'user@domain.com',
         username: 'user',
-        domain: 'domain.com',
+        host: 'domain.com',
       });
     });
   });

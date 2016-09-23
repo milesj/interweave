@@ -34,7 +34,7 @@ export default class EmailMatcher extends Matcher {
     return {
       match: matches[0],
       username: matches[1],
-      domain: matches[2],
+      host: matches[2],
     };
   }
 }

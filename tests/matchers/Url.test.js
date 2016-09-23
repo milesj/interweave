@@ -6,81 +6,88 @@ import { TOKEN_LOCATIONS } from '../mocks';
 
 // Borrowed from: https://github.com/Sporkmonger/Addressable/blob/master/spec/addressable/uri_spec.rb
 const VALID_URLS = [
-  'example.com',
-  'www.example.com',
-  'http://example.com/',
-  'http://example.com/path',
-  'http://example.com/path/to/resource/',
-  'http://example.com/?q=string',
-  'http://example.com/?x=1&y=2',
-  'http://example.com:80/',
-  'http://example.com:8080/',
-  'http://example.com:8080/path?query=value#fragment',
-  'http://example.com/path/to/resource?query=x#fragment',
-  'HTTP://example.com.:%38%30/%70a%74%68?a=%31#1%323',
-  'http://example.com/file.txt',
-  'https://ftp.is.co.za/rfc/rfc1808.txt',
-  'http://www.ietf.org/rfc/rfc2396.txt',
-  'http://www.w3.org/pub/WWW/TheProject.html',
-  'http://example.com?#',
-  'http://example.com/~smith/',
-  'http://example.com/%E8',
-  'http://example.com/path%2Fsegment/',
-  'http://example.com/?%F6',
-  'http://example.com/#%F6',
-  'http://example.com/%C3%87',
-  'http://example.com/%2E/',
-  'http://example.com/../..',
-  'http://example.com/(path)/',
-  'http://www.example.com//',
-  'http://example.com/x;y/',
-  'http://example.com/search?q=Q%26A',
-  'http://example.com/?&x=b',
-  'http://example.com/?q=\'one;two\'&x=1',
-  'http://example.com/?&&x=b',
-  'http://example.com/?q=a&&x=b',
-  'http://example.com/?q&&x=b',
-  'http://example.com/?q=a+b',
-  'http://example.com/?q=a%2bb',
-  'http://example.com/?v=%7E&w=%&x=%25&y=%2B&z=C%CC%A7',
-  'http://example.com/sound%2bvision',
-  'http://example.com/?q=',
-  'http://example.com/?one=1&two=2&three=3',
-  'http://example.com/?one=1=uno&two=2=dos',
-  'http://example.com/?one[two][three]=four',
-  'http://example.com/?one.two.three=four',
-  'http://example.com/?one[two][three]=four&one[two][five]=six',
-  'http://example.com/?one.two.three=four&one.two.five=six',
-  'http://example.com/?one[two][three][]=four&one[two][three][]=five',
-  'http://example.com/?one[two][three][0]=four&one[two][three][1]=five',
-  'http://example.com/?one[two][three][1]=four&one[two][three][0]=five',
-  'http://example.com/?one[two][three][2]=four&one[two][three][1]=five',
-  'http://example.com/?q=',
-  'http://example.com/?q=',
-  'http://example.com/?q=',
-  'http://example.com/indirect/path/./to/../resource/',
-  'http://under_score.example.com/',
-  'http://www.xn--8ws00zhy3a.com/',
-  '192.0.2.16:8000/path',
+  { url: 'example.com', scheme: null, host: 'example.com' },
+  { url: 'www.example.com', scheme: null, host: 'www.example.com' },
+  { url: 'http://example.com/', path: '/' },
+  { url: 'http://example.com/path', path: '/path' },
+  { url: 'http://example.com/path/to/resource/', path: '/path/to/resource/' },
+  { url: 'http://example.com/?q=string', path: '/', query: '?q=string' },
+  { url: 'http://example.com/?x=1&y=2', path: '/', query: '?x=1&y=2' },
+  { url: 'http://example.com:80/', path: '/', port: ':80' },
+  { url: 'http://example.com:8080/', path: '/', port: ':8080' },
+  { url: 'http://example.com:8080/path?query=value#fragment', port: ':8080', path: '/path', query: '?query=value', fragment: '#fragment' },
+  { url: 'http://example.com/path/to/resource?query=x#fragment', path: '/path/to/resource', query: '?query=x', fragment: '#fragment' },
+  { url: 'http://example.com/file.txt', path: '/file.txt' },
+  { url: 'https://ftp.is.co.za/rfc/rfc1808.txt', scheme: 'https://', host: 'ftp.is.co.za', path: '/rfc/rfc1808.txt' },
+  { url: 'http://www.ietf.org/rfc/rfc2396.txt', host: 'www.ietf.org', path: '/rfc/rfc2396.txt' },
+  { url: 'http://www.w3.org/pub/WWW/TheProject.html', host: 'www.w3.org', path: '/pub/WWW/TheProject.html' },
+  { url: 'http://example.com?#', query: '?', fragment: '#' },
+  { url: 'http://example.com/~smith/', path: '/~smith/' },
+  { url: 'http://example.com/%E8', path: '/%E8' },
+  { url: 'http://example.com/path%2Fsegment/', path: '/path%2Fsegment/' },
+  { url: 'http://example.com/?%F6', path: '/', query: '?%F6' },
+  { url: 'HTTP://example.com/#%F6', scheme: 'HTTP://', path: '/', fragment: '#%F6' },
+  { url: 'http://example.com/%C3%87', path: '/%C3%87' },
+  { url: 'http://example.com/%2E/', path: '/%2E/' },
+  { url: 'http://example.com/../..', path: '/../..' },
+  { url: 'http://www.example.com//', host: 'www.example.com', path: '//' },
+  { url: 'http://example.com/x;y/', path: '/x;y/' },
+  { url: 'http://example.com/search?q=Q%26A', path: '/search', query: '?q=Q%26A' },
+  { url: 'http://example.com/?&x=b', path: '/', query: '?&x=b' },
+  { url: 'http://example.com/?q=\'one;two\'&x=1', path: '/', query: '?q=\'one;two\'&x=1' },
+  { url: 'http://example.com/?&&x=b', path: '/', query: '?&&x=b' },
+  { url: 'http://example.com/?q=a&&x=b', path: '/', query: '?q=a&&x=b' },
+  { url: 'http://example.com/?q&&x=b', path: '/', query: '?q&&x=b' },
+  { url: 'http://example.com/?q=a+b', path: '/', query: '?q=a+b' },
+  { url: 'http://example.com/?q=a%2bb', path: '/', query: '?q=a%2bb' },
+  { url: 'http://example.com/?v=%7E&w=%&x=%25&y=%2B&z=C%CC%A7', path: '/', query: '?v=%7E&w=%&x=%25&y=%2B&z=C%CC%A7' },
+  { url: 'http://example.com/sound%2bvision', path: '/sound%2bvision' },
+  { url: 'http://example.com/?q=', path: '/', query: '?q=' },
+  { url: 'http://example.com/?one=1&two=2&three=3', path: '/', query: '?one=1&two=2&three=3' },
+  { url: 'http://example.com/?one=1=uno&two=2=dos', path: '/', query: '?one=1=uno&two=2=dos' },
+  { url: 'http://example.com/?one[two][three]=four', path: '/', query: '?one[two][three]=four' },
+  { url: 'http://example.com/?one.two.three=four', path: '/', query: '?one.two.three=four' },
+  { url: 'http://example.com/?one[two][three]=four&one[two][five]=six', path: '/', query: '?one[two][three]=four&one[two][five]=six' },
+  { url: 'http://example.com/?one.two.three=four&one.two.five=six', path: '/', query: '?one.two.three=four&one.two.five=six' },
+  { url: 'http://example.com/?one[two][three][]=four&one[two][three][]=five', path: '/', query: '?one[two][three][]=four&one[two][three][]=five' },
+  { url: 'http://example.com/?one[two][three][0]=four&one[two][three][1]=five', path: '/', query: '?one[two][three][0]=four&one[two][three][1]=five' },
+  { url: 'http://example.com/?one[two][three][1]=four&one[two][three][0]=five', path: '/', query: '?one[two][three][1]=four&one[two][three][0]=five' },
+  { url: 'http://example.com/?one[two][three][2]=four&one[two][three][1]=five', path: '/', query: '?one[two][three][2]=four&one[two][three][1]=five' },
+  { url: 'http://example.com/indirect/path/./to/../resource/', path: '/indirect/path/./to/../resource/' },
+  { url: 'http://www.xn--8ws00zhy3a.com/', path: '/', host: 'www.xn--8ws00zhy3a.com' },
+  { url: 'http://user:@example.com', auth: 'user:@' },
+  { url: 'http://:pass@example.com', auth: ':pass@' },
+  { url: 'http://:@example.com', auth: ':@' },
+  { url: 'http://user:pass@example.com/path/to/resource?query=x#fragment', auth: 'user:pass@', path: '/path/to/resource', query: '?query=x', fragment: '#fragment' },
+  // I feel like these should be invalid
+  { url: 'http://:@example.com/', auth: ':@', path: '/' },
+  { url: 'http://example.com/..', path: '/..' },
 ];
 
 const INVALID_URLS = [
-  'http://example.com./',
-  'http://:@example.com/',
-  'http://example.com:%38%30/',
-  'http://example.com/..',
-  'http://www.詹姆斯.com/',
-  'http://www.詹姆斯.com/atomtests/iri/詹.html',
-  'http:example.com',
-  'https:example.com/',
-  // I do not want to support IPV6 URLs
-  'http://[3ffe:1900:4545:3:200:f8ff:fe21:67cf]/',
-  // Nor authority and usernames
-  'http://@example.com/',
-  'http://user:@example.com',
-  'http://:pass@example.com',
-  'http://:@example.com',
-  'http://user:pass@example.com/path/to/resource?query=x#fragment',
+  { url: 'http://' },
+  { url: 'http://example.com./' },
+  { url: 'http://example.com:%38%30/' },
+  { url: 'http://www.詹姆斯.com/' },
+  { url: 'http://www.詹姆斯.com/atomtests/iri/詹.html' },
+  { url: 'http:example.com' },
+  { url: 'https:example.com/' },
+  { url: 'http://under_score.example.com/' },
+  { url: 'http://@example.com/' },
+  { url: 'HTTP://example.com.:%38%30/%70a%74%68?a=%31#1%323' },
+  { url: 'http://example.com/(path)/' },
+  // This matcher doesn't support IPs
+  { url: '192.0.2.16' },
+  { url: 'https://192.0.2.16?query' },
+  { url: '192.0.2.16:8000/path' },
+  { url: 'http://[3ffe:1900:4545:3:200:f8ff:fe21:67cf]/' },
+  // Or localhosts
+  { url: 'localhost/' },
+  { url: 'http://localhost/' },
+  // Or other protocols
+  { url: 'ftp://domain.com' },
+  { url: 'file://domain.com' },
+  { url: 'sftp://domain.com' },
 ];
 
 describe('matchers/Url', () => {
@@ -88,10 +95,18 @@ describe('matchers/Url', () => {
   const pattern = new RegExp(`^${URL_PATTERN}$`, 'i');
 
   describe('does match valid url:', () => {
-    VALID_URLS.forEach((url) => {
-      it(url, () => {
+    VALID_URLS.forEach((urlParams) => {
+      it(urlParams.url, () => {
+        const { url, ...params } = urlParams;
         const expected = [
           url,
+          (params.scheme === null ? undefined : (params.scheme || 'http://')),
+          params.auth,
+          (typeof params.host === 'undefined' ? 'example.com' : params.host),
+          params.port,
+          params.path,
+          params.query,
+          params.fragment,
         ];
         expected.index = 0;
         expected.input = url;
@@ -102,35 +117,48 @@ describe('matchers/Url', () => {
   });
 
   describe('doesnt match invalid url:', () => {
-    INVALID_URLS.forEach((url) => {
-      it(url, () => {
-        expect(url.match(pattern)).to.equal(null);
+    INVALID_URLS.forEach((urlParams) => {
+      it(urlParams.url, () => {
+        expect(urlParams.url.match(pattern)).to.equal(null);
       });
     });
   });
 
   describe('matches all urls in a string', () => {
     const parser = new Parser('', {}, [matcher]);
-    const create = url => matcher.factory(url, { tag: url.substr(1) });
+    const create = (urlParams) => {
+      const { url, ...params } = urlParams;
 
-    VALID_URLS.forEach((url) => {
+      return matcher.factory(url, {
+        host: 'example.com',
+        path: '',
+        query: '',
+        fragment: '',
+        ...params,
+        scheme: params.scheme ? params.scheme.replace('://', '') : 'http',
+        auth: params.auth ? params.auth.substr(0, params.auth.length - 1) : '',
+        port: params.port ? params.port.substr(1) : '',
+      });
+    };
+
+    VALID_URLS.forEach((urlParams) => {
       const expected = [
         'no tokens',
-        [create(url)],
-        [' ', create(url), ' '],
-        [create(url), ' pattern at beginning'],
-        ['pattern at end ', create(url)],
-        ['pattern in ', create(url), ' middle'],
-        [create(url), ' pattern at beginning and end ', create(url)],
-        [create(url), ' pattern on ', create(url), ' all sides ', create(url)],
-        ['pattern ', create(url), ' used ', create(url), ' multiple ', create(url), ' times'],
-        ['tokens next ', create(url), ' ', create(url), ' ', create(url), ' to each other'],
-        ['tokens without ', create(url), create(url), create(url), ' spaces'],
+        [create(urlParams)],
+        [' ', create(urlParams), ' '],
+        [create(urlParams), ' pattern at beginning'],
+        ['pattern at end ', create(urlParams)],
+        ['pattern in ', create(urlParams), ' middle'],
+        [create(urlParams), ' pattern at beginning and end ', create(urlParams)],
+        [create(urlParams), ' pattern on ', create(urlParams), ' all sides ', create(urlParams)],
+        ['pattern ', create(urlParams), ' used ', create(urlParams), ' multiple ', create(urlParams), ' times'],
+        ['tokens next ', create(urlParams), ' ', create(urlParams), ' ', create(urlParams), ' to each other'],
+        ['tokens without ', create(urlParams), create(urlParams), create(urlParams), ' spaces'],
       ];
 
       TOKEN_LOCATIONS.forEach((location, i) => {
-        it(`for: ${url} - ${location}`, () => {
-          const tokenString = location.replace(/\{token\}/g, url);
+        it(`for: ${urlParams.url} - ${location}`, () => {
+          const tokenString = location.replace(/\{token\}/g, urlParams.url);
           const actual = parser.applyMatchers(tokenString);
 
           if (i === 0) {

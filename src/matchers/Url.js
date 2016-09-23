@@ -33,7 +33,7 @@ export default class UrlMatcher extends Matcher {
 
     return {
       match: matches[0],
-      scheme: matches[1] ? matches[1].replace('://', '') : '',
+      scheme: matches[1] ? matches[1].replace('://', '') : 'http',
       auth: matches[2] ? matches[2].substr(0, matches[2].length - 1) : '',
       host: matches[3],
       port: matches[4] ? matches[4].substr(1) : '',
