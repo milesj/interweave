@@ -67,7 +67,12 @@ describe('matchers/Hashtag', () => {
         [create(hashtag), ' pattern on ', create(hashtag), ' all sides ', create(hashtag)],
         ['pattern ', create(hashtag), ' used ', create(hashtag), ' multiple ', create(hashtag), ' times'],
         ['tokens next ', create(hashtag), ' ', create(hashtag), ' ', create(hashtag), ' to each other'],
-        ['tokens without ', create(hashtag), create(hashtag), create(hashtag), ' spaces'],
+        // ['tokens without ', create(hashtag), create(hashtag), create(hashtag), ' spaces'],
+        ['token next to ', create(hashtag), ', a comma'],
+        ['token by a period ', create(hashtag), '.'],
+        ['token after a colon: ', create(hashtag)],
+        ['token after a\n', create(hashtag), ' new line'],
+        ['token before a ', create(hashtag), '\n new line'],
       ];
 
       TOKEN_LOCATIONS.forEach((location, i) => {

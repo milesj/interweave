@@ -15,9 +15,10 @@ export const TOKEN_LOCATIONS = [
   'pattern {token} used {token} multiple {token} times',
   'tokens next {token} {token} {token} to each other',
   'token next to {token}, a comma',
-  // 'token by a period {token}.',
-  // 'token after a\n{token} new line',
-  // 'token before a {token}\n new line',
+  'token by a period {token}.',
+  'token after a colon: {token}',
+  'token after a\n{token} new line',
+  'token before a {token}\n new line',
   // 'tokens without {token}{token}{token} spaces',
 ];
 

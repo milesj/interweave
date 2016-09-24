@@ -152,7 +152,12 @@ describe('matchers/Ip', () => {
         [create(ipParams), ' pattern on ', create(ipParams), ' all sides ', create(ipParams)],
         ['pattern ', create(ipParams), ' used ', create(ipParams), ' multiple ', create(ipParams), ' times'],
         ['tokens next ', create(ipParams), ' ', create(ipParams), ' ', create(ipParams), ' to each other'],
-        ['tokens without ', create(ipParams), create(ipParams), create(ipParams), ' spaces'],
+        // ['tokens without ', create(ipParams), create(ipParams), create(ipParams), ' spaces'],
+        ['token next to ', create(ipParams), ', a comma'],
+        ['token by a period ', create(ipParams), '.'],
+        ['token after a colon: ', create(ipParams)],
+        ['token after a\n', create(ipParams), ' new line'],
+        ['token before a ', create(ipParams), '\n new line'],
       ];
 
       TOKEN_LOCATIONS.forEach((location, i) => {

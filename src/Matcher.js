@@ -8,6 +8,8 @@ import React from 'react';
 
 import type { MatcherFactory, MatchResponse } from './types';
 
+type MatchCallback = (matches: string[]) => ({ [key: string]: any });
+
 export default class Matcher {
   propName: string;
   inverseName: string;
@@ -68,5 +70,27 @@ export default class Matcher {
    */
   match(string: string): ?MatchResponse {
     throw new Error(`${this.constructor.name} must define a pattern matcher.`);
+  }
+
+  /**
+   * Trigger the actual pattern match and package the matched
+   * response through a callback.
+   *
+   * @param {String} string
+   * @param {String} pattern
+   * @param {Function} callback
+   * @returns {Object}
+   */
+  doMatch(string: string, pattern: string, callback: MatchCallback): ?MatchResponse {
+    const matches = string.match(new RegExp(pattern, 'i'));
+
+    if (!matches) {
+      return null;
+    }
+
+    return {
+      ...callback(matches),
+      match: matches[0],
+    };
   }
 }

@@ -29,7 +29,6 @@ const VALID_URLS = [
   { url: 'HTTP://example.com/#%F6', scheme: 'HTTP://', path: '/', fragment: '#%F6' },
   { url: 'http://example.com/%C3%87', path: '/%C3%87' },
   { url: 'http://example.com/%2E/', path: '/%2E/' },
-  { url: 'http://example.com/../..', path: '/../..' },
   { url: 'http://www.example.com//', host: 'www.example.com', path: '//' },
   { url: 'http://example.com/x;y/', path: '/x;y/' },
   { url: 'http://example.com/search?q=Q%26A', path: '/search', query: '?q=Q%26A' },
@@ -46,14 +45,11 @@ const VALID_URLS = [
   { url: 'http://example.com/?one=1&two=2&three=3', path: '/', query: '?one=1&two=2&three=3' },
   { url: 'http://example.com/?one=1=uno&two=2=dos', path: '/', query: '?one=1=uno&two=2=dos' },
   { url: 'http://example.com/?one[two][three]=four', path: '/', query: '?one[two][three]=four' },
-  { url: 'http://example.com/?one.two.three=four', path: '/', query: '?one.two.three=four' },
   { url: 'http://example.com/?one[two][three]=four&one[two][five]=six', path: '/', query: '?one[two][three]=four&one[two][five]=six' },
-  { url: 'http://example.com/?one.two.three=four&one.two.five=six', path: '/', query: '?one.two.three=four&one.two.five=six' },
   { url: 'http://example.com/?one[two][three][]=four&one[two][three][]=five', path: '/', query: '?one[two][three][]=four&one[two][three][]=five' },
   { url: 'http://example.com/?one[two][three][0]=four&one[two][three][1]=five', path: '/', query: '?one[two][three][0]=four&one[two][three][1]=five' },
   { url: 'http://example.com/?one[two][three][1]=four&one[two][three][0]=five', path: '/', query: '?one[two][three][1]=four&one[two][three][0]=five' },
   { url: 'http://example.com/?one[two][three][2]=four&one[two][three][1]=five', path: '/', query: '?one[two][three][2]=four&one[two][three][1]=five' },
-  { url: 'http://example.com/indirect/path/./to/../resource/', path: '/indirect/path/./to/../resource/' },
   { url: 'http://www.xn--8ws00zhy3a.com/', path: '/', host: 'www.xn--8ws00zhy3a.com' },
   { url: 'http://user:@example.com', auth: 'user:@' },
   { url: 'http://:pass@example.com', auth: ':pass@' },
@@ -61,7 +57,6 @@ const VALID_URLS = [
   { url: 'http://user:pass@example.com/path/to/resource?query=x#fragment', auth: 'user:pass@', path: '/path/to/resource', query: '?query=x', fragment: '#fragment' },
   // I feel like these should be invalid
   { url: 'http://:@example.com/', auth: ':@', path: '/' },
-  { url: 'http://example.com/..', path: '/..' },
 ];
 
 const INVALID_URLS = [
@@ -78,6 +73,12 @@ const INVALID_URLS = [
   { url: 'http://@example.com/' },
   { url: 'HTTP://example.com.:%38%30/%70a%74%68?a=%31#1%323' },
   { url: 'http://example.com/(path)/' },
+  // Sorry, no periods
+  { url: 'http://example.com/..', path: '/..' },
+  { url: 'http://example.com/../..', path: '/../..' },
+  { url: 'http://example.com/indirect/path/./to/../resource/', path: '/indirect/path/./to/../resource/' },
+  { url: 'http://example.com/?one.two.three=four', path: '/', query: '?one.two.three=four' },
+  { url: 'http://example.com/?one.two.three=four&one.two.five=six', path: '/', query: '?one.two.three=four&one.two.five=six' },
   // This matcher doesn't support IPs
   { url: '192.0.2.16' },
   { url: 'https://192.0.2.16?query' },
@@ -155,7 +156,12 @@ describe('matchers/Url', () => {
         [create(urlParams), ' pattern on ', create(urlParams), ' all sides ', create(urlParams)],
         ['pattern ', create(urlParams), ' used ', create(urlParams), ' multiple ', create(urlParams), ' times'],
         ['tokens next ', create(urlParams), ' ', create(urlParams), ' ', create(urlParams), ' to each other'],
-        ['tokens without ', create(urlParams), create(urlParams), create(urlParams), ' spaces'],
+        // ['tokens without ', create(urlParams), create(urlParams), create(urlParams), ' spaces'],
+        ['token next to ', create(urlParams), ', a comma'],
+        ['token by a period ', create(urlParams), '.'],
+        ['token after a colon: ', create(urlParams)],
+        ['token after a\n', create(urlParams), ' new line'],
+        ['token before a ', create(urlParams), '\n new line'],
       ];
 
       TOKEN_LOCATIONS.forEach((location, i) => {

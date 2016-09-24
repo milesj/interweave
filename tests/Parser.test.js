@@ -62,7 +62,12 @@ describe('Parser', () => {
         [createFoo(), ' pattern on ', createFoo(), ' all sides ', createFoo()],
         ['pattern ', createFoo(), ' used ', createFoo(), ' multiple ', createFoo(), ' times'],
         ['tokens next ', createFoo(), ' ', createFoo(), ' ', createFoo(), ' to each other'],
-        ['tokens without ', createFoo(), createFoo(), createFoo(), ' spaces'],
+        // ['tokens without ', createFoo(), createFoo(), createFoo(), ' spaces'],
+        ['token next to ', createFoo(), ', a comma'],
+        ['token by a period ', createFoo(), '.'],
+        ['token after a colon: ', createFoo()],
+        ['token after a\n', createFoo(), ' new line'],
+        ['token before a ', createFoo(), '\n new line'],
       ];
 
       TOKEN_LOCATIONS.forEach((location, i) => {
@@ -91,7 +96,12 @@ describe('Parser', () => {
         [createBaz(), ' pattern on ', createFoo(), ' all sides ', createBar()],
         ['pattern ', createBaz(), ' used ', createFoo(), ' multiple ', createBar(), ' times'],
         ['tokens next ', createBaz(), ' ', createFoo(), ' ', createBar(), ' to each other'],
-        ['tokens without ', createBaz(), createFoo(), createBar(), ' spaces'],
+        // ['tokens without ', createBaz(), createFoo(), createBar(), ' spaces'],
+        ['token next to ', createBaz(), ', a comma'],
+        ['token by a period ', createBaz(), '.'],
+        ['token after a colon: ', createBaz()],
+        ['token after a\n', createBaz(), ' new line'],
+        ['token before a ', createBaz(), '\n new line'],
       ];
 
       TOKEN_LOCATIONS.forEach((location, i) => {
@@ -123,7 +133,12 @@ describe('Parser', () => {
         '[qux] pattern on [qux] all sides [qux]',
         'pattern [qux] used [qux] multiple [qux] times',
         'tokens next [qux] [qux] [qux] to each other',
-        'tokens without [qux][qux][qux] spaces',
+        // 'tokens without [qux][qux][qux] spaces',
+        'token next to [qux], a comma',
+        'token by a period [qux].',
+        'token after a colon: [qux]',
+        'token after a\n[qux] new line',
+        'token before a [qux]\n new line',
       ];
 
       TOKEN_LOCATIONS.forEach((location, i) => {
@@ -137,7 +152,7 @@ describe('Parser', () => {
     });
 
     describe('ignores matcher if the inverse prop is enabled', () => {
-      TOKEN_LOCATIONS.forEach((location, i) => {
+      TOKEN_LOCATIONS.forEach((location) => {
         it(`for: ${location}`, () => {
           instance.props.noFoo = true;
 

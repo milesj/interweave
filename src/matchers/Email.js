@@ -25,16 +25,9 @@ export default class EmailMatcher extends Matcher {
    * {@inheritDoc}
    */
   match(string: string): ?MatchResponse {
-    const matches = string.match(new RegExp(EMAIL_PATTERN, 'i'));
-
-    if (!matches) {
-      return null;
-    }
-
-    return {
-      match: matches[0],
+    return this.doMatch(string, EMAIL_PATTERN, matches => ({
       username: matches[1],
       host: matches[2],
-    };
+    }));
   }
 }

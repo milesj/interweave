@@ -110,7 +110,12 @@ describe('matchers/Email', () => {
         [create(email), ' pattern on ', create(email), ' all sides ', create(email)],
         ['pattern ', create(email), ' used ', create(email), ' multiple ', create(email), ' times'],
         ['tokens next ', create(email), ' ', create(email), ' ', create(email), ' to each other'],
-        ['tokens without ', create(email), create(email), create(email), ' spaces'],
+        // ['tokens without ', create(email), create(email), create(email), ' spaces'],
+        ['token next to ', create(email), ', a comma'],
+        ['token by a period ', create(email), '.'],
+        ['token after a colon: ', create(email)],
+        ['token after a\n', create(email), ' new line'],
+        ['token before a ', create(email), '\n new line'],
       ];
 
       TOKEN_LOCATIONS.forEach((location, i) => {

@@ -6,20 +6,25 @@
 
 /* eslint-disable no-useless-escape, max-len */
 
+// https://blog.codinghorror.com/the-problem-with-urls/
+// http://www.regular-expressions.info/email.html
+
 type FilterMap = { [key: string]: number };
 
+// This pattern will be used at the start or end of other patterns,
+// making it easier to apply matches without capturing special chars.
 export const ALNUM_CHAR: string = '[a-z0-9]{1}';
+
 export const HASHTAG_PATTERN: string = '#([-a-z0-9_]+)';
 
-// https://blog.codinghorror.com/the-problem-with-urls/
-export const URL_CHAR_PART: string = 'a-z0-9-._~%!$&\'*+,;:@';
+export const URL_CHAR_PART: string = 'a-z0-9-_~%!$&\'*+;:@'; // Disallow . ,
 export const URL_SCHEME_PATTERN: string = '(https?://)?';
 export const URL_AUTH_PATTERN: string = `([${URL_CHAR_PART}]+@)?`;
 export const URL_HOST_PATTERN: string = `((?:www\\.)?${ALNUM_CHAR}[-a-z0-9.]*[-a-z0-9]+\\.[a-z]{2,63})`;
 export const URL_PORT_PATTERN: string = '(:[0-9]+)?';
-export const URL_PATH_PATTERN: string = `(/[${URL_CHAR_PART}/]*)?`;
+export const URL_PATH_PATTERN: string = `(/[${URL_CHAR_PART}/]*(?:\\.[a-z]{2,8})?)?`;
 export const URL_QUERY_PATTERN: string = `(\\?[${URL_CHAR_PART}=\\[\\]]*)?`;
-export const URL_FRAGMENT_PATTERN: string = `(#[${URL_CHAR_PART}/]*)?`;
+export const URL_FRAGMENT_PATTERN: string = `(#[${URL_CHAR_PART}/]*[a-z]?)?`;
 export const URL_PATTERN: string = [
   URL_SCHEME_PATTERN,
   URL_AUTH_PATTERN,
@@ -42,7 +47,6 @@ export const IP_PATTERN: string = [
   URL_FRAGMENT_PATTERN,
 ].join('');
 
-// http://www.regular-expressions.info/email.html
 export const EMAIL_CLASS_PART: string = '[a-z0-9!#$%&?*+=_{|}~-]+';
 export const EMAIL_USERNAME_PATTERN: string = `(${ALNUM_CHAR}${EMAIL_CLASS_PART}(?:\\.${EMAIL_CLASS_PART})*${ALNUM_CHAR})`;
 export const EMAIL_PATTERN: string = `${EMAIL_USERNAME_PATTERN}@${URL_HOST_PATTERN}`;

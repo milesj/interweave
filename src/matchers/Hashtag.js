@@ -25,15 +25,8 @@ export default class HashtagMatcher extends Matcher {
    * {@inheritDoc}
    */
   match(string: string): ?MatchResponse {
-    const matches = string.match(new RegExp(HASHTAG_PATTERN, 'i'));
-
-    if (!matches) {
-      return null;
-    }
-
-    return {
-      match: matches[0],
+    return this.doMatch(string, HASHTAG_PATTERN, matches => ({
       tag: matches[1],
-    };
+    }));
   }
 }

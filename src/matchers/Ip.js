@@ -7,6 +7,13 @@
 import UrlMatcher from './Url';
 import { IP_PATTERN } from '../constants';
 
+import type { MatchResponse } from '../types';
+
 export default class IpMatcher extends UrlMatcher {
-  static pattern = IP_PATTERN;
+  /**
+   * {@inheritDoc}
+   */
+  match(string: string): ?MatchResponse {
+    return this.doMatch(string, IP_PATTERN, this.handleMatches);
+  }
 }
