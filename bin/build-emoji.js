@@ -3,7 +3,7 @@
 let emojiData = require('emojione/emoji.json');
 let dataSet = {};
 
-// We only need the unicode and shortnames
+// We only want the unicode codepoints and shortnames
 Object.keys(emojiData).forEach((shortName) => {
   dataSet[shortName] = emojiData[shortName].unicode;
 });

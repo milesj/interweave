@@ -76,6 +76,7 @@ export type UrlProps = {
 };
 
 export type EmojiProps = {
-  children: string[],
+  shortName: string,
+  unicode: string,
   emojiPath?: string,
 };
