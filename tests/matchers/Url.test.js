@@ -133,14 +133,16 @@ describe('matchers/Url', () => {
       const { url, ...params } = urlParams;
 
       return matcher.factory(url, {
-        host: 'example.com',
-        path: '',
-        query: '',
-        fragment: '',
-        ...params,
-        scheme: params.scheme ? params.scheme.replace('://', '') : 'http',
-        auth: params.auth ? params.auth.substr(0, params.auth.length - 1) : '',
-        port: params.port ? params.port.substr(1) : '',
+        urlParts: {
+          host: 'example.com',
+          path: '',
+          query: '',
+          fragment: '',
+          ...params,
+          scheme: params.scheme ? params.scheme.replace('://', '') : 'http',
+          auth: params.auth ? params.auth.substr(0, params.auth.length - 1) : '',
+          port: params.port ? params.port.substr(1) : '',
+        },
       });
     };
 
@@ -187,13 +189,15 @@ describe('matchers/Url', () => {
     it('returns object for valid match', () => {
       expect(matcher.match('http://user:pass@domain.com:8080/some/path?with=query#fragment')).to.deep.equal({
         match: 'http://user:pass@domain.com:8080/some/path?with=query#fragment',
-        scheme: 'http',
-        auth: 'user:pass',
-        host: 'domain.com',
-        port: '8080',
-        path: '/some/path',
-        query: '?with=query',
-        fragment: '#fragment',
+        urlParts: {
+          scheme: 'http',
+          auth: 'user:pass',
+          host: 'domain.com',
+          port: '8080',
+          path: '/some/path',
+          query: '?with=query',
+          fragment: '#fragment',
+        },
       });
     });
   });

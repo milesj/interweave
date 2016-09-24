@@ -93,8 +93,10 @@ describe('matchers/Email', () => {
       const parts = email.split('@');
 
       return matcher.factory(email, {
-        username: parts[0],
-        host: parts[1],
+        emailParts: {
+          username: parts[0],
+          host: parts[1],
+        },
       });
     };
 
@@ -141,8 +143,10 @@ describe('matchers/Email', () => {
     it('returns object for valid match', () => {
       expect(matcher.match('user@domain.com')).to.deep.equal({
         match: 'user@domain.com',
-        username: 'user',
-        host: 'domain.com',
+        emailParts: {
+          username: 'user',
+          host: 'domain.com',
+        },
       });
     });
   });

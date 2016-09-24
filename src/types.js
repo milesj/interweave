@@ -63,16 +63,30 @@ export type ElementProps = {
 export type EmailProps = {
   children: string,
   obfuscateEmail?: boolean,
+  emailParts: {
+    username: string,
+    host: string,
+  },
 };
 
 export type HashtagProps = {
   children: string,
+  hashtagName: string,
   hashtagUrl?: string,
   encodeHashtag?: boolean,
 };
 
 export type UrlProps = {
   children: string,
+  urlParts: {
+    scheme: string,
+    auth: string,
+    host: string,
+    port: string | number,
+    path: string,
+    query: string,
+    fragment: string,
+  },
 };
 
 export type EmojiProps = {

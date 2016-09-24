@@ -11,6 +11,7 @@
     "no-param-reassign": 0,
     "padded-blocks": 0,
     "class-methods-use-this": 0,
+    "react/no-unused-prop-types": 0,
     "react/jsx-filename-extension": 0,
     "no-unused-vars": [2, { "vars": "all", "args": "none" }],
     "flowtype/require-parameter-type": [2, { "excludeArrowFunctions": true }],

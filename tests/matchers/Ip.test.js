@@ -73,14 +73,16 @@ describe('matchers/Ip', () => {
       const { ip, ...params } = ipParams;
 
       return matcher.factory(ip, {
-        host: '',
-        path: '',
-        query: '',
-        fragment: '',
-        ...params,
-        scheme: params.scheme ? params.scheme.replace('://', '') : 'http',
-        auth: params.auth ? params.auth.substr(0, params.auth.length - 1) : '',
-        port: params.port ? params.port.substr(1) : '',
+        urlParts: {
+          host: '',
+          path: '',
+          query: '',
+          fragment: '',
+          ...params,
+          scheme: params.scheme ? params.scheme.replace('://', '') : 'http',
+          auth: params.auth ? params.auth.substr(0, params.auth.length - 1) : '',
+          port: params.port ? params.port.substr(1) : '',
+        },
       });
     };
 
@@ -127,13 +129,15 @@ describe('matchers/Ip', () => {
     it('returns object for valid match', () => {
       expect(matcher.match('https://127.0.0.1:8080/some/path?with=query#fragment')).to.deep.equal({
         match: 'https://127.0.0.1:8080/some/path?with=query#fragment',
-        scheme: 'https',
-        auth: '',
-        host: '127.0.0.1',
-        port: '8080',
-        path: '/some/path',
-        query: '?with=query',
-        fragment: '#fragment',
+        urlParts: {
+          scheme: 'https',
+          auth: '',
+          host: '127.0.0.1',
+          port: '8080',
+          path: '/some/path',
+          query: '?with=query',
+          fragment: '#fragment',
+        },
       });
     });
   });

@@ -31,6 +31,7 @@ export default function Hashtag({
 
 Hashtag.propTypes = {
   children: PropTypes.string.isRequired,
+  hashtagName: PropTypes.string,
   hashtagUrl: PropTypes.string,
   encodeHashtag: PropTypes.bool,
 };

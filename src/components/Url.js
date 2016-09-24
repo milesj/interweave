@@ -25,4 +25,13 @@ export default function Url({ children, ...props }: UrlProps) {
 
 Url.propTypes = {
   children: PropTypes.string.isRequired,
+  urlParts: PropTypes.shape({
+    scheme: PropTypes.string,
+    auth: PropTypes.string,
+    host: PropTypes.string,
+    port: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+    path: PropTypes.string,
+    query: PropTypes.string,
+    fragment: PropTypes.string,
+  }),
 };

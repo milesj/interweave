@@ -53,7 +53,7 @@ describe('matchers/Hashtag', () => {
 
   describe('matches all hashtags in a string', () => {
     const parser = new Parser('', {}, [matcher]);
-    const create = hashtag => matcher.factory(hashtag, { tag: hashtag.substr(1) });
+    const create = hashtag => matcher.factory(hashtag, { hashtagName: hashtag.substr(1) });
 
     VALID_HASHTAGS.forEach((hashtag) => {
       const expected = [
@@ -98,7 +98,7 @@ describe('matchers/Hashtag', () => {
     it('returns object for valid match', () => {
       expect(matcher.match('#hashtag')).to.deep.equal({
         match: '#hashtag',
-        tag: 'hashtag',
+        hashtagName: 'hashtag',
       });
     });
   });

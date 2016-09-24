@@ -26,8 +26,10 @@ export default class EmailMatcher extends Matcher {
    */
   match(string: string): ?MatchResponse {
     return this.doMatch(string, EMAIL_PATTERN, matches => ({
-      username: matches[1],
-      host: matches[2],
+      emailParts: {
+        username: matches[1],
+        host: matches[2],
+      },
     }));
   }
 }

@@ -38,4 +38,8 @@ export default function Email({ children, obfuscateEmail = false, ...props }: Em
 Email.propTypes = {
   children: PropTypes.string.isRequired,
   obfuscateEmail: PropTypes.bool,
+  emailParts: PropTypes.shape({
+    username: PropTypes.string,
+    host: PropTypes.string,
+  }),
 };
