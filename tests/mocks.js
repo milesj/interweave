@@ -19,6 +19,7 @@ export const TOKEN_LOCATIONS = [
   'token after a colon: {token}',
   'token after a\n{token} new line',
   'token before a {token}\n new line',
+  'token surrounded by ({token}) parenthesis',
   // 'tokens without {token}{token}{token} spaces',
 ];
 
@@ -39,6 +40,7 @@ export function createExpectedTokenLocations(value, factory, flatten = false) {
     ['token after a colon: ', factory(value, 0)],
     ['token after a\n', factory(value, 0), ' new line'],
     ['token before a ', factory(value, 0), '\n new line'],
+    ['token surrounded by (', factory(value, 0), ') parenthesis'],
     // ['tokens without ', factory(value, 0), factory(value, 1), factory(value, 2), ' spaces'],
   ];
 
