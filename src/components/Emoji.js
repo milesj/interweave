@@ -17,13 +17,15 @@ export default function Emoji({ shortName, unicode, emojiPath }: EmojiProps) {
     throw new Error('Emoji component requires a `unicode` character or a `shortName`.');
   }
 
-  // Return an empty component instead of throwing errors,
+  // Return the invalid value instead of throwing errors,
   // as this will avoid unnecessary noise in production.
   if (
     (unicode && typeof UNICODE_TO_SHORTNAME[unicode] === 'undefined') ||
     (shortName && typeof SHORTNAME_TO_UNICODE[shortName] === 'undefined')
   ) {
-    return null;
+    return (
+      <span>{unicode || shortName}</span>
+    );
   }
 
   // Retrieve any missing values

@@ -12,16 +12,16 @@ describe('components/Emoji', () => {
       .throw(Error, 'Emoji component requires a `unicode` character or a `shortName`.');
   });
 
-  it('returns empty for invalid shortname', () => {
+  it('returns valu for invalid shortname', () => {
     const wrapper = shallow(<Emoji shortName="fake" />);
 
-    expect(wrapper.isEmptyRender()).to.equal(true);
+    expect(wrapper.prop('children')).to.equal('fake');
   });
 
   it('returns empty for invalid unicode', () => {
     const wrapper = shallow(<Emoji unicode="fake" />);
 
-    expect(wrapper.isEmptyRender()).to.equal(true);
+    expect(wrapper.prop('children')).to.equal('fake');
   });
 
   it('renders with only the shortname', () => {

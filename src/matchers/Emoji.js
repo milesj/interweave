@@ -7,7 +7,7 @@
 import React from 'react';
 import Matcher from '../Matcher';
 import Emoji from '../components/Emoji';
-import { EMOJI_PATTERN, EMOJI_SHORTNAME_PATTERN } from '../constants';
+import { /* EMOJI_PATTERN, */ EMOJI_SHORTNAME_PATTERN } from '../constants';
 
 import type { MatchResponse, EmojiProps } from '../types';
 
