@@ -77,12 +77,12 @@ export default class Matcher {
    * response through a callback.
    *
    * @param {String} string
-   * @param {String} pattern
+   * @param {String|RegExp} pattern
    * @param {Function} callback
    * @returns {Object}
    */
-  doMatch(string: string, pattern: string, callback: MatchCallback): ?MatchResponse {
-    const matches = string.match(new RegExp(pattern, 'i'));
+  doMatch(string: string, pattern: string | RegExp, callback: MatchCallback): ?MatchResponse {
+    const matches = string.match((pattern instanceof RegExp) ? pattern : new RegExp(pattern, 'i'));
 
     if (!matches) {
       return null;

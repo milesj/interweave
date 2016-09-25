@@ -1,7 +1,7 @@
 --compilers js:babel-register
 --require ./tests/setup.js
 --require chai
---reporter spec
+--reporter dot
 --ui bdd
 --colors
 --check-leaks

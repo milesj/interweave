@@ -8,12 +8,24 @@ describe('components/Emoji', () => {
   const [codePoint, unicode, shortName] = VALID_EMOJIS[0];
 
   it('errors if no shortname or unicode', () => {
-    expect(() => shallow(<Emoji emojiPath="" />)).to
+    expect(() => shallow(<Emoji />)).to
       .throw(Error, 'Emoji component requires a `unicode` character or a `shortName`.');
   });
 
+  it('returns empty for invalid shortname', () => {
+    const wrapper = shallow(<Emoji shortName="fake" />);
+
+    expect(wrapper.isEmptyRender()).to.equal(true);
+  });
+
+  it('returns empty for invalid unicode', () => {
+    const wrapper = shallow(<Emoji unicode="fake" />);
+
+    expect(wrapper.isEmptyRender()).to.equal(true);
+  });
+
   it('renders with only the shortname', () => {
-    const wrapper = shallow(<Emoji shortName={shortName} emojiPath="" />);
+    const wrapper = shallow(<Emoji shortName={shortName} />);
 
     expect(wrapper.prop('data-unicode')).to.equal(unicode);
     expect(wrapper.prop('data-codepoint')).to.equal(codePoint);
@@ -21,7 +33,7 @@ describe('components/Emoji', () => {
   });
 
   it('renders with only the unicode', () => {
-    const wrapper = shallow(<Emoji unicode={unicode} emojiPath="" />);
+    const wrapper = shallow(<Emoji unicode={unicode} />);
 
     expect(wrapper.prop('data-unicode')).to.equal(unicode);
     expect(wrapper.prop('data-codepoint')).to.equal(codePoint);
@@ -29,7 +41,7 @@ describe('components/Emoji', () => {
   });
 
   it('renders with both', () => {
-    const wrapper = shallow(<Emoji shortName={shortName} unicode={unicode} emojiPath="" />);
+    const wrapper = shallow(<Emoji shortName={shortName} unicode={unicode} />);
 
     expect(wrapper.prop('data-unicode')).to.equal(unicode);
     expect(wrapper.prop('data-codepoint')).to.equal(codePoint);
@@ -50,7 +62,7 @@ describe('components/Emoji', () => {
   });
 
   it('renders class names', () => {
-    const wrapper = shallow(<Emoji shortName={shortName} unicode={unicode} emojiPath="" />);
+    const wrapper = shallow(<Emoji shortName={shortName} unicode={unicode} />);
 
     expect(wrapper.prop('className')).to.equal('interweave__emoji ');
 

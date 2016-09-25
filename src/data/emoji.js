@@ -18,7 +18,7 @@ export function convertToUnicode(codePoint) {
 }
 
 const data = (typeof json === 'string') ? JSON.parse(json) : json;
-const unicodes = [];
+const unicodeRegex = [];
 
 export const UNICODE_TO_SHORTNAME = {};
 export const SHORTNAME_TO_UNICODE = {};
@@ -34,9 +34,9 @@ Object.keys(data).forEach((name) => {
   SHORTNAME_TO_UNICODE[shortName] = unicode;
   SHORTNAME_TO_CODEPOINT[shortName] = codePoint;
 
-  unicodes.push(unicode);
+  unicodeRegex.push(unicode);
 });
 
 // Sort the list so that the largest unicode characters are first
-export const EMOJI_PATTERN = `:\w+:|${unicodes.sort((a, b) => b.length - a.length).join('|')}`;
+export const EMOJI_PATTERN = `(?:${unicodeRegex.sort((a, b) => b.length - a.length).join('|')})`;
 export default data;

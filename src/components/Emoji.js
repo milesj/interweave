@@ -5,11 +5,7 @@
  */
 
 import React, { PropTypes } from 'react';
-import {
-  UNICODE_TO_SHORTNAME,
-  SHORTNAME_TO_UNICODE,
-  SHORTNAME_TO_CODEPOINT,
-} from '../data/emoji';
+import { UNICODE_TO_SHORTNAME, SHORTNAME_TO_UNICODE, SHORTNAME_TO_CODEPOINT } from '../data/emoji';
 
 import type { EmojiProps } from '../types';
 
@@ -19,10 +15,20 @@ import type { EmojiProps } from '../types';
 export default function Emoji({ shortName, unicode, emojiPath }: EmojiProps) {
   if (!shortName && !unicode) {
     throw new Error('Emoji component requires a `unicode` character or a `shortName`.');
+  }
 
-  } else if (!shortName && unicode) {
+  // Return an empty component instead of throwing errors,
+  // as this will avoid unnecessary noise in production.
+  if (
+    (unicode && typeof UNICODE_TO_SHORTNAME[unicode] === 'undefined') ||
+    (shortName && typeof SHORTNAME_TO_UNICODE[shortName] === 'undefined')
+  ) {
+    return null;
+  }
+
+  // Retrieve any missing values
+  if (!shortName && unicode) {
     shortName = UNICODE_TO_SHORTNAME[unicode];
-
   } else if (!unicode && shortName) {
     unicode = SHORTNAME_TO_UNICODE[shortName];
   }
@@ -46,5 +52,5 @@ export default function Emoji({ shortName, unicode, emojiPath }: EmojiProps) {
 Emoji.propTypes = {
   shortName: PropTypes.string,
   unicode: PropTypes.string,
-  emojiPath: PropTypes.string.isRequired,
+  emojiPath: PropTypes.string,
 };

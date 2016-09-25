@@ -7,11 +7,7 @@
 import React from 'react';
 import Matcher from '../Matcher';
 import Emoji from '../components/Emoji';
-import {
-  EMOJI_PATTERN,
-  UNICODE_TO_SHORTNAME,
-  SHORTNAME_TO_UNICODE,
-} from '../data/emoji';
+import { EMOJI_PATTERN, EMOJI_SHORTNAME_PATTERN } from '../constants';
 
 import type { MatchResponse, EmojiProps } from '../types';
 
@@ -29,22 +25,24 @@ export default class EmojiMatcher extends Matcher {
    * {@inheritDoc}
    */
   match(string: string): ?MatchResponse {
-    return this.doMatch(string, EMOJI_PATTERN, (matches) => {
-      const match = matches[0];
+    let response = null;
 
-      // Shortname
-      if (match[0] === ':' && match[-1] === ':') {
-        return {
-          shortName: match,
-          unicode: SHORTNAME_TO_UNICODE[match],
-        };
-      }
+    // Let's first check to see if a colon exists in the string,
+    // before doing any unnecessary shortname regex matching.
+    if (string.indexOf(':') >= 0) {
+      response = this.doMatch(string, EMOJI_SHORTNAME_PATTERN, matches => ({
+        shortName: matches[0].toLowerCase(),
+      }));
+    }
 
-      // Unicode
-      return {
-        shortName: UNICODE_TO_SHORTNAME[match],
-        unicode: match,
-      };
-    });
+    /* const response = this.doMatch(string, EMOJI_PATTERN, (matches) => ({
+      unicode: matches[0],
+    }));
+
+    if (response) {
+      return response;
+    } */
+
+    return response;
   }
 }
