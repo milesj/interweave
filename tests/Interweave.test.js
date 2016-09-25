@@ -3,6 +3,8 @@ import { expect } from 'chai';
 import { shallow } from 'enzyme';
 import Interweave from '../lib/Interweave';
 import Element from '../lib/components/Element';
+import { Email, /* Emoji, */ Hashtag, Url } from '../lib/components';
+import { EmailMatcher, /* EmojiMatcher, */ HashtagMatcher, IpMatcher, UrlMatcher } from '../lib/matchers';
 import { MockFilter, MockMatcher, HrefFilter, CodeTagMatcher } from './mocks';
 
 describe('Interweave', () => {
@@ -22,7 +24,7 @@ describe('Interweave', () => {
 
     expect(wrapper.prop('children')).to.deep.equal([
       'Foo ',
-      <Element tagName="a" key="1" attributes={{ href: 'bar.net' }}>{['Bar']}</Element>,
+      <Element tagName="a" key="0" attributes={{ href: 'bar.net' }}>{['Bar']}</Element>,
       ' Baz',
     ]);
   });
@@ -133,7 +135,7 @@ describe('Interweave', () => {
 
       expect(wrapper.prop('children')).to.deep.equal([
         'Foo ',
-        <Element tagName="i" key="1" attributes={{}}>{['Bar']}</Element>,
+        <Element tagName="i" key="0" attributes={{}}>{['Bar']}</Element>,
         ' Baz',
       ]);
     });
@@ -142,7 +144,7 @@ describe('Interweave', () => {
       const wrapper = shallow(
         <Interweave
           onAfterParse={(content) => {
-            content.push(<Element tagName="u" key="3">Qux</Element>);
+            content.push(<Element tagName="u" key="1">Qux</Element>);
             return content;
           }}
         >
@@ -152,9 +154,9 @@ describe('Interweave', () => {
 
       expect(wrapper.prop('children')).to.deep.equal([
         'Foo ',
-        <Element tagName="b" key="1" attributes={{}}>{['Bar']}</Element>,
+        <Element tagName="b" key="0" attributes={{}}>{['Bar']}</Element>,
         ' Baz',
-        <Element tagName="u" key="3">Qux</Element>,
+        <Element tagName="u" key="1">Qux</Element>,
       ]);
     });
   });
@@ -181,9 +183,57 @@ describe('Interweave', () => {
       expect(wrapper.find('Element').prop('tagName')).to.equal('b');
       expect(wrapper.prop('children')).to.deep.equal([
         'Foo ',
-        <Element tagName="b" key="1" attributes={{}}>{['Bar']}</Element>,
+        <Element tagName="b" key="0" attributes={{}}>{['Bar']}</Element>,
         ' Baz',
       ]);
     });
+  });
+
+  it('parses and renders large blocks of text with many matchers', () => {
+    const wrapper = shallow(
+      <Interweave
+        tagName="div"
+        matchers={[
+          new EmailMatcher('email'),
+          // new EmojiMatcher('emoji'),
+          new HashtagMatcher('hashtag'),
+          new IpMatcher('ip'),
+          new UrlMatcher('url'),
+        ]}
+      >
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec massa lorem, mollis non commodo quis, ultricies at elit. email@domain.com. Aliquam a arcu porttitor, aliquam eros sed, convallis massa. Nunc vitae vehicula quam, in feugiat ligula. #interweave Donec eu sem non nibh condimentum luctus. Vivamus pharetra feugiat blandit. Vestibulum neque velit, semper id vestibulum id, viverra a felis. Integer convallis in orci nec bibendum. Ut consequat posuere metus, www.domain.com.
+
+Curabitur lectus odio, tempus quis velit vitae, cursus sagittis nulla. Maecenas sem nulla, tempor nec risus nec, ultricies ultricies magna. https://127.0.0.1/foo Nulla malesuada lacinia libero non mollis. Curabitur id lacus id dolor vestibulum ornare quis a nisi. Pellentesque ac finibus mauris. Sed eu luctus diam. Quisque porta lectus in turpis imperdiet dapibus.
+
+#blessed #interweave #milesj
+      </Interweave>
+    ).shallow();
+
+    const urlParts = {
+      scheme: 'http',
+      auth: '',
+      host: '',
+      port: '',
+      path: '',
+      query: '',
+      fragment: '',
+    };
+
+    expect(wrapper.prop('children')).to.deep.equal([
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec massa lorem, mollis non commodo quis, ultricies at elit. ',
+      <Email key="0" emailParts={{ username: 'email', host: 'domain.com' }}>email@domain.com</Email>,
+      '. Aliquam a arcu porttitor, aliquam eros sed, convallis massa. Nunc vitae vehicula quam, in feugiat ligula. ',
+      <Hashtag key="1" hashtagName="interweave">#interweave</Hashtag>,
+      ' Donec eu sem non nibh condimentum luctus. Vivamus pharetra feugiat blandit. Vestibulum neque velit, semper id vestibulum id, viverra a felis. Integer convallis in orci nec bibendum. Ut consequat posuere metus, ',
+      <Url key="6" urlParts={{ ...urlParts, host: 'www.domain.com' }}>www.domain.com</Url>,
+      '. Curabitur lectus odio, tempus quis velit vitae, cursus sagittis nulla. Maecenas sem nulla, tempor nec risus nec, ultricies ultricies magna. ',
+      <Url key="5" urlParts={{ ...urlParts, scheme: 'https', host: '127.0.0.1', path: '/foo' }}>https://127.0.0.1/foo</Url>,
+      ' Nulla malesuada lacinia libero non mollis. Curabitur id lacus id dolor vestibulum ornare quis a nisi. Pellentesque ac finibus mauris. Sed eu luctus diam. Quisque porta lectus in turpis imperdiet dapibus. ',
+      <Hashtag key="2" hashtagName="blessed">#blessed</Hashtag>,
+      ' ',
+      <Hashtag key="3" hashtagName="interweave">#interweave</Hashtag>,
+      ' ',
+      <Hashtag key="4" hashtagName="milesj">#milesj</Hashtag>,
+    ]);
   });
 });

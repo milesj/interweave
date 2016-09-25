@@ -1,6 +1,5 @@
 import React from 'react';
 import { expect } from 'chai';
-import { CodeTagMatcher, HrefFilter, TOKEN_LOCATIONS, MOCK_MARKUP } from './mocks';
 import Interweave from '../lib/Interweave';
 import Parser from '../lib/Parser';
 import Element from '../lib/components/Element';
@@ -14,6 +13,13 @@ import {
   FILTER_CAST_BOOL,
   FILTER_CAST_NUMBER,
 } from '../lib/constants';
+import {
+  CodeTagMatcher,
+  HrefFilter,
+  TOKEN_LOCATIONS,
+  MOCK_MARKUP,
+  createExpectedTokenLocations,
+} from './mocks';
 
 function createChild(tag, text) {
   const child = document.createElement(tag);
@@ -46,32 +52,25 @@ describe('Parser', () => {
   });
 
   describe('applyMatchers()', () => {
-    const createFoo = () => <Element tagName="foo" customProp="foo">FOO</Element>;
-    const createBar = () => <Element tagName="bar" customProp="foo">BAR</Element>;
-    const createBaz = () => <Element tagName="baz" customProp="foo">BAZ</Element>;
+    const createElement = (value, key) => (
+      <Element tagName={value} customProp="foo" key={key}>{value.toUpperCase()}</Element>
+    );
+    const createMultiElement = (value, key) => {
+      switch (key) {
+        default:
+        case 0: return createElement('foo', 0);
+        case 1: return createElement('bar', 1);
+        case 2: return createElement('baz', 2);
+      }
+    };
 
     describe('handles matchers correctly', () => {
-      const expected = [
-        'no tokens',
-        [createFoo()],
-        [' ', createFoo(), ' '],
-        [createFoo(), ' pattern at beginning'],
-        ['pattern at end ', createFoo()],
-        ['pattern in ', createFoo(), ' middle'],
-        [createFoo(), ' pattern at beginning and end ', createFoo()],
-        [createFoo(), ' pattern on ', createFoo(), ' all sides ', createFoo()],
-        ['pattern ', createFoo(), ' used ', createFoo(), ' multiple ', createFoo(), ' times'],
-        ['tokens next ', createFoo(), ' ', createFoo(), ' ', createFoo(), ' to each other'],
-        // ['tokens without ', createFoo(), createFoo(), createFoo(), ' spaces'],
-        ['token next to ', createFoo(), ', a comma'],
-        ['token by a period ', createFoo(), '.'],
-        ['token after a colon: ', createFoo()],
-        ['token after a\n', createFoo(), ' new line'],
-        ['token before a ', createFoo(), '\n new line'],
-      ];
+      const expected = createExpectedTokenLocations('foo', createElement);
 
       TOKEN_LOCATIONS.forEach((location, i) => {
         it(`for: ${location}`, () => {
+          instance.keyIndex = 0; // Reset for easier testing
+
           const tokenString = location.replace(/\{token\}/g, '[foo]');
           const actual = instance.applyMatchers(tokenString);
 
@@ -85,31 +84,16 @@ describe('Parser', () => {
     });
 
     describe('handles multiple matchers correctly', () => {
-      const expected = [
-        'no tokens',
-        [createBaz()],
-        [' ', createBaz(), ' '],
-        [createBaz(), ' pattern at beginning'],
-        ['pattern at end ', createBaz()],
-        ['pattern in ', createBaz(), ' middle'],
-        [createBaz(), ' pattern at beginning and end ', createFoo()],
-        [createBaz(), ' pattern on ', createFoo(), ' all sides ', createBar()],
-        ['pattern ', createBaz(), ' used ', createFoo(), ' multiple ', createBar(), ' times'],
-        ['tokens next ', createBaz(), ' ', createFoo(), ' ', createBar(), ' to each other'],
-        // ['tokens without ', createBaz(), createFoo(), createBar(), ' spaces'],
-        ['token next to ', createBaz(), ', a comma'],
-        ['token by a period ', createBaz(), '.'],
-        ['token after a colon: ', createBaz()],
-        ['token after a\n', createBaz(), ' new line'],
-        ['token before a ', createBaz(), '\n new line'],
-      ];
+      const expected = createExpectedTokenLocations('', createMultiElement);
 
       TOKEN_LOCATIONS.forEach((location, i) => {
         it(`for: ${location}`, () => {
+          instance.keyIndex = 0; // Reset for easier testing
+
           const tokenString = location
-            .replace('{token}', '[baz]')
             .replace('{token}', '[foo]')
-            .replace('{token}', '[bar]');
+            .replace('{token}', '[bar]')
+            .replace('{token}', '[baz]');
           const actual = instance.applyMatchers(tokenString);
 
           if (i === 0) {
@@ -122,24 +106,7 @@ describe('Parser', () => {
     });
 
     describe('handles no matchers correctly', () => {
-      const expected = [
-        'no tokens',
-        '[qux]',
-        ' [qux] ',
-        '[qux] pattern at beginning',
-        'pattern at end [qux]',
-        'pattern in [qux] middle',
-        '[qux] pattern at beginning and end [qux]',
-        '[qux] pattern on [qux] all sides [qux]',
-        'pattern [qux] used [qux] multiple [qux] times',
-        'tokens next [qux] [qux] [qux] to each other',
-        // 'tokens without [qux][qux][qux] spaces',
-        'token next to [qux], a comma',
-        'token by a period [qux].',
-        'token after a colon: [qux]',
-        'token after a\n[qux] new line',
-        'token before a [qux]\n new line',
-      ];
+      const expected = createExpectedTokenLocations('[qux]', value => value, true);
 
       TOKEN_LOCATIONS.forEach((location, i) => {
         it(`for: ${location}`, () => {
@@ -323,17 +290,17 @@ describe('Parser', () => {
 
       expect(instance.parse()).to.deep.equal([
         '\n  ',
-        <Element key="1" tagName="main" attributes={{ role: 'main' }}>
+        <Element key="0" tagName="main" attributes={{ role: 'main' }}>
           {[
             '\n    Main content\n    ',
-            <Element key="1" tagName="div" attributes={{}}>
+            <Element key="0" tagName="div" attributes={{}}>
               {[
                 '\n      ',
-                <Element key="1" tagName="a" attributes={{ href: '#' }}>
+                <Element key="0" tagName="a" attributes={{ href: '#' }}>
                   {['Link']}
                 </Element>,
                 '\n      ',
-                <Element key="3" tagName="span" attributes={{ className: 'foo' }}>
+                <Element key="1" tagName="span" attributes={{ className: 'foo' }}>
                   {['String']}
                 </Element>,
                 '\n    ',
@@ -343,7 +310,7 @@ describe('Parser', () => {
           ]}
         </Element>,
         '\n  ',
-        <Element key="3" tagName="aside" attributes={{ id: 'sidebar' }}>
+        <Element key="4" tagName="aside" attributes={{ id: 'sidebar' }}>
           {['\n    Sidebar content\n  ']}
         </Element>,
         '\n\n',
@@ -417,7 +384,7 @@ describe('Parser', () => {
 
       expect(instance.parseNode(element)).to.deep.equal([
         'Foo',
-        <Element key="1" tagName="div" attributes={{}}>{['Bar']}</Element>,
+        <Element key="0" tagName="div" attributes={{}}>{['Bar']}</Element>,
         'Baz',
       ]);
     });
@@ -431,9 +398,9 @@ describe('Parser', () => {
 
       expect(instance.parseNode(element)).to.deep.equal([
         'Foo',
-        <Element key="1" tagName="div" attributes={{}}>{['Bar']}</Element>,
+        <Element key="0" tagName="div" attributes={{}}>{['Bar']}</Element>,
         'BazQux',
-        <Element key="4" tagName="div" attributes={{}}>{['Bar']}</Element>,
+        <Element key="1" tagName="div" attributes={{}}>{['Bar']}</Element>,
       ]);
     });
 

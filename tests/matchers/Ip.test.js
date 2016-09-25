@@ -2,7 +2,7 @@ import { expect } from 'chai';
 import Parser from '../../lib/Parser';
 import IpMatcher from '../../lib/matchers/Ip';
 import { IP_PATTERN } from '../../lib/constants';
-import { TOKEN_LOCATIONS } from '../mocks';
+import { TOKEN_LOCATIONS, createExpectedTokenLocations } from '../mocks';
 
 const VALID_IPS = [
   { ip: '0.0.0.0', scheme: null, host: '0.0.0.0' },
@@ -69,7 +69,7 @@ describe('matchers/Ip', () => {
 
   describe('matches all ips in a string', () => {
     const parser = new Parser('', {}, [matcher]);
-    const create = (ipParams) => {
+    const createIp = (ipParams, key) => {
       const { ip, ...params } = ipParams;
 
       return matcher.factory(ip, {
@@ -83,31 +83,17 @@ describe('matchers/Ip', () => {
           auth: params.auth ? params.auth.substr(0, params.auth.length - 1) : '',
           port: params.port ? params.port.substr(1) : '',
         },
+        key,
       });
     };
 
     VALID_IPS.forEach((ipParams) => {
-      const expected = [
-        'no tokens',
-        [create(ipParams)],
-        [' ', create(ipParams), ' '],
-        [create(ipParams), ' pattern at beginning'],
-        ['pattern at end ', create(ipParams)],
-        ['pattern in ', create(ipParams), ' middle'],
-        [create(ipParams), ' pattern at beginning and end ', create(ipParams)],
-        [create(ipParams), ' pattern on ', create(ipParams), ' all sides ', create(ipParams)],
-        ['pattern ', create(ipParams), ' used ', create(ipParams), ' multiple ', create(ipParams), ' times'],
-        ['tokens next ', create(ipParams), ' ', create(ipParams), ' ', create(ipParams), ' to each other'],
-        // ['tokens without ', create(ipParams), create(ipParams), create(ipParams), ' spaces'],
-        ['token next to ', create(ipParams), ', a comma'],
-        ['token by a period ', create(ipParams), '.'],
-        ['token after a colon: ', create(ipParams)],
-        ['token after a\n', create(ipParams), ' new line'],
-        ['token before a ', create(ipParams), '\n new line'],
-      ];
+      const expected = createExpectedTokenLocations(ipParams, createIp);
 
       TOKEN_LOCATIONS.forEach((location, i) => {
         it(`for: ${ipParams.ip} - ${location}`, () => {
+          parser.keyIndex = 0; // Reset for easier testing
+
           const tokenString = location.replace(/\{token\}/g, ipParams.ip);
           const actual = parser.applyMatchers(tokenString);
 

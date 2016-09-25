@@ -37,6 +37,7 @@ export default class Parser {
   props: Object;
   matchers: Matcher[];
   filters: Filter[];
+  keyIndex: number;
 
   constructor(
     markup: string,
@@ -55,6 +56,7 @@ export default class Parser {
       ...Interweave.getFilters().map(row => row.filter),
       ...filters,
     ];
+    this.keyIndex = 0;
   }
 
   /**
@@ -102,7 +104,10 @@ export default class Parser {
         components.push(matcher.createElement(match, {
           ...props,
           ...(partProps || {}),
+          key: this.keyIndex,
         }));
+
+        this.keyIndex += 1;
       }
     });
 
@@ -125,7 +130,7 @@ export default class Parser {
       }
 
       // Inject the component
-      matchedArray.push(components[parseFloat(no)]);
+      matchedArray.push(components[parseInt(no, 10)]);
 
       // Set the next index
       lastIndex = index + parts[0].length;
@@ -249,7 +254,7 @@ export default class Parser {
     let content = [];
     let mergedText = '';
 
-    Array.from(parentNode.childNodes).forEach((node, i) => {
+    Array.from(parentNode.childNodes).forEach((node) => {
       // Create components for HTML elements
       if (node.nodeType === ELEMENT_NODE) {
         const tagName = node.nodeName.toLowerCase();
@@ -272,10 +277,16 @@ export default class Parser {
         // Convert the element to a component
         } else {
           content.push(
-            <ElementComponent key={i} tagName={tagName} attributes={this.extractAttributes(node)}>
+            <ElementComponent
+              key={this.keyIndex}
+              tagName={tagName}
+              attributes={this.extractAttributes(node)}
+            >
               {this.parseNode(node)}
             </ElementComponent>
           );
+
+          this.keyIndex += 1;
         }
 
       // Apply matchers if a text node

@@ -2,7 +2,7 @@ import { expect } from 'chai';
 import Parser from '../../lib/Parser';
 import UrlMatcher from '../../lib/matchers/Url';
 import { URL_PATTERN } from '../../lib/constants';
-import { TOKEN_LOCATIONS } from '../mocks';
+import { TOKEN_LOCATIONS, createExpectedTokenLocations } from '../mocks';
 
 // Borrowed from: https://github.com/Sporkmonger/Addressable/blob/master/spec/addressable/uri_spec.rb
 const VALID_URLS = [
@@ -129,7 +129,7 @@ describe('matchers/Url', () => {
 
   describe('matches all urls in a string', () => {
     const parser = new Parser('', {}, [matcher]);
-    const create = (urlParams) => {
+    const createUrl = (urlParams, key) => {
       const { url, ...params } = urlParams;
 
       return matcher.factory(url, {
@@ -143,31 +143,17 @@ describe('matchers/Url', () => {
           auth: params.auth ? params.auth.substr(0, params.auth.length - 1) : '',
           port: params.port ? params.port.substr(1) : '',
         },
+        key,
       });
     };
 
     VALID_URLS.forEach((urlParams) => {
-      const expected = [
-        'no tokens',
-        [create(urlParams)],
-        [' ', create(urlParams), ' '],
-        [create(urlParams), ' pattern at beginning'],
-        ['pattern at end ', create(urlParams)],
-        ['pattern in ', create(urlParams), ' middle'],
-        [create(urlParams), ' pattern at beginning and end ', create(urlParams)],
-        [create(urlParams), ' pattern on ', create(urlParams), ' all sides ', create(urlParams)],
-        ['pattern ', create(urlParams), ' used ', create(urlParams), ' multiple ', create(urlParams), ' times'],
-        ['tokens next ', create(urlParams), ' ', create(urlParams), ' ', create(urlParams), ' to each other'],
-        // ['tokens without ', create(urlParams), create(urlParams), create(urlParams), ' spaces'],
-        ['token next to ', create(urlParams), ', a comma'],
-        ['token by a period ', create(urlParams), '.'],
-        ['token after a colon: ', create(urlParams)],
-        ['token after a\n', create(urlParams), ' new line'],
-        ['token before a ', create(urlParams), '\n new line'],
-      ];
+      const expected = createExpectedTokenLocations(urlParams, createUrl);
 
       TOKEN_LOCATIONS.forEach((location, i) => {
         it(`for: ${urlParams.url} - ${location}`, () => {
+          parser.keyIndex = 0; // Reset for easier testing
+
           const tokenString = location.replace(/\{token\}/g, urlParams.url);
           const actual = parser.applyMatchers(tokenString);
 

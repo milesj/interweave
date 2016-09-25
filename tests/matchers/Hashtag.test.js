@@ -2,7 +2,7 @@ import { expect } from 'chai';
 import Parser from '../../lib/Parser';
 import HashtagMatcher from '../../lib/matchers/Hashtag';
 import { HASHTAG_PATTERN } from '../../lib/constants';
-import { TOKEN_LOCATIONS } from '../mocks';
+import { TOKEN_LOCATIONS, createExpectedTokenLocations } from '../mocks';
 
 const VALID_HASHTAGS = [
   '#alloneword',
@@ -53,30 +53,18 @@ describe('matchers/Hashtag', () => {
 
   describe('matches all hashtags in a string', () => {
     const parser = new Parser('', {}, [matcher]);
-    const create = hashtag => matcher.factory(hashtag, { hashtagName: hashtag.substr(1) });
+    const createHashtag = (hashtag, key) => (matcher.factory(hashtag, {
+      hashtagName: hashtag.substr(1),
+      key,
+    }));
 
     VALID_HASHTAGS.forEach((hashtag) => {
-      const expected = [
-        'no tokens',
-        [create(hashtag)],
-        [' ', create(hashtag), ' '],
-        [create(hashtag), ' pattern at beginning'],
-        ['pattern at end ', create(hashtag)],
-        ['pattern in ', create(hashtag), ' middle'],
-        [create(hashtag), ' pattern at beginning and end ', create(hashtag)],
-        [create(hashtag), ' pattern on ', create(hashtag), ' all sides ', create(hashtag)],
-        ['pattern ', create(hashtag), ' used ', create(hashtag), ' multiple ', create(hashtag), ' times'],
-        ['tokens next ', create(hashtag), ' ', create(hashtag), ' ', create(hashtag), ' to each other'],
-        // ['tokens without ', create(hashtag), create(hashtag), create(hashtag), ' spaces'],
-        ['token next to ', create(hashtag), ', a comma'],
-        ['token by a period ', create(hashtag), '.'],
-        ['token after a colon: ', create(hashtag)],
-        ['token after a\n', create(hashtag), ' new line'],
-        ['token before a ', create(hashtag), '\n new line'],
-      ];
+      const expected = createExpectedTokenLocations(hashtag, createHashtag);
 
       TOKEN_LOCATIONS.forEach((location, i) => {
         it(`for: ${hashtag} - ${location}`, () => {
+          parser.keyIndex = 0; // Reset for easier testing
+
           const tokenString = location.replace(/\{token\}/g, hashtag);
           const actual = parser.applyMatchers(tokenString);
 

@@ -2,7 +2,7 @@ import { expect } from 'chai';
 import Parser from '../../lib/Parser';
 import EmailMatcher from '../../lib/matchers/Email';
 import { EMAIL_PATTERN } from '../../lib/constants';
-import { TOKEN_LOCATIONS } from '../mocks';
+import { TOKEN_LOCATIONS, createExpectedTokenLocations } from '../mocks';
 
 const VALID_EMAILS = [
   'user@domain.com',
@@ -89,7 +89,7 @@ describe('matchers/Email', () => {
 
   describe('matches all emails in a string', () => {
     const parser = new Parser('', {}, [matcher]);
-    const create = (email) => {
+    const createEmail = (email, key) => {
       const parts = email.split('@');
 
       return matcher.factory(email, {
@@ -97,31 +97,17 @@ describe('matchers/Email', () => {
           username: parts[0],
           host: parts[1],
         },
+        key,
       });
     };
 
     VALID_EMAILS.forEach((email) => {
-      const expected = [
-        'no tokens',
-        [create(email)],
-        [' ', create(email), ' '],
-        [create(email), ' pattern at beginning'],
-        ['pattern at end ', create(email)],
-        ['pattern in ', create(email), ' middle'],
-        [create(email), ' pattern at beginning and end ', create(email)],
-        [create(email), ' pattern on ', create(email), ' all sides ', create(email)],
-        ['pattern ', create(email), ' used ', create(email), ' multiple ', create(email), ' times'],
-        ['tokens next ', create(email), ' ', create(email), ' ', create(email), ' to each other'],
-        // ['tokens without ', create(email), create(email), create(email), ' spaces'],
-        ['token next to ', create(email), ', a comma'],
-        ['token by a period ', create(email), '.'],
-        ['token after a colon: ', create(email)],
-        ['token after a\n', create(email), ' new line'],
-        ['token before a ', create(email), '\n new line'],
-      ];
+      const expected = createExpectedTokenLocations(email, createEmail);
 
       TOKEN_LOCATIONS.forEach((location, i) => {
         it(`for: ${email} - ${location}`, () => {
+          parser.keyIndex = 0; // Reset for easier testing
+
           const tokenString = location.replace(/\{token\}/g, email);
           const actual = parser.applyMatchers(tokenString);
 

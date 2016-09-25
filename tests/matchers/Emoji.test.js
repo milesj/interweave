@@ -1,9 +1,9 @@
 import { expect } from 'chai';
 import Parser from '../../lib/Parser';
 import EmojiMatcher from '../../lib/matchers/Emoji';
-import { SHORTNAME_TO_UNICODE /*, UNICODE_TO_SHORTNAME, EMOJI_PATTERN */ } from '../../lib/data/emoji';
+import { SHORTNAME_TO_UNICODE /* , UNICODE_TO_SHORTNAME, EMOJI_PATTERN */ } from '../../lib/data/emoji';
 import { EMOJI_SHORTNAME_PATTERN } from '../../lib/constants';
-import { VALID_EMOJIS, TOKEN_LOCATIONS } from '../mocks';
+import { VALID_EMOJIS, TOKEN_LOCATIONS, createExpectedTokenLocations } from '../mocks';
 
 // const VALID_UNICODE = Object.keys(UNICODE_TO_SHORTNAME);
 const VALID_SHORTNAME = Object.keys(SHORTNAME_TO_UNICODE);
@@ -52,30 +52,15 @@ describe('matchers/Emoji', () => {
 
   describe('matches all emojis in a string', () => {
     const parser = new Parser('', {}, [matcher]);
-    const createShort = shortName => matcher.factory(shortName, { shortName });
+    const createShort = (shortName, key) => matcher.factory(shortName, { shortName, key });
 
     VALID_EMOJIS.forEach(([,, shortName]) => {
-      const expectedShort = [
-        'no tokens',
-        [createShort(shortName)],
-        [' ', createShort(shortName), ' '],
-        [createShort(shortName), ' pattern at beginning'],
-        ['pattern at end ', createShort(shortName)],
-        ['pattern in ', createShort(shortName), ' middle'],
-        [createShort(shortName), ' pattern at beginning and end ', createShort(shortName)],
-        [createShort(shortName), ' pattern on ', createShort(shortName), ' all sides ', createShort(shortName)],
-        ['pattern ', createShort(shortName), ' used ', createShort(shortName), ' multiple ', createShort(shortName), ' times'],
-        ['tokens next ', createShort(shortName), ' ', createShort(shortName), ' ', createShort(shortName), ' to each other'],
-        // ['tokens without ', createShort(shortName), createShort(shortName), createShort(shortName), ' spaces'],
-        ['token next to ', createShort(shortName), ', a comma'],
-        ['token by a period ', createShort(shortName), '.'],
-        ['token after a colon: ', createShort(shortName)],
-        ['token after a\n', createShort(shortName), ' new line'],
-        ['token before a ', createShort(shortName), '\n new line'],
-      ];
+      const expectedShort = createExpectedTokenLocations(shortName, createShort);
 
       TOKEN_LOCATIONS.forEach((location, i) => {
         it(`for: ${shortName} - ${location}`, () => {
+          parser.keyIndex = 0; // Reset for easier testing
+
           const tokenString = location.replace(/\{token\}/g, shortName);
           const actual = parser.applyMatchers(tokenString);
 
