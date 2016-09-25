@@ -8,9 +8,7 @@ import React, { PropTypes } from 'react';
 
 import type { ElementProps } from '../types';
 
-export default function Element(props: ElementProps) {
-  const { attributes = {}, children, tagName: Tag } = props;
-
+export default function Element({ attributes = {}, children, tagName: Tag }: ElementProps) {
   return (
     <Tag {...attributes} data-interweave>
       {children}

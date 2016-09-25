@@ -1,7 +1,7 @@
 import json from './emoji.json';
 
-function convertToUnicode(codePoint) {
-  if (codePoint.indexOf('-')) {
+export function convertToUnicode(codePoint) {
+  if (codePoint.indexOf('-') >= 0) {
     return codePoint.split('-').map(convertToUnicode).join('');
   }
 

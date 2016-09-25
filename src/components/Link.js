@@ -8,9 +8,7 @@ import React, { PropTypes } from 'react';
 
 import type { LinkProps } from '../types';
 
-export default function Link(props: LinkProps) {
-  const { children, href, onClick, newWindow } = props;
-
+export default function Link({ children, href, onClick, newWindow }: LinkProps) {
   return (
     <a
       href={href}

@@ -5,7 +5,11 @@
  */
 
 import React, { PropTypes } from 'react';
-import { SHORTNAME_TO_CODEPOINT } from '../data/emoji';
+import {
+  UNICODE_TO_SHORTNAME,
+  SHORTNAME_TO_UNICODE,
+  SHORTNAME_TO_CODEPOINT,
+} from '../data/emoji';
 
 import type { EmojiProps } from '../types';
 
@@ -13,13 +17,23 @@ import type { EmojiProps } from '../types';
 // http://git.emojione.com/demos/latest/sprites-svg.html
 // https://css-tricks.com/using-svg/
 export default function Emoji({ shortName, unicode, emojiPath }: EmojiProps) {
+  if (!shortName && !unicode) {
+    throw new Error('Emoji component requires a `unicode` character or a `shortName`.');
+
+  } else if (!shortName && unicode) {
+    shortName = UNICODE_TO_SHORTNAME[unicode];
+
+  } else if (!unicode && shortName) {
+    unicode = SHORTNAME_TO_UNICODE[shortName];
+  }
+
   const codePoint = SHORTNAME_TO_CODEPOINT[shortName];
   const path = emojiPath || '{{codepoint}}';
-  const ext = path.substr(-3).toLowerCase();
+  const ext = emojiPath ? emojiPath.substr(-3).toLowerCase() : '';
 
   return (
     <span
-      className={`interweave__emoji interweave__emoji--${ext}`}
+      className={`interweave__emoji ${ext}`}
       data-unicode={unicode}
       data-codepoint={codePoint}
       data-shortname={shortName}
@@ -30,7 +44,7 @@ export default function Emoji({ shortName, unicode, emojiPath }: EmojiProps) {
 }
 
 Emoji.propTypes = {
-  shortName: PropTypes.string.isRequired,
-  unicode: PropTypes.string.isRequired,
+  shortName: PropTypes.string,
+  unicode: PropTypes.string,
   emojiPath: PropTypes.string.isRequired,
 };
