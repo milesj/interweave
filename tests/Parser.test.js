@@ -6,10 +6,11 @@ import Element from '../lib/components/Element';
 import {
   TAGS,
   ATTRIBUTES,
-  ATTRIBUTES_TO_REACT,
+  ATTRIBUTES_TO_PROPS,
+  PARSER_ALLOW,
+  PARSER_DENY,
+  PARSER_PASS_THROUGH,
   FILTER_ALLOW,
-  FILTER_DENY,
-  FILTER_PASS_THROUGH,
   FILTER_CAST_BOOL,
   FILTER_CAST_NUMBER,
 } from '../lib/constants';
@@ -161,7 +162,7 @@ describe('Parser', () => {
     });
 
     Object.keys(ATTRIBUTES).forEach((name) => {
-      const attrName = ATTRIBUTES_TO_REACT[name] || name;
+      const attrName = ATTRIBUTES_TO_PROPS[name] || name;
 
       switch (ATTRIBUTES[name]) {
         case FILTER_ALLOW:
@@ -338,7 +339,7 @@ describe('Parser', () => {
 
     Object.keys(TAGS).forEach((tag, i) => {
       switch (TAGS[tag]) {
-        case FILTER_ALLOW:
+        case PARSER_ALLOW:
           it(`renders <${tag}> elements that are allowed`, () => {
             element.appendChild(createChild(tag, i));
 
@@ -348,7 +349,7 @@ describe('Parser', () => {
           });
           break;
 
-        case FILTER_DENY:
+        case PARSER_DENY:
           it(`removes <${tag}> elements that are denied`, () => {
             element.appendChild(createChild(tag, i));
 
@@ -356,7 +357,7 @@ describe('Parser', () => {
           });
           break;
 
-        case FILTER_PASS_THROUGH:
+        case PARSER_PASS_THROUGH:
           it(`removes <${tag}> elements as they are pass-through but renders its children`, () => {
             element.appendChild(createChild(tag, i));
 

@@ -18,6 +18,15 @@ export interface NodeInterface {
   textContent: string,
 }
 
+export type NodeConfig = {
+  rule: number,
+  type: string,
+  inline: boolean,
+  block: boolean,
+  self: boolean,
+  children: string[],
+};
+
 export type PrimitiveType = string | number | boolean;
 
 export type Attributes = { [key: string]: PrimitiveType };

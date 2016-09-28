@@ -12,19 +12,21 @@ import Matcher from './Matcher';
 import Filter from './Filter';
 import ElementComponent from './components/Element';
 import {
+  PARSER_DENY,
+  PARSER_PASS_THROUGH,
   FILTER_DENY,
-  FILTER_PASS_THROUGH,
   FILTER_CAST_NUMBER,
   FILTER_CAST_BOOL,
   TAGS,
   ATTRIBUTES,
-  ATTRIBUTES_TO_REACT,
+  ATTRIBUTES_TO_PROPS,
 } from './constants';
 
 import type {
   Attributes,
   PrimitiveType,
   ParsedNodes,
+  NodeConfig,
   NodeInterface,
 } from './types';
 
@@ -186,17 +188,15 @@ export default class Parser {
         return;
       }
 
-      let name: string = attr.name;
+      const name: string = attr.name.toLowerCase();
       const value: string = attr.value;
       const filter: number = ATTRIBUTES[name];
-
-      name = name.toLowerCase();
 
       // Do not allow blacklisted attributes excluding ARIA attributes
       // Do not allow events or XSS injections
       if (name.substr(0, 5) !== 'aria-') {
         if (
-          typeof filter === 'undefined' ||
+          !filter ||
           filter === FILTER_DENY ||
           name.match(/^on/) ||
           value.match(/(javascript|script|xss):/i)
@@ -221,7 +221,7 @@ export default class Parser {
         newValue = String(newValue);
       }
 
-      attributes[ATTRIBUTES_TO_REACT[name] || name] = newValue;
+      attributes[ATTRIBUTES_TO_PROPS[name] || name] = newValue;
     });
 
     return attributes;
@@ -236,7 +236,7 @@ export default class Parser {
    */
   parse(): ParsedNodes {
     if (!this.content.length) {
-      this.content = this.parseNode(this.doc.body);
+      this.content = this.parseNode(this.doc.body, TAGS.body);
     }
 
     return this.content;
@@ -247,9 +247,10 @@ export default class Parser {
    * list of text nodes and React components.
    *
    * @param {Node} parentNode
+   * @param {Object} parentConfig
    * @returns {String[]|ReactComponent[]}
    */
-  parseNode(parentNode: NodeInterface): ParsedNodes {
+  parseNode(parentNode: NodeInterface, parentConfig: NodeConfig): ParsedNodes {
     const { noHtml } = this.props;
     let content = [];
     let mergedText = '';
@@ -258,7 +259,7 @@ export default class Parser {
       // Create components for HTML elements
       if (node.nodeType === ELEMENT_NODE) {
         const tagName = node.nodeName.toLowerCase();
-        const filter = TAGS[tagName];
+        const config = TAGS[tagName];
 
         // Persist any previous text
         if (mergedText) {
@@ -266,13 +267,13 @@ export default class Parser {
           mergedText = '';
         }
 
-        // Skip over elements in the blacklist
-        if (typeof filter === 'undefined' || filter === FILTER_DENY) {
+        // Skip over elements not supported
+        if (!config || config.rule === PARSER_DENY) {
           return;
 
         // Only pass through the text content
-        } else if (filter === FILTER_PASS_THROUGH || noHtml) {
-          content = content.concat(this.parseNode(node));
+        } else if (config.rule === PARSER_PASS_THROUGH || noHtml) {
+          content = content.concat(this.parseNode(node, config));
 
         // Convert the element to a component
         } else {
@@ -282,7 +283,7 @@ export default class Parser {
               tagName={tagName}
               attributes={this.extractAttributes(node)}
             >
-              {this.parseNode(node)}
+              {this.parseNode(node, config)}
             </ElementComponent>
           );
 
