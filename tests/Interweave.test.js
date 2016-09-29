@@ -2,8 +2,8 @@ import React from 'react';
 import { expect } from 'chai';
 import { shallow } from 'enzyme';
 import Interweave from '../lib/Interweave';
-import { Element, Email, /* Emoji, */ Hashtag, Url } from '../lib/components';
-import { EmailMatcher, /* EmojiMatcher, */ HashtagMatcher, IpMatcher, UrlMatcher } from '../lib/matchers';
+import { Element, Email, Emoji, Hashtag, Url } from '../lib/components';
+import { EmailMatcher, EmojiMatcher, HashtagMatcher, IpMatcher, UrlMatcher } from '../lib/matchers';
 import { MockFilter, MockMatcher, HrefFilter, CodeTagMatcher } from './mocks';
 
 describe('Interweave', () => {
@@ -204,13 +204,13 @@ describe('Interweave', () => {
         tagName="div"
         matchers={[
           new EmailMatcher('email'),
-          // new EmojiMatcher('emoji'),
+          new EmojiMatcher('emoji'),
           new HashtagMatcher('hashtag'),
           new IpMatcher('ip'),
           new UrlMatcher('url'),
         ]}
       >
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec massa lorem, mollis non commodo quis, ultricies at elit. email@domain.com. Aliquam a arcu porttitor, aliquam eros sed, convallis massa. Nunc vitae vehicula quam, in feugiat ligula. #interweave Donec eu sem non nibh condimentum luctus. Vivamus pharetra feugiat blandit. Vestibulum neque velit, semper id vestibulum id, viverra a felis. Integer convallis in orci nec bibendum. Ut consequat posuere metus, www.domain.com.
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec massa lorem, mollis non commodo quis, ultricies at elit. email@domain.com. Aliquam a arcu porttitor, aliquam eros sed, convallis massa. Nunc vitae vehicula quam, in feugiat ligula. #interweave Donec eu sem non nibh condimentum luctus. Vivamus pharetra feugiat blandit. Vestibulum neque velit, semper :japanese_castle: id vestibulum id, viverra a felis. Integer convallis in orci nec bibendum. Ut consequat posuere metus, www.domain.com.
 
 Curabitur lectus odio, tempus quis velit vitae, cursus sagittis nulla. Maecenas sem nulla, tempor nec risus nec, ultricies ultricies magna. https://127.0.0.1/foo Nulla malesuada lacinia libero non mollis. Curabitur id lacus id dolor vestibulum ornare quis a nisi (http://domain.com/some/path?with=query). Pellentesque ac finibus mauris. Sed eu luctus diam. Quisque porta lectus in turpis imperdiet dapibus.
 
@@ -222,19 +222,21 @@ Curabitur lectus odio, tempus quis velit vitae, cursus sagittis nulla. Maecenas 
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec massa lorem, mollis non commodo quis, ultricies at elit. ',
       <Email key="0" emailParts={{ username: 'email', host: 'domain.com' }}>email@domain.com</Email>,
       '. Aliquam a arcu porttitor, aliquam eros sed, convallis massa. Nunc vitae vehicula quam, in feugiat ligula. ',
-      <Hashtag key="1" hashtagName="interweave">#interweave</Hashtag>,
-      ' Donec eu sem non nibh condimentum luctus. Vivamus pharetra feugiat blandit. Vestibulum neque velit, semper id vestibulum id, viverra a felis. Integer convallis in orci nec bibendum. Ut consequat posuere metus, ',
-      <Url key="6" urlParts={{ ...urlParts, host: 'www.domain.com' }}>www.domain.com</Url>,
+      <Hashtag key="2" hashtagName="interweave">#interweave</Hashtag>,
+      ' Donec eu sem non nibh condimentum luctus. Vivamus pharetra feugiat blandit. Vestibulum neque velit, semper ',
+      <Emoji key="1" shortName=":japanese_castle:" />,
+      ' id vestibulum id, viverra a felis. Integer convallis in orci nec bibendum. Ut consequat posuere metus, ',
+      <Url key="7" urlParts={{ ...urlParts, host: 'www.domain.com' }}>www.domain.com</Url>,
       '. Curabitur lectus odio, tempus quis velit vitae, cursus sagittis nulla. Maecenas sem nulla, tempor nec risus nec, ultricies ultricies magna. ',
-      <Url key="5" urlParts={{ ...urlParts, scheme: 'https', host: '127.0.0.1', path: '/foo' }}>https://127.0.0.1/foo</Url>,
+      <Url key="6" urlParts={{ ...urlParts, scheme: 'https', host: '127.0.0.1', path: '/foo' }}>https://127.0.0.1/foo</Url>,
       ' Nulla malesuada lacinia libero non mollis. Curabitur id lacus id dolor vestibulum ornare quis a nisi (',
-      <Url key="7" urlParts={{ ...urlParts, host: 'domain.com', path: '/some/path', query: '?with=query' }}>http://domain.com/some/path?with=query</Url>,
+      <Url key="8" urlParts={{ ...urlParts, host: 'domain.com', path: '/some/path', query: '?with=query' }}>http://domain.com/some/path?with=query</Url>,
       '). Pellentesque ac finibus mauris. Sed eu luctus diam. Quisque porta lectus in turpis imperdiet dapibus. ',
-      <Hashtag key="2" hashtagName="blessed">#blessed</Hashtag>,
+      <Hashtag key="3" hashtagName="blessed">#blessed</Hashtag>,
       ' ',
-      <Hashtag key="3" hashtagName="interweave">#interweave</Hashtag>,
+      <Hashtag key="4" hashtagName="interweave">#interweave</Hashtag>,
       ' ',
-      <Hashtag key="4" hashtagName="milesj">#milesj</Hashtag>,
+      <Hashtag key="5" hashtagName="milesj">#milesj</Hashtag>,
     ]);
   });
 
@@ -244,7 +246,7 @@ Curabitur lectus odio, tempus quis velit vitae, cursus sagittis nulla. Maecenas 
         tagName="div"
         matchers={[
           new EmailMatcher('email'),
-          // new EmojiMatcher('emoji'),
+          new EmojiMatcher('emoji'),
           new HashtagMatcher('hashtag'),
           new IpMatcher('ip'),
           new UrlMatcher('url'),
@@ -252,11 +254,11 @@ Curabitur lectus odio, tempus quis velit vitae, cursus sagittis nulla. Maecenas 
       >
         {`<h1>Lorem ipsum dolor sit amet</h1>
 
-<p><b>Consectetur adipiscing elit.</b> Donec massa lorem, mollis non commodo quis, ultricies at elit. email@domain.com. Aliquam a arcu porttitor, aliquam eros sed, convallis massa. Nunc vitae vehicula quam, in feugiat ligula. #interweave Donec eu sem non nibh condimentum luctus. Vivamus pharetra feugiat blandit. Vestibulum neque velit, semper id vestibulum id, viverra a felis. Integer convallis in orci nec bibendum. Ut consequat posuere metus, <a href="www.domain.com">www.domain.com</a>.</p>
+<p><b>Consectetur adipiscing elit.</b> Donec massa lorem, mollis non commodo quis, ultricies at elit. email@domain.com. Aliquam a arcu porttitor, aliquam eros sed, convallis massa. Nunc vitae vehicula quam, in feugiat ligula. #interweave Donec eu sem non nibh condimentum luctus. Vivamus pharetra feugiat blandit. Vestibulum neque velit, semper id vestibulum id :love_letter:, viverra a felis. Integer convallis in orci nec bibendum. Ut consequat posuere metus, <a href="www.domain.com">www.domain.com</a>.</p>
 
-<br /><br />
+<br />:ok_woman_tone3:<br />
 
-<div>Curabitur lectus odio, <em>tempus quis velit vitae, cursus sagittis nulla</em>. Maecenas sem nulla, tempor nec risus nec, ultricies ultricies magna. https://127.0.0.1/foo Nulla malesuada lacinia libero non mollis. Curabitur id lacus id dolor vestibulum ornare quis a nisi (http://domain.com/some/path?with=query). Pellentesque ac finibus mauris. Sed eu luctus diam. Quisque porta lectus in turpis imperdiet dapibus.</div>
+<div>Curabitur lectus odio, <em>tempus quis velit vitae, cursus sagittis nulla</em>. Maecenas sem nulla, tempor nec risus nec, ultricies ultricies magna. https://127.0.0.1/foo Nulla malesuada lacinia libero non mollis. Curabitur id lacus id dolor vestibulum ornare quis a nisi (http://domain.com/some/path?with=query). Pellentesque ac finibus mauris. Sed eu luctus diam. :not_an_emoji: Quisque porta lectus in turpis imperdiet dapibus.</div>
 
 <section>#blessed #interweave #milesj</section>`}
       </Interweave>
@@ -271,35 +273,38 @@ Curabitur lectus odio, tempus quis velit vitae, cursus sagittis nulla. Maecenas 
           ' Donec massa lorem, mollis non commodo quis, ultricies at elit. ',
           <Email key="3" emailParts={{ username: 'email', host: 'domain.com' }}>email@domain.com</Email>,
           '. Aliquam a arcu porttitor, aliquam eros sed, convallis massa. Nunc vitae vehicula quam, in feugiat ligula. ',
-          <Hashtag key="4" hashtagName="interweave">#interweave</Hashtag>,
-          ' Donec eu sem non nibh condimentum luctus. Vivamus pharetra feugiat blandit. Vestibulum neque velit, semper id vestibulum id, viverra a felis. Integer convallis in orci nec bibendum. Ut consequat posuere metus, ',
-          <Element key="5" tagName="a" attributes={{ href: 'www.domain.com' }}>{['www.domain.com']}</Element>,
+          <Hashtag key="5" hashtagName="interweave">#interweave</Hashtag>,
+          ' Donec eu sem non nibh condimentum luctus. Vivamus pharetra feugiat blandit. Vestibulum neque velit, semper id vestibulum id ',
+          <Emoji key="4" shortName=":love_letter:" />,
+          ', viverra a felis. Integer convallis in orci nec bibendum. Ut consequat posuere metus, ',
+          <Element key="6" tagName="a" attributes={{ href: 'www.domain.com' }}>{['www.domain.com']}</Element>,
           '.',
         ]}
       </Element>,
       '\n\n',
-      <Element key="6" tagName="br" attributes={{}}>{[]}</Element>,
       <Element key="7" tagName="br" attributes={{}}>{[]}</Element>,
+      <Emoji key="8" shortName=":ok_woman_tone3:" />,
+      <Element key="9" tagName="br" attributes={{}}>{[]}</Element>,
       '\n\n',
-      <Element key="8" tagName="div" attributes={{}}>
+      <Element key="10" tagName="div" attributes={{}}>
         {[
           'Curabitur lectus odio, ',
-          <Element key="9" tagName="em" attributes={{}}>{['tempus quis velit vitae, cursus sagittis nulla']}</Element>,
+          <Element key="11" tagName="em" attributes={{}}>{['tempus quis velit vitae, cursus sagittis nulla']}</Element>,
           '. Maecenas sem nulla, tempor nec risus nec, ultricies ultricies magna. ',
-          <Url key="10" urlParts={{ ...urlParts, scheme: 'https', host: '127.0.0.1', path: '/foo' }}>https://127.0.0.1/foo</Url>,
+          <Url key="12" urlParts={{ ...urlParts, scheme: 'https', host: '127.0.0.1', path: '/foo' }}>https://127.0.0.1/foo</Url>,
           ' Nulla malesuada lacinia libero non mollis. Curabitur id lacus id dolor vestibulum ornare quis a nisi (',
-          <Url key="11" urlParts={{ ...urlParts, host: 'domain.com', path: '/some/path', query: '?with=query' }}>http://domain.com/some/path?with=query</Url>,
-          '). Pellentesque ac finibus mauris. Sed eu luctus diam. Quisque porta lectus in turpis imperdiet dapibus.',
+          <Url key="13" urlParts={{ ...urlParts, host: 'domain.com', path: '/some/path', query: '?with=query' }}>http://domain.com/some/path?with=query</Url>,
+          '). Pellentesque ac finibus mauris. Sed eu luctus diam. :not_an_emoji: Quisque porta lectus in turpis imperdiet dapibus.',
         ]}
       </Element>,
       '\n\n',
-      <Element key="12" tagName="section" attributes={{}}>
+      <Element key="14" tagName="section" attributes={{}}>
         {[
-          <Hashtag key="13" hashtagName="blessed">#blessed</Hashtag>,
+          <Hashtag key="15" hashtagName="blessed">#blessed</Hashtag>,
           ' ',
-          <Hashtag key="14" hashtagName="interweave">#interweave</Hashtag>,
+          <Hashtag key="16" hashtagName="interweave">#interweave</Hashtag>,
           ' ',
-          <Hashtag key="15" hashtagName="milesj">#milesj</Hashtag>,
+          <Hashtag key="17" hashtagName="milesj">#milesj</Hashtag>,
         ]}
       </Element>,
     ]);
@@ -311,7 +316,7 @@ Curabitur lectus odio, tempus quis velit vitae, cursus sagittis nulla. Maecenas 
         tagName="div"
         matchers={[
           new EmailMatcher('email'),
-          // new EmojiMatcher('emoji'),
+          new EmojiMatcher('emoji'),
           new HashtagMatcher('hashtag'),
           new IpMatcher('ip'),
           new UrlMatcher('url'),

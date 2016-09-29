@@ -7,6 +7,7 @@
 import React from 'react';
 import Matcher from '../Matcher';
 import Emoji from '../components/Emoji';
+import { SHORTNAME_TO_UNICODE } from '../data/emoji';
 import { /* EMOJI_PATTERN, */ EMOJI_SHORTNAME_PATTERN } from '../constants';
 
 import type { MatchResponse, EmojiProps } from '../types';
@@ -40,15 +41,12 @@ export default class EmojiMatcher extends Matcher {
       response = this.doMatch(string, EMOJI_SHORTNAME_PATTERN, matches => ({
         shortName: matches[0].toLowerCase(),
       }));
+
+      // Only trigger a match if a valid shortname
+      if (response && !SHORTNAME_TO_UNICODE[response.shortName]) {
+        response = null;
+      }
     }
-
-    /* const response = this.doMatch(string, EMOJI_PATTERN, (matches) => ({
-      unicode: matches[0],
-    }));
-
-    if (response) {
-      return response;
-    } */
 
     return response;
   }
