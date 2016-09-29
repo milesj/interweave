@@ -20,6 +20,7 @@ import {
   TOKEN_LOCATIONS,
   MOCK_MARKUP,
   createExpectedTokenLocations,
+  parentConfig,
 } from './mocks';
 
 function createChild(tag, text) {
@@ -54,7 +55,7 @@ describe('Parser', () => {
 
   describe('applyMatchers()', () => {
     const createElement = (value, key) => (
-      <Element tagName={value} customProp="foo" key={key}>{value.toUpperCase()}</Element>
+      <Element tagName="span" customProp="foo" key={key}>{value.toUpperCase()}</Element>
     );
     const createMultiElement = (value, key) => {
       switch (key) {
@@ -70,10 +71,10 @@ describe('Parser', () => {
 
       TOKEN_LOCATIONS.forEach((location, i) => {
         it(`for: ${location}`, () => {
-          instance.keyIndex = 0; // Reset for easier testing
+          instance.keyIndex = -1; // Reset for easier testing
 
           const tokenString = location.replace(/\{token\}/g, '[foo]');
-          const actual = instance.applyMatchers(tokenString);
+          const actual = instance.applyMatchers(tokenString, parentConfig);
 
           if (i === 0) {
             expect(actual).to.equal(expected[0]);
@@ -89,13 +90,13 @@ describe('Parser', () => {
 
       TOKEN_LOCATIONS.forEach((location, i) => {
         it(`for: ${location}`, () => {
-          instance.keyIndex = 0; // Reset for easier testing
+          instance.keyIndex = -1; // Reset for easier testing
 
           const tokenString = location
             .replace('{token}', '[foo]')
             .replace('{token}', '[bar]')
             .replace('{token}', '[baz]');
-          const actual = instance.applyMatchers(tokenString);
+          const actual = instance.applyMatchers(tokenString, parentConfig);
 
           if (i === 0) {
             expect(actual).to.equal(expected[0]);
@@ -112,7 +113,7 @@ describe('Parser', () => {
       TOKEN_LOCATIONS.forEach((location, i) => {
         it(`for: ${location}`, () => {
           const tokenString = location.replace(/\{token\}/g, '[qux]');
-          const actual = instance.applyMatchers(tokenString);
+          const actual = instance.applyMatchers(tokenString, parentConfig);
 
           expect(actual).to.equal(expected[i]);
         });
@@ -125,7 +126,7 @@ describe('Parser', () => {
           instance.props.noFoo = true;
 
           const tokenString = location.replace(/\{token\}/g, '[foo]');
-          const actual = instance.applyMatchers(tokenString);
+          const actual = instance.applyMatchers(tokenString, parentConfig);
 
           expect(actual).to.equal(tokenString);
 
@@ -294,14 +295,14 @@ describe('Parser', () => {
         <Element key="0" tagName="main" attributes={{ role: 'main' }}>
           {[
             '\n    Main content\n    ',
-            <Element key="0" tagName="div" attributes={{}}>
+            <Element key="1" tagName="div" attributes={{}}>
               {[
                 '\n      ',
-                <Element key="0" tagName="a" attributes={{ href: '#' }}>
+                <Element key="2" tagName="a" attributes={{ href: '#' }}>
                   {['Link']}
                 </Element>,
                 '\n      ',
-                <Element key="1" tagName="span" attributes={{ className: 'foo' }}>
+                <Element key="3" tagName="span" attributes={{ className: 'foo' }}>
                   {['String']}
                 </Element>,
                 '\n    ',
@@ -325,14 +326,14 @@ describe('Parser', () => {
     });
 
     it('returns an empty array when no child nodes present', () => {
-      expect(instance.parseNode(element)).to.deep.equal([]);
+      expect(instance.parseNode(element, parentConfig)).to.deep.equal([]);
     });
 
     it('returns text nodes as strings', () => {
       element.appendChild(document.createTextNode('Foo'));
       element.appendChild(document.createTextNode('Bar'));
 
-      expect(instance.parseNode(element)).to.deep.equal([
+      expect(instance.parseNode(element, parentConfig)).to.deep.equal([
         'FooBar',
       ]);
     });
@@ -343,7 +344,7 @@ describe('Parser', () => {
           it(`renders <${tag}> elements that are allowed`, () => {
             element.appendChild(createChild(tag, i));
 
-            expect(instance.parseNode(element)).to.deep.equal([
+            expect(instance.parseNode(element, parentConfig)).to.deep.equal([
               <Element key="0" tagName={tag} attributes={{}}>{[`${i}`]}</Element>,
             ]);
           });
@@ -353,7 +354,7 @@ describe('Parser', () => {
           it(`removes <${tag}> elements that are denied`, () => {
             element.appendChild(createChild(tag, i));
 
-            expect(instance.parseNode(element)).to.deep.equal([]);
+            expect(instance.parseNode(element, parentConfig)).to.deep.equal([]);
           });
           break;
 
@@ -361,7 +362,7 @@ describe('Parser', () => {
           it(`removes <${tag}> elements as they are pass-through but renders its children`, () => {
             element.appendChild(createChild(tag, i));
 
-            expect(instance.parseNode(element)).to.deep.equal([
+            expect(instance.parseNode(element, parentConfig)).to.deep.equal([
               `${i}`,
             ]);
           });
@@ -375,7 +376,7 @@ describe('Parser', () => {
     it('ignores unknown elements', () => {
       element.appendChild(document.createElement('foo'));
 
-      expect(instance.parseNode(element)).to.deep.equal([]);
+      expect(instance.parseNode(element, parentConfig)).to.deep.equal([]);
     });
 
     it('returns text and element nodes in order', () => {
@@ -383,7 +384,7 @@ describe('Parser', () => {
       element.appendChild(createChild('div', 'Bar'));
       element.appendChild(document.createTextNode('Baz'));
 
-      expect(instance.parseNode(element)).to.deep.equal([
+      expect(instance.parseNode(element, parentConfig)).to.deep.equal([
         'Foo',
         <Element key="0" tagName="div" attributes={{}}>{['Bar']}</Element>,
         'Baz',
@@ -397,7 +398,7 @@ describe('Parser', () => {
       element.appendChild(document.createTextNode('Qux'));
       element.appendChild(createChild('div', 'Bar'));
 
-      expect(instance.parseNode(element)).to.deep.equal([
+      expect(instance.parseNode(element, parentConfig)).to.deep.equal([
         'Foo',
         <Element key="0" tagName="div" attributes={{}}>{['Bar']}</Element>,
         'BazQux',
@@ -408,19 +409,19 @@ describe('Parser', () => {
     it('ignores comment nodes', () => {
       element.appendChild(document.createComment('Comment'));
 
-      expect(instance.parseNode(element)).to.deep.equal([]);
+      expect(instance.parseNode(element, parentConfig)).to.deep.equal([]);
     });
 
     it('ignores document nodes', () => {
       element.appendChild(document);
 
-      expect(instance.parseNode(element)).to.deep.equal([]);
+      expect(instance.parseNode(element, parentConfig)).to.deep.equal([]);
     });
 
     it('ignores document fragment nodes', () => {
       element.appendChild(document.createDocumentFragment());
 
-      expect(instance.parseNode(element)).to.deep.equal([]);
+      expect(instance.parseNode(element, parentConfig)).to.deep.equal([]);
     });
 
     it('passes through elements if `noHtml` prop is set', () => {
@@ -434,12 +435,88 @@ describe('Parser', () => {
       element.appendChild(createChild('div', 'Qux'));
       element.appendChild(createChild('div', 'Wat'));
 
-      expect(instance.parseNode(element)).to.deep.equal([
+      expect(instance.parseNode(element, parentConfig)).to.deep.equal([
         'Foo',
         'Bar',
         'Baz',
         'Qux',
         'Wat',
+      ]);
+    });
+
+    it('only renders whitelisted children', () => {
+      element.appendChild(document.createTextNode('Foo'));
+      element.appendChild(createChild('i', 'Bar'));
+      element.appendChild(document.createTextNode('Baz'));
+      element.appendChild(createChild('b', 'Qux'));
+      element.appendChild(createChild('u', 'Wat'));
+
+      expect(instance.parseNode(element, {
+        ...parentConfig,
+        children: ['b'],
+      })).to.deep.equal([
+        'Foo',
+        'Bar',
+        'Baz',
+        <Element key="0" tagName="b" attributes={{}}>{['Qux']}</Element>,
+        'Wat',
+      ]);
+    });
+
+    it('doesnt render self children', () => {
+      element.appendChild(document.createTextNode('Foo'));
+      element.appendChild(createChild('div', 'Bar'));
+      element.appendChild(document.createTextNode('Baz'));
+      element.appendChild(createChild('span', 'Qux'));
+      element.appendChild(createChild('section', 'Wat'));
+
+      expect(instance.parseNode(element, {
+        ...parentConfig,
+        self: false,
+      })).to.deep.equal([
+        'Foo',
+        'Bar',
+        'Baz',
+        <Element key="0" tagName="span" attributes={{}}>{['Qux']}</Element>,
+        <Element key="1" tagName="section" attributes={{}}>{['Wat']}</Element>,
+      ]);
+    });
+
+    it('doesnt render block children', () => {
+      element.appendChild(document.createTextNode('Foo'));
+      element.appendChild(createChild('div', 'Bar'));
+      element.appendChild(document.createTextNode('Baz'));
+      element.appendChild(createChild('span', 'Qux'));
+      element.appendChild(createChild('section', 'Wat'));
+
+      expect(instance.parseNode(element, {
+        ...parentConfig,
+        block: false,
+      })).to.deep.equal([
+        'Foo',
+        'Bar',
+        'Baz',
+        <Element key="0" tagName="span" attributes={{}}>{['Qux']}</Element>,
+        'Wat',
+      ]);
+    });
+
+    it('doesnt render inline children', () => {
+      element.appendChild(document.createTextNode('Foo'));
+      element.appendChild(createChild('div', 'Bar'));
+      element.appendChild(document.createTextNode('Baz'));
+      element.appendChild(createChild('span', 'Qux'));
+      element.appendChild(createChild('section', 'Wat'));
+
+      expect(instance.parseNode(element, {
+        ...parentConfig,
+        inline: false,
+      })).to.deep.equal([
+        'Foo',
+        <Element key="0" tagName="div" attributes={{}}>{['Bar']}</Element>,
+        'Baz',
+        'Qux',
+        <Element key="1" tagName="section" attributes={{}}>{['Wat']}</Element>,
       ]);
     });
   });

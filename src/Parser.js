@@ -20,6 +20,8 @@ import {
   TAGS,
   ATTRIBUTES,
   ATTRIBUTES_TO_PROPS,
+  TYPE_INLINE,
+  TYPE_BLOCK,
 } from './constants';
 
 import type {
@@ -58,7 +60,7 @@ export default class Parser {
       ...Interweave.getFilters().map(row => row.filter),
       ...filters,
     ];
-    this.keyIndex = 0;
+    this.keyIndex = -1;
   }
 
   /**
@@ -77,21 +79,37 @@ export default class Parser {
 
   /**
    * Loop through and apply all registered matchers to the string.
-   * If a match is found, create a React component, and build a new array.
+   * If a match is found, create a React element, and build a new array.
    * This array allows React to interpolate and render accordingly.
    *
    * @param {String} string
+   * @param {Object} parentConfig
    * @returns {String|String[]}
    */
-  applyMatchers(string: string): string | Array<string | React.Element<*>> {
-    const components = [];
+  applyMatchers(
+    string: string,
+    parentConfig: NodeConfig
+  ): string | Array<string | React.Element<*>> {
+    const elements = [];
     const props = this.props;
     let matchedString = string;
     let parts = {};
 
     this.matchers.forEach((matcher) => {
-      // Skip matchers that have been disabled from props
-      if (props[matcher.inverseName]) {
+      const tagName = matcher.getTagName().toLowerCase();
+
+      // Skip matchers that have been disabled from props or are not supported
+      if (props[matcher.inverseName] || !TAGS[tagName]) {
+        return;
+      }
+
+      const config = {
+        ...TAGS[tagName],
+        tagName,
+      };
+
+      // Skip matchers in which the child cannot be rendered
+      if (config.rule === PARSER_DENY || !this.canRenderChild(parentConfig, config)) {
         return;
       }
 
@@ -100,20 +118,20 @@ export default class Parser {
         const { match, ...partProps } = parts;
 
         // Replace the matched portion with a placeholder
-        matchedString = matchedString.replace(match, `#{{${components.length}}}#`);
+        matchedString = matchedString.replace(match, `#{{${elements.length}}}#`);
 
-        // Create a component through the matchers factory
-        components.push(matcher.createElement(match, {
+        // Create an element through the matchers factory
+        this.keyIndex += 1;
+
+        elements.push(matcher.createElement(match, {
           ...props,
           ...(partProps || {}),
           key: this.keyIndex,
         }));
-
-        this.keyIndex += 1;
       }
     });
 
-    if (!components.length) {
+    if (!elements.length) {
       return matchedString;
     }
 
@@ -131,8 +149,8 @@ export default class Parser {
         matchedArray.push(matchedString.substring(lastIndex, index));
       }
 
-      // Inject the component
-      matchedArray.push(components[parseInt(no, 10)]);
+      // Inject the element
+      matchedArray.push(elements[parseInt(no, 10)]);
 
       // Set the next index
       lastIndex = index + parts[0].length;
@@ -148,6 +166,49 @@ export default class Parser {
     }
 
     return matchedArray;
+  }
+
+  /**
+   * Determine whether the child can be rendered within the parent.
+   *
+   * @param {Object} parentConfig
+   * @param {Object} childConfig
+   * @returns {Boolean}
+   */
+  canRenderChild(parentConfig: NodeConfig, childConfig: NodeConfig): boolean {
+    if (!parentConfig.tagName || !childConfig.tagName) {
+      return false;
+    }
+
+    // Pass through first
+    if (childConfig.rule === PARSER_PASS_THROUGH) {
+      return false;
+    }
+
+    // Valid children second
+    if (
+      parentConfig.children.length &&
+      parentConfig.children.indexOf(childConfig.tagName) === -1
+    ) {
+      return false;
+    }
+
+    // Self nesting third
+    if (!parentConfig.self && parentConfig.tagName === childConfig.tagName) {
+      return false;
+    }
+
+    // Block fourth
+    if (!parentConfig.block && childConfig.type === TYPE_BLOCK) {
+      return false;
+    }
+
+    // Inline last
+    if (!parentConfig.inline && childConfig.type === TYPE_INLINE) {
+      return false;
+    }
+
+    return true;
   }
 
   /**
@@ -232,11 +293,14 @@ export default class Parser {
    * while looping over all child nodes and generating an
    * array to interpolate into JSX.
    *
-   * @returns {String[]|ReactComponent[]}
+   * @returns {String[]|ReactElement[]}
    */
   parse(): ParsedNodes {
     if (!this.content.length) {
-      this.content = this.parseNode(this.doc.body, TAGS.body);
+      this.content = this.parseNode(this.doc.body, {
+        ...TAGS.body,
+        tagName: 'body',
+      });
     }
 
     return this.content;
@@ -244,11 +308,11 @@ export default class Parser {
 
   /**
    * Loop over the nodes children and generate a
-   * list of text nodes and React components.
+   * list of text nodes and React elements.
    *
    * @param {Node} parentNode
    * @param {Object} parentConfig
-   * @returns {String[]|ReactComponent[]}
+   * @returns {String[]|ReactElement[]}
    */
   parseNode(parentNode: NodeInterface, parentConfig: NodeConfig): ParsedNodes {
     const { noHtml } = this.props;
@@ -256,10 +320,18 @@ export default class Parser {
     let mergedText = '';
 
     Array.from(parentNode.childNodes).forEach((node) => {
-      // Create components for HTML elements
+      // Create React elements from HTML elements
       if (node.nodeType === ELEMENT_NODE) {
         const tagName = node.nodeName.toLowerCase();
-        const config = TAGS[tagName];
+
+        if (!TAGS[tagName]) {
+          return;
+        }
+
+        const config = {
+          ...TAGS[tagName],
+          tagName,
+        };
 
         // Persist any previous text
         if (mergedText) {
@@ -268,15 +340,17 @@ export default class Parser {
         }
 
         // Skip over elements not supported
-        if (!config || config.rule === PARSER_DENY) {
+        if (config.rule === PARSER_DENY) {
           return;
 
         // Only pass through the text content
-        } else if (config.rule === PARSER_PASS_THROUGH || noHtml) {
+        } else if (noHtml || !this.canRenderChild(parentConfig, config)) {
           content = content.concat(this.parseNode(node, config));
 
-        // Convert the element to a component
+        // Convert the element
         } else {
+          this.keyIndex += 1;
+
           content.push(
             <ElementComponent
               key={this.keyIndex}
@@ -286,13 +360,11 @@ export default class Parser {
               {this.parseNode(node, config)}
             </ElementComponent>
           );
-
-          this.keyIndex += 1;
         }
 
       // Apply matchers if a text node
       } else if (node.nodeType === TEXT_NODE) {
-        const text = this.applyMatchers(node.textContent);
+        const text = this.applyMatchers(node.textContent, parentConfig);
 
         if (Array.isArray(text)) {
           content = content.concat(text);

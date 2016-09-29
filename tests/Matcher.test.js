@@ -21,7 +21,7 @@ describe('Matcher', () => {
   describe('createElement()', () => {
     it('returns a React element from factory', () => {
       expect(matcher.factory('[foo]', { children: 'foo' })).to.deep.equal(
-        <Element tagName="foo" key="1">FOO</Element>
+        <Element tagName="span" key="1">FOO</Element>
       );
     });
 
@@ -49,7 +49,7 @@ describe('Matcher', () => {
 
     it('returns a React element', () => {
       expect(matcher.factory('[foo]', { children: 'foo' })).to.deep.equal(
-        <Element tagName="foo" key="1">FOO</Element>
+        <Element tagName="span" key="1">FOO</Element>
       );
     });
   });

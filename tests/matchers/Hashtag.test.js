@@ -2,7 +2,7 @@ import { expect } from 'chai';
 import Parser from '../../lib/Parser';
 import HashtagMatcher from '../../lib/matchers/Hashtag';
 import { HASHTAG_PATTERN } from '../../lib/constants';
-import { TOKEN_LOCATIONS, createExpectedTokenLocations } from '../mocks';
+import { TOKEN_LOCATIONS, createExpectedTokenLocations, parentConfig } from '../mocks';
 
 const VALID_HASHTAGS = [
   '#alloneword',
@@ -63,10 +63,10 @@ describe('matchers/Hashtag', () => {
 
       TOKEN_LOCATIONS.forEach((location, i) => {
         it(`for: ${hashtag} - ${location}`, () => {
-          parser.keyIndex = 0; // Reset for easier testing
+          parser.keyIndex = -1; // Reset for easier testing
 
           const tokenString = location.replace(/\{token\}/g, hashtag);
-          const actual = parser.applyMatchers(tokenString);
+          const actual = parser.applyMatchers(tokenString, parentConfig);
 
           if (i === 0) {
             expect(actual).to.equal(expected[0]);

@@ -22,6 +22,13 @@ export default class EmojiMatcher extends Matcher {
   }
 
   /**
+   * @{inheritDoc}
+   */
+  getTagName() {
+    return 'span';
+  }
+
+  /**
    * {@inheritDoc}
    */
   match(string: string): ?MatchResponse {

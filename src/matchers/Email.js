@@ -22,6 +22,13 @@ export default class EmailMatcher extends Matcher {
   }
 
   /**
+   * @{inheritDoc}
+   */
+  getTagName() {
+    return 'a';
+  }
+
+  /**
    * {@inheritDoc}
    */
   match(string: string): ?MatchResponse {

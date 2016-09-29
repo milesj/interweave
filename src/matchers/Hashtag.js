@@ -22,6 +22,13 @@ export default class HashtagMatcher extends Matcher {
   }
 
   /**
+   * @{inheritDoc}
+   */
+  getTagName() {
+    return 'a';
+  }
+
+  /**
    * {@inheritDoc}
    */
   match(string: string): ?MatchResponse {

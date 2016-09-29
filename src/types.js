@@ -19,6 +19,7 @@ export interface NodeInterface {
 }
 
 export type NodeConfig = {
+  tagName?: string,
   rule: number,
   type: string,
   inline: boolean,

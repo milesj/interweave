@@ -2,6 +2,7 @@ import React from 'react';
 import Filter from '../lib/Filter';
 import Matcher from '../lib/Matcher';
 import Element from '../lib/components/Element';
+import { TYPE_BLOCK, PARSER_ALLOW } from '../lib/constants';
 
 export const TOKEN_LOCATIONS = [
   'no tokens',
@@ -93,6 +94,16 @@ export const MOCK_MARKUP = `<!DOCTYPE>
 </body>
 </html>`;
 
+export const parentConfig = {
+  tagName: 'div',
+  rule: PARSER_ALLOW,
+  type: TYPE_BLOCK,
+  inline: true,
+  block: true,
+  self: true,
+  children: [],
+};
+
 export class CodeTagMatcher extends Matcher {
   constructor(tag, key = null) {
     super(tag);
@@ -109,10 +120,14 @@ export class CodeTagMatcher extends Matcher {
     }
 
     return (
-      <Element tagName={children} {...props}>
+      <Element tagName="span" {...props}>
         {children.toUpperCase()}
       </Element>
     );
+  }
+
+  getTagName() {
+    return 'span';
   }
 
   match(string) {

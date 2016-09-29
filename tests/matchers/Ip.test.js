@@ -2,7 +2,7 @@ import { expect } from 'chai';
 import Parser from '../../lib/Parser';
 import IpMatcher from '../../lib/matchers/Ip';
 import { IP_PATTERN } from '../../lib/constants';
-import { TOKEN_LOCATIONS, createExpectedTokenLocations } from '../mocks';
+import { TOKEN_LOCATIONS, createExpectedTokenLocations, parentConfig } from '../mocks';
 
 const VALID_IPS = [
   { ip: '0.0.0.0', scheme: null, host: '0.0.0.0' },
@@ -92,10 +92,10 @@ describe('matchers/Ip', () => {
 
       TOKEN_LOCATIONS.forEach((location, i) => {
         it(`for: ${ipParams.ip} - ${location}`, () => {
-          parser.keyIndex = 0; // Reset for easier testing
+          parser.keyIndex = -1; // Reset for easier testing
 
           const tokenString = location.replace(/\{token\}/g, ipParams.ip);
-          const actual = parser.applyMatchers(tokenString);
+          const actual = parser.applyMatchers(tokenString, parentConfig);
 
           if (i === 0) {
             expect(actual).to.equal(expected[0]);

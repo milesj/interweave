@@ -61,6 +61,15 @@ export default class Matcher {
   }
 
   /**
+   * Defines the HTML tag name that the resulting React element will be.
+   *
+   * @returns {String}
+   */
+  getTagName() {
+    throw new Error(`${this.constructor.name} must define the HTML tag name it will render.`);
+  }
+
+  /**
    * Attempt to match against the defined string.
    * Return `null` if no match found, else return the `match`
    * and any optional props to pass along.

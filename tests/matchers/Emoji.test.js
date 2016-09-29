@@ -3,7 +3,7 @@ import Parser from '../../lib/Parser';
 import EmojiMatcher from '../../lib/matchers/Emoji';
 import { SHORTNAME_TO_UNICODE /* , UNICODE_TO_SHORTNAME, EMOJI_PATTERN */ } from '../../lib/data/emoji';
 import { EMOJI_SHORTNAME_PATTERN } from '../../lib/constants';
-import { VALID_EMOJIS, TOKEN_LOCATIONS, createExpectedTokenLocations } from '../mocks';
+import { VALID_EMOJIS, TOKEN_LOCATIONS, createExpectedTokenLocations, parentConfig } from '../mocks';
 
 // const VALID_UNICODE = Object.keys(UNICODE_TO_SHORTNAME);
 const VALID_SHORTNAME = Object.keys(SHORTNAME_TO_UNICODE);
@@ -59,10 +59,10 @@ describe('matchers/Emoji', () => {
 
       TOKEN_LOCATIONS.forEach((location, i) => {
         it(`for: ${shortName} - ${location}`, () => {
-          parser.keyIndex = 0; // Reset for easier testing
+          parser.keyIndex = -1; // Reset for easier testing
 
           const tokenString = location.replace(/\{token\}/g, shortName);
-          const actual = parser.applyMatchers(tokenString);
+          const actual = parser.applyMatchers(tokenString, parentConfig);
 
           if (i === 0) {
             expect(actual).to.equal(expectedShort[0]);

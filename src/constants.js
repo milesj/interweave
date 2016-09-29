@@ -194,6 +194,30 @@ export const TAGS: ConfigMap = {
     ...blockConfig,
     self: false,
   },
+  h1: {
+    ...blockConfig,
+    self: false,
+  },
+  h2: {
+    ...blockConfig,
+    self: false,
+  },
+  h3: {
+    ...blockConfig,
+    self: false,
+  },
+  h4: {
+    ...blockConfig,
+    self: false,
+  },
+  h5: {
+    ...blockConfig,
+    self: false,
+  },
+  h6: {
+    ...blockConfig,
+    self: false,
+  },
   hr: {
     ...blockConfig,
     inline: false,
