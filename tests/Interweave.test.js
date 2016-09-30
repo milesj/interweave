@@ -26,9 +26,8 @@ describe('Interweave', () => {
     const wrapper = shallow(
       <Interweave
         filters={[new HrefFilter()]}
-      >
-        {'Foo <a href="foo.com">Bar</a> Baz'}
-      </Interweave>
+        markup={`Foo <a href="foo.com">Bar</a> Baz`}
+      />
     ).shallow();
 
     expect(wrapper.prop('children')).to.deep.equal([
@@ -43,9 +42,8 @@ describe('Interweave', () => {
       <Interweave
         filters={[new HrefFilter()]}
         noFilters
-      >
-        {'Foo <a href="foo.com">Bar</a> Baz'}
-      </Interweave>
+        markup={'Foo <a href="foo.com">Bar</a> Baz'}
+      />
     ).shallow();
 
     expect(wrapper.prop('children')).to.deep.equal([
@@ -59,9 +57,8 @@ describe('Interweave', () => {
     const wrapper = shallow(
       <Interweave
         matchers={[new CodeTagMatcher('b', '1')]}
-      >
-        {'Foo [b] Bar Baz'}
-      </Interweave>
+        markup="Foo [b] Bar Baz"
+      />
     ).shallow();
 
     expect(wrapper.prop('children')).to.deep.equal([
@@ -76,9 +73,8 @@ describe('Interweave', () => {
       <Interweave
         matchers={[new CodeTagMatcher('b', '1')]}
         noMatchers
-      >
-        {'Foo [b] Bar Baz'}
-      </Interweave>
+        markup="Foo [b] Bar Baz"
+      />
     ).shallow();
 
     expect(wrapper.prop('children')).to.deep.equal([
@@ -157,21 +153,22 @@ describe('Interweave', () => {
   describe('parseMarkup()', () => {
     it('errors if onBeforeParse doesnt return a string', () => {
       expect(() => {
-        shallow(<Interweave onBeforeParse={() => 123}>Foo</Interweave>);
+        shallow(<Interweave onBeforeParse={() => 123} markup="Foo" />);
       }).to.throw(TypeError, 'Interweave `onBeforeParse` must return a valid HTML string.');
     });
 
     it('errors if onAfterParse doesnt return an array', () => {
       expect(() => {
-        shallow(<Interweave onAfterParse={() => 123}>Foo</Interweave>);
+        shallow(<Interweave onAfterParse={() => 123} markup="Foo" />);
       }).to.throw(TypeError, 'Interweave `onAfterParse` must return an array of strings and React elements.');
     });
 
     it('can modify the markup using onBeforeParse', () => {
       const wrapper = shallow(
-        <Interweave onBeforeParse={content => content.replace(/b>/g, 'i>')}>
-          {'Foo <b>Bar</b> Baz'}
-        </Interweave>
+        <Interweave
+          onBeforeParse={content => content.replace(/b>/g, 'i>')}
+          markup={'Foo <b>Bar</b> Baz'}
+        />
       ).shallow();
 
       expect(wrapper.prop('children')).to.deep.equal([
@@ -188,9 +185,8 @@ describe('Interweave', () => {
             content.push(<Element tagName="u" key="1">Qux</Element>);
             return content;
           }}
-        >
-          {'Foo <b>Bar</b> Baz'}
-        </Interweave>
+          markup={'Foo <b>Bar</b> Baz'}
+        />
       ).shallow();
 
       expect(wrapper.prop('children')).to.deep.equal([
@@ -204,21 +200,21 @@ describe('Interweave', () => {
 
   describe('render()', () => {
     it('renders with a default tag name', () => {
-      const wrapper = shallow(<Interweave>Foo</Interweave>).shallow();
+      const wrapper = shallow(<Interweave markup="Foo" />).shallow();
 
       expect(wrapper.find('span')).to.have.lengthOf(1);
       expect(wrapper.text()).to.equal('Foo');
     });
 
     it('renders with a custom tag name', () => {
-      const wrapper = shallow(<Interweave tagName="div">Foo</Interweave>).shallow();
+      const wrapper = shallow(<Interweave tagName="div" markup="Foo" />).shallow();
 
       expect(wrapper.find('div')).to.have.lengthOf(1);
       expect(wrapper.text()).to.equal('Foo');
     });
 
     it('parses HTML', () => {
-      const wrapper = shallow(<Interweave tagName="div">{'Foo <b>Bar</b> Baz'}</Interweave>).shallow();
+      const wrapper = shallow(<Interweave tagName="div" markup={'Foo <b>Bar</b> Baz'} />).shallow();
 
       expect(wrapper.find('div')).to.have.lengthOf(1);
       expect(wrapper.find('Element').prop('tagName')).to.equal('b');
@@ -241,13 +237,12 @@ describe('Interweave', () => {
           new IpMatcher('ip'),
           new UrlMatcher('url'),
         ]}
-      >
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec massa lorem, mollis non commodo quis, ultricies at elit. email@domain.com. Aliquam a arcu porttitor, aliquam eros sed, convallis massa. Nunc vitae vehicula quam, in feugiat ligula. #interweave Donec eu sem non nibh condimentum luctus. Vivamus pharetra feugiat blandit. Vestibulum neque velit, semper :japanese_castle: id vestibulum id, viverra a felis. Integer convallis in orci nec bibendum. Ut consequat posuere metus, www.domain.com.
+        markup={`Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec massa lorem, mollis non commodo quis, ultricies at elit. email@domain.com. Aliquam a arcu porttitor, aliquam eros sed, convallis massa. Nunc vitae vehicula quam, in feugiat ligula. #interweave Donec eu sem non nibh condimentum luctus. Vivamus pharetra feugiat blandit. Vestibulum neque velit, semper :japanese_castle: id vestibulum id, viverra a felis. Integer convallis in orci nec bibendum. Ut consequat posuere metus, www.domain.com.
 
 Curabitur lectus odio, tempus quis velit vitae, cursus sagittis nulla. Maecenas sem nulla, tempor nec risus nec, ultricies ultricies magna. https://127.0.0.1/foo Nulla malesuada lacinia libero non mollis. Curabitur id lacus id dolor vestibulum ornare quis a nisi (http://domain.com/some/path?with=query). Pellentesque ac finibus mauris. Sed eu luctus diam. Quisque porta lectus in turpis imperdiet dapibus.
 
-#blessed #interweave #milesj
-      </Interweave>
+#blessed #interweave #milesj`}
+      />
     ).shallow();
 
     expect(wrapper.prop('children')).to.deep.equal([
@@ -259,11 +254,11 @@ Curabitur lectus odio, tempus quis velit vitae, cursus sagittis nulla. Maecenas 
       <Emoji key="1" shortName=":japanese_castle:" />,
       ' id vestibulum id, viverra a felis. Integer convallis in orci nec bibendum. Ut consequat posuere metus, ',
       <Url key="7" urlParts={{ ...urlParts, host: 'www.domain.com' }}>www.domain.com</Url>,
-      '. Curabitur lectus odio, tempus quis velit vitae, cursus sagittis nulla. Maecenas sem nulla, tempor nec risus nec, ultricies ultricies magna. ',
+      '.\n\nCurabitur lectus odio, tempus quis velit vitae, cursus sagittis nulla. Maecenas sem nulla, tempor nec risus nec, ultricies ultricies magna. ',
       <Url key="6" urlParts={{ ...urlParts, scheme: 'https', host: '127.0.0.1', path: '/foo' }}>https://127.0.0.1/foo</Url>,
       ' Nulla malesuada lacinia libero non mollis. Curabitur id lacus id dolor vestibulum ornare quis a nisi (',
       <Url key="8" urlParts={{ ...urlParts, host: 'domain.com', path: '/some/path', query: '?with=query' }}>http://domain.com/some/path?with=query</Url>,
-      '). Pellentesque ac finibus mauris. Sed eu luctus diam. Quisque porta lectus in turpis imperdiet dapibus. ',
+      '). Pellentesque ac finibus mauris. Sed eu luctus diam. Quisque porta lectus in turpis imperdiet dapibus.\n\n',
       <Hashtag key="3" hashtagName="blessed">#blessed</Hashtag>,
       ' ',
       <Hashtag key="4" hashtagName="interweave">#interweave</Hashtag>,
@@ -283,8 +278,7 @@ Curabitur lectus odio, tempus quis velit vitae, cursus sagittis nulla. Maecenas 
           new IpMatcher('ip'),
           new UrlMatcher('url'),
         ]}
-      >
-        {`<h1>Lorem ipsum dolor sit amet</h1>
+        markup={`<h1>Lorem ipsum dolor sit amet</h1>
 
 <p><b>Consectetur adipiscing elit.</b> Donec massa lorem, mollis non commodo quis, ultricies at elit. email@domain.com. Aliquam a arcu porttitor, aliquam eros sed, convallis massa. Nunc vitae vehicula quam, in feugiat ligula. #interweave Donec eu sem non nibh condimentum luctus. Vivamus pharetra feugiat blandit. Vestibulum neque velit, semper id vestibulum id :love_letter:, viverra a felis. Integer convallis in orci nec bibendum. Ut consequat posuere metus, <a href="www.domain.com">www.domain.com</a>.</p>
 
@@ -293,7 +287,7 @@ Curabitur lectus odio, tempus quis velit vitae, cursus sagittis nulla. Maecenas 
 <div>Curabitur lectus odio, <em>tempus quis velit vitae, cursus sagittis nulla</em>. Maecenas sem nulla, tempor nec risus nec, ultricies ultricies magna. https://127.0.0.1/foo Nulla malesuada lacinia libero non mollis. Curabitur id lacus id dolor vestibulum ornare quis a nisi (http://domain.com/some/path?with=query). Pellentesque ac finibus mauris. Sed eu luctus diam. :not_an_emoji: Quisque porta lectus in turpis imperdiet dapibus.</div>
 
 <section>#blessed #interweave #milesj</section>`}
-      </Interweave>
+      />
     ).shallow();
 
     expect(wrapper.prop('children')).to.deep.equal([
@@ -353,12 +347,11 @@ Curabitur lectus odio, tempus quis velit vitae, cursus sagittis nulla. Maecenas 
           new IpMatcher('ip'),
           new UrlMatcher('url'),
         ]}
-      >
-        {`- https://127.0.0.1/foo
+        markup={`- https://127.0.0.1/foo
 - <a href="www.domain.com">www.domain.com</a>
 - (http://domain.com/some/path?with=query)
 - <a href="http://domain.com">This text should stay</a>`}
-      </Interweave>
+      />
     ).shallow();
 
     expect(wrapper.prop('children')).to.deep.equal([

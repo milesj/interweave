@@ -32,7 +32,7 @@ function prioritySort(
 }
 
 type InterweaveProps = {
-  children: string,
+  markup: string,
   filters: Filter[],
   matchers: Matcher[],
   noHtml: boolean,
@@ -48,7 +48,7 @@ export default class Interweave extends React.Component {
   props: InterweaveProps;
 
   static propTypes = {
-    children: PropTypes.string.isRequired,
+    markup: PropTypes.string.isRequired,
     filters: PropTypes.arrayOf(PropTypes.instanceOf(Filter)),
     matchers: PropTypes.arrayOf(PropTypes.instanceOf(Matcher)),
     noHtml: PropTypes.bool,
@@ -146,7 +146,7 @@ export default class Interweave extends React.Component {
   parseMarkup(): ParsedNodes {
     const {
       tagName, // eslint-disable-line
-      children,
+      markup,
       onBeforeParse,
       onAfterParse,
       matchers,
@@ -156,7 +156,7 @@ export default class Interweave extends React.Component {
       ...props,
     } = this.props;
 
-    let content = children;
+    let content = markup;
 
     if (onBeforeParse) {
       content = onBeforeParse(content);

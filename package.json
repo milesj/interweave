@@ -17,14 +17,11 @@
     "emoji",
     "hashtag"
   ],
-  "files": [
-    "*.md",
-    "lib"
-  ],
   "scripts": {
     "clean": "rimraf ./lib",
-    "build": "npm run build:js && npm run build:emoji",
+    "build": "npm run build:js && npm run build:lib && npm run build:emoji",
     "build:js": "babel ./src -d ./lib",
+    "build:lib": "cp ./{*.md,package.json,LICENSE} ./lib",
     "build:emoji": "cp ./src/data/emoji.json ./lib/data",
     "watch": "babel --watch ./src -d ./lib",
     "emoji": "./bin/build-emoji.js > ./src/data/emoji.json",
