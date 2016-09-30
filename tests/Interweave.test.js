@@ -38,6 +38,23 @@ describe('Interweave', () => {
     ]);
   });
 
+  it('can disable all filters using `noFilters`', () => {
+    const wrapper = shallow(
+      <Interweave
+        filters={[new HrefFilter()]}
+        noFilters
+      >
+        {'Foo <a href="foo.com">Bar</a> Baz'}
+      </Interweave>
+    ).shallow();
+
+    expect(wrapper.prop('children')).to.deep.equal([
+      'Foo ',
+      <Element tagName="a" key="0" attributes={{ href: 'foo.com' }}>{['Bar']}</Element>,
+      ' Baz',
+    ]);
+  });
+
   it('can pass matchers through props', () => {
     const wrapper = shallow(
       <Interweave
@@ -51,6 +68,21 @@ describe('Interweave', () => {
       'Foo ',
       <Element tagName="span" key="1" customProp="foo">B</Element>,
       ' Bar Baz',
+    ]);
+  });
+
+  it('can disable all matchers using `noMatchers', () => {
+    const wrapper = shallow(
+      <Interweave
+        matchers={[new CodeTagMatcher('b', '1')]}
+        noMatchers
+      >
+        {'Foo [b] Bar Baz'}
+      </Interweave>
+    ).shallow();
+
+    expect(wrapper.prop('children')).to.deep.equal([
+      'Foo [b] Bar Baz',
     ]);
   });
 

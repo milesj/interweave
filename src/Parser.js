@@ -7,7 +7,6 @@
 /* eslint-disable no-cond-assign, no-undef */
 
 import React from 'react';
-import Interweave from './Interweave';
 import Matcher from './Matcher';
 import Filter from './Filter';
 import ElementComponent from './components/Element';
@@ -52,14 +51,8 @@ export default class Parser {
     this.doc = this.createDocument(markup);
     this.content = [];
     this.props = props;
-    this.matchers = [
-      ...Interweave.getMatchers().map(row => row.matcher),
-      ...matchers,
-    ];
-    this.filters = [
-      ...Interweave.getFilters().map(row => row.filter),
-      ...filters,
-    ];
+    this.matchers = matchers;
+    this.filters = filters;
     this.keyIndex = -1;
   }
 

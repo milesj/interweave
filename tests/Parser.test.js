@@ -1,6 +1,5 @@
 import React from 'react';
 import { expect } from 'chai';
-import Interweave from '../lib/Interweave';
 import Parser from '../lib/Parser';
 import Element from '../lib/components/Element';
 import {
@@ -35,15 +34,13 @@ describe('Parser', () => {
   let element;
 
   beforeEach(() => {
-    Interweave.clearFilters();
-    Interweave.clearMatchers();
-
-    Interweave.addFilter(new HrefFilter());
-    Interweave.addMatcher(new CodeTagMatcher('foo'));
-    Interweave.addMatcher(new CodeTagMatcher('bar'));
-    Interweave.addMatcher(new CodeTagMatcher('baz'));
-
-    instance = new Parser('');
+    instance = new Parser('', {}, [
+      new CodeTagMatcher('foo'),
+      new CodeTagMatcher('bar'),
+      new CodeTagMatcher('baz'),
+    ], [
+      new HrefFilter(),
+    ]);
   });
 
   describe('applyFilters()', () => {
