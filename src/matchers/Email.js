@@ -24,7 +24,7 @@ export default class EmailMatcher extends Matcher {
   /**
    * @{inheritDoc}
    */
-  getTagName() {
+  getTagName(): string {
     return 'a';
   }
 

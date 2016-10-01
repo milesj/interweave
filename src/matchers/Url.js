@@ -24,7 +24,7 @@ export default class UrlMatcher extends Matcher {
   /**
    * @{inheritDoc}
    */
-  getTagName() {
+  getTagName(): string {
     return 'a';
   }
 

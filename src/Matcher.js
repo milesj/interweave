@@ -65,7 +65,7 @@ export default class Matcher {
    *
    * @returns {String}
    */
-  getTagName() {
+  getTagName(): string {
     throw new Error(`${this.constructor.name} must define the HTML tag name it will render.`);
   }
 

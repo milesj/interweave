@@ -1,7 +1,7 @@
 {
   "name": "interweave",
   "version": "0.0.1",
-  "description": "Interweave components and elements into interpolated React strings.",
+  "description": "Insert React elements into strings using matchers and filters, while safely rendering HTML.",
   "keywords": [
     "interweave",
     "inject",
@@ -14,14 +14,18 @@
     "filter",
     "email",
     "url",
+    "autolink",
     "emoji",
-    "hashtag"
+    "hashtag",
+    "html",
+    "markup"
   ],
   "scripts": {
     "clean": "rimraf ./lib",
-    "build": "npm run build:js && npm run build:lib && npm run build:emoji",
+    "build": "npm run build:js && npm run build:docs && npm run build:flow && npm run build:emoji",
     "build:js": "babel ./src -d ./lib",
-    "build:lib": "cp ./{*.md,package.json,LICENSE} ./lib",
+    "build:docs": "cp ./{*.md,package.json,LICENSE} ./lib",
+    "build:flow": "cp ./src/interweave.js.flow ./lib",
     "build:emoji": "cp ./src/data/emoji.json ./lib/data",
     "watch": "babel --watch ./src -d ./lib",
     "emoji": "./bin/build-emoji.js > ./src/data/emoji.json",
@@ -63,10 +67,10 @@
     "emoji-regex": "^6.0.0",
     "emojione": "^2.2.6",
     "enzyme": "^2.4.1",
-    "eslint": "^3.6.1",
+    "eslint": "^3.7.0",
     "eslint-config-airbnb": "^12.0.0",
     "eslint-plugin-flowtype": "^2.19.0",
-    "eslint-plugin-import": "^1.16.0",
+    "eslint-plugin-import": "^2.0.0",
     "eslint-plugin-jsx-a11y": "^2.2.2",
     "eslint-plugin-react": "^6.3.0",
     "flow-bin": "^0.33.0",
