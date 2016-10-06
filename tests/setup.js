@@ -1,8 +1,6 @@
 /* eslint-disable */
 
-import jsdom from 'jsdom';
-
-const document = jsdom.jsdom('<!doctype html><html><body></body></html>');
+const document = require('jsdom').jsdom('<!doctype html><html><body></body></html>');
 const window = document.defaultView;
 
 global.document = document;

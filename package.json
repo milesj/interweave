@@ -1,6 +1,6 @@
 {
   "name": "interweave",
-  "version": "0.0.1",
+  "version": "0.0.3",
   "description": "Insert React elements into strings using matchers and filters, while safely rendering HTML.",
   "keywords": [
     "interweave",
@@ -36,7 +36,8 @@
     "pretest": "npm run lint && npm run clean && npm run build",
     "test": "npm run mocha",
     "posttest": "npm run flow",
-    "preversion": "npm test"
+    "preversion": "npm test",
+    "release": "npm publish ./lib"
   },
   "repository": {
     "type": "git",
@@ -52,29 +53,32 @@
   },
   "homepage": "https://github.com/milesj/interweave#readme",
   "peerDependencies": {
-    "react": "^15.0.0"
+    "react": "^15.0.0",
+    "babel-runtime": "^6.0.0"
   },
   "devDependencies": {
     "babel-cli": "^6.16.0",
     "babel-eslint": "^7.0.0",
     "babel-plugin-transform-class-properties": "^6.16.0",
-    "babel-plugin-transform-flow-comments": "^6.8.0",
+    "babel-plugin-transform-flow-comments": "^6.17.0",
+    "babel-plugin-transform-runtime": "^6.15.0",
     "babel-preset-es2015": "^6.16.0",
     "babel-preset-react": "^6.16.0",
-    "babel-preset-stage-2": "^6.16.0",
+    "babel-preset-stage-2": "^6.17.0",
     "babel-register": "^6.16.3",
+    "babel-runtime": "^6.11.6",
     "chai": "^3.5.0",
     "emoji-regex": "^6.0.0",
     "emojione": "^2.2.6",
     "enzyme": "^2.4.1",
-    "eslint": "^3.7.0",
+    "eslint": "^3.7.1",
     "eslint-config-airbnb": "^12.0.0",
     "eslint-plugin-flowtype": "^2.19.0",
-    "eslint-plugin-import": "^2.0.0",
+    "eslint-plugin-import": "^1.16.0",
     "eslint-plugin-jsx-a11y": "^2.2.2",
     "eslint-plugin-react": "^6.3.0",
     "flow-bin": "^0.33.0",
-    "jsdom": "^9.5.0",
+    "jsdom": "^9.6.0",
     "mocha": "^3.1.0",
     "react": "^15.3.2",
     "react-addons-test-utils": "^15.3.2",

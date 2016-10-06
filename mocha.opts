@@ -1,6 +1,6 @@
---compilers js:babel-register
---require ./tests/setup.js
+--require babel-register
 --require chai
+--require ./tests/setup.js
 --reporter dot
 --ui bdd
 --colors

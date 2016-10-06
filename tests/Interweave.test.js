@@ -26,7 +26,7 @@ describe('Interweave', () => {
     const wrapper = shallow(
       <Interweave
         filters={[new HrefFilter()]}
-        markup={`Foo <a href="foo.com">Bar</a> Baz`}
+        markup={'Foo <a href="foo.com">Bar</a> Baz'}
       />
     ).shallow();
 
