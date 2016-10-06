@@ -36,8 +36,8 @@ type InterweaveProps = {
   filters: Filter[],
   matchers: Matcher[],
   noHtml: boolean,
-  noFilters: boolean,
-  noMatchers: boolean,
+  disableFilters: boolean,
+  disableMatchers: boolean,
   onBeforeParse: (content: string) => string,
   onAfterParse: (content: ParsedNodes) => ParsedNodes,
   tagName: string,
@@ -52,8 +52,8 @@ export default class Interweave extends React.Component {
     filters: PropTypes.arrayOf(PropTypes.instanceOf(Filter)),
     matchers: PropTypes.arrayOf(PropTypes.instanceOf(Matcher)),
     noHtml: PropTypes.bool,
-    noFilters: PropTypes.bool,
-    noMatchers: PropTypes.bool,
+    disableFilters: PropTypes.bool,
+    disableMatchers: PropTypes.bool,
     onBeforeParse: PropTypes.func,
     onAfterParse: PropTypes.func,
     tagName: PropTypes.oneOf(['span', 'div', 'p']),
@@ -150,9 +150,9 @@ export default class Interweave extends React.Component {
       onBeforeParse,
       onAfterParse,
       matchers,
-      noMatchers,
+      disableMatchers,
       filters,
-      noFilters,
+      disableFilters,
       ...props,
     } = this.props;
 
@@ -166,12 +166,12 @@ export default class Interweave extends React.Component {
       }
     }
 
-    const newMatchers = noMatchers ? [] : [
+    const newMatchers = disableMatchers ? [] : [
       ...Interweave.getMatchers().map(row => row.matcher),
       ...matchers,
     ];
 
-    const newFilters = noFilters ? [] : [
+    const newFilters = disableFilters ? [] : [
       ...Interweave.getFilters().map(row => row.filter),
       ...filters,
     ];

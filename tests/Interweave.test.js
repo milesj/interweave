@@ -37,11 +37,11 @@ describe('Interweave', () => {
     ]);
   });
 
-  it('can disable all filters using `noFilters`', () => {
+  it('can disable all filters using `disableFilters`', () => {
     const wrapper = shallow(
       <Interweave
         filters={[new HrefFilter()]}
-        noFilters
+        disableFilters
         markup={'Foo <a href="foo.com">Bar</a> Baz'}
       />
     ).shallow();
@@ -68,11 +68,11 @@ describe('Interweave', () => {
     ]);
   });
 
-  it('can disable all matchers using `noMatchers', () => {
+  it('can disable all matchers using `disableMatchers', () => {
     const wrapper = shallow(
       <Interweave
         matchers={[new CodeTagMatcher('b', '1')]}
-        noMatchers
+        disableMatchers
         markup="Foo [b] Bar Baz"
       />
     ).shallow();
