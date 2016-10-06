@@ -9,19 +9,19 @@ import Parser from './Parser';
 import Element from './components/Element';
 
 type MarkupProps = {
-  markup: string,
+  content: string,
   tagName: string,
 };
 
-export default function Markup({ markup, tagName = 'div' }: MarkupProps) {
+export default function Markup({ content, tagName = 'div' }: MarkupProps) {
   return (
     <Element tagName={tagName}>
-      {new Parser(markup).parse()}
+      {new Parser(content).parse()}
     </Element>
   );
 }
 
 Markup.propTypes = {
-  markup: PropTypes.string.isRequired,
+  content: PropTypes.string.isRequired,
   tagName: PropTypes.oneOf(['span', 'div', 'p']),
 };

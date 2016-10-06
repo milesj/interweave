@@ -7,7 +7,7 @@ import { MOCK_MARKUP } from './mocks';
 
 describe('Markup', () => {
   it('parses the entire document starting from the body', () => {
-    const wrapper = shallow(<Markup markup={MOCK_MARKUP} />);
+    const wrapper = shallow(<Markup content={MOCK_MARKUP} />);
 
     expect(wrapper.prop('children')).to.deep.equal([
       '\n  ',

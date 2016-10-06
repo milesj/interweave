@@ -6,7 +6,7 @@ Insert React elements into strings using matchers and filters, while safely rend
 ## Requirements
 
 * ES2015
-* React 15+
+* React 0.14+
 * IE9+
 
 ## Installation

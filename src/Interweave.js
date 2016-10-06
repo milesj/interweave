@@ -32,7 +32,7 @@ function prioritySort(
 }
 
 type InterweaveProps = {
-  markup: string,
+  content: string,
   filters: Filter[],
   matchers: Matcher[],
   noHtml: boolean,
@@ -48,7 +48,7 @@ export default class Interweave extends React.Component {
   props: InterweaveProps;
 
   static propTypes = {
-    markup: PropTypes.string.isRequired,
+    content: PropTypes.string.isRequired,
     filters: PropTypes.arrayOf(PropTypes.instanceOf(Filter)),
     matchers: PropTypes.arrayOf(PropTypes.instanceOf(Matcher)),
     noHtml: PropTypes.bool,
@@ -146,7 +146,7 @@ export default class Interweave extends React.Component {
   parseMarkup(): ParsedNodes {
     const {
       tagName, // eslint-disable-line
-      markup,
+      content,
       onBeforeParse,
       onAfterParse,
       matchers,
@@ -156,12 +156,12 @@ export default class Interweave extends React.Component {
       ...props,
     } = this.props;
 
-    let content = markup;
+    let markup = content;
 
     if (onBeforeParse) {
-      content = onBeforeParse(content);
+      markup = onBeforeParse(markup);
 
-      if (typeof content !== 'string') {
+      if (typeof markup !== 'string') {
         throw new TypeError('Interweave `onBeforeParse` must return a valid HTML string.');
       }
     }
@@ -176,17 +176,17 @@ export default class Interweave extends React.Component {
       ...filters,
     ];
 
-    content = new Parser(content, props, newMatchers, newFilters).parse();
+    markup = new Parser(markup, props, newMatchers, newFilters).parse();
 
     if (onAfterParse) {
-      content = onAfterParse(content);
+      markup = onAfterParse(markup);
 
-      if (!Array.isArray(content)) {
+      if (!Array.isArray(markup)) {
         throw new TypeError('Interweave `onAfterParse` must return an array of strings and React elements.');
       }
     }
 
-    return content;
+    return markup;
   }
 
   /**

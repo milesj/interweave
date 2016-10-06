@@ -26,7 +26,7 @@ describe('Interweave', () => {
     const wrapper = shallow(
       <Interweave
         filters={[new HrefFilter()]}
-        markup={'Foo <a href="foo.com">Bar</a> Baz'}
+        content={'Foo <a href="foo.com">Bar</a> Baz'}
       />
     ).shallow();
 
@@ -42,7 +42,7 @@ describe('Interweave', () => {
       <Interweave
         filters={[new HrefFilter()]}
         disableFilters
-        markup={'Foo <a href="foo.com">Bar</a> Baz'}
+        content={'Foo <a href="foo.com">Bar</a> Baz'}
       />
     ).shallow();
 
@@ -57,7 +57,7 @@ describe('Interweave', () => {
     const wrapper = shallow(
       <Interweave
         matchers={[new CodeTagMatcher('b', '1')]}
-        markup="Foo [b] Bar Baz"
+        content="Foo [b] Bar Baz"
       />
     ).shallow();
 
@@ -73,7 +73,7 @@ describe('Interweave', () => {
       <Interweave
         matchers={[new CodeTagMatcher('b', '1')]}
         disableMatchers
-        markup="Foo [b] Bar Baz"
+        content="Foo [b] Bar Baz"
       />
     ).shallow();
 
@@ -153,13 +153,13 @@ describe('Interweave', () => {
   describe('parseMarkup()', () => {
     it('errors if onBeforeParse doesnt return a string', () => {
       expect(() => {
-        shallow(<Interweave onBeforeParse={() => 123} markup="Foo" />);
+        shallow(<Interweave onBeforeParse={() => 123} content="Foo" />);
       }).to.throw(TypeError, 'Interweave `onBeforeParse` must return a valid HTML string.');
     });
 
     it('errors if onAfterParse doesnt return an array', () => {
       expect(() => {
-        shallow(<Interweave onAfterParse={() => 123} markup="Foo" />);
+        shallow(<Interweave onAfterParse={() => 123} content="Foo" />);
       }).to.throw(TypeError, 'Interweave `onAfterParse` must return an array of strings and React elements.');
     });
 
@@ -167,7 +167,7 @@ describe('Interweave', () => {
       const wrapper = shallow(
         <Interweave
           onBeforeParse={content => content.replace(/b>/g, 'i>')}
-          markup={'Foo <b>Bar</b> Baz'}
+          content={'Foo <b>Bar</b> Baz'}
         />
       ).shallow();
 
@@ -185,7 +185,7 @@ describe('Interweave', () => {
             content.push(<Element tagName="u" key="1">Qux</Element>);
             return content;
           }}
-          markup={'Foo <b>Bar</b> Baz'}
+          content={'Foo <b>Bar</b> Baz'}
         />
       ).shallow();
 
@@ -200,21 +200,21 @@ describe('Interweave', () => {
 
   describe('render()', () => {
     it('renders with a default tag name', () => {
-      const wrapper = shallow(<Interweave markup="Foo" />).shallow();
+      const wrapper = shallow(<Interweave content="Foo" />).shallow();
 
       expect(wrapper.find('span')).to.have.lengthOf(1);
       expect(wrapper.text()).to.equal('Foo');
     });
 
     it('renders with a custom tag name', () => {
-      const wrapper = shallow(<Interweave tagName="div" markup="Foo" />).shallow();
+      const wrapper = shallow(<Interweave tagName="div" content="Foo" />).shallow();
 
       expect(wrapper.find('div')).to.have.lengthOf(1);
       expect(wrapper.text()).to.equal('Foo');
     });
 
     it('parses HTML', () => {
-      const wrapper = shallow(<Interweave tagName="div" markup={'Foo <b>Bar</b> Baz'} />).shallow();
+      const wrapper = shallow(<Interweave tagName="div" content={'Foo <b>Bar</b> Baz'} />).shallow();
 
       expect(wrapper.find('div')).to.have.lengthOf(1);
       expect(wrapper.find('Element').prop('tagName')).to.equal('b');
@@ -237,7 +237,7 @@ describe('Interweave', () => {
           new IpMatcher('ip'),
           new UrlMatcher('url'),
         ]}
-        markup={`Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec massa lorem, mollis non commodo quis, ultricies at elit. email@domain.com. Aliquam a arcu porttitor, aliquam eros sed, convallis massa. Nunc vitae vehicula quam, in feugiat ligula. #interweave Donec eu sem non nibh condimentum luctus. Vivamus pharetra feugiat blandit. Vestibulum neque velit, semper :japanese_castle: id vestibulum id, viverra a felis. Integer convallis in orci nec bibendum. Ut consequat posuere metus, www.domain.com.
+        content={`Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec massa lorem, mollis non commodo quis, ultricies at elit. email@domain.com. Aliquam a arcu porttitor, aliquam eros sed, convallis massa. Nunc vitae vehicula quam, in feugiat ligula. #interweave Donec eu sem non nibh condimentum luctus. Vivamus pharetra feugiat blandit. Vestibulum neque velit, semper :japanese_castle: id vestibulum id, viverra a felis. Integer convallis in orci nec bibendum. Ut consequat posuere metus, www.domain.com.
 
 Curabitur lectus odio, tempus quis velit vitae, cursus sagittis nulla. Maecenas sem nulla, tempor nec risus nec, ultricies ultricies magna. https://127.0.0.1/foo Nulla malesuada lacinia libero non mollis. Curabitur id lacus id dolor vestibulum ornare quis a nisi (http://domain.com/some/path?with=query). Pellentesque ac finibus mauris. Sed eu luctus diam. Quisque porta lectus in turpis imperdiet dapibus.
 
@@ -278,7 +278,7 @@ Curabitur lectus odio, tempus quis velit vitae, cursus sagittis nulla. Maecenas 
           new IpMatcher('ip'),
           new UrlMatcher('url'),
         ]}
-        markup={`<h1>Lorem ipsum dolor sit amet</h1>
+        content={`<h1>Lorem ipsum dolor sit amet</h1>
 
 <p><b>Consectetur adipiscing elit.</b> Donec massa lorem, mollis non commodo quis, ultricies at elit. email@domain.com. Aliquam a arcu porttitor, aliquam eros sed, convallis massa. Nunc vitae vehicula quam, in feugiat ligula. #interweave Donec eu sem non nibh condimentum luctus. Vivamus pharetra feugiat blandit. Vestibulum neque velit, semper id vestibulum id :love_letter:, viverra a felis. Integer convallis in orci nec bibendum. Ut consequat posuere metus, <a href="www.domain.com">www.domain.com</a>.</p>
 
@@ -347,7 +347,7 @@ Curabitur lectus odio, tempus quis velit vitae, cursus sagittis nulla. Maecenas 
           new IpMatcher('ip'),
           new UrlMatcher('url'),
         ]}
-        markup={`- https://127.0.0.1/foo
+        content={`- https://127.0.0.1/foo
 - <a href="www.domain.com">www.domain.com</a>
 - (http://domain.com/some/path?with=query)
 - <a href="http://domain.com">This text should stay</a>`}
