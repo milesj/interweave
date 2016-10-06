@@ -26,7 +26,7 @@
     "build:js": "babel ./src -d ./lib",
     "build:docs": "cp ./{*.md,package.json,LICENSE} ./lib",
     "build:flow": "cp ./src/interweave.js.flow ./lib",
-    "build:emoji": "cp ./src/data/emoji.json ./lib/data",
+    "build:emoji": "cp ./src/data/emoji/data.json ./lib/data/emoji",
     "watch": "babel --watch ./src -d ./lib",
     "emoji": "./bin/build-emoji.js > ./src/data/emoji.json",
     "emoji:regex": "./bin/generate-emoji-regex.js",

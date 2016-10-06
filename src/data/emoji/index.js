@@ -4,7 +4,7 @@
  * @flow
  */
 
-import json from './emoji.json';
+import json from './data.json';
 
 type StringMap = { [key: string]: string };
 type EmojiMap = {
