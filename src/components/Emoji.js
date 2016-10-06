@@ -5,7 +5,7 @@
  */
 
 import React, { PropTypes } from 'react';
-import { UNICODE_TO_SHORTNAME, SHORTNAME_TO_UNICODE, SHORTNAME_TO_CODEPOINT } from '../data/emoji';
+import emojiData, { UNICODE_TO_SHORTNAME, SHORTNAME_TO_UNICODE } from '../data/emoji';
 
 import type { EmojiProps } from '../types';
 
@@ -35,18 +35,19 @@ export default function Emoji({ shortName, unicode, emojiPath }: EmojiProps) {
     unicode = SHORTNAME_TO_UNICODE[shortName];
   }
 
-  const codePoint = SHORTNAME_TO_CODEPOINT[shortName];
-  const path = emojiPath || '{{codepoint}}';
+  const emoji = emojiData[shortName];
+  const path = emojiPath || '{{hexcode}}';
   const ext = emojiPath ? emojiPath.substr(-3).toLowerCase() : '';
 
   return (
     <span
       className={`interweave__emoji ${ext}`}
       data-unicode={unicode}
-      data-codepoint={codePoint}
+      data-hexcode={emoji.hexCode}
+      data-codepoint={emoji.codePoint.join('-')}
       data-shortname={shortName}
     >
-      <img src={path.replace('{{codepoint}}', codePoint)} alt={shortName} />
+      <img src={path.replace('{{hexcode}}', emoji.hexCode)} alt={shortName} />
     </span>
   );
 }

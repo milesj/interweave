@@ -29,6 +29,7 @@
     "build:emoji": "cp ./src/data/emoji.json ./lib/data",
     "watch": "babel --watch ./src -d ./lib",
     "emoji": "./bin/build-emoji.js > ./src/data/emoji.json",
+    "emoji:regex": "./bin/generate-emoji-regex.js",
     "lint": "eslint ./src ./tests",
     "flow": "flow check",
     "mocha": "npm run mocha:in ./tests/*.test.js ./tests/**/*.test.js",
@@ -85,6 +86,8 @@
     "react": "^15.3.2",
     "react-addons-test-utils": "^15.3.2",
     "react-dom": "^15.3.2",
+    "regenerate": "^1.3.1",
+    "regex-trie": "^1.0.4",
     "rimraf": "^2.5.4"
   }
 }

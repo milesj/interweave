@@ -1,8 +1,7 @@
 import { expect } from 'chai';
 import Parser from '../../lib/Parser';
 import EmojiMatcher from '../../lib/matchers/Emoji';
-import { SHORTNAME_TO_UNICODE /* , UNICODE_TO_SHORTNAME, EMOJI_PATTERN */ } from '../../lib/data/emoji';
-import { EMOJI_SHORTNAME_PATTERN } from '../../lib/constants';
+import { EMOJI_SHORTNAME_PATTERN, SHORTNAME_TO_UNICODE /* , UNICODE_TO_SHORTNAME, EMOJI_PATTERN */ } from '../../lib/data/emoji';
 import { VALID_EMOJIS, TOKEN_LOCATIONS, createExpectedTokenLocations, parentConfig } from '../mocks';
 
 // const VALID_UNICODE = Object.keys(UNICODE_TO_SHORTNAME);
