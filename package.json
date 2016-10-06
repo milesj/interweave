@@ -1,6 +1,6 @@
 {
   "name": "interweave",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Insert React elements into strings using matchers and filters, while safely rendering HTML.",
   "keywords": [
     "interweave",
