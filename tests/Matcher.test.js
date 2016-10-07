@@ -26,7 +26,7 @@ describe('Matcher', () => {
     });
 
     it('returns a React element from custom factory', () => {
-      const customMatcher = new Matcher('foo', (match, p) => (
+      const customMatcher = new Matcher('foo', {}, (match, p) => (
         <Element tagName={p.tagName}>{match}</Element>
       ));
 
@@ -36,7 +36,7 @@ describe('Matcher', () => {
     });
 
     it('errors if not a React element', () => {
-      const customMatcher = new Matcher('foo', () => 123);
+      const customMatcher = new Matcher('foo', {}, () => 123);
 
       expect(() => { customMatcher.createElement(); }).to.throw(Error);
     });

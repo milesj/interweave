@@ -11,7 +11,7 @@ import { HASHTAG_PATTERN } from '../constants';
 
 import type { MatchResponse, HashtagProps } from '../types';
 
-export default class HashtagMatcher extends Matcher {
+export default class HashtagMatcher extends Matcher<Object> {
   /**
    * {@inheritDoc}
    */

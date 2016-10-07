@@ -4,6 +4,7 @@ import { shallow } from 'enzyme';
 import Interweave from '../lib/Interweave';
 import { Element, Email, Emoji, Hashtag, Url } from '../lib/components';
 import { EmailMatcher, EmojiMatcher, HashtagMatcher, IpMatcher, UrlMatcher } from '../lib/matchers';
+import { SHORTNAME_TO_UNICODE } from '../lib/data/emoji';
 import { MockFilter, MockMatcher, HrefFilter, CodeTagMatcher } from './mocks';
 
 describe('Interweave', () => {
@@ -232,7 +233,7 @@ describe('Interweave', () => {
         tagName="div"
         matchers={[
           new EmailMatcher('email'),
-          new EmojiMatcher('emoji'),
+          new EmojiMatcher('emoji', { convertShortName: true }),
           new HashtagMatcher('hashtag'),
           new IpMatcher('ip'),
           new UrlMatcher('url'),
@@ -251,7 +252,7 @@ Curabitur lectus odio, tempus quis velit vitae, cursus sagittis nulla. Maecenas 
       '. Aliquam a arcu porttitor, aliquam eros sed, convallis massa. Nunc vitae vehicula quam, in feugiat ligula. ',
       <Hashtag key="2" hashtagName="interweave">#interweave</Hashtag>,
       ' Donec eu sem non nibh condimentum luctus. Vivamus pharetra feugiat blandit. Vestibulum neque velit, semper ',
-      <Emoji key="1" shortName=":japanese_castle:" />,
+      <Emoji key="1" shortName=":japanese_castle:" unicode={SHORTNAME_TO_UNICODE[':japanese_castle:']} />,
       ' id vestibulum id, viverra a felis. Integer convallis in orci nec bibendum. Ut consequat posuere metus, ',
       <Url key="7" urlParts={{ ...urlParts, host: 'www.domain.com' }}>www.domain.com</Url>,
       '.\n\nCurabitur lectus odio, tempus quis velit vitae, cursus sagittis nulla. Maecenas sem nulla, tempor nec risus nec, ultricies ultricies magna. ',
@@ -273,7 +274,7 @@ Curabitur lectus odio, tempus quis velit vitae, cursus sagittis nulla. Maecenas 
         tagName="div"
         matchers={[
           new EmailMatcher('email'),
-          new EmojiMatcher('emoji'),
+          new EmojiMatcher('emoji', { convertShortName: true }),
           new HashtagMatcher('hashtag'),
           new IpMatcher('ip'),
           new UrlMatcher('url'),
@@ -301,7 +302,7 @@ Curabitur lectus odio, tempus quis velit vitae, cursus sagittis nulla. Maecenas 
           '. Aliquam a arcu porttitor, aliquam eros sed, convallis massa. Nunc vitae vehicula quam, in feugiat ligula. ',
           <Hashtag key="5" hashtagName="interweave">#interweave</Hashtag>,
           ' Donec eu sem non nibh condimentum luctus. Vivamus pharetra feugiat blandit. Vestibulum neque velit, semper id vestibulum id ',
-          <Emoji key="4" shortName=":love_letter:" />,
+          <Emoji key="4" shortName=":love_letter:" unicode={SHORTNAME_TO_UNICODE[':love_letter:']} />,
           ', viverra a felis. Integer convallis in orci nec bibendum. Ut consequat posuere metus, ',
           <Element key="6" tagName="a" attributes={{ href: 'www.domain.com' }}>{['www.domain.com']}</Element>,
           '.',
@@ -309,7 +310,7 @@ Curabitur lectus odio, tempus quis velit vitae, cursus sagittis nulla. Maecenas 
       </Element>,
       '\n\n',
       <Element key="7" tagName="br" attributes={{}}>{[]}</Element>,
-      <Emoji key="8" shortName=":ok_woman_tone3:" />,
+      <Emoji key="8" shortName=":ok_woman_tone3:" unicode={SHORTNAME_TO_UNICODE[':ok_woman_tone3:']} />,
       <Element key="9" tagName="br" attributes={{}}>{[]}</Element>,
       '\n\n',
       <Element key="10" tagName="div" attributes={{}}>
@@ -342,7 +343,7 @@ Curabitur lectus odio, tempus quis velit vitae, cursus sagittis nulla. Maecenas 
         tagName="div"
         matchers={[
           new EmailMatcher('email'),
-          new EmojiMatcher('emoji'),
+          new EmojiMatcher('emoji', { convertShortName: true }),
           new HashtagMatcher('hashtag'),
           new IpMatcher('ip'),
           new UrlMatcher('url'),
@@ -363,6 +364,26 @@ Curabitur lectus odio, tempus quis velit vitae, cursus sagittis nulla. Maecenas 
       <Url key="2" urlParts={{ ...urlParts, host: 'domain.com', path: '/some/path', query: '?with=query' }}>http://domain.com/some/path?with=query</Url>,
       ')\n- ',
       <Element key="3" tagName="a" attributes={{ href: 'http://domain.com' }}>{['This text should stay']}</Element>,
+    ]);
+  });
+
+  it('parses and renders emoji as unicode', () => {
+    const wrapper = shallow(
+      <Interweave
+        tagName="div"
+        matchers={[
+          new EmojiMatcher('emoji', { convertShortName: true, renderUnicode: true }),
+        ]}
+        content="This has :cat: and :dog: shortnames."
+      />
+    ).shallow();
+
+    expect(wrapper.prop('children')).to.deep.equal([
+      'This has ',
+      SHORTNAME_TO_UNICODE[':cat:'],
+      ' and ',
+      SHORTNAME_TO_UNICODE[':dog:'],
+      ' shortnames.',
     ]);
   });
 });

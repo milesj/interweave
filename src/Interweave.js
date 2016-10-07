@@ -34,7 +34,7 @@ function prioritySort(
 type InterweaveProps = {
   content: string,
   filters: Filter[],
-  matchers: Matcher[],
+  matchers: Matcher<*>[],
   noHtml: boolean,
   disableFilters: boolean,
   disableMatchers: boolean,
@@ -91,7 +91,7 @@ export default class Interweave extends React.Component {
    * @param {Matcher} matcher
    * @param {Number} [priority]
    */
-  static addMatcher(matcher: Matcher, priority: number = 0) {
+  static addMatcher(matcher: Matcher<*>, priority: number = 0) {
     if (!(matcher instanceof Matcher)) {
       throw new TypeError('Matcher must be an instance of the `Matcher` class.');
     }
@@ -120,6 +120,19 @@ export default class Interweave extends React.Component {
    */
   static clearMatchers() {
     globalMatchers = [];
+  }
+
+  /**
+   * Configure default value for child props by
+   * defining default props on the parent.
+   *
+   * @param {Object} props
+   */
+  static configure(props: Object) {
+    Interweave.defaultProps = {
+      ...Interweave.defaultProps,
+      ...props,
+    };
   }
 
   /**

@@ -38,14 +38,14 @@ export default class Parser {
   doc: Document;
   content: ParsedNodes;
   props: Object;
-  matchers: Matcher[];
+  matchers: Matcher<*>[];
   filters: Filter[];
   keyIndex: number;
 
   constructor(
     markup: string,
     props: Object = {},
-    matchers: Matcher[] = [],
+    matchers: Matcher<*>[] = [],
     filters: Filter[] = []
   ) {
     this.doc = this.createDocument(markup);

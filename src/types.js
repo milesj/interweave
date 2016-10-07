@@ -40,7 +40,7 @@ export type FilterStructure = {
 export type FilterList = FilterStructure[];
 
 export type MatcherStructure = {
-  matcher: Matcher,
+  matcher: Matcher<*>,
   priority: number,
 };
 
@@ -103,4 +103,10 @@ export type EmojiProps = {
   shortName: string,
   unicode: string,
   emojiPath?: string,
+};
+
+export type EmojiOptions = {
+  convertShortName: boolean;
+  convertUnicode: boolean;
+  renderUnicode: boolean;
 };

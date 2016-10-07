@@ -10,16 +10,18 @@ import type { MatcherFactory, MatchResponse } from './types';
 
 type MatchCallback = (matches: string[]) => ({ [key: string]: any });
 
-export default class Matcher {
+export default class Matcher<T> {
+  options: T;
   propName: string;
   inverseName: string;
   customFactory: ?MatcherFactory;
 
-  constructor(name: string, factory: ?MatcherFactory = null) {
+  constructor(name: string, options: T, factory: ?MatcherFactory = null) {
     if (!name || name.toLowerCase() === 'html') {
       throw new Error(`The matcher name "${name}" is not allowed.`);
     }
 
+    this.options = options || {};
     this.propName = name;
     this.inverseName = `no${name.charAt(0).toUpperCase() + name.substr(1)}`;
     this.customFactory = factory;
@@ -31,7 +33,7 @@ export default class Matcher {
    *
    * @param {String} match
    * @param {Object} [props]
-   * @returns {ReactComponent}
+   * @returns {ReactComponent|String}
    */
   createElement(match: string, props: Object = {}): React.Element<*> {
     let element = null;
@@ -42,7 +44,7 @@ export default class Matcher {
       element = this.factory(match, props);
     }
 
-    if (!React.isValidElement(element)) {
+    if (typeof element !== 'string' && !React.isValidElement(element)) {
       throw new Error(`Invalid React element created from ${this.constructor.name}.`);
     }
 

@@ -11,7 +11,7 @@ import { URL_PATTERN } from '../constants';
 
 import type { MatchResponse, UrlProps } from '../types';
 
-export default class UrlMatcher extends Matcher {
+export default class UrlMatcher extends Matcher<Object> {
   /**
    * {@inheritDoc}
    */

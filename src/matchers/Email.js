@@ -11,7 +11,7 @@ import { EMAIL_PATTERN } from '../constants';
 
 import type { MatchResponse, EmailProps } from '../types';
 
-export default class EmailMatcher extends Matcher {
+export default class EmailMatcher extends Matcher<Object> {
   /**
    * {@inheritDoc}
    */

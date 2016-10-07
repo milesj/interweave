@@ -9,13 +9,19 @@ import Matcher from '../Matcher';
 import Emoji from '../components/Emoji';
 import { SHORTNAME_TO_UNICODE, EMOJI_SHORTNAME_PATTERN } from '../data/emoji';
 
-import type { MatchResponse, EmojiProps } from '../types';
+import type { MatchResponse, EmojiProps, EmojiOptions } from '../types';
 
-export default class EmojiMatcher extends Matcher {
+export default class EmojiMatcher extends Matcher<EmojiOptions> {
+  options: EmojiOptions;
+
   /**
    * {@inheritDoc}
    */
   factory(match: string, props: Object = {}): React.Element<EmojiProps> {
+    if (this.options.renderUnicode) {
+      return props.unicode;
+    }
+
     return (
       <Emoji {...props} />
     );
@@ -34,17 +40,29 @@ export default class EmojiMatcher extends Matcher {
   match(string: string): ?MatchResponse {
     let response = null;
 
-    // Let's first check to see if a colon exists in the string,
-    // before doing any unnecessary shortname regex matching.
-    if (string.indexOf(':') >= 0) {
+    // Should we convert shortnames to unicode?
+    if (this.options.convertShortName && string.indexOf(':') >= 0) {
       response = this.doMatch(string, EMOJI_SHORTNAME_PATTERN, matches => ({
         shortName: matches[0].toLowerCase(),
       }));
 
-      // Only trigger a match if a valid shortname
-      if (response && !SHORTNAME_TO_UNICODE[response.shortName]) {
-        response = null;
+      if (response) {
+        const unicode = SHORTNAME_TO_UNICODE[response.shortName];
+
+        // Invalid shortname
+        if (!unicode) {
+          response = null;
+
+        // We want to render using the unicode value
+        } else {
+          response.unicode = unicode;
+        }
       }
+    }
+
+    // Should we convert unicode to SVG/PNG?
+    if (this.options.convertUnicode && !response) {
+      // TODO
     }
 
     return response;

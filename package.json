@@ -39,7 +39,6 @@
     "posttest": "npm run lint && npm run flow",
     "preversion": "npm test",
     "postversion": "npm run build",
-    "prepublish": "npm run clean && npm run build",
     "release": "npm publish ./lib"
   },
   "repository": {

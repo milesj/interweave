@@ -15,7 +15,8 @@ const INVALID_SHORTNAME = [
 ];
 
 describe('matchers/Emoji', () => {
-  const matcher = new EmojiMatcher('emoji');
+  const matcher = new EmojiMatcher('emoji', { convertShortName: true });
+  const noConvertMatcher = new EmojiMatcher('emoji');
   // const pattern = new RegExp(`^${EMOJI_PATTERN}$`, 'u');
   const shortPattern = new RegExp(`^${EMOJI_SHORTNAME_PATTERN}$`, 'i');
 
@@ -41,6 +42,14 @@ describe('matchers/Emoji', () => {
     });
   });
 
+  describe('doesnt match shortname when `convertShortName` is false', () => {
+    VALID_SHORTNAME.forEach((shortName) => {
+      it(`shortname: ${shortName}`, () => {
+        expect(noConvertMatcher.match(shortName)).to.equal(null);
+      });
+    });
+  });
+
   describe('doesnt match invalid emoji', () => {
     INVALID_SHORTNAME.forEach((shortName) => {
       it(`shortname: ${shortName}`, () => {
@@ -51,7 +60,11 @@ describe('matchers/Emoji', () => {
 
   describe('matches all emojis in a string', () => {
     const parser = new Parser('', {}, [matcher]);
-    const createShort = (shortName, key) => matcher.factory(shortName, { shortName, key });
+    const createShort = (shortName, key) => matcher.factory(shortName, {
+      unicode: SHORTNAME_TO_UNICODE[shortName],
+      shortName,
+      key,
+    });
 
     VALID_EMOJIS.forEach(([,, shortName]) => {
       const expectedShort = createExpectedTokenLocations(shortName, createShort);
@@ -82,6 +95,21 @@ describe('matchers/Emoji', () => {
       expect(matcher.match(':man:')).to.deep.equal({
         match: ':man:',
         shortName: ':man:',
+        unicode: SHORTNAME_TO_UNICODE[':man:'],
+      });
+    });
+  });
+
+  describe('factory()', () => {
+    VALID_EMOJIS.forEach(([, unicode, shortName]) => {
+      const uniMatcher = new EmojiMatcher('emoji', { renderUnicode: true });
+
+      it(`returns the unicode as is when using \`renderUnicode\`: ${shortName}`, () => {
+        expect(uniMatcher.factory(unicode, { unicode, shortName })).to.equal(unicode);
+      });
+
+      it(`returns the unicode when providing a shortname using \`renderUnicode\`: ${shortName}`, () => {
+        expect(uniMatcher.factory(shortName, { unicode, shortName })).to.equal(unicode);
       });
     });
   });

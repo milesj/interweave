@@ -8,12 +8,13 @@ declare module "interweave" {
     filter(value: string): string;
   }
 
-  declare export class Matcher {
+  declare export class Matcher<T> {
+    options: T;
     propName: string;
     inverseName: string;
     customFactory: ?MatcherFactory;
 
-    constructor(name: string, factory: ?MatcherFactory): this;
+    constructor(name: string, options: T, factory: ?MatcherFactory): this;
     createElement(match: string, props: Object): React.Element<*>;
     factory(match: string, props: Object): React.Element<*>;
     getTagName(): string;
@@ -27,11 +28,12 @@ declare module "interweave" {
 
   declare export default class Interweave extends React.Component {
     static addFilter(filter: Filter, priority: number): void;
-    static addMatcher(matcher: Matcher, priority: number): void;
+    static addMatcher(matcher: Matcher<*>, priority: number): void;
     static clearFilters(): void;
     static clearMatchers(): void;
+    static configure(props: Object): void;
     static getFilters(): { filter: Filter, priority: number }[];
-    static getMatchers(): { matcher: Matcher, priority: number }[];
+    static getMatchers(): { matcher: Matcher<*>, priority: number }[];
     parseMarkup(): Array<string | React.Element<*>>;
     render(): React.Element<*>;
   }
@@ -47,9 +49,9 @@ declare module "interweave/components" {
 }
 
 declare module "interweave/matchers" {
-  declare export class EmailMatcher extends Matcher {}
-  declare export class EmojiMatcher extends Matcher {}
-  declare export class HashtagMatcher extends Matcher {}
-  declare export class IpMatcher extends Matcher {}
-  declare export class UrlMatcher extends Matcher {}
+  declare export class EmailMatcher extends Matcher<Object> {}
+  declare export class EmojiMatcher extends Matcher<Object> {}
+  declare export class HashtagMatcher extends Matcher<Object> {}
+  declare export class IpMatcher extends Matcher<Object> {}
+  declare export class UrlMatcher extends Matcher<Object> {}
 }
