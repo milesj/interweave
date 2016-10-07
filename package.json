@@ -38,8 +38,7 @@
     "test": "npm run mocha",
     "posttest": "npm run lint && npm run flow",
     "preversion": "npm test",
-    "postversion": "npm run build",
-    "release": "npm publish ./lib"
+    "release": "npm run clean && npm run build && npm publish ./lib"
   },
   "repository": {
     "type": "git",
