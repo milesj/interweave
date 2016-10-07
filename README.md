@@ -43,7 +43,7 @@ npm install interweave react --save
 ```javascript
 import Interweave from 'interweave';
 
-<Interweave markup="This string <b>contains</b> HTML." />
+<Interweave content="This string <b>contains</b> HTML." />
 ```
 
 #### Managing Matchers
@@ -68,7 +68,7 @@ The following props are supported:
 ```javascript
 import { Markup } from 'interweave';
 
-<Markup markup="This string <b>contains</b> HTML." />
+<Markup content="This string <b>contains</b> HTML." />
 ```
 
 ### Matchers
