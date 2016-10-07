@@ -72,7 +72,6 @@ export type ElementProps = {
 
 export type EmailProps = {
   children: string,
-  obfuscateEmail?: boolean,
   emailParts: {
     username: string,
     host: string,

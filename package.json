@@ -36,6 +36,7 @@
     "mocha:in": "mocha --opts ./mocha.opts",
     "pretest": "npm run clean && npm run build:js && npm run build:emoji",
     "test": "npm run mocha",
+    "test:bundle": "browserify -t [ babelify ] ./tests/browsers/bundle.js -o ./tests/browsers/bundle.min.js",
     "posttest": "npm run lint && npm run flow",
     "preversion": "npm test",
     "release": "npm run clean && npm run build && npm publish ./lib"
@@ -70,6 +71,8 @@
     "babel-preset-stage-2": "^6.17.0",
     "babel-register": "^6.16.3",
     "babel-runtime": "^6.11.6",
+    "babelify": "^7.3.0",
+    "browserify": "^13.1.0",
     "chai": "^3.5.0",
     "emojione": "^2.2.6",
     "enzyme": "^2.4.1",
