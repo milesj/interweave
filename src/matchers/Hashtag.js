@@ -11,6 +11,8 @@ import { HASHTAG_PATTERN } from '../constants';
 
 import type { MatchResponse, HashtagProps } from '../types';
 
+const HASHTAG_REGEX = new RegExp(HASHTAG_PATTERN, 'i');
+
 export default class HashtagMatcher extends Matcher<Object> {
   /**
    * {@inheritDoc}
@@ -32,7 +34,7 @@ export default class HashtagMatcher extends Matcher<Object> {
    * {@inheritDoc}
    */
   match(string: string): ?MatchResponse {
-    return this.doMatch(string, HASHTAG_PATTERN, matches => ({
+    return this.doMatch(string, HASHTAG_REGEX, matches => ({
       hashtagName: matches[1],
     }));
   }

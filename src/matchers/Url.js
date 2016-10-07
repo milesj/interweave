@@ -11,6 +11,8 @@ import { URL_PATTERN } from '../constants';
 
 import type { MatchResponse, UrlProps } from '../types';
 
+const URL_REGEX = new RegExp(URL_PATTERN, 'i');
+
 export default class UrlMatcher extends Matcher<Object> {
   /**
    * {@inheritDoc}
@@ -32,7 +34,7 @@ export default class UrlMatcher extends Matcher<Object> {
    * {@inheritDoc}
    */
   match(string: string): ?MatchResponse {
-    return this.doMatch(string, URL_PATTERN, this.handleMatches);
+    return this.doMatch(string, URL_REGEX, this.handleMatches);
   }
 
   /**

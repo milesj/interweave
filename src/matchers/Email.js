@@ -11,6 +11,8 @@ import { EMAIL_PATTERN } from '../constants';
 
 import type { MatchResponse, EmailProps } from '../types';
 
+const EMAIL_REGEX = new RegExp(EMAIL_PATTERN, 'i');
+
 export default class EmailMatcher extends Matcher<Object> {
   /**
    * {@inheritDoc}
@@ -32,7 +34,7 @@ export default class EmailMatcher extends Matcher<Object> {
    * {@inheritDoc}
    */
   match(string: string): ?MatchResponse {
-    return this.doMatch(string, EMAIL_PATTERN, matches => ({
+    return this.doMatch(string, EMAIL_REGEX, matches => ({
       emailParts: {
         username: matches[1],
         host: matches[2],
