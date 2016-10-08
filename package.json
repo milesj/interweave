@@ -1,6 +1,6 @@
 {
   "name": "interweave",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "description": "Safely render HTML, clean attributes with filters, autowrap text with matchers, render emoji characters, and much more.",
   "keywords": [
     "interweave",
