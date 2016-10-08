@@ -535,5 +535,67 @@ describe('Parser', () => {
         <Element key="1" tagName="section" attributes={{}}>{['Wat']}</Element>,
       ]);
     });
+
+    it('does render an `a` tag within inline', () => {
+      element = document.createElement('span');
+      element.appendChild(document.createTextNode('Foo'));
+      element.appendChild(createChild('a', 'Bar'));
+      element.appendChild(document.createTextNode('Baz'));
+
+      expect(instance.parseNode(element, {
+        ...TAGS.span,
+        tagName: 'span',
+      })).to.deep.equal([
+        'Foo',
+        <Element key="0" tagName="a" attributes={{}}>{['Bar']}</Element>,
+        'Baz',
+      ]);
+    });
+
+    it('does render an `a` tag within block', () => {
+      element.appendChild(document.createTextNode('Foo'));
+      element.appendChild(createChild('a', 'Bar'));
+      element.appendChild(document.createTextNode('Baz'));
+
+      expect(instance.parseNode(element, {
+        ...parentConfig,
+      })).to.deep.equal([
+        'Foo',
+        <Element key="0" tagName="a" attributes={{}}>{['Bar']}</Element>,
+        'Baz',
+      ]);
+    });
+
+    it('does render inline elements within an `a` tag', () => {
+      element = document.createElement('a');
+      element.appendChild(document.createTextNode('Foo'));
+      element.appendChild(createChild('span', 'Bar'));
+      element.appendChild(document.createTextNode('Baz'));
+
+      expect(instance.parseNode(element, {
+        ...TAGS.a,
+        tagName: 'a',
+      })).to.deep.equal([
+        'Foo',
+        <Element key="0" tagName="span" attributes={{}}>{['Bar']}</Element>,
+        'Baz',
+      ]);
+    });
+
+    it('does render block elements within an `a` tag', () => {
+      element = document.createElement('a');
+      element.appendChild(document.createTextNode('Foo'));
+      element.appendChild(createChild('div', 'Bar'));
+      element.appendChild(document.createTextNode('Baz'));
+
+      expect(instance.parseNode(element, {
+        ...TAGS.a,
+        tagName: 'a',
+      })).to.deep.equal([
+        'Foo',
+        <Element key="0" tagName="div" attributes={{}}>{['Bar']}</Element>,
+        'Baz',
+      ]);
+    });
   });
 });

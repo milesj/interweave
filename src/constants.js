@@ -61,6 +61,7 @@ export const PARSER_PASS_THROUGH: number = 3; // Do not render this element but 
 
 export const TYPE_INLINE: string = 'inline';
 export const TYPE_BLOCK: string = 'block';
+export const TYPE_INLINE_BLOCK: string = 'inline-block'; // Special case
 
 const inlineConfig: NodeConfig = {
   rule: PARSER_ALLOW,
@@ -87,6 +88,8 @@ const blockConfig: NodeConfig = {
 export const TAGS: ConfigMap = {
   a: {
     ...inlineConfig,
+    type: TYPE_INLINE_BLOCK,
+    block: true,
   },
   abbr: {
     ...inlineConfig,

@@ -199,12 +199,12 @@ export default class Parser {
       return false;
     }
 
-    // Block fourth
+    // Block
     if (!parentConfig.block && childConfig.type === TYPE_BLOCK) {
       return false;
     }
 
-    // Inline last
+    // Inline
     if (!parentConfig.inline && childConfig.type === TYPE_INLINE) {
       return false;
     }
