@@ -32,12 +32,13 @@ function prioritySort(
 }
 
 type InterweaveProps = {
+  className: string,
   content: string,
+  disableFilters: boolean,
+  disableMatchers: boolean,
   filters: Filter[],
   matchers: Matcher<*>[],
   noHtml: boolean,
-  disableFilters: boolean,
-  disableMatchers: boolean,
   onBeforeParse: (content: string) => string,
   onAfterParse: (content: ParsedNodes) => ParsedNodes,
   tagName: string,
@@ -48,12 +49,13 @@ export default class Interweave extends React.Component {
   props: InterweaveProps;
 
   static propTypes = {
+    className: PropTypes.string,
     content: PropTypes.string.isRequired,
+    disableFilters: PropTypes.bool,
+    disableMatchers: PropTypes.bool,
     filters: PropTypes.arrayOf(PropTypes.instanceOf(Filter)),
     matchers: PropTypes.arrayOf(PropTypes.instanceOf(Matcher)),
     noHtml: PropTypes.bool,
-    disableFilters: PropTypes.bool,
-    disableMatchers: PropTypes.bool,
     onBeforeParse: PropTypes.func,
     onAfterParse: PropTypes.func,
     tagName: PropTypes.oneOf(['span', 'div', 'p']),
@@ -159,6 +161,7 @@ export default class Interweave extends React.Component {
   parseMarkup(): ParsedNodes {
     const {
       tagName, // eslint-disable-line
+      className, // eslint-disable-line
       content,
       onBeforeParse,
       onAfterParse,
@@ -208,8 +211,10 @@ export default class Interweave extends React.Component {
    * @returns {JSX}
    */
   render() {
+    const { tagName, className } = this.props;
+
     return (
-      <Element tagName={this.props.tagName}>
+      <Element tagName={tagName} className={className}>
         {this.parseMarkup()}
       </Element>
     );

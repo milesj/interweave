@@ -8,9 +8,16 @@ import React, { PropTypes } from 'react';
 
 import type { ElementProps } from '../types';
 
-export default function Element({ attributes = {}, children, tagName: Tag }: ElementProps) {
+export default function Element({
+  attributes = {},
+  className,
+  children,
+  tagName: Tag,
+}: ElementProps) {
+  const combinedClass = [className || '', attributes.className || ''].filter(Boolean);
+
   return (
-    <Tag {...attributes} data-interweave>
+    <Tag {...attributes} className={combinedClass.join(' ')} data-interweave>
       {children}
     </Tag>
   );
@@ -22,6 +29,7 @@ Element.propTypes = {
     PropTypes.number,
     PropTypes.bool,
   ])),
+  className: PropTypes.string,
   children: PropTypes.node.isRequired,
   tagName: PropTypes.string.isRequired,
 };

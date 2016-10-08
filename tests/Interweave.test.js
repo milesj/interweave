@@ -23,6 +23,18 @@ describe('Interweave', () => {
     Interweave.clearMatchers();
   });
 
+  it('can set the class name', () => {
+    const wrapper = shallow(
+      <Interweave
+        className="foo-bar"
+        content="Foo Bar"
+      />
+    );
+
+    // Passes to the Element
+    expect(wrapper.prop('className')).to.equal('foo-bar');
+  });
+
   it('can pass filters through props', () => {
     const wrapper = shallow(
       <Interweave

@@ -4,6 +4,26 @@ import { shallow } from 'enzyme';
 import Element from '../../lib/components/Element';
 
 describe('components/Element', () => {
+  it('can set the class name', () => {
+    const wrapper = shallow(<Element className="foo-bar" tagName="div">Foo</Element>);
+
+    expect(wrapper.hasClass('foo-bar')).to.equal(true);
+  });
+
+  it('combines attribute class with prop class', () => {
+    const wrapper = shallow(
+      <Element
+        className="foo-bar"
+        tagName="div"
+        attributes={{ className: 'baz-qux' }}
+      >
+        Foo
+      </Element>
+    );
+
+    expect(wrapper.prop('className')).to.equal('foo-bar baz-qux');
+  });
+
   it('renders with a custom HTML tag', () => {
     let wrapper = shallow(<Element tagName="div">Foo</Element>);
 
@@ -24,6 +44,7 @@ describe('components/Element', () => {
     expect(wrapper.isEmptyRender()).to.equal(false);
     expect(wrapper.props()).to.deep.equal({
       children: 'Foo',
+      className: '',
       'data-interweave': true,
     });
   });
@@ -35,6 +56,7 @@ describe('components/Element', () => {
     expect(wrapper.props()).to.deep.equal({
       children: 'Foo',
       id: 'foo',
+      className: '',
       'data-interweave': true,
     });
   });
@@ -57,6 +79,7 @@ describe('components/Element', () => {
     expect(wrapper.props()).to.deep.equal({
       children: 'Foo',
       id: 'foo',
+      className: '',
       disabled: true,
       maxLength: 15,
       'data-interweave': true,

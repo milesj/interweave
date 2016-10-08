@@ -6,6 +6,18 @@ import Element from '../lib/components/Element';
 import { MOCK_MARKUP } from './mocks';
 
 describe('Markup', () => {
+  it('can set the class name', () => {
+    const wrapper = shallow(
+      <Markup
+        className="foo-bar"
+        content="Foo Bar"
+      />
+    );
+
+    // Passes to the Element
+    expect(wrapper.prop('className')).to.equal('foo-bar');
+  });
+
   it('parses the entire document starting from the body', () => {
     const wrapper = shallow(<Markup content={MOCK_MARKUP} />);
 
