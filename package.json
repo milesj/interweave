@@ -1,7 +1,7 @@
 {
   "name": "interweave",
   "version": "0.3.0",
-  "description": "Insert React elements into strings using matchers and filters, while safely rendering HTML.",
+  "description": "Safely render HTML, clean attributes with filters, autowrap text with matchers, render emoji characters, and much more.",
   "keywords": [
     "interweave",
     "inject",
@@ -12,13 +12,17 @@
     "element",
     "matcher",
     "filter",
+    "clean",
     "email",
     "url",
     "autolink",
     "emoji",
     "hashtag",
     "html",
-    "markup"
+    "markup",
+    "safe",
+    "render",
+    "html"
   ],
   "scripts": {
     "clean": "rimraf ./lib",

@@ -1,7 +1,14 @@
-# Interweave v0.1.0
+# Interweave v0.4.0
 [![Build Status](https://travis-ci.org/milesj/interweave.svg?branch=master)](https://travis-ci.org/milesj/interweave)
 
-Insert React elements into strings using matchers and filters, while safely rendering HTML.
+Interweave is a robust library that can...
+
+* Safely render HTML without using `dangerouslySetInnerHTML`.
+* Clean HTML attributes using filters.
+* Match and replace text using matchers.
+* Autolink URLs, IPs, emails, and hashtags.
+* Render or replace Emoji characters.
+* And much more!
 
 ## Requirements
 
@@ -16,6 +23,61 @@ Interweave requires React as a peer dependency.
 ```
 npm install interweave react --save
 ```
+
+## Usage
+
+Interweave can primarily be used through the `Interweave` and `Markup`
+components, both of which provide an easy, straight-forward implementation
+for safely [parsing and rendering HTML](#html-parsing)
+without using [dangerouslySetInnerHTML](https://facebook.github.io/react/tips/dangerously-set-inner-html.html).
+
+The `Interweave` component has the additional benefit of utilizing
+[filters](#filters), [matchers](#matchers), and callbacks.
+
+```javascript
+import Interweave from 'interweave';
+
+<Interweave
+    tagName="div"
+    className="foo"
+    content="This string <b>contains</b> HTML."
+/>
+```
+
+#### Props
+
+* `content` (string) - The string to render and apply matchers and
+  filters to. Supports HTML.
+* `tagName` (div | span | p) - The HTML element tag name to wrap the
+  output with. Defaults to "span".
+* `className` (string) - Class name to append to the HTML element.
+* `filters` (Filter[]) - Filters to apply to this local instance.
+* `matchers` (Matcher[]) - Matchers to apply to this local instance.
+* `disableFilters` (boolean) - Disables both global and local filters.
+* `disableMatchers` (boolean) - Disables both global and local matchers.
+* `noHtml` (boolean) - Strips HTML tags from the content string while
+  parsing.
+* `onBeforeParse` (func) - Callback that fires before parsing. Is
+  passed the source string and must return a string.
+* `onAfterParse` (func) => Callback that fires after parsing. Is
+  passed an array of strings/elements and must return an array.
+
+### Markup
+
+Unlike the `Interweave` component, the `Markup` component does not
+support matchers, filters, or callbacks. This component is preferred
+when rendering strings that contain HTML is the primary use case.
+
+```javascript
+import { Markup } from 'interweave';
+
+<Markup content="This string <b>contains</b> HTML." />
+```
+
+#### Props
+
+The `Markup` component only supports the `content`, `tagName`, and
+`className` props mentioned previously.
 
 ## Documentation
 
@@ -40,12 +102,6 @@ npm install interweave react --save
 
 ### Interweave Component
 
-```javascript
-import Interweave from 'interweave';
-
-<Interweave content="This string <b>contains</b> HTML." />
-```
-
 #### Managing Matchers
 
 #### Managing Filters
@@ -53,23 +109,6 @@ import Interweave from 'interweave';
 #### Callback Events
 
 ### Markup Component
-
-The `Markup` component provides an easy straight-forward pattern
-for safely [parsing and rendering HTML](#html-parsing)
-without using [dangerouslySetInnerHTML](https://facebook.github.io/react/tips/dangerously-set-inner-html.html).
-Unlike the `Interweave` component, the `Markup` component does not
-support matchers, filters, or callbacks.
-
-The following props are supported:
-
-* `markup` (string) - A string that contains HTML.
-* `tagName` (div | span | p) - The HTML tag name to wrap the output with.
-
-```javascript
-import { Markup } from 'interweave';
-
-<Markup content="This string <b>contains</b> HTML." />
-```
 
 ### Matchers
 
