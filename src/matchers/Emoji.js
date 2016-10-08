@@ -7,7 +7,12 @@
 import React from 'react';
 import Matcher from '../Matcher';
 import Emoji from '../components/Emoji';
-import { SHORTNAME_TO_UNICODE, EMOJI_PATTERN, EMOJI_SHORTNAME_PATTERN } from '../data/emoji';
+import {
+  EMOJI_PATTERN,
+  EMOJI_SHORTNAME_PATTERN,
+  SHORTNAME_TO_UNICODE,
+  UNICODE_TO_SHORTNAME,
+} from '../data/emoji';
 
 import type { MatchResponse, EmojiProps, EmojiOptions } from '../types';
 
@@ -68,6 +73,10 @@ export default class EmojiMatcher extends Matcher<EmojiOptions> {
       response = this.doMatch(string, EMOJI_REGEX, matches => ({
         unicode: matches[0],
       }));
+
+      if (response && !UNICODE_TO_SHORTNAME[response.unicode]) {
+        return null;
+      }
     }
 
     return response;
