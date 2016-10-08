@@ -460,6 +460,25 @@ describe('Parser', () => {
       ]);
     });
 
+    it('only renders in whitelisted parent', () => {
+      element.appendChild(document.createTextNode('Foo'));
+      element.appendChild(createChild('li', 'Bar'));
+      element.appendChild(document.createTextNode('Baz'));
+      element.appendChild(createChild('li', 'Qux'));
+      element.appendChild(createChild('li', 'Wat'));
+
+      expect(instance.parseNode(element, {
+        ...parentConfig,
+        children: ['li'],
+      })).to.deep.equal([
+        'Foo',
+        'Bar',
+        'Baz',
+        'Qux',
+        'Wat',
+      ]);
+    });
+
     it('doesnt render self children', () => {
       element.appendChild(document.createTextNode('Foo'));
       element.appendChild(createChild('div', 'Bar'));

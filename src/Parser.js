@@ -173,12 +173,12 @@ export default class Parser {
       return false;
     }
 
-    // Pass through first
+    // Pass through
     if (childConfig.rule === PARSER_PASS_THROUGH) {
       return false;
     }
 
-    // Valid children second
+    // Valid children
     if (
       parentConfig.children.length &&
       parentConfig.children.indexOf(childConfig.tagName) === -1
@@ -186,7 +186,15 @@ export default class Parser {
       return false;
     }
 
-    // Self nesting third
+    // Valid parent
+    if (
+      childConfig.parent.length &&
+      childConfig.parent.indexOf(parentConfig.tagName) === -1
+    ) {
+      return false;
+    }
+
+    // Self nesting
     if (!parentConfig.self && parentConfig.tagName === childConfig.tagName) {
       return false;
     }

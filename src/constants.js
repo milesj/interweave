@@ -68,6 +68,7 @@ const inlineConfig: NodeConfig = {
   inline: true,
   block: false,
   self: false,
+  parent: [],
   children: [],
 };
 
@@ -77,6 +78,7 @@ const blockConfig: NodeConfig = {
   inline: true,
   block: true,
   self: true,
+  parent: [],
   children: [],
 };
 
@@ -140,6 +142,7 @@ export const TAGS: ConfigMap = {
   },
   dd: {
     ...blockConfig,
+    parent: ['dl'],
   },
   del: {
     ...inlineConfig,
@@ -159,6 +162,7 @@ export const TAGS: ConfigMap = {
   },
   dt: {
     ...blockConfig,
+    parent: ['dl'],
     children: ['dd'],
   },
   em: {
@@ -169,6 +173,7 @@ export const TAGS: ConfigMap = {
   },
   figcaption: {
     ...blockConfig,
+    parent: ['figure'],
   },
   figure: {
     ...blockConfig,
@@ -240,6 +245,7 @@ export const TAGS: ConfigMap = {
   li: {
     ...blockConfig,
     self: false,
+    parent: ['ul', 'ol'],
   },
   main: {
     ...blockConfig,
@@ -287,6 +293,7 @@ export const TAGS: ConfigMap = {
   source: {
     ...inlineConfig,
     inline: false,
+    parent: ['audio', 'video', 'picture'],
   },
   span: {
     ...inlineConfig,
@@ -310,20 +317,25 @@ export const TAGS: ConfigMap = {
   },
   tbody: {
     ...blockConfig,
+    parent: ['table'],
     children: ['tr'],
   },
   td: {
     ...blockConfig,
+    parent: ['tr'],
   },
   tfoot: {
     ...blockConfig,
+    parent: ['table'],
     children: ['tr'],
   },
   th: {
     ...blockConfig,
+    parent: ['tr'],
   },
   thead: {
     ...blockConfig,
+    parent: ['table'],
     children: ['tr'],
   },
   time: {
@@ -331,11 +343,13 @@ export const TAGS: ConfigMap = {
   },
   tr: {
     ...blockConfig,
+    parent: ['table', 'tbody', 'thead', 'tfoot'],
     children: ['th', 'td'],
   },
   track: {
     ...inlineConfig,
     inline: false,
+    parent: ['audio', 'video'],
   },
   u: {
     ...inlineConfig,

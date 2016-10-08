@@ -25,6 +25,7 @@ export type NodeConfig = {
   inline: boolean,
   block: boolean,
   self: boolean,
+  parent: string[],
   children: string[],
 };
 
@@ -66,6 +67,7 @@ export type LinkProps = {
 
 export type ElementProps = {
   attributes?: Attributes,
+  className?: string,
   children?: any,
   tagName: string,
 };
