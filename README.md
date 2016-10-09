@@ -81,54 +81,136 @@ The `Markup` component only supports the `content`, `tagName`, and
 
 ## Documentation
 
-* [Interweave Component](#interweave-component)
-    * [Managing Matchers](#managing-matchers)
-    * [Managing Filters](#managing-filters)
-    * [Callback Events](#callback-events)
-* [Markup Component](#markup-component)
 * [Matchers](#matchers)
-    * [Built-in Matchers](#built-in-matchers)
-        * [Email](#email)
-        * [Emoji](#emoji)
-        * [Hashtag](#hashtag)
-        * [IP](#ip)
-        * [URL](#url)
     * [Creating A Matcher](#creating-a-matcher)
+    * [Rendered Components](#rendered-components)
 * [Filters](#filters)
     * [Creating A Filter](#creating-a-filter)
+* [Autolinking](#autolinking)
+    * [URLs, IPs](#urls-ips)
+    * [Emails](#emails)
+    * [Hashtags](#hashtags)
 * [HTML Parsing](#html-parsing)
     * [Tag Whitelist](#tag-whitelist)
     * [Attribute Whitelist](#attribute-whitelist)
 
-### Interweave Component
-
-#### Managing Matchers
-
-#### Managing Filters
-
-#### Callback Events
-
-### Markup Component
-
 ### Matchers
-
-#### Built-in Matchers
-
-##### Email
-
-##### Emoji
-
-##### Hashtag
-
-##### IP
-
-##### URL
 
 #### Creating A Matcher
 
 ### Filters
 
 #### Creating A Filter
+
+### Autolinking
+
+Autolinking is the concept of matching patterns within a string and
+wrapping the matched result in an anchor link (an `<a>` tag).
+This can be achieved with the [matchers](#matchers) described below.
+
+Note: The regex patterns in use for autolinking do not conform to the
+official RFC specifications, as we need to take into account word
+boundaries, punctuation, and more. Instead, the patterns will do their
+best to match against the majority common use cases.
+
+#### URLs, IPs
+
+The `UrlMatcher` will match most variations of a URL and its segments.
+This includes the protocol, user and password auth, host, port, path,
+query, and fragment.
+
+```javascript
+import Interweave from 'interweave';
+import UrlMatcher from 'interweave/matchers/Url';
+
+// Global
+Interweave.addMatcher(new UrlMatcher('url'));
+
+// Local
+<Interweave matchers={[new UrlMatcher('url')]} />
+```
+
+The `UrlMatcher` does not support IP based hosts as I wanted a clear
+distinction between supporting these two patterns separately. To support
+IPs, use the `IpMatcher`, which will match hosts that conform to a
+valid IPv4 address (IPv6 not supported). Like the `UrlMatcher`, all
+segments are included.
+
+```javascript
+import IpMatcher from 'interweave/matchers/Ip';
+```
+
+If a match is found, a [Url](#rendered-components) component or matcher
+factory will be rendered and passed the following props.
+
+* `children` (string) - The entire URL/IP that was matched.
+* `urlParts` (object)
+    * `scheme` (string) - The protocol. Defaults to "http".
+    * `auth` (string) - The username and password authorization.
+      Does not include the `@`.
+    * `host` (string) - The host, domain, or IP address.
+    * `port` (number) - The port number.
+    * `path` (string) - The path.
+    * `query` (string) - The query string.
+    * `fragment` (string) - The hash fragment, including `#`.
+
+#### Emails
+
+The `EmailMatcher` will match an email address and link it using a
+"mailto:" target.
+
+```javascript
+import Interweave from 'interweave';
+import EmailMatcher from 'interweave/matchers/Email';
+
+// Global
+Interweave.addMatcher(new EmailMatcher('email'));
+
+// Local
+<Interweave matchers={[new EmailMatcher('email')]} />
+```
+
+If a match is found, an [Email](#rendered-components) component or matcher
+factory will be rendered and passed the following props.
+
+* `children` (string) - The entire email address that was matched.
+* `emailParts` (object)
+    * `username` (string) - The username. Found before the `@`.
+    * `host` (string) - The host or domain. Found after the `@`.
+
+#### Hashtags
+
+The `HashtagMatcher` will match a common hashtag (like Twitter and
+Instagram) and link to it using a custom URL (passed as a prop).
+Hashtag matching supports alpha-numeric (`a-z0-9`), underscore (`_`),
+and dash (`-`) characters, and must start with a `#`.
+
+Hashtags require a URL to link to, which is defined by the
+`hashtagUrl` prop. The URL must declare the following token,
+`{{hashtag}}`, which will be replaced by the matched hashtag.
+
+```javascript
+import Interweave from 'interweave';
+import HashtagMatcher from 'interweave/matchers/Hashtag';
+
+const hashtagUrl = 'https://twitter.com/hashtag/{{hashtag}}';
+
+// Global
+Interweave.configure({ hashtagUrl });
+Interweave.addMatcher(new HashtagMatcher('hashtag'));
+
+// Local
+<Interweave
+    hashtagUrl={hashtagUrl}
+    matchers={[new HashtagMatcher('hashtag')]}
+/>
+```
+
+If a match is found, a [Hashtag](#rendered-components) component or
+matcher factory will be rendered and passed the following props.
+
+* `children` (string) - The entire hashtag that was matched.
+* `hashtagName` (string) - The hashtag name without `#`.
 
 ### HTML Parsing
 
