@@ -43,6 +43,18 @@ describe('Parser', () => {
     ]);
   });
 
+  it('parses when passed an empty value', () => {
+    [null, false, undefined, '', 0].forEach((value) => {
+      expect(new Parser(value).parse()).to.deep.equal([]);
+    });
+  });
+
+  it('errors for a non-string value', () => {
+    [123, 456.78, true, [], {}].forEach((value) => {
+      expect(() => new Parser(value)).to.throw(TypeError);
+    });
+  });
+
   describe('applyFilters()', () => {
     it('applies filters for the attribute name', () => {
       expect(instance.applyFilters('src', 'foo.com')).to.equal('foo.com');

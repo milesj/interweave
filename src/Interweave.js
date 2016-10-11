@@ -36,6 +36,7 @@ type InterweaveProps = {
   content: string,
   disableFilters: boolean,
   disableMatchers: boolean,
+  emptyContent: ?React.Element<*>,
   filters: Filter[],
   matchers: Matcher<*>[],
   noHtml: boolean,
@@ -53,6 +54,7 @@ export default class Interweave extends React.Component {
     content: PropTypes.string.isRequired,
     disableFilters: PropTypes.bool,
     disableMatchers: PropTypes.bool,
+    emptyContent: PropTypes.node,
     filters: PropTypes.arrayOf(PropTypes.instanceOf(Filter)),
     matchers: PropTypes.arrayOf(PropTypes.instanceOf(Matcher)),
     noHtml: PropTypes.bool,
@@ -62,6 +64,7 @@ export default class Interweave extends React.Component {
   };
 
   static defaultProps = {
+    emptyContent: null,
     filters: [],
     matchers: [],
     tagName: 'span',
@@ -158,11 +161,12 @@ export default class Interweave extends React.Component {
   /**
    * Parse the markup and apply hooks.
    */
-  parseMarkup(): ParsedNodes {
+  parseMarkup(): ParsedNodes | ?React.Element<*> {
     const {
       tagName, // eslint-disable-line
       className, // eslint-disable-line
       content,
+      emptyContent,
       onBeforeParse,
       onAfterParse,
       matchers,
@@ -200,6 +204,10 @@ export default class Interweave extends React.Component {
       if (!Array.isArray(markup)) {
         throw new TypeError('Interweave `onAfterParse` must return an array of strings and React elements.');
       }
+    }
+
+    if (!markup.length) {
+      return emptyContent;
     }
 
     return markup;

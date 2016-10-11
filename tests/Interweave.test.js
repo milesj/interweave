@@ -95,6 +95,13 @@ describe('Interweave', () => {
     ]);
   });
 
+  it('will render the `emptyContent` if no content exists', () => {
+    const empty = <div>Foo</div>;
+    const wrapper = shallow(<Interweave content="" emptyContent={empty} />);
+
+    expect(wrapper.contains(empty)).to.equal(true);
+  });
+
   describe('addFilter()', () => {
     it('errors if not a filter', () => {
       expect(() => {

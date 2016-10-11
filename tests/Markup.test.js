@@ -18,6 +18,13 @@ describe('Markup', () => {
     expect(wrapper.prop('className')).to.equal('foo-bar');
   });
 
+  it('will render the `emptyContent` if no content exists', () => {
+    const empty = <div>Foo</div>;
+    const wrapper = shallow(<Markup content="" emptyContent={empty} />);
+
+    expect(wrapper.contains(empty)).to.equal(true);
+  });
+
   it('parses the entire document starting from the body', () => {
     const wrapper = shallow(<Markup content={MOCK_MARKUP} />);
 

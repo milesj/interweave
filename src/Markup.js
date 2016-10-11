@@ -11,13 +11,21 @@ import Element from './components/Element';
 type MarkupProps = {
   className: string,
   content: string,
+  emptyContent: ?React.Element<*>,
   tagName: string,
 };
 
-export default function Markup({ content, className, tagName = 'span' }: MarkupProps) {
+export default function Markup({
+  className,
+  content,
+  emptyContent,
+  tagName = 'span',
+}: MarkupProps) {
+  const markup = new Parser(content).parse();
+
   return (
     <Element tagName={tagName} className={className}>
-      {new Parser(content).parse()}
+      {markup.length ? markup : (emptyContent || null)}
     </Element>
   );
 }
@@ -25,5 +33,6 @@ export default function Markup({ content, className, tagName = 'span' }: MarkupP
 Markup.propTypes = {
   className: PropTypes.string,
   content: PropTypes.string.isRequired,
+  emptyContent: PropTypes.node,
   tagName: PropTypes.oneOf(['span', 'div', 'p']),
 };

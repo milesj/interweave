@@ -48,8 +48,13 @@ export default class Parser {
     matchers: Matcher<*>[] = [],
     filters: Filter[] = []
   ) {
+    if (!markup) {
+      markup = '';
+    } else if (typeof markup !== 'string') {
+      throw new TypeError('Interweave parser requires a valid string.');
+    }
+
     this.doc = this.createDocument(markup);
-    this.content = [];
     this.props = props;
     this.matchers = matchers;
     this.filters = filters;
@@ -297,14 +302,10 @@ export default class Parser {
    * @returns {String[]|ReactElement[]}
    */
   parse(): ParsedNodes {
-    if (!this.content.length) {
-      this.content = this.parseNode(this.doc.body, {
-        ...TAGS.body,
-        tagName: 'body',
-      });
-    }
-
-    return this.content;
+    return this.parseNode(this.doc.body, {
+      ...TAGS.body,
+      tagName: 'body',
+    });
   }
 
   /**
