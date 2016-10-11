@@ -1,4 +1,4 @@
-# Interweave v0.4.0
+# Interweave v0.5.0
 [![Build Status](https://travis-ci.org/milesj/interweave.svg?branch=master)](https://travis-ci.org/milesj/interweave)
 
 Interweave is a robust library that can...
@@ -48,6 +48,8 @@ import Interweave from 'interweave';
 
 * `content` (string) - The string to render and apply matchers and
   filters to. Supports HTML.
+* `emptyContent` (node) - React node to render if no content was
+  rendered.
 * `tagName` (div | span | p) - The HTML element tag name to wrap the
   output with. Defaults to "span".
 * `className` (string) - Class name to append to the HTML element.
@@ -76,8 +78,8 @@ import { Markup } from 'interweave';
 
 #### Props
 
-The `Markup` component only supports the `content`, `tagName`, and
-`className` props mentioned previously.
+The `Markup` component only supports the `content`, `emptyContent`,
+`tagName`, and `className` props mentioned previously.
 
 ## Documentation
 
