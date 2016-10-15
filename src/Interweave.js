@@ -173,7 +173,7 @@ export default class Interweave extends React.Component {
       disableMatchers,
       filters,
       disableFilters,
-      ...props,
+      ...props
     } = this.props;
 
     let markup = content;

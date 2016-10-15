@@ -1,7 +1,7 @@
 # Interweave v0.5.0
 [![Build Status](https://travis-ci.org/milesj/interweave.svg?branch=master)](https://travis-ci.org/milesj/interweave)
 
-Interweave is a robust library that can...
+Interweave is a robust React library that can...
 
 * Safely render HTML without using `dangerouslySetInnerHTML`.
 * Clean HTML attributes using filters.
@@ -100,6 +100,8 @@ The `Markup` component only supports the `content`, `emptyContent`,
 
 #### Creating A Matcher
 
+#### Rendered Components
+
 ### Filters
 
 #### Creating A Filter
@@ -148,8 +150,8 @@ factory will be rendered and passed the following props.
 * `children` (string) - The entire URL/IP that was matched.
 * `urlParts` (object)
     * `scheme` (string) - The protocol. Defaults to "http".
-    * `auth` (string) - The username and password authorization.
-      Does not include the `@`.
+    * `auth` (string) - The username and password authorization,
+      excluding `@`.
     * `host` (string) - The host, domain, or IP address.
     * `port` (number) - The port number.
     * `path` (string) - The path.
@@ -172,8 +174,8 @@ Interweave.addMatcher(new EmailMatcher('email'));
 <Interweave matchers={[new EmailMatcher('email')]} />
 ```
 
-If a match is found, an [Email](#rendered-components) component or matcher
-factory will be rendered and passed the following props.
+If a match is found, an [Email](#rendered-components) component or
+matcher factory will be rendered and passed the following props.
 
 * `children` (string) - The entire email address that was matched.
 * `emailParts` (object)
