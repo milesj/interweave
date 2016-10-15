@@ -219,7 +219,7 @@ matcher factory will be rendered and passed the following props.
 ### HTML Parsing
 
 Interweave doesn't rely on an HTML parser for rendering HTML safely,
-instead it uses the DOM itself. It accomplishes this by using
+instead, it uses the DOM itself. It accomplishes this by using
 `DOMImplementation.createHTMLDocument` ([MDN][domhtml]), which creates
 an HTML document in memory, allowing us to easily set markup,
 aggregate nodes, and generate React elements. This implementation is
@@ -228,7 +228,7 @@ supported by all modern browsers and IE9+.
 `DOMImplementation` has the added benefit of not requesting resources
 (images, scripts, etc) until the document has been rendered to the page.
 This provides an extra layer of security by avoiding possible CSRF
-and remote execution attacks.
+and arbitrary code execution.
 
 Furthermore, Interweave manages a whitelist of both HTML tags and
 attributes, further increasing security, and reducing the risk of XSS
