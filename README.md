@@ -28,8 +28,8 @@ npm install interweave react --save
 
 Interweave can primarily be used through the `Interweave` and `Markup`
 components, both of which provide an easy, straight-forward implementation
-for safely [parsing and rendering HTML](#html-parsing)
-without using [dangerouslySetInnerHTML](https://facebook.github.io/react/tips/dangerously-set-inner-html.html).
+for safely [parsing and rendering HTML](#html-parsing) without using
+`dangerouslySetInnerHTML` ([Facebook][dangerhtml]).
 
 The `Interweave` component has the additional benefit of utilizing
 [filters](#filters), [matchers](#matchers), and callbacks.
@@ -218,6 +218,52 @@ matcher factory will be rendered and passed the following props.
 
 ### HTML Parsing
 
+Interweave doesn't rely on an HTML parser for rendering HTML safely,
+instead it uses the DOM itself. It accomplishes this by using
+`DOMImplementation.createHTMLDocument` ([MDN][domhtml]), which creates
+an HTML document in memory, allowing us to easily set markup,
+aggregate nodes, and generate React elements. This implementation is
+supported by all modern browsers and IE9+.
+
+`DOMImplementation` has the added benefit of not requesting resources
+(images, scripts, etc) until the document has been rendered to the page.
+This provides an extra layer of security by avoiding possible CSRF
+and remote execution attacks.
+
+Furthermore, Interweave manages a whitelist of both HTML tags and
+attributes, further increasing security, and reducing the risk of XSS
+and vulnerabilities.
+
 #### Tag Whitelist
 
+Interweave keeps a mapping of valid [HTML tags to parsing
+configurations][tagwhitelist]. These configurations handle the following
+rules and processes.
+
+* Defines the type of rule: allow (render element and children),
+  pass-through (ignore element and render children), deny (ignore both).
+* Defines the type of tag: inline, block, inline-block.
+* Flags whether inline children can be rendered.
+* Flags whether block children can be rendered.
+* Flags whether children of the same tag name can be rendered.
+* Maps the parent tags the current element can render in.
+* Maps the child tags the current element can render.
+
+Lastly, any tag not found in the mapping will be flagged using the
+rule "deny", and promptly not rendered.
+
 #### Attribute Whitelist
+
+Interweave takes parsing a step further, by also [filtering](#filters)
+attribute values on all parsed HTML elements. Like tags, a mapping of
+valid [HTML attributes to parser rules][attrwhitelist] exist. A rule
+can be one of: allow and cast to string (default), allow and cast to
+number, allow and cast to boolean, and finally, deny.
+
+Also like the tag whitelist, any attribute not found in the mapping is
+ignored.
+
+[dangerhtml]: https://facebook.github.io/react/tips/dangerously-set-inner-html.html
+[domhtml]: https://developer.mozilla.org/en-US/docs/Web/API/DOMImplementation/createHTMLDocument
+[tagwhitelist]: https://github.com/milesj/interweave/blob/master/src/constants.js#L88
+[attrwhitelist]: https://github.com/milesj/interweave/blob/master/src/constants.js#L381
