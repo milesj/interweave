@@ -28,7 +28,7 @@ npm install interweave react --save
 
 Interweave can primarily be used through the `Interweave` and `Markup`
 components, both of which provide an easy, straight-forward implementation
-for safely [parsing and rendering HTML](#html-parsing) without using
+for safely [parsing and rendering HTML](#parse-html) without using
 `dangerouslySetInnerHTML` ([Facebook][dangerhtml]).
 
 The `Interweave` component has the additional benefit of utilizing
@@ -92,9 +92,14 @@ The `Markup` component only supports the `content`, `emptyContent`,
     * [URLs, IPs](#urls-ips)
     * [Emails](#emails)
     * [Hashtags](#hashtags)
-* [HTML Parsing](#html-parsing)
+* [Render Emojis](#render-emojis)
+    * [Converting Shortnames](#converting-shortnames)
+    * [Using SVGs or PNGs](#using-svgs-or-pngs)
+    * [Displaying Unicode Characters](#displaying-unicode-characters)
+* [Parse HTML](#parse-html)
     * [Tag Whitelist](#tag-whitelist)
     * [Attribute Whitelist](#attribute-whitelist)
+    * [Disabling HTML](#disabling-html)
 
 ### Matchers
 
@@ -216,7 +221,91 @@ matcher factory will be rendered and passed the following props.
 * `children` (string) - The entire hashtag that was matched.
 * `hashtagName` (string) - The hashtag name without `#`.
 
-### HTML Parsing
+### Render Emojis
+
+Who loves emojis? Everyone loves emojis. Interweave has built-in
+support for rendering emoji, either their unicode character or
+with media, all through the `EmojiMatcher`. The matcher utilizes
+[EmojiOne](http://emojione.com/) for accurate and up-to-date data.
+
+```javascript
+import Interweave from 'interweave';
+import EmojiMatcher from 'interweave/matchers/Emoji';
+
+// Global
+Interweave.addMatcher(new EmojiMatcher('emoji'));
+
+// Local
+<Interweave matchers={[new EmojiMatcher('emoji')]} />
+```
+
+When matching, both unicode literal characters and escape sequences
+are supported.
+
+#### Converting Shortnames
+
+Shortnames provide an easy non-unicode alternative for supporting emoji,
+and are represented by a word (or two) surrounded by two colons:
+`:boy:`. A list of all possible shortnames can be found at
+[emoji.codes](http://emoji.codes/family).
+
+To enable conversion of a shortname to a unicode literal character,
+pass the `convertShortName` option to the matcher constructor.
+
+```javascript
+new EmojiMatcher('emoji', { convertShortName: true });
+```
+
+#### Using SVGs or PNGs
+
+To begin, we must enable conversion of unicode characters to media,
+by enabling the `convertUnicode` option. Secondly, enable
+`convertShortName` if you want to support shortnames.
+
+```javascript
+new EmojiMatcher('emoji', {
+    convertShortName: true,
+    convertUnicode: true,
+});
+```
+
+Now we need to provide an absolute path to the PNG/SVG file using
+`emojiPath`. This path must contain a `{{hexcode}}` token, which
+will be replaced by the hexadecimal value of the emoji.
+
+```javascript
+const emojiPath = 'https://example.com/images/emoji/{{hexcode}}.png';
+
+// Global
+Interweave.configure({ emojiPath });
+
+// Local
+<Interweave emojiPath={emojiPath} />
+```
+
+Both media formats make use of the `img` tag, and will require an
+individual file as sprites and icon fonts are not supported. The
+following resources can be used for downloading PNG/SVG icons.
+
+* [EmojiOne](http://emojione.com/developers/) ([CDN](https://cdnjs.com/libraries/emojione))
+* [Twemoji](https://github.com/twitter/twemoji)
+
+Note: SVGs require CORS to work, so files will need to be stored
+locally, or within a CDN under the same domain. Linking to remote SVGs
+will not work -- use PNGs instead.
+
+#### Displaying Unicode Characters
+
+To display native unicode characters as is, pass the `renderUnicode`
+option to the matcher constructor. This option will override the
+rendering of SVGs or PNGs, and works quite well alongside shortname
+conversion.
+
+```javascript
+new EmojiMatcher('emoji', { renderUnicode: true });
+```
+
+### Parse HTML
 
 Interweave doesn't rely on an HTML parser for rendering HTML safely,
 instead, it uses the DOM itself. It accomplishes this by using
@@ -262,6 +351,13 @@ number, allow and cast to boolean, and finally, deny.
 
 Also like the tag whitelist, any attribute not found in the mapping is
 ignored.
+
+#### Disabling HTML
+
+The HTML parser cannot be disabled, however, a `noHtml` boolean prop can
+be passed to both the `Interweave` and `Markup` components. This prop
+will mark all HTML elements as pass-through, simply rendering text nodes
+recursively.
 
 [dangerhtml]: https://facebook.github.io/react/tips/dangerously-set-inner-html.html
 [domhtml]: https://developer.mozilla.org/en-US/docs/Web/API/DOMImplementation/createHTMLDocument
