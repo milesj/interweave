@@ -95,6 +95,7 @@ The `Markup` component only supports the `content`, `emptyContent`,
 * [Render Emojis](#render-emojis)
     * [Converting Shortnames](#converting-shortnames)
     * [Using SVGs or PNGs](#using-svgs-or-pngs)
+        * [CSS Styling](#css-styling)
     * [Displaying Unicode Characters](#displaying-unicode-characters)
 * [Parse HTML](#parse-html)
     * [Tag Whitelist](#tag-whitelist)
@@ -239,8 +240,14 @@ Interweave.addMatcher(new EmojiMatcher('emoji'));
 <Interweave matchers={[new EmojiMatcher('emoji')]} />
 ```
 
-When matching, both unicode literal characters and escape sequences
-are supported.
+Both unicode literal characters and escape sequences are supported
+when matching. If a match is found, an [Emoji](#rendered-components)
+component or matcher factory will be rendered and passed the following
+props.
+
+* `shortName` (string) - The shortname when `convertShortName` is on.
+* `unicode` (string) - The unicode literal character. Provided for both
+  shortname and unicode matching.
 
 #### Converting Shortnames
 
@@ -269,7 +276,7 @@ new EmojiMatcher('emoji', {
 });
 ```
 
-Now we need to provide an absolute path to the PNG/SVG file using
+Now we need to provide an absolute path to the SVG/PNG file using
 `emojiPath`. This path must contain a `{{hexcode}}` token, which
 will be replaced by the hexadecimal value of the emoji.
 
@@ -285,7 +292,7 @@ Interweave.configure({ emojiPath });
 
 Both media formats make use of the `img` tag, and will require an
 individual file as sprites and icon fonts are not supported. The
-following resources can be used for downloading PNG/SVG icons.
+following resources can be used for downloading SVG/PNG icons.
 
 * [EmojiOne](http://emojione.com/developers/) ([CDN](https://cdnjs.com/libraries/emojione))
 * [Twemoji](https://github.com/twitter/twemoji)
@@ -293,6 +300,26 @@ following resources can be used for downloading PNG/SVG icons.
 Note: SVGs require CORS to work, so files will need to be stored
 locally, or within a CDN under the same domain. Linking to remote SVGs
 will not work -- use PNGs instead.
+
+##### CSS Styling
+
+Since SVG/PNG emojis are rendered using the `img` tag, and dimensions
+can vary based on the size of the file, we must use CSS to restrict the
+size. The following styles work rather well, but the end result is up
+to you.
+
+```css
+// Align in the middle of the text
+.interweave__emoji {
+    display: inline-block;
+    vertical-align: middle;
+}
+
+// Match the size of the current text
+.interweave__emoji img {
+    width: 1em;
+}
+```
 
 #### Displaying Unicode Characters
 
