@@ -13,7 +13,7 @@ export default function Hashtag({
   children,
   hashtagUrl,
   encodeHashtag = false,
-  ...props,
+  ...props
 }: HashtagProps) {
   const url = hashtagUrl || '{{hashtag}}';
   let hashtag = children;

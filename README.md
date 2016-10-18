@@ -106,11 +106,112 @@ The `Markup` component only supports the `content`, `emptyContent`,
 
 #### Creating A Matcher
 
+To create a custom matcher, extend the base `Matcher` class, and
+define the following methods.
+
+* `match(string)` - Used to match a string against a defined regex.
+  This method must return `null` if no match is found, else it must
+  return an object with a `match` key and the matched value.
+  Furthermore, any other keys defined in this object will be passed as
+  props to the factory element.
+* `factory(match, props)` - Returns a React element that replaces the
+  matched content in the string. The match is passed as the 1st
+  argument, and any match props and parent props are passed as the
+  2nd argument.
+* `getTagName()` - The HTML tag name of the factory element.
+
+```javascript
+import Matcher from 'interweave/Matcher';
+
+export default class FooMatcher extends Matcher {
+    match(string) {
+        const matches = string.match(/foo/);
+
+        if (!matches) {
+            return null;
+        }
+
+        return {
+            match: matches[0],
+            extraProp: 'foo',
+        };
+    }
+
+    factory(match, props) {
+        return (
+            <span {...props}>{match}</span>
+        );
+    }
+
+    getTagName() {
+        return 'span';
+    }
+}
+```
+
+To make the matching process easier, there is a `doMatch` method that
+handles the `null` and object building logic. Simply pass it a regex
+pattern and a callback to build the object.
+
+```javascript
+match(string) {
+    return this.doMatch(string, /foo/, matches => ({
+        extraProp: 'foo',
+    });
+}
+```
+
 #### Rendered Components
 
 ### Filters
 
+Filters provide an easy way of cleaning HTML attribute values during
+the [parsing cycle](#parse-html). This is especially useful for `src`
+and `href` attributes.
+
+Filters can be registered globally to apply to all instances of
+`Interweave`, or locally, to apply per each instance of `Interweave`.
+When adding a filter, the name of the attribute to clean must be
+passed as the 1st argument to the constructor.
+
+```javascript
+import Interweave from 'interweave';
+
+// Global
+Interweave.addFilter(new HrefFilter('href'));
+
+// Local
+<Interweave filters={[new HrefFilter('href')]} />
+```
+
+To clear all global filters, use `Interweave.clearFilters()`.
+
+```javascript
+Interweave.clearFilters();
+```
+
+To disable all filters, global and local, per `Interweave` instance,
+pass the `disableFilters` prop.
+
+```javascript
+<Interweave disableFilters />
+```
+
 #### Creating A Filter
+
+Creating a custom filter is easy. Simply extend the base `Filter` class
+and define a `filter` method. This method will receive the attribute
+value as the 1st argument, and it must return a string.
+
+```javascript
+import Filter from 'interweave/Filter';
+
+export default class SourceFilter extends Filter {
+    filter(value) {
+        return value; // Clean attribute value
+    }
+}
+```
 
 ### Autolinking
 
