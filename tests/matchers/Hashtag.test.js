@@ -53,7 +53,7 @@ describe('matchers/Hashtag', () => {
 
   describe('matches all hashtags in a string', () => {
     const parser = new Parser('', {}, [matcher]);
-    const createHashtag = (hashtag, key) => (matcher.factory(hashtag, {
+    const createHashtag = (hashtag, key) => (matcher.replaceWith(hashtag, {
       hashtagName: hashtag.substr(1),
       key,
     }));

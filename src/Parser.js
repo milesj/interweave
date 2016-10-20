@@ -94,7 +94,7 @@ export default class Parser {
     let parts = {};
 
     this.matchers.forEach((matcher) => {
-      const tagName = matcher.getTagName().toLowerCase();
+      const tagName = matcher.asTag().toLowerCase();
 
       // Skip matchers that have been disabled from props or are not supported
       if (props[matcher.inverseName] || !TAGS[tagName]) {

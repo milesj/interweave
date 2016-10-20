@@ -17,7 +17,7 @@ export default class EmailMatcher extends Matcher<Object> {
   /**
    * {@inheritDoc}
    */
-  factory(match: string, props: Object = {}): React.Element<EmailProps> {
+  replaceWith(match: string, props: Object = {}): React.Element<EmailProps> {
     return (
       <Email {...props}>{match}</Email>
     );
@@ -26,7 +26,7 @@ export default class EmailMatcher extends Matcher<Object> {
   /**
    * @{inheritDoc}
    */
-  getTagName(): string {
+  asTag(): string {
     return 'a';
   }
 

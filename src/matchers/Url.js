@@ -17,7 +17,7 @@ export default class UrlMatcher extends Matcher<Object> {
   /**
    * {@inheritDoc}
    */
-  factory(match: string, props: Object = {}): React.Element<UrlProps> {
+  replaceWith(match: string, props: Object = {}): React.Element<UrlProps> {
     return (
       <Url {...props}>{match}</Url>
     );
@@ -26,7 +26,7 @@ export default class UrlMatcher extends Matcher<Object> {
   /**
    * @{inheritDoc}
    */
-  getTagName(): string {
+  asTag(): string {
     return 'a';
   }
 

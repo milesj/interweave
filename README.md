@@ -85,7 +85,7 @@ The `Markup` component only supports the `content`, `emptyContent`,
 
 * [Matchers](#matchers)
     * [Creating A Matcher](#creating-a-matcher)
-    * [Rendered Components](#rendered-components)
+    * [Rendered Elements](#rendered-elements)
 * [Filters](#filters)
     * [Creating A Filter](#creating-a-filter)
 * [Autolinking](#autolinking)
@@ -112,13 +112,13 @@ define the following methods.
 * `match(string)` - Used to match a string against a defined regex.
   This method must return `null` if no match is found, else it must
   return an object with a `match` key and the matched value.
-  Furthermore, any other keys defined in this object will be passed as
-  props to the factory element.
-* `factory(match, props)` - Returns a React element that replaces the
-  matched content in the string. The match is passed as the 1st
+  Furthermore, any additional keys defined in this object will be
+  passed as props to the created element.
+* `replaceWith(match, props)` - Returns a React element that replaces
+  the matched content in the string. The match is passed as the 1st
   argument, and any match props and parent props are passed as the
   2nd argument.
-* `getTagName()` - The HTML tag name of the factory element.
+* `asTag()` - The HTML tag name of the replacement element.
 
 ```javascript
 import Matcher from 'interweave/Matcher';
@@ -133,23 +133,23 @@ export default class FooMatcher extends Matcher {
 
         return {
             match: matches[0],
-            extraProp: 'foo',
+            extraProp: 'foo', // or matches[1], etc
         };
     }
 
-    factory(match, props) {
+    replaceWith(match, props) {
         return (
             <span {...props}>{match}</span>
         );
     }
 
-    getTagName() {
+    asTag() {
         return 'span';
     }
 }
 ```
 
-To make the matching process easier, there is a `doMatch` method that
+To ease the matching process, there is a `doMatch` method that
 handles the `null` and object building logic. Simply pass it a regex
 pattern and a callback to build the object.
 
@@ -161,7 +161,26 @@ match(string) {
 }
 ```
 
-#### Rendered Components
+#### Rendered Elements
+
+When a match is found, a React element is rendered (from a React
+component) from either the matcher's `replaceWith` method, or from a
+factory. What's a factory you ask? Simply put, it's a function passed
+to the constructor of a matcher, allowing the rendered element to be
+customized for built-in or third-party matchers.
+
+To define a factory, simply pass a function to the 3rd argument of a
+matcher constructor. The factory function receives the same arguments
+as `replaceWith`.
+
+```javascript
+new FooMatcher('foo', {}, (match, props) => (
+    <span {...props}>{match}</span>
+));
+```
+
+Elements returned from `replaceWith` or the factory must return an
+HTML element with the same tag name as defined by `asTag`.
 
 ### Filters
 
@@ -251,8 +270,8 @@ segments are included.
 import IpMatcher from 'interweave/matchers/Ip';
 ```
 
-If a match is found, a [Url](#rendered-components) component or matcher
-factory will be rendered and passed the following props.
+If a match is found, a [Url](#rendered-elements) element or matcher
+element will be rendered and passed the following props.
 
 * `children` (string) - The entire URL/IP that was matched.
 * `urlParts` (object)
@@ -281,8 +300,8 @@ Interweave.addMatcher(new EmailMatcher('email'));
 <Interweave matchers={[new EmailMatcher('email')]} />
 ```
 
-If a match is found, an [Email](#rendered-components) component or
-matcher factory will be rendered and passed the following props.
+If a match is found, an [Email](#rendered-elements) element or
+matcher element will be rendered and passed the following props.
 
 * `children` (string) - The entire email address that was matched.
 * `emailParts` (object)
@@ -317,8 +336,8 @@ Interweave.addMatcher(new HashtagMatcher('hashtag'));
 />
 ```
 
-If a match is found, a [Hashtag](#rendered-components) component or
-matcher factory will be rendered and passed the following props.
+If a match is found, a [Hashtag](#rendered-elements) element or
+matcher element will be rendered and passed the following props.
 
 * `children` (string) - The entire hashtag that was matched.
 * `hashtagName` (string) - The hashtag name without `#`.
@@ -342,8 +361,8 @@ Interweave.addMatcher(new EmojiMatcher('emoji'));
 ```
 
 Both unicode literal characters and escape sequences are supported
-when matching. If a match is found, an [Emoji](#rendered-components)
-component or matcher factory will be rendered and passed the following
+when matching. If a match is found, an [Emoji](#rendered-elements)
+element or matcher element will be rendered and passed the following
 props.
 
 * `shortName` (string) - The shortname when `convertShortName` is on.

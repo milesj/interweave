@@ -14,7 +14,7 @@ export default class Matcher<T> {
   options: T;
   propName: string;
   inverseName: string;
-  customFactory: ?MatcherFactory;
+  factory: ?MatcherFactory;
 
   constructor(name: string, options: T, factory: ?MatcherFactory = null) {
     if (!name || name.toLowerCase() === 'html') {
@@ -24,7 +24,7 @@ export default class Matcher<T> {
     this.options = options || {};
     this.propName = name;
     this.inverseName = `no${name.charAt(0).toUpperCase() + name.substr(1)}`;
-    this.customFactory = factory;
+    this.factory = factory;
   }
 
   /**
@@ -38,10 +38,10 @@ export default class Matcher<T> {
   createElement(match: string, props: Object = {}): React.Element<*> {
     let element = null;
 
-    if (typeof this.customFactory === 'function') {
-      element = this.customFactory(match, props);
-    } else {
+    if (typeof this.factory === 'function') {
       element = this.factory(match, props);
+    } else {
+      element = this.replaceWith(match, props);
     }
 
     if (typeof element !== 'string' && !React.isValidElement(element)) {
@@ -52,13 +52,13 @@ export default class Matcher<T> {
   }
 
   /**
-   * Create a React element based on the matched token and optional props.
+   * Replace the match with a React element based on the matched token and optional props.
    *
    * @param {String} match
    * @param {Object} [props]
    * @returns {ReactComponent}
    */
-  factory(match: string, props: Object = {}): React.Element<*> {
+  replaceWith(match: string, props: Object = {}): React.Element<*> {
     throw new Error(`${this.constructor.name} must return a React element.`);
   }
 
@@ -67,7 +67,7 @@ export default class Matcher<T> {
    *
    * @returns {String}
    */
-  getTagName(): string {
+  asTag(): string {
     throw new Error(`${this.constructor.name} must define the HTML tag name it will render.`);
   }
 

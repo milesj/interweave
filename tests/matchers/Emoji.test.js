@@ -81,8 +81,8 @@ describe('matchers/Emoji', () => {
 
   describe('matches all emojis in a string', () => {
     const parser = new Parser('', {}, [matcher]);
-    const createUnicode = (unicode, key) => matcher.factory(unicode, { unicode, key });
-    const createShort = (shortName, key) => matcher.factory(shortName, {
+    const createUnicode = (unicode, key) => matcher.replaceWith(unicode, { unicode, key });
+    const createShort = (shortName, key) => matcher.replaceWith(shortName, {
       unicode: SHORTNAME_TO_UNICODE[shortName],
       shortName,
       key,
@@ -147,16 +147,16 @@ describe('matchers/Emoji', () => {
     });
   });
 
-  describe('factory()', () => {
+  describe('replaceWith()', () => {
     VALID_EMOJIS.forEach(([, unicode, shortName]) => {
       const uniMatcher = new EmojiMatcher('emoji', { renderUnicode: true });
 
       it(`returns the unicode as is when using \`renderUnicode\`: ${shortName}`, () => {
-        expect(uniMatcher.factory(unicode, { unicode, shortName })).to.equal(unicode);
+        expect(uniMatcher.replaceWith(unicode, { unicode, shortName })).to.equal(unicode);
       });
 
       it(`returns the unicode when providing a shortname using \`renderUnicode\`: ${shortName}`, () => {
-        expect(uniMatcher.factory(shortName, { unicode, shortName })).to.equal(unicode);
+        expect(uniMatcher.replaceWith(shortName, { unicode, shortName })).to.equal(unicode);
       });
     });
   });

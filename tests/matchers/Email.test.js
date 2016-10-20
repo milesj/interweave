@@ -92,7 +92,7 @@ describe('matchers/Email', () => {
     const createEmail = (email, key) => {
       const parts = email.split('@');
 
-      return matcher.factory(email, {
+      return matcher.replaceWith(email, {
         emailParts: {
           username: parts[0],
           host: parts[1],

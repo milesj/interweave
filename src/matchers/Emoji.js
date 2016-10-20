@@ -25,7 +25,7 @@ export default class EmojiMatcher extends Matcher<EmojiOptions> {
   /**
    * {@inheritDoc}
    */
-  factory(match: string, props: Object = {}): React.Element<EmojiProps> {
+  replaceWith(match: string, props: Object = {}): React.Element<EmojiProps> {
     if (this.options.renderUnicode) {
       return props.unicode;
     }
@@ -38,7 +38,7 @@ export default class EmojiMatcher extends Matcher<EmojiOptions> {
   /**
    * @{inheritDoc}
    */
-  getTagName(): string {
+  asTag(): string {
     return 'span';
   }
 

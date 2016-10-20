@@ -72,7 +72,7 @@ describe('matchers/Ip', () => {
     const createIp = (ipParams, key) => {
       const { ip, ...params } = ipParams;
 
-      return matcher.factory(ip, {
+      return matcher.replaceWith(ip, {
         urlParts: {
           host: '',
           path: '',

@@ -17,7 +17,7 @@ export default class HashtagMatcher extends Matcher<Object> {
   /**
    * {@inheritDoc}
    */
-  factory(match: string, props: Object = {}): React.Element<HashtagProps> {
+  replaceWith(match: string, props: Object = {}): React.Element<HashtagProps> {
     return (
       <Hashtag {...props}>{match}</Hashtag>
     );
@@ -26,7 +26,7 @@ export default class HashtagMatcher extends Matcher<Object> {
   /**
    * @{inheritDoc}
    */
-  getTagName(): string {
+  asTag(): string {
     return 'a';
   }
 

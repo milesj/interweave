@@ -20,7 +20,7 @@ describe('Matcher', () => {
 
   describe('createElement()', () => {
     it('returns a React element from factory', () => {
-      expect(matcher.factory('[foo]', { children: 'foo' })).to.deep.equal(
+      expect(matcher.replaceWith('[foo]', { children: 'foo' })).to.deep.equal(
         <Element tagName="span" key="1">FOO</Element>
       );
     });
@@ -42,13 +42,13 @@ describe('Matcher', () => {
     });
   });
 
-  describe('factory()', () => {
+  describe('replaceWith()', () => {
     it('errors if factory not defined', () => {
-      expect(() => { new Matcher().factory(); }).to.throw(Error);
+      expect(() => { new Matcher().replaceWith(); }).to.throw(Error);
     });
 
     it('returns a React element', () => {
-      expect(matcher.factory('[foo]', { children: 'foo' })).to.deep.equal(
+      expect(matcher.replaceWith('[foo]', { children: 'foo' })).to.deep.equal(
         <Element tagName="span" key="1">FOO</Element>
       );
     });

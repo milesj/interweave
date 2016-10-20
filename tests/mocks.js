@@ -112,7 +112,7 @@ export class CodeTagMatcher extends Matcher {
     this.key = key;
   }
 
-  factory(match, props = {}) {
+  replaceWith(match, props = {}) {
     const { children } = props;
 
     if (this.key) {
@@ -126,7 +126,7 @@ export class CodeTagMatcher extends Matcher {
     );
   }
 
-  getTagName() {
+  asTag() {
     return 'span';
   }
 

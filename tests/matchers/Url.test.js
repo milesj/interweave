@@ -132,7 +132,7 @@ describe('matchers/Url', () => {
     const createUrl = (urlParams, key) => {
       const { url, ...params } = urlParams;
 
-      return matcher.factory(url, {
+      return matcher.replaceWith(url, {
         urlParts: {
           host: 'example.com',
           path: '',

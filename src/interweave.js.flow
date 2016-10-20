@@ -12,12 +12,12 @@ declare module "interweave" {
     options: T;
     propName: string;
     inverseName: string;
-    customFactory: ?MatcherFactory;
+    factory: ?MatcherFactory;
 
     constructor(name: string, options: T, factory: ?MatcherFactory): this;
     createElement(match: string, props: Object): React.Element<*>;
-    factory(match: string, props: Object): React.Element<*>;
-    getTagName(): string;
+    replaceWith(match: string, props: Object): React.Element<*>;
+    asTag(): string;
     match(string: string): ?{
       match: string,
       [key: string]: any
