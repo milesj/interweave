@@ -1,4 +1,4 @@
-# Interweave v0.5.0
+# Interweave v1.0.0
 [![Build Status](https://travis-ci.org/milesj/interweave.svg?branch=master)](https://travis-ci.org/milesj/interweave)
 
 Interweave is a robust React library that can...
@@ -12,7 +12,6 @@ Interweave is a robust React library that can...
 
 ## Requirements
 
-* ES2015
 * React 0.14+
 * IE9+
 
@@ -26,9 +25,9 @@ npm install interweave react --save
 
 ## Usage
 
-Interweave can primarily be used through the `Interweave` and `Markup`
+Interweave can primarily be used by the `Interweave` and `Markup`
 components, both of which provide an easy, straight-forward implementation
-for safely [parsing and rendering HTML](#parse-html) without using
+for safely [parsing and rendering HTML](#html-parsing) without using
 `dangerouslySetInnerHTML` ([Facebook][dangerhtml]).
 
 The `Interweave` component has the additional benefit of utilizing
@@ -79,7 +78,7 @@ import { Markup } from 'interweave';
 #### Props
 
 The `Markup` component only supports the `content`, `emptyContent`,
-`tagName`, and `className` props mentioned previously.
+`tagName`, `className`, and `noHtml` props mentioned previously.
 
 ## Documentation
 
@@ -97,12 +96,68 @@ The `Markup` component only supports the `content`, `emptyContent`,
     * [Using SVGs or PNGs](#using-svgs-or-pngs)
         * [CSS Styling](#css-styling)
     * [Displaying Unicode Characters](#displaying-unicode-characters)
-* [Parse HTML](#parse-html)
+* [HTML Parsing](#html-parsing)
     * [Tag Whitelist](#tag-whitelist)
     * [Attribute Whitelist](#attribute-whitelist)
     * [Disabling HTML](#disabling-html)
 
 ### Matchers
+
+Matchers are the backbone of Interweave as they allow arbitrary
+insertion of React elements into strings through the use of regex
+matching. This feature is quite powerful with many possibilities.
+
+It works by matching patterns within a string, deconstructing it into
+pieces, and reconstructing it back into an array of strings and React
+elements, therefore, permitting it to be rendered by React's virtual
+DOM layer. For example, take the following string "Check out my
+website, github.com/milesj!", and a `UrlMatcher`, you'd get the
+following array.
+
+```
+[
+    'Check out my website, ',
+    <Url>github.com/milesj</Url>,
+    '!',
+]
+```
+
+Matchers can be registered globally to apply to all instances of
+`Interweave`, or locally, to apply per each instance of `Interweave`.
+When adding a matcher, a unique name must be passed to the constructor.
+
+```javascript
+import Interweave from 'interweave';
+import EmojiMatcher from 'interweave/matchers/Emoji';
+
+// Global
+Interweave.addMatcher(new EmojiMatcher('emoji'));
+
+// Local
+<Interweave matchers={[new EmojiMatcher('emoji')]} />
+```
+
+To clear all global matchers, use `Interweave.clearMatchers()`.
+
+```javascript
+Interweave.clearMatchers();
+```
+
+To disable all matchers, global and local, per `Interweave` instance,
+pass the `disableMatchers` prop.
+
+```javascript
+<Interweave disableMatchers />
+```
+
+To disable a single matcher, per instance, you can pass a prop that
+starts with "no", and ends with the unique name of the matcher (the one
+passed to the constructor). Using the example above, you can pass a
+`noEmoji` prop.
+
+```javascript
+<Interweave noEmoji />
+```
 
 #### Creating A Matcher
 
@@ -185,7 +240,7 @@ HTML element with the same tag name as defined by `asTag`.
 ### Filters
 
 Filters provide an easy way of cleaning HTML attribute values during
-the [parsing cycle](#parse-html). This is especially useful for `src`
+the [parsing cycle](#html-parsing). This is especially useful for `src`
 and `href` attributes.
 
 Filters can be registered globally to apply to all instances of
@@ -452,7 +507,7 @@ conversion.
 new EmojiMatcher('emoji', { renderUnicode: true });
 ```
 
-### Parse HTML
+### HTML Parsing
 
 Interweave doesn't rely on an HTML parser for rendering HTML safely,
 instead, it uses the DOM itself. It accomplishes this by using

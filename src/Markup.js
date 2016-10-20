@@ -13,6 +13,7 @@ type MarkupProps = {
   content: string,
   emptyContent: ?React.Element<*>,
   tagName: string,
+  noHtml: boolean,
 };
 
 export default function Markup({
@@ -20,8 +21,9 @@ export default function Markup({
   content,
   emptyContent,
   tagName = 'span',
+  noHtml = false,
 }: MarkupProps) {
-  const markup = new Parser(content).parse();
+  const markup = new Parser(content, { noHtml }).parse();
 
   return (
     <Element tagName={tagName} className={className}>
@@ -35,4 +37,5 @@ Markup.propTypes = {
   content: PropTypes.string.isRequired,
   emptyContent: PropTypes.node,
   tagName: PropTypes.oneOf(['span', 'div', 'p']),
+  noHtml: PropTypes.bool,
 };
