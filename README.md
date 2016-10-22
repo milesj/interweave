@@ -114,7 +114,7 @@ DOM layer. For example, take the following string "Check out my
 website, github.com/milesj!", and a `UrlMatcher`, you'd get the
 following array.
 
-```
+```javascript
 [
     'Check out my website, ',
     <Url>github.com/milesj</Url>,

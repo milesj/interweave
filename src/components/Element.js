@@ -18,7 +18,7 @@ export default function Element({
 
   return (
     <Tag {...attributes} className={combinedClass.join(' ')} data-interweave>
-      {children}
+      {children || null}
     </Tag>
   );
 }
@@ -30,6 +30,6 @@ Element.propTypes = {
     PropTypes.bool,
   ])),
   className: PropTypes.string,
-  children: PropTypes.node.isRequired,
+  children: PropTypes.node,
   tagName: PropTypes.string.isRequired,
 };

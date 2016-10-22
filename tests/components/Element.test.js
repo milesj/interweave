@@ -38,6 +38,17 @@ describe('components/Element', () => {
     expect(wrapper.find('section')).to.have.lengthOf(1);
   });
 
+  it('renders without children', () => {
+    const wrapper = shallow(<Element tagName="div" />);
+
+    expect(wrapper.is('div')).to.equal(true);
+    expect(wrapper.props()).to.deep.equal({
+      children: null,
+      className: '',
+      'data-interweave': true,
+    });
+  });
+
   it('renders without attributes', () => {
     const wrapper = shallow(<Element tagName="div">Foo</Element>);
 
