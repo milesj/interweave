@@ -1,4 +1,4 @@
-# Interweave v1.0.0
+# Interweave v1.0.1
 [![Build Status](https://travis-ci.org/milesj/interweave.svg?branch=master)](https://travis-ci.org/milesj/interweave)
 
 Interweave is a robust React library that can...
@@ -21,6 +21,8 @@ Interweave requires React as a peer dependency.
 
 ```
 npm install interweave react --save
+// Or
+yarn install interweave react
 ```
 
 ## Usage
