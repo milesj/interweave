@@ -22,7 +22,7 @@ Interweave requires React as a peer dependency.
 ```
 npm install interweave react --save
 // Or
-yarn install interweave react
+yarn add interweave react
 ```
 
 ## Usage
