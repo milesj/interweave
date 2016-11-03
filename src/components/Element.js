@@ -14,10 +14,14 @@ export default function Element({
   children,
   tagName: Tag,
 }: ElementProps) {
-  const combinedClass = [className || '', attributes.className || ''].filter(Boolean);
+  const combinedClass = [
+    className || '',
+    attributes.className || '',
+    'interweave__content',
+  ].filter(Boolean);
 
   return (
-    <Tag {...attributes} className={combinedClass.join(' ')} data-interweave>
+    <Tag {...attributes} className={combinedClass.join(' ')}>
       {children || null}
     </Tag>
   );

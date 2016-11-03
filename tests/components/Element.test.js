@@ -21,7 +21,7 @@ describe('components/Element', () => {
       </Element>
     );
 
-    expect(wrapper.prop('className')).to.equal('foo-bar baz-qux');
+    expect(wrapper.prop('className')).to.equal('foo-bar baz-qux interweave__content');
   });
 
   it('renders with a custom HTML tag', () => {
@@ -44,8 +44,7 @@ describe('components/Element', () => {
     expect(wrapper.is('div')).to.equal(true);
     expect(wrapper.props()).to.deep.equal({
       children: null,
-      className: '',
-      'data-interweave': true,
+      className: 'interweave__content',
     });
   });
 
@@ -55,8 +54,7 @@ describe('components/Element', () => {
     expect(wrapper.isEmptyRender()).to.equal(false);
     expect(wrapper.props()).to.deep.equal({
       children: 'Foo',
-      className: '',
-      'data-interweave': true,
+      className: 'interweave__content',
     });
   });
 
@@ -67,8 +65,7 @@ describe('components/Element', () => {
     expect(wrapper.props()).to.deep.equal({
       children: 'Foo',
       id: 'foo',
-      className: '',
-      'data-interweave': true,
+      className: 'interweave__content',
     });
   });
 
@@ -90,10 +87,9 @@ describe('components/Element', () => {
     expect(wrapper.props()).to.deep.equal({
       children: 'Foo',
       id: 'foo',
-      className: '',
+      className: 'interweave__content',
       disabled: true,
       maxLength: 15,
-      'data-interweave': true,
     });
   });
 });
