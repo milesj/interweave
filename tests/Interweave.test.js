@@ -95,6 +95,12 @@ describe('Interweave', () => {
     ]);
   });
 
+  it('allows empty `content` to be passed', () => {
+    const wrapper = shallow(<Interweave content={null} />);
+
+    expect(wrapper.prop('children')).to.equal(null);
+  });
+
   it('will render the `emptyContent` if no content exists', () => {
     const empty = <div>Foo</div>;
     const wrapper = shallow(<Interweave content="" emptyContent={empty} />);

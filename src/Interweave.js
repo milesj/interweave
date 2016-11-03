@@ -51,7 +51,7 @@ export default class Interweave extends React.Component {
 
   static propTypes = {
     className: PropTypes.string,
-    content: PropTypes.string.isRequired,
+    content: PropTypes.string,
     disableFilters: PropTypes.bool,
     disableMatchers: PropTypes.bool,
     emptyContent: PropTypes.node,
@@ -64,6 +64,7 @@ export default class Interweave extends React.Component {
   };
 
   static defaultProps = {
+    content: '',
     emptyContent: null,
     filters: [],
     matchers: [],

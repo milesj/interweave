@@ -18,7 +18,7 @@ type MarkupProps = {
 
 export default function Markup({
   className,
-  content,
+  content = '',
   emptyContent,
   tagName = 'span',
   noHtml = false,
@@ -34,7 +34,7 @@ export default function Markup({
 
 Markup.propTypes = {
   className: PropTypes.string,
-  content: PropTypes.string.isRequired,
+  content: PropTypes.string,
   emptyContent: PropTypes.node,
   tagName: PropTypes.oneOf(['span', 'div', 'p']),
   noHtml: PropTypes.bool,

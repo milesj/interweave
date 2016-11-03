@@ -18,6 +18,12 @@ describe('Markup', () => {
     expect(wrapper.prop('className')).to.equal('foo-bar');
   });
 
+  it('allows empty `content` to be passed', () => {
+    const wrapper = shallow(<Markup content={null} />);
+
+    expect(wrapper.prop('children')).to.equal(null);
+  });
+
   it('will render the `emptyContent` if no content exists', () => {
     const empty = <div>Foo</div>;
     const wrapper = shallow(<Markup content="" emptyContent={empty} />);
