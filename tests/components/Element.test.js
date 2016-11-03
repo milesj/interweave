@@ -21,7 +21,7 @@ describe('components/Element', () => {
       </Element>
     );
 
-    expect(wrapper.prop('className')).to.equal('foo-bar baz-qux interweave__content');
+    expect(wrapper.prop('className')).to.equal('interweave foo-bar baz-qux');
   });
 
   it('renders with a custom HTML tag', () => {
@@ -44,7 +44,7 @@ describe('components/Element', () => {
     expect(wrapper.is('div')).to.equal(true);
     expect(wrapper.props()).to.deep.equal({
       children: null,
-      className: 'interweave__content',
+      className: 'interweave',
     });
   });
 
@@ -54,7 +54,7 @@ describe('components/Element', () => {
     expect(wrapper.isEmptyRender()).to.equal(false);
     expect(wrapper.props()).to.deep.equal({
       children: 'Foo',
-      className: 'interweave__content',
+      className: 'interweave',
     });
   });
 
@@ -65,7 +65,7 @@ describe('components/Element', () => {
     expect(wrapper.props()).to.deep.equal({
       children: 'Foo',
       id: 'foo',
-      className: 'interweave__content',
+      className: 'interweave',
     });
   });
 
@@ -87,7 +87,7 @@ describe('components/Element', () => {
     expect(wrapper.props()).to.deep.equal({
       children: 'Foo',
       id: 'foo',
-      className: 'interweave__content',
+      className: 'interweave',
       disabled: true,
       maxLength: 15,
     });

@@ -8,6 +8,15 @@ import IpMatcher from '../../src/matchers/Ip';
 import UrlMatcher from '../../src/matchers/Url';
 
 function App() {
+  const contentWithNewLines = `This block has multiple new lines.
+Like how is this supposed to work.
+Someone please.
+Tell.
+Me.
+
+Help!`;
+  const contentWithBrs = 'This block has multiple new lines but uses `br`s.<br />Like how is this supposed to work.<br />Someone please.<br />Tell.<br />Me.<br /><br />Help!';
+
   return (
     <div className="interweave__examples">
       <Interweave
@@ -109,6 +118,16 @@ function App() {
         matchers={[new UrlMatcher('url')]}
         content="And of course URLS: milesj.me. This should work just fine,
           https://facebook.github.io/react (I hope). www.github.com."
+      />
+
+      <Interweave
+        tagName="div"
+        content={contentWithNewLines}
+      />
+
+      <Interweave
+        tagName="div"
+        content={contentWithBrs}
       />
     </div>
   );

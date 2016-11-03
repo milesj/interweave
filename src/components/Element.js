@@ -13,17 +13,25 @@ export default function Element({
   className,
   children,
   tagName: Tag,
+  selfClose = false,
 }: ElementProps) {
-  const combinedClass = [
-    className || '',
-    attributes.className || '',
-    'interweave__content',
-  ].filter(Boolean);
+  const props = {
+    ...attributes,
+    className: [
+      'interweave',
+      className || '',
+      attributes.className || '',
+    ].filter(Boolean).join(' '),
+  };
+
+  if (selfClose) {
+    return (
+      <Tag {...props} />
+    );
+  }
 
   return (
-    <Tag {...attributes} className={combinedClass.join(' ')}>
-      {children || null}
-    </Tag>
+    <Tag {...props}>{children || null}</Tag>
   );
 }
 
@@ -36,4 +44,5 @@ Element.propTypes = {
   className: PropTypes.string,
   children: PropTypes.node,
   tagName: PropTypes.string.isRequired,
+  selfClose: PropTypes.bool,
 };

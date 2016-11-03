@@ -69,6 +69,7 @@ const inlineConfig: NodeConfig = {
   inline: true,
   block: false,
   self: false,
+  void: false,
   parent: [],
   children: [],
 };
@@ -79,6 +80,7 @@ const blockConfig: NodeConfig = {
   inline: true,
   block: true,
   self: true,
+  void: false,
   parent: [],
   children: [],
 };
@@ -129,6 +131,7 @@ export const TAGS: ConfigMap = {
   br: {
     ...inlineConfig,
     inline: false,
+    void: true,
   },
   button: {
     ...blockConfig,
@@ -225,6 +228,7 @@ export const TAGS: ConfigMap = {
     ...blockConfig,
     inline: false,
     block: false,
+    void: true,
   },
   i: {
     ...inlineConfig,
@@ -232,6 +236,7 @@ export const TAGS: ConfigMap = {
   img: {
     ...inlineConfig,
     inline: false,
+    void: true,
   },
   ins: {
     ...inlineConfig,
@@ -297,6 +302,7 @@ export const TAGS: ConfigMap = {
     ...inlineConfig,
     inline: false,
     parent: ['audio', 'video', 'picture'],
+    void: true,
   },
   span: {
     ...inlineConfig,
@@ -353,6 +359,7 @@ export const TAGS: ConfigMap = {
     ...inlineConfig,
     inline: false,
     parent: ['audio', 'video'],
+    void: true,
   },
   u: {
     ...inlineConfig,

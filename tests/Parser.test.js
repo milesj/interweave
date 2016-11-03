@@ -241,13 +241,13 @@ describe('Parser', () => {
     it('denies data attributes', () => {
       element.setAttribute('data-foo', 'bar');
 
-      expect(instance.extractAttributes(element)).to.deep.equal({});
+      expect(instance.extractAttributes(element)).to.equal(null);
     });
 
     it('denies attributes that are not whitelisted', () => {
       element.setAttribute('readonly', 'true');
 
-      expect(instance.extractAttributes(element)).to.deep.equal({});
+      expect(instance.extractAttributes(element)).to.equal(null);
     });
 
     it('denies attributes that start with on', () => {
@@ -255,7 +255,7 @@ describe('Parser', () => {
       element.setAttribute('onclick', 'doSomething();');
       element.onmouseenter = function () {};
 
-      expect(instance.extractAttributes(element)).to.deep.equal({});
+      expect(instance.extractAttributes(element)).to.equal(null);
     });
 
     it('denies sources that have injections', () => {
@@ -265,7 +265,7 @@ describe('Parser', () => {
       element.setAttribute('source', 'xss:confirm();');
       /* eslint-enable no-script-url */
 
-      expect(instance.extractAttributes(element)).to.deep.equal({});
+      expect(instance.extractAttributes(element)).to.equal(null);
     });
 
     it('camel cases specific attribute names to React attribute names', () => {
@@ -304,7 +304,7 @@ describe('Parser', () => {
         <Element key="0" tagName="main" attributes={{ role: 'main' }}>
           {[
             '\n    Main content\n    ',
-            <Element key="1" tagName="div" attributes={{}}>
+            <Element key="1" tagName="div">
               {[
                 '\n      ',
                 <Element key="2" tagName="a" attributes={{ href: '#' }}>
@@ -354,7 +354,7 @@ describe('Parser', () => {
             element.appendChild(createChild(tag, i));
 
             expect(instance.parseNode(element, parentConfig)).to.deep.equal([
-              <Element key="0" tagName={tag} attributes={{}}>{[`${i}`]}</Element>,
+              <Element key="0" tagName={tag}>{[`${i}`]}</Element>,
             ]);
           });
           break;
@@ -395,7 +395,7 @@ describe('Parser', () => {
 
       expect(instance.parseNode(element, parentConfig)).to.deep.equal([
         'Foo',
-        <Element key="0" tagName="div" attributes={{}}>{['Bar']}</Element>,
+        <Element key="0" tagName="div">{['Bar']}</Element>,
         'Baz',
       ]);
     });
@@ -409,9 +409,9 @@ describe('Parser', () => {
 
       expect(instance.parseNode(element, parentConfig)).to.deep.equal([
         'Foo',
-        <Element key="0" tagName="div" attributes={{}}>{['Bar']}</Element>,
+        <Element key="0" tagName="div">{['Bar']}</Element>,
         'BazQux',
-        <Element key="1" tagName="div" attributes={{}}>{['Bar']}</Element>,
+        <Element key="1" tagName="div">{['Bar']}</Element>,
       ]);
     });
 
@@ -467,7 +467,7 @@ describe('Parser', () => {
         'Foo',
         'Bar',
         'Baz',
-        <Element key="0" tagName="b" attributes={{}}>{['Qux']}</Element>,
+        <Element key="0" tagName="b">{['Qux']}</Element>,
         'Wat',
       ]);
     });
@@ -505,8 +505,8 @@ describe('Parser', () => {
         'Foo',
         'Bar',
         'Baz',
-        <Element key="0" tagName="span" attributes={{}}>{['Qux']}</Element>,
-        <Element key="1" tagName="section" attributes={{}}>{['Wat']}</Element>,
+        <Element key="0" tagName="span">{['Qux']}</Element>,
+        <Element key="1" tagName="section">{['Wat']}</Element>,
       ]);
     });
 
@@ -524,7 +524,7 @@ describe('Parser', () => {
         'Foo',
         'Bar',
         'Baz',
-        <Element key="0" tagName="span" attributes={{}}>{['Qux']}</Element>,
+        <Element key="0" tagName="span">{['Qux']}</Element>,
         'Wat',
       ]);
     });
@@ -541,10 +541,10 @@ describe('Parser', () => {
         inline: false,
       })).to.deep.equal([
         'Foo',
-        <Element key="0" tagName="div" attributes={{}}>{['Bar']}</Element>,
+        <Element key="0" tagName="div">{['Bar']}</Element>,
         'Baz',
         'Qux',
-        <Element key="1" tagName="section" attributes={{}}>{['Wat']}</Element>,
+        <Element key="1" tagName="section">{['Wat']}</Element>,
       ]);
     });
 
@@ -559,7 +559,7 @@ describe('Parser', () => {
         tagName: 'span',
       })).to.deep.equal([
         'Foo',
-        <Element key="0" tagName="a" attributes={{}}>{['Bar']}</Element>,
+        <Element key="0" tagName="a">{['Bar']}</Element>,
         'Baz',
       ]);
     });
@@ -573,7 +573,7 @@ describe('Parser', () => {
         ...parentConfig,
       })).to.deep.equal([
         'Foo',
-        <Element key="0" tagName="a" attributes={{}}>{['Bar']}</Element>,
+        <Element key="0" tagName="a">{['Bar']}</Element>,
         'Baz',
       ]);
     });
@@ -589,7 +589,7 @@ describe('Parser', () => {
         tagName: 'a',
       })).to.deep.equal([
         'Foo',
-        <Element key="0" tagName="span" attributes={{}}>{['Bar']}</Element>,
+        <Element key="0" tagName="span">{['Bar']}</Element>,
         'Baz',
       ]);
     });
@@ -605,7 +605,7 @@ describe('Parser', () => {
         tagName: 'a',
       })).to.deep.equal([
         'Foo',
-        <Element key="0" tagName="div" attributes={{}}>{['Bar']}</Element>,
+        <Element key="0" tagName="div">{['Bar']}</Element>,
         'Baz',
       ]);
     });

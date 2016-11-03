@@ -29,6 +29,7 @@ import type {
   ParsedNodes,
   NodeConfig,
   NodeInterface,
+  ElementProps,
 } from './types';
 
 const ELEMENT_NODE: number = 1;
@@ -239,15 +240,17 @@ export default class Parser {
 
   /**
    * Convert an elements attribute map to an object map.
+   * Returns null if no attributes are defined.
    *
    * @param {Node} node
-   * @returns {Object}
+   * @returns {Object|null}
    */
-  extractAttributes(node: NodeInterface): Attributes {
+  extractAttributes(node: NodeInterface): ?Attributes {
     const attributes = {};
+    let count = 0;
 
     if (node.nodeType !== ELEMENT_NODE || !node.attributes) {
-      return attributes;
+      return null;
     }
 
     Array.from(node.attributes).forEach((attr) => {
@@ -289,7 +292,12 @@ export default class Parser {
       }
 
       attributes[ATTRIBUTES_TO_PROPS[name] || name] = newValue;
+      count += 1;
     });
+
+    if (count === 0) {
+      return null;
+    }
 
     return attributes;
   }
@@ -353,12 +361,23 @@ export default class Parser {
         } else {
           this.keyIndex += 1;
 
+          // Build the props as it makes it easier to test
+          const attributes = this.extractAttributes(node);
+          const elementProps: ElementProps = {
+            key: this.keyIndex,
+            tagName,
+          };
+
+          if (attributes) {
+            elementProps.attributes = attributes;
+          }
+
+          if (config.void) {
+            elementProps.selfClose = config.void;
+          }
+
           content.push(
-            <ElementComponent
-              key={this.keyIndex}
-              tagName={tagName}
-              attributes={this.extractAttributes(node)}
-            >
+            <ElementComponent {...elementProps}>
               {this.parseNode(node, config)}
             </ElementComponent>
           );

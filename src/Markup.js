@@ -9,7 +9,6 @@ import Parser from './Parser';
 import Element from './components/Element';
 
 type MarkupProps = {
-  className: string,
   content: string,
   emptyContent: ?React.Element<*>,
   tagName: string,
@@ -17,13 +16,13 @@ type MarkupProps = {
 };
 
 export default function Markup({
-  className,
   content = '',
   emptyContent,
   tagName = 'span',
   noHtml = false,
 }: MarkupProps) {
   const markup = new Parser(content, { noHtml }).parse();
+  const className = noHtml ? 'interweave--no-html' : '';
 
   return (
     <Element tagName={tagName} className={className}>
@@ -33,7 +32,6 @@ export default function Markup({
 }
 
 Markup.propTypes = {
-  className: PropTypes.string,
   content: PropTypes.string,
   emptyContent: PropTypes.node,
   tagName: PropTypes.oneOf(['span', 'div', 'p']),

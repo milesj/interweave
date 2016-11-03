@@ -23,16 +23,15 @@ describe('Interweave', () => {
     Interweave.clearMatchers();
   });
 
-  it('can set the class name', () => {
+  it('sets the `noHtml` class name', () => {
     const wrapper = shallow(
       <Interweave
-        className="foo-bar"
+        noHtml
         content="Foo Bar"
       />
     );
 
-    // Passes to the Element
-    expect(wrapper.prop('className')).to.equal('foo-bar');
+    expect(wrapper.prop('className')).to.equal('interweave--no-html');
   });
 
   it('can pass filters through props', () => {
@@ -199,7 +198,7 @@ describe('Interweave', () => {
 
       expect(wrapper.prop('children')).to.deep.equal([
         'Foo ',
-        <Element tagName="i" key="0" attributes={{}}>{['Bar']}</Element>,
+        <Element tagName="i" key="0">{['Bar']}</Element>,
         ' Baz',
       ]);
     });
@@ -217,7 +216,7 @@ describe('Interweave', () => {
 
       expect(wrapper.prop('children')).to.deep.equal([
         'Foo ',
-        <Element tagName="b" key="0" attributes={{}}>{['Bar']}</Element>,
+        <Element tagName="b" key="0">{['Bar']}</Element>,
         ' Baz',
         <Element tagName="u" key="1">Qux</Element>,
       ]);
@@ -246,7 +245,7 @@ describe('Interweave', () => {
       expect(wrapper.find('Element').prop('tagName')).to.equal('b');
       expect(wrapper.prop('children')).to.deep.equal([
         'Foo ',
-        <Element tagName="b" key="0" attributes={{}}>{['Bar']}</Element>,
+        <Element tagName="b" key="0">{['Bar']}</Element>,
         ' Baz',
       ]);
     });
@@ -317,11 +316,11 @@ Curabitur lectus odio, tempus quis velit vitae, cursus sagittis nulla. Maecenas 
     ).shallow();
 
     expect(wrapper.prop('children')).to.deep.equal([
-      <Element key="0" tagName="h1" attributes={{}}>{['Lorem ipsum dolor sit amet']}</Element>,
+      <Element key="0" tagName="h1">{['Lorem ipsum dolor sit amet']}</Element>,
       '\n\n',
-      <Element key="1" tagName="p" attributes={{}}>
+      <Element key="1" tagName="p">
         {[
-          <Element key="2" tagName="b" attributes={{}}>{['Consectetur adipiscing elit.']}</Element>,
+          <Element key="2" tagName="b">{['Consectetur adipiscing elit.']}</Element>,
           ' Donec massa lorem, mollis non commodo quis, ultricies at elit. ',
           <Email key="3" emailParts={{ username: 'email', host: 'domain.com' }}>email@domain.com</Email>,
           '. Aliquam a arcu porttitor, aliquam eros sed, convallis massa. Nunc vitae vehicula quam, in feugiat ligula. ',
@@ -336,14 +335,14 @@ Curabitur lectus odio, tempus quis velit vitae, cursus sagittis nulla. Maecenas 
         ]}
       </Element>,
       '\n\n',
-      <Element key="8" tagName="br" attributes={{}}>{[]}</Element>,
+      <Element key="8" tagName="br" selfClose>{[]}</Element>,
       <Emoji key="9" shortName=":ok_woman_tone3:" unicode={SHORTNAME_TO_UNICODE[':ok_woman_tone3:']} />,
-      <Element key="10" tagName="br" attributes={{}}>{[]}</Element>,
+      <Element key="10" tagName="br" selfClose>{[]}</Element>,
       '\n\n',
-      <Element key="11" tagName="div" attributes={{}}>
+      <Element key="11" tagName="div">
         {[
           'Curabitur lectus odio, ',
-          <Element key="12" tagName="em" attributes={{}}>{['tempus quis velit vitae, cursus sagittis nulla']}</Element>,
+          <Element key="12" tagName="em">{['tempus quis velit vitae, cursus sagittis nulla']}</Element>,
           '. Maecenas sem nulla, tempor nec risus nec, ultricies ultricies magna. ',
           <Url key="13" urlParts={{ ...urlParts, scheme: 'https', host: '127.0.0.1', path: '/foo' }}>https://127.0.0.1/foo</Url>,
           ' Nulla malesuada lacinia libero non mollis. Curabitur id lacus id dolor vestibulum ornare quis a nisi (',
@@ -352,7 +351,7 @@ Curabitur lectus odio, tempus quis velit vitae, cursus sagittis nulla. Maecenas 
         ]}
       </Element>,
       '\n\n',
-      <Element key="15" tagName="section" attributes={{}}>
+      <Element key="15" tagName="section">
         {[
           <Hashtag key="16" hashtagName="blessed">#blessed</Hashtag>,
           ' ',
@@ -453,6 +452,24 @@ Curabitur lectus odio, tempus quis velit vitae, cursus sagittis nulla. Maecenas 
       ' and ',
       SHORTNAME_TO_UNICODE[':dog:'],
       ' shortnames.',
+    ]);
+  });
+
+  it('handles void elements correctly', () => {
+    const wrapper = shallow(
+      <Interweave
+        tagName="div"
+        content={'This has line breaks.<br>Horizontal rule.<hr />An image.<img src="http://domain.com/image.jpg" />'}
+      />
+    ).shallow();
+
+    expect(wrapper.prop('children')).to.deep.equal([
+      'This has line breaks.',
+      <Element key="0" tagName="br" selfClose>{[]}</Element>,
+      'Horizontal rule.',
+      <Element key="1" tagName="hr" selfClose>{[]}</Element>,
+      'An image.',
+      <Element key="2" tagName="img" attributes={{ src: 'http://domain.com/image.jpg' }} selfClose>{[]}</Element>,
     ]);
   });
 });

@@ -25,6 +25,7 @@ export type NodeConfig = {
   inline: boolean,
   block: boolean,
   self: boolean,
+  void: boolean,
   parent: string[],
   children: string[],
 };
@@ -70,6 +71,7 @@ export type ElementProps = {
   className?: string,
   children?: any,
   tagName: string,
+  selfClose?: boolean,
 };
 
 export type EmailProps = {

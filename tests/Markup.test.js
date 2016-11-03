@@ -6,16 +6,15 @@ import Element from '../lib/components/Element';
 import { MOCK_MARKUP } from './mocks';
 
 describe('Markup', () => {
-  it('can set the class name', () => {
+  it('sets the `noHtml` class name', () => {
     const wrapper = shallow(
       <Markup
-        className="foo-bar"
+        noHtml
         content="Foo Bar"
       />
     );
 
-    // Passes to the Element
-    expect(wrapper.prop('className')).to.equal('foo-bar');
+    expect(wrapper.prop('className')).to.equal('interweave--no-html');
   });
 
   it('allows empty `content` to be passed', () => {
@@ -39,7 +38,7 @@ describe('Markup', () => {
       <Element key="0" tagName="main" attributes={{ role: 'main' }}>
         {[
           '\n    Main content\n    ',
-          <Element key="1" tagName="div" attributes={{}}>
+          <Element key="1" tagName="div">
             {[
               '\n      ',
               <Element key="2" tagName="a" attributes={{ href: '#' }}>

@@ -32,7 +32,6 @@ function prioritySort(
 }
 
 type InterweaveProps = {
-  className: string,
   content: string,
   disableFilters: boolean,
   disableMatchers: boolean,
@@ -50,7 +49,6 @@ export default class Interweave extends React.Component {
   props: InterweaveProps;
 
   static propTypes = {
-    className: PropTypes.string,
     content: PropTypes.string,
     disableFilters: PropTypes.bool,
     disableMatchers: PropTypes.bool,
@@ -165,7 +163,6 @@ export default class Interweave extends React.Component {
   parseMarkup(): ParsedNodes | ?React.Element<*> {
     const {
       tagName, // eslint-disable-line
-      className, // eslint-disable-line
       content,
       emptyContent,
       onBeforeParse,
@@ -220,7 +217,8 @@ export default class Interweave extends React.Component {
    * @returns {JSX}
    */
   render() {
-    const { tagName, className } = this.props;
+    const { tagName, noHtml } = this.props;
+    const className = noHtml ? 'interweave--no-html' : '';
 
     return (
       <Element tagName={tagName} className={className}>
