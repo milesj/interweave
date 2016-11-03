@@ -15,7 +15,12 @@ Tell.
 Me.
 
 Help!`;
-  const contentWithBrs = 'This block has multiple new lines but uses `br`s.<br />Like how is this supposed to work.<br />Someone please.<br />Tell.<br />Me.<br /><br />Help!';
+  const contentWithBrs = `This block has multiple new lines but uses \`br\`s.<br />
+Like how is this supposed to work.<br />
+Someone please.<br />
+Tell.<br />
+Me.<br /><br />
+Help!`;
 
   return (
     <div className="interweave__examples">

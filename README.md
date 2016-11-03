@@ -40,7 +40,6 @@ import Interweave from 'interweave';
 
 <Interweave
     tagName="div"
-    className="foo"
     content="This string <b>contains</b> HTML."
 />
 ```
@@ -53,7 +52,6 @@ import Interweave from 'interweave';
   rendered.
 * `tagName` (div | span | p) - The HTML element tag name to wrap the
   output with. Defaults to "span".
-* `className` (string) - Class name to append to the HTML element.
 * `filters` (Filter[]) - Filters to apply to this local instance.
 * `matchers` (Matcher[]) - Matchers to apply to this local instance.
 * `disableFilters` (boolean) - Disables both global and local filters.
@@ -80,7 +78,7 @@ import { Markup } from 'interweave';
 #### Props
 
 The `Markup` component only supports the `content`, `emptyContent`,
-`tagName`, `className`, and `noHtml` props mentioned previously.
+`tagName`, and `noHtml` props mentioned previously.
 
 ## Documentation
 
