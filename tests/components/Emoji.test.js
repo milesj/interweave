@@ -56,13 +56,13 @@ describe('components/Emoji', () => {
   });
 
   it('can define the path', () => {
-    const wrapper = shallow(
+    const wrapper = shallow((
       <Emoji
         shortName={shortName}
         unicode={unicode}
         emojiPath="http://foo.com/path/to/{{hexcode}}.svg"
       />
-    );
+    ));
 
     expect(wrapper.find('img').prop('alt')).to.equal(shortName);
     expect(wrapper.find('img').prop('src')).to.equal(`http://foo.com/path/to/${hexCode}.svg`);

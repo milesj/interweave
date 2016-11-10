@@ -26,7 +26,7 @@ let globalMatchers: MatcherList = [];
 
 function prioritySort(
   a: MatcherStructure | FilterStructure,
-  b: MatcherStructure | FilterStructure
+  b: MatcherStructure | FilterStructure,
 ): number {
   return a.priority - b.priority;
 }

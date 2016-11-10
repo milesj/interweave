@@ -20,9 +20,9 @@ describe('Matcher', () => {
 
   describe('createElement()', () => {
     it('returns a React element from factory', () => {
-      expect(matcher.replaceWith('[foo]', { children: 'foo' })).to.deep.equal(
+      expect(matcher.replaceWith('[foo]', { children: 'foo' })).to.deep.equal((
         <Element tagName="span" key="1">FOO</Element>
-      );
+      ));
     });
 
     it('returns a React element from custom factory', () => {
@@ -30,9 +30,9 @@ describe('Matcher', () => {
         <Element tagName={p.tagName}>{match}</Element>
       ));
 
-      expect(customMatcher.createElement('Bar', { tagName: 'div' })).to.deep.equal(
+      expect(customMatcher.createElement('Bar', { tagName: 'div' })).to.deep.equal((
         <Element tagName="div">Bar</Element>
-      );
+      ));
     });
 
     it('errors if not a React element', () => {
@@ -48,9 +48,9 @@ describe('Matcher', () => {
     });
 
     it('returns a React element', () => {
-      expect(matcher.replaceWith('[foo]', { children: 'foo' })).to.deep.equal(
+      expect(matcher.replaceWith('[foo]', { children: 'foo' })).to.deep.equal((
         <Element tagName="span" key="1">FOO</Element>
-      );
+      ));
     });
   });
 

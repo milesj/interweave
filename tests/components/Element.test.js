@@ -11,7 +11,7 @@ describe('components/Element', () => {
   });
 
   it('combines attribute class with prop class', () => {
-    const wrapper = shallow(
+    const wrapper = shallow((
       <Element
         className="foo-bar"
         tagName="div"
@@ -19,7 +19,7 @@ describe('components/Element', () => {
       >
         Foo
       </Element>
-    );
+    ));
 
     expect(wrapper.prop('className')).to.equal('interweave foo-bar baz-qux');
   });
@@ -70,7 +70,7 @@ describe('components/Element', () => {
   });
 
   it('renders with attributes of each type', () => {
-    const wrapper = shallow(
+    const wrapper = shallow((
       <Element
         tagName="input"
         attributes={{
@@ -81,7 +81,7 @@ describe('components/Element', () => {
       >
         Foo
       </Element>
-    );
+    ));
 
     expect(wrapper.isEmptyRender()).to.equal(false);
     expect(wrapper.props()).to.deep.equal({

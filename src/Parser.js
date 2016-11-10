@@ -47,7 +47,7 @@ export default class Parser {
     markup: string,
     props: Object = {},
     matchers: Matcher<*>[] = [],
-    filters: Filter[] = []
+    filters: Filter[] = [],
   ) {
     if (!markup) {
       markup = '';
@@ -87,7 +87,7 @@ export default class Parser {
    */
   applyMatchers(
     string: string,
-    parentConfig: NodeConfig
+    parentConfig: NodeConfig,
   ): string | Array<string | React.Element<*>> {
     const elements = [];
     const props = this.props;
@@ -378,7 +378,7 @@ export default class Parser {
 
         // Skip over elements not supported
         if (config.rule === PARSER_DENY) {
-          return;
+          // Do nothing
 
         // Only pass through the text content
         } else if (noHtml || !this.canRenderChild(parentConfig, config)) {
@@ -403,11 +403,11 @@ export default class Parser {
             elementProps.selfClose = config.void;
           }
 
-          content.push(
+          content.push((
             <ElementComponent {...elementProps}>
               {this.parseNode(node, config)}
             </ElementComponent>
-          );
+          ));
         }
 
       // Apply matchers if a text node

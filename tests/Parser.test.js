@@ -157,8 +157,7 @@ describe('Parser', () => {
       const doc = instance.createDocument('<!DOCTYPE><html>' +
         '<head><title>Wat</title></head>' +
         '<body><main>Foo<div>Bar<span>Baz</span></div></main></body>' +
-        '</html>'
-      );
+        '</html>');
 
       expect(doc.head.childNodes[0].textContent).to.equal('Wat');
       expect(doc.body.outerHTML).to

@@ -7,12 +7,12 @@ import { MOCK_MARKUP } from './mocks';
 
 describe('Markup', () => {
   it('sets the `noHtml` class name', () => {
-    const wrapper = shallow(
+    const wrapper = shallow((
       <Markup
         noHtml
         content="Foo Bar"
       />
-    );
+    ));
 
     expect(wrapper.prop('className')).to.equal('interweave--no-html');
   });
