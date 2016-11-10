@@ -1,3 +1,6 @@
+# 1.1.1
+* Fixed an issue with the published build.
+
 # 1.1.0
 * Line breaks found in non-HTML strings will now be automatically
   converted to `<br/>` tags.
