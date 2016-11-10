@@ -1,4 +1,4 @@
-# Interweave v1.0.1
+# Interweave v1.1.0
 [![Build Status](https://travis-ci.org/milesj/interweave.svg?branch=master)](https://travis-ci.org/milesj/interweave)
 
 Interweave is a robust React library that can...
@@ -56,6 +56,7 @@ import Interweave from 'interweave';
 * `matchers` (Matcher[]) - Matchers to apply to this local instance.
 * `disableFilters` (boolean) - Disables both global and local filters.
 * `disableMatchers` (boolean) - Disables both global and local matchers.
+* `disableLineBreaks` (boolean) - Disables automatic line break conversion.
 * `noHtml` (boolean) - Strips HTML tags from the content string while
   parsing.
 * `onBeforeParse` (func) - Callback that fires before parsing. Is
@@ -78,7 +79,7 @@ import { Markup } from 'interweave';
 #### Props
 
 The `Markup` component only supports the `content`, `emptyContent`,
-`tagName`, and `noHtml` props mentioned previously.
+`tagName`, `disableLineBreaks`, and `noHtml` props mentioned previously.
 
 ## Documentation
 
