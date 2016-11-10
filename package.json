@@ -1,6 +1,6 @@
 {
   "name": "interweave",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "React safely render HTML, filters attributes, autowrap text with matchers, render emoji characters, and much more.",
   "keywords": [
     "interweave",
@@ -43,7 +43,7 @@
     "test:bundle": "browserify -t [ babelify ] ./tests/browsers/bundle.js -o ./tests/browsers/bundle.min.js",
     "posttest": "yarn run lint && yarn run flow",
     "preversion": "yarn test",
-    "release": "yarn run clean && yarn run build && yarn publish ./lib"
+    "release": "yarn run clean && yarn run build && npm publish ./lib"
   },
   "repository": {
     "type": "git",
