@@ -61,4 +61,32 @@ describe('Markup', () => {
       '\n\n',
     ]);
   });
+
+  it('converts line breaks', () => {
+    const wrapper = shallow(<Markup content={'Foo\nBar'} />);
+
+    expect(wrapper.prop('children')).to.deep.equal([
+      'Foo',
+      <Element key="0" tagName="br" selfClose>{[]}</Element>,
+      'Bar',
+    ]);
+  });
+
+  it('doesnt convert line breaks', () => {
+    const wrapper = shallow(<Markup content={'Foo\nBar'} disableLineBreaks />);
+
+    expect(wrapper.prop('children')).to.deep.equal([
+      'Foo\nBar',
+    ]);
+  });
+
+  it('doesnt convert line breaks if it contains HTML', () => {
+    const wrapper = shallow(<Markup content={'Foo\n<br/>Bar'} />);
+
+    expect(wrapper.prop('children')).to.deep.equal([
+      'Foo\n',
+      <Element key="0" tagName="br" selfClose>{[]}</Element>,
+      'Bar',
+    ]);
+  });
 });

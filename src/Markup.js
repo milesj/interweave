@@ -11,6 +11,7 @@ import Element from './components/Element';
 type MarkupProps = {
   content: string,
   emptyContent: ?React.Element<*>,
+  disableLineBreaks: boolean,
   tagName: string,
   noHtml: boolean,
 };
@@ -18,10 +19,11 @@ type MarkupProps = {
 export default function Markup({
   content = '',
   emptyContent,
+  disableLineBreaks = false,
   tagName = 'span',
   noHtml = false,
 }: MarkupProps) {
-  const markup = new Parser(content, { noHtml }).parse();
+  const markup = new Parser(content, { noHtml, disableLineBreaks }).parse();
   const className = noHtml ? 'interweave--no-html' : '';
 
   return (
@@ -34,6 +36,7 @@ export default function Markup({
 Markup.propTypes = {
   content: PropTypes.string,
   emptyContent: PropTypes.node,
+  disableLineBreaks: PropTypes.bool,
   tagName: PropTypes.oneOf(['span', 'div', 'p']),
   noHtml: PropTypes.bool,
 };

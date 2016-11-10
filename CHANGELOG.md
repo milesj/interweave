@@ -1,4 +1,8 @@
 # 1.1.0
+* Line breaks found in non-HTML strings will now be automatically
+  converted to `<br/>` tags.
+* Added a `disableLineBreaks` prop to `Interweave` and `Markup`,
+  which will disable the automatic line break conversion.
 * Added an `interweave` class to all rendered HTML elements.
 * Added an `interweave--no-html` class when `noHtml` is enabled.
 * Updated the `content` prop to accept null or undefined values. Will

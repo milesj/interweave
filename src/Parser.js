@@ -55,11 +55,11 @@ export default class Parser {
       throw new TypeError('Interweave parser requires a valid string.');
     }
 
-    this.doc = this.createDocument(markup);
     this.props = props;
     this.matchers = matchers;
     this.filters = filters;
     this.keyIndex = -1;
+    this.doc = this.createDocument(markup);
   }
 
   /**
@@ -219,6 +219,33 @@ export default class Parser {
   }
 
   /**
+   * Convert line breaks in a string to HTML `<br/>` tags.
+   * If the string contains HTML, we should not convert anything,
+   * as line breaks should be handled by `<br/>`s in the markup itself.
+   *
+   * @param {String} markup
+   * @returns {String}
+   */
+  convertLineBreaks(markup: string): string {
+    const { noHtml, disableLineBreaks } = this.props;
+
+    if (noHtml || disableLineBreaks || markup.match(/<((?:\/[a-z ]+)|(?:[a-z ]+\/))>/ig)) {
+      return markup;
+    }
+
+    // Replace carriage returns
+    markup = markup.replace(/\r\n/g, '\n');
+
+    // Replace long line feeds
+    markup = markup.replace(/\n{3,}/g, '\n\n\n');
+
+    // Replace line feeds with `<br/>`s
+    markup = markup.replace(/\n/g, '<br/>');
+
+    return markup;
+  }
+
+  /**
    * Create a detached HTML document that allows for easy HTML
    * parsing while not triggering scripts or loading external
    * resources.
@@ -232,7 +259,7 @@ export default class Parser {
     if (markup.substr(0, 9).toUpperCase() === '<!DOCTYPE') {
       doc.documentElement.innerHTML = markup;
     } else {
-      doc.body.innerHTML = markup;
+      doc.body.innerHTML = this.convertLineBreaks(markup);
     }
 
     return doc;

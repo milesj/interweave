@@ -17,12 +17,15 @@ export default function Element({
 }: ElementProps) {
   const props = {
     ...attributes,
-    className: [
+  };
+
+  if (!selfClose || (selfClose && Tag === 'img')) {
+    props.className = [
       'interweave',
       className || '',
       attributes.className || '',
-    ].filter(Boolean).join(' '),
-  };
+    ].filter(Boolean).join(' ');
+  }
 
   if (selfClose) {
     return (

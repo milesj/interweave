@@ -166,6 +166,40 @@ describe('Parser', () => {
     });
   });
 
+  describe('convertLineBreaks()', () => {
+    it('it doesnt convert when HTML closing tags exist', () => {
+      expect(instance.convertLineBreaks('<div>It\nwont\r\nconvert.</div>')).to.equal('<div>It\nwont\r\nconvert.</div>');
+    });
+
+    it('it doesnt convert when HTML void tags exist', () => {
+      expect(instance.convertLineBreaks('It\n<br/>wont\r\nconvert.')).to.equal('It\n<br/>wont\r\nconvert.');
+    });
+
+    it('it doesnt convert when HTML void tags with spaces exist', () => {
+      expect(instance.convertLineBreaks('It\n<br  />wont\r\nconvert.')).to.equal('It\n<br  />wont\r\nconvert.');
+    });
+
+    it('it doesnt convert if `noHtml` is true', () => {
+      instance.props.noHtml = true;
+
+      expect(instance.convertLineBreaks('It\nwont\r\nconvert.')).to.equal('It\nwont\r\nconvert.');
+    });
+
+    it('it doesnt convert if `disableLineBreaks` is true', () => {
+      instance.props.disableLineBreaks = true;
+
+      expect(instance.convertLineBreaks('It\nwont\r\nconvert.')).to.equal('It\nwont\r\nconvert.');
+    });
+
+    it('it replaces carriage returns', () => {
+      expect(instance.convertLineBreaks('Foo\r\nBar')).to.equal('Foo<br/>Bar');
+    });
+
+    it('it replaces super long multilines', () => {
+      expect(instance.convertLineBreaks('Foo\n\n\n\n\n\n\nBar')).to.equal('Foo<br/><br/><br/>Bar');
+    });
+  });
+
   describe('extractAttributes()', () => {
     beforeEach(() => {
       element = document.createElement('div');

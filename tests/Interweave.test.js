@@ -278,17 +278,22 @@ Curabitur lectus odio, tempus quis velit vitae, cursus sagittis nulla. Maecenas 
       ' Donec eu sem non nibh condimentum luctus. Vivamus pharetra feugiat blandit. Vestibulum neque velit, semper ',
       <Emoji key="1" shortName=":japanese_castle:" unicode={SHORTNAME_TO_UNICODE[':japanese_castle:']} />,
       ' id vestibulum id, viverra a felis. Integer convallis in orci nec bibendum. Ut consequat posuere metus, ',
-      <Url key="7" urlParts={{ ...urlParts, host: 'www.domain.com' }}>www.domain.com</Url>,
-      '.\n\nCurabitur lectus odio, tempus quis velit vitae, cursus sagittis nulla. Maecenas sem nulla, tempor nec risus nec, ultricies ultricies magna. ',
+      <Url key="3" urlParts={{ ...urlParts, host: 'www.domain.com' }}>www.domain.com</Url>,
+      '.',
+      <Element key="4" tagName="br" selfClose>{[]}</Element>,
+      <Element key="5" tagName="br" selfClose>{[]}</Element>,
+      'Curabitur lectus odio, tempus quis velit vitae, cursus sagittis nulla. Maecenas sem nulla, tempor nec risus nec, ultricies ultricies magna. ',
       <Url key="6" urlParts={{ ...urlParts, scheme: 'https', host: '127.0.0.1', path: '/foo' }}>https://127.0.0.1/foo</Url>,
       ' Nulla malesuada lacinia libero non mollis. Curabitur id lacus id dolor vestibulum ornare quis a nisi (',
-      <Url key="8" urlParts={{ ...urlParts, host: 'domain.com', path: '/some/path', query: '?with=query' }}>http://domain.com/some/path?with=query</Url>,
-      '). Pellentesque ac finibus mauris. Sed eu luctus diam. Quisque porta lectus in turpis imperdiet dapibus.\n\n',
-      <Hashtag key="3" hashtagName="blessed">#blessed</Hashtag>,
+      <Url key="7" urlParts={{ ...urlParts, host: 'domain.com', path: '/some/path', query: '?with=query' }}>http://domain.com/some/path?with=query</Url>,
+      '). Pellentesque ac finibus mauris. Sed eu luctus diam. Quisque porta lectus in turpis imperdiet dapibus.',
+      <Element key="8" tagName="br" selfClose>{[]}</Element>,
+      <Element key="9" tagName="br" selfClose>{[]}</Element>,
+      <Hashtag key="10" hashtagName="blessed">#blessed</Hashtag>,
       ' ',
-      <Hashtag key="4" hashtagName="interweave">#interweave</Hashtag>,
+      <Hashtag key="11" hashtagName="interweave">#interweave</Hashtag>,
       ' ',
-      <Hashtag key="5" hashtagName="milesj">#milesj</Hashtag>,
+      <Hashtag key="12" hashtagName="milesj">#milesj</Hashtag>,
     ]);
   });
 
@@ -470,6 +475,34 @@ Curabitur lectus odio, tempus quis velit vitae, cursus sagittis nulla. Maecenas 
       <Element key="1" tagName="hr" selfClose>{[]}</Element>,
       'An image.',
       <Element key="2" tagName="img" attributes={{ src: 'http://domain.com/image.jpg' }} selfClose>{[]}</Element>,
+    ]);
+  });
+
+  it('converts line breaks', () => {
+    const wrapper = shallow(<Interweave content={'Foo\nBar'} />);
+
+    expect(wrapper.prop('children')).to.deep.equal([
+      'Foo',
+      <Element key="0" tagName="br" selfClose>{[]}</Element>,
+      'Bar',
+    ]);
+  });
+
+  it('doesnt convert line breaks', () => {
+    const wrapper = shallow(<Interweave content={'Foo\nBar'} disableLineBreaks />);
+
+    expect(wrapper.prop('children')).to.deep.equal([
+      'Foo\nBar',
+    ]);
+  });
+
+  it('doesnt convert line breaks if it contains HTML', () => {
+    const wrapper = shallow(<Interweave content={'Foo\n<br/>Bar'} />);
+
+    expect(wrapper.prop('children')).to.deep.equal([
+      'Foo\n',
+      <Element key="0" tagName="br" selfClose>{[]}</Element>,
+      'Bar',
     ]);
   });
 });
