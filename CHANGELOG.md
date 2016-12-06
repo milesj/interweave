@@ -1,3 +1,6 @@
+# 1.2.0
+* Updated emoji to the latest EmojiOne dataset.
+
 # 1.1.1
 * Fixed an issue with the published build.
 

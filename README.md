@@ -1,4 +1,4 @@
-# Interweave v1.1.1
+# Interweave v1.2.0
 [![Build Status](https://travis-ci.org/milesj/interweave.svg?branch=master)](https://travis-ci.org/milesj/interweave)
 
 Interweave is a robust React library that can...
@@ -294,10 +294,10 @@ Autolinking is the concept of matching patterns within a string and
 wrapping the matched result in an anchor link (an `<a>` tag).
 This can be achieved with the [matchers](#matchers) described below.
 
-Note: The regex patterns in use for autolinking do not conform to the
-official RFC specifications, as we need to take into account word
-boundaries, punctuation, and more. Instead, the patterns will do their
-best to match against the majority common use cases.
+> Note: The regex patterns in use for autolinking do not conform to the
+> official RFC specifications, as we need to take into account word
+> boundaries, punctuation, and more. Instead, the patterns will do their
+> best to match against the majority common use cases.
 
 #### URLs, IPs
 
@@ -473,9 +473,9 @@ following resources can be used for downloading SVG/PNG icons.
 * [EmojiOne](http://emojione.com/developers/) ([CDN](https://cdnjs.com/libraries/emojione))
 * [Twemoji](https://github.com/twitter/twemoji)
 
-Note: SVGs require CORS to work, so files will need to be stored
-locally, or within a CDN under the same domain. Linking to remote SVGs
-will not work -- use PNGs instead.
+> Note: SVGs require CORS to work, so files will need to be stored
+> locally, or within a CDN under the same domain. Linking to remote SVGs
+> will not work -- use PNGs instead.
 
 ##### CSS Styling
 

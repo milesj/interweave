@@ -1,7 +1,7 @@
 {
   "name": "interweave",
   "version": "1.2.0",
-  "description": "React safely render HTML, filters attributes, autowrap text with matchers, render emoji characters, and much more.",
+  "description": "Safely render HTML, filters attributes, autowrap text with matchers, render emoji characters, and much more.",
   "keywords": [
     "interweave",
     "inject",
