@@ -18,4 +18,4 @@ Object.keys(emojiData).forEach((shortName) => {
   }
 });
 
-console.log(`${multiCodePoints.toString()}|${singleCodePoint.toString()}`);
+console.log(`${multiCodePoints.toString()}|${singleCodePoint.toString()}`.replace('*', '\\*'));
