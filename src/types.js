@@ -52,7 +52,15 @@ export type MatcherFactory = (match: string, props: Object) => React.Element<*>;
 
 export type MatchResponse = {
   match: string,
+  shortName?: string,
+  unicode?: string,
   [key: string]: any
+};
+
+export type ParserProps = {
+  noHtml?: boolean,
+  disableLineBreaks?: boolean,
+  [key: string]: any,
 };
 
 export type ParsedNodes = Array<string | React.Element<*>>;

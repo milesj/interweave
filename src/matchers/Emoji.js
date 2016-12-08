@@ -54,7 +54,7 @@ export default class EmojiMatcher extends Matcher<EmojiOptions> {
         shortName: matches[0].toLowerCase(),
       }));
 
-      if (response) {
+      if (response && response.shortName) {
         const unicode = SHORTNAME_TO_UNICODE[response.shortName];
 
         // Invalid shortname
@@ -74,7 +74,10 @@ export default class EmojiMatcher extends Matcher<EmojiOptions> {
         unicode: matches[0],
       }));
 
-      if (response && !UNICODE_TO_SHORTNAME[response.unicode]) {
+      if (
+        response && response.unicode &&
+        !UNICODE_TO_SHORTNAME[response.unicode]
+      ) {
         return null;
       }
     }
