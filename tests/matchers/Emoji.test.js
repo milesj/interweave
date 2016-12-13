@@ -1,5 +1,7 @@
+import React from 'react';
 import { expect } from 'chai';
 import Parser from '../../lib/Parser';
+import Emoji from '../../lib/components/Emoji';
 import EmojiMatcher from '../../lib/matchers/Emoji';
 import { EMOJI_PATTERN, EMOJI_SHORTNAME_PATTERN, SHORTNAME_TO_UNICODE, UNICODE_TO_SHORTNAME } from '../../lib/data/emoji';
 import { VALID_EMOJIS, TOKEN_LOCATIONS, createExpectedTokenLocations, parentConfig } from '../mocks';
@@ -158,6 +160,43 @@ describe('matchers/Emoji', () => {
       it(`returns the unicode when providing a shortname using \`renderUnicode\`: ${shortName}`, () => {
         expect(uniMatcher.replaceWith(shortName, { unicode, shortName })).to.equal(unicode);
       });
+    });
+  });
+
+  describe('onAfterParse', () => {
+    it('returns a single <Emoji/> enlarged', () => {
+      expect(matcher.onAfterParse([
+        <Emoji shortName=":cat:" />,
+      ])).to.deep.equal([
+        <Emoji shortName=":cat:" enlargeEmoji />,
+      ]);
+    });
+
+    it('ignores multiple <Emoji/>', () => {
+      const nodes = [
+        <Emoji shortName=":cat:" />,
+        <Emoji shortName=":dog:" />,
+        <Emoji shortName=":man:" />,
+      ];
+
+      expect(matcher.onAfterParse(nodes)).to.deep.equal(nodes);
+    });
+
+    it('ignores non-<Emoji/>', () => {
+      const nodes = [
+        <div>Foo</div>,
+      ];
+
+      expect(matcher.onAfterParse(nodes)).to.deep.equal(nodes);
+    });
+
+    it('ignores content longer than 1', () => {
+      const nodes = [
+        <div>Foo</div>,
+        'Bar',
+      ];
+
+      expect(matcher.onAfterParse(nodes)).to.deep.equal(nodes);
     });
   });
 });

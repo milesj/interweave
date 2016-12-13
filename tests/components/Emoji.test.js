@@ -71,12 +71,19 @@ describe('components/Emoji', () => {
   it('renders class names', () => {
     const wrapper = shallow(<Emoji shortName={shortName} unicode={unicode} />);
 
-    expect(wrapper.prop('className')).to.equal('interweave__emoji ');
+    expect(wrapper.prop('className')).to.equal('interweave__emoji');
 
     wrapper.setProps({
       emojiPath: 'http://foo.com/path/to/{{hexcode}}.svg',
     });
 
-    expect(wrapper.prop('className')).to.equal('interweave__emoji svg');
+    expect(wrapper.prop('className')).to.equal('interweave__emoji interweave__emoji--svg');
+
+    wrapper.setProps({
+      emojiPath: '',
+      enlargeEmoji: true,
+    });
+
+    expect(wrapper.prop('className')).to.equal('interweave__emoji interweave__emoji--large');
   });
 });

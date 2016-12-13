@@ -99,6 +99,13 @@ Help!`;
 
       <Interweave
         tagName="div"
+        matchers={[new EmojiMatcher('emoji', { convertUnicode: true })]}
+        content="🐶"
+        emojiPath="https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.6/assets/png/{{hexcode}}.png"
+      />
+
+      <Interweave
+        tagName="div"
         matchers={[new HashtagMatcher('hashtag')]}
         content="This #block of text has multiple hashtags. #blessed"
       />

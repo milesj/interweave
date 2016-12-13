@@ -1,9 +1,13 @@
-# 2.2.0
+# 2.0.0
 * Removed the concept of global configuration. Composition should be used instead.
+* When an emoji is the only character parsed as the content, it will automatically be enlarged.
+* Added a `preserveHash` prop to the `Hashtag` component to not strip the hash.
+* Added an `enlargeEmoji` prop to the `Emoji` component that will append a large class name.
+* Added `onBeforeParse` and `onAfterParse` callback methods to all matchers.
+* Updated the `Hashtag` component to strip the hash (#) when replacing `{{hashtag}}`.
+* Updated the `Emoji` component to prefix the file extension class name with `interweave__emoji--`.
 * Removed `Interweave.addFilter`, `addMatcher`, `clearFilters`, `clearMatchers`,
   `getFilters`, `getMatchers`, and `configure`.
-* Updated the `Hashtag` component to strip the hash (#) when replacing `{{hashtag}}`.
-* Added a `preserveHash` prop to the `Hashtag` component to not strip the hash.
 
 # 1.2.0
 * Updated emoji to the latest EmojiOne dataset.

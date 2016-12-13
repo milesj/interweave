@@ -6,7 +6,7 @@
 
 import React from 'react';
 
-import type { MatcherFactory, MatchResponse } from './types';
+import type { MatcherFactory, MatchResponse, ParsedNodes } from './types';
 
 type MatchCallback = (matches: string[]) => ({ [key: string]: any });
 
@@ -103,5 +103,25 @@ export default class Matcher<T> {
       ...callback(matches),
       match: matches[0],
     };
+  }
+
+  /**
+   * Callback triggered before parsing.
+   *
+   * @param {String} content
+   * @returns {String}
+   */
+  onBeforeParse(content: string): string {
+    return content;
+  }
+
+  /**
+   * Callback triggered after parsing.
+   *
+   * @param {String[]|ReactElement[]} content
+   * @returns {String[]|ReactElement[]}
+   */
+  onAfterParse(content: ParsedNodes): ParsedNodes {
+    return content;
   }
 }

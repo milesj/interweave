@@ -58,29 +58,41 @@ export default class Interweave extends React.Component {
     } = this.props;
 
     let markup = content;
+    const allMatchers = disableMatchers ? [] : matchers;
+    const allFilters = disableFilters ? [] : filters;
+    const beforeCallbacks = onBeforeParse ? [onBeforeParse] : [];
+    const afterCallbacks = onAfterParse ? [onAfterParse] : [];
 
-    if (onBeforeParse) {
-      markup = onBeforeParse(markup);
+    // Inherit callbacks from matchers
+    allMatchers.forEach((matcher) => {
+      beforeCallbacks.push(matcher.onBeforeParse.bind(matcher));
+      afterCallbacks.push(matcher.onAfterParse.bind(matcher));
+    });
 
-      if (typeof markup !== 'string') {
+    // Trigger before callbacks
+    markup = beforeCallbacks.reduce((string, callback) => {
+      string = callback(string);
+
+      if (typeof string !== 'string') {
         throw new TypeError('Interweave `onBeforeParse` must return a valid HTML string.');
       }
-    }
 
-    markup = new Parser(
-      markup,
-      props,
-      disableMatchers ? [] : matchers,
-      disableFilters ? [] : filters,
-    ).parse();
+      return string;
+    }, markup);
 
-    if (onAfterParse) {
-      markup = onAfterParse(markup);
+    // Parse the markup
+    markup = new Parser(markup, props, allMatchers, allFilters).parse();
 
-      if (!Array.isArray(markup)) {
+    // Trigger after callbacks
+    markup = afterCallbacks.reduce((nodes, callback) => {
+      nodes = callback(nodes);
+
+      if (!Array.isArray(nodes)) {
         throw new TypeError('Interweave `onAfterParse` must return an array of strings and React elements.');
       }
-    }
+
+      return nodes;
+    }, markup);
 
     if (!markup.length) {
       return emptyContent;

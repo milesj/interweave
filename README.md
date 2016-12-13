@@ -163,6 +163,11 @@ define the following methods.
   argument, and any matched props or parent props are passed as the
   2nd argument.
 * `asTag()` - The HTML tag name of the replacement element.
+* `onBeforeParse` (func) - Callback that fires before parsing. Is
+passed the source string and must return a string.
+* `onAfterParse` (func) - Callback that fires after parsing. Is
+passed an array of strings/elements and must return an array.
+
 
 ```javascript
 import { Matcher } from 'interweave';
@@ -450,6 +455,11 @@ to you.
 .interweave__emoji img {
   width: 1em;
 }
+
+// Increase the size of large emoji
+.interweave__emoji--large img {
+  width: 2em;
+}
 ```
 
 #### Displaying Unicode Characters
@@ -541,6 +551,17 @@ import UrlMatcher from 'interweave/matchers/Url';
 import EmojiMatcher from 'interweave/matchers/Emoji';
 import HashtagMatcher from 'interweave/matchers/Hashtag';
 
+const globalFilters = [
+  new CustomFilter('href'),
+];
+
+const globalMatchers = [
+  new IpMatcher('ip'),
+  new UrlMatcher('url'),
+  new EmojiMatcher('emoji', { convertUnicode: true, convertShortName: true }),
+  new HashtagMatcher('hashtag'),
+];
+
 export default function Interweave({
   filters = [],
   matchers = [],
@@ -565,18 +586,16 @@ export default function Interweave({
   return (
     <BaseInterweave
       filters={[
-        new CustomFilter('href'),
+        ...globalFilters,
         ...filters,
       ]}
       matchers={[
-        new IpMatcher('ip'),
-        new UrlMatcher('url'),
-        new EmojiMatcher('emoji'),
-        new HashtagMatcher('hashtag'),
+        ...globalMatchers,
         ...matchers,
       ]}
       hashtagUrl={hashtagUrl}
       emojiPath={emojiPath}
+      newWindow
       {...props}
     />
   )

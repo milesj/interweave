@@ -12,7 +12,7 @@ import type { EmojiProps } from '../types';
 // http://git.emojione.com/demos/latest/sprites-png.html
 // http://git.emojione.com/demos/latest/sprites-svg.html
 // https://css-tricks.com/using-svg/
-export default function Emoji({ shortName, unicode, emojiPath }: EmojiProps) {
+export default function Emoji({ shortName, unicode, emojiPath, enlargeEmoji = false }: EmojiProps) {
   if (!shortName && !unicode) {
     throw new Error('Emoji component requires a `unicode` character or a `shortName`.');
   }
@@ -38,10 +38,15 @@ export default function Emoji({ shortName, unicode, emojiPath }: EmojiProps) {
   const emoji = emojiData[shortName];
   const path = emojiPath || '{{hexcode}}';
   const ext = emojiPath ? emojiPath.substr(-3).toLowerCase() : '';
+  const className = [
+    'interweave__emoji',
+    ext && `interweave__emoji--${ext}`,
+    enlargeEmoji && 'interweave__emoji--large',
+  ].filter(Boolean).join(' ');
 
   return (
     <span
-      className={`interweave__emoji ${ext}`}
+      className={className}
       data-unicode={unicode}
       data-hexcode={emoji.hexCode}
       data-codepoint={emoji.codePoint.join('-')}
@@ -56,4 +61,5 @@ Emoji.propTypes = {
   shortName: PropTypes.string,
   unicode: PropTypes.string,
   emojiPath: PropTypes.string,
+  enlargeEmoji: PropTypes.bool,
 };

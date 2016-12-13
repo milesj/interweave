@@ -137,6 +137,7 @@ export type EmojiProps = {
   shortName: string,
   unicode: string,
   emojiPath?: string,
+  enlargeEmoji?: boolean,
 };
 
 export type EmojiOptions = {
