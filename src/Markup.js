@@ -8,13 +8,7 @@ import React, { PropTypes } from 'react';
 import Parser from './Parser';
 import Element from './components/Element';
 
-type MarkupProps = {
-  content: string,
-  emptyContent: ?React.Element<*>,
-  disableLineBreaks: boolean,
-  tagName: string,
-  noHtml: boolean,
-};
+import type { MarkupProps } from './types';
 
 export default function Markup({
   content = '',

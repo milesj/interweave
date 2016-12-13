@@ -87,7 +87,7 @@ const blockConfig: NodeConfig = {
 
 // Tags not listed here will be denied
 // https://developer.mozilla.org/en-US/docs/Web/HTML/Element
-export const TAGS: ConfigMap = {
+export const TAGS: ConfigMap = Object.freeze({
   a: {
     ...inlineConfig,
     type: TYPE_INLINE_BLOCK,
@@ -375,7 +375,7 @@ export const TAGS: ConfigMap = {
     ...inlineConfig,
     children: ['track', 'source'],
   },
-};
+});
 
 // Filters apply to HTML attributes
 export const FILTER_ALLOW: number = 1;
@@ -385,7 +385,7 @@ export const FILTER_CAST_BOOL: number = 4;
 
 // Attributes not listed here will be denied
 // https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes
-export const ATTRIBUTES: FilterMap = {
+export const ATTRIBUTES: FilterMap = Object.freeze({
   alt: FILTER_ALLOW,
   cite: FILTER_ALLOW,
   class: FILTER_ALLOW,
@@ -411,12 +411,12 @@ export const ATTRIBUTES: FilterMap = {
   target: FILTER_ALLOW,
   title: FILTER_ALLOW,
   width: FILTER_ALLOW,
-};
+});
 
 // Attributes to camel case for React props
-export const ATTRIBUTES_TO_PROPS: { [key: string]: string } = {
+export const ATTRIBUTES_TO_PROPS: { [key: string]: string } = Object.freeze({
   class: 'className',
   colspan: 'colSpan',
   datetime: 'dateTime',
   rowspan: 'rowSpan',
-};
+});

@@ -7,7 +7,7 @@ import Interweave from '../lib/Interweave';
 import { Element, Email, Emoji, Hashtag, Url } from '../lib/components';
 import { EmailMatcher, EmojiMatcher, HashtagMatcher, IpMatcher, UrlMatcher } from '../lib/matchers';
 import { SHORTNAME_TO_UNICODE } from '../lib/data/emoji';
-import { MockFilter, MockMatcher, HrefFilter, CodeTagMatcher } from './mocks';
+import { HrefFilter, CodeTagMatcher } from './mocks';
 
 describe('Interweave', () => {
   const urlParts = {
@@ -19,11 +19,6 @@ describe('Interweave', () => {
     query: '',
     fragment: '',
   };
-
-  beforeEach(() => {
-    Interweave.clearFilters();
-    Interweave.clearMatchers();
-  });
 
   it('sets the `noHtml` class name', () => {
     const wrapper = shallow(
@@ -107,74 +102,6 @@ describe('Interweave', () => {
     const wrapper = shallow(<Interweave content="" emptyContent={empty} />);
 
     expect(wrapper.contains(empty)).to.equal(true);
-  });
-
-  describe('addFilter()', () => {
-    it('errors if not a filter', () => {
-      expect(() => {
-        Interweave.addFilter('notafilter');
-      }).to.throw(TypeError, 'Filter must be an instance of the `Filter` class.');
-    });
-
-    it('errors if not a supported attribute', () => {
-      expect(() => {
-        Interweave.addFilter(new MockFilter('onclick'));
-      }).to.throw(Error, 'Attribute "onclick" is not supported.');
-    });
-
-    it('adds a filter with a priority', () => {
-      Interweave.addFilter(new MockFilter('href'), 5);
-
-      expect(Interweave.getFilters()).to.deep.equal([
-        { filter: new MockFilter('href'), priority: 5 },
-      ]);
-    });
-
-    it('adds a filter with an incrementing priority and sorts', () => {
-      Interweave.addFilter(new MockFilter('href'));
-      Interweave.addFilter(new MockFilter('href'), 10);
-      Interweave.addFilter(new MockFilter('href'));
-
-      expect(Interweave.getFilters()).to.deep.equal([
-        { filter: new MockFilter('href'), priority: 10 },
-        { filter: new MockFilter('href'), priority: 100 },
-        { filter: new MockFilter('href'), priority: 102 },
-      ]);
-    });
-  });
-
-  describe('addMatcher()', () => {
-    it('errors if not a matcher', () => {
-      expect(() => {
-        Interweave.addMatcher('notamatcher');
-      }).to.throw(TypeError, 'Matcher must be an instance of the `Matcher` class.');
-    });
-
-    it('errors if using the html name', () => {
-      expect(() => {
-        Interweave.addMatcher(new MockMatcher('html'));
-      }).to.throw(Error, 'The matcher name "html" is not allowed.');
-    });
-
-    it('adds a matcher with an incrementing priority and sorts', () => {
-      Interweave.addMatcher(new MockMatcher('emoji'));
-      Interweave.addMatcher(new MockMatcher('email'), 10);
-      Interweave.addMatcher(new MockMatcher('url'));
-
-      expect(Interweave.getMatchers()).to.deep.equal([
-        { matcher: new MockMatcher('email'), priority: 10 },
-        { matcher: new MockMatcher('emoji'), priority: 100 },
-        { matcher: new MockMatcher('url'), priority: 102 },
-      ]);
-    });
-
-    it('sets an inverse named prop types', () => {
-      expect(Interweave.propTypes.noBazQux).to.be.an('undefined');
-
-      Interweave.addMatcher(new MockMatcher('bazQux'));
-
-      expect(Interweave.propTypes.noBazQux).to.be.a('function');
-    });
   });
 
   describe('parseMarkup()', () => {

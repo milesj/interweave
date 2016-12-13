@@ -20,8 +20,8 @@ export default function Emoji({ shortName, unicode, emojiPath }: EmojiProps) {
   // Return the invalid value instead of throwing errors,
   // as this will avoid unnecessary noise in production.
   if (
-    (unicode && typeof UNICODE_TO_SHORTNAME[unicode] === 'undefined') ||
-    (shortName && typeof SHORTNAME_TO_UNICODE[shortName] === 'undefined')
+    (unicode && !UNICODE_TO_SHORTNAME[unicode]) ||
+    (shortName && !SHORTNAME_TO_UNICODE[shortName])
   ) {
     return (
       <span>{unicode || shortName}</span>

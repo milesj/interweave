@@ -7,7 +7,7 @@ Interweave is a robust React library that can...
 * Clean HTML attributes using filters.
 * Match and replace text using matchers.
 * Autolink URLs, IPs, emails, and hashtags.
-* Render or replace Emoji characters.
+* Render Emoji characters.
 * And much more!
 
 ## Requirements
@@ -27,7 +27,7 @@ yarn add interweave react
 
 ## Usage
 
-Interweave can primarily be used by the `Interweave` and `Markup`
+Interweave can primarily be used with the `Interweave` and `Markup`
 components, both of which provide an easy, straight-forward implementation
 for safely [parsing and rendering HTML](#html-parsing) without using
 `dangerouslySetInnerHTML` ([Facebook][dangerhtml]).
@@ -39,8 +39,8 @@ The `Interweave` component has the additional benefit of utilizing
 import Interweave from 'interweave';
 
 <Interweave
-    tagName="div"
-    content="This string <b>contains</b> HTML."
+  tagName="div"
+  content="This string <b>contains</b> HTML."
 />
 ```
 
@@ -52,16 +52,16 @@ import Interweave from 'interweave';
   rendered.
 * `tagName` (div | span | p) - The HTML element tag name to wrap the
   output with. Defaults to "span".
-* `filters` (Filter[]) - Filters to apply to this local instance.
-* `matchers` (Matcher[]) - Matchers to apply to this local instance.
-* `disableFilters` (boolean) - Disables both global and local filters.
-* `disableMatchers` (boolean) - Disables both global and local matchers.
+* `filters` (Filter[]) - Filters to apply to this instance.
+* `matchers` (Matcher[]) - Matchers to apply to this instance.
+* `disableFilters` (boolean) - Disables all filters.
+* `disableMatchers` (boolean) - Disables all matchers.
 * `disableLineBreaks` (boolean) - Disables automatic line break conversion.
 * `noHtml` (boolean) - Strips HTML tags from the content string while
   parsing.
 * `onBeforeParse` (func) - Callback that fires before parsing. Is
   passed the source string and must return a string.
-* `onAfterParse` (func) => Callback that fires after parsing. Is
+* `onAfterParse` (func) - Callback that fires after parsing. Is
   passed an array of strings/elements and must return an array.
 
 ### Markup
@@ -84,32 +84,32 @@ The `Markup` component only supports the `content`, `emptyContent`,
 ## Documentation
 
 * [Matchers](#matchers)
-    * [Creating A Matcher](#creating-a-matcher)
-    * [Rendered Elements](#rendered-elements)
+  * [Creating A Matcher](#creating-a-matcher)
+  * [Rendered Elements](#rendered-elements)
 * [Filters](#filters)
-    * [Creating A Filter](#creating-a-filter)
+  * [Creating A Filter](#creating-a-filter)
 * [Autolinking](#autolinking)
-    * [URLs, IPs](#urls-ips)
-    * [Emails](#emails)
-    * [Hashtags](#hashtags)
+  * [URLs, IPs](#urls-ips)
+  * [Emails](#emails)
+  * [Hashtags](#hashtags)
 * [Render Emojis](#render-emojis)
-    * [Converting Shortnames](#converting-shortnames)
-    * [Using SVGs or PNGs](#using-svgs-or-pngs)
-        * [CSS Styling](#css-styling)
-    * [Displaying Unicode Characters](#displaying-unicode-characters)
+  * [Converting Shortnames](#converting-shortnames)
+  * [Using SVGs or PNGs](#using-svgs-or-pngs)
+    * [CSS Styling](#css-styling)
+  * [Displaying Unicode Characters](#displaying-unicode-characters)
 * [HTML Parsing](#html-parsing)
-    * [Tag Whitelist](#tag-whitelist)
-    * [Attribute Whitelist](#attribute-whitelist)
-    * [Disabling HTML](#disabling-html)
+  * [Tag Whitelist](#tag-whitelist)
+  * [Attribute Whitelist](#attribute-whitelist)
+  * [Disabling HTML](#disabling-html)
 
 ### Matchers
 
 Matchers are the backbone of Interweave as they allow arbitrary
-insertion of React elements into strings through the use of regex
-matching. This feature is quite powerful with many possibilities.
+insertion of React elements into strings, through the use of regex
+matching. This feature is quite powerful and opens up many possibilities.
 
 It works by matching patterns within a string, deconstructing it into
-pieces, and reconstructing it back into an array of strings and React
+tokens, and reconstructing it back into an array of strings and React
 elements, therefore, permitting it to be rendered by React's virtual
 DOM layer. For example, take the following string "Check out my
 website, github.com/milesj!", and a `UrlMatcher`, you'd get the
@@ -117,44 +117,31 @@ following array.
 
 ```javascript
 [
-    'Check out my website, ',
-    <Url>github.com/milesj</Url>,
-    '!',
+  'Check out my website, ',
+  <Url>github.com/milesj</Url>,
+  '!',
 ]
 ```
 
-Matchers can be registered globally to apply to all instances of
-`Interweave`, or locally, to apply per each instance of `Interweave`.
+Matchers can be passed to each instance of `Interweave`.
 When adding a matcher, a unique name must be passed to the constructor.
 
 ```javascript
 import Interweave from 'interweave';
 import EmojiMatcher from 'interweave/matchers/Emoji';
 
-// Global
-Interweave.addMatcher(new EmojiMatcher('emoji'));
-
-// Local
 <Interweave matchers={[new EmojiMatcher('emoji')]} />
 ```
 
-To clear all global matchers, use `Interweave.clearMatchers()`.
-
-```javascript
-Interweave.clearMatchers();
-```
-
-To disable all matchers, global and local, per `Interweave` instance,
-pass the `disableMatchers` prop.
+To disable all matchers per instance, pass the `disableMatchers` prop.
 
 ```javascript
 <Interweave disableMatchers />
 ```
 
-To disable a single matcher, per instance, you can pass a prop that
-starts with "no", and ends with the unique name of the matcher (the one
-passed to the constructor). Using the example above, you can pass a
-`noEmoji` prop.
+To disable a single matcher, you can pass a prop that starts with "no",
+and ends with the unique name of the matcher (the one passed to the constructor).
+Using the example above, you can pass a `noEmoji` prop.
 
 ```javascript
 <Interweave noEmoji />
@@ -165,43 +152,45 @@ passed to the constructor). Using the example above, you can pass a
 To create a custom matcher, extend the base `Matcher` class, and
 define the following methods.
 
-* `match(string)` - Used to match a string against a defined regex.
+* `match(string)` - Match the passed string using a regex pattern.
   This method must return `null` if no match is found, else it must
   return an object with a `match` key and the matched value.
   Furthermore, any additional keys defined in this object will be
   passed as props to the created element.
 * `replaceWith(match, props)` - Returns a React element that replaces
   the matched content in the string. The match is passed as the 1st
-  argument, and any match props and parent props are passed as the
+  argument, and any matched props or parent props are passed as the
   2nd argument.
 * `asTag()` - The HTML tag name of the replacement element.
 
 ```javascript
-import Matcher from 'interweave/Matcher';
+import { Matcher } from 'interweave';
 
 export default class FooMatcher extends Matcher {
-    match(string) {
-        const matches = string.match(/foo/);
+  match(string) {
+    const matches = string.match(/foo/);
 
-        if (!matches) {
-            return null;
-        }
-
-        return {
-            match: matches[0],
-            extraProp: 'foo', // or matches[1], etc
-        };
+    if (!matches) {
+      return null;
     }
 
-    replaceWith(match, props) {
-        return (
-            <span {...props}>{match}</span>
-        );
-    }
+    return {
+      match: matches[0],
+      extraProp: 'foo', // or matches[1], etc
+    };
+  }
 
-    asTag() {
-        return 'span';
-    }
+  replaceWith(match, props) {
+    const Tag = this.asTag();
+
+    return (
+      <Tag {...props}>{match}</Tag>
+    );
+  }
+
+  asTag() {
+    return 'span';
+  }
 }
 ```
 
@@ -211,9 +200,9 @@ pattern and a callback to build the object.
 
 ```javascript
 match(string) {
-    return this.doMatch(string, /foo/, matches => ({
-        extraProp: 'foo',
-    });
+  return this.doMatch(string, /foo/, matches => ({
+    extraProp: 'foo',
+  }));
 }
 ```
 
@@ -231,12 +220,12 @@ as `replaceWith`.
 
 ```javascript
 new FooMatcher('foo', {}, (match, props) => (
-    <span {...props}>{match}</span>
+  <span {...props}>{match}</span>
 ));
 ```
 
-Elements returned from `replaceWith` or the factory must return an
-HTML element with the same tag name as defined by `asTag`.
+> Elements returned from `replaceWith` or the factory must return an
+> HTML element with the same tag name as defined by `asTag`.
 
 ### Filters
 
@@ -244,29 +233,17 @@ Filters provide an easy way of cleaning HTML attribute values during
 the [parsing cycle](#html-parsing). This is especially useful for `src`
 and `href` attributes.
 
-Filters can be registered globally to apply to all instances of
-`Interweave`, or locally, to apply per each instance of `Interweave`.
+Filters can be added to each instance of `Interweave`.
 When adding a filter, the name of the attribute to clean must be
-passed as the 1st argument to the constructor.
+passed as the first argument to the constructor.
 
 ```javascript
 import Interweave from 'interweave';
 
-// Global
-Interweave.addFilter(new HrefFilter('href'));
-
-// Local
 <Interweave filters={[new HrefFilter('href')]} />
 ```
 
-To clear all global filters, use `Interweave.clearFilters()`.
-
-```javascript
-Interweave.clearFilters();
-```
-
-To disable all filters, global and local, per `Interweave` instance,
-pass the `disableFilters` prop.
+To disable all filters, pass the `disableFilters` prop.
 
 ```javascript
 <Interweave disableFilters />
@@ -279,25 +256,25 @@ and define a `filter` method. This method will receive the attribute
 value as the 1st argument, and it must return a string.
 
 ```javascript
-import Filter from 'interweave/Filter';
+import { Filter } from 'interweave';
 
 export default class SourceFilter extends Filter {
-    filter(value) {
-        return value; // Clean attribute value
-    }
+  filter(value) {
+    return encodeURIComponent(value); // Clean attribute value
+  }
 }
 ```
 
 ### Autolinking
 
 Autolinking is the concept of matching patterns within a string and
-wrapping the matched result in an anchor link (an `<a>` tag).
+wrapping the matched result in a link (an `<a>` tag).
 This can be achieved with the [matchers](#matchers) described below.
 
 > Note: The regex patterns in use for autolinking do not conform to the
 > official RFC specifications, as we need to take into account word
 > boundaries, punctuation, and more. Instead, the patterns will do their
-> best to match against the majority common use cases.
+> best to match against the majority of common use cases.
 
 #### URLs, IPs
 
@@ -309,10 +286,6 @@ query, and fragment.
 import Interweave from 'interweave';
 import UrlMatcher from 'interweave/matchers/Url';
 
-// Global
-Interweave.addMatcher(new UrlMatcher('url'));
-
-// Local
 <Interweave matchers={[new UrlMatcher('url')]} />
 ```
 
@@ -331,14 +304,14 @@ element will be rendered and passed the following props.
 
 * `children` (string) - The entire URL/IP that was matched.
 * `urlParts` (object)
-    * `scheme` (string) - The protocol. Defaults to "http".
-    * `auth` (string) - The username and password authorization,
-      excluding `@`.
-    * `host` (string) - The host, domain, or IP address.
-    * `port` (number) - The port number.
-    * `path` (string) - The path.
-    * `query` (string) - The query string.
-    * `fragment` (string) - The hash fragment, including `#`.
+  * `scheme` (string) - The protocol. Defaults to "http".
+  * `auth` (string) - The username and password authorization,
+    excluding `@`.
+  * `host` (string) - The host, domain, or IP address.
+  * `port` (number) - The port number.
+  * `path` (string) - The path.
+  * `query` (string) - The query string.
+  * `fragment` (string) - The hash fragment, including `#`.
 
 #### Emails
 
@@ -349,10 +322,6 @@ The `EmailMatcher` will match an email address and link it using a
 import Interweave from 'interweave';
 import EmailMatcher from 'interweave/matchers/Email';
 
-// Global
-Interweave.addMatcher(new EmailMatcher('email'));
-
-// Local
 <Interweave matchers={[new EmailMatcher('email')]} />
 ```
 
@@ -361,8 +330,8 @@ matcher element will be rendered and passed the following props.
 
 * `children` (string) - The entire email address that was matched.
 * `emailParts` (object)
-    * `username` (string) - The username. Found before the `@`.
-    * `host` (string) - The host or domain. Found after the `@`.
+  * `username` (string) - The username. Found before the `@`.
+  * `host` (string) - The host or domain. Found after the `@`.
 
 #### Hashtags
 
@@ -379,16 +348,9 @@ Hashtags require a URL to link to, which is defined by the
 import Interweave from 'interweave';
 import HashtagMatcher from 'interweave/matchers/Hashtag';
 
-const hashtagUrl = 'https://twitter.com/hashtag/{{hashtag}}';
-
-// Global
-Interweave.configure({ hashtagUrl });
-Interweave.addMatcher(new HashtagMatcher('hashtag'));
-
-// Local
 <Interweave
-    hashtagUrl={hashtagUrl}
-    matchers={[new HashtagMatcher('hashtag')]}
+  hashtagUrl="https://twitter.com/hashtag/{{hashtag}}"
+  matchers={[new HashtagMatcher('hashtag')]}
 />
 ```
 
@@ -401,7 +363,7 @@ matcher element will be rendered and passed the following props.
 ### Render Emojis
 
 Who loves emojis? Everyone loves emojis. Interweave has built-in
-support for rendering emoji, either their unicode character or
+support for rendering emoji, either their unicode character, or
 with media, all through the `EmojiMatcher`. The matcher utilizes
 [EmojiOne](http://emojione.com/) for accurate and up-to-date data.
 
@@ -409,10 +371,6 @@ with media, all through the `EmojiMatcher`. The matcher utilizes
 import Interweave from 'interweave';
 import EmojiMatcher from 'interweave/matchers/Emoji';
 
-// Global
-Interweave.addMatcher(new EmojiMatcher('emoji'));
-
-// Local
 <Interweave matchers={[new EmojiMatcher('emoji')]} />
 ```
 
@@ -428,8 +386,8 @@ props.
 #### Converting Shortnames
 
 Shortnames provide an easy non-unicode alternative for supporting emoji,
-and are represented by a word (or two) surrounded by two colons:
-`:boy:`. A list of all possible shortnames can be found at
+and are represented by a word (or two) surrounded by two colons: `:boy:`.
+A list of all possible shortnames can be found at
 [emoji.codes](http://emoji.codes/family).
 
 To enable conversion of a shortname to a unicode literal character,
@@ -441,39 +399,35 @@ new EmojiMatcher('emoji', { convertShortName: true });
 
 #### Using SVGs or PNGs
 
-To begin, we must enable conversion of unicode characters to media,
-by enabling the `convertUnicode` option. Secondly, enable
-`convertShortName` if you want to support shortnames.
+To begin, we must enable conversion of unicode characters to media (images, vector, etc),
+by enabling the `convertUnicode` option. Secondly, if you want to support shortnames,
+enable `convertShortName`.
 
 ```javascript
 new EmojiMatcher('emoji', {
-    convertShortName: true,
-    convertUnicode: true,
+  convertShortName: true,
+  convertUnicode: true,
 });
 ```
 
 Now we need to provide an absolute path to the SVG/PNG file using
-`emojiPath`. This path must contain a `{{hexcode}}` token, which
-will be replaced by the hexadecimal value of the emoji.
+the `emojiPath` prop. This path must contain a `{{hexcode}}` token,
+which will be replaced by the hexadecimal value of the emoji.
 
 ```javascript
-const emojiPath = 'https://example.com/images/emoji/{{hexcode}}.png';
-
-// Global
-Interweave.configure({ emojiPath });
-
-// Local
-<Interweave emojiPath={emojiPath} />
+<Interweave
+  emojiPath="https://example.com/images/emoji/{{hexcode}}.png"
+/>
 ```
 
 Both media formats make use of the `img` tag, and will require an
-individual file as sprites and icon fonts are not supported. The
+individual file, as sprites and icon fonts are not supported. The
 following resources can be used for downloading SVG/PNG icons.
 
 * [EmojiOne](http://emojione.com/developers/) ([CDN](https://cdnjs.com/libraries/emojione))
 * [Twemoji](https://github.com/twitter/twemoji)
 
-> Note: SVGs require CORS to work, so files will need to be stored
+> Note: SVGs require CORS to work correctly, so files will need to be stored
 > locally, or within a CDN under the same domain. Linking to remote SVGs
 > will not work -- use PNGs instead.
 
@@ -487,13 +441,13 @@ to you.
 ```css
 // Align in the middle of the text
 .interweave__emoji {
-    display: inline-block;
-    vertical-align: middle;
+  display: inline-block;
+  vertical-align: middle;
 }
 
 // Match the size of the current text
 .interweave__emoji img {
-    width: 1em;
+  width: 1em;
 }
 ```
 

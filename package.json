@@ -1,7 +1,7 @@
 {
   "name": "interweave",
   "version": "1.2.0",
-  "description": "Safely render HTML, filters attributes, autowrap text with matchers, render emoji characters, and much more.",
+  "description": "React library to safely render HTML, filter attributes, autowrap text with matchers, render emoji characters, and much more.",
   "keywords": [
     "interweave",
     "inject",
@@ -43,7 +43,7 @@
     "test:bundle": "browserify -t [ babelify ] ./tests/browsers/bundle.js -o ./tests/browsers/bundle.min.js",
     "posttest": "yarn run lint && yarn run flow",
     "preversion": "yarn test",
-    "release": "yarn run clean && yarn run build && npm publish ./lib"
+    "release": "yarn run clean && yarn run build"
   },
   "repository": {
     "type": "git",
@@ -79,13 +79,13 @@
     "chai": "^3.5.0",
     "emojione": "^2.2.6",
     "enzyme": "^2.6.0",
-    "eslint": "^3.10.2",
+    "eslint": "^3.12.1",
     "eslint-config-airbnb": "^13.0.0",
     "eslint-plugin-flowtype": "^2.25.0",
     "eslint-plugin-import": "^2.2.0",
     "eslint-plugin-jsx-a11y": "^2.2.3",
     "eslint-plugin-react": "^6.7.1",
-    "flow-bin": "^0.36.0",
+    "flow-bin": "^0.37.0",
     "jsdom": "^9.8.3",
     "mocha": "^3.1.2",
     "react": "^15.4.0",

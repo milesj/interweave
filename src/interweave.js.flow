@@ -27,13 +27,6 @@ declare module "interweave" {
   declare export class Markup extends React.Component {}
 
   declare export default class Interweave extends React.Component {
-    static addFilter(filter: Filter, priority: number): void;
-    static addMatcher(matcher: Matcher<*>, priority: number): void;
-    static clearFilters(): void;
-    static clearMatchers(): void;
-    static configure(props: Object): void;
-    static getFilters(): { filter: Filter, priority: number }[];
-    static getMatchers(): { matcher: Matcher<*>, priority: number }[];
     parseMarkup(): Array<string | React.Element<*>>;
     render(): React.Element<*>;
   }

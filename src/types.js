@@ -67,6 +67,28 @@ export type ParsedNodes = Array<string | React.Element<*>>;
 
 // Component Props
 
+export type InterweaveProps = {
+  content: string,
+  disableFilters: boolean,
+  disableMatchers: boolean,
+  disableLineBreaks: boolean,
+  emptyContent: ?React.Element<*>,
+  filters: Filter[],
+  matchers: Matcher<*>[],
+  noHtml: boolean,
+  onBeforeParse: (content: string) => string,
+  onAfterParse: (content: ParsedNodes) => ParsedNodes,
+  tagName: string,
+};
+
+export type MarkupProps = {
+  content: string,
+  emptyContent: ?React.Element<*>,
+  disableLineBreaks: boolean,
+  tagName: string,
+  noHtml: boolean,
+};
+
 export type LinkProps = {
   href: string,
   children?: any,

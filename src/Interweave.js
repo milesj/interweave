@@ -12,38 +12,7 @@ import Matcher from './Matcher';
 import Parser from './Parser';
 import Element from './components/Element';
 
-import type {
-  FilterStructure,
-  FilterList,
-  MatcherStructure,
-  MatcherList,
-  ParsedNodes,
-} from './types';
-
-const DEFAULT_PRIORITY: number = 100;
-let globalFilters: FilterList = [];
-let globalMatchers: MatcherList = [];
-
-function prioritySort(
-  a: MatcherStructure | FilterStructure,
-  b: MatcherStructure | FilterStructure,
-): number {
-  return a.priority - b.priority;
-}
-
-type InterweaveProps = {
-  content: string,
-  disableFilters: boolean,
-  disableMatchers: boolean,
-  disableLineBreaks: boolean,
-  emptyContent: ?React.Element<*>,
-  filters: Filter[],
-  matchers: Matcher<*>[],
-  noHtml: boolean,
-  onBeforeParse: (content: string) => string,
-  onAfterParse: (content: ParsedNodes) => ParsedNodes,
-  tagName: string,
-};
+import type { ParsedNodes, InterweaveProps } from './types';
 
 export default class Interweave extends React.Component {
   // eslint-disable-next-line react/sort-comp
@@ -72,94 +41,6 @@ export default class Interweave extends React.Component {
   };
 
   /**
-   * Add a filter class that will be used to cleanse HTML attributes.
-   *
-   * @param {Filter} filter
-   * @param {Number} [priority]
-   */
-  static addFilter(filter: Filter, priority: number = 0) {
-    if (!(filter instanceof Filter)) {
-      throw new TypeError('Filter must be an instance of the `Filter` class.');
-    }
-
-    // Apply and sort filters
-    globalFilters.push({
-      filter,
-      priority: priority || (DEFAULT_PRIORITY + globalFilters.length),
-    });
-
-    globalFilters.sort(prioritySort);
-  }
-
-  /**
-   * Add a matcher class that will be used to match and replace tokens with components.
-   *
-   * @param {Matcher} matcher
-   * @param {Number} [priority]
-   */
-  static addMatcher(matcher: Matcher<*>, priority: number = 0) {
-    if (!(matcher instanceof Matcher)) {
-      throw new TypeError('Matcher must be an instance of the `Matcher` class.');
-    }
-
-    // Add a prop type so we can disable per instance
-    Interweave.propTypes[matcher.inverseName] = PropTypes.bool;
-
-    // Append and sort matchers
-    globalMatchers.push({
-      matcher,
-      priority: priority || (DEFAULT_PRIORITY + globalMatchers.length),
-    });
-
-    globalMatchers.sort(prioritySort);
-  }
-
-  /**
-   * Reset all global filters.
-   */
-  static clearFilters() {
-    globalFilters = [];
-  }
-
-  /**
-   * Reset all global matchers.
-   */
-  static clearMatchers() {
-    globalMatchers = [];
-  }
-
-  /**
-   * Configure default value for child props by
-   * defining default props on the parent.
-   *
-   * @param {Object} props
-   */
-  static configure(props: Object) {
-    Interweave.defaultProps = {
-      ...Interweave.defaultProps,
-      ...props,
-    };
-  }
-
-  /**
-   * Return all defined filters for an attribute.
-   *
-   * @returns {{ filter: Filter }[]}
-   */
-  static getFilters(): FilterList {
-    return globalFilters;
-  }
-
-  /**
-   * Return all defined matchers.
-   *
-   * @returns {{ matcher: Matcher }[]}
-   */
-  static getMatchers(): MatcherList {
-    return globalMatchers;
-  }
-
-  /**
    * Parse the markup and apply hooks.
    */
   parseMarkup(): ParsedNodes | ?React.Element<*> {
@@ -186,17 +67,12 @@ export default class Interweave extends React.Component {
       }
     }
 
-    const newMatchers = disableMatchers ? [] : [
-      ...Interweave.getMatchers().map(row => row.matcher),
-      ...matchers,
-    ];
-
-    const newFilters = disableFilters ? [] : [
-      ...Interweave.getFilters().map(row => row.filter),
-      ...filters,
-    ];
-
-    markup = new Parser(markup, props, newMatchers, newFilters).parse();
+    markup = new Parser(
+      markup,
+      props,
+      disableMatchers ? [] : matchers,
+      disableFilters ? [] : filters,
+    ).parse();
 
     if (onAfterParse) {
       markup = onAfterParse(markup);
