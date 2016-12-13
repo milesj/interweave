@@ -1,3 +1,10 @@
+# 2.2.0
+* Removed the concept of global configuration. Composition should be used instead.
+* Removed `Interweave.addFilter`, `addMatcher`, `clearFilters`, `clearMatchers`,
+  `getFilters`, `getMatchers`, and `configure`.
+* Updated the `Hashtag` component to strip the hash (#) when replacing `{{hashtag}}`.
+* Added a `preserveHash` prop to the `Hashtag` component to not strip the hash.
+
 # 1.2.0
 * Updated emoji to the latest EmojiOne dataset.
 

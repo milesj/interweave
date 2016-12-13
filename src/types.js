@@ -117,6 +117,7 @@ export type HashtagProps = {
   hashtagName: string,
   hashtagUrl?: string,
   encodeHashtag?: boolean,
+  preserveHash?: boolean,
 };
 
 export type UrlProps = {

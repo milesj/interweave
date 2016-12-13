@@ -1,4 +1,4 @@
-# Interweave v1.2.0
+# Interweave v2.0.0
 [![Build Status](https://travis-ci.org/milesj/interweave.svg?branch=master)](https://travis-ci.org/milesj/interweave)
 
 Interweave is a robust React library that can...
@@ -101,6 +101,7 @@ The `Markup` component only supports the `content`, `emptyContent`,
   * [Tag Whitelist](#tag-whitelist)
   * [Attribute Whitelist](#attribute-whitelist)
   * [Disabling HTML](#disabling-html)
+* [Global Configuration](#global-configuration)
 
 ### Matchers
 
@@ -520,3 +521,72 @@ recursively.
 [domhtml]: https://developer.mozilla.org/en-US/docs/Web/API/DOMImplementation/createHTMLDocument
 [tagwhitelist]: https://github.com/milesj/interweave/blob/master/src/constants.js#L88
 [attrwhitelist]: https://github.com/milesj/interweave/blob/master/src/constants.js#L381
+
+### Global Configuration
+
+In an older version of `Interweave`, there was this concept of global configuration,
+in which filters, matchers, and even nested props can be defined. This configuration
+would then be passed to all instances of `Interweave` or `Markup`. Since it was using
+globals, this approach had its fair share of problems.
+
+In newer versions, we suggest composing around `Interweave` using a custom component
+in your application. This provides more options for customization, like the choice
+between Twitter and Instagram hashtags, or PNG or SVG emojis.
+
+```javascript
+import React, { PropTypes } from 'react';
+import BaseInterweave, { Filter, Matcher } from 'interweave';
+import IpMatcher from 'interweave/matchers/Ip';
+import UrlMatcher from 'interweave/matchers/Url';
+import EmojiMatcher from 'interweave/matchers/Emoji';
+import HashtagMatcher from 'interweave/matchers/Hashtag';
+
+export default function Interweave({
+  filters = [],
+  matchers = [],
+  twitter = false,
+  instagram = false,
+  svg = false,
+  ...props
+}) {
+  let emojiPath = '//cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/png/{{hexcode}}.png';
+  let hashtagUrl = '';
+
+  if (svg) {
+    emojiPath = emojiPath.replace('.png', '.svg');
+  }
+
+  if (twitter) {
+    hashtagUrl = 'https://twitter.com/hashtag/{{hashtag}}';
+  } else if (instagram) {
+    hashtagUrl = 'https://instagram.com/explore/tags/{{hashtag}}';
+  }
+
+  return (
+    <BaseInterweave
+      filters={[
+        new CustomFilter('href'),
+        ...filters,
+      ]}
+      matchers={[
+        new IpMatcher('ip'),
+        new UrlMatcher('url'),
+        new EmojiMatcher('emoji'),
+        new HashtagMatcher('hashtag'),
+        ...matchers,
+      ]}
+      hashtagUrl={hashtagUrl}
+      emojiPath={emojiPath}
+      {...props}
+    />
+  )
+}
+
+Interweave.propTypes = {
+  filters: PropTypes.arrayOf(PropTypes.instanceOf(Filter)),
+  matchers: PropTypes.arrayOf(PropTypes.instanceOf(Matcher)),
+  twitter: PropTypes.bool,
+  instagram: PropTypes.bool,
+  svg: PropTypes.bool,
+};
+```

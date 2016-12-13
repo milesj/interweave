@@ -13,10 +13,15 @@ export default function Hashtag({
   children,
   hashtagUrl,
   encodeHashtag = false,
+  preserveHash = false,
   ...props
 }: HashtagProps) {
   const url = hashtagUrl || '{{hashtag}}';
   let hashtag = children;
+
+  if (!preserveHash && hashtag.charAt(0) === '#') {
+    hashtag = hashtag.substr(1);
+  }
 
   if (encodeHashtag) {
     hashtag = encodeURIComponent(hashtag);
@@ -34,4 +39,5 @@ Hashtag.propTypes = {
   hashtagName: PropTypes.string,
   hashtagUrl: PropTypes.string,
   encodeHashtag: PropTypes.bool,
+  preserveHash: PropTypes.bool,
 };

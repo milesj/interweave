@@ -8,11 +8,11 @@ describe('components/Hashtag', () => {
     const wrapper = shallow(<Hashtag hashtagUrl="http://foo.com/{{hashtag}}">#interweave</Hashtag>);
 
     expect(wrapper.prop('children')).to.equal('#interweave');
-    expect(wrapper.prop('href')).to.equal('http://foo.com/#interweave');
+    expect(wrapper.prop('href')).to.equal('http://foo.com/interweave');
   });
 
   it('can encode the hashtag', () => {
-    const wrapper = shallow(<Hashtag encodeHashtag>#interweave</Hashtag>);
+    const wrapper = shallow(<Hashtag encodeHashtag preserveHash>#interweave</Hashtag>);
 
     expect(wrapper.prop('children')).to.equal('#interweave');
     expect(wrapper.prop('href')).to.equal('%23interweave');
