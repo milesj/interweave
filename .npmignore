@@ -1,5 +1,6 @@
 ./src
 ./tests
+./flow
 ./.babelrc
 ./.eslintignore
 ./.eslintrc

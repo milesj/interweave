@@ -19,7 +19,7 @@
     "flowtype/space-before-type-colon": [2, "never"],
     "flowtype/type-id-match": 0,
 
-    // Broken
+    // Currently broken
     "react/jsx-indent": 0
   },
   "settings": {
