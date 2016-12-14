@@ -1,3 +1,6 @@
+# 2.0.1
+* Fixed an issue with the NPM package.
+
 # 2.0.0
 * Removed the concept of global configuration. Composition should be used instead.
 * When an emoji is the only character parsed as the content, it will automatically be enlarged.
