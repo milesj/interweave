@@ -1,0 +1,97 @@
+{
+  "name": "peerio-interweave",
+  "version": "2.0.2",
+  "description": "React library to safely render HTML, filter attributes, autowrap text with matchers, render emoji characters, and much more.",
+  "keywords": [
+    "interweave",
+    "inject",
+    "interpolate",
+    "react",
+    "string",
+    "component",
+    "element",
+    "matcher",
+    "filter",
+    "clean",
+    "email",
+    "url",
+    "autolink",
+    "emoji",
+    "hashtag",
+    "html",
+    "markup",
+    "safe",
+    "render",
+    "html"
+  ],
+  "scripts": {
+    "clean": "rimraf ./lib",
+    "build": "yarn run build:js && yarn run build:docs && yarn run build:flow && yarn run build:emoji",
+    "build:js": "babel ./src -d ./lib",
+    "build:docs": "cp ./{*.md,package.json,LICENSE} ./lib",
+    "build:flow": "cp ./flow/interweave.js.flow ./lib",
+    "build:emoji": "cp ./src/data/emoji/data.json ./lib/data/emoji",
+    "watch": "babel --watch ./src -d ./lib",
+    "emoji": "./bin/build-emoji.js > ./src/data/emoji/data.json",
+    "emoji:regex": "./bin/generate-emoji-regex.js",
+    "lint": "eslint ./src ./tests",
+    "flow": "flow check",
+    "mocha": "mocha --opts ./mocha.opts './tests/**/*.test.js'",
+    "pretest": "yarn run clean && yarn run build:js && yarn run build:emoji",
+    "test": "yarn run mocha",
+    "test:bundle": "browserify -t [ babelify ] ./tests/browsers/bundle.js -o ./tests/browsers/bundle.min.js",
+    "posttest": "yarn run lint && yarn run flow",
+    "preversion": "yarn test",
+    "release": "yarn run clean && yarn run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:anri-asaturov/interweave.git"
+  },
+  "author": {
+    "name": "Miles Johnson",
+    "url": "http://milesj.me"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/milesj/interweave/issues"
+  },
+  "homepage": "https://github.com/milesj/interweave#readme",
+  "dependencies": {
+    "babel-runtime": "^6.18.0"
+  },
+  "peerDependencies": {
+    "react": "^15.0.0"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.18.0",
+    "babel-eslint": "^7.1.0",
+    "babel-plugin-transform-class-properties": "^6.19.0",
+    "babel-plugin-transform-flow-comments": "^6.17.0",
+    "babel-plugin-transform-runtime": "^6.15.0",
+    "babel-preset-es2015": "^6.18.0",
+    "babel-preset-react": "^6.16.0",
+    "babel-preset-stage-2": "^6.18.0",
+    "babel-register": "^6.18.0",
+    "babelify": "^7.3.0",
+    "browserify": "^13.1.1",
+    "chai": "^3.5.0",
+    "emojione": "^2.2.6",
+    "enzyme": "^2.6.0",
+    "eslint": "^3.12.1",
+    "eslint-config-airbnb": "^13.0.0",
+    "eslint-plugin-flowtype": "^2.25.0",
+    "eslint-plugin-import": "^2.2.0",
+    "eslint-plugin-jsx-a11y": "^2.2.3",
+    "eslint-plugin-react": "^6.7.1",
+    "flow-bin": "^0.37.0",
+    "jsdom": "^9.8.3",
+    "mocha": "^3.1.2",
+    "react": "^15.4.0",
+    "react-addons-test-utils": "^15.4.0",
+    "react-dom": "^15.4.0",
+    "regenerate": "^1.3.2",
+    "regex-trie": "^1.0.4",
+    "rimraf": "^2.5.4"
+  }
+}
