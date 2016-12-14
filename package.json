@@ -1,6 +1,6 @@
 {
-  "name": "interweave",
-  "version": "2.0.1",
+  "name": "peerio-interweave",
+  "version": "2.0.2",
   "description": "React library to safely render HTML, filter attributes, autowrap text with matchers, render emoji characters, and much more.",
   "keywords": [
     "interweave",
@@ -46,7 +46,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/milesj/interweave.git"
+    "url": "git@github.com:anri-asaturov/interweave.git"
   },
   "author": {
     "name": "Miles Johnson",
