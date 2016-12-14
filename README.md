@@ -389,6 +389,14 @@ props.
 * `unicode` (string) - The unicode literal character. Provided for both
   shortname and unicode matching.
 
+#### Enlarged emoji
+
+If content consists of only emojis, special `.interweave__emoji--large` class
+will be applied to each one of them.
+
+Set `enlargeUpTo` emoji matcher option to disable enlarging for string containing
+more then `enlargeUpTo` emojis. Default value is 10. Set 0 to disable enlarging.
+
 #### Converting Shortnames
 
 Shortnames provide an easy non-unicode alternative for supporting emoji,
