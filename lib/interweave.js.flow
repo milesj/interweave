@@ -1,0 +1,50 @@
+declare module "interweave" {
+  declare type MatcherFactory = (match: string, props: Object) => React.Element<*>;
+
+  declare export class Filter {
+    attribute: string;
+
+    constructor(attribute: string): this;
+    filter(value: string): string;
+  }
+
+  declare export class Matcher<T> {
+    options: T;
+    propName: string;
+    inverseName: string;
+    factory: ?MatcherFactory;
+
+    constructor(name: string, options: T, factory: ?MatcherFactory): this;
+    createElement(match: string, props: Object): React.Element<*>;
+    replaceWith(match: string, props: Object): React.Element<*>;
+    asTag(): string;
+    match(string: string): ?{
+      match: string,
+      [key: string]: any
+    };
+  }
+
+  declare export class Markup extends React.Component {}
+
+  declare export default class Interweave extends React.Component {
+    parseMarkup(): Array<string | React.Element<*>>;
+    render(): React.Element<*>;
+  }
+}
+
+declare module "interweave/components" {
+  declare export class Element extends React.Component {}
+  declare export class Email extends React.Component {}
+  declare export class Emoji extends React.Component {}
+  declare export class Hashtag extends React.Component {}
+  declare export class Link extends React.Component {}
+  declare export class Url extends React.Component {}
+}
+
+declare module "interweave/matchers" {
+  declare export class EmailMatcher extends Matcher<Object> {}
+  declare export class EmojiMatcher extends Matcher<Object> {}
+  declare export class HashtagMatcher extends Matcher<Object> {}
+  declare export class IpMatcher extends Matcher<Object> {}
+  declare export class UrlMatcher extends Matcher<Object> {}
+}
