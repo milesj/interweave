@@ -144,4 +144,5 @@ export type EmojiOptions = {
   convertShortName: boolean;
   convertUnicode: boolean;
   renderUnicode: boolean;
+  enlargeUpTo: number;
 };

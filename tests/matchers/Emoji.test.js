@@ -24,7 +24,7 @@ const INVALID_SHORTNAME = [
 const MAN_EMOJI = SHORTNAME_TO_UNICODE[':man:'];
 
 describe('matchers/Emoji', () => {
-  const matcher = new EmojiMatcher('emoji', { convertShortName: true, convertUnicode: true });
+  const matcher = new EmojiMatcher('emoji', { convertShortName: true, convertUnicode: true, enlargeUpTo: 2 });
   const noConvertMatcher = new EmojiMatcher('emoji');
   const pattern = new RegExp(`^${EMOJI_PATTERN}$`, 'i');
   const shortPattern = new RegExp(`^${EMOJI_SHORTNAME_PATTERN}$`, 'i');
@@ -164,11 +164,13 @@ describe('matchers/Emoji', () => {
   });
 
   describe('onAfterParse', () => {
-    it('returns a single <Emoji/> enlarged', () => {
+    it('returns <Emoji/>-only string enlarged', () => {
       expect(matcher.onAfterParse([
         <Emoji shortName=":cat:" />,
+        <Emoji shortName=":dog:" />,
       ])).to.deep.equal([
         <Emoji shortName=":cat:" enlargeEmoji />,
+        <Emoji shortName=":dog:" enlargeEmoji />,
       ]);
     });
 

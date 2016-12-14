@@ -25,6 +25,15 @@ export default class EmojiMatcher extends Matcher<EmojiOptions> {
   /**
    * {@inheritDoc}
    */
+  constructor(name: string, options: EmojiOptions) {
+    options = options || {};
+    if (typeof options.enlargeUpTo !== 'number') options.enlargeUpTo = 10;
+    super(name, options);
+  }
+
+  /**
+   * {@inheritDoc}
+   */
   replaceWith(match: string, props: Object = {}): React.Element<EmojiProps> {
     if (this.options.renderUnicode) {
       return props.unicode;
@@ -90,20 +99,22 @@ export default class EmojiMatcher extends Matcher<EmojiOptions> {
    */
   onAfterParse(content: ParsedNodes): ParsedNodes {
     // When a single `Emoji` is the only content, enlarge it!
-    if (content.length === 1) {
-      let item = content[0];
-
-      if (typeof item !== 'string' && React.isValidElement(item) && item.type === Emoji) {
-        item = (item: React.Element<*>);
-
-        return [
-          React.cloneElement(item, {
-            ...item.props,
-            enlargeEmoji: true,
-          }),
-        ];
-      }
+    if (content.length > this.options.enlargeUpTo
+        || !content.every(item => typeof item !== 'string'
+                                  && React.isValidElement(item)
+                                  && item.type === Emoji)) {
+      return content;
     }
+    content.forEach((item, i) => {
+      // $FlowIssue https://github.com/facebook/flow/issues/744
+      item = (item: React.Element<*>);
+
+      content[i] =
+        React.cloneElement(item, {
+          ...item.props,
+          enlargeEmoji: true,
+        });
+    });
 
     return content;
   }
