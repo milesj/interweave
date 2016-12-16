@@ -94,7 +94,7 @@ export default class Parser {
     let matchedString = string;
     let parts = {};
 
-    this.matchers.forEach((matcher) => {
+    this.matchers.forEach((matcher: Matcher<*>) => {
       const tagName = matcher.asTag().toLowerCase();
 
       // Skip matchers that have been disabled from props or are not supported
@@ -280,7 +280,8 @@ export default class Parser {
       return null;
     }
 
-    Array.from(node.attributes).forEach((attr) => {
+    // $FlowIssue Array.from() defines Array<void>
+    Array.from(node.attributes).forEach((attr: { name: string, value: string }) => {
       if (!attr) {
         return;
       }
@@ -356,7 +357,7 @@ export default class Parser {
     let content = [];
     let mergedText = '';
 
-    Array.from(parentNode.childNodes).forEach((node) => {
+    Array.from(parentNode.childNodes).forEach((node: NodeInterface) => {
       // Create React elements from HTML elements
       if (node.nodeType === ELEMENT_NODE) {
         const tagName = node.nodeName.toLowerCase();

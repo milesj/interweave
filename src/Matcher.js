@@ -8,7 +8,7 @@ import React from 'react';
 
 import type { MatcherFactory, MatchResponse, ParsedNodes } from './types';
 
-type MatchCallback = (matches: string[]) => ({ [key: string]: any });
+type MatchCallback = (matches: string[]) => ({ [key: string]: string | Object });
 
 export default class Matcher<T> {
   options: T;

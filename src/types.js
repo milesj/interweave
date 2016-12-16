@@ -13,21 +13,21 @@ import Matcher from './Matcher';
 export interface NodeInterface {
   attributes?: NamedNodeMap,
   childNodes: NodeList<Node>,
-  nodeType: number,
   nodeName: string,
+  nodeType: number,
   textContent: string,
 }
 
 export type NodeConfig = {
-  tagName?: string,
-  rule: number,
-  type: string,
-  inline: boolean,
   block: boolean,
-  self: boolean,
-  void: boolean,
-  parent: string[],
   children: string[],
+  inline: boolean,
+  parent: string[],
+  rule: number,
+  self: boolean,
+  tagName?: string,
+  type: string,
+  void: boolean,
 };
 
 export type PrimitiveType = string | number | boolean;
@@ -54,94 +54,98 @@ export type MatchResponse = {
   match: string,
   shortName?: string,
   unicode?: string,
-  [key: string]: any
+  [key: string]: mixed,
 };
 
 export type ParserProps = {
-  noHtml?: boolean,
   disableLineBreaks?: boolean,
-  [key: string]: any,
+  noHtml?: boolean,
+  [key: string]: mixed,
 };
 
 export type ParsedNodes = Array<string | React.Element<*>>;
+
+export type AfterParseCallback = (content: ParsedNodes) => ParsedNodes;
+
+export type BeforeParseCallback = (content: string) => string;
 
 // Component Props
 
 export type InterweaveProps = {
   content: string,
   disableFilters: boolean,
-  disableMatchers: boolean,
   disableLineBreaks: boolean,
+  disableMatchers: boolean,
   emptyContent: ?React.Element<*>,
   filters: Filter[],
   matchers: Matcher<*>[],
   noHtml: boolean,
-  onBeforeParse: (content: string) => string,
-  onAfterParse: (content: ParsedNodes) => ParsedNodes,
+  onAfterParse: AfterParseCallback,
+  onBeforeParse: BeforeParseCallback,
   tagName: string,
 };
 
 export type MarkupProps = {
   content: string,
-  emptyContent: ?React.Element<*>,
   disableLineBreaks: boolean,
-  tagName: string,
+  emptyContent: ?React.Element<*>,
   noHtml: boolean,
+  tagName: string,
 };
 
 export type LinkProps = {
+  children?: mixed,
   href: string,
-  children?: any,
-  onClick?: () => void,
   newWindow?: boolean,
+  onClick?: () => void,
 };
 
 export type ElementProps = {
   attributes?: Attributes,
+  children?: mixed,
   className?: string,
-  children?: any,
-  tagName: string,
   selfClose?: boolean,
+  tagName: string,
 };
 
 export type EmailProps = {
   children: string,
   emailParts: {
-    username: string,
     host: string,
+    username: string,
   },
 };
 
 export type HashtagProps = {
   children: string,
+  encodeHashtag?: boolean,
   hashtagName: string,
   hashtagUrl?: string,
-  encodeHashtag?: boolean,
   preserveHash?: boolean,
 };
 
 export type UrlProps = {
   children: string,
   urlParts: {
-    scheme: string,
     auth: string,
-    host: string,
-    port: string | number,
-    path: string,
-    query: string,
     fragment: string,
+    host: string,
+    path: string,
+    port: string | number,
+    query: string,
+    scheme: string,
   },
 };
 
 export type EmojiProps = {
-  shortName: string,
-  unicode: string,
   emojiPath?: string,
   enlargeEmoji?: boolean,
+  shortName: string,
+  unicode: string,
 };
 
 export type EmojiOptions = {
-  convertShortName: boolean;
-  convertUnicode: boolean;
-  renderUnicode: boolean;
+  convertShortName: boolean,
+  convertUnicode: boolean,
+  renderUnicode: boolean,
 };

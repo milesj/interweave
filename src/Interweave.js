@@ -12,7 +12,12 @@ import Matcher from './Matcher';
 import Parser from './Parser';
 import Element from './components/Element';
 
-import type { ParsedNodes, InterweaveProps } from './types';
+import type {
+  ParsedNodes,
+  InterweaveProps,
+  AfterParseCallback,
+  BeforeParseCallback,
+} from './types';
 
 export default class Interweave extends React.Component {
   // eslint-disable-next-line react/sort-comp
@@ -64,13 +69,13 @@ export default class Interweave extends React.Component {
     const afterCallbacks = onAfterParse ? [onAfterParse] : [];
 
     // Inherit callbacks from matchers
-    allMatchers.forEach((matcher) => {
+    allMatchers.forEach((matcher: Matcher<*>) => {
       beforeCallbacks.push(matcher.onBeforeParse.bind(matcher));
       afterCallbacks.push(matcher.onAfterParse.bind(matcher));
     });
 
     // Trigger before callbacks
-    markup = beforeCallbacks.reduce((string, callback) => {
+    markup = beforeCallbacks.reduce((string: string, callback: BeforeParseCallback) => {
       string = callback(string);
 
       if (typeof string !== 'string') {
@@ -84,7 +89,7 @@ export default class Interweave extends React.Component {
     markup = new Parser(markup, props, allMatchers, allFilters).parse();
 
     // Trigger after callbacks
-    markup = afterCallbacks.reduce((nodes, callback) => {
+    markup = afterCallbacks.reduce((nodes: ParsedNodes, callback: AfterParseCallback) => {
       nodes = callback(nodes);
 
       if (!Array.isArray(nodes)) {

@@ -9,10 +9,10 @@ import json from './data.json';
 type StringMap = { [key: string]: string };
 type EmojiMap = {
   [shortName: string]: {
-    hexCode: string,
     codePoint: number[],
+    hexCode: string,
     unicode: string,
-  }
+  },
 };
 
 const data: StringMap = (typeof json === 'string') ? JSON.parse(json) : json;
@@ -23,7 +23,7 @@ export const SHORTNAME_TO_UNICODE: StringMap = {};
 
 // Extract the shortname, codepoint, and unicode
 // https://r12a.github.io/apps/conversion/
-Object.keys(data).forEach((name) => {
+Object.keys(data).forEach((name: string) => {
   const hexCode = data[name];
   const shortName = `:${name}:`;
   const codePoint = hexCode.split('-').map(point => parseInt(point, 16));

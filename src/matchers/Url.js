@@ -43,7 +43,7 @@ export default class UrlMatcher extends Matcher<Object> {
    * @param {String[]} matches
    * @returns {Object}
    */
-  handleMatches(matches: string[]): { [key: string]: any } {
+  handleMatches(matches: string[]): { [key: string]: string | Object } {
     return {
       urlParts: {
         scheme: matches[1] ? matches[1].replace('://', '') : 'http',
