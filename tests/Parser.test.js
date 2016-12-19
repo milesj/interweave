@@ -1,7 +1,7 @@
 import React from 'react';
 import { expect } from 'chai';
-import Parser from '../lib/Parser';
-import Element from '../lib/components/Element';
+import Parser from '../src/Parser';
+import Element from '../src/components/Element';
 import {
   TAGS,
   ATTRIBUTES,
@@ -12,7 +12,7 @@ import {
   FILTER_ALLOW,
   FILTER_CAST_BOOL,
   FILTER_CAST_NUMBER,
-} from '../lib/constants';
+} from '../src/constants';
 import {
   CodeTagMatcher,
   HrefFilter,

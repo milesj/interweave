@@ -1,7 +1,7 @@
 import { expect } from 'chai';
-import Parser from '../../lib/Parser';
-import IpMatcher from '../../lib/matchers/Ip';
-import { IP_PATTERN } from '../../lib/constants';
+import Parser from '../../src/Parser';
+import IpMatcher from '../../src/matchers/Ip';
+import { IP_PATTERN } from '../../src/constants';
 import { TOKEN_LOCATIONS, createExpectedTokenLocations, parentConfig } from '../mocks';
 
 const VALID_IPS = [

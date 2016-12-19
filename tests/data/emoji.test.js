@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import { UNICODE_TO_SHORTNAME, SHORTNAME_TO_UNICODE } from '../../lib/data/emoji';
+import { UNICODE_TO_SHORTNAME, SHORTNAME_TO_UNICODE } from '../../src/data/emoji';
 import { VALID_EMOJIS } from '../mocks';
 
 describe('data/emoji', () => {

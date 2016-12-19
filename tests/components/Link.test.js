@@ -1,7 +1,7 @@
 import React from 'react';
 import { expect } from 'chai';
 import { shallow } from 'enzyme';
-import Link from '../../lib/components/Link';
+import Link from '../../src/components/Link';
 
 describe('components/Link', () => {
   it('renders a link with href', () => {

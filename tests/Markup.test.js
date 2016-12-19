@@ -1,8 +1,8 @@
 import React from 'react';
 import { expect } from 'chai';
 import { shallow } from 'enzyme';
-import Markup from '../lib/Markup';
-import Element from '../lib/components/Element';
+import Markup from '../src/Markup';
+import Element from '../src/components/Element';
 import { MOCK_MARKUP } from './mocks';
 
 describe('Markup', () => {

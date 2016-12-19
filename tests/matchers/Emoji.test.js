@@ -1,9 +1,9 @@
 import React from 'react';
 import { expect } from 'chai';
-import Parser from '../../lib/Parser';
-import Emoji from '../../lib/components/Emoji';
-import EmojiMatcher from '../../lib/matchers/Emoji';
-import { EMOJI_PATTERN, EMOJI_SHORTNAME_PATTERN, SHORTNAME_TO_UNICODE, UNICODE_TO_SHORTNAME } from '../../lib/data/emoji';
+import Parser from '../../src/Parser';
+import Emoji from '../../src/components/Emoji';
+import EmojiMatcher from '../../src/matchers/Emoji';
+import { EMOJI_PATTERN, EMOJI_SHORTNAME_PATTERN, SHORTNAME_TO_UNICODE, UNICODE_TO_SHORTNAME } from '../../src/data/emoji';
 import { VALID_EMOJIS, TOKEN_LOCATIONS, createExpectedTokenLocations, parentConfig } from '../mocks';
 
 const VALID_UNICODE = Object.keys(UNICODE_TO_SHORTNAME);

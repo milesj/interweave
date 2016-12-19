@@ -1,7 +1,7 @@
 import React from 'react';
 import { expect } from 'chai';
 import { shallow } from 'enzyme';
-import Email from '../../lib/components/Email';
+import Email from '../../src/components/Email';
 
 describe('components/Email', () => {
   it('can pass props to Link', () => {

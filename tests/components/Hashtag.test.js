@@ -1,7 +1,7 @@
 import React from 'react';
 import { expect } from 'chai';
 import { shallow } from 'enzyme';
-import Hashtag from '../../lib/components/Hashtag';
+import Hashtag from '../../src/components/Hashtag';
 
 describe('components/Hashtag', () => {
   it('can define the URL', () => {

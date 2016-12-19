@@ -1,7 +1,7 @@
 import React from 'react';
 import { expect } from 'chai';
 import { shallow } from 'enzyme';
-import Emoji from '../../lib/components/Emoji';
+import Emoji from '../../src/components/Emoji';
 import { VALID_EMOJIS } from '../mocks';
 
 function hex2cp(hex) {

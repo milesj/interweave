@@ -1,7 +1,7 @@
 import React from 'react';
 import { expect } from 'chai';
 import { shallow } from 'enzyme';
-import Element from '../../lib/components/Element';
+import Element from '../../src/components/Element';
 
 describe('components/Element', () => {
   it('can set the class name', () => {

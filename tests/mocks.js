@@ -1,8 +1,8 @@
 import React from 'react';
-import Filter from '../lib/Filter';
-import Matcher from '../lib/Matcher';
-import Element from '../lib/components/Element';
-import { TYPE_BLOCK, PARSER_ALLOW } from '../lib/constants';
+import Filter from '../src/Filter';
+import Matcher from '../src/Matcher';
+import Element from '../src/components/Element';
+import { TYPE_BLOCK, PARSER_ALLOW } from '../src/constants';
 
 export const TOKEN_LOCATIONS = [
   'no tokens',

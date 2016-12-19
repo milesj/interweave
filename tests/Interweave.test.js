@@ -3,10 +3,10 @@
 import React from 'react';
 import { expect } from 'chai';
 import { shallow } from 'enzyme';
-import Interweave from '../lib/Interweave';
-import { Element, Email, Emoji, Hashtag, Url } from '../lib/components';
-import { EmailMatcher, EmojiMatcher, HashtagMatcher, IpMatcher, UrlMatcher } from '../lib/matchers';
-import { SHORTNAME_TO_UNICODE } from '../lib/data/emoji';
+import Interweave from '../src/Interweave';
+import { Element, Email, Emoji, Hashtag, Url } from '../src/components';
+import { EmailMatcher, EmojiMatcher, HashtagMatcher, IpMatcher, UrlMatcher } from '../src/matchers';
+import { SHORTNAME_TO_UNICODE } from '../src/data/emoji';
 import { HrefFilter, CodeTagMatcher } from './mocks';
 
 describe('Interweave', () => {

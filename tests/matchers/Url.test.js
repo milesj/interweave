@@ -1,7 +1,7 @@
 import { expect } from 'chai';
-import Parser from '../../lib/Parser';
-import UrlMatcher from '../../lib/matchers/Url';
-import { URL_PATTERN } from '../../lib/constants';
+import Parser from '../../src/Parser';
+import UrlMatcher from '../../src/matchers/Url';
+import { URL_PATTERN } from '../../src/constants';
 import { TOKEN_LOCATIONS, createExpectedTokenLocations, parentConfig } from '../mocks';
 
 // Borrowed from: https://github.com/Sporkmonger/Addressable/blob/master/spec/addressable/uri_spec.rb

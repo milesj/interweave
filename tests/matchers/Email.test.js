@@ -1,7 +1,7 @@
 import { expect } from 'chai';
-import Parser from '../../lib/Parser';
-import EmailMatcher from '../../lib/matchers/Email';
-import { EMAIL_PATTERN } from '../../lib/constants';
+import Parser from '../../src/Parser';
+import EmailMatcher from '../../src/matchers/Email';
+import { EMAIL_PATTERN } from '../../src/constants';
 import { TOKEN_LOCATIONS, createExpectedTokenLocations, parentConfig } from '../mocks';
 
 const VALID_EMAILS = [

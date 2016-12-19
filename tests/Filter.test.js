@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import Filter from '../lib/Filter';
+import Filter from '../src/Filter';
 import { HrefFilter } from './mocks';
 
 describe('Filter', () => {

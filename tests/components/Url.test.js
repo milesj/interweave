@@ -1,7 +1,7 @@
 import React from 'react';
 import { expect } from 'chai';
 import { shallow } from 'enzyme';
-import Url from '../../lib/components/Url';
+import Url from '../../src/components/Url';
 
 describe('components/Url', () => {
   it('passes the child as an href', () => {

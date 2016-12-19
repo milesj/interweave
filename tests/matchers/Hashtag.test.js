@@ -1,7 +1,7 @@
 import { expect } from 'chai';
-import Parser from '../../lib/Parser';
-import HashtagMatcher from '../../lib/matchers/Hashtag';
-import { HASHTAG_PATTERN } from '../../lib/constants';
+import Parser from '../../src/Parser';
+import HashtagMatcher from '../../src/matchers/Hashtag';
+import { HASHTAG_PATTERN } from '../../src/constants';
 import { TOKEN_LOCATIONS, createExpectedTokenLocations, parentConfig } from '../mocks';
 
 const VALID_HASHTAGS = [

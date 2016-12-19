@@ -1,7 +1,7 @@
 import React from 'react';
 import { expect } from 'chai';
-import Matcher from '../lib/Matcher';
-import Element from '../lib/components/Element';
+import Matcher from '../src/Matcher';
+import Element from '../src/components/Element';
 import { CodeTagMatcher } from './mocks';
 
 describe('Matcher', () => {
