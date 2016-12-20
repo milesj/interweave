@@ -18,6 +18,7 @@ import type { MatchResponse, EmojiProps, EmojiOptions, ParsedNodes } from '../ty
 
 const EMOJI_REGEX = new RegExp(EMOJI_PATTERN, 'u');
 const EMOJI_SHORTNAME_REGEX = new RegExp(EMOJI_SHORTNAME_PATTERN, 'i');
+const WHITESPACE_REGEX = /^\s+$/;
 
 export default class EmojiMatcher extends Matcher<EmojiOptions> {
   options: EmojiOptions;
@@ -100,9 +101,10 @@ export default class EmojiMatcher extends Matcher<EmojiOptions> {
   onAfterParse(content: ParsedNodes): ParsedNodes {
     // When a single `Emoji` is the only content, enlarge it!
     if (content.length > this.options.enlargeUpTo
-        || !content.every(item => typeof item !== 'string'
+        || !content.every(item => (typeof item === 'string' && !!item.match(WHITESPACE_REGEX))
+                                  || (typeof item !== 'string'
                                   && React.isValidElement(item)
-                                  && item.type === Emoji)) {
+                                  && item.type === Emoji))) {
       return content;
     }
     content.forEach((item, i) => {
