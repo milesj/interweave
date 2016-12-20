@@ -16,7 +16,7 @@ import {
 
 import type { MatchResponse, EmojiProps, EmojiOptions, ParsedNodes } from '../types';
 
-const EMOJI_REGEX = new RegExp(EMOJI_PATTERN);
+const EMOJI_REGEX = new RegExp(EMOJI_PATTERN, 'u');
 const EMOJI_SHORTNAME_REGEX = new RegExp(EMOJI_SHORTNAME_PATTERN, 'i');
 
 export default class EmojiMatcher extends Matcher<EmojiOptions> {
