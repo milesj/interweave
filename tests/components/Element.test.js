@@ -91,4 +91,10 @@ describe('components/Element', () => {
       maxLength: 15,
     });
   });
+
+  it('applies class names to image when self closing', () => {
+    const wrapper = shallow(<Element className="foo-bar" tagName="img" selfClose />);
+
+    expect(wrapper.prop('className')).toBe('interweave foo-bar');
+  });
 });

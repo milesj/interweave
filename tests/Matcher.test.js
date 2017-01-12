@@ -45,8 +45,8 @@ describe('Matcher', () => {
 
   describe('replaceWith()', () => {
     it('errors if factory not defined', () => {
-      expect(() => { new Matcher().replaceWith(); })
-        .toThrowError('The matcher name "undefined" is not allowed.');
+      expect(() => { new Matcher('foo').replaceWith(); })
+        .toThrowError('Matcher must return a React element.');
     });
 
     it('returns a React element', () => {
@@ -56,10 +56,17 @@ describe('Matcher', () => {
     });
   });
 
+  describe('asTag()', () => {
+    it('errors if not defined', () => {
+      expect(() => { new Matcher('foo').asTag(); })
+        .toThrowError('Matcher must define the HTML tag name it will render.');
+    });
+  });
+
   describe('match()', () => {
     it('errors if match not defined', () => {
-      expect(() => { new Matcher().match(); })
-        .toThrowError('The matcher name "undefined" is not allowed.');
+      expect(() => { new Matcher('foo').match(); })
+        .toThrowError('Matcher must define a pattern matcher.');
     });
 
     it('does match', () => {

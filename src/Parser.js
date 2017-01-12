@@ -282,10 +282,6 @@ export default class Parser {
 
     // $FlowIssue Array.from() defines Array<void>
     Array.from(node.attributes).forEach((attr: { name: string, value: string }) => {
-      if (!attr) {
-        return;
-      }
-
       const name: string = attr.name.toLowerCase();
       const value: string = attr.value;
       const filter: number = ATTRIBUTES[name];

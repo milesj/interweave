@@ -144,6 +144,23 @@ describe('Parser', () => {
     });
   });
 
+  describe('canRenderChild()', () => {
+    it('doesnt render if missing parent tag', () => {
+      expect(instance.canRenderChild({}, {})).toBe(false);
+    });
+
+    it('doesnt render if missing child tag', () => {
+      expect(instance.canRenderChild({ tagName: 'span' }, {})).toBe(false);
+    });
+
+    it('doesnt render if child is pass-through', () => {
+      expect(instance.canRenderChild({ tagName: 'span' }, {
+        tagName: 'span',
+        rule: PARSER_PASS_THROUGH,
+      })).toBe(false);
+    });
+  });
+
   describe('createDocument()', () => {
     it('injects the markup into the body', () => {
       const doc = instance.createDocument('<div>Foo<section>Bar</section><aside>Baz</aside></div>');
@@ -201,6 +218,10 @@ describe('Parser', () => {
   describe('extractAttributes()', () => {
     beforeEach(() => {
       element = document.createElement('div');
+    });
+
+    it('returns null for invalid node', () => {
+      expect(instance.extractAttributes(document.createComment('Comment'))).toBe(null);
     });
 
     Object.keys(ATTRIBUTES).forEach((name) => {
