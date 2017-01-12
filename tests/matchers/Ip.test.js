@@ -1,4 +1,3 @@
-import { expect } from 'chai';
 import Parser from '../../src/Parser';
 import IpMatcher from '../../src/matchers/Ip';
 import { IP_PATTERN } from '../../src/constants';
@@ -54,7 +53,7 @@ describe('matchers/Ip', () => {
         expected.index = 0;
         expected.input = ip;
 
-        expect(ip.match(pattern)).to.deep.equal(expected);
+        expect(ip.match(pattern)).toEqual(expected);
       });
     });
   });
@@ -62,7 +61,7 @@ describe('matchers/Ip', () => {
   describe('doesnt match invalid ip:', () => {
     INVALID_IPS.forEach((ipParams) => {
       it(ipParams.ip, () => {
-        expect(ipParams.ip.match(pattern)).to.equal(null);
+        expect(ipParams.ip.match(pattern)).toBe(null);
       });
     });
   });
@@ -98,9 +97,9 @@ describe('matchers/Ip', () => {
           const actual = parser.applyMatchers(tokenString, parentConfig);
 
           if (i === 0) {
-            expect(actual).to.equal(expected[0]);
+            expect(actual).toBe(expected[0]);
           } else {
-            expect(actual).to.deep.equal(expected[i]);
+            expect(actual).toEqual(expected[i]);
           }
         });
       });
@@ -109,11 +108,11 @@ describe('matchers/Ip', () => {
 
   describe('match()', () => {
     it('returns null for invalid match', () => {
-      expect(matcher.match('notanip')).to.equal(null);
+      expect(matcher.match('notanip')).toBe(null);
     });
 
     it('returns object for valid match', () => {
-      expect(matcher.match('https://127.0.0.1:8080/some/path?with=query#fragment')).to.deep.equal({
+      expect(matcher.match('https://127.0.0.1:8080/some/path?with=query#fragment')).toEqual({
         match: 'https://127.0.0.1:8080/some/path?with=query#fragment',
         urlParts: {
           scheme: 'https',

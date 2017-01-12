@@ -1,4 +1,3 @@
-import { expect } from 'chai';
 import Parser from '../../src/Parser';
 import EmailMatcher from '../../src/matchers/Email';
 import { EMAIL_PATTERN } from '../../src/constants';
@@ -74,7 +73,7 @@ describe('matchers/Email', () => {
         expected.index = 0;
         expected.input = email;
 
-        expect(email.match(pattern)).to.deep.equal(expected);
+        expect(email.match(pattern)).toEqual(expected);
       });
     });
   });
@@ -82,7 +81,7 @@ describe('matchers/Email', () => {
   describe('doesnt match invalid email:', () => {
     INVALID_EMAILS.forEach((email) => {
       it(email, () => {
-        expect(email.match(pattern)).to.equal(null);
+        expect(email.match(pattern)).toBe(null);
       });
     });
   });
@@ -112,9 +111,9 @@ describe('matchers/Email', () => {
           const actual = parser.applyMatchers(tokenString, parentConfig);
 
           if (i === 0) {
-            expect(actual).to.equal(expected[0]);
+            expect(actual).toBe(expected[0]);
           } else {
-            expect(actual).to.deep.equal(expected[i]);
+            expect(actual).toEqual(expected[i]);
           }
         });
       });
@@ -123,11 +122,11 @@ describe('matchers/Email', () => {
 
   describe('match()', () => {
     it('returns null for invalid match', () => {
-      expect(matcher.match('notanemail')).to.equal(null);
+      expect(matcher.match('notanemail')).toBe(null);
     });
 
     it('returns object for valid match', () => {
-      expect(matcher.match('user@domain.com')).to.deep.equal({
+      expect(matcher.match('user@domain.com')).toEqual({
         match: 'user@domain.com',
         emailParts: {
           username: 'user',

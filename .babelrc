@@ -1,4 +1,4 @@
 {
-    "presets": ["latest", "stage-2", "react"],
-    "plugins": ["transform-class-properties", "transform-flow-comments", "transform-runtime"]
+  "presets": ["latest", "stage-2", "react"],
+  "plugins": ["transform-class-properties", "transform-flow-comments", "transform-runtime"]
 }

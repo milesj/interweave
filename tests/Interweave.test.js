@@ -1,7 +1,6 @@
 /* eslint-disable comma-dangle */
 
 import React from 'react';
-import { expect } from 'chai';
 import { shallow } from 'enzyme';
 import Interweave from '../src/Interweave';
 import { Element, Email, Emoji, Hashtag, Url } from '../src/components';
@@ -28,7 +27,7 @@ describe('Interweave', () => {
       />
     );
 
-    expect(wrapper.prop('className')).to.equal('interweave--no-html');
+    expect(wrapper.prop('className')).toBe('interweave--no-html');
   });
 
   it('can pass filters through props', () => {
@@ -39,7 +38,7 @@ describe('Interweave', () => {
       />
     ).shallow();
 
-    expect(wrapper.prop('children')).to.deep.equal([
+    expect(wrapper.prop('children')).toEqual([
       'Foo ',
       <Element tagName="a" key="0" attributes={{ href: 'bar.net' }}>{['Bar']}</Element>,
       ' Baz',
@@ -55,7 +54,7 @@ describe('Interweave', () => {
       />
     ).shallow();
 
-    expect(wrapper.prop('children')).to.deep.equal([
+    expect(wrapper.prop('children')).toEqual([
       'Foo ',
       <Element tagName="a" key="0" attributes={{ href: 'foo.com' }}>{['Bar']}</Element>,
       ' Baz',
@@ -70,7 +69,7 @@ describe('Interweave', () => {
       />
     ).shallow();
 
-    expect(wrapper.prop('children')).to.deep.equal([
+    expect(wrapper.prop('children')).toEqual([
       'Foo ',
       <Element tagName="span" key="1" customProp="foo">B</Element>,
       ' Bar Baz',
@@ -86,7 +85,7 @@ describe('Interweave', () => {
       />
     ).shallow();
 
-    expect(wrapper.prop('children')).to.deep.equal([
+    expect(wrapper.prop('children')).toEqual([
       'Foo [b] Bar Baz',
     ]);
   });
@@ -94,27 +93,27 @@ describe('Interweave', () => {
   it('allows empty `content` to be passed', () => {
     const wrapper = shallow(<Interweave content={null} />);
 
-    expect(wrapper.prop('children')).to.equal(null);
+    expect(wrapper.prop('children')).toBe(null);
   });
 
   it('will render the `emptyContent` if no content exists', () => {
     const empty = <div>Foo</div>;
     const wrapper = shallow(<Interweave content="" emptyContent={empty} />);
 
-    expect(wrapper.contains(empty)).to.equal(true);
+    expect(wrapper.contains(empty)).toBe(true);
   });
 
   describe('parseMarkup()', () => {
     it('errors if onBeforeParse doesnt return a string', () => {
       expect(() => {
         shallow(<Interweave onBeforeParse={() => 123} content="Foo" />);
-      }).to.throw(TypeError, 'Interweave `onBeforeParse` must return a valid HTML string.');
+      }).toThrow('Interweave `onBeforeParse` must return a valid HTML string.');
     });
 
     it('errors if onAfterParse doesnt return an array', () => {
       expect(() => {
         shallow(<Interweave onAfterParse={() => 123} content="Foo" />);
-      }).to.throw(TypeError, 'Interweave `onAfterParse` must return an array of strings and React elements.');
+      }).toThrow('Interweave `onAfterParse` must return an array of strings and React elements.');
     });
 
     it('can modify the markup using onBeforeParse', () => {
@@ -125,7 +124,7 @@ describe('Interweave', () => {
         />
       ).shallow();
 
-      expect(wrapper.prop('children')).to.deep.equal([
+      expect(wrapper.prop('children')).toEqual([
         'Foo ',
         <Element tagName="i" key="0">{['Bar']}</Element>,
         ' Baz',
@@ -143,7 +142,7 @@ describe('Interweave', () => {
         />
       ).shallow();
 
-      expect(wrapper.prop('children')).to.deep.equal([
+      expect(wrapper.prop('children')).toEqual([
         'Foo ',
         <Element tagName="b" key="0">{['Bar']}</Element>,
         ' Baz',
@@ -156,23 +155,23 @@ describe('Interweave', () => {
     it('renders with a default tag name', () => {
       const wrapper = shallow(<Interweave content="Foo" />).shallow();
 
-      expect(wrapper.find('span')).to.have.lengthOf(1);
-      expect(wrapper.text()).to.equal('Foo');
+      expect(wrapper.find('span')).toHaveLength(1);
+      expect(wrapper.text()).toBe('Foo');
     });
 
     it('renders with a custom tag name', () => {
       const wrapper = shallow(<Interweave tagName="div" content="Foo" />).shallow();
 
-      expect(wrapper.find('div')).to.have.lengthOf(1);
-      expect(wrapper.text()).to.equal('Foo');
+      expect(wrapper.find('div')).toHaveLength(1);
+      expect(wrapper.text()).toBe('Foo');
     });
 
     it('parses HTML', () => {
       const wrapper = shallow(<Interweave tagName="div" content={'Foo <b>Bar</b> Baz'} />).shallow();
 
-      expect(wrapper.find('div')).to.have.lengthOf(1);
-      expect(wrapper.find('Element').prop('tagName')).to.equal('b');
-      expect(wrapper.prop('children')).to.deep.equal([
+      expect(wrapper.find('div')).toHaveLength(1);
+      expect(wrapper.find('Element').prop('tagName')).toBe('b');
+      expect(wrapper.prop('children')).toEqual([
         'Foo ',
         <Element tagName="b" key="0">{['Bar']}</Element>,
         ' Baz',
@@ -199,7 +198,7 @@ Curabitur lectus odio, tempus quis velit vitae, cursus sagittis nulla. Maecenas 
       />
     ).shallow();
 
-    expect(wrapper.prop('children')).to.deep.equal([
+    expect(wrapper.prop('children')).toEqual([
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec massa lorem, mollis non commodo quis, ultricies at elit. ',
       <Email key="0" emailParts={{ username: 'email', host: 'domain.com' }}>email@domain.com</Email>,
       '. Aliquam a arcu porttitor, aliquam eros sed, convallis massa. Nunc vitae vehicula quam, in feugiat ligula. ',
@@ -249,7 +248,7 @@ Curabitur lectus odio, tempus quis velit vitae, cursus sagittis nulla. Maecenas 
       />
     ).shallow();
 
-    expect(wrapper.prop('children')).to.deep.equal([
+    expect(wrapper.prop('children')).toEqual([
       <Element key="0" tagName="h1">{['Lorem ipsum dolor sit amet']}</Element>,
       '\n\n',
       <Element key="1" tagName="p">
@@ -317,7 +316,7 @@ Curabitur lectus odio, tempus quis velit vitae, cursus sagittis nulla. Maecenas 
       />
     ).shallow();
 
-    expect(wrapper.prop('children')).to.deep.equal([
+    expect(wrapper.prop('children')).toEqual([
       '- ',
       <Url key="0" urlParts={{ ...urlParts, scheme: 'https', host: '127.0.0.1', path: '/foo' }}>https://127.0.0.1/foo</Url>,
       '\n- ',
@@ -340,7 +339,7 @@ Curabitur lectus odio, tempus quis velit vitae, cursus sagittis nulla. Maecenas 
       />
     ).shallow();
 
-    expect(wrapper.prop('children')).to.deep.equal([
+    expect(wrapper.prop('children')).toEqual([
       'This has ',
       SHORTNAME_TO_UNICODE[':cat:'],
       ' and ',
@@ -360,7 +359,7 @@ Curabitur lectus odio, tempus quis velit vitae, cursus sagittis nulla. Maecenas 
       />
     ).shallow();
 
-    expect(wrapper.prop('children')).to.deep.equal([
+    expect(wrapper.prop('children')).toEqual([
       'This has ',
       SHORTNAME_TO_UNICODE[':cat:'],
       ' and ',
@@ -380,7 +379,7 @@ Curabitur lectus odio, tempus quis velit vitae, cursus sagittis nulla. Maecenas 
       />
     ).shallow();
 
-    expect(wrapper.prop('children')).to.deep.equal([
+    expect(wrapper.prop('children')).toEqual([
       'This has ',
       SHORTNAME_TO_UNICODE[':cat:'],
       ' and ',
@@ -397,7 +396,7 @@ Curabitur lectus odio, tempus quis velit vitae, cursus sagittis nulla. Maecenas 
       />
     ).shallow();
 
-    expect(wrapper.prop('children')).to.deep.equal([
+    expect(wrapper.prop('children')).toEqual([
       'This has line breaks.',
       <Element key="0" tagName="br" selfClose>{[]}</Element>,
       'Horizontal rule.',
@@ -410,7 +409,7 @@ Curabitur lectus odio, tempus quis velit vitae, cursus sagittis nulla. Maecenas 
   it('converts line breaks', () => {
     const wrapper = shallow(<Interweave content={'Foo\nBar'} />);
 
-    expect(wrapper.prop('children')).to.deep.equal([
+    expect(wrapper.prop('children')).toEqual([
       'Foo',
       <Element key="0" tagName="br" selfClose>{[]}</Element>,
       'Bar',
@@ -420,7 +419,7 @@ Curabitur lectus odio, tempus quis velit vitae, cursus sagittis nulla. Maecenas 
   it('doesnt convert line breaks', () => {
     const wrapper = shallow(<Interweave content={'Foo\nBar'} disableLineBreaks />);
 
-    expect(wrapper.prop('children')).to.deep.equal([
+    expect(wrapper.prop('children')).toEqual([
       'Foo\nBar',
     ]);
   });
@@ -428,7 +427,7 @@ Curabitur lectus odio, tempus quis velit vitae, cursus sagittis nulla. Maecenas 
   it('doesnt convert line breaks if it contains HTML', () => {
     const wrapper = shallow(<Interweave content={'Foo\n<br/>Bar'} />);
 
-    expect(wrapper.prop('children')).to.deep.equal([
+    expect(wrapper.prop('children')).toEqual([
       'Foo\n',
       <Element key="0" tagName="br" selfClose>{[]}</Element>,
       'Bar',

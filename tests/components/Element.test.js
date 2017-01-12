@@ -1,5 +1,4 @@
 import React from 'react';
-import { expect } from 'chai';
 import { shallow } from 'enzyme';
 import Element from '../../src/components/Element';
 
@@ -7,7 +6,7 @@ describe('components/Element', () => {
   it('can set the class name', () => {
     const wrapper = shallow(<Element className="foo-bar" tagName="div">Foo</Element>);
 
-    expect(wrapper.hasClass('foo-bar')).to.equal(true);
+    expect(wrapper.hasClass('foo-bar')).toBe(true);
   });
 
   it('combines attribute class with prop class', () => {
@@ -21,28 +20,28 @@ describe('components/Element', () => {
       </Element>
     ));
 
-    expect(wrapper.prop('className')).to.equal('interweave foo-bar baz-qux');
+    expect(wrapper.prop('className')).toBe('interweave foo-bar baz-qux');
   });
 
   it('renders with a custom HTML tag', () => {
     let wrapper = shallow(<Element tagName="div">Foo</Element>);
 
-    expect(wrapper.find('div')).to.have.lengthOf(1);
+    expect(wrapper.find('div')).toHaveLength(1);
 
     wrapper = shallow(<Element tagName="span">Foo</Element>);
 
-    expect(wrapper.find('span')).to.have.lengthOf(1);
+    expect(wrapper.find('span')).toHaveLength(1);
 
     wrapper = shallow(<Element tagName="section">Foo</Element>);
 
-    expect(wrapper.find('section')).to.have.lengthOf(1);
+    expect(wrapper.find('section')).toHaveLength(1);
   });
 
   it('renders without children', () => {
     const wrapper = shallow(<Element tagName="div" />);
 
-    expect(wrapper.is('div')).to.equal(true);
-    expect(wrapper.props()).to.deep.equal({
+    expect(wrapper.is('div')).toBe(true);
+    expect(wrapper.props()).toEqual({
       children: null,
       className: 'interweave',
     });
@@ -51,8 +50,8 @@ describe('components/Element', () => {
   it('renders without attributes', () => {
     const wrapper = shallow(<Element tagName="div">Foo</Element>);
 
-    expect(wrapper.isEmptyRender()).to.equal(false);
-    expect(wrapper.props()).to.deep.equal({
+    expect(wrapper.isEmptyRender()).toBe(false);
+    expect(wrapper.props()).toEqual({
       children: 'Foo',
       className: 'interweave',
     });
@@ -61,8 +60,8 @@ describe('components/Element', () => {
   it('renders with attributes', () => {
     const wrapper = shallow(<Element tagName="div" attributes={{ id: 'foo' }}>Foo</Element>);
 
-    expect(wrapper.isEmptyRender()).to.equal(false);
-    expect(wrapper.props()).to.deep.equal({
+    expect(wrapper.isEmptyRender()).toBe(false);
+    expect(wrapper.props()).toEqual({
       children: 'Foo',
       id: 'foo',
       className: 'interweave',
@@ -83,8 +82,8 @@ describe('components/Element', () => {
       </Element>
     ));
 
-    expect(wrapper.isEmptyRender()).to.equal(false);
-    expect(wrapper.props()).to.deep.equal({
+    expect(wrapper.isEmptyRender()).toBe(false);
+    expect(wrapper.props()).toEqual({
       children: 'Foo',
       id: 'foo',
       className: 'interweave',

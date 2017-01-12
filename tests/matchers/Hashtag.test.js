@@ -1,4 +1,3 @@
-import { expect } from 'chai';
 import Parser from '../../src/Parser';
 import HashtagMatcher from '../../src/matchers/Hashtag';
 import { HASHTAG_PATTERN } from '../../src/constants';
@@ -38,7 +37,7 @@ describe('matchers/Hashtag', () => {
         expected.index = 0;
         expected.input = hashtag;
 
-        expect(hashtag.match(pattern)).to.deep.equal(expected);
+        expect(hashtag.match(pattern)).toEqual(expected);
       });
     });
   });
@@ -46,7 +45,7 @@ describe('matchers/Hashtag', () => {
   describe('doesnt match invalid hashtag:', () => {
     INVALID_HASHTAGS.forEach((hashtag) => {
       it(hashtag, () => {
-        expect(hashtag.match(pattern)).to.equal(null);
+        expect(hashtag.match(pattern)).toBe(null);
       });
     });
   });
@@ -69,9 +68,9 @@ describe('matchers/Hashtag', () => {
           const actual = parser.applyMatchers(tokenString, parentConfig);
 
           if (i === 0) {
-            expect(actual).to.equal(expected[0]);
+            expect(actual).toBe(expected[0]);
           } else {
-            expect(actual).to.deep.equal(expected[i]);
+            expect(actual).toEqual(expected[i]);
           }
         });
       });
@@ -80,11 +79,11 @@ describe('matchers/Hashtag', () => {
 
   describe('match()', () => {
     it('returns null for invalid match', () => {
-      expect(matcher.match('invalidtag')).to.equal(null);
+      expect(matcher.match('invalidtag')).toBe(null);
     });
 
     it('returns object for valid match', () => {
-      expect(matcher.match('#hashtag')).to.deep.equal({
+      expect(matcher.match('#hashtag')).toEqual({
         match: '#hashtag',
         hashtagName: 'hashtag',
       });

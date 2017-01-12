@@ -1,5 +1,4 @@
 import React from 'react';
-import { expect } from 'chai';
 import Matcher from '../src/Matcher';
 import Element from '../src/components/Element';
 import { CodeTagMatcher } from './mocks';
@@ -8,19 +7,20 @@ describe('Matcher', () => {
   const matcher = new CodeTagMatcher('foo', '1');
 
   it('errors for html name', () => {
-    expect(() => { new Matcher('html').match(); }).to.throw(Error);
+    expect(() => { new Matcher('html').match(); })
+      .toThrowError('The matcher name "html" is not allowed.');
   });
 
   it('sets names', () => {
     const nameMatcher = new Matcher('barBaz');
 
-    expect(nameMatcher.propName).to.equal('barBaz');
-    expect(nameMatcher.inverseName).to.equal('noBarBaz');
+    expect(nameMatcher.propName).toBe('barBaz');
+    expect(nameMatcher.inverseName).toBe('noBarBaz');
   });
 
   describe('createElement()', () => {
     it('returns a React element from factory', () => {
-      expect(matcher.replaceWith('[foo]', { children: 'foo' })).to.deep.equal((
+      expect(matcher.replaceWith('[foo]', { children: 'foo' })).toEqual((
         <Element tagName="span" key="1">FOO</Element>
       ));
     });
@@ -30,7 +30,7 @@ describe('Matcher', () => {
         <Element tagName={p.tagName}>{match}</Element>
       ));
 
-      expect(customMatcher.createElement('Bar', { tagName: 'div' })).to.deep.equal((
+      expect(customMatcher.createElement('Bar', { tagName: 'div' })).toEqual((
         <Element tagName="div">Bar</Element>
       ));
     });
@@ -38,17 +38,19 @@ describe('Matcher', () => {
     it('errors if not a React element', () => {
       const customMatcher = new Matcher('foo', {}, () => 123);
 
-      expect(() => { customMatcher.createElement(); }).to.throw(Error);
+      expect(() => { customMatcher.createElement(); })
+        .toThrowError('Invalid React element created from Matcher.');
     });
   });
 
   describe('replaceWith()', () => {
     it('errors if factory not defined', () => {
-      expect(() => { new Matcher().replaceWith(); }).to.throw(Error);
+      expect(() => { new Matcher().replaceWith(); })
+        .toThrowError('The matcher name "undefined" is not allowed.');
     });
 
     it('returns a React element', () => {
-      expect(matcher.replaceWith('[foo]', { children: 'foo' })).to.deep.equal((
+      expect(matcher.replaceWith('[foo]', { children: 'foo' })).toEqual((
         <Element tagName="span" key="1">FOO</Element>
       ));
     });
@@ -56,11 +58,12 @@ describe('Matcher', () => {
 
   describe('match()', () => {
     it('errors if match not defined', () => {
-      expect(() => { new Matcher().match(); }).to.throw(Error);
+      expect(() => { new Matcher().match(); })
+        .toThrowError('The matcher name "undefined" is not allowed.');
     });
 
     it('does match', () => {
-      expect(matcher.match('[foo]')).to.deep.equal({
+      expect(matcher.match('[foo]')).toEqual({
         match: '[foo]',
         children: 'foo',
         customProp: 'foo',
@@ -68,7 +71,7 @@ describe('Matcher', () => {
     });
 
     it('does not match', () => {
-      expect(matcher.match('[bar]')).to.equal(null);
+      expect(matcher.match('[bar]')).toBe(null);
     });
   });
 });

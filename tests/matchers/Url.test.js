@@ -1,4 +1,3 @@
-import { expect } from 'chai';
 import Parser from '../../src/Parser';
 import UrlMatcher from '../../src/matchers/Url';
 import { URL_PATTERN } from '../../src/constants';
@@ -114,7 +113,7 @@ describe('matchers/Url', () => {
         expected.index = 0;
         expected.input = url;
 
-        expect(url.match(pattern)).to.deep.equal(expected);
+        expect(url.match(pattern)).toEqual(expected);
       });
     });
   });
@@ -122,7 +121,7 @@ describe('matchers/Url', () => {
   describe('doesnt match invalid url:', () => {
     INVALID_URLS.forEach((urlParams) => {
       it(urlParams.url, () => {
-        expect(urlParams.url.match(pattern)).to.equal(null);
+        expect(urlParams.url.match(pattern)).toBe(null);
       });
     });
   });
@@ -158,9 +157,9 @@ describe('matchers/Url', () => {
           const actual = parser.applyMatchers(tokenString, parentConfig);
 
           if (i === 0) {
-            expect(actual).to.equal(expected[0]);
+            expect(actual).toBe(expected[0]);
           } else {
-            expect(actual).to.deep.equal(expected[i]);
+            expect(actual).toEqual(expected[i]);
           }
         });
       });
@@ -169,11 +168,11 @@ describe('matchers/Url', () => {
 
   describe('match()', () => {
     it('returns null for invalid match', () => {
-      expect(matcher.match('notaurl')).to.equal(null);
+      expect(matcher.match('notaurl')).toBe(null);
     });
 
     it('returns object for valid match', () => {
-      expect(matcher.match('http://user:pass@domain.com:8080/some/path?with=query#fragment')).to.deep.equal({
+      expect(matcher.match('http://user:pass@domain.com:8080/some/path?with=query#fragment')).toEqual({
         match: 'http://user:pass@domain.com:8080/some/path?with=query#fragment',
         urlParts: {
           scheme: 'http',

@@ -7,4 +7,4 @@
 ./.flowconfig
 ./.gitignore
 ./.travis.yml
-./mocha.opts
+./jest.json

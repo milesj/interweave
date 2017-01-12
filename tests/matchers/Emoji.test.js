@@ -1,5 +1,4 @@
 import React from 'react';
-import { expect } from 'chai';
 import Parser from '../../src/Parser';
 import Emoji from '../../src/components/Emoji';
 import EmojiMatcher from '../../src/matchers/Emoji';
@@ -36,7 +35,7 @@ describe('matchers/Emoji', () => {
         expected.index = 0;
         expected.input = unicode;
 
-        expect(unicode.match(pattern)).to.deep.equal(expected);
+        expect(unicode.match(pattern)).toEqual(expected);
       });
     });
 
@@ -46,7 +45,7 @@ describe('matchers/Emoji', () => {
         expected.index = 0;
         expected.input = shortName;
 
-        expect(shortName.match(shortPattern)).to.deep.equal(expected);
+        expect(shortName.match(shortPattern)).toEqual(expected);
       });
     });
   });
@@ -54,13 +53,13 @@ describe('matchers/Emoji', () => {
   describe('doesnt match invalid emoji', () => {
     INVALID_UNICODE.forEach((unicode) => {
       it(`unicode: ${unicode}`, () => {
-        expect(unicode.match(pattern)).to.equal(null);
+        expect(unicode.match(pattern)).toBe(null);
       });
     });
 
     INVALID_SHORTNAME.forEach((shortName) => {
       it(`shortname: ${shortName}`, () => {
-        expect(shortName.match(shortPattern)).to.equal(null);
+        expect(shortName.match(shortPattern)).toBe(null);
       });
     });
   });
@@ -68,7 +67,7 @@ describe('matchers/Emoji', () => {
   describe('doesnt match unicode when `convertUnicode` is false', () => {
     VALID_UNICODE.forEach((unicode) => {
       it(`unicode: ${unicode}`, () => {
-        expect(noConvertMatcher.match(unicode)).to.equal(null);
+        expect(noConvertMatcher.match(unicode)).toBe(null);
       });
     });
   });
@@ -76,7 +75,7 @@ describe('matchers/Emoji', () => {
   describe('doesnt match shortname when `convertShortName` is false', () => {
     VALID_SHORTNAME.forEach((shortName) => {
       it(`shortname: ${shortName}`, () => {
-        expect(noConvertMatcher.match(shortName)).to.equal(null);
+        expect(noConvertMatcher.match(shortName)).toBe(null);
       });
     });
   });
@@ -102,9 +101,9 @@ describe('matchers/Emoji', () => {
           const actual = parser.applyMatchers(tokenString, parentConfig);
 
           if (i === 0) {
-            expect(actual).to.equal(expectedUnicode[0]);
+            expect(actual).toBe(expectedUnicode[0]);
           } else {
-            expect(actual).to.deep.equal(expectedUnicode[i]);
+            expect(actual).toEqual(expectedUnicode[i]);
           }
         });
 
@@ -115,9 +114,9 @@ describe('matchers/Emoji', () => {
           const actual = parser.applyMatchers(tokenString, parentConfig);
 
           if (i === 0) {
-            expect(actual).to.equal(expectedShort[0]);
+            expect(actual).toBe(expectedShort[0]);
           } else {
-            expect(actual).to.deep.equal(expectedShort[i]);
+            expect(actual).toEqual(expectedShort[i]);
           }
         });
       });
@@ -126,22 +125,22 @@ describe('matchers/Emoji', () => {
 
   describe('match()', () => {
     it('returns null for invalid unicode match', () => {
-      expect(matcher.match(INVALID_UNICODE[0])).to.equal(null);
+      expect(matcher.match(INVALID_UNICODE[0])).toBe(null);
     });
 
     it('returns object for valid unicode match', () => {
-      expect(matcher.match(MAN_EMOJI)).to.deep.equal({
+      expect(matcher.match(MAN_EMOJI)).toEqual({
         match: MAN_EMOJI,
         unicode: MAN_EMOJI,
       });
     });
 
     it('returns null for invalid shortname match', () => {
-      expect(matcher.match(':invalid')).to.equal(null);
+      expect(matcher.match(':invalid')).toBe(null);
     });
 
     it('returns object for valid shortname match', () => {
-      expect(matcher.match(':man:')).to.deep.equal({
+      expect(matcher.match(':man:')).toEqual({
         match: ':man:',
         shortName: ':man:',
         unicode: MAN_EMOJI,
@@ -154,11 +153,11 @@ describe('matchers/Emoji', () => {
       const uniMatcher = new EmojiMatcher('emoji', { renderUnicode: true });
 
       it(`returns the unicode as is when using \`renderUnicode\`: ${shortName}`, () => {
-        expect(uniMatcher.replaceWith(unicode, { unicode, shortName })).to.equal(unicode);
+        expect(uniMatcher.replaceWith(unicode, { unicode, shortName })).toBe(unicode);
       });
 
       it(`returns the unicode when providing a shortname using \`renderUnicode\`: ${shortName}`, () => {
-        expect(uniMatcher.replaceWith(shortName, { unicode, shortName })).to.equal(unicode);
+        expect(uniMatcher.replaceWith(shortName, { unicode, shortName })).toBe(unicode);
       });
     });
   });
@@ -167,7 +166,7 @@ describe('matchers/Emoji', () => {
     it('returns a single <Emoji/> enlarged', () => {
       expect(matcher.onAfterParse([
         <Emoji shortName=":cat:" />,
-      ])).to.deep.equal([
+      ])).toEqual([
         <Emoji shortName=":cat:" enlargeEmoji />,
       ]);
     });
@@ -179,7 +178,7 @@ describe('matchers/Emoji', () => {
         <Emoji shortName=":man:" />,
       ];
 
-      expect(matcher.onAfterParse(nodes)).to.deep.equal(nodes);
+      expect(matcher.onAfterParse(nodes)).toEqual(nodes);
     });
 
     it('ignores non-<Emoji/>', () => {
@@ -187,7 +186,7 @@ describe('matchers/Emoji', () => {
         <div>Foo</div>,
       ];
 
-      expect(matcher.onAfterParse(nodes)).to.deep.equal(nodes);
+      expect(matcher.onAfterParse(nodes)).toEqual(nodes);
     });
 
     it('ignores content longer than 1', () => {
@@ -196,7 +195,7 @@ describe('matchers/Emoji', () => {
         'Bar',
       ];
 
-      expect(matcher.onAfterParse(nodes)).to.deep.equal(nodes);
+      expect(matcher.onAfterParse(nodes)).toEqual(nodes);
     });
   });
 });

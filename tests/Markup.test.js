@@ -1,5 +1,4 @@
 import React from 'react';
-import { expect } from 'chai';
 import { shallow } from 'enzyme';
 import Markup from '../src/Markup';
 import Element from '../src/components/Element';
@@ -14,26 +13,26 @@ describe('Markup', () => {
       />
     ));
 
-    expect(wrapper.prop('className')).to.equal('interweave--no-html');
+    expect(wrapper.prop('className')).toBe('interweave--no-html');
   });
 
   it('allows empty `content` to be passed', () => {
     const wrapper = shallow(<Markup content={null} />);
 
-    expect(wrapper.prop('children')).to.equal(null);
+    expect(wrapper.prop('children')).toBe(null);
   });
 
   it('will render the `emptyContent` if no content exists', () => {
     const empty = <div>Foo</div>;
     const wrapper = shallow(<Markup content="" emptyContent={empty} />);
 
-    expect(wrapper.contains(empty)).to.equal(true);
+    expect(wrapper.contains(empty)).toBe(true);
   });
 
   it('parses the entire document starting from the body', () => {
     const wrapper = shallow(<Markup content={MOCK_MARKUP} />);
 
-    expect(wrapper.prop('children')).to.deep.equal([
+    expect(wrapper.prop('children')).toEqual([
       '\n  ',
       <Element key="0" tagName="main" attributes={{ role: 'main' }}>
         {[
@@ -65,7 +64,7 @@ describe('Markup', () => {
   it('converts line breaks', () => {
     const wrapper = shallow(<Markup content={'Foo\nBar'} />);
 
-    expect(wrapper.prop('children')).to.deep.equal([
+    expect(wrapper.prop('children')).toEqual([
       'Foo',
       <Element key="0" tagName="br" selfClose>{[]}</Element>,
       'Bar',
@@ -75,7 +74,7 @@ describe('Markup', () => {
   it('doesnt convert line breaks', () => {
     const wrapper = shallow(<Markup content={'Foo\nBar'} disableLineBreaks />);
 
-    expect(wrapper.prop('children')).to.deep.equal([
+    expect(wrapper.prop('children')).toEqual([
       'Foo\nBar',
     ]);
   });
@@ -83,7 +82,7 @@ describe('Markup', () => {
   it('doesnt convert line breaks if it contains HTML', () => {
     const wrapper = shallow(<Markup content={'Foo\n<br/>Bar'} />);
 
-    expect(wrapper.prop('children')).to.deep.equal([
+    expect(wrapper.prop('children')).toEqual([
       'Foo\n',
       <Element key="0" tagName="br" selfClose>{[]}</Element>,
       'Bar',

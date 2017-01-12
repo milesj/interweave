@@ -1,5 +1,4 @@
 import React from 'react';
-import { expect } from 'chai';
 import Parser from '../src/Parser';
 import Element from '../src/components/Element';
 import {
@@ -45,20 +44,20 @@ describe('Parser', () => {
 
   it('parses when passed an empty value', () => {
     [null, false, undefined, '', 0].forEach((value) => {
-      expect(new Parser(value).parse()).to.deep.equal([]);
+      expect(new Parser(value).parse()).toEqual([]);
     });
   });
 
   it('errors for a non-string value', () => {
     [123, 456.78, true, [], {}].forEach((value) => {
-      expect(() => new Parser(value)).to.throw(TypeError);
+      expect(() => new Parser(value)).toThrowError('Interweave parser requires a valid string.');
     });
   });
 
   describe('applyFilters()', () => {
     it('applies filters for the attribute name', () => {
-      expect(instance.applyFilters('src', 'foo.com')).to.equal('foo.com');
-      expect(instance.applyFilters('href', 'foo.com')).to.equal('bar.net');
+      expect(instance.applyFilters('src', 'foo.com')).toBe('foo.com');
+      expect(instance.applyFilters('href', 'foo.com')).toBe('bar.net');
     });
   });
 
@@ -86,9 +85,9 @@ describe('Parser', () => {
           const actual = instance.applyMatchers(tokenString, parentConfig);
 
           if (i === 0) {
-            expect(actual).to.equal(expected[0]);
+            expect(actual).toBe(expected[0]);
           } else {
-            expect(actual).to.deep.equal(expected[i]);
+            expect(actual).toEqual(expected[i]);
           }
         });
       });
@@ -108,9 +107,9 @@ describe('Parser', () => {
           const actual = instance.applyMatchers(tokenString, parentConfig);
 
           if (i === 0) {
-            expect(actual).to.equal(expected[0]);
+            expect(actual).toBe(expected[0]);
           } else {
-            expect(actual).to.deep.equal(expected[i]);
+            expect(actual).toEqual(expected[i]);
           }
         });
       });
@@ -124,7 +123,7 @@ describe('Parser', () => {
           const tokenString = location.replace(/\{token\}/g, '[qux]');
           const actual = instance.applyMatchers(tokenString, parentConfig);
 
-          expect(actual).to.equal(expected[i]);
+          expect(actual).toBe(expected[i]);
         });
       });
     });
@@ -137,7 +136,7 @@ describe('Parser', () => {
           const tokenString = location.replace(/\{token\}/g, '[foo]');
           const actual = instance.applyMatchers(tokenString, parentConfig);
 
-          expect(actual).to.equal(tokenString);
+          expect(actual).toBe(tokenString);
 
           instance.props = {};
         });
@@ -149,8 +148,8 @@ describe('Parser', () => {
     it('injects the markup into the body', () => {
       const doc = instance.createDocument('<div>Foo<section>Bar</section><aside>Baz</aside></div>');
 
-      expect(doc.body.outerHTML).to
-        .equal('<body><div>Foo<section>Bar</section><aside>Baz</aside></div></body>');
+      expect(doc.body.outerHTML)
+        .toBe('<body><div>Foo<section>Bar</section><aside>Baz</aside></div></body>');
     });
 
     it('injects the document and overrides', () => {
@@ -159,43 +158,43 @@ describe('Parser', () => {
         '<body><main>Foo<div>Bar<span>Baz</span></div></main></body>' +
         '</html>');
 
-      expect(doc.head.childNodes[0].textContent).to.equal('Wat');
-      expect(doc.body.outerHTML).to
-        .equal('<body><main>Foo<div>Bar<span>Baz</span></div></main></body>');
+      expect(doc.head.childNodes[0].textContent).toBe('Wat');
+      expect(doc.body.outerHTML)
+        .toBe('<body><main>Foo<div>Bar<span>Baz</span></div></main></body>');
     });
   });
 
   describe('convertLineBreaks()', () => {
     it('it doesnt convert when HTML closing tags exist', () => {
-      expect(instance.convertLineBreaks('<div>It\nwont\r\nconvert.</div>')).to.equal('<div>It\nwont\r\nconvert.</div>');
+      expect(instance.convertLineBreaks('<div>It\nwont\r\nconvert.</div>')).toBe('<div>It\nwont\r\nconvert.</div>');
     });
 
     it('it doesnt convert when HTML void tags exist', () => {
-      expect(instance.convertLineBreaks('It\n<br/>wont\r\nconvert.')).to.equal('It\n<br/>wont\r\nconvert.');
+      expect(instance.convertLineBreaks('It\n<br/>wont\r\nconvert.')).toBe('It\n<br/>wont\r\nconvert.');
     });
 
     it('it doesnt convert when HTML void tags with spaces exist', () => {
-      expect(instance.convertLineBreaks('It\n<br  />wont\r\nconvert.')).to.equal('It\n<br  />wont\r\nconvert.');
+      expect(instance.convertLineBreaks('It\n<br  />wont\r\nconvert.')).toBe('It\n<br  />wont\r\nconvert.');
     });
 
     it('it doesnt convert if `noHtml` is true', () => {
       instance.props.noHtml = true;
 
-      expect(instance.convertLineBreaks('It\nwont\r\nconvert.')).to.equal('It\nwont\r\nconvert.');
+      expect(instance.convertLineBreaks('It\nwont\r\nconvert.')).toBe('It\nwont\r\nconvert.');
     });
 
     it('it doesnt convert if `disableLineBreaks` is true', () => {
       instance.props.disableLineBreaks = true;
 
-      expect(instance.convertLineBreaks('It\nwont\r\nconvert.')).to.equal('It\nwont\r\nconvert.');
+      expect(instance.convertLineBreaks('It\nwont\r\nconvert.')).toBe('It\nwont\r\nconvert.');
     });
 
     it('it replaces carriage returns', () => {
-      expect(instance.convertLineBreaks('Foo\r\nBar')).to.equal('Foo<br/>Bar');
+      expect(instance.convertLineBreaks('Foo\r\nBar')).toBe('Foo<br/>Bar');
     });
 
     it('it replaces super long multilines', () => {
-      expect(instance.convertLineBreaks('Foo\n\n\n\n\n\n\nBar')).to.equal('Foo<br/><br/><br/>Bar');
+      expect(instance.convertLineBreaks('Foo\n\n\n\n\n\n\nBar')).toBe('Foo<br/><br/><br/>Bar');
     });
   });
 
@@ -212,7 +211,7 @@ describe('Parser', () => {
           it(`allows the "${name}" attribute and casts to a string`, () => {
             element.setAttribute(name, 'Foo');
 
-            expect(instance.extractAttributes(element)).to.deep.equal({
+            expect(instance.extractAttributes(element)).toEqual({
               [attrName]: 'Foo',
             });
           });
@@ -222,13 +221,13 @@ describe('Parser', () => {
           it(`allows the "${name}" attribute and casts to a boolean`, () => {
             element.setAttribute(name, true);
 
-            expect(instance.extractAttributes(element)).to.deep.equal({
+            expect(instance.extractAttributes(element)).toEqual({
               [attrName]: true,
             });
 
             element.setAttribute(name, false);
 
-            expect(instance.extractAttributes(element)).to.deep.equal({
+            expect(instance.extractAttributes(element)).toEqual({
               [attrName]: false,
             });
           });
@@ -236,13 +235,13 @@ describe('Parser', () => {
           it(`allows the "${name}" attribute and casts to a boolean when setting value equal to name`, () => {
             element.setAttribute(name, name);
 
-            expect(instance.extractAttributes(element)).to.deep.equal({
+            expect(instance.extractAttributes(element)).toEqual({
               [attrName]: true,
             });
 
             element.setAttribute(name, '');
 
-            expect(instance.extractAttributes(element)).to.deep.equal({
+            expect(instance.extractAttributes(element)).toEqual({
               [attrName]: false,
             });
           });
@@ -252,7 +251,7 @@ describe('Parser', () => {
           it(`allows the "${name}" attribute and casts to a number`, () => {
             element.setAttribute(name, '100');
 
-            expect(instance.extractAttributes(element)).to.deep.equal({
+            expect(instance.extractAttributes(element)).toEqual({
               [attrName]: 100,
             });
           });
@@ -266,7 +265,7 @@ describe('Parser', () => {
     it('allows aria attributes', () => {
       element.setAttribute('aria-live', 'off');
 
-      expect(instance.extractAttributes(element)).to.deep.equal({
+      expect(instance.extractAttributes(element)).toEqual({
         'aria-live': 'off',
       });
     });
@@ -274,13 +273,13 @@ describe('Parser', () => {
     it('denies data attributes', () => {
       element.setAttribute('data-foo', 'bar');
 
-      expect(instance.extractAttributes(element)).to.equal(null);
+      expect(instance.extractAttributes(element)).toBe(null);
     });
 
     it('denies attributes that are not whitelisted', () => {
       element.setAttribute('readonly', 'true');
 
-      expect(instance.extractAttributes(element)).to.equal(null);
+      expect(instance.extractAttributes(element)).toBe(null);
     });
 
     it('denies attributes that start with on', () => {
@@ -288,7 +287,7 @@ describe('Parser', () => {
       element.setAttribute('onclick', 'doSomething();');
       element.onmouseenter = function () {};
 
-      expect(instance.extractAttributes(element)).to.equal(null);
+      expect(instance.extractAttributes(element)).toBe(null);
     });
 
     it('denies sources that have injections', () => {
@@ -298,7 +297,7 @@ describe('Parser', () => {
       element.setAttribute('source', 'xss:confirm();');
       /* eslint-enable no-script-url */
 
-      expect(instance.extractAttributes(element)).to.equal(null);
+      expect(instance.extractAttributes(element)).toBe(null);
     });
 
     it('camel cases specific attribute names to React attribute names', () => {
@@ -309,7 +308,7 @@ describe('Parser', () => {
       element.setAttribute('alt', 'Foo');
       element.setAttribute('disabled', 'disabled');
 
-      expect(instance.extractAttributes(element)).to.deep.equal({
+      expect(instance.extractAttributes(element)).toEqual({
         dateTime: '2016-01-01',
         colSpan: 3,
         rowSpan: 6,
@@ -322,7 +321,7 @@ describe('Parser', () => {
     it('applies filters to attributes', () => {
       element.setAttribute('href', 'http://foo.com/hello/world');
 
-      expect(instance.extractAttributes(element)).to.deep.equal({
+      expect(instance.extractAttributes(element)).toEqual({
         href: 'http://bar.net/hello/world',
       });
     });
@@ -332,7 +331,7 @@ describe('Parser', () => {
     it('parses the entire document starting from the body', () => {
       instance = new Parser(MOCK_MARKUP);
 
-      expect(instance.parse()).to.deep.equal([
+      expect(instance.parse()).toEqual([
         '\n  ',
         <Element key="0" tagName="main" attributes={{ role: 'main' }}>
           {[
@@ -368,14 +367,14 @@ describe('Parser', () => {
     });
 
     it('returns an empty array when no child nodes present', () => {
-      expect(instance.parseNode(element, parentConfig)).to.deep.equal([]);
+      expect(instance.parseNode(element, parentConfig)).toEqual([]);
     });
 
     it('returns text nodes as strings', () => {
       element.appendChild(document.createTextNode('Foo'));
       element.appendChild(document.createTextNode('Bar'));
 
-      expect(instance.parseNode(element, parentConfig)).to.deep.equal([
+      expect(instance.parseNode(element, parentConfig)).toEqual([
         'FooBar',
       ]);
     });
@@ -386,7 +385,7 @@ describe('Parser', () => {
           it(`renders <${tag}> elements that are allowed`, () => {
             element.appendChild(createChild(tag, i));
 
-            expect(instance.parseNode(element, parentConfig)).to.deep.equal([
+            expect(instance.parseNode(element, parentConfig)).toEqual([
               <Element key="0" tagName={tag}>{[`${i}`]}</Element>,
             ]);
           });
@@ -396,7 +395,7 @@ describe('Parser', () => {
           it(`removes <${tag}> elements that are denied`, () => {
             element.appendChild(createChild(tag, i));
 
-            expect(instance.parseNode(element, parentConfig)).to.deep.equal([]);
+            expect(instance.parseNode(element, parentConfig)).toEqual([]);
           });
           break;
 
@@ -404,7 +403,7 @@ describe('Parser', () => {
           it(`removes <${tag}> elements as they are pass-through but renders its children`, () => {
             element.appendChild(createChild(tag, i));
 
-            expect(instance.parseNode(element, parentConfig)).to.deep.equal([
+            expect(instance.parseNode(element, parentConfig)).toEqual([
               `${i}`,
             ]);
           });
@@ -418,7 +417,7 @@ describe('Parser', () => {
     it('ignores unknown elements', () => {
       element.appendChild(document.createElement('foo'));
 
-      expect(instance.parseNode(element, parentConfig)).to.deep.equal([]);
+      expect(instance.parseNode(element, parentConfig)).toEqual([]);
     });
 
     it('returns text and element nodes in order', () => {
@@ -426,7 +425,7 @@ describe('Parser', () => {
       element.appendChild(createChild('div', 'Bar'));
       element.appendChild(document.createTextNode('Baz'));
 
-      expect(instance.parseNode(element, parentConfig)).to.deep.equal([
+      expect(instance.parseNode(element, parentConfig)).toEqual([
         'Foo',
         <Element key="0" tagName="div">{['Bar']}</Element>,
         'Baz',
@@ -440,7 +439,7 @@ describe('Parser', () => {
       element.appendChild(document.createTextNode('Qux'));
       element.appendChild(createChild('div', 'Bar'));
 
-      expect(instance.parseNode(element, parentConfig)).to.deep.equal([
+      expect(instance.parseNode(element, parentConfig)).toEqual([
         'Foo',
         <Element key="0" tagName="div">{['Bar']}</Element>,
         'BazQux',
@@ -451,19 +450,19 @@ describe('Parser', () => {
     it('ignores comment nodes', () => {
       element.appendChild(document.createComment('Comment'));
 
-      expect(instance.parseNode(element, parentConfig)).to.deep.equal([]);
+      expect(instance.parseNode(element, parentConfig)).toEqual([]);
     });
 
     it('ignores document nodes', () => {
       element.appendChild(document);
 
-      expect(instance.parseNode(element, parentConfig)).to.deep.equal([]);
+      expect(instance.parseNode(element, parentConfig)).toEqual([]);
     });
 
     it('ignores document fragment nodes', () => {
       element.appendChild(document.createDocumentFragment());
 
-      expect(instance.parseNode(element, parentConfig)).to.deep.equal([]);
+      expect(instance.parseNode(element, parentConfig)).toEqual([]);
     });
 
     it('passes through elements if `noHtml` prop is set', () => {
@@ -477,7 +476,7 @@ describe('Parser', () => {
       element.appendChild(createChild('div', 'Qux'));
       element.appendChild(createChild('div', 'Wat'));
 
-      expect(instance.parseNode(element, parentConfig)).to.deep.equal([
+      expect(instance.parseNode(element, parentConfig)).toEqual([
         'Foo',
         'Bar',
         'Baz',
@@ -496,7 +495,7 @@ describe('Parser', () => {
       expect(instance.parseNode(element, {
         ...parentConfig,
         children: ['b'],
-      })).to.deep.equal([
+      })).toEqual([
         'Foo',
         'Bar',
         'Baz',
@@ -515,7 +514,7 @@ describe('Parser', () => {
       expect(instance.parseNode(element, {
         ...parentConfig,
         children: ['li'],
-      })).to.deep.equal([
+      })).toEqual([
         'Foo',
         'Bar',
         'Baz',
@@ -534,7 +533,7 @@ describe('Parser', () => {
       expect(instance.parseNode(element, {
         ...parentConfig,
         self: false,
-      })).to.deep.equal([
+      })).toEqual([
         'Foo',
         'Bar',
         'Baz',
@@ -553,7 +552,7 @@ describe('Parser', () => {
       expect(instance.parseNode(element, {
         ...parentConfig,
         block: false,
-      })).to.deep.equal([
+      })).toEqual([
         'Foo',
         'Bar',
         'Baz',
@@ -572,7 +571,7 @@ describe('Parser', () => {
       expect(instance.parseNode(element, {
         ...parentConfig,
         inline: false,
-      })).to.deep.equal([
+      })).toEqual([
         'Foo',
         <Element key="0" tagName="div">{['Bar']}</Element>,
         'Baz',
@@ -590,7 +589,7 @@ describe('Parser', () => {
       expect(instance.parseNode(element, {
         ...TAGS.span,
         tagName: 'span',
-      })).to.deep.equal([
+      })).toEqual([
         'Foo',
         <Element key="0" tagName="a">{['Bar']}</Element>,
         'Baz',
@@ -604,7 +603,7 @@ describe('Parser', () => {
 
       expect(instance.parseNode(element, {
         ...parentConfig,
-      })).to.deep.equal([
+      })).toEqual([
         'Foo',
         <Element key="0" tagName="a">{['Bar']}</Element>,
         'Baz',
@@ -620,7 +619,7 @@ describe('Parser', () => {
       expect(instance.parseNode(element, {
         ...TAGS.a,
         tagName: 'a',
-      })).to.deep.equal([
+      })).toEqual([
         'Foo',
         <Element key="0" tagName="span">{['Bar']}</Element>,
         'Baz',
@@ -636,7 +635,7 @@ describe('Parser', () => {
       expect(instance.parseNode(element, {
         ...TAGS.a,
         tagName: 'a',
-      })).to.deep.equal([
+      })).toEqual([
         'Foo',
         <Element key="0" tagName="div">{['Bar']}</Element>,
         'Baz',

@@ -1,11 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Interweave from '../../src/Interweave';
-import EmailMatcher from '../../src/matchers/Email';
-import EmojiMatcher from '../../src/matchers/Emoji';
-import HashtagMatcher from '../../src/matchers/Hashtag';
-import IpMatcher from '../../src/matchers/Ip';
-import UrlMatcher from '../../src/matchers/Url';
+import Interweave from '../src/Interweave';
+import EmailMatcher from '../src/matchers/Email';
+import EmojiMatcher from '../src/matchers/Emoji';
+import HashtagMatcher from '../src/matchers/Hashtag';
+import IpMatcher from '../src/matchers/Ip';
+import UrlMatcher from '../src/matchers/Url';
 
 function App() {
   const contentWithNewLines = `This block has multiple new lines.

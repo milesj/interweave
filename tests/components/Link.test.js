@@ -1,5 +1,4 @@
 import React from 'react';
-import { expect } from 'chai';
 import { shallow } from 'enzyme';
 import Link from '../../src/components/Link';
 
@@ -7,10 +6,10 @@ describe('components/Link', () => {
   it('renders a link with href', () => {
     const wrapper = shallow(<Link href="/home">Foo</Link>);
 
-    expect(wrapper.is('a')).to.equal(true);
-    expect(wrapper.prop('href')).to.equal('/home');
-    expect(wrapper.prop('className')).to.equal('interweave__link');
-    expect(wrapper.prop('children')).to.equal('Foo');
+    expect(wrapper.is('a')).toBe(true);
+    expect(wrapper.prop('href')).toBe('/home');
+    expect(wrapper.prop('className')).toBe('interweave__link');
+    expect(wrapper.prop('children')).toBe('Foo');
   });
 
   it('can set and trigger an onClick', () => {
@@ -18,20 +17,20 @@ describe('components/Link', () => {
     const clicker = () => { clicked = true; };
     const wrapper = shallow(<Link href="/blog" onClick={clicker}>Foo</Link>);
 
-    expect(wrapper.prop('onClick')).to.equal(clicker);
+    expect(wrapper.prop('onClick')).toBe(clicker);
 
     wrapper.simulate('click');
 
-    expect(clicked).to.equal(true);
+    expect(clicked).toBe(true);
   });
 
   it('can set target blank via newWindow', () => {
     const wrapper = shallow(<Link href="/forums">Foo</Link>);
 
-    expect(wrapper.prop('target')).to.equal(null);
+    expect(wrapper.prop('target')).toBe(null);
 
     wrapper.setProps({ newWindow: true });
 
-    expect(wrapper.prop('target')).to.equal('_blank');
+    expect(wrapper.prop('target')).toBe('_blank');
   });
 });
