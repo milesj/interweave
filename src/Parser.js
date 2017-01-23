@@ -257,8 +257,11 @@ export default class Parser {
     const doc = document.implementation.createHTMLDocument('Interweave');
 
     if (markup.substr(0, 9).toUpperCase() === '<!DOCTYPE') {
+      // $FlowIssue Isn't null
       doc.documentElement.innerHTML = markup;
+
     } else {
+      // $FlowIssue Isn't null
       doc.body.innerHTML = this.convertLineBreaks(markup);
     }
 
@@ -280,7 +283,6 @@ export default class Parser {
       return null;
     }
 
-    // $FlowIssue Array.from() defines Array<void>
     Array.from(node.attributes).forEach((attr: { name: string, value: string }) => {
       const name: string = attr.name.toLowerCase();
       const value: string = attr.value;
@@ -334,6 +336,7 @@ export default class Parser {
    * @returns {String[]|ReactElement[]}
    */
   parse(): ParsedNodes {
+    // $FlowIssue Body is not null!
     return this.parseNode(this.doc.body, {
       ...TAGS.body,
       tagName: 'body',

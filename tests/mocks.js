@@ -147,6 +147,7 @@ export class CodeTagMatcher extends Matcher {
 }
 
 export class MockMatcher extends Matcher {
+  /* istanbul ignore next */
   constructor(key) {
     super(key);
 
@@ -165,6 +166,7 @@ export class HrefFilter extends Filter {
 }
 
 export class MockFilter extends Filter {
+  /* istanbul ignore next */
   filter(value) {
     return value;
   }

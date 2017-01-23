@@ -1,8 +1,8 @@
 {
-  "collectCoverage": true,
+  "collectCoverage": false,
   "coverageDirectory": "./coverage",
   "globals": {},
-  "resetMocks": true,
-  "resetModules": true,
+  "resetMocks": false,
+  "resetModules": false,
   "testPathDirs": ["./tests"]
 }

@@ -78,6 +78,7 @@ export default class EmojiMatcher extends Matcher<EmojiOptions> {
         response && response.unicode &&
         !UNICODE_TO_SHORTNAME[response.unicode]
       ) {
+        /* istanbul ignore next Hard to test */
         return null;
       }
     }
