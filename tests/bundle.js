@@ -65,6 +65,13 @@ Help!`;
 
       <Interweave
         tagName="div"
+        matchers={[new EmojiMatcher('emoji', { convertUnicode: true, convertShortName: true })]}
+        content={'This will convert surrogate pairs 👨👩👧👦 :family_mwgb: \uD83D\uDC68\uD83D\uDC69\uD83D\uDC67\uD83D\uDC66 to PNGs.'}
+        emojiPath="https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.6/assets/png/{{hexcode}}.png"
+      />
+
+      <Interweave
+        tagName="div"
         matchers={[new EmojiMatcher('emoji', { convertShortName: true, renderUnicode: true })]}
         content="This will convert :cat: :dog: emoji shortnames :man: to unicode literals."
       />
@@ -73,6 +80,12 @@ Help!`;
         tagName="div"
         matchers={[new EmojiMatcher('emoji', { convertUnicode: true, renderUnicode: true })]}
         content={'This will convert \uD83D\uDC31 \uD83D\uDC36 emoji unicode escapes \uD83D\uDC68 to unicode literals.'}
+      />
+
+      <Interweave
+        tagName="div"
+        matchers={[new EmojiMatcher('emoji', { convertUnicode: true, convertShortName: true, renderUnicode: true })]}
+        content={'This will convert surrogate pairs 👨👩👧👦 :family_mwgb: \uD83D\uDC68\uD83D\uDC69\uD83D\uDC67\uD83D\uDC66 to unicode literals.'}
       />
 
       <Interweave
