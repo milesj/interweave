@@ -1,15 +1,15 @@
 #! /usr/bin/env node
 
-const Trie = require('regexgen').Trie;
+const regenerate = require('regenerate');
 const emojiData = require('emojione/emoji.json');
 
 // If we separate each surrogate pair into a trie per code point,
 // we can efficiently created nested groups and ranges.
 const codePointGroups = {
-  4: [new Trie(), new Trie(), new Trie(), new Trie()],
-  3: [new Trie(), new Trie(), new Trie()],
-  2: [new Trie(), new Trie()],
-  1: [new Trie()],
+  4: [regenerate(), regenerate(), regenerate(), regenerate()],
+  3: [regenerate(), regenerate(), regenerate()],
+  2: [regenerate(), regenerate()],
+  1: [regenerate()],
 };
 
 // Extract the codepoints from the data set

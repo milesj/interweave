@@ -1,3 +1,8 @@
+# 2.0.2
+* Fixed an issue with surrogate pair emojis rendering separately. For example, the MWGB family
+  emoji should now render as a single emoji, instead of 4 individual.
+* Improved the efficiency of the emoji regex pattern.
+
 # 2.0.1
 * Fixed an issue with the NPM package.
 
