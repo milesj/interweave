@@ -3,33 +3,33 @@
 const Trie = require('regexgen').Trie;
 const emojiData = require('emojione/emoji.json');
 
-const multiCodePoints = [];
-const singleCodePoint = new Trie();
+// If we separate each surrogate pair into a trie per code point,
+// we can efficiently created nested groups and ranges.
+const codePointGroups = {
+  4: [new Trie(), new Trie(), new Trie(), new Trie()],
+  3: [new Trie(), new Trie(), new Trie()],
+  2: [new Trie(), new Trie()],
+  1: [new Trie()],
+};
 
-// Extract the code points from data set
+// Extract the codepoints from the data set
 Object.keys(emojiData).forEach((shortName) => {
-  const points = emojiData[shortName].unicode.split('-');
+  const hexCodes = emojiData[shortName].unicode.split('-');
+  const group = hexCodes.length;
 
-  // The "asterisk" emoji causes "no repeating" errors, so escape it
-  if (shortName === 'asterisk') {
-    multiCodePoints.push('(?:\\\\*\\u20E3)');
-
-  // Pairs are difficult to optimize, so just use normal capturing groups
-  } else if (points.length > 1) {
-    const patterns = points.map(point => `\\u{${point}}`).join('');
-
-    multiCodePoints.push(`(?:${patterns})`);
-
-  // While non-pairs can use ranges
-  } else {
-    singleCodePoint.add(String.fromCodePoint(parseInt(points[0], 16)));
-  }
+  hexCodes.forEach((hexCode, i) => {
+    codePointGroups[group][i].add(String.fromCodePoint(parseInt(hexCode, 16)));
+  });
 });
 
-// Sort with largest pair at the top
-multiCodePoints.sort((a, b) => b.length - a.length);
+// Generate the regex pattern groups
+const regex = [4, 3, 2, 1].map((group) => {
+  const pattern = codePointGroups[group]
+    .map(trie => ((group === 1) ? trie.toString() : `(?:${trie.toString()})`))
+    .join('');
 
-// Append the single patterns
-multiCodePoints.push(singleCodePoint.toString());
+  return (group === 1) ? pattern : `(?:${pattern})`;
+});
 
-console.log(multiCodePoints.join('|'));
+// Join the groups and escape the asterisk emoji
+console.log(regex.join('|').replace('*', '\\*'));
