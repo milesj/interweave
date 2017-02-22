@@ -295,7 +295,7 @@ export default class Parser {
           !filter ||
           filter === FILTER_DENY ||
           name.match(/^on/) ||
-          value.match(/(javascript|script|xss):/i)
+          value.replace(/\r|\n/, '').match(/(javascript|script|xss):/i)
         ) {
           return;
         }

@@ -314,6 +314,8 @@ describe('Parser', () => {
     it('denies sources that have injections', () => {
       /* eslint-disable no-script-url */
       element.setAttribute('href', 'javascript:alert();');
+      element.setAttribute('href', 'javas\ncript:alert();');
+      element.setAttribute('src', 'java\rs\ncript:void(0);');
       element.setAttribute('src', 'javaScript:void(0);');
       element.setAttribute('source', 'xss:confirm();');
       /* eslint-enable no-script-url */
