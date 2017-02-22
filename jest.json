@@ -4,5 +4,5 @@
   "globals": {},
   "resetMocks": false,
   "resetModules": false,
-  "testPathDirs": ["./tests"]
+  "roots": ["./src", "./tests"]
 }
