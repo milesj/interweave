@@ -288,6 +288,11 @@ export default class Parser {
       const value: string = attr.value;
       const filter: number = ATTRIBUTES[name];
 
+      // Verify the node is safe from attacks
+      if (!this.isSafe(node)) {
+        return;
+      }
+
       // Do not allow blacklisted attributes excluding ARIA attributes
       // Do not allow events or XSS injections
       if (name.substr(0, 5) !== 'aria-') {
@@ -295,7 +300,7 @@ export default class Parser {
           !filter ||
           filter === FILTER_DENY ||
           name.match(/^on/) ||
-          value.replace(/\r|\n/, '').match(/(javascript|script|xss):/i)
+          value.replace(/(\s|\0|&#x0(9|A|D);)/, '').match(/(javascript|vbscript|livescript|xss):/i)
         ) {
           return;
         }
@@ -326,6 +331,41 @@ export default class Parser {
     }
 
     return attributes;
+  }
+
+  /**
+   * Verify that a node is safe from XSS and injection attacks.
+   *
+   * @param {Node} node
+   * @returns {Boolean}
+   */
+  isSafe(node: NodeInterface): boolean {
+    if (!(node instanceof HTMLElement)) {
+      return true;
+    }
+
+    // URLs should only support HTTP and email
+    if ('href' in node) {
+      const href = node.getAttribute('href');
+
+      // Fragment protocols start with about:
+      // So let's just allow them
+      if (href && href.charAt(0) === '#') {
+        return true;
+      }
+
+      // $FlowIssue Protocol only exists for anchors
+      const protocol = (node.protocol || '').toLowerCase();
+
+      return (
+        protocol === ':' ||
+        protocol === 'http:' ||
+        protocol === 'https:' ||
+        protocol === 'mailto:'
+      );
+    }
+
+    return true;
   }
 
   /**

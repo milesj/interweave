@@ -311,16 +311,41 @@ describe('Parser', () => {
       expect(instance.extractAttributes(element)).toBe(null);
     });
 
+    // https://www.owasp.org/index.php/XSS_Filter_Evasion_Cheat_Sheet
     it('denies sources that have injections', () => {
       /* eslint-disable no-script-url */
+      element = document.createElement('a');
+
       element.setAttribute('href', 'javascript:alert();');
-      element.setAttribute('href', 'javas\ncript:alert();');
-      element.setAttribute('src', 'java\rs\ncript:void(0);');
+      expect(instance.extractAttributes(element)).toBe(null);
+
+      element.setAttribute('href', 'jav\ras\ncript\t:alert();');
+      expect(instance.extractAttributes(element)).toBe(null);
+
+      element.setAttribute('href', 'jav&#x09;ascript:alert();');
+      expect(instance.extractAttributes(element)).toBe(null);
+
+      element.setAttribute('href', 'jav&#x0A;ascript:alert();');
+      expect(instance.extractAttributes(element)).toBe(null);
+
+      element.setAttribute('href', 'jav&#x0D;ascript:alert();');
+      expect(instance.extractAttributes(element)).toBe(null);
+
+      element.setAttribute('href', 'java\0script:alert();');
+      expect(instance.extractAttributes(element)).toBe(null);
+
+      element = document.createElement('img');
+
       element.setAttribute('src', 'javaScript:void(0);');
-      element.setAttribute('source', 'xss:confirm();');
+      expect(instance.extractAttributes(element)).toBe(null);
+
+      element.setAttribute('src', ' &#14;  javascript:void(0);');
+      expect(instance.extractAttributes(element)).toBe(null);
+
+      element.setAttribute('src', 'xss:confirm();');
+      expect(instance.extractAttributes(element)).toBe(null);
       /* eslint-enable no-script-url */
 
-      expect(instance.extractAttributes(element)).toBe(null);
     });
 
     it('camel cases specific attribute names to React attribute names', () => {
