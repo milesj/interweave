@@ -65,10 +65,6 @@ export default class Parser {
   /**
    * Loop through and apply all registered attribute filters to the
    * provided value.
-   *
-   * @param {String} attribute
-   * @param {String} value
-   * @returns {String}
    */
   applyFilters(attribute: string, value: string): string {
     return this.filters.reduce((newValue, filter) => (
@@ -80,10 +76,6 @@ export default class Parser {
    * Loop through and apply all registered matchers to the string.
    * If a match is found, create a React element, and build a new array.
    * This array allows React to interpolate and render accordingly.
-   *
-   * @param {String} string
-   * @param {Object} parentConfig
-   * @returns {String|String[]}
    */
   applyMatchers(
     string: string,
@@ -169,10 +161,6 @@ export default class Parser {
 
   /**
    * Determine whether the child can be rendered within the parent.
-   *
-   * @param {Object} parentConfig
-   * @param {Object} childConfig
-   * @returns {Boolean}
    */
   canRenderChild(parentConfig: NodeConfig, childConfig: NodeConfig): boolean {
     if (!parentConfig.tagName || !childConfig.tagName) {
@@ -222,9 +210,6 @@ export default class Parser {
    * Convert line breaks in a string to HTML `<br/>` tags.
    * If the string contains HTML, we should not convert anything,
    * as line breaks should be handled by `<br/>`s in the markup itself.
-   *
-   * @param {String} markup
-   * @returns {String}
    */
   convertLineBreaks(markup: string): string {
     const { noHtml, disableLineBreaks } = this.props;
@@ -249,9 +234,6 @@ export default class Parser {
    * Create a detached HTML document that allows for easy HTML
    * parsing while not triggering scripts or loading external
    * resources.
-   *
-   * @param {String} markup
-   * @returns {HTMLDocument}
    */
   createDocument(markup: string): Document {
     const doc = document.implementation.createHTMLDocument('Interweave');
@@ -271,9 +253,6 @@ export default class Parser {
   /**
    * Convert an elements attribute map to an object map.
    * Returns null if no attributes are defined.
-   *
-   * @param {Node} node
-   * @returns {Object|null}
    */
   extractAttributes(node: NodeInterface): ?Attributes {
     const attributes = {};
@@ -335,9 +314,6 @@ export default class Parser {
 
   /**
    * Verify that a node is safe from XSS and injection attacks.
-   *
-   * @param {Node} node
-   * @returns {Boolean}
    */
   isSafe(node: NodeInterface): boolean {
     if (!(node instanceof HTMLElement)) {
@@ -372,8 +348,6 @@ export default class Parser {
    * Parse the markup by injecting it into a detached document,
    * while looping over all child nodes and generating an
    * array to interpolate into JSX.
-   *
-   * @returns {String[]|ReactElement[]}
    */
   parse(): ParsedNodes {
     // $FlowIssue Body is not null!
@@ -386,10 +360,6 @@ export default class Parser {
   /**
    * Loop over the nodes children and generate a
    * list of text nodes and React elements.
-   *
-   * @param {Node} parentNode
-   * @param {Object} parentConfig
-   * @returns {String[]|ReactElement[]}
    */
   parseNode(parentNode: NodeInterface, parentConfig: NodeConfig): ParsedNodes {
     const { noHtml } = this.props;

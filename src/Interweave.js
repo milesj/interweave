@@ -108,8 +108,6 @@ export default class Interweave extends React.Component {
 
   /**
    * Render the component by parsing the markup.
-   *
-   * @returns {JSX}
    */
   render() {
     const { tagName, noHtml } = this.props;

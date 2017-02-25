@@ -14,34 +14,22 @@ import type { MatchResponse, UrlProps } from '../types';
 const URL_REGEX = new RegExp(URL_PATTERN, 'i');
 
 export default class UrlMatcher extends Matcher<Object> {
-  /**
-   * {@inheritDoc}
-   */
   replaceWith(match: string, props: Object = {}): React.Element<UrlProps> {
     return (
       <Url {...props}>{match}</Url>
     );
   }
 
-  /**
-   * @{inheritDoc}
-   */
   asTag(): string {
     return 'a';
   }
 
-  /**
-   * {@inheritDoc}
-   */
   match(string: string): ?MatchResponse {
     return this.doMatch(string, URL_REGEX, this.handleMatches);
   }
 
   /**
    * Package the mached response.
-   *
-   * @param {String[]} matches
-   * @returns {Object}
    */
   handleMatches(matches: string[]): { [key: string]: string | Object } {
     return {

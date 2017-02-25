@@ -22,9 +22,6 @@ const EMOJI_SHORTNAME_REGEX = new RegExp(EMOJI_SHORTNAME_PATTERN, 'i');
 export default class EmojiMatcher extends Matcher<EmojiOptions> {
   options: EmojiOptions;
 
-  /**
-   * {@inheritDoc}
-   */
   replaceWith(match: string, props: Object = {}): React.Element<EmojiProps> {
     if (this.options.renderUnicode) {
       return props.unicode;
@@ -35,16 +32,10 @@ export default class EmojiMatcher extends Matcher<EmojiOptions> {
     );
   }
 
-  /**
-   * @{inheritDoc}
-   */
   asTag(): string {
     return 'span';
   }
 
-  /**
-   * {@inheritDoc}
-   */
   match(string: string): ?MatchResponse {
     let response = null;
 
@@ -86,9 +77,6 @@ export default class EmojiMatcher extends Matcher<EmojiOptions> {
     return response;
   }
 
-  /**
-   * {@inheritDoc}
-   */
   onAfterParse(content: ParsedNodes): ParsedNodes {
     // When a single `Emoji` is the only content, enlarge it!
     if (content.length === 1) {

@@ -4,7 +4,7 @@ const regenerate = require('regenerate');
 const emojiData = require('emojione/emoji.json');
 
 // If we separate each surrogate pair into a trie per code point,
-// we can efficiently created nested groups and ranges.
+// we can efficiently create nested groups and ranges.
 const codePointGroups = {
   4: [regenerate(), regenerate(), regenerate(), regenerate()],
   3: [regenerate(), regenerate(), regenerate()],

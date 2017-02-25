@@ -14,25 +14,16 @@ import type { MatchResponse, EmailProps } from '../types';
 const EMAIL_REGEX = new RegExp(EMAIL_PATTERN, 'i');
 
 export default class EmailMatcher extends Matcher<Object> {
-  /**
-   * {@inheritDoc}
-   */
   replaceWith(match: string, props: Object = {}): React.Element<EmailProps> {
     return (
       <Email {...props}>{match}</Email>
     );
   }
 
-  /**
-   * @{inheritDoc}
-   */
   asTag(): string {
     return 'a';
   }
 
-  /**
-   * {@inheritDoc}
-   */
   match(string: string): ?MatchResponse {
     return this.doMatch(string, EMAIL_REGEX, matches => ({
       emailParts: {

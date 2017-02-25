@@ -20,9 +20,6 @@ export default class Filter {
   /**
    * Filter and clean an attribute value if applicable.
    * Can return an empty value to omit the attribute.
-   *
-   * @param {String} value
-   * @returns {String}
    */
   filter(value: string): string {
     throw new Error(`${this.constructor.name} must define a filter.`);
