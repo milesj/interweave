@@ -1,9 +1,10 @@
-# Interweave v2.0.2
+# Interweave v2.0.3
 [![Build Status](https://travis-ci.org/milesj/interweave.svg?branch=master)](https://travis-ci.org/milesj/interweave)
 
 Interweave is a robust React library that can...
 
 * Safely render HTML without using `dangerouslySetInnerHTML`.
+* Automatic XSS and injection protection.
 * Clean HTML attributes using filters.
 * Match and replace text using matchers.
 * Autolink URLs, IPs, emails, and hashtags.

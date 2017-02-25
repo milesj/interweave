@@ -1,3 +1,7 @@
+# 2.0.3
+* Added `Parser#isSafe` to verify that a node is safe from injection attacks.
+* Fixed an issue with specific anchor link `javascript:` attacks being permitted.
+
 # 2.0.2
 * Fixed an issue with surrogate pair emojis rendering separately. For example, the MWGB family
   emoji should now render as a single emoji, instead of 4 individual.
