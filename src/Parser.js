@@ -17,6 +17,7 @@ import {
   FILTER_CAST_NUMBER,
   FILTER_CAST_BOOL,
   TAGS,
+  TAGS_BLACKLIST,
   ATTRIBUTES,
   ATTRIBUTES_TO_PROPS,
   TYPE_INLINE,
@@ -174,6 +175,7 @@ export default class Parser {
 
     // Valid children
     if (
+      parentConfig.children &&
       parentConfig.children.length &&
       parentConfig.children.indexOf(childConfig.tagName) === -1
     ) {
@@ -182,6 +184,7 @@ export default class Parser {
 
     // Valid parent
     if (
+      childConfig.parent &&
       childConfig.parent.length &&
       childConfig.parent.indexOf(parentConfig.tagName) === -1
     ) {
@@ -362,7 +365,7 @@ export default class Parser {
    * list of text nodes and React elements.
    */
   parseNode(parentNode: NodeInterface, parentConfig: NodeConfig): ParsedNodes {
-    const { noHtml } = this.props;
+    const { noHtml, disableWhitelist } = this.props;
     let content = [];
     let mergedText = '';
 
@@ -370,15 +373,13 @@ export default class Parser {
       // Create React elements from HTML elements
       if (node.nodeType === ELEMENT_NODE) {
         const tagName = node.nodeName.toLowerCase();
+        let config = {};
+        let render = false;
 
-        if (!TAGS[tagName]) {
+        // Never allow these tags
+        if (TAGS_BLACKLIST[tagName]) {
           return;
         }
-
-        const config = {
-          ...TAGS[tagName],
-          tagName,
-        };
 
         // Persist any previous text
         if (mergedText) {
@@ -386,16 +387,36 @@ export default class Parser {
           mergedText = '';
         }
 
-        // Skip over elements not supported
-        if (config.rule === PARSER_DENY) {
-          // Do nothing
+        // Allow all tags
+        if (disableWhitelist) {
+          render = true;
 
-        // Only pass through the text content
-        } else if (noHtml || !this.canRenderChild(parentConfig, config)) {
-          content = content.concat(this.parseNode(node, config));
-
-        // Convert the element
+        // Validate tags
         } else {
+          if (TAGS[tagName]) {
+            config = {
+              ...TAGS[tagName],
+              tagName,
+            };
+          }
+
+          // Skip over elements not supported
+          if (config.rule === PARSER_DENY) {
+            render = false;
+
+          // Only pass through the text content
+          } else if (noHtml || !this.canRenderChild(parentConfig, config)) {
+            content = content.concat(this.parseNode(node, config));
+            render = false;
+
+          // Node is legitimate
+          } else {
+            render = true;
+          }
+        }
+
+        // Render the element
+        if (render) {
           this.keyIndex += 1;
 
           // Build the props as it makes it easier to test

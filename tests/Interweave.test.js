@@ -6,7 +6,7 @@ import Interweave from '../src/Interweave';
 import { Element, Email, Emoji, Hashtag, Url } from '../src/components';
 import { EmailMatcher, EmojiMatcher, HashtagMatcher, IpMatcher, UrlMatcher } from '../src/matchers';
 import { SHORTNAME_TO_UNICODE } from '../src/data/emoji';
-import { HrefFilter, CodeTagMatcher } from './mocks';
+import { MOCK_INVALID_MARKUP, HrefFilter, CodeTagMatcher } from './mocks';
 
 describe('Interweave', () => {
   const urlParts = {
@@ -406,31 +406,71 @@ Curabitur lectus odio, tempus quis velit vitae, cursus sagittis nulla. Maecenas 
     ]);
   });
 
-  it('converts line breaks', () => {
-    const wrapper = shallow(<Interweave content={'Foo\nBar'} />);
+  describe('line breaks', () => {
+    it('converts line breaks', () => {
+      const wrapper = shallow(<Interweave content={'Foo\nBar'} />);
 
-    expect(wrapper.prop('children')).toEqual([
-      'Foo',
-      <Element key="0" tagName="br" selfClose>{[]}</Element>,
-      'Bar',
-    ]);
+      expect(wrapper.prop('children')).toEqual([
+        'Foo',
+        <Element key="0" tagName="br" selfClose>{[]}</Element>,
+        'Bar',
+      ]);
+    });
+
+    it('doesnt convert line breaks', () => {
+      const wrapper = shallow(<Interweave content={'Foo\nBar'} disableLineBreaks />);
+
+      expect(wrapper.prop('children')).toEqual([
+        'Foo\nBar',
+      ]);
+    });
+
+    it('doesnt convert line breaks if it contains HTML', () => {
+      const wrapper = shallow(<Interweave content={'Foo\n<br/>Bar'} />);
+
+      expect(wrapper.prop('children')).toEqual([
+        'Foo\n',
+        <Element key="0" tagName="br" selfClose>{[]}</Element>,
+        'Bar',
+      ]);
+    });
   });
 
-  it('doesnt convert line breaks', () => {
-    const wrapper = shallow(<Interweave content={'Foo\nBar'} disableLineBreaks />);
+  describe('whitelist', () => {
+    it('filters invalid tags and attributes', () => {
+      const wrapper = shallow(<Interweave content={MOCK_INVALID_MARKUP} />);
 
-    expect(wrapper.prop('children')).toEqual([
-      'Foo\nBar',
-    ]);
-  });
+      expect(wrapper.prop('children')).toEqual([
+        <Element key="0" tagName="div">{[
+          '\n  ',
+          'Outdated font.',
+          '\n  \n  ',
+          <Element key="1" tagName="p">{[
+            'More text ',
+            'with outdated stuff',
+            '.',
+          ]}</Element>,
+          '\n',
+        ]}</Element>,
+      ]);
+    });
 
-  it('doesnt convert line breaks if it contains HTML', () => {
-    const wrapper = shallow(<Interweave content={'Foo\n<br/>Bar'} />);
+    it('doesnt filter invalid tags and attributes when disabled', () => {
+      const wrapper = shallow(<Interweave content={MOCK_INVALID_MARKUP} disableWhitelist />);
 
-    expect(wrapper.prop('children')).toEqual([
-      'Foo\n',
-      <Element key="0" tagName="br" selfClose>{[]}</Element>,
-      'Bar',
-    ]);
+      expect(wrapper.prop('children')).toEqual([
+        <Element key="0" tagName="div">{[
+          '\n  ',
+          <Element key="1" tagName="font">{['Outdated font.']}</Element>,
+          '\n  \n  ',
+          <Element key="2" tagName="p">{[
+            'More text ',
+            <Element key="3" tagName="strike">{['with outdated stuff']}</Element>,
+            '.',
+          ]}</Element>,
+          '\n',
+        ]}</Element>,
+      ]);
+    });
   });
 });

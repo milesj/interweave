@@ -19,34 +19,20 @@ export interface NodeInterface {
 }
 
 export type NodeConfig = {
-  block: boolean,
-  children: string[],
-  inline: boolean,
-  parent: string[],
-  rule: number,
-  self: boolean,
+  block?: boolean,
+  children?: string[],
+  inline?: boolean,
+  parent?: string[],
+  rule?: number,
+  self?: boolean,
   tagName?: string,
-  type: string,
-  void: boolean,
+  type?: string,
+  void?: boolean,
 };
 
 export type PrimitiveType = string | number | boolean;
 
 export type Attributes = { [key: string]: PrimitiveType };
-
-export type FilterStructure = {
-  filter: Filter,
-  priority: number,
-};
-
-export type FilterList = FilterStructure[];
-
-export type MatcherStructure = {
-  matcher: Matcher<*>,
-  priority: number,
-};
-
-export type MatcherList = MatcherStructure[];
 
 export type MatcherFactory = (match: string, props: Object) => React.Element<*>;
 
@@ -76,6 +62,7 @@ export type InterweaveProps = {
   disableFilters: boolean,
   disableLineBreaks: boolean,
   disableMatchers: boolean,
+  disableWhitelist: boolean,
   emptyContent: ?React.Element<*>,
   filters: Filter[],
   matchers: Matcher<*>[],
@@ -88,6 +75,7 @@ export type InterweaveProps = {
 export type MarkupProps = {
   content: string,
   disableLineBreaks: boolean,
+  disableWhitelist: boolean,
   emptyContent: ?React.Element<*>,
   noHtml: boolean,
   tagName: string,

@@ -28,6 +28,7 @@ export default class Interweave extends React.Component {
     disableFilters: PropTypes.bool,
     disableMatchers: PropTypes.bool,
     disableLineBreaks: PropTypes.bool,
+    disableWhitelist: PropTypes.bool,
     emptyContent: PropTypes.node,
     filters: PropTypes.arrayOf(PropTypes.instanceOf(Filter)),
     matchers: PropTypes.arrayOf(PropTypes.instanceOf(Matcher)),

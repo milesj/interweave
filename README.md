@@ -6,7 +6,7 @@ Interweave is a robust React library that can...
 * Safely render HTML without using `dangerouslySetInnerHTML`.
 * Automatic XSS and injection protection.
 * Clean HTML attributes using filters.
-* Match and replace text using matchers.
+* Interpolate components using matchers.
 * Autolink URLs, IPs, emails, and hashtags.
 * Render Emoji characters.
 * And much more!
@@ -58,6 +58,7 @@ import Interweave from 'interweave';
 * `disableFilters` (boolean) - Disables all filters.
 * `disableMatchers` (boolean) - Disables all matchers.
 * `disableLineBreaks` (boolean) - Disables automatic line break conversion.
+* `disableWhitelist` (boolean) - Disables automatic tag and attribute filtering.
 * `noHtml` (boolean) - Strips HTML tags from the content string while
   parsing.
 * `onBeforeParse` (func) - Callback that fires before parsing. Is
@@ -80,7 +81,7 @@ import { Markup } from 'interweave';
 #### Props
 
 The `Markup` component only supports the `content`, `emptyContent`,
-`tagName`, `disableLineBreaks`, and `noHtml` props mentioned previously.
+`tagName`, `disableLineBreaks`, `disableWhitelist`, and `noHtml` props mentioned previously.
 
 ## Documentation
 
@@ -101,6 +102,7 @@ The `Markup` component only supports the `content`, `emptyContent`,
 * [HTML Parsing](#html-parsing)
   * [Tag Whitelist](#tag-whitelist)
   * [Attribute Whitelist](#attribute-whitelist)
+  * [By-passing the Whitelist](#by-passing-the-whitelist)
   * [Disabling HTML](#disabling-html)
 * [Global Configuration](#global-configuration)
 
@@ -521,17 +523,22 @@ number, allow and cast to boolean, and finally, deny.
 Also like the tag whitelist, any attribute not found in the mapping is
 ignored.
 
+#### By-passing the Whitelist
+
+If need be, the whitelist can be disabled with the `disableWhitelist` prop.
+This is highly discouraged as it opens up possible XSS and injection attacks,
+and should only be used if the markup passed to `Interweave` has been
+sanitized beforehand.
+
+That being said, specific tags like `script`, `iframe`, `applet`, and a few
+others are consistently removed.
+
 #### Disabling HTML
 
 The HTML parser cannot be disabled, however, a `noHtml` boolean prop can
 be passed to both the `Interweave` and `Markup` components. This prop
 will mark all HTML elements as pass-through, simply rendering text nodes
 recursively.
-
-[dangerhtml]: https://facebook.github.io/react/tips/dangerously-set-inner-html.html
-[domhtml]: https://developer.mozilla.org/en-US/docs/Web/API/DOMImplementation/createHTMLDocument
-[tagwhitelist]: https://github.com/milesj/interweave/blob/master/src/constants.js#L88
-[attrwhitelist]: https://github.com/milesj/interweave/blob/master/src/constants.js#L381
 
 ### Global Configuration
 
@@ -610,3 +617,8 @@ Interweave.propTypes = {
   svg: PropTypes.bool,
 };
 ```
+
+[dangerhtml]: https://facebook.github.io/react/tips/dangerously-set-inner-html.html
+[domhtml]: https://developer.mozilla.org/en-US/docs/Web/API/DOMImplementation/createHTMLDocument
+[tagwhitelist]: https://github.com/milesj/interweave/blob/master/src/constants.js#L88
+[attrwhitelist]: https://github.com/milesj/interweave/blob/master/src/constants.js#L381

@@ -377,6 +377,18 @@ export const TAGS: ConfigMap = Object.freeze({
   },
 });
 
+// Tags that should never be allowed, even if the whitelist is disabled.
+export const TAGS_BLACKLIST = {
+  applet: true,
+  embed: true,
+  frame: true,
+  frameset: true,
+  iframe: true,
+  object: true,
+  script: true,
+  style: true,
+};
+
 // Filters apply to HTML attributes
 export const FILTER_ALLOW: number = 1;
 export const FILTER_DENY: number = 2;

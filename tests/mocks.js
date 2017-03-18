@@ -94,6 +94,12 @@ export const MOCK_MARKUP = `<!DOCTYPE>
 </body>
 </html>`;
 
+export const MOCK_INVALID_MARKUP = `<div bgcolor="black">
+  <font color="red">Outdated font.</font>
+  <script type="text/javascript"></script>
+  <p>More text <strike>with outdated stuff</strike>.</p>
+</div>`;
+
 export const parentConfig = {
   tagName: 'div',
   rule: PARSER_ALLOW,
