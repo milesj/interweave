@@ -89,16 +89,16 @@ export default class Parser {
 
     this.matchers.forEach((matcher: Matcher<*>) => {
       const tagName = matcher.asTag().toLowerCase();
+      const config = this.getTagConfig(tagName);
 
       // Skip matchers that have been disabled from props or are not supported
-      if (props[matcher.inverseName] || !TAGS[tagName]) {
+      if (
+        props[matcher.inverseName] ||
+        TAGS_BLACKLIST[tagName] ||
+        (!props.disableWhitelist && !TAGS[tagName])
+      ) {
         return;
       }
-
-      const config = {
-        ...TAGS[tagName],
-        tagName,
-      };
 
       // Skip matchers in which the child cannot be rendered
       if (config.rule === PARSER_DENY || !this.canRenderChild(parentConfig, config)) {
