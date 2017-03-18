@@ -258,6 +258,7 @@ export default class Parser {
    * Returns null if no attributes are defined.
    */
   extractAttributes(node: NodeInterface): ?Attributes {
+    const { disableWhitelist } = this.props;
     const attributes = {};
     let count = 0;
 
@@ -279,8 +280,7 @@ export default class Parser {
       // Do not allow events or XSS injections
       if (name.substr(0, 5) !== 'aria-') {
         if (
-          !filter ||
-          filter === FILTER_DENY ||
+          (!disableWhitelist && (!filter || filter === FILTER_DENY)) ||
           name.match(/^on/) ||
           value.replace(/(\s|\0|&#x0(9|A|D);)/, '').match(/(javascript|vbscript|livescript|xss):/i)
         ) {
@@ -313,6 +313,21 @@ export default class Parser {
     }
 
     return attributes;
+  }
+
+  /**
+   * Return configuration for a specific tag.
+   * If no tag config exists, return a plain object.
+   */
+  getTagConfig(tagName: string): NodeConfig {
+    if (TAGS[tagName]) {
+      return {
+        ...TAGS[tagName],
+        tagName,
+      };
+    }
+
+    return {};
   }
 
   /**
@@ -373,8 +388,8 @@ export default class Parser {
       // Create React elements from HTML elements
       if (node.nodeType === ELEMENT_NODE) {
         const tagName = node.nodeName.toLowerCase();
-        let config = {};
-        let render = false;
+        const config = this.getTagConfig(tagName);
+        let render = true;
 
         // Never allow these tags
         if (TAGS_BLACKLIST[tagName]) {
@@ -391,28 +406,14 @@ export default class Parser {
         if (disableWhitelist) {
           render = true;
 
-        // Validate tags
-        } else {
-          if (TAGS[tagName]) {
-            config = {
-              ...TAGS[tagName],
-              tagName,
-            };
-          }
+        // Skip over tags not supported
+        } else if (config.rule === PARSER_DENY) {
+          render = false;
 
-          // Skip over elements not supported
-          if (config.rule === PARSER_DENY) {
-            render = false;
-
-          // Only pass through the text content
-          } else if (noHtml || !this.canRenderChild(parentConfig, config)) {
-            content = content.concat(this.parseNode(node, config));
-            render = false;
-
-          // Node is legitimate
-          } else {
-            render = true;
-          }
+        // Only pass through the text content
+        } else if (noHtml || !this.canRenderChild(parentConfig, config)) {
+          content = content.concat(this.parseNode(node, config));
+          render = false;
         }
 
         // Render the element

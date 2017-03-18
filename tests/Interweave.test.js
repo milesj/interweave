@@ -459,11 +459,11 @@ Curabitur lectus odio, tempus quis velit vitae, cursus sagittis nulla. Maecenas 
       const wrapper = shallow(<Interweave content={MOCK_INVALID_MARKUP} disableWhitelist />);
 
       expect(wrapper.prop('children')).toEqual([
-        <Element key="0" tagName="div">{[
+        <Element key="0" attributes={{ bgcolor: 'black' }} tagName="div">{[
           '\n  ',
-          <Element key="1" tagName="font">{['Outdated font.']}</Element>,
+          <Element key="1" attributes={{ color: 'red' }} tagName="font">{['Outdated font.']}</Element>,
           '\n  \n  ',
-          <Element key="2" tagName="p">{[
+          <Element key="2" attributes={{ align: 'center' }} tagName="p">{[
             'More text ',
             <Element key="3" tagName="strike">{['with outdated stuff']}</Element>,
             '.',
