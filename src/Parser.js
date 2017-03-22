@@ -35,6 +35,7 @@ import type {
 
 const ELEMENT_NODE: number = 1;
 const TEXT_NODE: number = 3;
+const INVALID_ROOTS: string[] = ['!DOC', 'HTML', 'HEAD', 'BODY'];
 
 export default class Parser {
   doc: Document;
@@ -241,9 +242,8 @@ export default class Parser {
   createDocument(markup: string): Document {
     const doc = document.implementation.createHTMLDocument('Interweave');
 
-    if (markup.substr(0, 9).toUpperCase() === '<!DOCTYPE') {
-      // $FlowIssue Isn't null
-      doc.documentElement.innerHTML = markup;
+    if (INVALID_ROOTS.indexOf(markup.substr(1, 4).toUpperCase()) >= 0) {
+      throw new Error('HTML documents as Interweave content are not supported.');
 
     } else {
       // $FlowIssue Isn't null

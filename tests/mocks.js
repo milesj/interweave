@@ -75,24 +75,16 @@ export const VALID_EMOJIS = [
   ['1f536', '\uD83D\uDD36', ':large_orange_diamond:'],
 ];
 
-export const MOCK_MARKUP = `<!DOCTYPE>
-<html>
-<head>
-  <title>Title</title>
-</head>
-<body>
-  <main role="main">
-    Main content
-    <div>
-      <a href="#">Link</a>
-      <span class="foo">String</span>
-    </div>
-  </main>
-  <aside id="sidebar">
-    Sidebar content
-  </aside>
-</body>
-</html>`;
+export const MOCK_MARKUP = `<main role="main">
+  Main content
+  <div>
+    <a href="#">Link</a>
+    <span class="foo">String</span>
+  </div>
+</main>
+<aside id="sidebar">
+  Sidebar content
+</aside>`;
 
 export const MOCK_INVALID_MARKUP = `<div bgcolor="black">
   <font color="red">Outdated font.</font>

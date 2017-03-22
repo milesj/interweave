@@ -169,15 +169,28 @@ describe('Parser', () => {
         .toBe('<body><div>Foo<section>Bar</section><aside>Baz</aside></div></body>');
     });
 
-    it('injects the document and overrides', () => {
-      const doc = instance.createDocument('<!DOCTYPE><html>' +
-        '<head><title>Wat</title></head>' +
-        '<body><main>Foo<div>Bar<span>Baz</span></div></main></body>' +
-        '</html>');
+    it('errors out for `!DOCTYPE`', () => {
+      expect(() => {
+        instance.createDocument('<!DOCTYPE><html><body>Foo</body></html>');
+      }).toThrowError('HTML documents as Interweave content are not supported.');
+    });
 
-      expect(doc.head.childNodes[0].textContent).toBe('Wat');
-      expect(doc.body.outerHTML)
-        .toBe('<body><main>Foo<div>Bar<span>Baz</span></div></main></body>');
+    it('errors out for `html`', () => {
+      expect(() => {
+        instance.createDocument('<html><body>Foo</body></html>');
+      }).toThrowError('HTML documents as Interweave content are not supported.');
+    });
+
+    it('errors out for `head`', () => {
+      expect(() => {
+        instance.createDocument('<head></head><body>Foo</body>');
+      }).toThrowError('HTML documents as Interweave content are not supported.');
+    });
+
+    it('errors out for `body`', () => {
+      expect(() => {
+        instance.createDocument('<body>Foo</body>');
+      }).toThrowError('HTML documents as Interweave content are not supported.');
     });
   });
 
@@ -380,31 +393,29 @@ describe('Parser', () => {
       instance = new Parser(MOCK_MARKUP);
 
       expect(instance.parse()).toEqual([
-        '\n  ',
         <Element key="0" tagName="main" attributes={{ role: 'main' }}>
           {[
-            '\n    Main content\n    ',
+            '\n  Main content\n  ',
             <Element key="1" tagName="div">
               {[
-                '\n      ',
+                '\n    ',
                 <Element key="2" tagName="a" attributes={{ href: '#' }}>
                   {['Link']}
                 </Element>,
-                '\n      ',
+                '\n    ',
                 <Element key="3" tagName="span" attributes={{ className: 'foo' }}>
                   {['String']}
                 </Element>,
-                '\n    ',
+                '\n  ',
               ]}
             </Element>,
-            '\n  ',
+            '\n',
           ]}
         </Element>,
-        '\n  ',
+        '\n',
         <Element key="4" tagName="aside" attributes={{ id: 'sidebar' }}>
-          {['\n    Sidebar content\n  ']}
+          {['\n  Sidebar content\n']}
         </Element>,
-        '\n\n',
       ]);
     });
   });

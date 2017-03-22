@@ -33,31 +33,29 @@ describe('Markup', () => {
     const wrapper = shallow(<Markup content={MOCK_MARKUP} />);
 
     expect(wrapper.prop('children')).toEqual([
-      '\n  ',
       <Element key="0" tagName="main" attributes={{ role: 'main' }}>
         {[
-          '\n    Main content\n    ',
+          '\n  Main content\n  ',
           <Element key="1" tagName="div">
             {[
-              '\n      ',
+              '\n    ',
               <Element key="2" tagName="a" attributes={{ href: '#' }}>
                 {['Link']}
               </Element>,
-              '\n      ',
+              '\n    ',
               <Element key="3" tagName="span" attributes={{ className: 'foo' }}>
                 {['String']}
               </Element>,
-              '\n    ',
+              '\n  ',
             ]}
           </Element>,
-          '\n  ',
+          '\n',
         ]}
       </Element>,
-      '\n  ',
+      '\n',
       <Element key="4" tagName="aside" attributes={{ id: 'sidebar' }}>
-        {['\n    Sidebar content\n  ']}
+        {['\n  Sidebar content\n']}
       </Element>,
-      '\n\n',
     ]);
   });
 
