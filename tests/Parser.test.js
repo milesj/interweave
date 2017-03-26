@@ -7,7 +7,6 @@ import {
   ATTRIBUTES_TO_PROPS,
   PARSER_ALLOW,
   PARSER_DENY,
-  PARSER_PASS_THROUGH,
   FILTER_ALLOW,
   FILTER_CAST_BOOL,
   FILTER_CAST_NUMBER,
@@ -151,13 +150,6 @@ describe('Parser', () => {
 
     it('doesnt render if missing child tag', () => {
       expect(instance.canRenderChild({ tagName: 'span' }, {})).toBe(false);
-    });
-
-    it('doesnt render if child is pass-through', () => {
-      expect(instance.canRenderChild({ tagName: 'span' }, {
-        tagName: 'span',
-        rule: PARSER_PASS_THROUGH,
-      })).toBe(false);
     });
   });
 
@@ -458,16 +450,6 @@ describe('Parser', () => {
           });
           break;
 
-        case PARSER_PASS_THROUGH:
-          it(`removes <${tag}> elements as they are pass-through but renders its children`, () => {
-            element.appendChild(createChild(tag, i));
-
-            expect(instance.parseNode(element, parentConfig)).toEqual([
-              `${i}`,
-            ]);
-          });
-          break;
-
         default:
           break;
       }
@@ -698,6 +680,22 @@ describe('Parser', () => {
         'Foo',
         <Element key="0" tagName="div">{['Bar']}</Element>,
         'Baz',
+      ]);
+    });
+
+    it('uses parent config for unsupported elements', () => {
+      element = document.createElement('span');
+
+      const acronym = document.createElement('acronym');
+      acronym.appendChild(createChild('a', 'Link'));
+
+      element.appendChild(acronym);
+
+      expect(instance.parseNode(element, {
+        ...TAGS.span,
+        tagName: 'span',
+      })).toEqual([
+        <Element key="0" tagName="a">{['Link']}</Element>,
       ]);
     });
   });

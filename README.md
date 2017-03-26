@@ -1,4 +1,4 @@
-# Interweave v2.0.3
+# Interweave v3.0.0
 [![Build Status](https://travis-ci.org/milesj/interweave.svg?branch=master)](https://travis-ci.org/milesj/interweave)
 
 Interweave is a robust React library that can...
@@ -511,6 +511,22 @@ rules and processes.
 
 Lastly, any tag not found in the mapping will be flagged using the
 rule "deny", and promptly not rendered.
+
+The following tags are not supported, but their children will still be rendered.
+
+`acronym`, `area`, `base`, `basefont`, `bdi`, `bdo`, `bgsound`, `big`, `blink`,
+`body`, `caption`, `center`, `col`, `colgroup`, `command`, `content`,
+`data`, `datalist`, `dialog`, `dir`, `font`, `form`, `head`, `hgroup`, `html`,
+`image`, `input`, `isindex`, `keygen`, `link`, `listing`, `marquee`, `menu`,
+`menuitem`, `meta`, `meter`, `multicol`, `nobr`, `noembed`, `noframes`,
+`noscript`, `optgroup`, `option`, `param`, `plaintext`, `progress`, `rp`, `rt`,
+`rtc`, `ruby`, `select`, `shadow`, `slot`, `small`, `spacer`, `strike`,
+`template`, `textarea`, `title`, `tt`, `wbr`, `xmp`
+
+The following tags and their children will never be rendered,
+even when the whitelist is disabled.
+
+`applet`, `canvas`, `embed`, `frame`, `frameset`, `iframe`, `object`, `script`, `style`
 
 #### Attribute Whitelist
 

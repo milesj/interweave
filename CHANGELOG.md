@@ -1,3 +1,14 @@
+# 3.0.0
+* Updated to no longer support parsing entire HTML documents.
+  * This includes content that starts with `<!DOCTYPE>`, `<html>`, `<head>`, and `<body>`.
+  * Will now throw an error if the content is invalid.
+* Updated to treat all non-whitelist and non-blacklist tags as pass-through.
+  * Will now render children for tags that were not previously supported.
+* Added a new `disableWhitelist` prop to `Interweave` and `Markup` components,
+  that disables the automatic HTML tag and attribute filtering.
+* Added `CONFIG_INLINE` and `CONFIG_BLOCK` constants.
+* Removed the `PARSER_PASS_THROUGH` constant.
+
 # 2.0.3
 * Added `Parser#isSafe` to verify that a node is safe from injection attacks.
 * Fixed an issue with specific anchor link `javascript:` attacks being permitted.
@@ -28,18 +39,16 @@
 * Fixed an issue with the published build.
 
 # 1.1.0
-* Line breaks found in non-HTML strings will now be automatically
-  converted to `<br/>` tags.
+* Line breaks found in non-HTML strings will now be automatically converted to `<br/>` tags.
 * Added a `disableLineBreaks` prop to `Interweave` and `Markup`,
   which will disable the automatic line break conversion.
 * Added an `interweave` class to all rendered HTML elements.
 * Added an `interweave--no-html` class when `noHtml` is enabled.
-* Updated the `content` prop to accept null or undefined values. Will
-  default to an empty string.
+* Updated the `content` prop to accept null or undefined values.
+  Will default to an empty string.
 * Removed the `data-interweave` attribute from elements.
 * Removed the `className` prop from `Interweave` and `Markup`.
-* Fixed an issue where void elements (`br`, `hr`, etc) would not render
-  correctly.
+* Fixed an issue where void elements (`br`, `hr`, etc) would not render correctly.
 
 # 1.0.1
 * Fixed an issue in which empty parses would pass an empty child to

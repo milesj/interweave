@@ -11,8 +11,6 @@ import Matcher from './Matcher';
 import Filter from './Filter';
 import ElementComponent from './components/Element';
 import {
-  PARSER_DENY,
-  PARSER_PASS_THROUGH,
   FILTER_DENY,
   FILTER_CAST_NUMBER,
   FILTER_CAST_BOOL,
@@ -22,6 +20,7 @@ import {
   ATTRIBUTES_TO_PROPS,
   TYPE_INLINE,
   TYPE_BLOCK,
+  CONFIG_BLOCK,
 } from './constants';
 
 import type {
@@ -102,7 +101,7 @@ export default class Parser {
       }
 
       // Skip matchers in which the child cannot be rendered
-      if (config.rule === PARSER_DENY || !this.canRenderChild(parentConfig, config)) {
+      if (!this.canRenderChild(parentConfig, config)) {
         return;
       }
 
@@ -166,11 +165,6 @@ export default class Parser {
    */
   canRenderChild(parentConfig: NodeConfig, childConfig: NodeConfig): boolean {
     if (!parentConfig.tagName || !childConfig.tagName) {
-      return false;
-    }
-
-    // Pass through
-    if (childConfig.rule === PARSER_PASS_THROUGH) {
       return false;
     }
 
@@ -370,7 +364,7 @@ export default class Parser {
   parse(): ParsedNodes {
     // $FlowIssue Body is not null!
     return this.parseNode(this.doc.body, {
-      ...TAGS.body,
+      ...CONFIG_BLOCK,
       tagName: 'body',
     });
   }
@@ -389,7 +383,6 @@ export default class Parser {
       if (node.nodeType === ELEMENT_NODE) {
         const tagName = node.nodeName.toLowerCase();
         const config = this.getTagConfig(tagName);
-        let render = true;
 
         // Never allow these tags
         if (TAGS_BLACKLIST[tagName]) {
@@ -402,22 +395,10 @@ export default class Parser {
           mergedText = '';
         }
 
-        // Allow all tags
-        if (disableWhitelist) {
-          render = true;
-
-        // Skip over tags not supported
-        } else if (config.rule === PARSER_DENY) {
-          render = false;
-
-        // Only pass through the text content
-        } else if (noHtml || !this.canRenderChild(parentConfig, config)) {
-          content = content.concat(this.parseNode(node, config));
-          render = false;
-        }
-
-        // Render the element
-        if (render) {
+        // Only render when the following criteria is met:
+        //  - HTML has not been disabled
+        //  - Whitelist is disabled OR the child is valid within the parent
+        if (!noHtml && (disableWhitelist || this.canRenderChild(parentConfig, config))) {
           this.keyIndex += 1;
 
           // Build the props as it makes it easier to test
@@ -440,11 +421,19 @@ export default class Parser {
               {this.parseNode(node, config)}
             </ElementComponent>
           ));
+
+        // Render the children of the current element only.
+        // Important: If the current element is not whitelisted,
+        // use the parent element for the next scope.
+        } else {
+          content = content.concat(this.parseNode(node, config.tagName ? config : parentConfig));
         }
 
       // Apply matchers if a text node
       } else if (node.nodeType === TEXT_NODE) {
-        const text = this.applyMatchers(node.textContent, parentConfig);
+        const text = noHtml
+          ? node.textContent
+          : this.applyMatchers(node.textContent, parentConfig);
 
         if (Array.isArray(text)) {
           content = content.concat(text);

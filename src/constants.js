@@ -57,13 +57,12 @@ export const EMAIL_PATTERN: string = `${EMAIL_USERNAME_PATTERN}@${URL_HOST_PATTE
 // Parser rules for HTML tags
 export const PARSER_ALLOW: number = 1; // Allow element and children
 export const PARSER_DENY: number = 2; // Do not render this element or its children
-export const PARSER_PASS_THROUGH: number = 3; // Do not render this element but allow its children
 
 export const TYPE_INLINE: string = 'inline';
 export const TYPE_BLOCK: string = 'block';
 export const TYPE_INLINE_BLOCK: string = 'inline-block'; // Special case
 
-const inlineConfig: NodeConfig = {
+export const CONFIG_INLINE: NodeConfig = {
   rule: PARSER_ALLOW,
   type: TYPE_INLINE,
   inline: true,
@@ -74,7 +73,7 @@ const inlineConfig: NodeConfig = {
   children: [],
 };
 
-const blockConfig: NodeConfig = {
+export const CONFIG_BLOCK: NodeConfig = {
   rule: PARSER_ALLOW,
   type: TYPE_BLOCK,
   inline: true,
@@ -89,300 +88,276 @@ const blockConfig: NodeConfig = {
 // https://developer.mozilla.org/en-US/docs/Web/HTML/Element
 export const TAGS: ConfigMap = Object.freeze({
   a: {
-    ...inlineConfig,
+    ...CONFIG_INLINE,
     type: TYPE_INLINE_BLOCK,
     block: true,
   },
   abbr: {
-    ...inlineConfig,
-  },
-  acronym: {
-    ...inlineConfig,
-    rule: PARSER_PASS_THROUGH,
+    ...CONFIG_INLINE,
   },
   address: {
-    ...blockConfig,
+    ...CONFIG_BLOCK,
     self: false,
   },
   article: {
-    ...blockConfig,
+    ...CONFIG_BLOCK,
   },
   aside: {
-    ...blockConfig,
+    ...CONFIG_BLOCK,
   },
   audio: {
-    ...blockConfig,
+    ...CONFIG_BLOCK,
     children: ['track', 'source'],
   },
   b: {
-    ...inlineConfig,
-  },
-  big: {
-    ...inlineConfig,
-    rule: PARSER_PASS_THROUGH,
+    ...CONFIG_INLINE,
   },
   blockquote: {
-    ...blockConfig,
-  },
-  body: {
-    ...blockConfig,
-    rule: PARSER_PASS_THROUGH,
+    ...CONFIG_BLOCK,
   },
   br: {
-    ...inlineConfig,
+    ...CONFIG_INLINE,
     inline: false,
     void: true,
   },
   button: {
-    ...blockConfig,
-  },
-  center: {
-    ...blockConfig,
-    rule: PARSER_PASS_THROUGH,
+    ...CONFIG_BLOCK,
   },
   cite: {
-    ...inlineConfig,
+    ...CONFIG_INLINE,
   },
   code: {
-    ...inlineConfig,
+    ...CONFIG_INLINE,
   },
   dd: {
-    ...blockConfig,
+    ...CONFIG_BLOCK,
     parent: ['dl'],
   },
   del: {
-    ...inlineConfig,
+    ...CONFIG_INLINE,
   },
   details: {
-    ...blockConfig,
+    ...CONFIG_BLOCK,
   },
   dfn: {
-    ...inlineConfig,
+    ...CONFIG_INLINE,
   },
   div: {
-    ...blockConfig,
+    ...CONFIG_BLOCK,
   },
   dl: {
-    ...blockConfig,
+    ...CONFIG_BLOCK,
     children: ['dt'],
   },
   dt: {
-    ...blockConfig,
+    ...CONFIG_BLOCK,
     parent: ['dl'],
     children: ['dd'],
   },
   em: {
-    ...inlineConfig,
+    ...CONFIG_INLINE,
   },
   fieldset: {
-    ...blockConfig,
+    ...CONFIG_BLOCK,
   },
   figcaption: {
-    ...blockConfig,
+    ...CONFIG_BLOCK,
     parent: ['figure'],
   },
   figure: {
-    ...blockConfig,
-  },
-  font: {
-    ...inlineConfig,
-    rule: PARSER_PASS_THROUGH,
+    ...CONFIG_BLOCK,
   },
   footer: {
-    ...blockConfig,
+    ...CONFIG_BLOCK,
     self: false,
   },
-  form: {
-    ...blockConfig,
-    rule: PARSER_PASS_THROUGH,
-  },
   header: {
-    ...blockConfig,
+    ...CONFIG_BLOCK,
     self: false,
   },
   h1: {
-    ...blockConfig,
+    ...CONFIG_BLOCK,
     self: false,
   },
   h2: {
-    ...blockConfig,
+    ...CONFIG_BLOCK,
     self: false,
   },
   h3: {
-    ...blockConfig,
+    ...CONFIG_BLOCK,
     self: false,
   },
   h4: {
-    ...blockConfig,
+    ...CONFIG_BLOCK,
     self: false,
   },
   h5: {
-    ...blockConfig,
+    ...CONFIG_BLOCK,
     self: false,
   },
   h6: {
-    ...blockConfig,
+    ...CONFIG_BLOCK,
     self: false,
   },
   hr: {
-    ...blockConfig,
+    ...CONFIG_BLOCK,
     inline: false,
     block: false,
     void: true,
   },
   i: {
-    ...inlineConfig,
+    ...CONFIG_INLINE,
   },
   img: {
-    ...inlineConfig,
+    ...CONFIG_INLINE,
     inline: false,
     void: true,
   },
   ins: {
-    ...inlineConfig,
+    ...CONFIG_INLINE,
   },
   kbd: {
-    ...inlineConfig,
+    ...CONFIG_INLINE,
   },
   label: {
-    ...inlineConfig,
+    ...CONFIG_INLINE,
   },
   legend: {
-    ...blockConfig,
+    ...CONFIG_BLOCK,
   },
   li: {
-    ...blockConfig,
+    ...CONFIG_BLOCK,
     self: false,
     parent: ['ul', 'ol'],
   },
   main: {
-    ...blockConfig,
+    ...CONFIG_BLOCK,
     self: false,
   },
   mark: {
-    ...inlineConfig,
+    ...CONFIG_INLINE,
   },
   nav: {
-    ...blockConfig,
+    ...CONFIG_BLOCK,
   },
   ol: {
-    ...blockConfig,
+    ...CONFIG_BLOCK,
     children: ['li'],
   },
   output: {
-    ...inlineConfig,
+    ...CONFIG_INLINE,
   },
   p: {
-    ...blockConfig,
+    ...CONFIG_BLOCK,
   },
   picture: {
-    ...inlineConfig,
+    ...CONFIG_INLINE,
     children: ['source', 'img'],
   },
   pre: {
-    ...blockConfig,
+    ...CONFIG_BLOCK,
   },
   q: {
-    ...inlineConfig,
+    ...CONFIG_INLINE,
   },
   s: {
-    ...inlineConfig,
+    ...CONFIG_INLINE,
   },
   samp: {
-    ...inlineConfig,
+    ...CONFIG_INLINE,
   },
   section: {
-    ...blockConfig,
-  },
-  small: {
-    ...inlineConfig,
-    rule: PARSER_PASS_THROUGH,
+    ...CONFIG_BLOCK,
   },
   source: {
-    ...inlineConfig,
+    ...CONFIG_INLINE,
     inline: false,
     parent: ['audio', 'video', 'picture'],
     void: true,
   },
   span: {
-    ...inlineConfig,
+    ...CONFIG_INLINE,
     self: true,
   },
   strong: {
-    ...inlineConfig,
+    ...CONFIG_INLINE,
   },
   sub: {
-    ...inlineConfig,
+    ...CONFIG_INLINE,
   },
   summary: {
-    ...blockConfig,
+    ...CONFIG_BLOCK,
   },
   sup: {
-    ...inlineConfig,
+    ...CONFIG_INLINE,
   },
   table: {
-    ...blockConfig,
+    ...CONFIG_BLOCK,
     children: ['thead', 'tbody', 'tfoot', 'tr'],
   },
   tbody: {
-    ...blockConfig,
+    ...CONFIG_BLOCK,
     parent: ['table'],
     children: ['tr'],
   },
   td: {
-    ...blockConfig,
+    ...CONFIG_BLOCK,
     parent: ['tr'],
   },
   tfoot: {
-    ...blockConfig,
+    ...CONFIG_BLOCK,
     parent: ['table'],
     children: ['tr'],
   },
   th: {
-    ...blockConfig,
+    ...CONFIG_BLOCK,
     parent: ['tr'],
   },
   thead: {
-    ...blockConfig,
+    ...CONFIG_BLOCK,
     parent: ['table'],
     children: ['tr'],
   },
   time: {
-    ...inlineConfig,
+    ...CONFIG_INLINE,
   },
   tr: {
-    ...blockConfig,
+    ...CONFIG_BLOCK,
     parent: ['table', 'tbody', 'thead', 'tfoot'],
     children: ['th', 'td'],
   },
   track: {
-    ...inlineConfig,
+    ...CONFIG_INLINE,
     inline: false,
     parent: ['audio', 'video'],
     void: true,
   },
   u: {
-    ...inlineConfig,
+    ...CONFIG_INLINE,
   },
   ul: {
-    ...blockConfig,
+    ...CONFIG_BLOCK,
     children: ['li'],
   },
   var: {
-    ...inlineConfig,
+    ...CONFIG_INLINE,
   },
   video: {
-    ...inlineConfig,
+    ...CONFIG_INLINE,
     children: ['track', 'source'],
   },
 });
 
-// Tags that should never be allowed, even if the whitelist is disabled.
+// Tags that should never be allowed, even if the whitelist is disabled
 export const TAGS_BLACKLIST = {
   applet: true,
+  body: true,
+  canvas: true,
   embed: true,
   frame: true,
   frameset: true,
+  head: true,
+  html: true,
   iframe: true,
   object: true,
   script: true,
