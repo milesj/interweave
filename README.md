@@ -4,6 +4,7 @@
 Interweave is a robust React library that can...
 
 * Safely render HTML without using `dangerouslySetInnerHTML`.
+* Safely strip HTML tags.
 * Automatic XSS and injection protection.
 * Clean HTML attributes using filters.
 * Interpolate components using matchers.
@@ -167,9 +168,9 @@ define the following methods.
   2nd argument.
 * `asTag()` - The HTML tag name of the replacement element.
 * `onBeforeParse` (func) - Callback that fires before parsing. Is
-passed the source string and must return a string.
+  passed the source string and must return a string.
 * `onAfterParse` (func) - Callback that fires after parsing. Is
-passed an array of strings/elements and must return an array.
+  passed an array of strings/elements and must return an array.
 
 
 ```javascript
@@ -500,8 +501,7 @@ Interweave keeps a mapping of valid [HTML tags to parsing
 configurations][tagwhitelist]. These configurations handle the following
 rules and processes.
 
-* Defines the type of rule: allow (render element and children),
-  pass-through (ignore element and render children), deny (ignore both).
+* Defines the type of rule: allow or deny.
 * Defines the type of tag: inline, block, inline-block.
 * Flags whether inline children can be rendered.
 * Flags whether block children can be rendered.
