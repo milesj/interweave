@@ -84,272 +84,164 @@ export const CONFIG_BLOCK: NodeConfig = {
   children: [],
 };
 
-// Tags not listed here will be denied
+// Tags not listed here will be marked as pass-through
 // https://developer.mozilla.org/en-US/docs/Web/HTML/Element
-export const TAGS: ConfigMap = Object.freeze({
+const tagConfigs = {
   a: {
-    ...CONFIG_INLINE,
     type: TYPE_INLINE_BLOCK,
     block: true,
   },
-  abbr: {
-    ...CONFIG_INLINE,
-  },
   address: {
-    ...CONFIG_BLOCK,
     self: false,
   },
-  article: {
-    ...CONFIG_BLOCK,
-  },
-  aside: {
-    ...CONFIG_BLOCK,
-  },
   audio: {
-    ...CONFIG_BLOCK,
     children: ['track', 'source'],
   },
-  b: {
-    ...CONFIG_INLINE,
-  },
-  blockquote: {
-    ...CONFIG_BLOCK,
-  },
   br: {
-    ...CONFIG_INLINE,
     inline: false,
     void: true,
   },
   button: {
-    ...CONFIG_BLOCK,
-  },
-  cite: {
-    ...CONFIG_INLINE,
-  },
-  code: {
-    ...CONFIG_INLINE,
+    type: TYPE_INLINE_BLOCK,
   },
   dd: {
-    ...CONFIG_BLOCK,
     parent: ['dl'],
   },
-  del: {
-    ...CONFIG_INLINE,
-  },
-  details: {
-    ...CONFIG_BLOCK,
-  },
-  dfn: {
-    ...CONFIG_INLINE,
-  },
-  div: {
-    ...CONFIG_BLOCK,
-  },
   dl: {
-    ...CONFIG_BLOCK,
     children: ['dt'],
   },
   dt: {
-    ...CONFIG_BLOCK,
     parent: ['dl'],
     children: ['dd'],
   },
-  em: {
-    ...CONFIG_INLINE,
-  },
-  fieldset: {
-    ...CONFIG_BLOCK,
-  },
   figcaption: {
-    ...CONFIG_BLOCK,
     parent: ['figure'],
   },
-  figure: {
-    ...CONFIG_BLOCK,
-  },
   footer: {
-    ...CONFIG_BLOCK,
     self: false,
   },
   header: {
-    ...CONFIG_BLOCK,
     self: false,
   },
   h1: {
-    ...CONFIG_BLOCK,
     self: false,
   },
   h2: {
-    ...CONFIG_BLOCK,
     self: false,
   },
   h3: {
-    ...CONFIG_BLOCK,
     self: false,
   },
   h4: {
-    ...CONFIG_BLOCK,
     self: false,
   },
   h5: {
-    ...CONFIG_BLOCK,
     self: false,
   },
   h6: {
-    ...CONFIG_BLOCK,
     self: false,
   },
   hr: {
-    ...CONFIG_BLOCK,
     inline: false,
     block: false,
     void: true,
   },
-  i: {
-    ...CONFIG_INLINE,
-  },
   img: {
-    ...CONFIG_INLINE,
     inline: false,
     void: true,
   },
-  ins: {
-    ...CONFIG_INLINE,
-  },
-  kbd: {
-    ...CONFIG_INLINE,
-  },
-  label: {
-    ...CONFIG_INLINE,
-  },
-  legend: {
-    ...CONFIG_BLOCK,
-  },
   li: {
-    ...CONFIG_BLOCK,
     self: false,
     parent: ['ul', 'ol'],
   },
   main: {
-    ...CONFIG_BLOCK,
     self: false,
   },
-  mark: {
-    ...CONFIG_INLINE,
-  },
-  nav: {
-    ...CONFIG_BLOCK,
-  },
   ol: {
-    ...CONFIG_BLOCK,
     children: ['li'],
   },
-  output: {
-    ...CONFIG_INLINE,
-  },
-  p: {
-    ...CONFIG_BLOCK,
-  },
   picture: {
-    ...CONFIG_INLINE,
     children: ['source', 'img'],
   },
-  pre: {
-    ...CONFIG_BLOCK,
-  },
-  q: {
-    ...CONFIG_INLINE,
-  },
-  s: {
-    ...CONFIG_INLINE,
-  },
-  samp: {
-    ...CONFIG_INLINE,
-  },
-  section: {
-    ...CONFIG_BLOCK,
-  },
   source: {
-    ...CONFIG_INLINE,
     inline: false,
     parent: ['audio', 'video', 'picture'],
     void: true,
   },
   span: {
-    ...CONFIG_INLINE,
     self: true,
   },
-  strong: {
-    ...CONFIG_INLINE,
-  },
-  sub: {
-    ...CONFIG_INLINE,
-  },
-  summary: {
-    ...CONFIG_BLOCK,
-  },
-  sup: {
-    ...CONFIG_INLINE,
-  },
   table: {
-    ...CONFIG_BLOCK,
     children: ['thead', 'tbody', 'tfoot', 'tr'],
   },
   tbody: {
-    ...CONFIG_BLOCK,
     parent: ['table'],
     children: ['tr'],
   },
   td: {
-    ...CONFIG_BLOCK,
     parent: ['tr'],
   },
   tfoot: {
-    ...CONFIG_BLOCK,
     parent: ['table'],
     children: ['tr'],
   },
   th: {
-    ...CONFIG_BLOCK,
     parent: ['tr'],
   },
   thead: {
-    ...CONFIG_BLOCK,
     parent: ['table'],
     children: ['tr'],
   },
-  time: {
-    ...CONFIG_INLINE,
-  },
   tr: {
-    ...CONFIG_BLOCK,
     parent: ['table', 'tbody', 'thead', 'tfoot'],
     children: ['th', 'td'],
   },
   track: {
-    ...CONFIG_INLINE,
     inline: false,
     parent: ['audio', 'video'],
     void: true,
   },
-  u: {
-    ...CONFIG_INLINE,
-  },
   ul: {
-    ...CONFIG_BLOCK,
     children: ['li'],
   },
-  var: {
-    ...CONFIG_INLINE,
-  },
   video: {
-    ...CONFIG_INLINE,
     children: ['track', 'source'],
   },
-});
+};
+
+function createConfigBuilder(config: NodeConfig) {
+  return (tagName: string) => {
+    tagConfigs[tagName] = {
+      ...config,
+      ...(tagConfigs[tagName] || {}),
+    };
+  };
+}
+
+// Add inline tags
+[
+  'a', 'abbr', 'b', 'br', 'button', 'cite', 'code', 'del', 'dfn', 'em', 'i', 'img', 'ins', 'kbd',
+  'label', 'mark', 'output', 'picture', 'q', 's', 'samp', 'source', 'span', 'strong', 'sub', 'sup',
+  'time', 'track', 'u', 'var', 'video',
+].forEach(
+  createConfigBuilder(CONFIG_INLINE),
+);
+
+// Add block tags
+[
+  'address', 'article', 'aside', 'audio', 'blockquote', 'dd', 'details', 'div', 'dl', 'dt',
+  'fieldset', 'figcaption', 'figure', 'footer', 'header', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6',
+  'hr', 'legend', 'li', 'main', 'nav', 'ol', 'p', 'pre', 'section', 'summary', 'table', 'thead',
+  'tbody', 'tfoot', 'tr', 'th', 'td', 'ul',
+].forEach(
+  createConfigBuilder(CONFIG_BLOCK),
+);
+
+// Disable this map from being modified
+export const TAGS: ConfigMap = Object.freeze(tagConfigs);
 
 // Tags that should never be allowed, even if the whitelist is disabled
-export const TAGS_BLACKLIST = {
+export const TAGS_BLACKLIST: { [tagName: string]: boolean } = {
   applet: true,
   body: true,
   canvas: true,
