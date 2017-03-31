@@ -1,3 +1,6 @@
+# 3.0.1
+* Added support for `/` and `\` in URL query string parsing.
+
 # 3.0.0
 * Updated to no longer support parsing entire HTML documents.
   * This includes content that starts with `<!DOCTYPE>`, `<html>`, `<head>`, and `<body>`.

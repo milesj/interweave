@@ -26,7 +26,7 @@
   ],
   "scripts": {
     "clean": "rimraf ./lib",
-    "build": "yarn run build:js && yarn run build:docs && yarn run build:flow && yarn run build:emoji",
+    "build": "yarn run build:js && yarn run build:flow && yarn run build:emoji",
     "build:js": "babel ./src -d ./lib",
     "build:docs": "cp ./{*.md,package.json,LICENSE} ./lib",
     "build:flow": "cp ./flow/interweave.js.flow ./lib",
@@ -41,7 +41,8 @@
     "test": "yarn run jest",
     "test:bundle": "browserify -t [ babelify ] ./tests/bundle.js -o ./tests/bundle.min.js",
     "posttest": "yarn run flow",
-    "preversion": "yarn test && yarn run clean && yarn run build"
+    "preversion": "yarn test && yarn run clean && yarn run build",
+    "postversion": "yarn run build:docs"
   },
   "repository": {
     "type": "git",

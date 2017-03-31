@@ -41,6 +41,8 @@ const VALID_URLS = [
   { url: 'http://example.com/?v=%7E&w=%&x=%25&y=%2B&z=C%CC%A7', path: '/', query: '?v=%7E&w=%&x=%25&y=%2B&z=C%CC%A7' },
   { url: 'http://example.com/sound%2bvision', path: '/sound%2bvision' },
   { url: 'http://example.com/?q=', path: '/', query: '?q=' },
+  { url: 'http://example.com/?date=2017/01/01', path: '/', query: '?date=2017/01/01' },
+  { url: 'http://example.com/?route=foo\\bar\\baz', path: '/', query: '?route=foo\\bar\\baz' },
   { url: 'http://example.com/?one=1&two=2&three=3', path: '/', query: '?one=1&two=2&three=3' },
   { url: 'http://example.com/?one=1=uno&two=2=dos', path: '/', query: '?one=1=uno&two=2=dos' },
   { url: 'http://example.com/?one[two][three]=four', path: '/', query: '?one[two][three]=four' },
