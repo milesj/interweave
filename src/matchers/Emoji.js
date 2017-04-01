@@ -33,7 +33,7 @@ export default class EmojiMatcher extends Matcher<EmojiOptions> {
   }
 
   asTag(): string {
-    return 'span';
+    return 'img';
   }
 
   match(string: string): ?MatchResponse {
@@ -77,8 +77,10 @@ export default class EmojiMatcher extends Matcher<EmojiOptions> {
     return response;
   }
 
+  /**
+   * When a single `Emoji` is the only content, enlarge it!
+   */
   onAfterParse(content: ParsedNodes): ParsedNodes {
-    // When a single `Emoji` is the only content, enlarge it!
     if (content.length === 1) {
       let item = content[0];
 

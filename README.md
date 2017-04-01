@@ -99,6 +99,7 @@ The `Markup` component only supports the `content`, `emptyContent`,
   * [Converting Shortnames](#converting-shortnames)
   * [Using SVGs or PNGs](#using-svgs-or-pngs)
     * [CSS Styling](#css-styling)
+    * [Inline Sizing](#inline-sizing)
   * [Displaying Unicode Characters](#displaying-unicode-characters)
 * [HTML Parsing](#html-parsing)
   * [Tag Whitelist](#tag-whitelist)
@@ -449,22 +450,30 @@ size. The following styles work rather well, but the end result is up
 to you.
 
 ```css
-// Align in the middle of the text
+// Align in the middle of the text and match the size of the current text
 .interweave__emoji {
   display: inline-block;
   vertical-align: middle;
-}
-
-// Match the size of the current text
-.interweave__emoji img {
   width: 1em;
 }
 
 // Increase the size of large emoji
-.interweave__emoji--large img {
-  width: 2em;
+.interweave__emoji--large {
+  width: 3em;
 }
 ```
+
+##### Inline Sizing
+
+If you would like to use inline styles instead of CSS, you can use the
+`emojiSize` prop, which requires a number. This prop will apply a width
+(using `em` scaling) to every emoji using the `style` attribute.
+
+```javascript
+<Interweave emojiSize={1} />
+```
+
+> Enlarged emojis will render the size 3x as large.
 
 #### Displaying Unicode Characters
 
@@ -619,6 +628,7 @@ export default function Interweave({
       ]}
       hashtagUrl={hashtagUrl}
       emojiPath={emojiPath}
+      emojiSize={1}
       newWindow
       {...props}
     />

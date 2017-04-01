@@ -67,22 +67,42 @@ describe('components/Emoji', () => {
     expect(wrapper.find('img').prop('src')).toBe(`http://foo.com/path/to/${hexCode}.svg`);
   });
 
-  it('renders class names', () => {
+  it('adds class names', () => {
     const wrapper = shallow(<Emoji shortName={shortName} unicode={unicode} />);
 
     expect(wrapper.prop('className')).toBe('interweave__emoji');
 
     wrapper.setProps({
-      emojiPath: 'http://foo.com/path/to/{{hexcode}}.svg',
-    });
-
-    expect(wrapper.prop('className')).toBe('interweave__emoji interweave__emoji--svg');
-
-    wrapper.setProps({
-      emojiPath: '',
       enlargeEmoji: true,
     });
 
     expect(wrapper.prop('className')).toBe('interweave__emoji interweave__emoji--large');
+  });
+
+  it('sets styles when size is defined', () => {
+    const wrapper = shallow(<Emoji shortName={shortName} unicode={unicode} />);
+
+    expect(wrapper.prop('style')).toEqual({});
+
+    wrapper.setProps({
+      emojiSize: 1,
+    });
+
+    expect(wrapper.prop('style')).toEqual({
+      display: 'inline-block',
+      verticalAlign: 'middle',
+      width: '1em',
+    });
+
+    wrapper.setProps({
+      emojiSize: 1,
+      enlargeEmoji: true,
+    });
+
+    expect(wrapper.prop('style')).toEqual({
+      display: 'inline-block',
+      verticalAlign: 'middle',
+      width: '3em',
+    });
   });
 });

@@ -12,7 +12,13 @@ import type { EmojiProps } from '../types';
 // http://git.emojione.com/demos/latest/sprites-png.html
 // http://git.emojione.com/demos/latest/sprites-svg.html
 // https://css-tricks.com/using-svg/
-export default function Emoji({ shortName, unicode, emojiPath, enlargeEmoji = false }: EmojiProps) {
+export default function Emoji({
+  shortName,
+  unicode,
+  emojiPath,
+  emojiSize,
+  enlargeEmoji = false,
+}: EmojiProps) {
   if (!shortName && !unicode) {
     throw new Error('Emoji component requires a `unicode` character or a `shortName`.');
   }
@@ -37,23 +43,35 @@ export default function Emoji({ shortName, unicode, emojiPath, enlargeEmoji = fa
 
   const emoji = emojiData[shortName];
   const path = emojiPath || '{{hexcode}}';
-  const ext = emojiPath ? emojiPath.substr(-3).toLowerCase() : '';
-  const className = [
-    'interweave__emoji',
-    ext && `interweave__emoji--${ext}`,
-    enlargeEmoji && 'interweave__emoji--large',
-  ].filter(Boolean).join(' ');
+  const className = ['interweave__emoji'];
+  const styles = {};
+
+  // Only apply styles if a size is defined
+  if (emojiSize) {
+    styles.display = 'inline-block';
+    styles.verticalAlign = 'middle';
+    styles.width = `${emojiSize}em`;
+  }
+
+  if (enlargeEmoji) {
+    className.push('interweave__emoji--large');
+
+    if (emojiSize) {
+      styles.width = `${emojiSize * 3}em`;
+    }
+  }
 
   return (
-    <span
-      className={className}
+    <img
+      src={path.replace('{{hexcode}}', emoji.hexCode)}
+      alt={shortName}
+      style={styles}
+      className={className.join(' ')}
       data-unicode={unicode}
       data-hexcode={emoji.hexCode}
       data-codepoint={emoji.codePoint.join('-')}
       data-shortname={shortName}
-    >
-      <img src={path.replace('{{hexcode}}', emoji.hexCode)} alt={shortName} />
-    </span>
+    />
   );
 }
 
@@ -61,5 +79,6 @@ Emoji.propTypes = {
   shortName: PropTypes.string,
   unicode: PropTypes.string,
   emojiPath: PropTypes.string,
+  emojiSize: PropTypes.number,
   enlargeEmoji: PropTypes.bool,
 };

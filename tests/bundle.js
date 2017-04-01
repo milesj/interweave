@@ -40,6 +40,7 @@ Help!`;
         matchers={[new EmojiMatcher('emoji', { convertShortName: true })]}
         content="This will convert :cat: :dog: emoji shortnames :man: to PNGs."
         emojiPath="https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.6/assets/png/{{hexcode}}.png"
+        emojiSize={1}
       />
 
       <Interweave
@@ -47,6 +48,7 @@ Help!`;
         matchers={[new EmojiMatcher('emoji', { convertUnicode: true })]}
         content={'This will convert \uD83D\uDC31 \uD83D\uDC36 emoji unicode escapes \uD83D\uDC68 to PNGs.'}
         emojiPath="https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.6/assets/png/{{hexcode}}.png"
+        emojiSize={1}
       />
 
       <Interweave
@@ -54,13 +56,15 @@ Help!`;
         matchers={[new EmojiMatcher('emoji', { convertUnicode: true })]}
         content="This will convert 🐱 🐶 emoji unicode literals 👨 to PNGs."
         emojiPath="https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.6/assets/png/{{hexcode}}.png"
+        emojiSize={1}
       />
 
       <Interweave
         tagName="div"
         matchers={[new EmojiMatcher('emoji', { convertUnicode: true, convertShortName: true })]}
-        content={'This will convert 🐱 \uD83D\uDC36 all 3 emoji types at once :man: to PNGs.'}
+        content={'This will convert 🐱 \uD83D\uDC36 all 3 emoji types at once :man: to PNGs, and increase the size.'}
         emojiPath="https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.6/assets/png/{{hexcode}}.png"
+        emojiSize={2}
       />
 
       <Interweave
@@ -68,6 +72,7 @@ Help!`;
         matchers={[new EmojiMatcher('emoji', { convertUnicode: true, convertShortName: true })]}
         content={'This will convert surrogate pairs 👨👩👧👦 :family_mwgb: \uD83D\uDC68\uD83D\uDC69\uD83D\uDC67\uD83D\uDC66 to PNGs.'}
         emojiPath="https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.6/assets/png/{{hexcode}}.png"
+        emojiSize={1}
       />
 
       <Interweave
@@ -115,6 +120,7 @@ Help!`;
         matchers={[new EmojiMatcher('emoji', { convertUnicode: true })]}
         content="🐶"
         emojiPath="https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.6/assets/png/{{hexcode}}.png"
+        emojiSize={1}
       />
 
       <Interweave
