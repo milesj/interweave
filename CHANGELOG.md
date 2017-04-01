@@ -1,3 +1,9 @@
+# 3.1.0
+* Added an `emojiSize` prop to the `Emoji` component, which will scale the size
+  of the emoji using inline styles.
+* Updated the `Emoji` component to return `img` instead of `span`.
+* Removed the extension specific class name from the `Emoji` element.
+
 # 3.0.2
 * Fixed an issue with the published build.
 

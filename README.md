@@ -1,4 +1,4 @@
-# Interweave v3.0.2
+# Interweave v3.1.0
 [![Build Status](https://travis-ci.org/milesj/interweave.svg?branch=master)](https://travis-ci.org/milesj/interweave)
 
 Interweave is a robust React library that can...
@@ -450,14 +450,12 @@ size. The following styles work rather well, but the end result is up
 to you.
 
 ```css
-// Align in the middle of the text and match the size of the current text
 .interweave__emoji {
   display: inline-block;
   vertical-align: middle;
   width: 1em;
 }
 
-// Increase the size of large emoji
 .interweave__emoji--large {
   width: 3em;
 }
@@ -467,13 +465,13 @@ to you.
 
 If you would like to use inline styles instead of CSS, you can use the
 `emojiSize` prop, which requires a number. This prop will apply a width
-(using `em` scaling) to every emoji using the `style` attribute.
+(using `em` scaling) to every emoji with the `style` attribute.
 
 ```javascript
 <Interweave emojiSize={1} />
 ```
 
-> Enlarged emojis will render the size 3x as large.
+> Enlarged emojis will increase the size by 3x.
 
 #### Displaying Unicode Characters
 
