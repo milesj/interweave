@@ -575,7 +575,8 @@ in your application. This provides more options for customization, like the choi
 between Twitter and Instagram hashtags, or PNG or SVG emojis.
 
 ```javascript
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import BaseInterweave, { Filter, Matcher } from 'interweave';
 import IpMatcher from 'interweave/matchers/Ip';
 import UrlMatcher from 'interweave/matchers/Url';

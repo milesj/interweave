@@ -58,7 +58,8 @@
   },
   "homepage": "https://github.com/milesj/interweave#readme",
   "dependencies": {
-    "babel-runtime": "^6.23.0"
+    "babel-runtime": "^6.23.0",
+    "prop-types": "^15.5.8"
   },
   "peerDependencies": {
     "react": "^15.0.0"

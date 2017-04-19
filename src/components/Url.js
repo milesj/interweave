@@ -4,7 +4,8 @@
  * @flow
  */
 
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import Link from './Link';
 
 import type { UrlProps } from '../types';
