@@ -38,7 +38,7 @@ export type MatcherFactory = (match: string, props: Object) => React.Element<*>;
 
 export type MatchResponse = {
   match: string,
-  shortName?: string,
+  shortname?: string,
   unicode?: string,
   [key: string]: mixed,
 };
@@ -129,12 +129,12 @@ export type EmojiProps = {
   emojiPath?: string,
   emojiSize?: number,
   enlargeEmoji?: boolean,
-  shortName: string,
+  shortname: string,
   unicode: string,
 };
 
 export type EmojiOptions = {
-  convertShortName: boolean,
+  convertShortname: boolean,
   convertUnicode: boolean,
   renderUnicode: boolean,
 };

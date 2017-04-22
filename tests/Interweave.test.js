@@ -185,7 +185,7 @@ describe('Interweave', () => {
         tagName="div"
         matchers={[
           new EmailMatcher('email'),
-          new EmojiMatcher('emoji', { convertShortName: true }),
+          new EmojiMatcher('emoji', { convertShortname: true }),
           new HashtagMatcher('hashtag'),
           new IpMatcher('ip'),
           new UrlMatcher('url'),
@@ -204,7 +204,7 @@ Curabitur lectus odio, tempus quis velit vitae, cursus sagittis nulla. Maecenas 
       '. Aliquam a arcu porttitor, aliquam eros sed, convallis massa. Nunc vitae vehicula quam, in feugiat ligula. ',
       <Hashtag key="2" hashtagName="interweave">#interweave</Hashtag>,
       ' Donec eu sem non nibh condimentum luctus. Vivamus pharetra feugiat blandit. Vestibulum neque velit, semper ',
-      <Emoji key="1" shortName=":japanese_castle:" unicode={SHORTNAME_TO_UNICODE[':japanese_castle:']} />,
+      <Emoji key="1" shortname=":japanese_castle:" unicode={SHORTNAME_TO_UNICODE[':japanese_castle:']} />,
       ' id vestibulum id, viverra a felis. Integer convallis in orci nec bibendum. Ut consequat posuere metus, ',
       <Url key="3" urlParts={{ ...urlParts, host: 'www.domain.com' }}>www.domain.com</Url>,
       '.',
@@ -231,7 +231,7 @@ Curabitur lectus odio, tempus quis velit vitae, cursus sagittis nulla. Maecenas 
         tagName="div"
         matchers={[
           new EmailMatcher('email'),
-          new EmojiMatcher('emoji', { convertShortName: true, convertUnicode: true }),
+          new EmojiMatcher('emoji', { convertShortname: true, convertUnicode: true }),
           new HashtagMatcher('hashtag'),
           new IpMatcher('ip'),
           new UrlMatcher('url'),
@@ -261,7 +261,7 @@ Curabitur lectus odio, tempus quis velit vitae, cursus sagittis nulla. Maecenas 
           ' Donec eu sem non nibh condimentum luctus. ',
           <Emoji key="5" unicode={SHORTNAME_TO_UNICODE[':cat:']} />,
           ' Vivamus pharetra feugiat blandit. Vestibulum neque velit, semper id vestibulum id ',
-          <Emoji key="4" shortName=":love_letter:" unicode={SHORTNAME_TO_UNICODE[':love_letter:']} />,
+          <Emoji key="4" shortname=":love_letter:" unicode={SHORTNAME_TO_UNICODE[':love_letter:']} />,
           ', viverra a felis. Integer convallis in orci nec bibendum. Ut consequat posuere metus, ',
           <Element key="7" tagName="a" attributes={{ href: 'www.domain.com' }}>{['www.domain.com']}</Element>,
           '.',
@@ -269,7 +269,7 @@ Curabitur lectus odio, tempus quis velit vitae, cursus sagittis nulla. Maecenas 
       </Element>,
       '\n\n',
       <Element key="8" tagName="br" selfClose>{[]}</Element>,
-      <Emoji key="9" shortName=":ok_woman_tone3:" unicode={SHORTNAME_TO_UNICODE[':ok_woman_tone3:']} />,
+      <Emoji key="9" shortname=":ok_woman_tone3:" unicode={SHORTNAME_TO_UNICODE[':ok_woman_tone3:']} />,
       <Element key="10" tagName="br" selfClose>{[]}</Element>,
       '\n\n',
       <Element key="11" tagName="div">
@@ -304,7 +304,7 @@ Curabitur lectus odio, tempus quis velit vitae, cursus sagittis nulla. Maecenas 
         tagName="div"
         matchers={[
           new EmailMatcher('email'),
-          new EmojiMatcher('emoji', { convertShortName: true }),
+          new EmojiMatcher('emoji', { convertShortname: true }),
           new HashtagMatcher('hashtag'),
           new IpMatcher('ip'),
           new UrlMatcher('url'),
@@ -333,7 +333,7 @@ Curabitur lectus odio, tempus quis velit vitae, cursus sagittis nulla. Maecenas 
       <Interweave
         tagName="div"
         matchers={[
-          new EmojiMatcher('emoji', { convertShortName: true, renderUnicode: true }),
+          new EmojiMatcher('emoji', { convertShortname: true, renderUnicode: true }),
         ]}
         content="This has :cat: and :dog: shortnames."
       />

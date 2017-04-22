@@ -56,7 +56,7 @@
   "homepage": "https://github.com/milesj/interweave#readme",
   "dependencies": {
     "babel-runtime": "^6.23.0",
-    "emoji-database": "^0.0.2",
+    "emoji-database": "^0.0.5",
     "prop-types": "^15.5.8"
   },
   "peerDependencies": {
@@ -64,7 +64,7 @@
   },
   "devDependencies": {
     "babel-cli": "^6.24.1",
-    "babel-eslint": "^7.2.2",
+    "babel-eslint": "^7.2.3",
     "babel-jest": "^19.0.0",
     "babel-plugin-transform-class-properties": "^6.24.1",
     "babel-plugin-transform-flow-comments": "^6.22.0",
@@ -78,15 +78,15 @@
     "enzyme": "^2.8.2",
     "eslint": "^3.19.0",
     "eslint-config-airbnb": "^14.1.0",
-    "eslint-plugin-flowtype": "^2.31.0",
+    "eslint-plugin-flowtype": "^2.32.1",
     "eslint-plugin-import": "^2.2.0",
     "eslint-plugin-jsx-a11y": "^4.0.0",
     "eslint-plugin-react": "^6.10.3",
     "flow-bin": "^0.44.2",
     "jest": "^19.0.2",
     "react": "^15.5.4",
-    "react-addons-test-utils": "^15.5.1",
     "react-dom": "^15.5.4",
+    "react-test-renderer": "^15.5.4",
     "rimraf": "^2.6.1"
   }
 }

@@ -14,35 +14,35 @@ import type { EmojiProps } from '../types';
 // http://git.emojione.com/demos/latest/sprites-svg.html
 // https://css-tricks.com/using-svg/
 export default function Emoji({
-  shortName,
+  shortname,
   unicode,
   emojiPath,
   emojiSize,
   enlargeEmoji = false,
 }: EmojiProps) {
-  if (!shortName && !unicode) {
-    throw new Error('Emoji component requires a `unicode` character or a `shortName`.');
+  if (!shortname && !unicode) {
+    throw new Error('Emoji component requires a `unicode` character or a `shortname`.');
   }
 
   // Return the invalid value instead of throwing errors,
   // as this will avoid unnecessary noise in production.
   if (
     (unicode && !UNICODE_TO_SHORTNAME[unicode]) ||
-    (shortName && !SHORTNAME_TO_UNICODE[shortName])
+    (shortname && !SHORTNAME_TO_UNICODE[shortname])
   ) {
     return (
-      <span>{unicode || shortName}</span>
+      <span>{unicode || shortname}</span>
     );
   }
 
   // Retrieve any missing values
-  if (!shortName && unicode) {
-    shortName = UNICODE_TO_SHORTNAME[unicode];
-  } else if (!unicode && shortName) {
-    unicode = SHORTNAME_TO_UNICODE[shortName];
+  if (!shortname && unicode) {
+    shortname = UNICODE_TO_SHORTNAME[unicode];
+  } else if (!unicode && shortname) {
+    unicode = SHORTNAME_TO_UNICODE[shortname];
   }
 
-  const emoji = emojiData[shortName];
+  const emoji = emojiData[shortname];
   const path = emojiPath || '{{hexcode}}';
   const className = ['interweave__emoji'];
   const styles = {};
@@ -64,20 +64,20 @@ export default function Emoji({
 
   return (
     <img
-      src={path.replace('{{hexcode}}', emoji.hexCode)}
-      alt={shortName}
+      src={path.replace('{{hexcode}}', emoji.hexcode)}
+      alt={shortname}
       style={styles}
       className={className.join(' ')}
       data-unicode={unicode}
-      data-hexcode={emoji.hexCode}
-      data-codepoint={emoji.codePoint.join('-')}
-      data-shortname={shortName}
+      data-hexcode={emoji.hexcode}
+      data-codepoint={emoji.codepoint.join('-')}
+      data-shortname={shortname}
     />
   );
 }
 
 Emoji.propTypes = {
-  shortName: PropTypes.string,
+  shortname: PropTypes.string,
   unicode: PropTypes.string,
   emojiPath: PropTypes.string,
   emojiSize: PropTypes.number,

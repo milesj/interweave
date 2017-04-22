@@ -45,7 +45,7 @@ Help!`;
       <Interweave
         {...emojiProps}
         tagName="div"
-        matchers={[new EmojiMatcher('emoji', { convertShortName: true })]}
+        matchers={[new EmojiMatcher('emoji', { convertShortname: true })]}
         content="This will convert :cat: :dog: emoji shortnames :man: to PNGs."
       />
 
@@ -64,7 +64,7 @@ Help!`;
       <Interweave
         {...emojiProps}
         tagName="div"
-        matchers={[new EmojiMatcher('emoji', { convertUnicode: true, convertShortName: true })]}
+        matchers={[new EmojiMatcher('emoji', { convertUnicode: true, convertShortname: true })]}
         content={'This will convert 🐱 \uD83D\uDC36 all 3 emoji types at once :man: to PNGs, and increase the size.'}
         emojiSize={2}
       />
@@ -72,13 +72,13 @@ Help!`;
       <Interweave
         {...emojiProps}
         tagName="div"
-        matchers={[new EmojiMatcher('emoji', { convertUnicode: true, convertShortName: true })]}
+        matchers={[new EmojiMatcher('emoji', { convertUnicode: true, convertShortname: true })]}
         content={'This will convert surrogate pairs 👨👩👧👦 :family_mwgb: \uD83D\uDC68\uD83D\uDC69\uD83D\uDC67\uD83D\uDC66 to PNGs.'}
       />
 
       <Interweave
         tagName="div"
-        matchers={[new EmojiMatcher('emoji', { convertShortName: true, renderUnicode: true })]}
+        matchers={[new EmojiMatcher('emoji', { convertShortname: true, renderUnicode: true })]}
         content="This will convert :cat: :dog: emoji shortnames :man: to unicode literals."
       />
 
@@ -90,7 +90,7 @@ Help!`;
 
       <Interweave
         tagName="div"
-        matchers={[new EmojiMatcher('emoji', { convertUnicode: true, convertShortName: true, renderUnicode: true })]}
+        matchers={[new EmojiMatcher('emoji', { convertUnicode: true, convertShortname: true, renderUnicode: true })]}
         content={'This will convert surrogate pairs 👨👩👧👦 :family_mwgb: \uD83D\uDC68\uD83D\uDC69\uD83D\uDC67\uD83D\uDC66 to unicode literals.'}
       />
 

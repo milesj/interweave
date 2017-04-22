@@ -2,10 +2,10 @@ import React from 'react';
 import Parser from '../../src/Parser';
 import Emoji from '../../src/components/Emoji';
 import EmojiMatcher from '../../src/matchers/Emoji';
-import { EMOJI_PATTERN, EMOJI_SHORTNAME_PATTERN, SHORTNAME_TO_UNICODE, UNICODE_TO_SHORTNAME } from '../../src/data/emoji';
+import { EMOJI_REGEX, EMOJI_SHORTNAME_REGEX, SHORTNAME_TO_UNICODE, UNICODE_TO_SHORTNAME } from '../../src/data/emoji';
 import { VALID_EMOJIS, TOKEN_LOCATIONS, createExpectedTokenLocations, parentConfig } from '../mocks';
 
-const VALID_UNICODE = Object.keys(UNICODE_TO_SHORTNAME);
+const VALID_UNICODE = [Object.keys(UNICODE_TO_SHORTNAME)[0]];
 const VALID_SHORTNAME = Object.keys(SHORTNAME_TO_UNICODE);
 
 const INVALID_UNICODE = [
@@ -23,29 +23,21 @@ const INVALID_SHORTNAME = [
 const MAN_EMOJI = SHORTNAME_TO_UNICODE[':man:'];
 
 describe('matchers/Emoji', () => {
-  const matcher = new EmojiMatcher('emoji', { convertShortName: true, convertUnicode: true });
+  const matcher = new EmojiMatcher('emoji', { convertShortname: true, convertUnicode: true });
   const noConvertMatcher = new EmojiMatcher('emoji');
-  const pattern = new RegExp(`^${EMOJI_PATTERN}$`, 'i');
-  const shortPattern = new RegExp(`^${EMOJI_SHORTNAME_PATTERN}$`, 'i');
+  const pattern = new RegExp(`^${EMOJI_REGEX.source}$`);
+  const shortPattern = new RegExp(`^${EMOJI_SHORTNAME_REGEX.source}$`);
 
   describe('does match valid emoji', () => {
     VALID_UNICODE.forEach((unicode) => {
       it(`unicode: ${unicode}`, () => {
-        const expected = [unicode];
-        expected.index = 0;
-        expected.input = unicode;
-
-        expect(unicode.match(pattern)).toEqual(expected);
+        expect(unicode.match(pattern)[0]).toBe(unicode);
       });
     });
 
-    VALID_SHORTNAME.forEach((shortName) => {
-      it(`shortname: ${shortName}`, () => {
-        const expected = [shortName];
-        expected.index = 0;
-        expected.input = shortName;
-
-        expect(shortName.match(shortPattern)).toEqual(expected);
+    VALID_SHORTNAME.forEach((shortname) => {
+      it(`shortname: ${shortname}`, () => {
+        expect(shortname.match(shortPattern)[0]).toBe(shortname);
       });
     });
   });
@@ -57,9 +49,9 @@ describe('matchers/Emoji', () => {
       });
     });
 
-    INVALID_SHORTNAME.forEach((shortName) => {
-      it(`shortname: ${shortName}`, () => {
-        expect(shortName.match(shortPattern)).toBe(null);
+    INVALID_SHORTNAME.forEach((shortname) => {
+      it(`shortname: ${shortname}`, () => {
+        expect(shortname.match(shortPattern)).toBe(null);
       });
     });
   });
@@ -72,10 +64,10 @@ describe('matchers/Emoji', () => {
     });
   });
 
-  describe('doesnt match shortname when `convertShortName` is false', () => {
-    VALID_SHORTNAME.forEach((shortName) => {
-      it(`shortname: ${shortName}`, () => {
-        expect(noConvertMatcher.match(shortName)).toBe(null);
+  describe('doesnt match shortname when `convertShortname` is false', () => {
+    VALID_SHORTNAME.forEach((shortname) => {
+      it(`shortname: ${shortname}`, () => {
+        expect(noConvertMatcher.match(shortname)).toBe(null);
       });
     });
   });
@@ -83,15 +75,15 @@ describe('matchers/Emoji', () => {
   describe('matches all emojis in a string', () => {
     const parser = new Parser('', {}, [matcher]);
     const createUnicode = (unicode, key) => matcher.replaceWith(unicode, { unicode, key });
-    const createShort = (shortName, key) => matcher.replaceWith(shortName, {
-      unicode: SHORTNAME_TO_UNICODE[shortName],
-      shortName,
+    const createShort = (shortname, key) => matcher.replaceWith(shortname, {
+      unicode: SHORTNAME_TO_UNICODE[shortname],
+      shortname,
       key,
     });
 
-    VALID_EMOJIS.forEach(([, unicode, shortName]) => {
+    VALID_EMOJIS.forEach(([, unicode, shortname]) => {
       const expectedUnicode = createExpectedTokenLocations(unicode, createUnicode);
-      const expectedShort = createExpectedTokenLocations(shortName, createShort);
+      const expectedShort = createExpectedTokenLocations(shortname, createShort);
 
       TOKEN_LOCATIONS.forEach((location, i) => {
         it(`for: ${unicode} - ${location}`, () => {
@@ -107,10 +99,10 @@ describe('matchers/Emoji', () => {
           }
         });
 
-        it(`for: ${shortName} - ${location}`, () => {
+        it(`for: ${shortname} - ${location}`, () => {
           parser.keyIndex = -1; // Reset for easier testing
 
-          const tokenString = location.replace(/\{token\}/g, shortName);
+          const tokenString = location.replace(/\{token\}/g, shortname);
           const actual = parser.applyMatchers(tokenString, parentConfig);
 
           if (i === 0) {
@@ -142,22 +134,22 @@ describe('matchers/Emoji', () => {
     it('returns object for valid shortname match', () => {
       expect(matcher.match(':man:')).toEqual({
         match: ':man:',
-        shortName: ':man:',
+        shortname: ':man:',
         unicode: MAN_EMOJI,
       });
     });
   });
 
   describe('replaceWith()', () => {
-    VALID_EMOJIS.forEach(([, unicode, shortName]) => {
+    VALID_EMOJIS.forEach(([, unicode, shortname]) => {
       const uniMatcher = new EmojiMatcher('emoji', { renderUnicode: true });
 
-      it(`returns the unicode as is when using \`renderUnicode\`: ${shortName}`, () => {
-        expect(uniMatcher.replaceWith(unicode, { unicode, shortName })).toBe(unicode);
+      it(`returns the unicode as is when using \`renderUnicode\`: ${shortname}`, () => {
+        expect(uniMatcher.replaceWith(unicode, { unicode, shortname })).toBe(unicode);
       });
 
-      it(`returns the unicode when providing a shortname using \`renderUnicode\`: ${shortName}`, () => {
-        expect(uniMatcher.replaceWith(shortName, { unicode, shortName })).toBe(unicode);
+      it(`returns the unicode when providing a shortname using \`renderUnicode\`: ${shortname}`, () => {
+        expect(uniMatcher.replaceWith(shortname, { unicode, shortname })).toBe(unicode);
       });
     });
   });
@@ -165,17 +157,17 @@ describe('matchers/Emoji', () => {
   describe('onAfterParse', () => {
     it('returns a single <Emoji/> enlarged', () => {
       expect(matcher.onAfterParse([
-        <Emoji shortName=":cat:" />,
+        <Emoji shortname=":cat:" />,
       ])).toEqual([
-        <Emoji shortName=":cat:" enlargeEmoji />,
+        <Emoji shortname=":cat:" enlargeEmoji />,
       ]);
     });
 
     it('ignores multiple <Emoji/>', () => {
       const nodes = [
-        <Emoji shortName=":cat:" />,
-        <Emoji shortName=":dog:" />,
-        <Emoji shortName=":man:" />,
+        <Emoji shortname=":cat:" />,
+        <Emoji shortname=":dog:" />,
+        <Emoji shortname=":man:" />,
       ];
 
       expect(matcher.onAfterParse(nodes)).toEqual(nodes);

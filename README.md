@@ -390,7 +390,7 @@ when matching. If a match is found, an [Emoji](#rendered-elements)
 element or matcher element will be rendered and passed the following
 props.
 
-* `shortName` (string) - The shortname when `convertShortName` is on.
+* `shortname` (string) - The shortname when `convertShortname` is on.
 * `unicode` (string) - The unicode literal character. Provided for both
   shortname and unicode matching.
 
@@ -402,21 +402,21 @@ A list of all possible shortnames can be found at
 [emoji.codes](http://emoji.codes/family).
 
 To enable conversion of a shortname to a unicode literal character,
-pass the `convertShortName` option to the matcher constructor.
+pass the `convertShortname` option to the matcher constructor.
 
 ```javascript
-new EmojiMatcher('emoji', { convertShortName: true });
+new EmojiMatcher('emoji', { convertShortname: true });
 ```
 
 #### Using SVGs or PNGs
 
 To begin, we must enable conversion of unicode characters to media (images, vector, etc),
 by enabling the `convertUnicode` option. Secondly, if you want to support shortnames,
-enable `convertShortName`.
+enable `convertShortname`.
 
 ```javascript
 new EmojiMatcher('emoji', {
-  convertShortName: true,
+  convertShortname: true,
   convertUnicode: true,
 });
 ```
@@ -590,7 +590,7 @@ const globalFilters = [
 const globalMatchers = [
   new IpMatcher('ip'),
   new UrlMatcher('url'),
-  new EmojiMatcher('emoji', { convertUnicode: true, convertShortName: true }),
+  new EmojiMatcher('emoji', { convertUnicode: true, convertShortname: true }),
   new HashtagMatcher('hashtag'),
 ];
 

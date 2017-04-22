@@ -53,26 +53,16 @@ export function createExpectedTokenLocations(value, factory, flatten = false) {
 }
 
 export const VALID_EMOJIS = [
-  ['1F468-1F469-1F467-1F466', '\uD83D\uDC68\uD83D\uDC69\uD83D\uDC67\uD83D\uDC66', ':family_mwgb:'],
-  ['1F1FA-1F1F8', '\uD83C\uDDFA\uD83C\uDDF8', ':flag_us:'],
-  ['1F621', '\uD83D\uDE21', ':rage:'],
-  ['1F63A', '\uD83D\uDE3A', ':smiley_cat:'],
-  ['1F3EF', '\uD83C\uDFEF', ':japanese_castle:'],
-  ['2653', '\u2653', ':pisces:'],
-  ['270A', '\u270A', ':fist:'],
-  ['1F434', '\uD83D\uDC34', ':horse:'],
-  ['1F554', '\uD83D\uDD54', ':clock5:'],
-  ['1F468', '\uD83D\uDC68', ':man:'],
-  ['1F54A', '\uD83D\uDD4A', ':dove:'],
-  ['1F5E1', '\uD83D\uDDE1', ':dagger:'],
-  ['1F36E', '\uD83C\uDF6E', ':custard:'],
-  ['1F6B6', '\uD83D\uDEB6', ':walking:'],
-  ['1F1E7-1F1F4', '\uD83C\uDDE7\uD83C\uDDF4', ':flag_bo:'],
-  ['1F468-1F468-1F466', '\uD83D\uDC68\uD83D\uDC68\uD83D\uDC66', ':family_mmb:'],
-  ['1F3C0', '\uD83C\uDFC0', ':basketball:'],
-  ['1F5DE', '\uD83D\uDDDE', ':newspaper2:'],
-  ['1F201', '\uD83C\uDE01', ':koko:'],
-  ['1F536', '\uD83D\uDD36', ':large_orange_diamond:'],
+  ['1F468-1F469-1F467-1F466', '👨‍👩‍👧‍👦', ':family_mwgb:'],
+  ['1F1FA-1F1F8', '🇺🇸', ':flag_us:'],
+  ['1F621', '😡', ':rage:'],
+  ['1F63A', '😺', ':smiley_cat:'],
+  ['1F3EF', '🏯', ':japanese_castle:'],
+  ['1F554', '🕔', ':clock5:'],
+  ['1F469-2764-1F468', '👩‍❤️‍👨', ':couple_with_heart_woman_man:'],
+  ['1F1E7-1F1F4', '🇧🇴', ':flag_bo:'],
+  ['1F468-1F468-1F466', '👨‍👨‍👦', ':family_mmb:'],
+  ['1F3C0', '🏀', ':basketball:'],
 ];
 
 export const MOCK_MARKUP = `<main role="main">

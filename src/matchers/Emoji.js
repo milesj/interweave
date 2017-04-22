@@ -8,16 +8,13 @@ import React from 'react';
 import Matcher from '../Matcher';
 import Emoji from '../components/Emoji';
 import {
-  EMOJI_PATTERN,
-  EMOJI_SHORTNAME_PATTERN,
+  EMOJI_REGEX,
+  EMOJI_SHORTNAME_REGEX,
   SHORTNAME_TO_UNICODE,
   UNICODE_TO_SHORTNAME,
 } from '../data/emoji';
 
 import type { MatchResponse, EmojiProps, EmojiOptions, ParsedNodes } from '../types';
-
-const EMOJI_REGEX = new RegExp(EMOJI_PATTERN);
-const EMOJI_SHORTNAME_REGEX = new RegExp(EMOJI_SHORTNAME_PATTERN, 'i');
 
 export default class EmojiMatcher extends Matcher<EmojiOptions> {
   options: EmojiOptions;
@@ -40,13 +37,13 @@ export default class EmojiMatcher extends Matcher<EmojiOptions> {
     let response = null;
 
     // Should we convert shortnames to unicode?
-    if (this.options.convertShortName && string.indexOf(':') >= 0) {
+    if (this.options.convertShortname && string.indexOf(':') >= 0) {
       response = this.doMatch(string, EMOJI_SHORTNAME_REGEX, matches => ({
-        shortName: matches[0].toLowerCase(),
+        shortname: matches[0].toLowerCase(),
       }));
 
-      if (response && response.shortName) {
-        const unicode = SHORTNAME_TO_UNICODE[response.shortName];
+      if (response && response.shortname) {
+        const unicode = SHORTNAME_TO_UNICODE[response.shortname];
 
         // Invalid shortname
         if (!unicode) {

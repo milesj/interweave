@@ -8,15 +8,15 @@ function hex2cp(hex) {
 }
 
 describe('components/Emoji', () => {
-  const [hexCode, unicode, shortName] = VALID_EMOJIS[0];
+  const [hexcode, unicode, shortname] = VALID_EMOJIS[0];
 
   it('errors if no shortname or unicode', () => {
     expect(() => shallow(<Emoji />))
-      .toThrowError('Emoji component requires a `unicode` character or a `shortName`.');
+      .toThrowError('Emoji component requires a `unicode` character or a `shortname`.');
   });
 
   it('returns value for invalid shortname', () => {
-    const wrapper = shallow(<Emoji shortName="fake" />);
+    const wrapper = shallow(<Emoji shortname="fake" />);
 
     expect(wrapper.prop('children')).toBe('fake');
   });
@@ -28,47 +28,47 @@ describe('components/Emoji', () => {
   });
 
   it('renders with only the shortname', () => {
-    const wrapper = shallow(<Emoji shortName={shortName} />);
+    const wrapper = shallow(<Emoji shortname={shortname} />);
 
     expect(wrapper.prop('data-unicode')).toBe(unicode);
-    expect(wrapper.prop('data-hexcode')).toBe(hexCode);
-    expect(wrapper.prop('data-codepoint')).toBe(hex2cp(hexCode));
-    expect(wrapper.prop('data-shortname')).toBe(shortName);
+    expect(wrapper.prop('data-hexcode')).toBe(hexcode);
+    expect(wrapper.prop('data-codepoint')).toBe(hex2cp(hexcode));
+    expect(wrapper.prop('data-shortname')).toBe(shortname);
   });
 
   it('renders with only the unicode', () => {
     const wrapper = shallow(<Emoji unicode={unicode} />);
 
     expect(wrapper.prop('data-unicode')).toBe(unicode);
-    expect(wrapper.prop('data-hexcode')).toBe(hexCode);
-    expect(wrapper.prop('data-codepoint')).toBe(hex2cp(hexCode));
-    expect(wrapper.prop('data-shortname')).toBe(shortName);
+    expect(wrapper.prop('data-hexcode')).toBe(hexcode);
+    expect(wrapper.prop('data-codepoint')).toBe(hex2cp(hexcode));
+    expect(wrapper.prop('data-shortname')).toBe(shortname);
   });
 
   it('renders with both', () => {
-    const wrapper = shallow(<Emoji shortName={shortName} unicode={unicode} />);
+    const wrapper = shallow(<Emoji shortname={shortname} unicode={unicode} />);
 
     expect(wrapper.prop('data-unicode')).toBe(unicode);
-    expect(wrapper.prop('data-hexcode')).toBe(hexCode);
-    expect(wrapper.prop('data-codepoint')).toBe(hex2cp(hexCode));
-    expect(wrapper.prop('data-shortname')).toBe(shortName);
+    expect(wrapper.prop('data-hexcode')).toBe(hexcode);
+    expect(wrapper.prop('data-codepoint')).toBe(hex2cp(hexcode));
+    expect(wrapper.prop('data-shortname')).toBe(shortname);
   });
 
   it('can define the path', () => {
     const wrapper = shallow((
       <Emoji
-        shortName={shortName}
+        shortname={shortname}
         unicode={unicode}
         emojiPath="http://foo.com/path/to/{{hexcode}}.svg"
       />
     ));
 
-    expect(wrapper.find('img').prop('alt')).toBe(shortName);
-    expect(wrapper.find('img').prop('src')).toBe(`http://foo.com/path/to/${hexCode}.svg`);
+    expect(wrapper.find('img').prop('alt')).toBe(shortname);
+    expect(wrapper.find('img').prop('src')).toBe(`http://foo.com/path/to/${hexcode}.svg`);
   });
 
   it('adds class names', () => {
-    const wrapper = shallow(<Emoji shortName={shortName} unicode={unicode} />);
+    const wrapper = shallow(<Emoji shortname={shortname} unicode={unicode} />);
 
     expect(wrapper.prop('className')).toBe('interweave__emoji');
 
@@ -80,7 +80,7 @@ describe('components/Emoji', () => {
   });
 
   it('sets styles when size is defined', () => {
-    const wrapper = shallow(<Emoji shortName={shortName} unicode={unicode} />);
+    const wrapper = shallow(<Emoji shortname={shortname} unicode={unicode} />);
 
     expect(wrapper.prop('style')).toEqual({});
 
