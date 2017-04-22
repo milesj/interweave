@@ -1,11 +1,8 @@
 import React from 'react';
 import { shallow } from 'enzyme';
+import fromHexToCodepoint from 'emoji-database/lib/fromHexToCodepoint';
 import Emoji from '../../src/components/Emoji';
 import { VALID_EMOJIS } from '../mocks';
-
-function hex2cp(hex) {
-  return hex.split('-').map(v => parseInt(v, 16)).join('-');
-}
 
 describe('components/Emoji', () => {
   const [hexcode, unicode, shortname] = VALID_EMOJIS[0];
@@ -32,7 +29,7 @@ describe('components/Emoji', () => {
 
     expect(wrapper.prop('data-unicode')).toBe(unicode);
     expect(wrapper.prop('data-hexcode')).toBe(hexcode);
-    expect(wrapper.prop('data-codepoint')).toBe(hex2cp(hexcode));
+    expect(wrapper.prop('data-codepoint')).toBe(fromHexToCodepoint(hexcode).join('-'));
     expect(wrapper.prop('data-shortname')).toBe(shortname);
   });
 
@@ -41,7 +38,7 @@ describe('components/Emoji', () => {
 
     expect(wrapper.prop('data-unicode')).toBe(unicode);
     expect(wrapper.prop('data-hexcode')).toBe(hexcode);
-    expect(wrapper.prop('data-codepoint')).toBe(hex2cp(hexcode));
+    expect(wrapper.prop('data-codepoint')).toBe(fromHexToCodepoint(hexcode).join('-'));
     expect(wrapper.prop('data-shortname')).toBe(shortname);
   });
 
@@ -50,7 +47,7 @@ describe('components/Emoji', () => {
 
     expect(wrapper.prop('data-unicode')).toBe(unicode);
     expect(wrapper.prop('data-hexcode')).toBe(hexcode);
-    expect(wrapper.prop('data-codepoint')).toBe(hex2cp(hexcode));
+    expect(wrapper.prop('data-codepoint')).toBe(fromHexToCodepoint(hexcode).join('-'));
     expect(wrapper.prop('data-shortname')).toBe(shortname);
   });
 

@@ -5,7 +5,7 @@ import EmojiMatcher from '../../src/matchers/Emoji';
 import { EMOJI_REGEX, EMOJI_SHORTNAME_REGEX, SHORTNAME_TO_UNICODE, UNICODE_TO_SHORTNAME } from '../../src/data/emoji';
 import { VALID_EMOJIS, TOKEN_LOCATIONS, createExpectedTokenLocations, parentConfig } from '../mocks';
 
-const VALID_UNICODE = [Object.keys(UNICODE_TO_SHORTNAME)[0]];
+const VALID_UNICODE = Object.keys(UNICODE_TO_SHORTNAME);
 const VALID_SHORTNAME = Object.keys(SHORTNAME_TO_UNICODE);
 
 const INVALID_UNICODE = [

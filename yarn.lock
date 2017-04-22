@@ -946,11 +946,7 @@ babelify@^7.3.0:
     babel-core "^6.0.14"
     object-assign "^4.0.0"
 
-babylon@^6.11.0, babylon@^6.13.0, babylon@^6.15.0:
-  version "6.16.1"
-  resolved "https://registry.yarnpkg.com/babylon/-/babylon-6.16.1.tgz#30c5a22f481978a9e7f8cdfdf496b11d94b404d3"
-
-babylon@^6.17.0:
+babylon@^6.11.0, babylon@^6.13.0, babylon@^6.15.0, babylon@^6.17.0:
   version "6.17.0"
   resolved "https://registry.yarnpkg.com/babylon/-/babylon-6.17.0.tgz#37da948878488b9c4e3c4038893fa3314b3fc932"
 
@@ -1640,9 +1636,9 @@ elliptic@^6.0.0:
     minimalistic-assert "^1.0.0"
     minimalistic-crypto-utils "^1.0.0"
 
-emoji-database@^0.0.5:
-  version "0.0.5"
-  resolved "https://registry.yarnpkg.com/emoji-database/-/emoji-database-0.0.5.tgz#14a4e1c7d87680efd39d9b1ec05975d9d4b1d056"
+emoji-database@^0.1.0:
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/emoji-database/-/emoji-database-0.1.0.tgz#09ca0909219df8ad1a89bfa3d5cbab3628488cb5"
   dependencies:
     chalk "^1.1.3"
     emojione "^3.0.0"

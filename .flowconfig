@@ -5,6 +5,8 @@
 [include]
 
 [libs]
+./flow
+./node_modules/emoji-database/lib/emoji-database.js.flow
 
 [options]
 esproposal.class_instance_fields=enable

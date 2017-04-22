@@ -240,7 +240,7 @@ Curabitur lectus odio, tempus quis velit vitae, cursus sagittis nulla. Maecenas 
 
 <p><b>Consectetur adipiscing elit.</b> Donec massa lorem, mollis non commodo quis, ultricies at elit. email@domain.com. Aliquam a arcu porttitor, aliquam eros sed, convallis massa. Nunc vitae vehicula quam, in feugiat ligula. #interweave Donec eu sem non nibh condimentum luctus. \uD83D\uDC31 Vivamus pharetra feugiat blandit. Vestibulum neque velit, semper id vestibulum id :love_letter:, viverra a felis. Integer convallis in orci nec bibendum. Ut consequat posuere metus, <a href="www.domain.com">www.domain.com</a>.</p>
 
-<br />:ok_woman_tone3:<br />
+<br />:woman_gesturing_ok_tone3:<br />
 
 <div>Curabitur lectus odio, <em>tempus quis velit vitae, cursus sagittis nulla</em>. Maecenas sem nulla, tempor nec risus nec, ultricies ultricies magna. https://127.0.0.1/foo Nulla malesuada lacinia libero non mollis. Curabitur id lacus id dolor vestibulum ornare quis a nisi (http://domain.com/some/path?with=query). Pellentesque ac finibus mauris. Sed eu luctus diam. :not_an_emoji: Quisque porta lectus in turpis imperdiet dapibus.</div>
 
@@ -269,7 +269,7 @@ Curabitur lectus odio, tempus quis velit vitae, cursus sagittis nulla. Maecenas 
       </Element>,
       '\n\n',
       <Element key="8" tagName="br" selfClose>{[]}</Element>,
-      <Emoji key="9" shortname=":ok_woman_tone3:" unicode={SHORTNAME_TO_UNICODE[':ok_woman_tone3:']} />,
+      <Emoji key="9" shortname=":woman_gesturing_ok_tone3:" unicode={SHORTNAME_TO_UNICODE[':woman_gesturing_ok_tone3:']} />,
       <Element key="10" tagName="br" selfClose>{[]}</Element>,
       '\n\n',
       <Element key="11" tagName="div">

@@ -56,7 +56,7 @@
   "homepage": "https://github.com/milesj/interweave#readme",
   "dependencies": {
     "babel-runtime": "^6.23.0",
-    "emoji-database": "^0.0.5",
+    "emoji-database": "^0.1.0",
     "prop-types": "^15.5.8"
   },
   "peerDependencies": {
