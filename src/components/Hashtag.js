@@ -17,9 +17,9 @@ export default function Hashtag({
   preserveHash = false,
   ...props
 }: HashtagProps) {
-  const url = hashtagUrl || '{{hashtag}}';
   let hashtag = children;
 
+  // Prepare the hashtag
   if (!preserveHash && hashtag.charAt(0) === '#') {
     hashtag = hashtag.substr(1);
   }
@@ -28,8 +28,17 @@ export default function Hashtag({
     hashtag = encodeURIComponent(hashtag);
   }
 
+  // Determine the URL
+  let url = hashtagUrl || '{{hashtag}}';
+
+  if (typeof url === 'function') {
+    url = url(hashtag);
+  } else {
+    url = url.replace('{{hashtag}}', hashtag);
+  }
+
   return (
-    <Link {...props} href={url.replace('{{hashtag}}', hashtag)}>
+    <Link {...props} href={url}>
       {children}
     </Link>
   );
@@ -38,7 +47,10 @@ export default function Hashtag({
 Hashtag.propTypes = {
   children: PropTypes.string.isRequired,
   hashtagName: PropTypes.string,
-  hashtagUrl: PropTypes.string,
+  hashtagUrl: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.func,
+  ]),
   encodeHashtag: PropTypes.bool,
   preserveHash: PropTypes.bool,
 };

@@ -10,6 +10,19 @@ describe('components/Hashtag', () => {
     expect(wrapper.prop('href')).toBe('http://foo.com/interweave');
   });
 
+  it('can define the URL with a function', () => {
+    const wrapper = shallow(
+      <Hashtag
+        hashtagUrl={tag => `http://foo.com/${tag.toUpperCase()}`}
+      >
+        #interweave
+      </Hashtag>,
+    );
+
+    expect(wrapper.prop('children')).toBe('#interweave');
+    expect(wrapper.prop('href')).toBe('http://foo.com/INTERWEAVE');
+  });
+
   it('can encode the hashtag', () => {
     const wrapper = shallow(<Hashtag encodeHashtag preserveHash>#interweave</Hashtag>);
 

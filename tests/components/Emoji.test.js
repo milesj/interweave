@@ -60,8 +60,21 @@ describe('components/Emoji', () => {
       />
     ));
 
-    expect(wrapper.find('img').prop('alt')).toBe(shortname);
+    expect(wrapper.find('img').prop('alt')).toBe(unicode);
     expect(wrapper.find('img').prop('src')).toBe(`http://foo.com/path/to/${hexcode}.svg`);
+  });
+
+  it('can define the path with a function', () => {
+    const wrapper = shallow((
+      <Emoji
+        shortname={shortname}
+        unicode={unicode}
+        emojiPath={hex => `http://foo.com/path/to/${hex.toLowerCase()}.svg`}
+      />
+    ));
+
+    expect(wrapper.find('img').prop('alt')).toBe(unicode);
+    expect(wrapper.find('img').prop('src')).toBe(`http://foo.com/path/to/${hexcode.toLowerCase()}.svg`);
   });
 
   it('adds class names', () => {

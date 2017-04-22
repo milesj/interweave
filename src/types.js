@@ -108,7 +108,7 @@ export type HashtagProps = {
   children: string,
   encodeHashtag?: boolean,
   hashtagName: string,
-  hashtagUrl?: string,
+  hashtagUrl?: string | (string) => string,
   preserveHash?: boolean,
 };
 
@@ -126,7 +126,7 @@ export type UrlProps = {
 };
 
 export type EmojiProps = {
-  emojiPath?: string,
+  emojiPath?: string | (string) => string,
   emojiSize?: number,
   enlargeEmoji?: boolean,
   shortname: string,

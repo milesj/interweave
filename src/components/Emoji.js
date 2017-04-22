@@ -43,7 +43,6 @@ export default function Emoji({
   }
 
   const emoji = emojiData[shortname];
-  const path = emojiPath || '{{hexcode}}';
   const className = ['interweave__emoji'];
   const styles = {};
 
@@ -62,10 +61,19 @@ export default function Emoji({
     }
   }
 
+  // Determine the path
+  let path = emojiPath || '{{hexcode}}';
+
+  if (typeof path === 'function') {
+    path = path(emoji.hexcode, shortname, unicode);
+  } else {
+    path = path.replace('{{hexcode}}', emoji.hexcode);
+  }
+
   return (
     <img
-      src={path.replace('{{hexcode}}', emoji.hexcode)}
-      alt={shortname}
+      src={path}
+      alt={unicode}
       style={styles}
       className={className.join(' ')}
       data-unicode={unicode}
@@ -79,7 +87,10 @@ export default function Emoji({
 Emoji.propTypes = {
   shortname: PropTypes.string,
   unicode: PropTypes.string,
-  emojiPath: PropTypes.string,
+  emojiPath: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.func,
+  ]),
   emojiSize: PropTypes.number,
   enlargeEmoji: PropTypes.bool,
 };
