@@ -1,3 +1,19 @@
+# 4.0.0
+* Updated support for React 15.5 and the new `prop-types` package.
+* Updated emoji parsing and rendering to use [emoji-database](https://www.npmjs.com/package/emoji-database),
+  which also supports EmojiOne 3.0, and the latest emoji unicode specification.
+* Updated the `Emoji` component's rendered `img` element to use the emoji unicode character
+  as the `alt` attribute.
+* Updated the `Emoji` component's `emojiPath` prop to accept a function,
+  which is passed the emoji hexadecimal code (without ZWJ).
+* Updated the `Hashtag` component's `hashtagUrl` prop to accept a function,
+  which is passed the hashtag.
+* Updated all emoji hexadecimal codes to be uppercase.
+* Renamed `Emoji` component prop `shortName` to `shortname`.
+* Renamed `EmojiMatcher` option `convertShortName` to `convertShortname`.
+* Removed the emoji dataset and regex generation from Interweave.
+* Fixed a few issues with the flowtype definitions.
+
 # 3.1.0
 * Added an `emojiSize` prop to the `Emoji` component, which will scale the size
   of the emoji using inline styles.

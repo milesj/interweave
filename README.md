@@ -1,4 +1,4 @@
-# Interweave v3.1.0
+# Interweave v4.0.0
 [![Build Status](https://travis-ci.org/milesj/interweave.svg?branch=master)](https://travis-ci.org/milesj/interweave)
 
 Interweave is a robust React library that can...
@@ -14,7 +14,7 @@ Interweave is a robust React library that can...
 
 ## Requirements
 
-* React 0.14+
+* React 15.0+
 * IE9+
 
 ## Installation
@@ -354,6 +354,7 @@ and dash (`-`) characters, and must start with a `#`.
 Hashtags require a URL to link to, which is defined by the
 `hashtagUrl` prop. The URL must declare the following token,
 `{{hashtag}}`, which will be replaced by the matched hashtag.
+Or a function can be passed, which receives the hashtag as the first argument.
 
 ```javascript
 import Interweave from 'interweave';
@@ -361,6 +362,13 @@ import HashtagMatcher from 'interweave/matchers/Hashtag';
 
 <Interweave
   hashtagUrl="https://twitter.com/hashtag/{{hashtag}}"
+  matchers={[new HashtagMatcher('hashtag')]}
+/>
+
+// OR
+
+<Interweave
+  hashtagUrl={hashtag => `https://twitter.com/hashtag/${hashtag}`}
   matchers={[new HashtagMatcher('hashtag')]}
 />
 ```
@@ -424,10 +432,19 @@ new EmojiMatcher('emoji', {
 Now we need to provide an absolute path to the SVG/PNG file using
 the `emojiPath` prop. This path must contain a `{{hexcode}}` token,
 which will be replaced by the hexadecimal value of the emoji.
+Or a function can be passed, which receives the hexcode as the first argument.
 
 ```javascript
 <Interweave
   emojiPath="https://example.com/images/emoji/{{hexcode}}.png"
+  matchers={[new EmojiMatcher('emoji')]}
+/>
+
+// OR
+
+<Interweave
+  emojiPath={hexcode => `https://example.com/images/emoji/${hexcode}.png`}
+  matchers={[new EmojiMatcher('emoji')]}
 />
 ```
 
