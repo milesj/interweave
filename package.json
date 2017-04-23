@@ -29,7 +29,7 @@
     "build": "yarn run build:js && yarn run build:flow",
     "build:js": "babel ./src -d ./lib",
     "build:docs": "cp ./{*.md,package.json,LICENSE} ./lib",
-    "build:flow": "cp ./flow-typed/interweave.js.flow ./lib",
+    "build:flow": "cp ./flow/interweave.js.flow ./lib",
     "lint": "eslint ./src ./tests",
     "flow": "flow check",
     "jest": "jest --config ./jest.json",
