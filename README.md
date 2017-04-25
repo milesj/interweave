@@ -613,20 +613,18 @@ const globalMatchers = [
   new HashtagMatcher('hashtag'),
 ];
 
+const emojiPath = (hexcode, enlarged) => (
+  `//cdn.jsdelivr.net/emojione/assets/3.0/png/${enlarged ? 64 : 32}/${hexcode.toLowerCase()}.png`,
+);
+
 export default function Interweave({
   filters = [],
   matchers = [],
   twitter = false,
   instagram = false,
-  svg = false,
   ...props
 }) {
-  let emojiPath = '//cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/png/{{hexcode}}.png';
   let hashtagUrl = '';
-
-  if (svg) {
-    emojiPath = emojiPath.replace('.png', '.svg');
-  }
 
   if (twitter) {
     hashtagUrl = 'https://twitter.com/hashtag/{{hashtag}}';
@@ -658,7 +656,6 @@ Interweave.propTypes = {
   matchers: PropTypes.arrayOf(PropTypes.instanceOf(Matcher)),
   twitter: PropTypes.bool,
   instagram: PropTypes.bool,
-  svg: PropTypes.bool,
 };
 ```
 
