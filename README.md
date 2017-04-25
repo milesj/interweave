@@ -432,7 +432,9 @@ new EmojiMatcher('emoji', {
 Now we need to provide an absolute path to the SVG/PNG file using
 the `emojiPath` prop. This path must contain a `{{hexcode}}` token,
 which will be replaced by the hexadecimal value of the emoji.
-Or a function can be passed, which receives the hexcode as the first argument.
+
+Or a function can be passed, which receives the hexcode as the 1st argument,
+`enlargeEmoji` value as the 2nd argument, and `emojiSize` as the 3rd argument.
 
 ```javascript
 <Interweave

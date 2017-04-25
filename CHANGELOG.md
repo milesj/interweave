@@ -1,3 +1,8 @@
+# 4.1.0
+* Updated the `emojiPath` function to receive `enlargeEmoji` as the 2nd argument,
+  and `emojiSize` as the 3rd argument.
+* Updated EmojiOne CDN.
+
 # 4.0.0
 * Updated support for React 15.5 and the new `prop-types` package.
 * Updated emoji parsing and rendering to use [emoji-database](https://www.npmjs.com/package/emoji-database),

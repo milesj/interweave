@@ -65,7 +65,7 @@ export default function Emoji({
   let path = emojiPath || '{{hexcode}}';
 
   if (typeof path === 'function') {
-    path = path(emoji.hexcode, shortname, unicode);
+    path = path(emoji.hexcode, enlargeEmoji, emojiSize);
   } else {
     path = path.replace('{{hexcode}}', emoji.hexcode);
   }

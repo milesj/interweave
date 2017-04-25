@@ -77,6 +77,22 @@ describe('components/Emoji', () => {
     expect(wrapper.find('img').prop('src')).toBe(`http://foo.com/path/to/${hexcode.toLowerCase()}.svg`);
   });
 
+  it('path function receives enlarge and size', () => {
+    const wrapper = shallow((
+      <Emoji
+        shortname={shortname}
+        unicode={unicode}
+        emojiPath={(hex, large, size) => (
+          `http://foo.com/path/to/${large ? (size * 2) : size}/${hex.toLowerCase()}.svg`
+        )}
+        emojiSize={2}
+        enlargeEmoji
+      />
+    ));
+
+    expect(wrapper.find('img').prop('src')).toBe(`http://foo.com/path/to/4/${hexcode.toLowerCase()}.svg`);
+  });
+
   it('adds class names', () => {
     const wrapper = shallow(<Emoji shortname={shortname} unicode={unicode} />);
 
