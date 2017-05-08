@@ -1,8 +1,0 @@
-{
-  "collectCoverage": false,
-  "coverageDirectory": "./coverage",
-  "globals": {},
-  "resetMocks": false,
-  "resetModules": false,
-  "roots": ["./src", "./tests"]
-}

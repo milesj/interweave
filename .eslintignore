@@ -1,1 +1,2 @@
-tests/bundle.min.js
+lib/
+*.min.js

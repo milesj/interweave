@@ -29,13 +29,16 @@ build/Release
 # Dependency directories
 node_modules
 jspm_packages
-.idea
+
+# IDE directories
+.idea/
 
 # Optional npm cache directory
 .npm
-.yarnclean
 
 # Optional REPL history
 .node_repl_history
+
+# Custom paths
 lib/
 tests/bundle.min.js

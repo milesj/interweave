@@ -1,10 +1,11 @@
-src/
-tests/
 flow/
+flow-typed/
+tests/
 .babelrc
 .eslintignore
 .eslintrc
 .flowconfig
 .gitignore
+.npmignore
 .travis.yml
 jest.json
