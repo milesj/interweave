@@ -27,24 +27,31 @@ export default class Interweave extends React.Component {
   static propTypes = {
     content: PropTypes.string,
     disableFilters: PropTypes.bool,
-    disableMatchers: PropTypes.bool,
     disableLineBreaks: PropTypes.bool,
+    disableMatchers: PropTypes.bool,
     disableWhitelist: PropTypes.bool,
     emptyContent: PropTypes.node,
     filters: PropTypes.arrayOf(PropTypes.instanceOf(Filter)),
     matchers: PropTypes.arrayOf(PropTypes.instanceOf(Matcher)),
     noHtml: PropTypes.bool,
-    onBeforeParse: PropTypes.func,
-    onAfterParse: PropTypes.func,
     tagName: PropTypes.oneOf(['span', 'div', 'p']),
+    onAfterParse: PropTypes.func,
+    onBeforeParse: PropTypes.func,
   };
 
   static defaultProps = {
     content: '',
+    disableFilters: false,
+    disableLineBreaks: false,
+    disableMatchers: false,
+    disableWhitelist: false,
     emptyContent: null,
     filters: [],
     matchers: [],
+    noHtml: false,
     tagName: 'span',
+    onAfterParse: null,
+    onBeforeParse: null,
   };
 
   /**
@@ -78,13 +85,13 @@ export default class Interweave extends React.Component {
 
     // Trigger before callbacks
     markup = beforeCallbacks.reduce((string: string, callback: BeforeParseCallback) => {
-      string = callback(string);
+      const nextString = callback(string);
 
-      if (typeof string !== 'string') {
+      if (typeof nextString !== 'string') {
         throw new TypeError('Interweave `onBeforeParse` must return a valid HTML string.');
       }
 
-      return string;
+      return nextString;
     }, markup);
 
     // Parse the markup
@@ -92,9 +99,9 @@ export default class Interweave extends React.Component {
 
     // Trigger after callbacks
     markup = afterCallbacks.reduce((nodes: ParsedNodes, callback: AfterParseCallback) => {
-      nodes = callback(nodes);
+      const nextNodes = callback(nodes);
 
-      if (!Array.isArray(nodes)) {
+      if (!Array.isArray(nextNodes)) {
         throw new TypeError('Interweave `onAfterParse` must return an array of strings and React elements.');
       }
 

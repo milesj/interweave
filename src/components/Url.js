@@ -36,3 +36,7 @@ Url.propTypes = {
     fragment: PropTypes.string,
   }),
 };
+
+Url.defaultProps = {
+  urlParts: {},
+};

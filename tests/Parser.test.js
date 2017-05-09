@@ -311,7 +311,7 @@ describe('Parser', () => {
     it('denies attributes that start with on', () => {
       element.setAttribute('onload', 'hackServers();');
       element.setAttribute('onclick', 'doSomething();');
-      element.onmouseenter = function () {};
+      element.onmouseenter = function noop() {};
 
       expect(instance.extractAttributes(element)).toBe(null);
     });

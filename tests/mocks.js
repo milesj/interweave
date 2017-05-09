@@ -104,6 +104,7 @@ export class CodeTagMatcher extends Matcher {
     const { children } = props;
 
     if (this.key) {
+      // eslint-disable-next-line
       props.key = this.key;
     }
 
@@ -119,7 +120,7 @@ export class CodeTagMatcher extends Matcher {
   }
 
   match(string) {
-    const tag = this.tag;
+    const { tag } = this;
     const matches = string.match(new RegExp(`\\[${tag}\\]`));
 
     if (!matches) {

@@ -4,11 +4,15 @@
  * @flow
  */
 
+/* eslint-disable complexity, no-param-reassign */
+
 import React from 'react';
 import PropTypes from 'prop-types';
 import emojiData, { UNICODE_TO_SHORTNAME, SHORTNAME_TO_UNICODE } from '../data/emoji';
 
 import type { EmojiProps } from '../types';
+
+const LARGE_MULTIPLIER = 3;
 
 // http://git.emojione.com/demos/latest/sprites-png.html
 // http://git.emojione.com/demos/latest/sprites-svg.html
@@ -57,7 +61,7 @@ export default function Emoji({
     className.push('interweave__emoji--large');
 
     if (emojiSize) {
-      styles.width = `${emojiSize * 3}em`;
+      styles.width = `${emojiSize * LARGE_MULTIPLIER}em`;
     }
   }
 
@@ -85,12 +89,20 @@ export default function Emoji({
 }
 
 Emoji.propTypes = {
-  shortname: PropTypes.string,
-  unicode: PropTypes.string,
   emojiPath: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.func,
   ]),
   emojiSize: PropTypes.number,
   enlargeEmoji: PropTypes.bool,
+  shortname: PropTypes.string,
+  unicode: PropTypes.string,
+};
+
+Emoji.defaultProps = {
+  shortname: '',
+  unicode: '',
+  emojiPath: '{{hexcode}}',
+  emojiSize: 0,
+  enlargeEmoji: false,
 };

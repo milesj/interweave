@@ -45,13 +45,13 @@ export default class EmojiMatcher extends Matcher<EmojiOptions> {
       if (response && response.shortname) {
         const unicode = SHORTNAME_TO_UNICODE[response.shortname];
 
-        // Invalid shortname
-        if (!unicode) {
-          response = null;
-
         // We want to render using the unicode value
-        } else {
+        if (unicode) {
           response.unicode = unicode;
+
+        // Invalid shortname
+        } else {
+          response = null;
         }
       }
     }
@@ -79,7 +79,7 @@ export default class EmojiMatcher extends Matcher<EmojiOptions> {
    */
   onAfterParse(content: ParsedNodes): ParsedNodes {
     if (content.length === 1) {
-      let item = content[0];
+      let [item] = content;
 
       if (typeof item !== 'string' && React.isValidElement(item) && item.type === Emoji) {
         item = (item: React.Element<*>);

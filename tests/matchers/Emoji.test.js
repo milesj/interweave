@@ -157,17 +157,17 @@ describe('matchers/Emoji', () => {
   describe('onAfterParse', () => {
     it('returns a single <Emoji/> enlarged', () => {
       expect(matcher.onAfterParse([
-        <Emoji shortname=":cat:" />,
+        <Emoji key={0} shortname=":cat:" />,
       ])).toEqual([
-        <Emoji shortname=":cat:" enlargeEmoji />,
+        <Emoji key={0} shortname=":cat:" enlargeEmoji />,
       ]);
     });
 
     it('ignores multiple <Emoji/>', () => {
       const nodes = [
-        <Emoji shortname=":cat:" />,
-        <Emoji shortname=":dog:" />,
-        <Emoji shortname=":man:" />,
+        <Emoji key={0} shortname=":cat:" />,
+        <Emoji key={1} shortname=":dog:" />,
+        <Emoji key={2} shortname=":man:" />,
       ];
 
       expect(matcher.onAfterParse(nodes)).toEqual(nodes);
@@ -175,7 +175,7 @@ describe('matchers/Emoji', () => {
 
     it('ignores non-<Emoji/>', () => {
       const nodes = [
-        <div>Foo</div>,
+        <div key="foo">Foo</div>,
       ];
 
       expect(matcher.onAfterParse(nodes)).toEqual(nodes);
@@ -183,7 +183,7 @@ describe('matchers/Emoji', () => {
 
     it('ignores content longer than 1', () => {
       const nodes = [
-        <div>Foo</div>,
+        <div key="foo">Foo</div>,
         'Bar',
       ];
 

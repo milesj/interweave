@@ -9,6 +9,12 @@ import { SHORTNAME_TO_UNICODE } from '../src/data/emoji';
 import { MOCK_INVALID_MARKUP, HrefFilter, CodeTagMatcher } from './mocks';
 
 describe('Interweave', () => {
+  const extraProps = {
+    disableWhitelist: false,
+    disableLineBreaks: false,
+    noHtml: false,
+  };
+
   const urlParts = {
     scheme: 'http',
     auth: '',
@@ -71,7 +77,7 @@ describe('Interweave', () => {
 
     expect(wrapper.prop('children')).toEqual([
       'Foo ',
-      <Element tagName="span" key="1" customProp="foo">B</Element>,
+      <Element {...extraProps} tagName="span" key="1" customProp="foo">B</Element>,
       ' Bar Baz',
     ]);
   });
@@ -136,6 +142,7 @@ describe('Interweave', () => {
         <Interweave
           onAfterParse={(content) => {
             content.push(<Element tagName="u" key="1">Qux</Element>);
+
             return content;
           }}
           content={'Foo <b>Bar</b> Baz'}
@@ -200,28 +207,28 @@ Curabitur lectus odio, tempus quis velit vitae, cursus sagittis nulla. Maecenas 
 
     expect(wrapper.prop('children')).toEqual([
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec massa lorem, mollis non commodo quis, ultricies at elit. ',
-      <Email key="0" emailParts={{ username: 'email', host: 'domain.com' }}>email@domain.com</Email>,
+      <Email key="0" {...extraProps} emailParts={{ username: 'email', host: 'domain.com' }}>email@domain.com</Email>,
       '. Aliquam a arcu porttitor, aliquam eros sed, convallis massa. Nunc vitae vehicula quam, in feugiat ligula. ',
-      <Hashtag key="2" hashtagName="interweave">#interweave</Hashtag>,
+      <Hashtag key="2" {...extraProps} hashtagName="interweave">#interweave</Hashtag>,
       ' Donec eu sem non nibh condimentum luctus. Vivamus pharetra feugiat blandit. Vestibulum neque velit, semper ',
-      <Emoji key="1" shortname=":japanese_castle:" unicode={SHORTNAME_TO_UNICODE[':japanese_castle:']} />,
+      <Emoji key="1" {...extraProps} shortname=":japanese_castle:" unicode={SHORTNAME_TO_UNICODE[':japanese_castle:']} />,
       ' id vestibulum id, viverra a felis. Integer convallis in orci nec bibendum. Ut consequat posuere metus, ',
-      <Url key="3" urlParts={{ ...urlParts, host: 'www.domain.com' }}>www.domain.com</Url>,
+      <Url key="3" {...extraProps} urlParts={{ ...urlParts, host: 'www.domain.com' }}>www.domain.com</Url>,
       '.',
       <Element key="4" tagName="br" selfClose>{[]}</Element>,
       <Element key="5" tagName="br" selfClose>{[]}</Element>,
       'Curabitur lectus odio, tempus quis velit vitae, cursus sagittis nulla. Maecenas sem nulla, tempor nec risus nec, ultricies ultricies magna. ',
-      <Url key="6" urlParts={{ ...urlParts, scheme: 'https', host: '127.0.0.1', path: '/foo' }}>https://127.0.0.1/foo</Url>,
+      <Url key="6" {...extraProps} urlParts={{ ...urlParts, scheme: 'https', host: '127.0.0.1', path: '/foo' }}>https://127.0.0.1/foo</Url>,
       ' Nulla malesuada lacinia libero non mollis. Curabitur id lacus id dolor vestibulum ornare quis a nisi (',
-      <Url key="7" urlParts={{ ...urlParts, host: 'domain.com', path: '/some/path', query: '?with=query' }}>http://domain.com/some/path?with=query</Url>,
+      <Url key="7" {...extraProps} urlParts={{ ...urlParts, host: 'domain.com', path: '/some/path', query: '?with=query' }}>http://domain.com/some/path?with=query</Url>,
       '). Pellentesque ac finibus mauris. Sed eu luctus diam. Quisque porta lectus in turpis imperdiet dapibus.',
       <Element key="8" tagName="br" selfClose>{[]}</Element>,
       <Element key="9" tagName="br" selfClose>{[]}</Element>,
-      <Hashtag key="10" hashtagName="blessed">#blessed</Hashtag>,
+      <Hashtag key="10" {...extraProps} hashtagName="blessed">#blessed</Hashtag>,
       ' ',
-      <Hashtag key="11" hashtagName="interweave">#interweave</Hashtag>,
+      <Hashtag key="11" {...extraProps} hashtagName="interweave">#interweave</Hashtag>,
       ' ',
-      <Hashtag key="12" hashtagName="milesj">#milesj</Hashtag>,
+      <Hashtag key="12" {...extraProps} hashtagName="milesj">#milesj</Hashtag>,
     ]);
   });
 
@@ -255,13 +262,13 @@ Curabitur lectus odio, tempus quis velit vitae, cursus sagittis nulla. Maecenas 
         {[
           <Element key="2" tagName="b">{['Consectetur adipiscing elit.']}</Element>,
           ' Donec massa lorem, mollis non commodo quis, ultricies at elit. ',
-          <Email key="3" emailParts={{ username: 'email', host: 'domain.com' }}>email@domain.com</Email>,
+          <Email key="3" {...extraProps} emailParts={{ username: 'email', host: 'domain.com' }}>email@domain.com</Email>,
           '. Aliquam a arcu porttitor, aliquam eros sed, convallis massa. Nunc vitae vehicula quam, in feugiat ligula. ',
-          <Hashtag key="6" hashtagName="interweave">#interweave</Hashtag>,
+          <Hashtag key="6" {...extraProps} hashtagName="interweave">#interweave</Hashtag>,
           ' Donec eu sem non nibh condimentum luctus. ',
-          <Emoji key="5" unicode={SHORTNAME_TO_UNICODE[':cat:']} />,
+          <Emoji key="5" {...extraProps} unicode={SHORTNAME_TO_UNICODE[':cat:']} />,
           ' Vivamus pharetra feugiat blandit. Vestibulum neque velit, semper id vestibulum id ',
-          <Emoji key="4" shortname=":love_letter:" unicode={SHORTNAME_TO_UNICODE[':love_letter:']} />,
+          <Emoji key="4" {...extraProps} shortname=":love_letter:" unicode={SHORTNAME_TO_UNICODE[':love_letter:']} />,
           ', viverra a felis. Integer convallis in orci nec bibendum. Ut consequat posuere metus, ',
           <Element key="7" tagName="a" attributes={{ href: 'www.domain.com' }}>{['www.domain.com']}</Element>,
           '.',
@@ -269,7 +276,7 @@ Curabitur lectus odio, tempus quis velit vitae, cursus sagittis nulla. Maecenas 
       </Element>,
       '\n\n',
       <Element key="8" tagName="br" selfClose>{[]}</Element>,
-      <Emoji key="9" shortname=":woman_gesturing_ok_tone3:" unicode={SHORTNAME_TO_UNICODE[':woman_gesturing_ok_tone3:']} />,
+      <Emoji key="9" {...extraProps} shortname=":woman_gesturing_ok_tone3:" unicode={SHORTNAME_TO_UNICODE[':woman_gesturing_ok_tone3:']} />,
       <Element key="10" tagName="br" selfClose>{[]}</Element>,
       '\n\n',
       <Element key="11" tagName="div">
@@ -277,24 +284,24 @@ Curabitur lectus odio, tempus quis velit vitae, cursus sagittis nulla. Maecenas 
           'Curabitur lectus odio, ',
           <Element key="12" tagName="em">{['tempus quis velit vitae, cursus sagittis nulla']}</Element>,
           '. Maecenas sem nulla, tempor nec risus nec, ultricies ultricies magna. ',
-          <Url key="13" urlParts={{ ...urlParts, scheme: 'https', host: '127.0.0.1', path: '/foo' }}>https://127.0.0.1/foo</Url>,
+          <Url key="13" {...extraProps} urlParts={{ ...urlParts, scheme: 'https', host: '127.0.0.1', path: '/foo' }}>https://127.0.0.1/foo</Url>,
           ' Nulla malesuada lacinia libero non mollis. Curabitur id lacus id dolor vestibulum ornare quis a nisi (',
-          <Url key="14" urlParts={{ ...urlParts, host: 'domain.com', path: '/some/path', query: '?with=query' }}>http://domain.com/some/path?with=query</Url>,
+          <Url key="14" {...extraProps} urlParts={{ ...urlParts, host: 'domain.com', path: '/some/path', query: '?with=query' }}>http://domain.com/some/path?with=query</Url>,
           '). Pellentesque ac finibus mauris. Sed eu luctus diam. :not_an_emoji: Quisque porta lectus in turpis imperdiet dapibus.',
         ]}
       </Element>,
       '\n\n',
       <Element key="15" tagName="section">
         {[
-          <Hashtag key="16" hashtagName="blessed">#blessed</Hashtag>,
+          <Hashtag key="16" {...extraProps} hashtagName="blessed">#blessed</Hashtag>,
           ' ',
-          <Hashtag key="17" hashtagName="interweave">#interweave</Hashtag>,
+          <Hashtag key="17" {...extraProps} hashtagName="interweave">#interweave</Hashtag>,
           ' ',
-          <Hashtag key="18" hashtagName="milesj">#milesj</Hashtag>,
+          <Hashtag key="18" {...extraProps} hashtagName="milesj">#milesj</Hashtag>,
         ]}
       </Element>,
       ' ',
-      <Emoji key="19" unicode={SHORTNAME_TO_UNICODE[':dog:']} />,
+      <Emoji key="19" {...extraProps} unicode={SHORTNAME_TO_UNICODE[':dog:']} />,
     ]);
   });
 
@@ -318,11 +325,11 @@ Curabitur lectus odio, tempus quis velit vitae, cursus sagittis nulla. Maecenas 
 
     expect(wrapper.prop('children')).toEqual([
       '- ',
-      <Url key="0" urlParts={{ ...urlParts, scheme: 'https', host: '127.0.0.1', path: '/foo' }}>https://127.0.0.1/foo</Url>,
+      <Url key="0" {...extraProps} urlParts={{ ...urlParts, scheme: 'https', host: '127.0.0.1', path: '/foo' }}>https://127.0.0.1/foo</Url>,
       '\n- ',
       <Element key="1" tagName="a" attributes={{ href: 'www.domain.com' }}>{['www.domain.com']}</Element>,
       '\n- (',
-      <Url key="2" urlParts={{ ...urlParts, host: 'domain.com', path: '/some/path', query: '?with=query' }}>http://domain.com/some/path?with=query</Url>,
+      <Url key="2" {...extraProps} urlParts={{ ...urlParts, host: 'domain.com', path: '/some/path', query: '?with=query' }}>http://domain.com/some/path?with=query</Url>,
       ')\n- ',
       <Element key="3" tagName="a" attributes={{ href: 'http://domain.com' }}>{['This text should stay']}</Element>,
     ]);

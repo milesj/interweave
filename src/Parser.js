@@ -25,16 +25,17 @@ import {
 
 import type {
   Attributes,
-  PrimitiveType,
   ParsedNodes,
   NodeConfig,
-  NodeInterface,
+  NodeInterface, // eslint-disable-line
   ElementProps,
 } from './types';
 
 const ELEMENT_NODE: number = 1;
 const TEXT_NODE: number = 3;
 const INVALID_ROOTS: string[] = ['!DOC', 'HTML', 'HEAD', 'BODY'];
+const ROOT_COMPARE_LENGTH: number = 4;
+const ARIA_COMPARE_LENGTH: number = 5;
 
 export default class Parser {
   doc: Document;
@@ -51,7 +52,7 @@ export default class Parser {
     filters: Filter[] = [],
   ) {
     if (!markup) {
-      markup = '';
+      markup = ''; // eslint-disable-line
     } else if (typeof markup !== 'string') {
       throw new TypeError('Interweave parser requires a valid string.');
     }
@@ -83,7 +84,7 @@ export default class Parser {
     parentConfig: NodeConfig,
   ): string | Array<string | React.Element<*>> {
     const elements = [];
-    const props = this.props;
+    const { props } = this;
     let matchedString = string;
     let parts = {};
 
@@ -132,9 +133,9 @@ export default class Parser {
     let lastIndex = 0;
 
     while (parts = matchedString.match(/#\{\{(\d+)\}\}#/)) {
-      const no = parts[1];
-      // $FlowIssue https://github.com/facebook/flow/issues/2450
-      const index = parts.index;
+      const [, no] = parts;
+      // $FlowIgnore https://github.com/facebook/flow/issues/2450
+      const { index } = parts;
 
       // Extract the previous string
       if (lastIndex !== index) {
@@ -217,15 +218,15 @@ export default class Parser {
     }
 
     // Replace carriage returns
-    markup = markup.replace(/\r\n/g, '\n');
+    let nextMarkup = markup.replace(/\r\n/g, '\n');
 
     // Replace long line feeds
-    markup = markup.replace(/\n{3,}/g, '\n\n\n');
+    nextMarkup = nextMarkup.replace(/\n{3,}/g, '\n\n\n');
 
     // Replace line feeds with `<br/>`s
-    markup = markup.replace(/\n/g, '<br/>');
+    nextMarkup = nextMarkup.replace(/\n/g, '<br/>');
 
-    return markup;
+    return nextMarkup;
   }
 
   /**
@@ -236,11 +237,11 @@ export default class Parser {
   createDocument(markup: string): Document {
     const doc = document.implementation.createHTMLDocument('Interweave');
 
-    if (INVALID_ROOTS.indexOf(markup.substr(1, 4).toUpperCase()) >= 0) {
+    if (INVALID_ROOTS.indexOf(markup.substr(1, ROOT_COMPARE_LENGTH).toUpperCase()) >= 0) {
       throw new Error('HTML documents as Interweave content are not supported.');
 
     } else {
-      // $FlowIssue Isn't null
+      // $FlowIgnore Isn't null
       doc.body.innerHTML = this.convertLineBreaks(markup);
     }
 
@@ -261,9 +262,10 @@ export default class Parser {
     }
 
     Array.from(node.attributes).forEach((attr: { name: string, value: string }) => {
-      const name: string = attr.name.toLowerCase();
-      const value: string = attr.value;
+      let { name, value } = attr;
       const filter: number = ATTRIBUTES[name];
+
+      name = name.toLowerCase();
 
       // Verify the node is safe from attacks
       if (!this.isSafe(node)) {
@@ -272,7 +274,7 @@ export default class Parser {
 
       // Do not allow blacklisted attributes excluding ARIA attributes
       // Do not allow events or XSS injections
-      if (name.substr(0, 5) !== 'aria-') {
+      if (name.substr(0, ARIA_COMPARE_LENGTH) !== 'aria-') {
         if (
           (!disableWhitelist && (!filter || filter === FILTER_DENY)) ||
           name.match(/^on/) ||
@@ -283,22 +285,22 @@ export default class Parser {
       }
 
       // Apply filters
-      let newValue: PrimitiveType = this.applyFilters(name, value);
+      value = this.applyFilters(name, value);
 
       // Cast to boolean
       if (filter === FILTER_CAST_BOOL) {
-        newValue = (newValue === 'true' || newValue === name);
+        value = (value === 'true' || value === name);
 
       // Cast to number
       } else if (filter === FILTER_CAST_NUMBER) {
-        newValue = parseFloat(newValue);
+        value = parseFloat(value);
 
       // Cast to string
       } else {
-        newValue = String(newValue);
+        value = String(value);
       }
 
-      attributes[ATTRIBUTES_TO_PROPS[name] || name] = newValue;
+      attributes[ATTRIBUTES_TO_PROPS[name] || name] = value;
       count += 1;
     });
 
@@ -342,7 +344,7 @@ export default class Parser {
         return true;
       }
 
-      // $FlowIssue Protocol only exists for anchors
+      // $FlowIgnore Protocol only exists for anchors
       const protocol = (node.protocol || '').toLowerCase();
 
       return (
@@ -362,7 +364,7 @@ export default class Parser {
    * array to interpolate into JSX.
    */
   parse(): ParsedNodes {
-    // $FlowIssue Body is not null!
+    // $FlowIgnore Body is not null!
     return this.parseNode(this.doc.body, {
       ...CONFIG_BLOCK,
       tagName: 'body',
@@ -378,7 +380,8 @@ export default class Parser {
     let content = [];
     let mergedText = '';
 
-    Array.from(parentNode.childNodes).forEach((node: NodeInterface) => {
+    // eslint-disable-next-line complexity
+    Array.from(parentNode.childNodes).forEach((node) => {
       // Create React elements from HTML elements
       if (node.nodeType === ELEMENT_NODE) {
         const tagName = node.nodeName.toLowerCase();

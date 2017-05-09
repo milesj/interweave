@@ -12,9 +12,9 @@ import type { HashtagProps } from '../types';
 
 export default function Hashtag({
   children,
+  encodeHashtag,
   hashtagUrl,
-  encodeHashtag = false,
-  preserveHash = false,
+  preserveHash,
   ...props
 }: HashtagProps) {
   let hashtag = children;
@@ -46,11 +46,18 @@ export default function Hashtag({
 
 Hashtag.propTypes = {
   children: PropTypes.string.isRequired,
+  encodeHashtag: PropTypes.bool,
   hashtagName: PropTypes.string,
   hashtagUrl: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.func,
   ]),
-  encodeHashtag: PropTypes.bool,
   preserveHash: PropTypes.bool,
+};
+
+Hashtag.defaultProps = {
+  encodeHashtag: false,
+  hashtagName: '',
+  hashtagUrl: '{{hashtag}}',
+  preserveHash: false,
 };

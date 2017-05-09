@@ -12,12 +12,12 @@ import Element from './components/Element';
 import type { MarkupProps } from './types';
 
 export default function Markup({
-  content = '',
+  content,
   emptyContent,
-  disableLineBreaks = false,
-  disableWhitelist = false,
-  tagName = 'span',
-  noHtml = false,
+  disableLineBreaks,
+  disableWhitelist,
+  tagName,
+  noHtml,
 }: MarkupProps) {
   const markup = new Parser(content, { noHtml, disableLineBreaks, disableWhitelist }).parse();
   const className = noHtml ? 'interweave--no-html' : '';
@@ -31,9 +31,18 @@ export default function Markup({
 
 Markup.propTypes = {
   content: PropTypes.string,
-  emptyContent: PropTypes.node,
   disableLineBreaks: PropTypes.bool,
   disableWhitelist: PropTypes.bool,
-  tagName: PropTypes.oneOf(['span', 'div', 'p']),
+  emptyContent: PropTypes.node,
   noHtml: PropTypes.bool,
+  tagName: PropTypes.oneOf(['span', 'div', 'p']),
+};
+
+Markup.defaultProps = {
+  content: '',
+  disableLineBreaks: false,
+  disableWhitelist: false,
+  emptyContent: null,
+  noHtml: false,
+  tagName: 'span',
 };

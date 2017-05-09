@@ -5,7 +5,7 @@ import Emoji from '../../src/components/Emoji';
 import { VALID_EMOJIS } from '../mocks';
 
 describe('components/Emoji', () => {
-  const [hexcode, unicode, shortname] = VALID_EMOJIS[0];
+  const [[hexcode, unicode, shortname]] = VALID_EMOJIS;
 
   it('errors if no shortname or unicode', () => {
     expect(() => shallow(<Emoji />))

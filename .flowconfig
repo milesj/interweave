@@ -8,6 +8,7 @@
 
 [libs]
 ./flow
+./node_modules/emoji-database/lib/emoji-database.js.flow
 
 [options]
 emoji=true

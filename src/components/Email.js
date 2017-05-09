@@ -25,3 +25,7 @@ Email.propTypes = {
     host: PropTypes.string,
   }),
 };
+
+Email.defaultProps = {
+  emailParts: {},
+};

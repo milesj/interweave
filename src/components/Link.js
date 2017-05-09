@@ -26,6 +26,11 @@ export default function Link({ children, href, onClick, newWindow }: LinkProps) 
 Link.propTypes = {
   children: PropTypes.node.isRequired,
   href: PropTypes.string.isRequired,
-  onClick: PropTypes.func,
   newWindow: PropTypes.bool,
+  onClick: PropTypes.func,
+};
+
+Link.defaultProps = {
+  newWindow: false,
+  onClick: null,
 };

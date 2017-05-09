@@ -11,10 +11,10 @@ import type { ElementProps } from '../types';
 
 export default function Element({
   attributes = {},
-  className,
   children,
+  className,
+  selfClose,
   tagName: Tag,
-  selfClose = false,
 }: ElementProps) {
   const props = {
     ...attributes,
@@ -45,8 +45,15 @@ Element.propTypes = {
     PropTypes.number,
     PropTypes.bool,
   ])),
-  className: PropTypes.string,
   children: PropTypes.node,
-  tagName: PropTypes.string.isRequired,
+  className: PropTypes.string,
   selfClose: PropTypes.bool,
+  tagName: PropTypes.string.isRequired,
+};
+
+Element.defaultProps = {
+  attributes: {},
+  className: '',
+  children: null,
+  selfClose: false,
 };
