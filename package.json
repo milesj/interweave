@@ -26,13 +26,13 @@
   ],
   "scripts": {
     "babel": "build-lib ./src -d ./lib",
-    "coverage": "yarn run jest -- --coverage",
+    "coverage": "run-coverage",
     "eslint": "run-linter ./src ./tests",
     "flow": "type-check",
     "jest": "run-tests",
     "posttest": "yarn run flow",
     "pretest": "yarn run eslint",
-    "preversion": "yarn test",
+    "preversion": "yarn test && yarn run babel",
     "test": "yarn run jest",
     "test:bundle": "browserify -t [ babelify ] ./tests/bundle.js -o ./tests/bundle.min.js"
   },
@@ -51,14 +51,14 @@
   "homepage": "https://github.com/milesj/interweave#readme",
   "dependencies": {
     "babel-runtime": "^6.23.0",
-    "emoji-database": "^0.3.0",
-    "prop-types": "^15.5.8"
+    "emoji-database": "^0.4.0",
+    "prop-types": "^15.5.9"
   },
   "peerDependencies": {
     "react": "^15.0.0"
   },
   "devDependencies": {
-    "@milesj/build-tool-config": "^0.2.1",
+    "@milesj/build-tool-config": "^0.3.1",
     "babel-register": "^6.24.1",
     "babelify": "^7.3.0",
     "browserify": "^14.3.0",

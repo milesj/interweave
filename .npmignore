@@ -1,3 +1,4 @@
+coverage/
 flow/
 flow-typed/
 tests/
@@ -8,4 +9,6 @@ tests/
 .gitignore
 .npmignore
 .travis.yml
+.yarnclean
 jest.json
+yarn-error.log
