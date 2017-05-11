@@ -134,7 +134,7 @@ When adding a matcher, a unique name must be passed to the constructor.
 
 ```javascript
 import Interweave from 'interweave';
-import EmojiMatcher from 'interweave/matchers/Emoji';
+import EmojiMatcher from 'interweave/lib/matchers/Emoji';
 
 <Interweave matchers={[new EmojiMatcher('emoji')]} />
 ```
@@ -295,7 +295,7 @@ query, and fragment.
 
 ```javascript
 import Interweave from 'interweave';
-import UrlMatcher from 'interweave/matchers/Url';
+import UrlMatcher from 'interweave/lib/matchers/Url';
 
 <Interweave matchers={[new UrlMatcher('url')]} />
 ```
@@ -307,7 +307,7 @@ valid IPv4 address (IPv6 not supported). Like the `UrlMatcher`, all
 segments are included.
 
 ```javascript
-import IpMatcher from 'interweave/matchers/Ip';
+import IpMatcher from 'interweave/lib/matchers/Ip';
 ```
 
 If a match is found, a [Url](#rendered-elements) element or matcher
@@ -331,7 +331,7 @@ The `EmailMatcher` will match an email address and link it using a
 
 ```javascript
 import Interweave from 'interweave';
-import EmailMatcher from 'interweave/matchers/Email';
+import EmailMatcher from 'interweave/lib/matchers/Email';
 
 <Interweave matchers={[new EmailMatcher('email')]} />
 ```
@@ -358,7 +358,7 @@ Or a function can be passed, which receives the hashtag as the first argument.
 
 ```javascript
 import Interweave from 'interweave';
-import HashtagMatcher from 'interweave/matchers/Hashtag';
+import HashtagMatcher from 'interweave/lib/matchers/Hashtag';
 
 <Interweave
   hashtagUrl="https://twitter.com/hashtag/{{hashtag}}"
@@ -388,7 +388,7 @@ with media, all through the `EmojiMatcher`. The matcher utilizes
 
 ```javascript
 import Interweave from 'interweave';
-import EmojiMatcher from 'interweave/matchers/Emoji';
+import EmojiMatcher from 'interweave/lib/matchers/Emoji';
 
 <Interweave matchers={[new EmojiMatcher('emoji')]} />
 ```
@@ -597,10 +597,10 @@ between Twitter and Instagram hashtags, or PNG or SVG emojis.
 import React from 'react';
 import PropTypes from 'prop-types';
 import BaseInterweave, { Filter, Matcher } from 'interweave';
-import IpMatcher from 'interweave/matchers/Ip';
-import UrlMatcher from 'interweave/matchers/Url';
-import EmojiMatcher from 'interweave/matchers/Emoji';
-import HashtagMatcher from 'interweave/matchers/Hashtag';
+import IpMatcher from 'interweave/lib/matchers/Ip';
+import UrlMatcher from 'interweave/lib/matchers/Url';
+import EmojiMatcher from 'interweave/lib/matchers/Emoji';
+import HashtagMatcher from 'interweave/lib/matchers/Hashtag';
 
 const globalFilters = [
   new CustomFilter('href'),

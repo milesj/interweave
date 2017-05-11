@@ -12,10 +12,10 @@ declare module 'interweave' {
   }
 
   declare export class Matcher<T> {
+    factory: ?MatcherFactory;
+    inverseName: string;
     options: T;
     propName: string;
-    inverseName: string;
-    factory: ?MatcherFactory;
 
     constructor(name: string, options: T, factory?: ?MatcherFactory): this;
     createElement(match: string, props: Object): React.Element<*>;
@@ -23,7 +23,7 @@ declare module 'interweave' {
     asTag(): string;
     match(string: string): ?{
       match: string,
-      [key: string]: any
+      [key: string]: any,
     };
   }
 
@@ -35,7 +35,7 @@ declare module 'interweave' {
   }
 }
 
-declare module 'interweave/components' {
+declare module 'interweave/lib/components' {
   declare export class Element extends React.Component {}
   declare export class Email extends React.Component {}
   declare export class Emoji extends React.Component {}
@@ -44,7 +44,7 @@ declare module 'interweave/components' {
   declare export class Url extends React.Component {}
 }
 
-declare module 'interweave/matchers' {
+declare module 'interweave/lib/matchers' {
   declare export class EmailMatcher extends Matcher<Object> {}
   declare export class EmojiMatcher extends Matcher<Object> {}
   declare export class HashtagMatcher extends Matcher<Object> {}
