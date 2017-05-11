@@ -1,4 +1,4 @@
-# Interweave v4.0.0
+# Interweave v5.0.0
 [![Build Status](https://travis-ci.org/milesj/interweave.svg?branch=master)](https://travis-ci.org/milesj/interweave)
 
 Interweave is a robust React library that can...
@@ -14,8 +14,8 @@ Interweave is a robust React library that can...
 
 ## Requirements
 
-* React 15.0+
-* IE9+
+* React 15+
+* IE 11+
 
 ## Installation
 

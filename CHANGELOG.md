@@ -1,3 +1,10 @@
+# 5.0.0
+* Updated IE requirement to 11+.
+* Updated to include src/ files in the published package.
+* Updated Flowtype definitions.
+* Moved Flowtype definition to root of project.
+* Moved published files to a lib/ folder.
+
 # 4.1.0
 * Updated the `emojiPath` function to receive `enlargeEmoji` as the 2nd argument,
   and `emojiSize` as the 3rd argument.
