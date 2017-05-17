@@ -24,6 +24,7 @@
     "render",
     "html"
   ],
+  "main": "./lib/index.js",
   "scripts": {
     "babel": "build-lib ./src -d ./lib",
     "coverage": "run-coverage",
@@ -58,7 +59,7 @@
     "react": "^15.0.0"
   },
   "devDependencies": {
-    "@milesj/build-tool-config": "^0.4.0",
+    "@milesj/build-tool-config": "^0.4.1",
     "babel-register": "^6.24.1",
     "babelify": "^7.3.0",
     "browserify": "^14.3.0",
