@@ -25,8 +25,8 @@ Help!`;
 
   const emojiProps = {
     matchers: [new EmojiMatcher('emoji', { convertUnicode: true })],
-    emojiPath: hex => (
-      `https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/png/${hex.toLowerCase()}.png`
+    emojiPath: (hex, large) => (
+      `https://cdn.jsdelivr.net/emojione/assets/3.0/png/${large ? 64 : 32}/${hex.toLowerCase()}.png`
     ),
     emojiSize: 1,
   };

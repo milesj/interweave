@@ -43,3 +43,4 @@ jspm_packages
 # Custom paths
 lib/
 tests/bundle.min.js
+tests/bundle.min.js.map

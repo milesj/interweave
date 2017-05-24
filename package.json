@@ -35,7 +35,7 @@
     "pretest": "yarn run eslint",
     "preversion": "yarn test && yarn run babel",
     "test": "yarn run jest",
-    "test:bundle": "browserify -t [ babelify ] ./tests/bundle.js -o ./tests/bundle.min.js"
+    "test:bundle": "bundle-lib -f iife -i ./tests/bundle.js -o ./tests/bundle.min.js"
   },
   "repository": {
     "type": "git",
@@ -59,10 +59,7 @@
     "react": "^15.0.0"
   },
   "devDependencies": {
-    "@milesj/build-tool-config": "^0.4.1",
-    "babel-register": "^6.24.1",
-    "babelify": "^7.3.0",
-    "browserify": "^14.3.0",
+    "@milesj/build-tool-config": "^0.7.0",
     "react": "^15.5.4",
     "react-dom": "^15.5.4"
   },
