@@ -126,7 +126,7 @@ export type UrlProps = {
 };
 
 export type EmojiProps = {
-  emojiPath?: string | (string) => string,
+  emojiPath?: string | (hexcode: string, enlarge: boolean, size?: number) => string,
   emojiSize?: number,
   enlargeEmoji?: boolean,
   shortname: string,

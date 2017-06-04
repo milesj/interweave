@@ -108,7 +108,7 @@ export default class Interweave extends React.Component {
       return nodes;
     }, markup);
 
-    if (!markup.length) {
+    if (markup.length === 0) {
       return emptyContent;
     }
 

@@ -124,7 +124,7 @@ export default class Parser {
       }
     });
 
-    if (!elements.length) {
+    if (elements.length === 0) {
       return matchedString;
     }
 
@@ -172,7 +172,7 @@ export default class Parser {
     // Valid children
     if (
       parentConfig.children &&
-      parentConfig.children.length &&
+      parentConfig.children.length > 0 &&
       parentConfig.children.indexOf(childConfig.tagName) === -1
     ) {
       return false;
@@ -181,7 +181,7 @@ export default class Parser {
     // Valid parent
     if (
       childConfig.parent &&
-      childConfig.parent.length &&
+      childConfig.parent.length > 0 &&
       childConfig.parent.indexOf(parentConfig.tagName) === -1
     ) {
       return false;
@@ -277,6 +277,7 @@ export default class Parser {
       if (name.substr(0, ARIA_COMPARE_LENGTH) !== 'aria-') {
         if (
           (!disableWhitelist && (!filter || filter === FILTER_DENY)) ||
+          // eslint-disable-next-line unicorn/prefer-starts-ends-with
           name.match(/^on/) ||
           value.replace(/(\s|\0|&#x0(9|A|D);)/, '').match(/(javascript|vbscript|livescript|xss):/i)
         ) {
