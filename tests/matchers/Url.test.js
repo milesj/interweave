@@ -95,8 +95,12 @@ const INVALID_URLS = [
 ];
 
 describe('matchers/Url', () => {
-  const matcher = new UrlMatcher('url');
+  let matcher = new UrlMatcher('url');
   const pattern = new RegExp(`^${URL_PATTERN}$`, 'i');
+
+  beforeEach(() => {
+    matcher = new UrlMatcher('url');
+  });
 
   describe('does match valid url:', () => {
     VALID_URLS.forEach((urlParams) => {
@@ -165,6 +169,31 @@ describe('matchers/Url', () => {
           }
         });
       });
+    });
+  });
+
+  describe('replaceWith()', () => {
+    const props = {
+      urlParts: {
+        scheme: 'http',
+        host: 'domain.foo',
+      },
+    };
+
+    it('returns the URL as a string for an unsupported TLD', () => {
+      expect(matcher.replaceWith('http://domain.foo', props)).toEqual('http://domain.foo');
+    });
+
+    it('can disable validation for an unsupported TLD', () => {
+      matcher.options.validateTLD = false;
+
+      expect(matcher.replaceWith('http://domain.foo', props)).not.toEqual('http://domain.foo');
+    });
+
+    it('supports a custom list of TLDs', () => {
+      matcher.options.customTLDs = ['foo'];
+
+      expect(matcher.replaceWith('http://domain.foo', props)).not.toEqual('http://domain.foo');
     });
   });
 

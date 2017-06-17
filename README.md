@@ -92,7 +92,9 @@ The `Markup` component only supports the `content`, `emptyContent`,
 * [Filters](#filters)
   * [Creating A Filter](#creating-a-filter)
 * [Autolinking](#autolinking)
-  * [URLs, IPs](#urls-ips)
+  * [URLs](#urls)
+    * [TLD Support](#tld-support)
+  * [IPs](#ips)
   * [Emails](#emails)
   * [Hashtags](#hashtags)
 * [Render Emojis](#render-emojis)
@@ -287,7 +289,7 @@ This can be achieved with the [matchers](#matchers) described below.
 > boundaries, punctuation, and more. Instead, the patterns will do their
 > best to match against the majority of common use cases.
 
-#### URLs, IPs
+#### URLs
 
 The `UrlMatcher` will match most variations of a URL and its segments.
 This includes the protocol, user and password auth, host, port, path,
@@ -298,16 +300,6 @@ import Interweave from 'interweave';
 import UrlMatcher from 'interweave/lib/matchers/Url';
 
 <Interweave matchers={[new UrlMatcher('url')]} />
-```
-
-The `UrlMatcher` does not support IP based hosts as I wanted a clear
-distinction between supporting these two patterns separately. To support
-IPs, use the `IpMatcher`, which will match hosts that conform to a
-valid IPv4 address (IPv6 not supported). Like the `UrlMatcher`, all
-segments are included.
-
-```javascript
-import IpMatcher from 'interweave/lib/matchers/Ip';
 ```
 
 If a match is found, a [Url](#rendered-elements) element or matcher
@@ -323,6 +315,36 @@ element will be rendered and passed the following props.
   * `path` (string) - The path.
   * `query` (string) - The query string.
   * `fragment` (string) - The hash fragment, including `#`.
+
+##### TLD Support
+
+By default, the `UrlMatcher` will validate top-level domains against a
+whitelist of the most common TLDs (like .com, .net, and countries).
+You can disable this validation with the `validateTLD` option.
+
+```javascript
+new UrlMatcher('url', { validateTLD: false });
+```
+
+Or you can provide a whitelist of additional TLDs to validate with.
+
+```javascript
+new UrlMatcher('url', { customTLDs: ['life', 'tech', 'ninja'] });
+```
+
+#### IPs
+
+The `UrlMatcher` does not support IP based hosts as I wanted a clear
+distinction between supporting these two patterns separately. To support
+IPs, use the `IpMatcher`, which will match hosts that conform to a
+valid IPv4 address (IPv6 not supported). Like the `UrlMatcher`, all
+segments are included.
+
+```javascript
+import IpMatcher from 'interweave/lib/matchers/Ip';
+```
+
+If a match is found, the same props as `UrlMatcher` is passed.
 
 #### Emails
 

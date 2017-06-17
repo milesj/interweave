@@ -6,9 +6,9 @@
 
 /* eslint-disable no-undef */
 
-import React from 'react';
-import Filter from './Filter';
-import Matcher from './Matcher';
+import type React from 'react';
+import type Filter from './Filter';
+import type Matcher from './Matcher';
 
 export interface NodeInterface {
   attributes?: NamedNodeMap,
@@ -123,6 +123,11 @@ export type UrlProps = {
     query: string,
     scheme: string,
   },
+};
+
+export type UrlOptions = {
+  customTLDs: string[],
+  validateTLD: boolean,
 };
 
 export type EmojiProps = {

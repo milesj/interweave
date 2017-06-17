@@ -1,6 +1,8 @@
 # 5.1.0
 * Updated support for React 15.6.
 * Updated emoji-database to 0.7.
+* Updated `UrlMatcher` to validate against a common whitelist of TLDs (no longer wildcard).
+* Added `customTLDs` and `validateTLD` options to `UrlMatcher`.
 
 # 5.0.1
 * Fixed an issue with the index import failing.

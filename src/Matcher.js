@@ -10,7 +10,7 @@ import type { MatcherFactory, MatchResponse, ParsedNodes } from './types';
 
 type MatchCallback = (matches: string[]) => ({ [key: string]: string | Object });
 
-export default class Matcher<T> {
+export default class Matcher<T: Object> {
   options: T;
   propName: string;
   inverseName: string;
@@ -21,7 +21,7 @@ export default class Matcher<T> {
       throw new Error(`The matcher name "${name}" is not allowed.`);
     }
 
-    this.options = options || {};
+    this.options = { ...(options || {}) };
     this.propName = name;
     this.inverseName = `no${name.charAt(0).toUpperCase() + name.substr(1)}`;
     this.factory = factory;

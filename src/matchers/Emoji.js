@@ -14,10 +14,25 @@ import {
   UNICODE_TO_SHORTNAME,
 } from '../data/emoji';
 
-import type { MatchResponse, EmojiProps, EmojiOptions, ParsedNodes } from '../types';
+import type {
+  MatchResponse,
+  MatcherFactory,
+  EmojiProps,
+  EmojiOptions,
+  ParsedNodes,
+} from '../types';
 
 export default class EmojiMatcher extends Matcher<EmojiOptions> {
   options: EmojiOptions;
+
+  constructor(name: string, options: Object = {}, factory: ?MatcherFactory = null) {
+    super(name, {
+      convertShortname: false,
+      convertUnicode: false,
+      renderUnicode: false,
+      ...options,
+    }, factory);
+  }
 
   replaceWith(match: string, props: Object = {}): React.Element<EmojiProps> {
     if (this.options.renderUnicode) {

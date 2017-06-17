@@ -7,14 +7,35 @@
 import React from 'react';
 import Matcher from '../Matcher';
 import Url from '../components/Url';
-import { URL_PATTERN } from '../constants';
+import { URL_PATTERN, TOP_LEVEL_TLDS } from '../constants';
 
-import type { MatchResponse, UrlProps } from '../types';
+import type { MatchResponse, MatcherFactory, UrlProps, UrlOptions } from '../types';
 
 const URL_REGEX = new RegExp(URL_PATTERN, 'i');
 
-export default class UrlMatcher extends Matcher<Object> {
+export default class UrlMatcher extends Matcher<UrlOptions> {
+  options: UrlOptions;
+
+  constructor(name: string, options: Object = {}, factory: ?MatcherFactory = null) {
+    super(name, {
+      customTLDs: [],
+      validateTLD: true,
+      ...options,
+    }, factory);
+  }
+
   replaceWith(match: string, props: Object = {}): React.Element<UrlProps> {
+    if (this.options.validateTLD) {
+      const { host } = props.urlParts;
+      const validList = TOP_LEVEL_TLDS.concat(this.options.customTLDs);
+      const tld = host.slice(host.lastIndexOf('.') + 1).toLowerCase();
+
+      if (validList.indexOf(tld) === -1) {
+        // $FlowIgnore Strings are allowed
+        return match;
+      }
+    }
+
     return (
       <Url {...props}>{match}</Url>
     );
