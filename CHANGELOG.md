@@ -1,3 +1,7 @@
+# 5.1.0
+* Updated support for React 15.6.
+* Updated emoji-database to 0.7.
+
 # 5.0.1
 * Fixed an issue with the index import failing.
 
