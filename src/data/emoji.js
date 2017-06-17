@@ -4,9 +4,8 @@
  * @flow
  */
 
+import { fromUnicodeToHex, fromHexToCodepoint } from 'emoji-database';
 import json from 'emoji-database/data/extra/shortname-to-unicode.json';
-import fromUnicodeToHex from 'emoji-database/lib/fromUnicodeToHex';
-import fromHexToCodepoint from 'emoji-database/lib/fromHexToCodepoint';
 import EMOJI_REGEX from 'emoji-database/regex';
 import EMOJI_SHORTNAME_REGEX from 'emoji-database/regex/shortname';
 
