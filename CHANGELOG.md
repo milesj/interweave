@@ -1,6 +1,10 @@
+# 5.1.1
+* Updated `emoji-database` to 0.8.
+* Fixed IE 10 compiled lib/ issues.
+
 # 5.1.0
-* Updated support for React 15.6.
-* Updated emoji-database to 0.7.
+* Updated support for `react` 15.6.
+* Updated `emoji-database` to 0.7.
 * Updated `UrlMatcher` to validate against a common whitelist of TLDs (no longer wildcard).
 * Added `customTLDs` and `validateTLD` options to `UrlMatcher`.
 

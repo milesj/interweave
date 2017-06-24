@@ -448,17 +448,21 @@ Curabitur lectus odio, tempus quis velit vitae, cursus sagittis nulla. Maecenas 
       const wrapper = shallow(<Interweave content={MOCK_INVALID_MARKUP} />);
 
       expect(wrapper.prop('children')).toEqual([
-        <Element key="0" tagName="div">{[
-          '\n  ',
-          'Outdated font.',
-          '\n  \n  ',
-          <Element key="1" tagName="p">{[
-            'More text ',
-            'with outdated stuff',
-            '.',
-          ]}</Element>,
-          '\n',
-        ]}</Element>,
+        <Element key="0" tagName="div">
+          {[
+            '\n  ',
+            'Outdated font.',
+            '\n  \n  ',
+            <Element key="1" tagName="p">
+              {[
+                'More text ',
+                'with outdated stuff',
+                '.',
+              ]}
+            </Element>,
+            '\n',
+          ]}
+        </Element>,
       ]);
     });
 
@@ -466,17 +470,23 @@ Curabitur lectus odio, tempus quis velit vitae, cursus sagittis nulla. Maecenas 
       const wrapper = shallow(<Interweave content={MOCK_INVALID_MARKUP} disableWhitelist />);
 
       expect(wrapper.prop('children')).toEqual([
-        <Element key="0" attributes={{ bgcolor: 'black' }} tagName="div">{[
-          '\n  ',
-          <Element key="1" attributes={{ color: 'red' }} tagName="font">{['Outdated font.']}</Element>,
-          '\n  \n  ',
-          <Element key="2" attributes={{ align: 'center' }} tagName="p">{[
-            'More text ',
-            <Element key="3" tagName="strike">{['with outdated stuff']}</Element>,
-            '.',
-          ]}</Element>,
-          '\n',
-        ]}</Element>,
+        <Element key="0" attributes={{ bgcolor: 'black' }} tagName="div">
+          {[
+            '\n  ',
+            <Element key="1" attributes={{ color: 'red' }} tagName="font">
+              {['Outdated font.']}
+            </Element>,
+            '\n  \n  ',
+            <Element key="2" attributes={{ align: 'center' }} tagName="p">
+              {[
+                'More text ',
+                <Element key="3" tagName="strike">{['with outdated stuff']}</Element>,
+                '.',
+              ]}
+            </Element>,
+            '\n',
+          ]}
+        </Element>,
       ]);
     });
   });
