@@ -1,3 +1,6 @@
+# 5.1.2
+* Fixed prefixed TLDs not being matched correctly.
+
 # 5.1.1
 * Updated `emoji-database` to 0.8.
 * Fixed IE 10 compiled lib/ issues.

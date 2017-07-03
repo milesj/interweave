@@ -8,6 +8,8 @@ const VALID_URLS = [
   { url: 'example.com', scheme: null, host: 'example.com' },
   { url: 'www.example.com', scheme: null, host: 'www.example.com' },
   { url: 'http://example.com/', path: '/' },
+  { url: 'http://example.uk/', path: '/', host: 'example.uk' },
+  { url: 'http://example.co.uk/', path: '/', host: 'example.co.uk' },
   { url: 'http://example.com/path', path: '/path' },
   { url: 'http://example.com/path/to/resource/', path: '/path/to/resource/' },
   { url: 'http://example.com/?q=string', path: '/', query: '?q=string' },
@@ -181,19 +183,28 @@ describe('matchers/Url', () => {
     };
 
     it('returns the URL as a string for an unsupported TLD', () => {
-      expect(matcher.replaceWith('http://domain.foo', props)).toEqual('http://domain.foo');
+      expect(matcher.replaceWith('http://domain.foo', props)).toBe('http://domain.foo');
     });
 
     it('can disable validation for an unsupported TLD', () => {
       matcher.options.validateTLD = false;
 
-      expect(matcher.replaceWith('http://domain.foo', props)).not.toEqual('http://domain.foo');
+      expect(matcher.replaceWith('http://domain.foo', props)).not.toBe('http://domain.foo');
     });
 
     it('supports a custom list of TLDs', () => {
       matcher.options.customTLDs = ['foo'];
 
-      expect(matcher.replaceWith('http://domain.foo', props)).not.toEqual('http://domain.foo');
+      expect(matcher.replaceWith('http://domain.foo', props)).not.toBe('http://domain.foo');
+    });
+
+    it('supports prefixed TLDs', () => {
+      expect(matcher.replaceWith('http://domain.co.uk', {
+        urlParts: {
+          scheme: 'http',
+          host: 'domain.co.uk',
+        },
+      })).not.toBe('http://domain.co.uk');
     });
   });
 
