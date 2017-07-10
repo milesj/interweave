@@ -18,9 +18,15 @@ export default function Markup({
   disableWhitelist,
   tagName,
   noHtml,
+  noHtmlExceptMatchers,
 }: MarkupProps) {
-  const markup = new Parser(content, { noHtml, disableLineBreaks, disableWhitelist }).parse();
-  const className = noHtml ? 'interweave--no-html' : '';
+  const markup = new Parser(content, {
+    noHtml,
+    noHtmlExceptMatchers,
+    disableLineBreaks,
+    disableWhitelist,
+  }).parse();
+  const className = (noHtml || noHtmlExceptMatchers) ? 'interweave--no-html' : '';
 
   return (
     <Element tagName={tagName} className={className}>
@@ -35,6 +41,7 @@ Markup.propTypes = {
   disableWhitelist: PropTypes.bool,
   emptyContent: PropTypes.node,
   noHtml: PropTypes.bool,
+  noHtmlExceptMatchers: PropTypes.bool,
   tagName: PropTypes.oneOf(['span', 'div', 'p']),
 };
 
@@ -44,5 +51,6 @@ Markup.defaultProps = {
   disableWhitelist: false,
   emptyContent: null,
   noHtml: false,
+  noHtmlExceptMatchers: false,
   tagName: 'span',
 };

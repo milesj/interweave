@@ -13,6 +13,7 @@ describe('Interweave', () => {
     disableWhitelist: false,
     disableLineBreaks: false,
     noHtml: false,
+    noHtmlExceptMatchers: false,
   };
 
   const urlParts = {
@@ -29,6 +30,17 @@ describe('Interweave', () => {
     const wrapper = shallow(
       <Interweave
         noHtml
+        content="Foo Bar"
+      />
+    );
+
+    expect(wrapper.prop('className')).toBe('interweave--no-html');
+  });
+
+  it('sets the `noHtmlExceptMatchers` class name', () => {
+    const wrapper = shallow(
+      <Interweave
+        noHtmlExceptMatchers
         content="Foo Bar"
       />
     );
@@ -186,64 +198,65 @@ describe('Interweave', () => {
     });
   });
 
-  it('parses and renders large blocks of text with all matchers', () => {
-    const wrapper = shallow(
-      <Interweave
-        tagName="div"
-        matchers={[
-          new EmailMatcher('email'),
-          new EmojiMatcher('emoji', { convertShortname: true }),
-          new HashtagMatcher('hashtag'),
-          new IpMatcher('ip'),
-          new UrlMatcher('url'),
-        ]}
-        content={`Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec massa lorem, mollis non commodo quis, ultricies at elit. email@domain.com. Aliquam a arcu porttitor, aliquam eros sed, convallis massa. Nunc vitae vehicula quam, in feugiat ligula. #interweave Donec eu sem non nibh condimentum luctus. Vivamus pharetra feugiat blandit. Vestibulum neque velit, semper :japanese_castle: id vestibulum id, viverra a felis. Integer convallis in orci nec bibendum. Ut consequat posuere metus, www.domain.com.
+  describe('parsing and rendering', () => {
+    it('renders large blocks of text with all matchers', () => {
+      const wrapper = shallow(
+        <Interweave
+          tagName="div"
+          matchers={[
+            new EmailMatcher('email'),
+            new EmojiMatcher('emoji', { convertShortname: true }),
+            new HashtagMatcher('hashtag'),
+            new IpMatcher('ip'),
+            new UrlMatcher('url'),
+          ]}
+          content={`Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec massa lorem, mollis non commodo quis, ultricies at elit. email@domain.com. Aliquam a arcu porttitor, aliquam eros sed, convallis massa. Nunc vitae vehicula quam, in feugiat ligula. #interweave Donec eu sem non nibh condimentum luctus. Vivamus pharetra feugiat blandit. Vestibulum neque velit, semper :japanese_castle: id vestibulum id, viverra a felis. Integer convallis in orci nec bibendum. Ut consequat posuere metus, www.domain.com.
 
 Curabitur lectus odio, tempus quis velit vitae, cursus sagittis nulla. Maecenas sem nulla, tempor nec risus nec, ultricies ultricies magna. https://127.0.0.1/foo Nulla malesuada lacinia libero non mollis. Curabitur id lacus id dolor vestibulum ornare quis a nisi (http://domain.com/some/path?with=query). Pellentesque ac finibus mauris. Sed eu luctus diam. Quisque porta lectus in turpis imperdiet dapibus.
 
 #blessed #interweave #milesj`}
-      />
-    ).shallow();
+        />
+      ).shallow();
 
-    expect(wrapper.prop('children')).toEqual([
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec massa lorem, mollis non commodo quis, ultricies at elit. ',
-      <Email key="0" {...extraProps} emailParts={{ username: 'email', host: 'domain.com' }}>email@domain.com</Email>,
-      '. Aliquam a arcu porttitor, aliquam eros sed, convallis massa. Nunc vitae vehicula quam, in feugiat ligula. ',
-      <Hashtag key="2" {...extraProps} hashtagName="interweave">#interweave</Hashtag>,
-      ' Donec eu sem non nibh condimentum luctus. Vivamus pharetra feugiat blandit. Vestibulum neque velit, semper ',
-      <Emoji key="1" {...extraProps} shortname=":japanese_castle:" unicode={SHORTNAME_TO_UNICODE[':japanese_castle:']} />,
-      ' id vestibulum id, viverra a felis. Integer convallis in orci nec bibendum. Ut consequat posuere metus, ',
-      <Url key="3" {...extraProps} urlParts={{ ...urlParts, host: 'www.domain.com' }}>www.domain.com</Url>,
-      '.',
-      <Element key="4" tagName="br" selfClose>{[]}</Element>,
-      <Element key="5" tagName="br" selfClose>{[]}</Element>,
-      'Curabitur lectus odio, tempus quis velit vitae, cursus sagittis nulla. Maecenas sem nulla, tempor nec risus nec, ultricies ultricies magna. ',
-      <Url key="6" {...extraProps} urlParts={{ ...urlParts, scheme: 'https', host: '127.0.0.1', path: '/foo' }}>https://127.0.0.1/foo</Url>,
-      ' Nulla malesuada lacinia libero non mollis. Curabitur id lacus id dolor vestibulum ornare quis a nisi (',
-      <Url key="7" {...extraProps} urlParts={{ ...urlParts, host: 'domain.com', path: '/some/path', query: '?with=query' }}>http://domain.com/some/path?with=query</Url>,
-      '). Pellentesque ac finibus mauris. Sed eu luctus diam. Quisque porta lectus in turpis imperdiet dapibus.',
-      <Element key="8" tagName="br" selfClose>{[]}</Element>,
-      <Element key="9" tagName="br" selfClose>{[]}</Element>,
-      <Hashtag key="10" {...extraProps} hashtagName="blessed">#blessed</Hashtag>,
-      ' ',
-      <Hashtag key="11" {...extraProps} hashtagName="interweave">#interweave</Hashtag>,
-      ' ',
-      <Hashtag key="12" {...extraProps} hashtagName="milesj">#milesj</Hashtag>,
-    ]);
-  });
+      expect(wrapper.prop('children')).toEqual([
+        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec massa lorem, mollis non commodo quis, ultricies at elit. ',
+        <Email key="0" {...extraProps} emailParts={{ username: 'email', host: 'domain.com' }}>email@domain.com</Email>,
+        '. Aliquam a arcu porttitor, aliquam eros sed, convallis massa. Nunc vitae vehicula quam, in feugiat ligula. ',
+        <Hashtag key="2" {...extraProps} hashtagName="interweave">#interweave</Hashtag>,
+        ' Donec eu sem non nibh condimentum luctus. Vivamus pharetra feugiat blandit. Vestibulum neque velit, semper ',
+        <Emoji key="1" {...extraProps} shortname=":japanese_castle:" unicode={SHORTNAME_TO_UNICODE[':japanese_castle:']} />,
+        ' id vestibulum id, viverra a felis. Integer convallis in orci nec bibendum. Ut consequat posuere metus, ',
+        <Url key="3" {...extraProps} urlParts={{ ...urlParts, host: 'www.domain.com' }}>www.domain.com</Url>,
+        '.',
+        <Element key="4" tagName="br" selfClose>{[]}</Element>,
+        <Element key="5" tagName="br" selfClose>{[]}</Element>,
+        'Curabitur lectus odio, tempus quis velit vitae, cursus sagittis nulla. Maecenas sem nulla, tempor nec risus nec, ultricies ultricies magna. ',
+        <Url key="6" {...extraProps} urlParts={{ ...urlParts, scheme: 'https', host: '127.0.0.1', path: '/foo' }}>https://127.0.0.1/foo</Url>,
+        ' Nulla malesuada lacinia libero non mollis. Curabitur id lacus id dolor vestibulum ornare quis a nisi (',
+        <Url key="7" {...extraProps} urlParts={{ ...urlParts, host: 'domain.com', path: '/some/path', query: '?with=query' }}>http://domain.com/some/path?with=query</Url>,
+        '). Pellentesque ac finibus mauris. Sed eu luctus diam. Quisque porta lectus in turpis imperdiet dapibus.',
+        <Element key="8" tagName="br" selfClose>{[]}</Element>,
+        <Element key="9" tagName="br" selfClose>{[]}</Element>,
+        <Hashtag key="10" {...extraProps} hashtagName="blessed">#blessed</Hashtag>,
+        ' ',
+        <Hashtag key="11" {...extraProps} hashtagName="interweave">#interweave</Hashtag>,
+        ' ',
+        <Hashtag key="12" {...extraProps} hashtagName="milesj">#milesj</Hashtag>,
+      ]);
+    });
 
-  it('parses and renders HTML text with all matchers', () => {
-    const wrapper = shallow(
-      <Interweave
-        tagName="div"
-        matchers={[
-          new EmailMatcher('email'),
-          new EmojiMatcher('emoji', { convertShortname: true, convertUnicode: true }),
-          new HashtagMatcher('hashtag'),
-          new IpMatcher('ip'),
-          new UrlMatcher('url'),
-        ]}
-        content={`<h1>Lorem ipsum dolor sit amet</h1>
+    it('renders HTML text with all matchers', () => {
+      const wrapper = shallow(
+        <Interweave
+          tagName="div"
+          matchers={[
+            new EmailMatcher('email'),
+            new EmojiMatcher('emoji', { convertShortname: true, convertUnicode: true }),
+            new HashtagMatcher('hashtag'),
+            new IpMatcher('ip'),
+            new UrlMatcher('url'),
+          ]}
+          content={`<h1>Lorem ipsum dolor sit amet</h1>
 
 <p><b>Consectetur adipiscing elit.</b> Donec massa lorem, mollis non commodo quis, ultricies at elit. email@domain.com. Aliquam a arcu porttitor, aliquam eros sed, convallis massa. Nunc vitae vehicula quam, in feugiat ligula. #interweave Donec eu sem non nibh condimentum luctus. \uD83D\uDC31 Vivamus pharetra feugiat blandit. Vestibulum neque velit, semper id vestibulum id :love_letter:, viverra a felis. Integer convallis in orci nec bibendum. Ut consequat posuere metus, <a href="www.domain.com">www.domain.com</a>.</p>
 
@@ -252,181 +265,182 @@ Curabitur lectus odio, tempus quis velit vitae, cursus sagittis nulla. Maecenas 
 <div>Curabitur lectus odio, <em>tempus quis velit vitae, cursus sagittis nulla</em>. Maecenas sem nulla, tempor nec risus nec, ultricies ultricies magna. https://127.0.0.1/foo Nulla malesuada lacinia libero non mollis. Curabitur id lacus id dolor vestibulum ornare quis a nisi (http://domain.com/some/path?with=query). Pellentesque ac finibus mauris. Sed eu luctus diam. :not_an_emoji: Quisque porta lectus in turpis imperdiet dapibus.</div>
 
 <section>#blessed #interweave #milesj</section> \uD83D\uDC36`}
-      />
-    ).shallow();
+        />
+      ).shallow();
 
-    expect(wrapper.prop('children')).toEqual([
-      <Element key="0" tagName="h1">{['Lorem ipsum dolor sit amet']}</Element>,
-      '\n\n',
-      <Element key="1" tagName="p">
-        {[
-          <Element key="2" tagName="b">{['Consectetur adipiscing elit.']}</Element>,
-          ' Donec massa lorem, mollis non commodo quis, ultricies at elit. ',
-          <Email key="3" {...extraProps} emailParts={{ username: 'email', host: 'domain.com' }}>email@domain.com</Email>,
-          '. Aliquam a arcu porttitor, aliquam eros sed, convallis massa. Nunc vitae vehicula quam, in feugiat ligula. ',
-          <Hashtag key="6" {...extraProps} hashtagName="interweave">#interweave</Hashtag>,
-          ' Donec eu sem non nibh condimentum luctus. ',
-          <Emoji key="5" {...extraProps} unicode={SHORTNAME_TO_UNICODE[':cat:']} />,
-          ' Vivamus pharetra feugiat blandit. Vestibulum neque velit, semper id vestibulum id ',
-          <Emoji key="4" {...extraProps} shortname=":love_letter:" unicode={SHORTNAME_TO_UNICODE[':love_letter:']} />,
-          ', viverra a felis. Integer convallis in orci nec bibendum. Ut consequat posuere metus, ',
-          <Element key="7" tagName="a" attributes={{ href: 'www.domain.com' }}>{['www.domain.com']}</Element>,
-          '.',
-        ]}
-      </Element>,
-      '\n\n',
-      <Element key="8" tagName="br" selfClose>{[]}</Element>,
-      <Emoji key="9" {...extraProps} shortname=":woman_gesturing_ok_tone3:" unicode={SHORTNAME_TO_UNICODE[':woman_gesturing_ok_tone3:']} />,
-      <Element key="10" tagName="br" selfClose>{[]}</Element>,
-      '\n\n',
-      <Element key="11" tagName="div">
-        {[
-          'Curabitur lectus odio, ',
-          <Element key="12" tagName="em">{['tempus quis velit vitae, cursus sagittis nulla']}</Element>,
-          '. Maecenas sem nulla, tempor nec risus nec, ultricies ultricies magna. ',
-          <Url key="13" {...extraProps} urlParts={{ ...urlParts, scheme: 'https', host: '127.0.0.1', path: '/foo' }}>https://127.0.0.1/foo</Url>,
-          ' Nulla malesuada lacinia libero non mollis. Curabitur id lacus id dolor vestibulum ornare quis a nisi (',
-          <Url key="14" {...extraProps} urlParts={{ ...urlParts, host: 'domain.com', path: '/some/path', query: '?with=query' }}>http://domain.com/some/path?with=query</Url>,
-          '). Pellentesque ac finibus mauris. Sed eu luctus diam. :not_an_emoji: Quisque porta lectus in turpis imperdiet dapibus.',
-        ]}
-      </Element>,
-      '\n\n',
-      <Element key="15" tagName="section">
-        {[
-          <Hashtag key="16" {...extraProps} hashtagName="blessed">#blessed</Hashtag>,
-          ' ',
-          <Hashtag key="17" {...extraProps} hashtagName="interweave">#interweave</Hashtag>,
-          ' ',
-          <Hashtag key="18" {...extraProps} hashtagName="milesj">#milesj</Hashtag>,
-        ]}
-      </Element>,
-      ' ',
-      <Emoji key="19" {...extraProps} unicode={SHORTNAME_TO_UNICODE[':dog:']} />,
-    ]);
-  });
+      expect(wrapper.prop('children')).toEqual([
+        <Element key="0" tagName="h1">{['Lorem ipsum dolor sit amet']}</Element>,
+        '\n\n',
+        <Element key="1" tagName="p">
+          {[
+            <Element key="2" tagName="b">{['Consectetur adipiscing elit.']}</Element>,
+            ' Donec massa lorem, mollis non commodo quis, ultricies at elit. ',
+            <Email key="3" {...extraProps} emailParts={{ username: 'email', host: 'domain.com' }}>email@domain.com</Email>,
+            '. Aliquam a arcu porttitor, aliquam eros sed, convallis massa. Nunc vitae vehicula quam, in feugiat ligula. ',
+            <Hashtag key="6" {...extraProps} hashtagName="interweave">#interweave</Hashtag>,
+            ' Donec eu sem non nibh condimentum luctus. ',
+            <Emoji key="5" {...extraProps} unicode={SHORTNAME_TO_UNICODE[':cat:']} />,
+            ' Vivamus pharetra feugiat blandit. Vestibulum neque velit, semper id vestibulum id ',
+            <Emoji key="4" {...extraProps} shortname=":love_letter:" unicode={SHORTNAME_TO_UNICODE[':love_letter:']} />,
+            ', viverra a felis. Integer convallis in orci nec bibendum. Ut consequat posuere metus, ',
+            <Element key="7" tagName="a" attributes={{ href: 'www.domain.com' }}>{['www.domain.com']}</Element>,
+            '.',
+          ]}
+        </Element>,
+        '\n\n',
+        <Element key="8" tagName="br" selfClose>{[]}</Element>,
+        <Emoji key="9" {...extraProps} shortname=":woman_gesturing_ok_tone3:" unicode={SHORTNAME_TO_UNICODE[':woman_gesturing_ok_tone3:']} />,
+        <Element key="10" tagName="br" selfClose>{[]}</Element>,
+        '\n\n',
+        <Element key="11" tagName="div">
+          {[
+            'Curabitur lectus odio, ',
+            <Element key="12" tagName="em">{['tempus quis velit vitae, cursus sagittis nulla']}</Element>,
+            '. Maecenas sem nulla, tempor nec risus nec, ultricies ultricies magna. ',
+            <Url key="13" {...extraProps} urlParts={{ ...urlParts, scheme: 'https', host: '127.0.0.1', path: '/foo' }}>https://127.0.0.1/foo</Url>,
+            ' Nulla malesuada lacinia libero non mollis. Curabitur id lacus id dolor vestibulum ornare quis a nisi (',
+            <Url key="14" {...extraProps} urlParts={{ ...urlParts, host: 'domain.com', path: '/some/path', query: '?with=query' }}>http://domain.com/some/path?with=query</Url>,
+            '). Pellentesque ac finibus mauris. Sed eu luctus diam. :not_an_emoji: Quisque porta lectus in turpis imperdiet dapibus.',
+          ]}
+        </Element>,
+        '\n\n',
+        <Element key="15" tagName="section">
+          {[
+            <Hashtag key="16" {...extraProps} hashtagName="blessed">#blessed</Hashtag>,
+            ' ',
+            <Hashtag key="17" {...extraProps} hashtagName="interweave">#interweave</Hashtag>,
+            ' ',
+            <Hashtag key="18" {...extraProps} hashtagName="milesj">#milesj</Hashtag>,
+          ]}
+        </Element>,
+        ' ',
+        <Emoji key="19" {...extraProps} unicode={SHORTNAME_TO_UNICODE[':dog:']} />,
+      ]);
+    });
 
-  it('parses and doesnt render anchor links within anchor links', () => {
-    const wrapper = shallow(
-      <Interweave
-        tagName="div"
-        matchers={[
-          new EmailMatcher('email'),
-          new EmojiMatcher('emoji', { convertShortname: true }),
-          new HashtagMatcher('hashtag'),
-          new IpMatcher('ip'),
-          new UrlMatcher('url'),
-        ]}
-        content={`- https://127.0.0.1/foo
+    it('doesnt render anchor links within anchor links', () => {
+      const wrapper = shallow(
+        <Interweave
+          tagName="div"
+          matchers={[
+            new EmailMatcher('email'),
+            new EmojiMatcher('emoji', { convertShortname: true }),
+            new HashtagMatcher('hashtag'),
+            new IpMatcher('ip'),
+            new UrlMatcher('url'),
+          ]}
+          content={`- https://127.0.0.1/foo
 - <a href="www.domain.com">www.domain.com</a>
 - (http://domain.com/some/path?with=query)
 - <a href="http://domain.com">This text should stay</a>`}
-      />
-    ).shallow();
+        />
+      ).shallow();
 
-    expect(wrapper.prop('children')).toEqual([
-      '- ',
-      <Url key="0" {...extraProps} urlParts={{ ...urlParts, scheme: 'https', host: '127.0.0.1', path: '/foo' }}>https://127.0.0.1/foo</Url>,
-      '\n- ',
-      <Element key="1" tagName="a" attributes={{ href: 'www.domain.com' }}>{['www.domain.com']}</Element>,
-      '\n- (',
-      <Url key="2" {...extraProps} urlParts={{ ...urlParts, host: 'domain.com', path: '/some/path', query: '?with=query' }}>http://domain.com/some/path?with=query</Url>,
-      ')\n- ',
-      <Element key="3" tagName="a" attributes={{ href: 'http://domain.com' }}>{['This text should stay']}</Element>,
-    ]);
-  });
+      expect(wrapper.prop('children')).toEqual([
+        '- ',
+        <Url key="0" {...extraProps} urlParts={{ ...urlParts, scheme: 'https', host: '127.0.0.1', path: '/foo' }}>https://127.0.0.1/foo</Url>,
+        '\n- ',
+        <Element key="1" tagName="a" attributes={{ href: 'www.domain.com' }}>{['www.domain.com']}</Element>,
+        '\n- (',
+        <Url key="2" {...extraProps} urlParts={{ ...urlParts, host: 'domain.com', path: '/some/path', query: '?with=query' }}>http://domain.com/some/path?with=query</Url>,
+        ')\n- ',
+        <Element key="3" tagName="a" attributes={{ href: 'http://domain.com' }}>{['This text should stay']}</Element>,
+      ]);
+    });
 
-  it('parses and renders emoji shortname as unicode', () => {
-    const wrapper = shallow(
-      <Interweave
-        tagName="div"
-        matchers={[
-          new EmojiMatcher('emoji', { convertShortname: true, renderUnicode: true }),
-        ]}
-        content="This has :cat: and :dog: shortnames."
-      />
-    ).shallow();
+    it('renders emoji shortname as unicode', () => {
+      const wrapper = shallow(
+        <Interweave
+          tagName="div"
+          matchers={[
+            new EmojiMatcher('emoji', { convertShortname: true, renderUnicode: true }),
+          ]}
+          content="This has :cat: and :dog: shortnames."
+        />
+      ).shallow();
 
-    expect(wrapper.prop('children')).toEqual([
-      'This has ',
-      SHORTNAME_TO_UNICODE[':cat:'],
-      ' and ',
-      SHORTNAME_TO_UNICODE[':dog:'],
-      ' shortnames.',
-    ]);
-  });
+      expect(wrapper.prop('children')).toEqual([
+        'This has ',
+        SHORTNAME_TO_UNICODE[':cat:'],
+        ' and ',
+        SHORTNAME_TO_UNICODE[':dog:'],
+        ' shortnames.',
+      ]);
+    });
 
-  it('parses and renders emoji unicode (literals) as unicode', () => {
-    const wrapper = shallow(
-      <Interweave
-        tagName="div"
-        matchers={[
-          new EmojiMatcher('emoji', { convertUnicode: true, renderUnicode: true }),
-        ]}
-        content="This has 🐱 and 🐶 shortnames."
-      />
-    ).shallow();
+    it('renders emoji unicode (literals) as unicode', () => {
+      const wrapper = shallow(
+        <Interweave
+          tagName="div"
+          matchers={[
+            new EmojiMatcher('emoji', { convertUnicode: true, renderUnicode: true }),
+          ]}
+          content="This has 🐱 and 🐶 shortnames."
+        />
+      ).shallow();
 
-    expect(wrapper.prop('children')).toEqual([
-      'This has ',
-      SHORTNAME_TO_UNICODE[':cat:'],
-      ' and ',
-      SHORTNAME_TO_UNICODE[':dog:'],
-      ' shortnames.',
-    ]);
-  });
+      expect(wrapper.prop('children')).toEqual([
+        'This has ',
+        SHORTNAME_TO_UNICODE[':cat:'],
+        ' and ',
+        SHORTNAME_TO_UNICODE[':dog:'],
+        ' shortnames.',
+      ]);
+    });
 
-  it('parses and renders emoji unicode (escapes) as unicode', () => {
-    const wrapper = shallow(
-      <Interweave
-        tagName="div"
-        matchers={[
-          new EmojiMatcher('emoji', { convertUnicode: true, renderUnicode: true }),
-        ]}
-        content={'This has \uD83D\uDC31 and \uD83D\uDC36 shortnames.'}
-      />
-    ).shallow();
+    it('renders emoji unicode (escapes) as unicode', () => {
+      const wrapper = shallow(
+        <Interweave
+          tagName="div"
+          matchers={[
+            new EmojiMatcher('emoji', { convertUnicode: true, renderUnicode: true }),
+          ]}
+          content={'This has \uD83D\uDC31 and \uD83D\uDC36 shortnames.'}
+        />
+      ).shallow();
 
-    expect(wrapper.prop('children')).toEqual([
-      'This has ',
-      SHORTNAME_TO_UNICODE[':cat:'],
-      ' and ',
-      SHORTNAME_TO_UNICODE[':dog:'],
-      ' shortnames.',
-    ]);
-  });
+      expect(wrapper.prop('children')).toEqual([
+        'This has ',
+        SHORTNAME_TO_UNICODE[':cat:'],
+        ' and ',
+        SHORTNAME_TO_UNICODE[':dog:'],
+        ' shortnames.',
+      ]);
+    });
 
-  it('parses and renders a single emoji enlarged', () => {
-    const wrapper = shallow(
-      <Interweave
-        tagName="div"
-        matchers={[
-          new EmojiMatcher('emoji', { convertUnicode: true, convertShortname: true }),
-        ]}
-        content=":cat:"
-      />
-    ).shallow();
+    it('renders a single emoji enlarged', () => {
+      const wrapper = shallow(
+        <Interweave
+          tagName="div"
+          matchers={[
+            new EmojiMatcher('emoji', { convertUnicode: true, convertShortname: true }),
+          ]}
+          content=":cat:"
+        />
+      ).shallow();
 
-    expect(wrapper.prop('children')).toEqual([
-      <Emoji {...extraProps} key={0} shortname=":cat:" unicode="🐱" enlargeEmoji />,
-    ]);
-  });
+      expect(wrapper.prop('children')).toEqual([
+        <Emoji {...extraProps} key={0} shortname=":cat:" unicode="🐱" enlargeEmoji />,
+      ]);
+    });
 
-  it('handles void elements correctly', () => {
-    const wrapper = shallow(
-      <Interweave
-        tagName="div"
-        content={'This has line breaks.<br>Horizontal rule.<hr />An image.<img src="http://domain.com/image.jpg" />'}
-      />
-    ).shallow();
+    it('handles void elements correctly', () => {
+      const wrapper = shallow(
+        <Interweave
+          tagName="div"
+          content={'This has line breaks.<br>Horizontal rule.<hr />An image.<img src="http://domain.com/image.jpg" />'}
+        />
+      ).shallow();
 
-    expect(wrapper.prop('children')).toEqual([
-      'This has line breaks.',
-      <Element key="0" tagName="br" selfClose>{[]}</Element>,
-      'Horizontal rule.',
-      <Element key="1" tagName="hr" selfClose>{[]}</Element>,
-      'An image.',
-      <Element key="2" tagName="img" attributes={{ src: 'http://domain.com/image.jpg' }} selfClose>{[]}</Element>,
-    ]);
+      expect(wrapper.prop('children')).toEqual([
+        'This has line breaks.',
+        <Element key="0" tagName="br" selfClose>{[]}</Element>,
+        'Horizontal rule.',
+        <Element key="1" tagName="hr" selfClose>{[]}</Element>,
+        'An image.',
+        <Element key="2" tagName="img" attributes={{ src: 'http://domain.com/image.jpg' }} selfClose>{[]}</Element>,
+      ]);
+    });
   });
 
   describe('line breaks', () => {

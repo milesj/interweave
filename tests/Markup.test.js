@@ -16,6 +16,17 @@ describe('Markup', () => {
     expect(wrapper.prop('className')).toBe('interweave--no-html');
   });
 
+  it('sets the `noHtmlExceptMatchers` class name', () => {
+    const wrapper = shallow((
+      <Markup
+        noHtmlExceptMatchers
+        content="Foo Bar"
+      />
+    ));
+
+    expect(wrapper.prop('className')).toBe('interweave--no-html');
+  });
+
   it('allows empty `content` to be passed', () => {
     const wrapper = shallow(<Markup content={null} />);
 

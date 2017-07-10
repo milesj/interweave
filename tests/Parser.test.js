@@ -526,6 +526,54 @@ describe('Parser', () => {
       ]);
     });
 
+    it('passes through elements if `noHtmlExceptMatchers` prop is set', () => {
+      instance = new Parser('', {
+        noHtmlExceptMatchers: true,
+      });
+
+      element.appendChild(document.createTextNode('Foo'));
+      element.appendChild(createChild('div', 'Bar'));
+      element.appendChild(document.createTextNode('Baz'));
+      element.appendChild(createChild('div', 'Qux'));
+      element.appendChild(createChild('div', 'Wat'));
+
+      expect(instance.parseNode(element, parentConfig)).toEqual([
+        'Foo',
+        'Bar',
+        'Baz',
+        'Qux',
+        'Wat',
+      ]);
+    });
+
+    it('strips matchers HTML if `noHtml` prop is set', () => {
+      instance.props.noHtml = true;
+
+      element.appendChild(document.createTextNode('Foo'));
+      element.appendChild(createChild('div', 'Bar'));
+      element.appendChild(document.createTextNode('[foo]'));
+
+      expect(instance.parseNode(element, parentConfig)).toEqual([
+        'Foo',
+        'Bar',
+        '[foo]',
+      ]);
+    });
+
+    it('doesnt strip matchers HTML if `noHtmlExceptMatchers` prop is set', () => {
+      instance.props.noHtmlExceptMatchers = true;
+
+      element.appendChild(document.createTextNode('Foo'));
+      element.appendChild(createChild('div', 'Bar'));
+      element.appendChild(document.createTextNode('[foo]'));
+
+      expect(instance.parseNode(element, parentConfig)).not.toEqual([
+        'Foo',
+        'Bar',
+        '[foo]',
+      ]);
+    });
+
     it('only renders whitelisted children', () => {
       element.appendChild(document.createTextNode('Foo'));
       element.appendChild(createChild('i', 'Bar'));

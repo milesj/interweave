@@ -211,9 +211,14 @@ export default class Parser {
    * as line breaks should be handled by `<br/>`s in the markup itself.
    */
   convertLineBreaks(markup: string): string {
-    const { noHtml, disableLineBreaks } = this.props;
+    const { noHtml, noHtmlExceptMatchers, disableLineBreaks } = this.props;
 
-    if (noHtml || disableLineBreaks || markup.match(/<((?:\/[a-z ]+)|(?:[a-z ]+\/))>/ig)) {
+    if (
+      noHtml ||
+      noHtmlExceptMatchers ||
+      disableLineBreaks ||
+      markup.match(/<((?:\/[a-z ]+)|(?:[a-z ]+\/))>/ig)
+    ) {
       return markup;
     }
 
@@ -377,7 +382,7 @@ export default class Parser {
    * list of text nodes and React elements.
    */
   parseNode(parentNode: NodeInterface, parentConfig: NodeConfig): ParsedNodes {
-    const { noHtml, disableWhitelist } = this.props;
+    const { noHtml, noHtmlExceptMatchers, disableWhitelist } = this.props;
     let content = [];
     let mergedText = '';
 
@@ -402,7 +407,10 @@ export default class Parser {
         // Only render when the following criteria is met:
         //  - HTML has not been disabled
         //  - Whitelist is disabled OR the child is valid within the parent
-        if (!noHtml && (disableWhitelist || this.canRenderChild(parentConfig, config))) {
+        if (
+          !(noHtml || noHtmlExceptMatchers) &&
+          (disableWhitelist || this.canRenderChild(parentConfig, config))
+        ) {
           this.keyIndex += 1;
 
           // Build the props as it makes it easier to test
@@ -435,7 +443,7 @@ export default class Parser {
 
       // Apply matchers if a text node
       } else if (node.nodeType === TEXT_NODE) {
-        const text = noHtml
+        const text = (noHtml && !noHtmlExceptMatchers)
           ? node.textContent
           : this.applyMatchers(node.textContent, parentConfig);
 

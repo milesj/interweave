@@ -34,6 +34,7 @@ export default class Interweave extends React.Component {
     filters: PropTypes.arrayOf(PropTypes.instanceOf(Filter)),
     matchers: PropTypes.arrayOf(PropTypes.instanceOf(Matcher)),
     noHtml: PropTypes.bool,
+    noHtmlExceptMatchers: PropTypes.bool,
     tagName: PropTypes.oneOf(['span', 'div', 'p']),
     onAfterParse: PropTypes.func,
     onBeforeParse: PropTypes.func,
@@ -49,6 +50,7 @@ export default class Interweave extends React.Component {
     filters: [],
     matchers: [],
     noHtml: false,
+    noHtmlExceptMatchers: false,
     tagName: 'span',
     onAfterParse: null,
     onBeforeParse: null,
@@ -119,8 +121,8 @@ export default class Interweave extends React.Component {
    * Render the component by parsing the markup.
    */
   render() {
-    const { tagName, noHtml } = this.props;
-    const className = noHtml ? 'interweave--no-html' : '';
+    const { tagName, noHtml, noHtmlExceptMatchers } = this.props;
+    const className = (noHtml || noHtmlExceptMatchers) ? 'interweave--no-html' : '';
 
     return (
       <Element tagName={tagName} className={className}>

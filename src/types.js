@@ -46,6 +46,7 @@ export type MatchResponse = {
 export type ParserProps = {
   disableLineBreaks?: boolean,
   noHtml?: boolean,
+  noHtmlExceptMatchers?: boolean,
   [key: string]: mixed,
 };
 
@@ -67,6 +68,7 @@ export type InterweaveProps = {
   filters: Filter[],
   matchers: Matcher<*>[],
   noHtml: boolean,
+  noHtmlExceptMatchers: boolean,
   onAfterParse: AfterParseCallback,
   onBeforeParse: BeforeParseCallback,
   tagName: string,
@@ -78,6 +80,7 @@ export type MarkupProps = {
   disableWhitelist: boolean,
   emptyContent: ?React.Element<*>,
   noHtml: boolean,
+  noHtmlExceptMatchers: boolean,
   tagName: string,
 };
 
