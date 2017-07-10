@@ -395,6 +395,22 @@ Curabitur lectus odio, tempus quis velit vitae, cursus sagittis nulla. Maecenas 
     ]);
   });
 
+  it('parses and renders a single emoji enlarged', () => {
+    const wrapper = shallow(
+      <Interweave
+        tagName="div"
+        matchers={[
+          new EmojiMatcher('emoji', { convertUnicode: true, convertShortname: true }),
+        ]}
+        content=":cat:"
+      />
+    ).shallow();
+
+    expect(wrapper.prop('children')).toEqual([
+      <Emoji {...extraProps} key={0} shortname=":cat:" unicode="🐱" enlargeEmoji />,
+    ]);
+  });
+
   it('handles void elements correctly', () => {
     const wrapper = shallow(
       <Interweave

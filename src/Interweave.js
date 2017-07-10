@@ -105,7 +105,7 @@ export default class Interweave extends React.Component {
         throw new TypeError('Interweave `onAfterParse` must return an array of strings and React elements.');
       }
 
-      return nodes;
+      return nextNodes;
     }, markup);
 
     if (markup.length === 0) {
