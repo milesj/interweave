@@ -93,7 +93,7 @@ export default class EmojiMatcher extends Matcher<EmojiOptions> {
   /**
    * When a single `Emoji` is the only content, enlarge it!
    */
-  onAfterParse(content: ParsedNodes): ParsedNodes {
+  onAfterParse(content: ParsedNodes, props: Object): ParsedNodes {
     const { enlargeThreshold } = this.options;
 
     if (content.length !== enlargeThreshold) {

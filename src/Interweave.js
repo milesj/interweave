@@ -87,7 +87,7 @@ export default class Interweave extends React.Component {
 
     // Trigger before callbacks
     markup = beforeCallbacks.reduce((string: string, callback: BeforeParseCallback) => {
-      const nextString = callback(string);
+      const nextString = callback(string, this.props);
 
       if (__DEV__) {
         if (typeof nextString !== 'string') {
@@ -103,7 +103,7 @@ export default class Interweave extends React.Component {
 
     // Trigger after callbacks
     markup = afterCallbacks.reduce((nodes: ParsedNodes, callback: AfterParseCallback) => {
-      const nextNodes = callback(nodes);
+      const nextNodes = callback(nodes, this.props);
 
       if (__DEV__) {
         if (!Array.isArray(nextNodes)) {

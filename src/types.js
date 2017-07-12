@@ -52,9 +52,9 @@ export type ParserProps = {
 
 export type ParsedNodes = Array<string | React.Element<*>>;
 
-export type AfterParseCallback = (content: ParsedNodes) => ParsedNodes;
+export type AfterParseCallback = (content: ParsedNodes, props: Object) => ParsedNodes;
 
-export type BeforeParseCallback = (content: string) => string;
+export type BeforeParseCallback = (content: string, props: Object) => string;
 
 // Component Props
 

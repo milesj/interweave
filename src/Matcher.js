@@ -104,14 +104,14 @@ export default class Matcher<T: Object> {
   /**
    * Callback triggered before parsing.
    */
-  onBeforeParse(content: string): string {
+  onBeforeParse(content: string, props: Object): string {
     return content;
   }
 
   /**
    * Callback triggered after parsing.
    */
-  onAfterParse(content: ParsedNodes): ParsedNodes {
+  onAfterParse(content: ParsedNodes, props: Object): ParsedNodes {
     return content;
   }
 }

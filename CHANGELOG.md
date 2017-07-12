@@ -3,6 +3,8 @@
   * Also passed as the 4th argument to the `emojiPath` function.
 * Added a new `enlargeThreshold` option to `EmojiMatcher`, which determines the number of
   emojis to automatically enlarge, when emojis are the only content.
+* Updated `Matcher#onBeforeParse` and `Matcher#onAfterParse` to receives the entire props
+  object as the 2nd argument.
 * Wrapped thrown errors in `__DEV__` environment checks.
 
 # 5.2.0
@@ -28,8 +30,8 @@
 # 5.0.0
 * Updated IE requirement to 11+.
 * Updated to include src/ files in the published package.
-* Updated Flowtype definitions.
-* Moved Flowtype definition to root of project.
+* Updated Flow definitions.
+* Moved Flow definition to root of project.
 * Moved published files to a lib/ folder.
 
 # 4.1.0
@@ -96,7 +98,7 @@
 * Added `onBeforeParse` and `onAfterParse` callback methods to all matchers.
 * Updated the `Hashtag` component to strip the hash (#) when replacing `{{hashtag}}`.
 * Updated the `Emoji` component to prefix the file extension class name with `interweave__emoji--`.
-* Removed `Interweave.addFilter`, `addMatcher`, `clearFilters`, `clearMatchers`,
+* Removed `Interweave#addFilter`, `addMatcher`, `clearFilters`, `clearMatchers`,
   `getFilters`, `getMatchers`, and `configure`.
 
 # 1.2.0
