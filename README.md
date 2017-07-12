@@ -105,6 +105,7 @@ and `noHtmlExceptMatchers` props mentioned previously.
     * [CSS Styling](#css-styling)
     * [Inline Sizing](#inline-sizing)
   * [Displaying Unicode Characters](#displaying-unicode-characters)
+  * [Automatic Enlargement](#automatic-enlargement)
 * [HTML Parsing](#html-parsing)
   * [Tag Whitelist](#tag-whitelist)
   * [Attribute Whitelist](#attribute-whitelist)
@@ -528,6 +529,21 @@ conversion.
 ```javascript
 new EmojiMatcher('emoji', { renderUnicode: true });
 ```
+
+#### Automatic Enlargement
+
+When an emoji is the only character within the content, it will
+automatically be enlarged. To disable this functionality,
+set `enlargeThreshold` to 0. Inversely, if you want to increase the
+threshold in which emojis are enlarged, increase the count.
+
+```javascript
+new EmojiMatcher('emoji', { enlargeThreshold: 3 });
+```
+
+For example, if `enlargeThreshold` is set to 3, and 3 emojis are found
+within the content, all will be enlarged. If 2 or 4 are found, they
+will not be enlarged.
 
 ### HTML Parsing
 

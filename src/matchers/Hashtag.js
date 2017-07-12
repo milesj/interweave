@@ -14,7 +14,7 @@ import type { MatchResponse, HashtagProps } from '../types';
 const HASHTAG_REGEX = new RegExp(HASHTAG_PATTERN, 'i');
 
 export default class HashtagMatcher extends Matcher<Object> {
-  replaceWith(match: string, props: Object = {}): React.Element<HashtagProps> {
+  replaceWith(match: string, props: Object = {}): string | React.Element<HashtagProps> {
     return (
       <Hashtag {...props}>{match}</Hashtag>
     );

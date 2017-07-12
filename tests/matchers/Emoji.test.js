@@ -155,7 +155,7 @@ describe('matchers/Emoji', () => {
   });
 
   describe('onAfterParse', () => {
-    it('returns a single <Emoji/> enlarged', () => {
+    it('enlarges a single <Emoji/>', () => {
       expect(matcher.onAfterParse([
         <Emoji key={0} shortname=":cat:" />,
       ])).toEqual([
@@ -163,10 +163,62 @@ describe('matchers/Emoji', () => {
       ]);
     });
 
-    it('ignores multiple <Emoji/>', () => {
+    it('enlarges multiple <Emoji/>s when `enlargeThreshold` is set', () => {
+      matcher.options.enlargeThreshold = 3;
+
+      expect(matcher.onAfterParse([
+        <Emoji key={0} shortname=":cat:" />,
+        <Emoji key={1} shortname=":dog:" />,
+        <Emoji key={2} shortname=":man:" />,
+      ])).toEqual([
+        <Emoji key={0} shortname=":cat:" enlargeEmoji />,
+        <Emoji key={1} shortname=":dog:" enlargeEmoji />,
+        <Emoji key={2} shortname=":man:" enlargeEmoji />,
+      ]);
+    });
+
+    it('doesnt enlarge when too few <Emoji/>', () => {
+      matcher.options.enlargeThreshold = 3;
+
+      const nodes = [
+        <Emoji key={0} shortname=":cat:" />,
+        <Emoji key={2} shortname=":man:" />,
+      ];
+
+      expect(matcher.onAfterParse(nodes)).toEqual(nodes);
+    });
+
+    it('doesnt enlarge when too many <Emoji/>', () => {
+      matcher.options.enlargeThreshold = 3;
+
       const nodes = [
         <Emoji key={0} shortname=":cat:" />,
         <Emoji key={1} shortname=":dog:" />,
+        <Emoji key={2} shortname=":man:" />,
+        <Emoji key={3} shortname=":woman:" />,
+      ];
+
+      expect(matcher.onAfterParse(nodes)).toEqual(nodes);
+    });
+
+    it('doesnt enlarge when strings are found', () => {
+      matcher.options.enlargeThreshold = 3;
+
+      const nodes = [
+        <Emoji key={0} shortname=":cat:" />,
+        'Foo',
+        <Emoji key={2} shortname=":man:" />,
+      ];
+
+      expect(matcher.onAfterParse(nodes)).toEqual(nodes);
+    });
+
+    it('doesnt enlarge when non-<Emoji/> are found', () => {
+      matcher.options.enlargeThreshold = 3;
+
+      const nodes = [
+        <Emoji key={0} shortname=":cat:" />,
+        <div key="foo">Foo</div>,
         <Emoji key={2} shortname=":man:" />,
       ];
 

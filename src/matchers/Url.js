@@ -24,14 +24,13 @@ export default class UrlMatcher extends Matcher<UrlOptions> {
     }, factory);
   }
 
-  replaceWith(match: string, props: Object = {}): React.Element<UrlProps> {
+  replaceWith(match: string, props: Object = {}): string | React.Element<UrlProps> {
     if (this.options.validateTLD) {
       const { host } = props.urlParts;
       const validList = TOP_LEVEL_TLDS.concat(this.options.customTLDs);
       const tld = host.slice(host.lastIndexOf('.') + 1).toLowerCase();
 
       if (validList.indexOf(tld) === -1) {
-        // $FlowIgnore Strings are allowed
         return match;
       }
     }

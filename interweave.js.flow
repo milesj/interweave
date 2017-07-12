@@ -18,8 +18,8 @@ declare module 'interweave' {
     propName: string;
 
     constructor(name: string, options: T, factory?: ?MatcherFactory): this;
-    createElement(match: string, props: Object): React.Element<*>;
-    replaceWith(match: string, props: Object): React.Element<*>;
+    createElement(match: string, props: Object): string | React.Element<*>;
+    replaceWith(match: string, props: Object): string | React.Element<*>;
     asTag(): string;
     match(string: string): ?{
       match: string,

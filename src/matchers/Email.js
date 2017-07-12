@@ -14,7 +14,7 @@ import type { MatchResponse, EmailProps } from '../types';
 const EMAIL_REGEX = new RegExp(EMAIL_PATTERN, 'i');
 
 export default class EmailMatcher extends Matcher<Object> {
-  replaceWith(match: string, props: Object = {}): React.Element<EmailProps> {
+  replaceWith(match: string, props: Object = {}): string | React.Element<EmailProps> {
     return (
       <Email {...props}>{match}</Email>
     );

@@ -30,11 +30,12 @@ export default class EmojiMatcher extends Matcher<EmojiOptions> {
       convertShortname: false,
       convertUnicode: false,
       renderUnicode: false,
+      enlargeThreshold: 1,
       ...options,
     }, factory);
   }
 
-  replaceWith(match: string, props: Object = {}): React.Element<EmojiProps> {
+  replaceWith(match: string, props: Object = {}): string | React.Element<EmojiProps> {
     if (this.options.renderUnicode) {
       return props.unicode;
     }
@@ -93,21 +94,27 @@ export default class EmojiMatcher extends Matcher<EmojiOptions> {
    * When a single `Emoji` is the only content, enlarge it!
    */
   onAfterParse(content: ParsedNodes): ParsedNodes {
-    if (content.length === 1) {
-      let [item] = content;
+    const { enlargeThreshold } = this.options;
 
-      if (typeof item !== 'string' && React.isValidElement(item) && item.type === Emoji) {
-        item = (item: React.Element<*>);
-
-        return [
-          React.cloneElement(item, {
-            ...item.props,
-            enlargeEmoji: true,
-          }),
-        ];
-      }
+    if (content.length !== enlargeThreshold) {
+      return content;
     }
 
-    return content;
+    const isAllEmojis = content.every(item => (
+      typeof item !== 'string' && React.isValidElement(item) && item.type === Emoji
+    ));
+
+    if (!isAllEmojis) {
+      return content;
+    }
+
+    return content.map(item => (
+      // $FlowIgnore We check above
+      React.cloneElement(item, {
+        // $FlowIgnore Same here
+        ...item.props,
+        enlargeEmoji: true,
+      })
+    ));
   }
 }

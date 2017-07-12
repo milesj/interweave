@@ -146,5 +146,6 @@ export type EmojiProps = {
 export type EmojiOptions = {
   convertShortname: boolean,
   convertUnicode: boolean,
+  enlargeThreshold: number,
   renderUnicode: boolean,
 };
