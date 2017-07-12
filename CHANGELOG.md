@@ -1,6 +1,3 @@
-# 5.3.0
-* Updated `enlargeEmoji` to accept numbers, which can be used as the `emojiSize` multiplier.
-
 # 5.2.0
 * Added a new `noHtmlExceptMatchers` prop.
 * Fixed a bug in which matcher after callbacks were not triggering properly.

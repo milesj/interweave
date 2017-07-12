@@ -131,21 +131,4 @@ describe('components/Emoji', () => {
       width: '3em',
     });
   });
-
-  it('can customize enlarge multiplier', () => {
-    const wrapper = shallow(
-      <Emoji
-        shortname={shortname}
-        unicode={unicode}
-        emojiSize={2}
-        enlargeEmoji={5}
-      />,
-    );
-
-    expect(wrapper.prop('style')).toEqual({
-      display: 'inline-block',
-      verticalAlign: 'middle',
-      width: '10em',
-    });
-  });
 });
