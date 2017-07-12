@@ -458,7 +458,8 @@ the `emojiPath` prop. This path must contain a `{{hexcode}}` token,
 which will be replaced by the hexadecimal value of the emoji.
 
 Or a function can be passed, which receives the hexcode as the 1st argument,
-`enlargeEmoji` value as the 2nd argument, and `emojiSize` as the 3rd argument.
+`enlargeEmoji` value as the 2nd argument, `emojiSize` as the 3rd argument,
+and `emojiLargeSize` as the 4th argument.
 
 ```javascript
 <Interweave
@@ -514,7 +515,8 @@ If you would like to use inline styles instead of CSS, you can use the
 <Interweave emojiSize={1} />
 ```
 
-> Enlarged emojis will increase the size by 3x.
+By default, enlarged emojis will increase their size by 3x.
+To customize this, define the `emojiLargeSize` prop.
 
 #### Displaying Unicode Characters
 

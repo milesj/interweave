@@ -1,3 +1,7 @@
+# 5.3.0
+* Added a new `emojiLargeSize` prop, which can be used to customize the size of enlarged emoji.
+  * Also passed as the 4th argument to the `emojiPath` function.
+
 # 5.2.0
 * Added a new `noHtmlExceptMatchers` prop.
 * Fixed a bug in which matcher after callbacks were not triggering properly.

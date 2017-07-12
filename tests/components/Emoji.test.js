@@ -131,4 +131,22 @@ describe('components/Emoji', () => {
       width: '3em',
     });
   });
+
+  it('can customize large size', () => {
+    const wrapper = shallow(
+      <Emoji
+        shortname={shortname}
+        unicode={unicode}
+        emojiSize={2}
+        emojiLargeSize={5}
+        enlargeEmoji
+      />,
+    );
+
+    expect(wrapper.prop('style')).toEqual({
+      display: 'inline-block',
+      verticalAlign: 'middle',
+      width: '5em',
+    });
+  });
 });

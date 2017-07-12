@@ -18,11 +18,12 @@ const LARGE_MULTIPLIER = 3;
 // http://git.emojione.com/demos/latest/sprites-svg.html
 // https://css-tricks.com/using-svg/
 export default function Emoji({
-  shortname,
-  unicode,
+  emojiLargeSize,
   emojiPath,
   emojiSize,
   enlargeEmoji = false,
+  shortname,
+  unicode,
 }: EmojiProps) {
   if (!shortname && !unicode) {
     throw new Error('Emoji component requires a `unicode` character or a `shortname`.');
@@ -57,11 +58,12 @@ export default function Emoji({
     styles.width = `${emojiSize}em`;
   }
 
+  // Handle large styles
   if (enlargeEmoji) {
     className.push('interweave__emoji--large');
 
     if (emojiSize) {
-      styles.width = `${emojiSize * LARGE_MULTIPLIER}em`;
+      styles.width = `${emojiLargeSize || (emojiSize * LARGE_MULTIPLIER)}em`;
     }
   }
 
@@ -69,7 +71,7 @@ export default function Emoji({
   let path = emojiPath || '{{hexcode}}';
 
   if (typeof path === 'function') {
-    path = path(emoji.hexcode, enlargeEmoji, emojiSize);
+    path = path(emoji.hexcode, enlargeEmoji, emojiSize, emojiLargeSize);
   } else {
     path = path.replace('{{hexcode}}', emoji.hexcode);
   }
@@ -89,6 +91,7 @@ export default function Emoji({
 }
 
 Emoji.propTypes = {
+  emojiLargeSize: PropTypes.number,
   emojiPath: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.func,
@@ -102,6 +105,7 @@ Emoji.propTypes = {
 Emoji.defaultProps = {
   shortname: '',
   unicode: '',
+  emojiLargeSize: 0,
   emojiPath: '{{hexcode}}',
   emojiSize: 0,
   enlargeEmoji: false,
