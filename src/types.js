@@ -136,7 +136,7 @@ export type UrlOptions = {
 export type EmojiProps = {
   emojiPath?: string | (hexcode: string, enlarge: boolean, size?: number) => string,
   emojiSize?: number,
-  enlargeEmoji?: boolean,
+  enlargeEmoji?: boolean | number,
   shortname: string,
   unicode: string,
 };
