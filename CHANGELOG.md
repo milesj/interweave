@@ -6,6 +6,7 @@
 * Updated `Matcher#onBeforeParse` and `Matcher#onAfterParse` to receives the entire props
   object as the 2nd argument.
 * Wrapped thrown errors in `__DEV__` environment checks.
+* Improvements to Flow definitions.
 
 # 5.2.0
 * Added a new `noHtmlExceptMatchers` prop.

@@ -6,7 +6,12 @@
 
 import React from 'react';
 
-import type { MatcherFactory, MatchResponse, ParsedNodes } from './types';
+import type {
+  MatcherFactory,
+  MatchResponse,
+  ReactNode,
+  ReactNodeList,
+} from './types';
 
 type MatchCallback = (matches: string[]) => ({ [key: string]: string | Object });
 
@@ -16,7 +21,7 @@ export default class Matcher<T: Object> {
   inverseName: string;
   factory: ?MatcherFactory;
 
-  constructor(name: string, options: T, factory: ?MatcherFactory = null) {
+  constructor(name: string, options: T, factory?: ?MatcherFactory = null) {
     if (__DEV__) {
       if (!name || name.toLowerCase() === 'html') {
         throw new Error(`The matcher name "${name}" is not allowed.`);
@@ -33,7 +38,7 @@ export default class Matcher<T: Object> {
    * Attempts to create a React element using a custom user provided factory,
    * or the default matcher factory.
    */
-  createElement(match: string, props: Object = {}): string | React.Element<*> {
+  createElement(match: string, props?: Object = {}): ReactNode<*> {
     let element = null;
 
     if (typeof this.factory === 'function') {
@@ -54,7 +59,7 @@ export default class Matcher<T: Object> {
   /**
    * Replace the match with a React element based on the matched token and optional props.
    */
-  replaceWith(match: string, props: Object = {}): string | React.Element<*> {
+  replaceWith(match: string, props?: Object = {}): ReactNode<*> {
     if (__DEV__) {
       throw new Error(`${this.constructor.name} must return a React element.`);
     }
@@ -111,7 +116,7 @@ export default class Matcher<T: Object> {
   /**
    * Callback triggered after parsing.
    */
-  onAfterParse(content: ParsedNodes, props: Object): ParsedNodes {
+  onAfterParse(content: ReactNodeList<*>, props: Object): ReactNodeList<*> {
     return content;
   }
 }

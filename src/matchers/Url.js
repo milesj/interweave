@@ -9,7 +9,7 @@ import Matcher from '../Matcher';
 import Url from '../components/Url';
 import { URL_PATTERN, TOP_LEVEL_TLDS } from '../constants';
 
-import type { MatchResponse, MatcherFactory, UrlProps, UrlOptions } from '../types';
+import type { MatchResponse, MatcherFactory, UrlProps, UrlOptions, ReactNode } from '../types';
 
 const URL_REGEX = new RegExp(URL_PATTERN, 'i');
 
@@ -24,7 +24,7 @@ export default class UrlMatcher extends Matcher<UrlOptions> {
     }, factory);
   }
 
-  replaceWith(match: string, props: Object = {}): string | React.Element<UrlProps> {
+  replaceWith(match: string, props: Object = {}): ReactNode<UrlProps> {
     if (this.options.validateTLD) {
       const { host } = props.urlParts;
       const validList = TOP_LEVEL_TLDS.concat(this.options.customTLDs);

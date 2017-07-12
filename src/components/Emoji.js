@@ -18,9 +18,9 @@ const LARGE_MULTIPLIER = 3;
 // http://git.emojione.com/demos/latest/sprites-svg.html
 // https://css-tricks.com/using-svg/
 export default function Emoji({
-  emojiLargeSize,
+  emojiLargeSize = 0,
   emojiPath,
-  emojiSize,
+  emojiSize = 0,
   enlargeEmoji = false,
   shortname,
   unicode,

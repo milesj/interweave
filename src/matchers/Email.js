@@ -9,12 +9,12 @@ import Matcher from '../Matcher';
 import Email from '../components/Email';
 import { EMAIL_PATTERN } from '../constants';
 
-import type { MatchResponse, EmailProps } from '../types';
+import type { MatchResponse, EmailProps, ReactNode } from '../types';
 
 const EMAIL_REGEX = new RegExp(EMAIL_PATTERN, 'i');
 
 export default class EmailMatcher extends Matcher<Object> {
-  replaceWith(match: string, props: Object = {}): string | React.Element<EmailProps> {
+  replaceWith(match: string, props: Object = {}): ReactNode<EmailProps> {
     return (
       <Email {...props}>{match}</Email>
     );

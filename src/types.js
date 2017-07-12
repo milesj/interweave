@@ -30,11 +30,15 @@ export type NodeConfig = {
   void?: boolean,
 };
 
+export type ReactNode<T> = string | React.Element<T>;
+
+export type ReactNodeList<T> = ReactNode<T>[];
+
 export type PrimitiveType = string | number | boolean;
 
 export type Attributes = { [key: string]: PrimitiveType };
 
-export type MatcherFactory = (match: string, props: Object) => React.Element<*>;
+export type MatcherFactory = (match: string, props: Object) => ReactNode<*>;
 
 export type MatchResponse = {
   match: string,
@@ -50,9 +54,7 @@ export type ParserProps = {
   [key: string]: mixed,
 };
 
-export type ParsedNodes = Array<string | React.Element<*>>;
-
-export type AfterParseCallback = (content: ParsedNodes, props: Object) => ParsedNodes;
+export type AfterParseCallback = (content: ReactNodeList<*>, props: Object) => ReactNodeList<*>;
 
 export type BeforeParseCallback = (content: string, props: Object) => string;
 
@@ -64,7 +66,7 @@ export type InterweaveProps = {
   disableLineBreaks: boolean,
   disableMatchers: boolean,
   disableWhitelist: boolean,
-  emptyContent: ?React.Element<*>,
+  emptyContent: ?ReactNode<*>,
   filters: Filter[],
   matchers: Matcher<*>[],
   noHtml: boolean,
@@ -78,7 +80,7 @@ export type MarkupProps = {
   content: string,
   disableLineBreaks: boolean,
   disableWhitelist: boolean,
-  emptyContent: ?React.Element<*>,
+  emptyContent: ?ReactNode<*>,
   noHtml: boolean,
   noHtmlExceptMatchers: boolean,
   tagName: string,
@@ -111,7 +113,7 @@ export type HashtagProps = {
   children: string,
   encodeHashtag?: boolean,
   hashtagName: string,
-  hashtagUrl?: string | (string) => string,
+  hashtagUrl?: string | (hashtag: string) => string,
   preserveHash?: boolean,
 };
 
@@ -136,7 +138,7 @@ export type UrlOptions = {
 export type EmojiProps = {
   emojiLargeSize?: number,
   emojiPath?: string |
-    (hexcode: string, enlarge: boolean, size?: number, largeSize?: number) => string,
+    (hexcode: string, enlarge: boolean, size: number, largeSize: number) => string,
   emojiSize?: number,
   enlargeEmoji?: boolean,
   shortname: string,

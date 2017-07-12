@@ -14,7 +14,8 @@ import Parser from './Parser';
 import Element from './components/Element';
 
 import type {
-  ParsedNodes,
+  ReactNode,
+  ReactNodeList,
   InterweaveProps,
   AfterParseCallback,
   BeforeParseCallback,
@@ -59,7 +60,7 @@ export default class Interweave extends React.Component {
   /**
    * Parse the markup and apply hooks.
    */
-  parseMarkup(): ParsedNodes | ?React.Element<*> {
+  parseMarkup(): ReactNodeList<*> | ?ReactNode<*> {
     const {
       tagName, // eslint-disable-line
       content,
@@ -102,7 +103,7 @@ export default class Interweave extends React.Component {
     markup = new Parser(markup, props, allMatchers, allFilters).parse();
 
     // Trigger after callbacks
-    markup = afterCallbacks.reduce((nodes: ParsedNodes, callback: AfterParseCallback) => {
+    markup = afterCallbacks.reduce((nodes: ReactNodeList<*>, callback: AfterParseCallback) => {
       const nextNodes = callback(nodes, this.props);
 
       if (__DEV__) {
