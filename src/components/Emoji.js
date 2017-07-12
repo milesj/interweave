@@ -25,8 +25,10 @@ export default function Emoji({
   shortname,
   unicode,
 }: EmojiProps) {
-  if (!shortname && !unicode) {
-    throw new Error('Emoji component requires a `unicode` character or a `shortname`.');
+  if (__DEV__) {
+    if (!shortname && !unicode) {
+      throw new Error('Emoji component requires a `unicode` character or a `shortname`.');
+    }
   }
 
   // Return the invalid value instead of throwing errors,

@@ -10,8 +10,10 @@ export default class Filter {
   attribute: string;
 
   constructor(attribute: string) {
-    if (!attribute || !ATTRIBUTES[attribute]) {
-      throw new Error(`Attribute "${attribute}" is not supported.`);
+    if (__DEV__) {
+      if (!attribute || !ATTRIBUTES[attribute]) {
+        throw new Error(`Attribute "${attribute}" is not supported.`);
+      }
     }
 
     this.attribute = attribute;
@@ -22,6 +24,10 @@ export default class Filter {
    * Can return an empty value to omit the attribute.
    */
   filter(value: string): string {
-    throw new Error(`${this.constructor.name} must define a filter.`);
+    if (__DEV__) {
+      throw new Error(`${this.constructor.name} must define a filter.`);
+    }
+
+    return value;
   }
 }

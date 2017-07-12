@@ -54,7 +54,9 @@ export default class Parser {
     if (!markup) {
       markup = ''; // eslint-disable-line
     } else if (typeof markup !== 'string') {
-      throw new TypeError('Interweave parser requires a valid string.');
+      if (__DEV__) {
+        throw new TypeError('Interweave parser requires a valid string.');
+      }
     }
 
     this.props = props;
@@ -243,7 +245,9 @@ export default class Parser {
     const doc = document.implementation.createHTMLDocument('Interweave');
 
     if (INVALID_ROOTS.indexOf(markup.substr(1, ROOT_COMPARE_LENGTH).toUpperCase()) >= 0) {
-      throw new Error('HTML documents as Interweave content are not supported.');
+      if (__DEV__) {
+        throw new Error('HTML documents as Interweave content are not supported.');
+      }
 
     } else {
       // $FlowIgnore Isn't null

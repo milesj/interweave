@@ -89,8 +89,10 @@ export default class Interweave extends React.Component {
     markup = beforeCallbacks.reduce((string: string, callback: BeforeParseCallback) => {
       const nextString = callback(string);
 
-      if (typeof nextString !== 'string') {
-        throw new TypeError('Interweave `onBeforeParse` must return a valid HTML string.');
+      if (__DEV__) {
+        if (typeof nextString !== 'string') {
+          throw new TypeError('Interweave `onBeforeParse` must return a valid HTML string.');
+        }
       }
 
       return nextString;
@@ -103,8 +105,10 @@ export default class Interweave extends React.Component {
     markup = afterCallbacks.reduce((nodes: ParsedNodes, callback: AfterParseCallback) => {
       const nextNodes = callback(nodes);
 
-      if (!Array.isArray(nextNodes)) {
-        throw new TypeError('Interweave `onAfterParse` must return an array of strings and React elements.');
+      if (__DEV__) {
+        if (!Array.isArray(nextNodes)) {
+          throw new TypeError('Interweave `onAfterParse` must return an array of strings and React elements.');
+        }
       }
 
       return nextNodes;

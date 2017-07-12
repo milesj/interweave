@@ -17,8 +17,10 @@ export default class Matcher<T: Object> {
   factory: ?MatcherFactory;
 
   constructor(name: string, options: T, factory: ?MatcherFactory = null) {
-    if (!name || name.toLowerCase() === 'html') {
-      throw new Error(`The matcher name "${name}" is not allowed.`);
+    if (__DEV__) {
+      if (!name || name.toLowerCase() === 'html') {
+        throw new Error(`The matcher name "${name}" is not allowed.`);
+      }
     }
 
     this.options = { ...(options || {}) };
@@ -31,7 +33,7 @@ export default class Matcher<T: Object> {
    * Attempts to create a React element using a custom user provided factory,
    * or the default matcher factory.
    */
-  createElement(match: string, props: Object = {}): React.Element<*> {
+  createElement(match: string, props: Object = {}): string | React.Element<*> {
     let element = null;
 
     if (typeof this.factory === 'function') {
@@ -40,8 +42,10 @@ export default class Matcher<T: Object> {
       element = this.replaceWith(match, props);
     }
 
-    if (typeof element !== 'string' && !React.isValidElement(element)) {
-      throw new Error(`Invalid React element created from ${this.constructor.name}.`);
+    if (__DEV__) {
+      if (typeof element !== 'string' && !React.isValidElement(element)) {
+        throw new Error(`Invalid React element created from ${this.constructor.name}.`);
+      }
     }
 
     return element;
@@ -50,15 +54,23 @@ export default class Matcher<T: Object> {
   /**
    * Replace the match with a React element based on the matched token and optional props.
    */
-  replaceWith(match: string, props: Object = {}): React.Element<*> {
-    throw new Error(`${this.constructor.name} must return a React element.`);
+  replaceWith(match: string, props: Object = {}): string | React.Element<*> {
+    if (__DEV__) {
+      throw new Error(`${this.constructor.name} must return a React element.`);
+    }
+
+    return match;
   }
 
   /**
    * Defines the HTML tag name that the resulting React element will be.
    */
   asTag(): string {
-    throw new Error(`${this.constructor.name} must define the HTML tag name it will render.`);
+    if (__DEV__) {
+      throw new Error(`${this.constructor.name} must define the HTML tag name it will render.`);
+    }
+
+    return '';
   }
 
   /**
@@ -67,7 +79,9 @@ export default class Matcher<T: Object> {
    * and any optional props to pass along.
    */
   match(string: string): ?MatchResponse {
-    throw new Error(`${this.constructor.name} must define a pattern matcher.`);
+    if (__DEV__) {
+      throw new Error(`${this.constructor.name} must define a pattern matcher.`);
+    }
   }
 
   /**
