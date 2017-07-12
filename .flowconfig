@@ -7,7 +7,6 @@
 .*\.test\.js
 
 [libs]
-./flow
 ./interweave.js.flow
 ./node_modules/emoji-database/emoji-database.js.flow
 
