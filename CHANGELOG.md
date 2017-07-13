@@ -1,3 +1,8 @@
+# 5.4.0
+* Updated `emoji-database` to 0.9.
+* Updated `enlargeThreshold` to ignore whitespace when counting.
+* Fixed a bug in which emoji counts below the `enlargeThreshold` were not being enlarged.
+
 # 5.3.0
 * Added a new `emojiLargeSize` prop, which can be used to customize the size of enlarged emoji.
   * Also passed as the 4th argument to the `emojiPath` function.

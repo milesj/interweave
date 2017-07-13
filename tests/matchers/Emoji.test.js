@@ -177,15 +177,40 @@ describe('matchers/Emoji', () => {
       ]);
     });
 
-    it('doesnt enlarge when too few <Emoji/>', () => {
+    it('enlarge when <Emoji/> count is below `enlargeThreshold`', () => {
       matcher.options.enlargeThreshold = 3;
 
-      const nodes = [
+      expect(matcher.onAfterParse([
         <Emoji key={0} shortname=":cat:" />,
-        <Emoji key={2} shortname=":man:" />,
-      ];
+        <Emoji key={1} shortname=":man:" />,
+      ])).toEqual([
+        <Emoji key={0} shortname=":cat:" enlargeEmoji />,
+        <Emoji key={1} shortname=":man:" enlargeEmoji />,
+      ]);
 
-      expect(matcher.onAfterParse(nodes)).toEqual(nodes);
+      expect(matcher.onAfterParse([
+        <Emoji key={0} shortname=":cat:" />,
+      ])).toEqual([
+        <Emoji key={0} shortname=":cat:" enlargeEmoji />,
+      ]);
+    });
+
+    it('doesnt count whitespace in the threshold', () => {
+      matcher.options.enlargeThreshold = 3;
+
+      expect(matcher.onAfterParse([
+        <Emoji key={0} shortname=":cat:" />,
+        ' ',
+        <Emoji key={1} shortname=":dog:" />,
+        '\n',
+        <Emoji key={2} shortname=":man:" />,
+      ])).toEqual([
+        <Emoji key={0} shortname=":cat:" enlargeEmoji />,
+        ' ',
+        <Emoji key={1} shortname=":dog:" enlargeEmoji />,
+        '\n',
+        <Emoji key={2} shortname=":man:" enlargeEmoji />,
+      ]);
     });
 
     it('doesnt enlarge when too many <Emoji/>', () => {

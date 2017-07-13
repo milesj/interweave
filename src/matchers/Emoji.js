@@ -95,27 +95,61 @@ export default class EmojiMatcher extends Matcher<EmojiOptions> {
    * When a single `Emoji` is the only content, enlarge it!
    */
   onAfterParse(content: ReactNodeList<*>, props: Object): ReactNodeList<*> {
+    if (content.length === 0) {
+      return content;
+    }
+
     const { enlargeThreshold } = this.options;
+    let valid = false;
+    let count = 0;
 
-    if (content.length !== enlargeThreshold) {
+    // Use a for-loop, as it's much cleaner than some()
+    for (let i = 0, item = null; i < content.length; i += 1) {
+      item = content[i];
+
+      if (typeof item === 'string') {
+        // Allow whitespace but disallow strings
+        if (!item.match(/^\s+$/)) {
+          valid = false;
+          break;
+        }
+
+      } else if (React.isValidElement(item)) {
+        // Only count towards emojis
+        if (item.type === Emoji) {
+          count += 1;
+          valid = true;
+
+          if (count > enlargeThreshold) {
+            valid = false;
+            break;
+          }
+
+        // Abort early for non-emoji components
+        } else {
+          valid = false;
+          break;
+        }
+
+      } else {
+        valid = false;
+        break;
+      }
+    }
+
+    if (!valid) {
       return content;
     }
 
-    const isAllEmojis = content.every(item => (
-      typeof item !== 'string' && React.isValidElement(item) && item.type === Emoji
-    ));
+    return content.map((item) => {
+      if (typeof item === 'string') {
+        return item;
+      }
 
-    if (!isAllEmojis) {
-      return content;
-    }
-
-    return content.map(item => (
-      // $FlowIgnore We check above
-      React.cloneElement(item, {
-        // $FlowIgnore Same here
+      return React.cloneElement(item, {
         ...item.props,
         enlargeEmoji: true,
-      })
-    ));
+      });
+    });
   }
 }
