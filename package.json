@@ -59,7 +59,7 @@
     "react": "^15.0.0"
   },
   "devDependencies": {
-    "@milesj/build-tool-config": "^0.15.0"
+    "@milesj/build-tool-config": "^0.16.0"
   },
   "babel": {
     "extends": "./node_modules/@milesj/build-tool-config/babel.json5"

@@ -3,6 +3,7 @@ flow/
 flow-typed/
 tests/
 .babelrc
+.eslintcache
 .eslintignore
 .eslintrc
 .flowconfig
