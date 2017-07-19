@@ -1,6 +1,7 @@
 /* eslint-disable comma-dangle */
 
 import React from 'react';
+import ReactDOMServer from 'react-dom/server';
 import { shallow } from 'enzyme';
 import Interweave from '../src/Interweave';
 import { Element, Email, Emoji, Hashtag, Url } from '../src/components';
@@ -518,6 +519,68 @@ Curabitur lectus odio, tempus quis velit vitae, cursus sagittis nulla. Maecenas 
           ]}
         </Element>,
       ]);
+    });
+  });
+
+  describe('server side rendering', () => {
+    it('renders basic HTML', () => {
+      const actual = ReactDOMServer.renderToStaticMarkup(
+        <Interweave content="This is <b>bold</b>." />
+      );
+
+      expect(actual).toBe('<span class="interweave">This is <b class="interweave">bold</b>.</span>');
+    });
+
+    it('strips HTML', () => {
+      const actual = ReactDOMServer.renderToStaticMarkup(
+        <Interweave content="This is <b>bold</b>." noHtml />
+      );
+
+      expect(actual).toBe('<span class="interweave interweave--no-html">This is bold.</span>');
+    });
+
+    it('supports filters', () => {
+      const actual = ReactDOMServer.renderToStaticMarkup(
+        <Interweave
+          filters={[new HrefFilter()]}
+          content={'Foo <a href="foo.com">Bar</a> Baz'}
+        />
+      );
+
+      expect(actual).toBe('<span class="interweave">Foo <a href="bar.net" class="interweave">Bar</a> Baz</span>');
+    });
+
+    it('supports matchers', () => {
+      const actual = ReactDOMServer.renderToStaticMarkup(
+        <Interweave
+          matchers={[new CodeTagMatcher('b', '1')]}
+          content="Foo [b] Bar Baz"
+        />
+      );
+
+      expect(actual).toBe('<span class="interweave">Foo <span class="interweave">B</span> Bar Baz</span>');
+    });
+
+    it('supports complex content', () => {
+      const actual = ReactDOMServer.renderToStaticMarkup(
+        <Interweave
+          tagName="div"
+          matchers={[
+            new EmailMatcher('email'),
+            new EmojiMatcher('emoji', { convertShortname: true, convertUnicode: true }),
+            new HashtagMatcher('hashtag'),
+            new IpMatcher('ip'),
+            new UrlMatcher('url'),
+          ]}
+          content={`Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec massa lorem, mollis non commodo quis, ultricies at elit. email@domain.com. Aliquam a arcu porttitor, aliquam eros sed, convallis massa. Nunc vitae vehicula quam, in feugiat ligula. #interweave Donec eu sem non nibh condimentum luctus. Vivamus pharetra feugiat blandit. Vestibulum neque velit, semper :japanese_castle: id vestibulum id, viverra a felis. Integer convallis in orci nec bibendum. Ut consequat posuere metus, www.domain.com.
+
+Curabitur lectus odio, tempus quis velit vitae, cursus sagittis nulla. Maecenas sem nulla, tempor nec risus nec, ultricies ultricies magna. https://127.0.0.1/foo Nulla malesuada lacinia libero non mollis. Curabitur id lacus id dolor vestibulum ornare quis a nisi (http://domain.com/some/path?with=query). Pellentesque ac finibus mauris. Sed eu luctus diam. Quisque porta lectus in turpis imperdiet dapibus.
+
+#blessed #interweave #milesj`}
+        />
+      );
+
+      expect(actual).toBe('<div class="interweave">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec massa lorem, mollis non commodo quis, ultricies at elit. <a href="mailto:email@domain.com" class="interweave__link" rel="noopener noreferrer">email@domain.com</a>. Aliquam a arcu porttitor, aliquam eros sed, convallis massa. Nunc vitae vehicula quam, in feugiat ligula. <a href="interweave" class="interweave__link" rel="noopener noreferrer">#interweave</a> Donec eu sem non nibh condimentum luctus. Vivamus pharetra feugiat blandit. Vestibulum neque velit, semper <img src="1F3EF" alt="🏯" class="interweave__emoji" data-unicode="🏯" data-hexcode="1F3EF" data-codepoint="127983" data-shortname=":japanese_castle:"/> id vestibulum id, viverra a felis. Integer convallis in orci nec bibendum. Ut consequat posuere metus, <a href="http://www.domain.com" class="interweave__link" rel="noopener noreferrer">www.domain.com</a>.<br/><br/>Curabitur lectus odio, tempus quis velit vitae, cursus sagittis nulla. Maecenas sem nulla, tempor nec risus nec, ultricies ultricies magna. <a href="https://127.0.0.1/foo" class="interweave__link" rel="noopener noreferrer">https://127.0.0.1/foo</a> Nulla malesuada lacinia libero non mollis. Curabitur id lacus id dolor vestibulum ornare quis a nisi (<a href="http://domain.com/some/path?with=query" class="interweave__link" rel="noopener noreferrer">http://domain.com/some/path?with=query</a>). Pellentesque ac finibus mauris. Sed eu luctus diam. Quisque porta lectus in turpis imperdiet dapibus.<br/><br/><a href="blessed" class="interweave__link" rel="noopener noreferrer">#blessed</a> <a href="interweave" class="interweave__link" rel="noopener noreferrer">#interweave</a> <a href="milesj" class="interweave__link" rel="noopener noreferrer">#milesj</a></div>');
     });
   });
 });

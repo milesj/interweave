@@ -112,6 +112,7 @@ and `noHtmlExceptMatchers` props mentioned previously.
   * [By-passing the Whitelist](#by-passing-the-whitelist)
   * [Disabling HTML](#disabling-html)
 * [Global Configuration](#global-configuration)
+* [Server-side Rendering](#server-side-rendering)
 
 ### Matchers
 
@@ -704,7 +705,32 @@ Interweave.propTypes = {
 };
 ```
 
+### Server-side Rendering
+
+Interweave utilizes the DOM to parse and validate HTML, and as such, is not server-side
+renderable out of the box. However, this is easily mitigated with [JSDOM][jsdom].
+To begin, install JSDOM.
+
+```
+npm install jsdom --save-dev
+// Or
+yarn add jsdom --dev
+```
+
+Add instantiate an instance, configured to your liking. Once this instance is configured,
+you can then render your React components without much issue (hopefully).
+
+```javascript
+import React from 'react';
+import ReactDOMServer from 'react-dom/server';
+import JSDOM from 'jsdom';
+
+global.window = new JSDOM('', { url: 'http://localhost' });
+global.document = global.window.document;
+```
+
 [dangerhtml]: https://facebook.github.io/react/tips/dangerously-set-inner-html.html
 [domhtml]: https://developer.mozilla.org/en-US/docs/Web/API/DOMImplementation/createHTMLDocument
 [tagwhitelist]: https://github.com/milesj/interweave/blob/master/src/constants.js#L88
 [attrwhitelist]: https://github.com/milesj/interweave/blob/master/src/constants.js#L381
+[jsdom]: https://github.com/tmpvar/jsdom
