@@ -113,7 +113,6 @@ export default class EmojiMatcher extends Matcher<EmojiOptions> {
           valid = false;
           break;
         }
-
       } else if (React.isValidElement(item)) {
         // Only count towards emojis
         if (item.type === Emoji) {
@@ -130,7 +129,6 @@ export default class EmojiMatcher extends Matcher<EmojiOptions> {
           valid = false;
           break;
         }
-
       } else {
         valid = false;
         break;

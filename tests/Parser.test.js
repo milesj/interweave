@@ -350,7 +350,6 @@ describe('Parser', () => {
       element.setAttribute('src', 'xss:confirm();');
       expect(instance.extractAttributes(element)).toBe(null);
       /* eslint-enable no-script-url */
-
     });
 
     it('camel cases specific attribute names to React attribute names', () => {

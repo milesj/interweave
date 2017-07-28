@@ -248,7 +248,6 @@ export default class Parser {
       if (__DEV__) {
         throw new Error('HTML documents as Interweave content are not supported.');
       }
-
     } else {
       // $FlowIgnore Isn't null
       doc.body.innerHTML = this.convertLineBreaks(markup);

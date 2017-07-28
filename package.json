@@ -51,21 +51,24 @@
   },
   "homepage": "https://github.com/milesj/interweave#readme",
   "dependencies": {
-    "babel-runtime": "^6.23.0",
-    "emoji-database": "^0.9.0",
+    "babel-runtime": "^6.25.0",
+    "emoji-database": "^0.10.0",
     "prop-types": "^15.5.10"
   },
   "peerDependencies": {
     "react": "^15.0.0"
   },
   "devDependencies": {
-    "@milesj/build-tool-config": "^0.16.0"
+    "@milesj/build-tool-config": "^0.17.2"
   },
   "babel": {
     "extends": "./node_modules/@milesj/build-tool-config/babel.json5"
   },
   "eslintConfig": {
-    "extends": "./node_modules/@milesj/build-tool-config/eslint.json5"
+    "extends": "./node_modules/@milesj/build-tool-config/eslint.json5",
+    "rules": {
+      "indent": "off"
+    }
   },
   "jest": {
     "preset": "@milesj/build-tool-config"
