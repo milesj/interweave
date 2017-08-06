@@ -5,15 +5,15 @@ import Emoji from '../../src/components/Emoji';
 import { VALID_EMOJIS } from '../mocks';
 
 describe('components/Emoji', () => {
-  const [[hexcode, unicode, shortname]] = VALID_EMOJIS;
+  const [[hexcode, unicode, shortcode]] = VALID_EMOJIS;
 
-  it('errors if no shortname or unicode', () => {
+  it('errors if no shortcode or unicode', () => {
     expect(() => shallow(<Emoji />))
-      .toThrowError('Emoji component requires a `unicode` character or a `shortname`.');
+      .toThrowError('Emoji component requires a `unicode` character or a `shortcode`.');
   });
 
-  it('returns value for invalid shortname', () => {
-    const wrapper = shallow(<Emoji shortname="fake" />);
+  it('returns value for invalid shortcode', () => {
+    const wrapper = shallow(<Emoji shortcode="fake" />);
 
     expect(wrapper.prop('children')).toBe('fake');
   });
@@ -24,13 +24,13 @@ describe('components/Emoji', () => {
     expect(wrapper.prop('children')).toBe('fake');
   });
 
-  it('renders with only the shortname', () => {
-    const wrapper = shallow(<Emoji shortname={shortname} />);
+  it('renders with only the shortcode', () => {
+    const wrapper = shallow(<Emoji shortcode={shortcode} />);
 
     expect(wrapper.prop('data-unicode')).toBe(unicode);
     expect(wrapper.prop('data-hexcode')).toBe(hexcode);
     expect(wrapper.prop('data-codepoint')).toBe(fromHexcodeToCodepoint(hexcode).join('-'));
-    expect(wrapper.prop('data-shortname')).toBe(shortname);
+    expect(wrapper.prop('data-shortcode')).toBe(shortcode);
   });
 
   it('renders with only the unicode', () => {
@@ -39,22 +39,22 @@ describe('components/Emoji', () => {
     expect(wrapper.prop('data-unicode')).toBe(unicode);
     expect(wrapper.prop('data-hexcode')).toBe(hexcode);
     expect(wrapper.prop('data-codepoint')).toBe(fromHexcodeToCodepoint(hexcode).join('-'));
-    expect(wrapper.prop('data-shortname')).toBe(shortname);
+    expect(wrapper.prop('data-shortcode')).toBe(shortcode);
   });
 
   it('renders with both', () => {
-    const wrapper = shallow(<Emoji shortname={shortname} unicode={unicode} />);
+    const wrapper = shallow(<Emoji shortcode={shortcode} unicode={unicode} />);
 
     expect(wrapper.prop('data-unicode')).toBe(unicode);
     expect(wrapper.prop('data-hexcode')).toBe(hexcode);
     expect(wrapper.prop('data-codepoint')).toBe(fromHexcodeToCodepoint(hexcode).join('-'));
-    expect(wrapper.prop('data-shortname')).toBe(shortname);
+    expect(wrapper.prop('data-shortcode')).toBe(shortcode);
   });
 
   it('can define the path', () => {
     const wrapper = shallow((
       <Emoji
-        shortname={shortname}
+        shortcode={shortcode}
         unicode={unicode}
         emojiPath="http://foo.com/path/to/{{hexcode}}.svg"
       />
@@ -67,7 +67,7 @@ describe('components/Emoji', () => {
   it('can define the path with a function', () => {
     const wrapper = shallow((
       <Emoji
-        shortname={shortname}
+        shortcode={shortcode}
         unicode={unicode}
         emojiPath={hex => `http://foo.com/path/to/${hex.toLowerCase()}.svg`}
       />
@@ -80,7 +80,7 @@ describe('components/Emoji', () => {
   it('path function receives enlarge and size', () => {
     const wrapper = shallow((
       <Emoji
-        shortname={shortname}
+        shortcode={shortcode}
         unicode={unicode}
         emojiPath={(hex, large, size) => (
           `http://foo.com/path/to/${large ? (size * 2) : size}/${hex.toLowerCase()}.svg`
@@ -94,7 +94,7 @@ describe('components/Emoji', () => {
   });
 
   it('adds class names', () => {
-    const wrapper = shallow(<Emoji shortname={shortname} unicode={unicode} />);
+    const wrapper = shallow(<Emoji shortcode={shortcode} unicode={unicode} />);
 
     expect(wrapper.prop('className')).toBe('interweave__emoji');
 
@@ -106,7 +106,7 @@ describe('components/Emoji', () => {
   });
 
   it('sets styles when size is defined', () => {
-    const wrapper = shallow(<Emoji shortname={shortname} unicode={unicode} />);
+    const wrapper = shallow(<Emoji shortcode={shortcode} unicode={unicode} />);
 
     expect(wrapper.prop('style')).toEqual({});
 
@@ -135,7 +135,7 @@ describe('components/Emoji', () => {
   it('can customize large size', () => {
     const wrapper = shallow(
       <Emoji
-        shortname={shortname}
+        shortcode={shortcode}
         unicode={unicode}
         emojiSize={2}
         emojiLargeSize={5}

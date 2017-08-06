@@ -47,8 +47,8 @@ Help!`;
       <Interweave
         {...emojiProps}
         tagName="div"
-        matchers={[new EmojiMatcher('emoji', { convertShortname: true })]}
-        content="This will convert :cat: :dog: emoji shortnames :man: to PNGs."
+        matchers={[new EmojiMatcher('emoji', { convertShortcode: true })]}
+        content="This will convert :cat: :dog: emoji shortcodes :man: to PNGs."
       />
 
       <Interweave
@@ -66,7 +66,7 @@ Help!`;
       <Interweave
         {...emojiProps}
         tagName="div"
-        matchers={[new EmojiMatcher('emoji', { convertUnicode: true, convertShortname: true })]}
+        matchers={[new EmojiMatcher('emoji', { convertUnicode: true, convertShortcode: true })]}
         content={'This will convert 🐱 \uD83D\uDC36 all 3 emoji types at once :man: to PNGs, and increase the size.'}
         emojiSize={2}
       />
@@ -74,14 +74,14 @@ Help!`;
       <Interweave
         {...emojiProps}
         tagName="div"
-        matchers={[new EmojiMatcher('emoji', { convertUnicode: true, convertShortname: true })]}
+        matchers={[new EmojiMatcher('emoji', { convertUnicode: true, convertShortcode: true })]}
         content={'This will convert surrogate pairs 👨‍👩‍👧‍👦 :family_mwgb: \uD83D\uDC68\u200D\uD83D\uDC69\u200D\uD83D\uDC67\u200D\uD83D\uDC66 to PNGs.'}
       />
 
       <Interweave
         tagName="div"
-        matchers={[new EmojiMatcher('emoji', { convertShortname: true, renderUnicode: true })]}
-        content="This will convert :cat: :dog: emoji shortnames :man: to unicode literals."
+        matchers={[new EmojiMatcher('emoji', { convertShortcode: true, renderUnicode: true })]}
+        content="This will convert :cat: :dog: emoji shortcodes :man: to unicode literals."
       />
 
       <Interweave
@@ -92,7 +92,7 @@ Help!`;
 
       <Interweave
         tagName="div"
-        matchers={[new EmojiMatcher('emoji', { convertUnicode: true, convertShortname: true, renderUnicode: true })]}
+        matchers={[new EmojiMatcher('emoji', { convertUnicode: true, convertShortcode: true, renderUnicode: true })]}
         content={'This will convert surrogate pairs 👨‍👩‍👧‍👦 :family_mwgb: \uD83D\uDC68\u200D\uD83D\uDC69\u200D\uD83D\uDC67\u200D\uD83D\uDC66 to unicode literals.'}
       />
 
@@ -115,7 +115,7 @@ Help!`;
       <Interweave
         tagName="div"
         matchers={[new EmojiMatcher('emoji')]}
-        content="This will not convert :cat: :dog: emoji shortnames :man:."
+        content="This will not convert :cat: :dog: emoji shortcodes :man:."
       />
 
       <Interweave

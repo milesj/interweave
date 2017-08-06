@@ -1519,13 +1519,17 @@ emoji-regex@^6.1.0:
   version "6.4.2"
   resolved "https://registry.yarnpkg.com/emoji-regex/-/emoji-regex-6.4.2.tgz#a30b6fee353d406d96cfb9fa765bdc82897eff6e"
 
-emojibase-regex@^1.0.0-alpha:
-  version "1.0.0-alpha"
-  resolved "https://registry.yarnpkg.com/emojibase-regex/-/emojibase-regex-1.0.0-alpha.tgz#713da525cef0f4097e36ed1b8a0731be5b8e2df0"
+emojibase-data@^1.0.0-beta:
+  version "1.0.0-beta"
+  resolved "https://registry.yarnpkg.com/emojibase-data/-/emojibase-data-1.0.0-beta.tgz#8e72c65ac7b886039a05a01b7538f597f338d050"
 
-emojibase@^1.0.0-alpha:
-  version "1.0.0-alpha"
-  resolved "https://registry.yarnpkg.com/emojibase/-/emojibase-1.0.0-alpha.tgz#de778484080448116231ea4c6aa3d5040bfce068"
+emojibase-regex@^1.0.0-beta:
+  version "1.0.0-beta"
+  resolved "https://registry.yarnpkg.com/emojibase-regex/-/emojibase-regex-1.0.0-beta.tgz#a2e7ec444e0134f48f3ed6a04b5cce4450200a48"
+
+emojibase@^1.0.0-beta:
+  version "1.0.0-beta"
+  resolved "https://registry.yarnpkg.com/emojibase/-/emojibase-1.0.0-beta.tgz#0539b2a1872c5ba6f61b79a8bab8910048e622e8"
 
 encoding@^0.1.11:
   version "0.1.12"

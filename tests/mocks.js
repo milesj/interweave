@@ -53,15 +53,15 @@ export function createExpectedTokenLocations(value, factory, flatten = false) {
 }
 
 export const VALID_EMOJIS = [
-  ['1F468-1F469-1F467-1F466', '👨‍👩‍👧‍👦', ':family_mwgb:'],
+  ['1F468-200D-1F469-200D-1F467-200D-1F466', '👨‍👩‍👧‍👦', ':family_mwgb:'],
   ['1F1FA-1F1F8', '🇺🇸', ':flag_us:'],
   ['1F621', '😡', ':rage:'],
-  ['1F63A', '😺', ':smiley_cat:'],
+  ['1F63A', '😺', ':smiling_cat:'],
   ['1F3EF', '🏯', ':japanese_castle:'],
-  ['1F554', '🕔', ':clock5:'],
-  ['1F469-2764-1F468', '👩‍❤️‍👨', ':couple_with_heart_woman_man:'],
+  ['1F681', '🚁', ':helicopter:'],
+  ['1F469-200D-2764-FE0F-200D-1F468', '👩‍❤️‍👨', ':couple_mw:'],
   ['1F1E7-1F1F4', '🇧🇴', ':flag_bo:'],
-  ['1F468-1F468-1F466', '👨‍👨‍👦', ':family_mmb:'],
+  ['1F468-200D-1F468-200D-1F466', '👨‍👨‍👦', ':family_mmb:'],
   ['1F3C0', '🏀', ':basketball:'],
 ];
 

@@ -25,6 +25,7 @@ let loaded = false;
 export default class Emoji extends React.Component {
   // eslint-disable-next-line react/sort-comp
   props: EmojiProps;
+  mounted: boolean;
 
   static propTypes = {
     emojiLargeSize: PropTypes.number,
@@ -50,6 +51,8 @@ export default class Emoji extends React.Component {
   };
 
   componentWillMount() {
+    this.mounted = true;
+
     if (loaded) {
       return;
     }
@@ -60,14 +63,21 @@ export default class Emoji extends React.Component {
     loadEmojiData(this.props.locale || 'en')
       .then(() => {
         loaded = true;
-        this.forceUpdate();
+
+        if (this.mounted) {
+          this.forceUpdate();
+        }
       })
       .catch((error) => {
         if (__DEV__) {
           // eslint-disable-next-line no-console
-          console.error('Failed to load emoji data from CDN:', error.message);
+          console.error('Failed to load emoji data from CDN:', error);
         }
       });
+  }
+
+  componentWillUnmount() {
+    this.mounted = false;
   }
 
   render() {
