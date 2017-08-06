@@ -8,7 +8,8 @@
 
 [libs]
 ./interweave.js.flow
-./node_modules/emoji-database/emoji-database.js.flow
+./node_modules/emojibase/emojibase.js.flow
+./node_modules/emojibase-regex/emojibase-regex.js.flow
 
 [options]
 emoji=true

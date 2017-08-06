@@ -42,7 +42,7 @@ export type MatcherFactory = (match: string, props: Object) => ReactNode<*>;
 
 export type MatchResponse = {
   match: string,
-  shortname?: string,
+  shortcode?: string,
   unicode?: string,
   [key: string]: mixed,
 };
@@ -141,12 +141,13 @@ export type EmojiProps = {
     (hexcode: string, enlarge: boolean, size: number, largeSize: number) => string,
   emojiSize?: number,
   enlargeEmoji?: boolean,
-  shortname: string,
+  locale?: string,
+  shortcode: string,
   unicode: string,
 };
 
 export type EmojiOptions = {
-  convertShortname: boolean,
+  convertShortcode: boolean,
   convertUnicode: boolean,
   enlargeThreshold: number,
   renderUnicode: boolean,

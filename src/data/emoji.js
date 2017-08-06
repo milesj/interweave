@@ -4,48 +4,58 @@
  * @flow
  */
 
-import { fromUnicodeToHex, fromHexToCodepoint } from 'emoji-database';
-import json from 'emoji-database/data/extra/shortname-to-unicode.json';
-import EMOJI_REGEX from 'emoji-database/regex';
-import EMOJI_SHORTNAME_REGEX from 'emoji-database/regex/shortname';
+import { fetchFromCDN } from 'emojibase';
+import { TEXT } from 'emojibase/lib/constants';
+
+import type { Emoji } from 'emojibase';
 
 type StringMap = { [key: string]: string };
-type EmojiMap = {
-  [shortname: string]: {
-    codepoint: number[],
-    hexcode: string,
-    unicode: string,
-  },
-};
+type EmojiMap = { [hexcode: string]: Emoji };
 
-const data: StringMap = (typeof json === 'string') ? JSON.parse(json) : json;
-const emoji: EmojiMap = {};
+export const UNICODE_TO_SHORTCODE: StringMap = {};
+export const SHORTCODE_TO_UNICODE: StringMap = {};
+export const EMOJIS: EmojiMap = {};
 
-const UNICODE_TO_SHORTNAME: StringMap = {};
-const SHORTNAME_TO_UNICODE: StringMap = {};
+export function parseEmojiData(data: Emoji[]): EmojiMap {
+  data.forEach((emoji) => {
+    const { hexcode, shortcodes } = emoji;
 
-// Extract the shortname, codepoint, and unicode
-// https://r12a.github.io/apps/conversion/
-Object.keys(data).forEach((name: string) => {
-  const shortname = `:${name}:`;
-  const unicode = data[name];
-  const hexcode = fromUnicodeToHex(unicode);
-  const codepoint = fromHexToCodepoint(hexcode);
+    // Only support the default presentation
+    let unicode = emoji.emoji;
 
-  UNICODE_TO_SHORTNAME[unicode] = shortname;
-  SHORTNAME_TO_UNICODE[shortname] = unicode;
+    if (emoji.text && emoji.type === TEXT) {
+      unicode = emoji.text;
+    }
 
-  emoji[shortname] = {
-    codepoint,
-    hexcode,
-    unicode,
-  };
-});
+    // Only support the primary shortcode
+    let shortcode = '';
 
-export {
-  EMOJI_REGEX,
-  EMOJI_SHORTNAME_REGEX,
-  UNICODE_TO_SHORTNAME,
-  SHORTNAME_TO_UNICODE,
-};
-export default emoji;
+    if (shortcodes && shortcodes.length > 0) {
+      shortcode = `:${shortcodes[0]}:`;
+
+      UNICODE_TO_SHORTCODE[unicode] = shortcode;
+      SHORTCODE_TO_UNICODE[shortcode] = unicode;
+    }
+
+    // Map hexcode to emoji object
+    EMOJIS[hexcode] = {
+      ...emoji,
+      unicode,
+      shortcode,
+    };
+  });
+
+  return EMOJIS;
+}
+
+let promise = null;
+
+export function loadEmojiData(locale: string): Promise<EmojiMap> {
+  if (promise) {
+    return promise;
+  }
+
+  promise = fetchFromCDN(`${locale}/compact.json`).then(parseEmojiData);
+
+  return promise;
+}

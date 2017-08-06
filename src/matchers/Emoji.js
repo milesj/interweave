@@ -5,19 +5,15 @@
  */
 
 import React from 'react';
+import EMOJI_REGEX from 'emojibase-regex';
+import EMOJI_SHORTCODE_REGEX from 'emojibase-regex/shortcode';
 import Matcher from '../Matcher';
 import Emoji from '../components/Emoji';
-import {
-  EMOJI_REGEX,
-  EMOJI_SHORTNAME_REGEX,
-  SHORTNAME_TO_UNICODE,
-  UNICODE_TO_SHORTNAME,
-} from '../data/emoji';
+import { SHORTCODE_TO_UNICODE, UNICODE_TO_SHORTCODE } from '../data/emoji';
 
 import type {
   MatchResponse,
   MatcherFactory,
-  EmojiProps,
   EmojiOptions,
   ReactNode,
   ReactNodeList,
@@ -28,7 +24,7 @@ export default class EmojiMatcher extends Matcher<EmojiOptions> {
 
   constructor(name: string, options: Object = {}, factory: ?MatcherFactory = null) {
     super(name, {
-      convertShortname: false,
+      convertShortcode: false,
       convertUnicode: false,
       renderUnicode: false,
       enlargeThreshold: 1,
@@ -36,7 +32,7 @@ export default class EmojiMatcher extends Matcher<EmojiOptions> {
     }, factory);
   }
 
-  replaceWith(match: string, props: Object = {}): ReactNode<EmojiProps> {
+  replaceWith(match: string, props: Object = {}): ReactNode<*> {
     if (this.options.renderUnicode) {
       return props.unicode;
     }
@@ -53,20 +49,20 @@ export default class EmojiMatcher extends Matcher<EmojiOptions> {
   match(string: string): ?MatchResponse {
     let response = null;
 
-    // Should we convert shortnames to unicode?
-    if (this.options.convertShortname && string.indexOf(':') >= 0) {
-      response = this.doMatch(string, EMOJI_SHORTNAME_REGEX, matches => ({
-        shortname: matches[0].toLowerCase(),
+    // Should we convert shortcodes to unicode?
+    if (this.options.convertShortcode && string.indexOf(':') >= 0) {
+      response = this.doMatch(string, EMOJI_SHORTCODE_REGEX, matches => ({
+        shortcode: matches[0].toLowerCase(),
       }));
 
-      if (response && response.shortname) {
-        const unicode = SHORTNAME_TO_UNICODE[response.shortname];
+      if (response && response.shortcode) {
+        const unicode = SHORTCODE_TO_UNICODE[response.shortcode];
 
         // We want to render using the unicode value
         if (unicode) {
           response.unicode = unicode;
 
-        // Invalid shortname
+        // Invalid shortcode
         } else {
           response = null;
         }
@@ -81,7 +77,7 @@ export default class EmojiMatcher extends Matcher<EmojiOptions> {
 
       if (
         response && response.unicode &&
-        !UNICODE_TO_SHORTNAME[response.unicode]
+        !UNICODE_TO_SHORTCODE[response.unicode]
       ) {
         /* istanbul ignore next Hard to test */
         return null;
@@ -113,6 +109,7 @@ export default class EmojiMatcher extends Matcher<EmojiOptions> {
           valid = false;
           break;
         }
+
       } else if (React.isValidElement(item)) {
         // Only count towards emojis
         if (item.type === Emoji) {
