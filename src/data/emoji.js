@@ -9,32 +9,28 @@ import { TEXT } from 'emojibase/lib/constants';
 
 import type { Emoji } from 'emojibase';
 
-type StringMap = { [key: string]: string };
 type EmojiMap = { [shortcode: string]: Emoji };
 
-export const UNICODE_TO_SHORTCODE: StringMap = {};
-export const SHORTCODE_TO_UNICODE: StringMap = {};
+export const UNICODE_TO_SHORTCODES: { [unicode: string]: string[] } = {};
+export const SHORTCODE_TO_UNICODE: { [shortcode: string]: string } = {};
 export const EMOJIS: EmojiMap = {};
 
 export function parseEmojiData(data: Emoji[]): EmojiMap {
-  data.forEach((emoji) => {
+  flattenEmojiData(data).forEach((emoji) => {
     const { shortcodes = [] } = emoji;
 
     // Only support the default presentation
     const unicode = (emoji.text && emoji.type === TEXT) ? emoji.text : emoji.emoji;
 
-    // Only support the primary shortcode
-    const shortcode = `:${shortcodes[0]}:`;
+    // Support all shortcodes
+    UNICODE_TO_SHORTCODES[unicode] = shortcodes.map((code) => {
+      const shortcode = `:${code}:`;
 
-    UNICODE_TO_SHORTCODE[unicode] = shortcode;
-    SHORTCODE_TO_UNICODE[shortcode] = unicode;
+      SHORTCODE_TO_UNICODE[shortcode] = unicode;
+      EMOJIS[shortcode] = emoji;
 
-    // Map hexcode to emoji object
-    EMOJIS[shortcode] = {
-      ...emoji,
-      unicode,
-      shortcode,
-    };
+      return shortcode;
+    });
   });
 
   return EMOJIS;

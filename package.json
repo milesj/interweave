@@ -35,7 +35,7 @@
     "pretest": "yarn run eslint",
     "preversion": "yarn test && yarn run babel",
     "test": "yarn run jest",
-    "test:bundle": "bundle-lib -f iife -i ./tests/bundle.js -o ./tests/bundle.min.js"
+    "test:bundle": "NODE_ENV=production bundle-lib -f iife -i ./tests/bundle.js -o ./tests/bundle.min.js"
   },
   "repository": {
     "type": "git",
@@ -52,16 +52,16 @@
   "homepage": "https://github.com/milesj/interweave#readme",
   "dependencies": {
     "babel-runtime": "^6.25.0",
-    "emojibase": "^1.0.0-beta",
-    "emojibase-regex": "^1.0.0-beta",
+    "emojibase": "^1.0.0-rc.2",
+    "emojibase-regex": "^1.0.0-rc.2",
     "prop-types": "^15.5.10"
   },
   "peerDependencies": {
     "react": "^15.0.0"
   },
   "devDependencies": {
-    "@milesj/build-tool-config": "^0.17.5",
-    "emojibase-data": "^1.0.0-beta"
+    "@milesj/build-tool-config": "^0.18.0",
+    "emojibase-data": "^1.0.0-rc.2"
   },
   "babel": {
     "extends": "./node_modules/@milesj/build-tool-config/babel.json5"

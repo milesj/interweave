@@ -9,7 +9,7 @@ import EMOJI_REGEX from 'emojibase-regex';
 import EMOJI_SHORTCODE_REGEX from 'emojibase-regex/shortcode';
 import Matcher from '../Matcher';
 import Emoji from '../components/Emoji';
-import { SHORTCODE_TO_UNICODE, UNICODE_TO_SHORTCODE } from '../data/emoji';
+import { SHORTCODE_TO_UNICODE, UNICODE_TO_SHORTCODES } from '../data/emoji';
 
 import type {
   MatchResponse,
@@ -77,7 +77,7 @@ export default class EmojiMatcher extends Matcher<EmojiOptions> {
 
       if (
         response && response.unicode &&
-        !UNICODE_TO_SHORTCODE[response.unicode]
+        !UNICODE_TO_SHORTCODES[response.unicode]
       ) {
         /* istanbul ignore next Hard to test */
         return null;

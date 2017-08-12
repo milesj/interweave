@@ -12,7 +12,7 @@ import { fromHexcodeToCodepoint } from 'emojibase';
 import { SUPPORTED_LOCALES } from 'emojibase/lib/constants';
 import {
   EMOJIS,
-  UNICODE_TO_SHORTCODE,
+  UNICODE_TO_SHORTCODES,
   SHORTCODE_TO_UNICODE,
   loadEmojiData,
 } from '../data/emoji';
@@ -93,7 +93,7 @@ export default class Emoji extends React.Component {
     // Return the invalid value instead of throwing errors,
     // as this will avoid unnecessary noise in production.
     if (
-      (unicode && !UNICODE_TO_SHORTCODE[unicode]) ||
+      (unicode && !UNICODE_TO_SHORTCODES[unicode]) ||
       (shortcode && !SHORTCODE_TO_UNICODE[shortcode])
     ) {
       return (
@@ -103,7 +103,7 @@ export default class Emoji extends React.Component {
 
     // Retrieve any missing values
     if (!shortcode && unicode) {
-      shortcode = UNICODE_TO_SHORTCODE[unicode];
+      [shortcode] = UNICODE_TO_SHORTCODES[unicode];
     } else if (!unicode && shortcode) {
       unicode = SHORTCODE_TO_UNICODE[shortcode];
     }

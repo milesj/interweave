@@ -4,10 +4,10 @@ import EMOJI_SHORTCODE_REGEX from 'emojibase-regex/shortcode';
 import Parser from '../../src/Parser';
 import Emoji from '../../src/components/Emoji';
 import EmojiMatcher from '../../src/matchers/Emoji';
-import { SHORTCODE_TO_UNICODE, UNICODE_TO_SHORTCODE } from '../../src/data/emoji';
+import { SHORTCODE_TO_UNICODE, UNICODE_TO_SHORTCODES } from '../../src/data/emoji';
 import { VALID_EMOJIS, TOKEN_LOCATIONS, createExpectedTokenLocations, parentConfig } from '../mocks';
 
-const VALID_UNICODE = Object.keys(UNICODE_TO_SHORTCODE);
+const VALID_UNICODE = Object.keys(UNICODE_TO_SHORTCODES);
 const VALID_SHORTCODE = Object.keys(SHORTCODE_TO_UNICODE);
 
 const INVALID_UNICODE = [
