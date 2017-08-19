@@ -6,6 +6,8 @@ import EmojiMatcher from '../src/matchers/EmojiMatcher';
 import HashtagMatcher from '../src/matchers/HashtagMatcher';
 import IpMatcher from '../src/matchers/IpMatcher';
 import UrlMatcher from '../src/matchers/UrlMatcher';
+import EmojiLoader from '../src/loaders/EmojiLoader';
+import { EMOJIS } from '../src/data/emoji';
 
 function App() {
   const contentWithNewLines = `This block has multiple new lines.
@@ -26,8 +28,9 @@ Help!`;
   const emojiProps = {
     matchers: [
       new EmojiMatcher('emoji', {
-        convertUnicode: true,
+        convertEmoticon: true,
         convertShortcode: true,
+        convertUnicode: true,
       }),
     ],
     emojiPath: (hex, large) => (
@@ -35,6 +38,8 @@ Help!`;
     ),
     emojiSize: 1,
   };
+
+  console.log(EMOJIS);
 
   return (
     <div className="interweave__examples">
@@ -254,4 +259,8 @@ Help!`;
   );
 }
 
-ReactDOM.render(<App />, document.getElementById('app'));
+ReactDOM.render((
+  <EmojiLoader>
+    <App />
+  </EmojiLoader>
+), document.getElementById('app'));

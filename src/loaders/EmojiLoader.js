@@ -12,12 +12,11 @@ import { fetchFromCDN } from 'emojibase';
 import { SUPPORTED_LOCALES } from 'emojibase/lib/constants';
 import { parseEmojiData } from '../data/emoji';
 
-import type { EmojiLoaderProps } from '../types';
+import type { EmojiLoaderProps, EmojiLoaderState } from '../types';
 
-let loaded = false;
 let promise;
 
-export default class EmojiLoader extends React.PureComponent<EmojiLoaderProps> {
+export default class EmojiLoader extends React.Component<EmojiLoaderProps, EmojiLoaderState> {
   static propTypes = {
     children: PropTypes.node.isRequired,
     locale: PropTypes.oneOf(SUPPORTED_LOCALES),
@@ -27,15 +26,16 @@ export default class EmojiLoader extends React.PureComponent<EmojiLoaderProps> {
     locale: 'en',
   };
 
-  constructor({ locale }: EmojiLoaderProps) {
-    super();
+  state = {
+    loaded: false,
+  };
 
-    // Abort if data has already been loaded
-    if (loaded) {
-      // Nothing!
+  componentWillMount() {
+    const { locale } = this.props;
+    const { loaded } = this.state;
 
     // If currently loading, re-render when complete
-    } else if (promise) {
+    if (!loaded && promise) {
       promise
         .then(() => {
           this.forceUpdate();
@@ -45,16 +45,16 @@ export default class EmojiLoader extends React.PureComponent<EmojiLoaderProps> {
         });
 
     // Start loading emoji data from the CDN as soon as possible
-    } else {
+    } else if (!loaded) {
       promise = fetchFromCDN(`${locale}/compact.json`)
         .then((data) => {
-          loaded = true;
-
           // Parse the emoji data and make it available to Interweave
           parseEmojiData(data);
 
-          // Re-render making the new data available
-          this.forceUpdate();
+          // Render making the new data available
+          this.setState({
+            loaded: true,
+          });
         })
         .catch((error) => {
           throw error;
@@ -62,7 +62,12 @@ export default class EmojiLoader extends React.PureComponent<EmojiLoaderProps> {
     }
   }
 
+  /**
+   * Clone the element so that it re-renders itself.
+   */
   render() {
-    return React.Children.only(this.props.children);
+    const { children, locale, ...props } = this.props;
+
+    return React.cloneElement(React.Children.only(children), props);
   }
 }

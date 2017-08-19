@@ -39,6 +39,7 @@ export type Attributes = { [key: string]: PrimitiveType };
 export type MatcherFactory = (match: string, props: Object) => ReactNode;
 
 export type MatchResponse = {
+  emoticon?: string,
   match: string,
   shortcode?: string,
   unicode?: string,
@@ -138,6 +139,7 @@ export type EmojiProps = {
   emojiPath?: string |
     (hexcode: string, enlarge: boolean, size: number, largeSize: number) => string,
   emojiSize?: number,
+  emoticon: string,
   enlargeEmoji?: boolean,
   locale?: string,
   shortcode: string,
@@ -149,7 +151,12 @@ export type EmojiLoaderProps = {
   locale: string,
 };
 
+export type EmojiLoaderState = {
+  loaded: boolean,
+};
+
 export type EmojiOptions = {
+  convertEmoticon: boolean,
   convertShortcode: boolean,
   convertUnicode: boolean,
   enlargeThreshold: number,
