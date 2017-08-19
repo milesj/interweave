@@ -60,16 +60,19 @@ export default function Emoji({
   // Only apply styles if a size is defined
   if (emojiSize) {
     styles.display = 'inline-block';
-    styles.verticalAlign = 'middle';
+    styles.verticalAlign = 'text-top';
     styles.width = `${emojiSize}em`;
   }
 
   // Handle large styles
   if (enlargeEmoji) {
     className.push('interweave__emoji--large');
+    styles.verticalAlign = 'middle';
 
-    if (emojiSize) {
-      styles.width = `${emojiLargeSize || (emojiSize * LARGE_MULTIPLIER)}em`;
+    if (emojiLargeSize) {
+      styles.width = `${emojiLargeSize}em`;
+    } else if (emojiSize) {
+      styles.width = `${emojiSize * LARGE_MULTIPLIER}em`;
     }
   }
 

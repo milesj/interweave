@@ -89,7 +89,7 @@ export type LinkProps = {
   children?: ReactNode,
   href: string,
   newWindow?: boolean,
-  onClick?: () => void,
+  onClick?: ?() => void,
 };
 
 export type ElementProps = {

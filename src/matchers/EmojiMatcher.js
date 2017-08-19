@@ -23,7 +23,8 @@ import type {
   ReactNode,
 } from '../types';
 
-const EMOTICON_BOUNDARY_REGEX = new RegExp(`(^|\b)(${EMOTICON_REGEX.source})(\b|$)`);
+// eslint-disable-next-line no-useless-escape
+const EMOTICON_BOUNDARY_REGEX = new RegExp(`(^|\\\b|\\\s)(${EMOTICON_REGEX.source})(?=\\\s|\\\b|$)`);
 
 export default class EmojiMatcher extends Matcher<EmojiOptions> {
   options: EmojiOptions;
@@ -57,9 +58,9 @@ export default class EmojiMatcher extends Matcher<EmojiOptions> {
     let response = null;
 
     // Should we convert emoticons to unicode?
-    if (this.options.convertShortcode) {
+    if (this.options.convertEmoticon) {
       response = this.doMatch(string, EMOTICON_BOUNDARY_REGEX, matches => ({
-        emoticon: matches[0],
+        emoticon: matches[0].trim(),
       }));
 
       if (response && response.emoticon) {
@@ -67,6 +68,7 @@ export default class EmojiMatcher extends Matcher<EmojiOptions> {
 
         if (unicode) {
           response.unicode = unicode;
+          response.match = response.emoticon; // Remove padding
         } else {
           response = null;
         }

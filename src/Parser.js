@@ -120,7 +120,7 @@ export default class Parser {
 
         elements.push(matcher.createElement(match, {
           ...props,
-          ...(partProps || {}),
+          ...partProps,
           key: this.keyIndex,
         }));
       }

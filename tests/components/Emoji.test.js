@@ -135,7 +135,7 @@ describe('components/Emoji', () => {
 
     expect(wrapper.prop('style')).toEqual({
       display: 'inline-block',
-      verticalAlign: 'middle',
+      verticalAlign: 'text-top',
       width: '1em',
     });
 
@@ -146,7 +146,7 @@ describe('components/Emoji', () => {
 
     expect(wrapper.prop('style')).toEqual({
       display: 'inline-block',
-      verticalAlign: 'middle',
+      verticalAlign: 'text-top',
       width: '3em',
     });
   });
@@ -164,7 +164,7 @@ describe('components/Emoji', () => {
 
     expect(wrapper.prop('style')).toEqual({
       display: 'inline-block',
-      verticalAlign: 'middle',
+      verticalAlign: 'text-top',
       width: '5em',
     });
   });
