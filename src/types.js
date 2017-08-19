@@ -4,7 +4,7 @@
  * @flow
  */
 
-/* eslint-disable no-undef */
+/* eslint-disable no-undef, import/prefer-default-export */
 
 import type { Node as ReactNode } from 'react';
 import type Filter from './Filter';
@@ -85,7 +85,7 @@ export type MarkupProps = {
 };
 
 export type LinkProps = {
-  children?: mixed,
+  children?: ReactNode,
   href: string,
   newWindow?: boolean,
   onClick?: () => void,
@@ -93,7 +93,7 @@ export type LinkProps = {
 
 export type ElementProps = {
   attributes?: Attributes,
-  children?: mixed,
+  children?: ReactNode,
   className?: string,
   selfClose?: boolean,
   tagName: string,

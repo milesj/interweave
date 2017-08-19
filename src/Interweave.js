@@ -125,8 +125,6 @@ export default class Interweave extends React.Component<InterweaveProps> {
     const { tagName, noHtml, noHtmlExceptMatchers } = this.props;
     const className = (noHtml || noHtmlExceptMatchers) ? 'interweave--no-html' : '';
 
-    console.log('Interweave');
-
     return (
       <Element tagName={tagName} className={className}>
         {this.parseMarkup()}

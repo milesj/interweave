@@ -1,11 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Interweave from '../src/Interweave';
-import EmailMatcher from '../src/matchers/Email';
-import EmojiMatcher from '../src/matchers/Emoji';
-import HashtagMatcher from '../src/matchers/Hashtag';
-import IpMatcher from '../src/matchers/Ip';
-import UrlMatcher from '../src/matchers/Url';
+import EmailMatcher from '../src/matchers/EmailMatcher';
+import EmojiMatcher from '../src/matchers/EmojiMatcher';
+import HashtagMatcher from '../src/matchers/HashtagMatcher';
+import IpMatcher from '../src/matchers/IpMatcher';
+import UrlMatcher from '../src/matchers/UrlMatcher';
 
 function App() {
   const contentWithNewLines = `This block has multiple new lines.
@@ -35,8 +35,6 @@ Help!`;
     ),
     emojiSize: 1,
   };
-
-  console.log('App');
 
   return (
     <div className="interweave__examples">

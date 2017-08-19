@@ -6,12 +6,12 @@
 
 import React from 'react';
 import EMOJI_REGEX from 'emojibase-regex';
-import EMOTICON_REGEX from 'emojibase-regex/emoticon';
+// import EMOTICON_REGEX from 'emojibase-regex/emoticon';
 import SHORTCODE_REGEX from 'emojibase-regex/shortcode';
 import Matcher from '../Matcher';
 import Emoji from '../components/Emoji';
 import {
-  EMOTICON_TO_UNICODE,
+  // EMOTICON_TO_UNICODE,
   SHORTCODE_TO_UNICODE,
   UNICODE_TO_SHORTCODES,
 } from '../data/emoji';
