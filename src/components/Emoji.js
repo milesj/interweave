@@ -60,14 +60,13 @@ export default function Emoji({
   // Only apply styles if a size is defined
   if (emojiSize) {
     styles.display = 'inline-block';
-    styles.verticalAlign = 'text-top';
+    styles.verticalAlign = 'middle';
     styles.width = `${emojiSize}em`;
   }
 
   // Handle large styles
   if (enlargeEmoji) {
     className.push('interweave__emoji--large');
-    styles.verticalAlign = 'middle';
 
     if (emojiLargeSize) {
       styles.width = `${emojiLargeSize}em`;
@@ -93,6 +92,7 @@ export default function Emoji({
     <img
       src={path}
       alt={unicode}
+      title={emoji.annotation || ''}
       style={styles}
       className={className.join(' ')}
       aria-label={emoji.annotation || ''}

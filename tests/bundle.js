@@ -26,6 +26,7 @@ Tell.<br />
 Me.<br /><br />
 Help!`;
 
+  // http://getemoji.com/
   const emojiProps = {
     matchers: [
       new EmojiMatcher('emoji', {
