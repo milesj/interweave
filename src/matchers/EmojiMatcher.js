@@ -135,7 +135,7 @@ export default class EmojiMatcher extends Matcher<EmojiOptions> {
 
       } else if (React.isValidElement(item)) {
         // Only count towards emojis
-        if (item.type === Emoji) {
+        if (item && item.type === Emoji) {
           count += 1;
           valid = true;
 
@@ -160,11 +160,13 @@ export default class EmojiMatcher extends Matcher<EmojiOptions> {
     }
 
     return content.map((item) => {
-      if (typeof item === 'string') {
+      if (!item || typeof item === 'string') {
         return item;
       }
 
+      // $FlowIgnore Can't type a React element
       return React.cloneElement(item, {
+        // $FlowIgnore Nor its props
         ...item.props,
         enlargeEmoji: true,
       });

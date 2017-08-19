@@ -213,7 +213,7 @@ function createConfigBuilder(config: NodeConfig) {
   return (tagName: string) => {
     tagConfigs[tagName] = {
       ...config,
-      ...(tagConfigs[tagName] || {}),
+      ...tagConfigs[tagName],
     };
   };
 }

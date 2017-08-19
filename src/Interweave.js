@@ -13,12 +13,7 @@ import Matcher from './Matcher';
 import Parser from './Parser';
 import Element from './components/Element';
 
-import type {
-  ReactNode,
-  InterweaveProps,
-  AfterParseCallback,
-  BeforeParseCallback,
-} from './types';
+import type { ReactNode, InterweaveProps } from './types';
 
 export default class Interweave extends React.Component<InterweaveProps> {
   static propTypes = {
@@ -70,20 +65,19 @@ export default class Interweave extends React.Component<InterweaveProps> {
       ...props
     } = this.props;
 
-    let markup = content;
     const allMatchers = disableMatchers ? [] : matchers;
     const allFilters = disableFilters ? [] : filters;
     const beforeCallbacks = onBeforeParse ? [onBeforeParse] : [];
     const afterCallbacks = onAfterParse ? [onAfterParse] : [];
 
     // Inherit callbacks from matchers
-    allMatchers.forEach((matcher: Matcher<*>) => {
+    allMatchers.forEach((matcher) => {
       beforeCallbacks.push(matcher.onBeforeParse.bind(matcher));
       afterCallbacks.push(matcher.onAfterParse.bind(matcher));
     });
 
     // Trigger before callbacks
-    markup = beforeCallbacks.reduce((string: string, callback: BeforeParseCallback) => {
+    const markup = beforeCallbacks.reduce((string, callback) => {
       const nextString = callback(string, this.props);
 
       if (__DEV__) {
@@ -93,29 +87,31 @@ export default class Interweave extends React.Component<InterweaveProps> {
       }
 
       return nextString;
-    }, markup);
+    }, content);
 
     // Parse the markup
-    markup = new Parser(markup, props, allMatchers, allFilters).parse();
+    const parser = new Parser(markup, props, allMatchers, allFilters);
 
     // Trigger after callbacks
-    markup = afterCallbacks.reduce((nodes: ReactNode[], callback: AfterParseCallback) => {
-      const nextNodes = callback(nodes, this.props);
+    const nodes = afterCallbacks.reduce((parserNodes, callback) => {
+      const nextNodes = callback(parserNodes, this.props);
 
       if (__DEV__) {
         if (!Array.isArray(nextNodes)) {
-          throw new TypeError('Interweave `onAfterParse` must return an array of strings and React elements.');
+          throw new TypeError(
+            'Interweave `onAfterParse` must return an array of strings and React elements.',
+          );
         }
       }
 
       return nextNodes;
-    }, markup);
+    }, parser.parse());
 
-    if (markup.length === 0) {
+    if (nodes.length === 0) {
       return emptyContent;
     }
 
-    return markup;
+    return nodes;
   }
 
   /**

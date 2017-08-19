@@ -20,13 +20,13 @@ export default function Markup({
   noHtml,
   noHtmlExceptMatchers,
 }: MarkupProps) {
+  const className = (noHtml || noHtmlExceptMatchers) ? 'interweave--no-html' : '';
   const markup = new Parser(content, {
     noHtml,
     noHtmlExceptMatchers,
     disableLineBreaks,
     disableWhitelist,
   }).parse();
-  const className = (noHtml || noHtmlExceptMatchers) ? 'interweave--no-html' : '';
 
   return (
     <Element tagName={tagName} className={className}>

@@ -25,7 +25,6 @@ import {
 
 import type {
   Attributes,
-  ElementProps,
   NodeConfig,
   NodeInterface, // eslint-disable-line
   ReactNode,
@@ -90,7 +89,7 @@ export default class Parser {
     let matchedString = string;
     let parts = {};
 
-    this.matchers.forEach((matcher: Matcher<*>) => {
+    this.matchers.forEach((matcher) => {
       const tagName = matcher.asTag().toLowerCase();
       const config = this.getTagConfig(tagName);
 
@@ -269,7 +268,7 @@ export default class Parser {
       return null;
     }
 
-    Array.from(node.attributes).forEach((attr: { name: string, value: string }) => {
+    Array.from(node.attributes).forEach((attr) => {
       let { name, value } = attr;
       const filter: number = ATTRIBUTES[name];
 
@@ -418,7 +417,7 @@ export default class Parser {
 
           // Build the props as it makes it easier to test
           const attributes = this.extractAttributes(node);
-          const elementProps: ElementProps = {
+          const elementProps: Object = {
             key: this.keyIndex,
             tagName,
           };

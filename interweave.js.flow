@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { Matcher } from 'interweave';
 
 declare module 'interweave' {
   declare export type AfterParseCallback = (content: React.Node[], props: Object) => React.Node[];
@@ -74,8 +75,6 @@ declare module 'interweave/lib/components' {
 }
 
 declare module 'interweave/lib/matchers' {
-  import type { Matcher } from 'interweave';
-
   declare export class EmailMatcher extends Matcher<Object> {}
   declare export class EmojiMatcher extends Matcher<Object> {}
   declare export class HashtagMatcher extends Matcher<Object> {}

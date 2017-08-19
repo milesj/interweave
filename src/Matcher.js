@@ -27,7 +27,7 @@ export default class Matcher<T: Object> {
       }
     }
 
-    this.options = { ...(options || {}) };
+    this.options = { ...options };
     this.propName = name;
     this.inverseName = `no${name.charAt(0).toUpperCase() + name.substr(1)}`;
     this.factory = factory;

@@ -79,7 +79,6 @@ export default function Emoji({
   let path = emojiPath || '{{hexcode}}';
 
   if (typeof path === 'function') {
-    // $FlowIgnore
     path = path(emoji.hexcode, enlargeEmoji, emojiSize, emojiLargeSize);
   } else {
     path = path.replace('{{hexcode}}', emoji.hexcode);

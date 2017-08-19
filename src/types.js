@@ -70,8 +70,8 @@ export type InterweaveProps = {
   matchers: Matcher<*>[],
   noHtml: boolean,
   noHtmlExceptMatchers: boolean,
-  onAfterParse: AfterParseCallback,
-  onBeforeParse: BeforeParseCallback,
+  onAfterParse: ?AfterParseCallback,
+  onBeforeParse: ?BeforeParseCallback,
   tagName: string,
 };
 
@@ -86,17 +86,17 @@ export type MarkupProps = {
 };
 
 export type LinkProps = {
-  children?: ReactNode,
+  children: ReactNode,
   href: string,
-  newWindow?: boolean,
-  onClick?: ?() => void,
+  newWindow: boolean,
+  onClick: ?() => void,
 };
 
 export type ElementProps = {
-  attributes?: Attributes,
-  children?: ReactNode,
-  className?: string,
-  selfClose?: boolean,
+  attributes: Attributes,
+  children: ReactNode,
+  className: string,
+  selfClose: boolean,
   tagName: string,
 };
 
@@ -110,10 +110,10 @@ export type EmailProps = {
 
 export type HashtagProps = {
   children: string,
-  encodeHashtag?: boolean,
+  encodeHashtag: boolean,
   hashtagName: string,
-  hashtagUrl?: string | (hashtag: string) => string,
-  preserveHash?: boolean,
+  hashtagUrl: string | (hashtag: string) => string,
+  preserveHash: boolean,
 };
 
 export type UrlProps = {
@@ -135,13 +135,13 @@ export type UrlOptions = {
 };
 
 export type EmojiProps = {
-  emojiLargeSize?: number,
-  emojiPath?: string |
+  emojiLargeSize: number,
+  emojiPath: string |
     (hexcode: string, enlarge: boolean, size: number, largeSize: number) => string,
-  emojiSize?: number,
+  emojiSize: number,
   emoticon: string,
-  enlargeEmoji?: boolean,
-  locale?: string,
+  enlargeEmoji: boolean,
+  locale: string,
   shortcode: string,
   unicode: string,
 };

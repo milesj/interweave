@@ -70,6 +70,7 @@ export default class EmojiLoader extends React.Component<EmojiLoaderProps> {
   render() {
     const { children, locale, ...props } = this.props;
 
+    // $FlowIgnore
     return React.cloneElement(React.Children.only(children), props);
   }
 }
