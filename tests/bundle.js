@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { stripHexcode } from 'emojibase';
 import Interweave from '../src/Interweave';
 import EmailMatcher from '../src/matchers/EmailMatcher';
 import EmojiMatcher from '../src/matchers/EmojiMatcher';
@@ -34,12 +35,12 @@ Help!`;
       }),
     ],
     emojiPath: (hex, large) => (
-      `https://cdn.jsdelivr.net/emojione/assets/3.0/png/${large ? 64 : 32}/${hex.toLowerCase()}.png`
+      `https://cdn.jsdelivr.net/emojione/assets/3.0/png/${large ? 64 : 32}/${stripHexcode(hex).toLowerCase()}.png`
     ),
     emojiSize: 1,
   };
 
-  console.log(EMOJIS);
+  console.log(EMOJIS); // eslint-disable-line
 
   return (
     <div className="interweave__examples">

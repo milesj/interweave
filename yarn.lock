@@ -1772,17 +1772,17 @@ emoji-regex@^6.1.0:
   version "6.4.2"
   resolved "https://registry.yarnpkg.com/emoji-regex/-/emoji-regex-6.4.2.tgz#a30b6fee353d406d96cfb9fa765bdc82897eff6e"
 
-emojibase-regex@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/emojibase-regex/-/emojibase-regex-1.0.0.tgz#83a597ccbd42ec7616fed2bb41ab1702d0c21efe"
+emojibase-regex@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/emojibase-regex/-/emojibase-regex-1.0.1.tgz#43c20a26e603e0e1cc9fdba6761ba94e17896a27"
 
-emojibase-test-utils@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/emojibase-test-utils/-/emojibase-test-utils-1.0.0.tgz#6229315df443dab0ca43c8e9a839781d91f41723"
+emojibase-test-utils@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/emojibase-test-utils/-/emojibase-test-utils-1.0.1.tgz#6e020302f4df4b0ac9f50977d29694ae439f9c0f"
 
-emojibase@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/emojibase/-/emojibase-1.0.0.tgz#990f96fc0acdd3bb36daf299f9839d4f7c28079b"
+emojibase@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/emojibase/-/emojibase-1.1.0.tgz#9a1b34168bd44115277aecc2b47fc3673e7933c3"
 
 encodeurl@~1.0.1:
   version "1.0.1"

@@ -52,8 +52,8 @@
   "homepage": "https://github.com/milesj/interweave#readme",
   "dependencies": {
     "babel-runtime": "^6.26.0",
-    "emojibase": "^1.0.0",
-    "emojibase-regex": "^1.0.0",
+    "emojibase": "^1.1.0",
+    "emojibase-regex": "^1.0.1",
     "prop-types": "^15.5.10"
   },
   "peerDependencies": {
@@ -61,7 +61,7 @@
   },
   "devDependencies": {
     "@milesj/build-tool-config": "^0.18.3",
-    "emojibase-test-utils": "^1.0.0",
+    "emojibase-test-utils": "^1.0.1",
     "serve": "^6.0.6"
   },
   "babel": {
