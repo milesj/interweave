@@ -24,7 +24,7 @@ export default class UrlMatcher extends Matcher<UrlOptions> {
     }, factory);
   }
 
-  replaceWith(match: string, props?: Object = {}): ReactNode<*> {
+  replaceWith(match: string, props?: Object = {}): ReactNode {
     if (this.options.validateTLD) {
       const { host } = props.urlParts;
       const validList = TOP_LEVEL_TLDS.concat(this.options.customTLDs);

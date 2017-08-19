@@ -1,12 +1,8 @@
-import React from 'react';
-import { Matcher } from 'interweave';
+import * as React from 'react';
+import typeof { Matcher } from 'interweave';
 
 declare module 'interweave' {
-  declare export type ReactNode<T> = string | React.Element<T>;
-
-  declare export type ReactNodeList<T> = ReactNode<T>[];
-
-  declare export type AfterParseCallback = (content: ReactNodeList<*>, props: Object) => ReactNodeList<*>;
+  declare export type AfterParseCallback = (content: React.Node[], props: Object) => React.Node[];
 
   declare export type BeforeParseCallback = (content: string, props: Object) => string;
 
@@ -16,7 +12,7 @@ declare module 'interweave' {
     filter(value: string): string;
   }
 
-  declare export type MatcherFactory = (match: string, props: Object) => ReactNode<*>;
+  declare export type MatcherFactory = (match: string, props: Object) => React.Node;
 
   declare export class Matcher<T> {
     factory: ?MatcherFactory;
@@ -24,14 +20,14 @@ declare module 'interweave' {
     options: T;
     propName: string;
     constructor(name: string, options?: T, factory?: ?MatcherFactory): this;
-    createElement(match: string, props?: Object): ReactNode<*>;
-    replaceWith(match: string, props?: Object): ReactNode<*>;
+    createElement(match: string, props?: Object): React.Node;
+    replaceWith(match: string, props?: Object): React.Node;
     asTag(): string;
     match(string: string): ?{
       match: string,
       [key: string]: any,
     };
-    onAfterParse(content: ReactNodeList<*>, props: Object): ReactNodeList<*>;
+    onAfterParse(content: React.Node[], props: Object): React.Node[];
     onBeforeParse(content: string, props: Object): string;
   }
 
@@ -39,7 +35,7 @@ declare module 'interweave' {
     content: string,
     disableLineBreaks: boolean,
     disableWhitelist: boolean,
-    emptyContent: ?ReactNode<*>,
+    emptyContent: ?React.Node,
     noHtml: boolean,
     noHtmlExceptMatchers: boolean,
     tagName: string,
@@ -53,7 +49,7 @@ declare module 'interweave' {
     disableLineBreaks: boolean,
     disableMatchers: boolean,
     disableWhitelist: boolean,
-    emptyContent: ?ReactNode<*>,
+    emptyContent: ?React.Node,
     filters: Filter[],
     matchers: Matcher<*>[],
     noHtml: boolean,
@@ -64,8 +60,8 @@ declare module 'interweave' {
   };
 
   declare export default class Interweave extends React.Component<InterweaveProps> {
-    parseMarkup(): ReactNodeList<*>;
-    render(): ReactNode<*>;
+    parseMarkup(): React.Node[];
+    render(): React.Node;
   }
 }
 

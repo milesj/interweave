@@ -10,7 +10,6 @@ import type {
   MatcherFactory,
   MatchResponse,
   ReactNode,
-  ReactNodeList,
 } from './types';
 
 type MatchCallback = (matches: string[]) => ({ [key: string]: string | Object });
@@ -38,7 +37,7 @@ export default class Matcher<T: Object> {
    * Attempts to create a React element using a custom user provided factory,
    * or the default matcher factory.
    */
-  createElement(match: string, props?: Object = {}): ReactNode<*> {
+  createElement(match: string, props?: Object = {}): ReactNode {
     let element = null;
 
     if (typeof this.factory === 'function') {
@@ -59,7 +58,7 @@ export default class Matcher<T: Object> {
   /**
    * Replace the match with a React element based on the matched token and optional props.
    */
-  replaceWith(match: string, props?: Object = {}): ReactNode<*> {
+  replaceWith(match: string, props?: Object = {}): ReactNode {
     if (__DEV__) {
       throw new Error(`${this.constructor.name} must return a React element.`);
     }
@@ -116,7 +115,7 @@ export default class Matcher<T: Object> {
   /**
    * Callback triggered after parsing.
    */
-  onAfterParse(content: ReactNodeList<*>, props: Object): ReactNodeList<*> {
+  onAfterParse(content: ReactNode[], props: Object): ReactNode[] {
     return content;
   }
 }

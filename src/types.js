@@ -6,9 +6,11 @@
 
 /* eslint-disable no-undef */
 
-import type React from 'react';
+import type { Node as ReactNode } from 'react';
 import type Filter from './Filter';
 import type Matcher from './Matcher';
+
+export type { ReactNode };
 
 export interface NodeInterface {
   attributes?: NamedNodeMap,
@@ -30,15 +32,11 @@ export type NodeConfig = {
   void?: boolean,
 };
 
-export type ReactNode<T> = string | React.Element<T>;
-
-export type ReactNodeList<T> = ReactNode<T>[];
-
 export type PrimitiveType = string | number | boolean;
 
 export type Attributes = { [key: string]: PrimitiveType };
 
-export type MatcherFactory = (match: string, props: Object) => ReactNode<*>;
+export type MatcherFactory = (match: string, props: Object) => ReactNode;
 
 export type MatchResponse = {
   match: string,
@@ -54,7 +52,7 @@ export type ParserProps = {
   [key: string]: mixed,
 };
 
-export type AfterParseCallback = (content: ReactNodeList<*>, props: Object) => ReactNodeList<*>;
+export type AfterParseCallback = (content: ReactNode[], props: Object) => ReactNode[];
 
 export type BeforeParseCallback = (content: string, props: Object) => string;
 
@@ -66,7 +64,7 @@ export type InterweaveProps = {
   disableLineBreaks: boolean,
   disableMatchers: boolean,
   disableWhitelist: boolean,
-  emptyContent: ?ReactNode<*>,
+  emptyContent: ?ReactNode,
   filters: Filter[],
   matchers: Matcher<*>[],
   noHtml: boolean,
@@ -80,7 +78,7 @@ export type MarkupProps = {
   content: string,
   disableLineBreaks: boolean,
   disableWhitelist: boolean,
-  emptyContent: ?ReactNode<*>,
+  emptyContent: ?ReactNode,
   noHtml: boolean,
   noHtmlExceptMatchers: boolean,
   tagName: string,
@@ -147,7 +145,7 @@ export type EmojiProps = {
 };
 
 export type EmojiLoaderProps = {
-  children: string, // TODO
+  children: ReactNode,
   locale: string,
 };
 

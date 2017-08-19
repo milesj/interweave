@@ -11,8 +11,12 @@
 ./node_modules/emojibase/emojibase.js.flow
 ./node_modules/emojibase-regex/emojibase-regex.js.flow
 
+[lints]
+all=warn
+
 [options]
 emoji=true
+include_warnings=true
 esproposal.class_instance_fields=enable
 esproposal.class_static_fields=enable
 esproposal.export_star_as=enable

@@ -21,7 +21,6 @@ import type {
   MatcherFactory,
   EmojiOptions,
   ReactNode,
-  ReactNodeList,
 } from '../types';
 
 export default class EmojiMatcher extends Matcher<EmojiOptions> {
@@ -37,7 +36,7 @@ export default class EmojiMatcher extends Matcher<EmojiOptions> {
     }, factory);
   }
 
-  replaceWith(match: string, props?: Object = {}): ReactNode<*> {
+  replaceWith(match: string, props?: Object = {}): ReactNode {
     if (this.options.renderUnicode) {
       return props.unicode;
     }
@@ -95,7 +94,7 @@ export default class EmojiMatcher extends Matcher<EmojiOptions> {
   /**
    * When a single `Emoji` is the only content, enlarge it!
    */
-  onAfterParse(content: ReactNodeList<*>, props: Object): ReactNodeList<*> {
+  onAfterParse(content: ReactNode[], props: Object): ReactNode[] {
     if (content.length === 0) {
       return content;
     }
