@@ -9,7 +9,7 @@ import EMOJI_REGEX from 'emojibase-regex';
 import EMOJI_SHORTCODE_REGEX from 'emojibase-regex/shortcode';
 import Matcher from '../Matcher';
 import Emoji from '../components/Emoji';
-import { SHORTCODE_TO_UNICODE, UNICODE_TO_SHORTCODES } from '../data/emoji';
+import { SHORTCODE_TO_UNICODE, UNICODE_TO_SHORTCODES, loadEmojiData } from '../data/emoji';
 
 import type {
   MatchResponse,
@@ -26,10 +26,14 @@ export default class EmojiMatcher extends Matcher<EmojiOptions> {
     super(name, {
       convertShortcode: false,
       convertUnicode: false,
-      renderUnicode: false,
       enlargeThreshold: 1,
+      locale: 'en',
+      renderUnicode: false,
       ...options,
     }, factory);
+
+    // Start loading emoji data from the CDN
+    loadEmojiData(options.locale || 'en');
   }
 
   replaceWith(match: string, props: Object = {}): ReactNode<*> {

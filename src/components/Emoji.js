@@ -9,12 +9,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { fromHexcodeToCodepoint } from 'emojibase';
-import { SUPPORTED_LOCALES } from 'emojibase/lib/constants';
 import {
   EMOJIS,
   UNICODE_TO_SHORTCODES,
   SHORTCODE_TO_UNICODE,
-  loadEmojiData,
 } from '../data/emoji';
 
 import type { EmojiProps } from '../types';
@@ -22,9 +20,7 @@ import type { EmojiProps } from '../types';
 const LARGE_MULTIPLIER = 3;
 let loaded = false;
 
-export default class Emoji extends React.Component {
-  // eslint-disable-next-line react/sort-comp
-  props: EmojiProps;
+export default class Emoji extends React.Component<EmojiProps> {
   mounted: boolean;
 
   static propTypes = {
@@ -35,7 +31,6 @@ export default class Emoji extends React.Component {
     ]),
     emojiSize: PropTypes.number,
     enlargeEmoji: PropTypes.bool,
-    locale: PropTypes.oneOf(SUPPORTED_LOCALES),
     shortcode: PropTypes.string,
     unicode: PropTypes.string,
   };
@@ -49,36 +44,6 @@ export default class Emoji extends React.Component {
     shortcode: '',
     unicode: '',
   };
-
-  componentWillMount() {
-    this.mounted = true;
-
-    if (loaded) {
-      return;
-    }
-
-    // Start fetching emoji data from the CDN on the first render.
-    // Reuse the same promise and data as a way to avoid multiple
-    // requests and possible overhead.
-    loadEmojiData(this.props.locale || 'en')
-      .then(() => {
-        loaded = true;
-
-        if (this.mounted) {
-          this.forceUpdate();
-        }
-      })
-      .catch((error) => {
-        if (__DEV__) {
-          // eslint-disable-next-line no-console
-          console.error('Failed to load emoji data from CDN:', error);
-        }
-      });
-  }
-
-  componentWillUnmount() {
-    this.mounted = false;
-  }
 
   render() {
     const { emojiLargeSize = 0, emojiPath, emojiSize = 0, enlargeEmoji = false } = this.props;

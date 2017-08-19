@@ -21,10 +21,7 @@ import type {
   BeforeParseCallback,
 } from './types';
 
-export default class Interweave extends React.Component {
-  // eslint-disable-next-line react/sort-comp
-  props: InterweaveProps;
-
+export default class Interweave extends React.Component<InterweaveProps> {
   static propTypes = {
     content: PropTypes.string,
     disableFilters: PropTypes.bool,
@@ -128,6 +125,8 @@ export default class Interweave extends React.Component {
   render() {
     const { tagName, noHtml, noHtmlExceptMatchers } = this.props;
     const className = (noHtml || noHtmlExceptMatchers) ? 'interweave--no-html' : '';
+
+    console.log('Interweave');
 
     return (
       <Element tagName={tagName} className={className}>

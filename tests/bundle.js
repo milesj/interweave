@@ -24,12 +24,19 @@ Me.<br /><br />
 Help!`;
 
   const emojiProps = {
-    matchers: [new EmojiMatcher('emoji', { convertUnicode: true })],
+    matchers: [
+      new EmojiMatcher('emoji', {
+        convertUnicode: true,
+        convertShortcode: true,
+      }),
+    ],
     emojiPath: (hex, large) => (
       `https://cdn.jsdelivr.net/emojione/assets/3.0/png/${large ? 64 : 32}/${hex.toLowerCase()}.png`
     ),
     emojiSize: 1,
   };
+
+  console.log('App');
 
   return (
     <div className="interweave__examples">

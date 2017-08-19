@@ -4,20 +4,19 @@
  * @flow
  */
 
-import { fetchFromCDN, flattenEmojiData } from 'emojibase';
+import { flattenEmojiData, generateEmoticonPermutations } from 'emojibase';
 import { TEXT } from 'emojibase/lib/constants';
 
 import type { Emoji } from 'emojibase';
 
-type EmojiMap = { [shortcode: string]: Emoji };
-
 export const UNICODE_TO_SHORTCODES: { [unicode: string]: string[] } = {};
 export const SHORTCODE_TO_UNICODE: { [shortcode: string]: string } = {};
-export const EMOJIS: EmojiMap = {};
+export const EMOTICON_TO_UNICODE: { [emoticon: string]: string } = {};
+export const EMOJIS: { [unicode: string]: Emoji } = {};
 
-export function parseEmojiData(data: Emoji[]): EmojiMap {
+export function parseEmojiData(data: Emoji[]) {
   flattenEmojiData(data).forEach((emoji) => {
-    const { shortcodes = [] } = emoji;
+    const { emoticon, shortcodes = [] } = emoji;
 
     // Only support the default presentation
     const unicode = (emoji.text && emoji.type === TEXT) ? emoji.text : emoji.emoji;
@@ -27,23 +26,17 @@ export function parseEmojiData(data: Emoji[]): EmojiMap {
       const shortcode = `:${code}:`;
 
       SHORTCODE_TO_UNICODE[shortcode] = unicode;
-      EMOJIS[shortcode] = emoji;
 
       return shortcode;
     });
+
+    // Support all emoticons
+    if (emoticon) {
+      generateEmoticonPermutations(emoticon).forEach((emo) => {
+        EMOTICON_TO_UNICODE[emo] = unicode;
+      });
+    }
+
+    EMOJIS[unicode] = emoji;
   });
-
-  return EMOJIS;
-}
-
-let promise = null;
-
-export function loadEmojiData(locale: string): Promise<EmojiMap> {
-  if (promise) {
-    return promise;
-  }
-
-  promise = fetchFromCDN(`${locale}/compact.json`).then(parseEmojiData);
-
-  return promise;
 }

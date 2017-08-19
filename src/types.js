@@ -146,6 +146,11 @@ export type EmojiProps = {
   unicode: string,
 };
 
+export type EmojiLoaderProps = {
+  children: string, // TODO
+  locale: string,
+};
+
 export type EmojiOptions = {
   convertShortcode: boolean,
   convertUnicode: boolean,
