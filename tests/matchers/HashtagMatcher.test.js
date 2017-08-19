@@ -1,5 +1,5 @@
 import Parser from '../../src/Parser';
-import HashtagMatcher from '../../src/matchers/Hashtag';
+import HashtagMatcher from '../../src/matchers/HashtagMatcher';
 import { HASHTAG_PATTERN } from '../../src/constants';
 import { TOKEN_LOCATIONS, createExpectedTokenLocations, parentConfig } from '../mocks';
 
@@ -23,7 +23,7 @@ const INVALID_HASHTAGS = [
   '#and90-=even<>more',
 ];
 
-describe('matchers/Hashtag', () => {
+describe('matchers/HashtagMatcher', () => {
   const matcher = new HashtagMatcher('hashtag');
   const pattern = new RegExp(`^${HASHTAG_PATTERN}$`, 'i');
 

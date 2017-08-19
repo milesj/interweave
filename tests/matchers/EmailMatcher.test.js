@@ -1,5 +1,5 @@
 import Parser from '../../src/Parser';
-import EmailMatcher from '../../src/matchers/Email';
+import EmailMatcher from '../../src/matchers/EmailMatcher';
 import { EMAIL_PATTERN } from '../../src/constants';
 import { TOKEN_LOCATIONS, createExpectedTokenLocations, parentConfig } from '../mocks';
 
@@ -57,7 +57,7 @@ const INVALID_EMAILS = [
   'very."(),:;<>[]".VERY."very@\\\\\\ "very".unusual@strange.example.com',
 ];
 
-describe('matchers/Email', () => {
+describe('matchers/EmailMatcher', () => {
   const matcher = new EmailMatcher('email');
   const pattern = new RegExp(`^${EMAIL_PATTERN}$`, 'i');
 

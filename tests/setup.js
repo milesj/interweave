@@ -1,7 +1,9 @@
 /* eslint-disable no-undef */
 
-import emojis from 'emojibase-data/en/data.json';
+import { loadEmojiData } from 'emojibase-test-utils';
 import { parseEmojiData } from '../src/data/emoji';
+
+const emojis = loadEmojiData();
 
 // Bootstrap our emoji data using the official en dataset
 parseEmojiData(emojis);

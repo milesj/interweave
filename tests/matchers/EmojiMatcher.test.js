@@ -1,9 +1,9 @@
 import React from 'react';
 import EMOJI_REGEX from 'emojibase-regex';
-import EMOJI_SHORTCODE_REGEX from 'emojibase-regex/shortcode';
+import SHORTCODE_REGEX from 'emojibase-regex/shortcode';
 import Parser from '../../src/Parser';
 import Emoji from '../../src/components/Emoji';
-import EmojiMatcher from '../../src/matchers/Emoji';
+import EmojiMatcher from '../../src/matchers/EmojiMatcher';
 import { SHORTCODE_TO_UNICODE, UNICODE_TO_SHORTCODES } from '../../src/data/emoji';
 import { VALID_EMOJIS, TOKEN_LOCATIONS, createExpectedTokenLocations, parentConfig } from '../mocks';
 
@@ -24,11 +24,11 @@ const INVALID_SHORTCODE = [
 
 const MAN_EMOJI = SHORTCODE_TO_UNICODE[':man:'];
 
-describe('matchers/Emoji', () => {
+describe('matchers/EmojiMatcher', () => {
   const matcher = new EmojiMatcher('emoji', { convertShortcode: true, convertUnicode: true });
   const noConvertMatcher = new EmojiMatcher('emoji');
   const pattern = new RegExp(`^${EMOJI_REGEX.source}$`);
-  const shortPattern = new RegExp(`^${EMOJI_SHORTCODE_REGEX.source}$`);
+  const shortPattern = new RegExp(`^${SHORTCODE_REGEX.source}$`);
 
   describe('does match valid emoji', () => {
     VALID_UNICODE.forEach((unicode) => {

@@ -6,10 +6,15 @@
 
 import React from 'react';
 import EMOJI_REGEX from 'emojibase-regex';
-import EMOJI_SHORTCODE_REGEX from 'emojibase-regex/shortcode';
+import EMOTICON_REGEX from 'emojibase-regex/emoticon';
+import SHORTCODE_REGEX from 'emojibase-regex/shortcode';
 import Matcher from '../Matcher';
 import Emoji from '../components/Emoji';
-import { SHORTCODE_TO_UNICODE, UNICODE_TO_SHORTCODES, loadEmojiData } from '../data/emoji';
+import {
+  EMOTICON_TO_UNICODE,
+  SHORTCODE_TO_UNICODE,
+  UNICODE_TO_SHORTCODES,
+} from '../data/emoji';
 
 import type {
   MatchResponse,
@@ -22,21 +27,17 @@ import type {
 export default class EmojiMatcher extends Matcher<EmojiOptions> {
   options: EmojiOptions;
 
-  constructor(name: string, options: Object = {}, factory: ?MatcherFactory = null) {
+  constructor(name: string, options?: Object = {}, factory?: ?MatcherFactory = null) {
     super(name, {
       convertShortcode: false,
       convertUnicode: false,
       enlargeThreshold: 1,
-      locale: 'en',
       renderUnicode: false,
       ...options,
     }, factory);
-
-    // Start loading emoji data from the CDN
-    loadEmojiData(options.locale || 'en');
   }
 
-  replaceWith(match: string, props: Object = {}): ReactNode<*> {
+  replaceWith(match: string, props?: Object = {}): ReactNode<*> {
     if (this.options.renderUnicode) {
       return props.unicode;
     }
@@ -55,7 +56,7 @@ export default class EmojiMatcher extends Matcher<EmojiOptions> {
 
     // Should we convert shortcodes to unicode?
     if (this.options.convertShortcode && string.indexOf(':') >= 0) {
-      response = this.doMatch(string, EMOJI_SHORTCODE_REGEX, matches => ({
+      response = this.doMatch(string, SHORTCODE_REGEX, matches => ({
         shortcode: matches[0].toLowerCase(),
       }));
 

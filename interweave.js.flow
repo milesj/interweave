@@ -6,9 +6,12 @@ declare module 'interweave' {
 
   declare export type ReactNodeList<T> = ReactNode<T>[];
 
+  declare export type AfterParseCallback = (content: ReactNodeList<*>, props: Object) => ReactNodeList<*>;
+
+  declare export type BeforeParseCallback = (content: string, props: Object) => string;
+
   declare export class Filter {
     attribute: string;
-
     constructor(attribute: string): this;
     filter(value: string): string;
   }
@@ -20,8 +23,7 @@ declare module 'interweave' {
     inverseName: string;
     options: T;
     propName: string;
-
-    constructor(name: string, options: T, factory?: ?MatcherFactory): this;
+    constructor(name: string, options?: T, factory?: ?MatcherFactory): this;
     createElement(match: string, props?: Object): ReactNode<*>;
     replaceWith(match: string, props?: Object): ReactNode<*>;
     asTag(): string;

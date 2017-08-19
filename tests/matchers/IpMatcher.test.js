@@ -1,5 +1,5 @@
 import Parser from '../../src/Parser';
-import IpMatcher from '../../src/matchers/Ip';
+import IpMatcher from '../../src/matchers/IpMatcher';
 import { IP_PATTERN } from '../../src/constants';
 import { TOKEN_LOCATIONS, createExpectedTokenLocations, parentConfig } from '../mocks';
 
@@ -32,7 +32,7 @@ const INVALID_IPS = [
   { ip: 'http://[3ffe:1900:4545:3:200:f8ff:fe21:67cf]/' },
 ];
 
-describe('matchers/Ip', () => {
+describe('matchers/IpMatcher', () => {
   const matcher = new IpMatcher('ip');
   const pattern = new RegExp(`^${IP_PATTERN}$`, 'i');
 
