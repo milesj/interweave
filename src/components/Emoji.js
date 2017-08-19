@@ -11,8 +11,9 @@ import PropTypes from 'prop-types';
 import { fromHexcodeToCodepoint } from 'emojibase';
 import {
   EMOJIS,
-  UNICODE_TO_SHORTCODES,
+  EMOTICON_TO_UNICODE,
   SHORTCODE_TO_UNICODE,
+  UNICODE_TO_SHORTCODES,
 } from '../data/emoji';
 
 import type { EmojiProps } from '../types';
@@ -23,35 +24,36 @@ export default function Emoji({
   emojiLargeSize,
   emojiPath,
   emojiSize,
+  emoticon,
   enlargeEmoji,
   shortcode,
   unicode,
 }: EmojiProps) {
   if (__DEV__) {
-    if (!shortcode && !unicode) {
-      throw new Error('Emoji component requires a `unicode` character or a `shortcode`.');
+    if (!emoticon && !shortcode && !unicode) {
+      throw new Error(
+        'Emoji component requires a `unicode` character, `emoticon`, or a `shortcode`.',
+      );
     }
   }
 
-  // Return the invalid value instead of throwing errors,
-  // as this will avoid unnecessary noise in production.
-  if (
-    (unicode && !UNICODE_TO_SHORTCODES[unicode]) ||
-    (shortcode && !SHORTCODE_TO_UNICODE[shortcode])
-  ) {
-    return (
-      <span>{unicode || shortcode}</span>
-    );
-  }
-
-  // Retrieve any missing values
-  if (!shortcode && unicode) {
-    [shortcode] = UNICODE_TO_SHORTCODES[unicode];
-  } else if (!unicode && shortcode) {
+  // Retrieve applicable unicode character
+  if (!unicode && shortcode) {
     unicode = SHORTCODE_TO_UNICODE[shortcode];
   }
 
-  const { annotation, hexcode } = EMOJIS[unicode];
+  if (!unicode && emoticon) {
+    unicode = EMOTICON_TO_UNICODE[emoticon];
+  }
+
+  // Return the invalid value instead of erroring
+  if (!unicode || !EMOJIS[unicode]) {
+    return (
+      <span>{unicode || emoticon || shortcode}</span>
+    );
+  }
+
+  const emoji = EMOJIS[unicode];
   const className = ['interweave__emoji'];
   const styles = {};
 
@@ -75,9 +77,10 @@ export default function Emoji({
   let path = emojiPath || '{{hexcode}}';
 
   if (typeof path === 'function') {
-    path = path(hexcode, enlargeEmoji, emojiSize, emojiLargeSize);
+    // $FlowIgnore
+    path = path(emoji.hexcode, enlargeEmoji, emojiSize, emojiLargeSize);
   } else {
-    path = path.replace('{{hexcode}}', hexcode);
+    path = path.replace('{{hexcode}}', emoji.hexcode);
   }
 
   // http://git.emojione.com/demos/latest/sprites-png.html
@@ -89,11 +92,12 @@ export default function Emoji({
       alt={unicode}
       style={styles}
       className={className.join(' ')}
-      aria-label={annotation}
+      aria-label={emoji.annotation || ''}
+      data-emoticon={emoji.emoticon || ''}
       data-unicode={unicode}
-      data-hexcode={hexcode}
-      data-shortcode={shortcode}
-      data-codepoint={fromHexcodeToCodepoint(hexcode).join('-')}
+      data-hexcode={emoji.hexcode}
+      data-shortcodes={UNICODE_TO_SHORTCODES[unicode].join(', ')}
+      data-codepoint={fromHexcodeToCodepoint(emoji.hexcode).join('-')}
     />
   );
 }
@@ -105,6 +109,7 @@ Emoji.propTypes = {
     PropTypes.func,
   ]),
   emojiSize: PropTypes.number,
+  emoticon: PropTypes.string,
   enlargeEmoji: PropTypes.bool,
   shortcode: PropTypes.string,
   unicode: PropTypes.string,
@@ -114,6 +119,7 @@ Emoji.defaultProps = {
   emojiLargeSize: 0,
   emojiPath: '{{hexcode}}',
   emojiSize: 0,
+  emoticon: '',
   enlargeEmoji: false,
   shortcode: '',
   unicode: '',

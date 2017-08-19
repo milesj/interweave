@@ -6,14 +6,14 @@
 
 import React from 'react';
 import EMOJI_REGEX from 'emojibase-regex';
-// import EMOTICON_REGEX from 'emojibase-regex/emoticon';
+import EMOTICON_REGEX from 'emojibase-regex/emoticon';
 import SHORTCODE_REGEX from 'emojibase-regex/shortcode';
 import Matcher from '../Matcher';
 import Emoji from '../components/Emoji';
 import {
-  // EMOTICON_TO_UNICODE,
+  EMOJIS,
+  EMOTICON_TO_UNICODE,
   SHORTCODE_TO_UNICODE,
-  UNICODE_TO_SHORTCODES,
 } from '../data/emoji';
 
 import type {
@@ -23,11 +23,14 @@ import type {
   ReactNode,
 } from '../types';
 
+const EMOTICON_BOUNDARY_REGEX = new RegExp(`(^|\b)(${EMOTICON_REGEX.source})(\b|$)`);
+
 export default class EmojiMatcher extends Matcher<EmojiOptions> {
   options: EmojiOptions;
 
   constructor(name: string, options?: Object = {}, factory?: ?MatcherFactory = null) {
     super(name, {
+      convertEmoticon: false,
       convertShortcode: false,
       convertUnicode: false,
       enlargeThreshold: 1,
@@ -53,8 +56,25 @@ export default class EmojiMatcher extends Matcher<EmojiOptions> {
   match(string: string): ?MatchResponse {
     let response = null;
 
+    // Should we convert emoticons to unicode?
+    if (this.options.convertShortcode) {
+      response = this.doMatch(string, EMOTICON_BOUNDARY_REGEX, matches => ({
+        emoticon: matches[0],
+      }));
+
+      if (response && response.emoticon) {
+        const unicode = EMOTICON_TO_UNICODE[response.emoticon];
+
+        if (unicode) {
+          response.unicode = unicode;
+        } else {
+          response = null;
+        }
+      }
+    }
+
     // Should we convert shortcodes to unicode?
-    if (this.options.convertShortcode && string.indexOf(':') >= 0) {
+    if (this.options.convertShortcode && !response && string.indexOf(':') >= 0) {
       response = this.doMatch(string, SHORTCODE_REGEX, matches => ({
         shortcode: matches[0].toLowerCase(),
       }));
@@ -62,11 +82,8 @@ export default class EmojiMatcher extends Matcher<EmojiOptions> {
       if (response && response.shortcode) {
         const unicode = SHORTCODE_TO_UNICODE[response.shortcode];
 
-        // We want to render using the unicode value
         if (unicode) {
           response.unicode = unicode;
-
-        // Invalid shortcode
         } else {
           response = null;
         }
@@ -81,7 +98,7 @@ export default class EmojiMatcher extends Matcher<EmojiOptions> {
 
       if (
         response && response.unicode &&
-        !UNICODE_TO_SHORTCODES[response.unicode]
+        !EMOJIS[response.unicode]
       ) {
         /* istanbul ignore next Hard to test */
         return null;

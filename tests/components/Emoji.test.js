@@ -5,11 +5,18 @@ import Emoji from '../../src/components/Emoji';
 import { VALID_EMOJIS } from '../mocks';
 
 describe('components/Emoji', () => {
-  const [[hexcode, unicode, shortcode]] = VALID_EMOJIS;
+  const [[hexcode, unicode, shortcode, emoticon]] = VALID_EMOJIS;
+  const shortcodes = ':enraged:, :pout:';
 
-  it('errors if no shortcode or unicode', () => {
+  it('errors if no emoticon, shortcode or unicode', () => {
     expect(() => shallow(<Emoji />))
-      .toThrowError('Emoji component requires a `unicode` character or a `shortcode`.');
+      .toThrowError('Emoji component requires a `unicode` character, `emoticon`, or a `shortcode`.');
+  });
+
+  it('returns value for invalid emoticon', () => {
+    const wrapper = shallow(<Emoji emoticon="0P" />);
+
+    expect(wrapper.prop('children')).toBe('0P');
   });
 
   it('returns value for invalid shortcode', () => {
@@ -24,22 +31,34 @@ describe('components/Emoji', () => {
     expect(wrapper.prop('children')).toBe('fake');
   });
 
-  it('renders with only the shortcode', () => {
-    const wrapper = shallow(<Emoji shortcode={shortcode} />);
+  it('renders with only the emoticon', () => {
+    const wrapper = shallow(<Emoji emoticon={emoticon} />);
 
+    expect(wrapper.prop('data-emoticon')).toBe(emoticon);
     expect(wrapper.prop('data-unicode')).toBe(unicode);
     expect(wrapper.prop('data-hexcode')).toBe(hexcode);
     expect(wrapper.prop('data-codepoint')).toBe(fromHexcodeToCodepoint(hexcode).join('-'));
-    expect(wrapper.prop('data-shortcode')).toBe(shortcode);
+    expect(wrapper.prop('data-shortcodes')).toBe(shortcodes);
+  });
+
+  it('renders with only the shortcode', () => {
+    const wrapper = shallow(<Emoji shortcode={shortcode} />);
+
+    expect(wrapper.prop('data-emoticon')).toBe(emoticon);
+    expect(wrapper.prop('data-unicode')).toBe(unicode);
+    expect(wrapper.prop('data-hexcode')).toBe(hexcode);
+    expect(wrapper.prop('data-codepoint')).toBe(fromHexcodeToCodepoint(hexcode).join('-'));
+    expect(wrapper.prop('data-shortcodes')).toBe(shortcodes);
   });
 
   it('renders with only the unicode', () => {
     const wrapper = shallow(<Emoji unicode={unicode} />);
 
+    expect(wrapper.prop('data-emoticon')).toBe(emoticon);
     expect(wrapper.prop('data-unicode')).toBe(unicode);
     expect(wrapper.prop('data-hexcode')).toBe(hexcode);
     expect(wrapper.prop('data-codepoint')).toBe(fromHexcodeToCodepoint(hexcode).join('-'));
-    expect(wrapper.prop('data-shortcode')).toBe(shortcode);
+    expect(wrapper.prop('data-shortcodes')).toBe(shortcodes);
   });
 
   it('renders with both', () => {
@@ -48,7 +67,7 @@ describe('components/Emoji', () => {
     expect(wrapper.prop('data-unicode')).toBe(unicode);
     expect(wrapper.prop('data-hexcode')).toBe(hexcode);
     expect(wrapper.prop('data-codepoint')).toBe(fromHexcodeToCodepoint(hexcode).join('-'));
-    expect(wrapper.prop('data-shortcode')).toBe(shortcode);
+    expect(wrapper.prop('data-shortcodes')).toBe(shortcodes);
   });
 
   it('can define the path', () => {

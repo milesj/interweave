@@ -1,15 +1,25 @@
 import React from 'react';
 import EMOJI_REGEX from 'emojibase-regex';
+import EMOTICON_REGEX from 'emojibase-regex/emoticon';
 import SHORTCODE_REGEX from 'emojibase-regex/shortcode';
 import Parser from '../../src/Parser';
 import Emoji from '../../src/components/Emoji';
 import EmojiMatcher from '../../src/matchers/EmojiMatcher';
-import { SHORTCODE_TO_UNICODE, UNICODE_TO_SHORTCODES } from '../../src/data/emoji';
-import { VALID_EMOJIS, TOKEN_LOCATIONS, createExpectedTokenLocations, parentConfig } from '../mocks';
+import {
+  EMOJIS,
+  EMOTICON_TO_UNICODE,
+  SHORTCODE_TO_UNICODE,
+} from '../../src/data/emoji';
+import {
+  VALID_EMOJIS,
+  TOKEN_LOCATIONS,
+  createExpectedTokenLocations,
+  parentConfig,
+} from '../mocks';
 
-const VALID_UNICODE = Object.keys(UNICODE_TO_SHORTCODES);
+const VALID_UNICODE = Object.keys(EMOJIS);
 const VALID_SHORTCODE = Object.keys(SHORTCODE_TO_UNICODE);
-
+const VALID_EMOTICON = Object.keys(EMOTICON_TO_UNICODE);
 const INVALID_UNICODE = [
   '\u02A9',
   '\u03C6',
@@ -21,13 +31,22 @@ const INVALID_SHORTCODE = [
   ':no spaces:',
   ':no#($*chars:',
 ];
-
+const INVALID_EMOTICON = [
+  '[:',
+  '@=',
+  '+[',
+];
 const MAN_EMOJI = SHORTCODE_TO_UNICODE[':man:'];
 
 describe('matchers/EmojiMatcher', () => {
-  const matcher = new EmojiMatcher('emoji', { convertShortcode: true, convertUnicode: true });
+  const matcher = new EmojiMatcher('emoji', {
+    convertEmoticon: true,
+    convertShortcode: true,
+    convertUnicode: true,
+  });
   const noConvertMatcher = new EmojiMatcher('emoji');
   const pattern = new RegExp(`^${EMOJI_REGEX.source}$`);
+  const emoPattern = new RegExp(`^${EMOTICON_REGEX.source}$`);
   const shortPattern = new RegExp(`^${SHORTCODE_REGEX.source}$`);
 
   describe('does match valid emoji', () => {
@@ -47,6 +66,12 @@ describe('matchers/EmojiMatcher', () => {
         expect(shortcode.match(shortPattern)[0]).toBe(shortcode);
       });
     });
+
+    VALID_EMOTICON.forEach((emoticon) => {
+      it(`emoticon: ${emoticon}`, () => {
+        expect(emoticon.match(emoPattern)[0]).toBe(emoticon);
+      });
+    });
   });
 
   describe('doesnt match invalid emoji', () => {
@@ -59,6 +84,12 @@ describe('matchers/EmojiMatcher', () => {
     INVALID_SHORTCODE.forEach((shortcode) => {
       it(`shortcode: ${shortcode}`, () => {
         expect(shortcode.match(shortPattern)).toBe(null);
+      });
+    });
+
+    INVALID_EMOTICON.forEach((emoticon) => {
+      it(`emoticon: ${emoticon}`, () => {
+        expect(emoticon.match(emoPattern)).toBe(null);
       });
     });
   });
@@ -75,6 +106,14 @@ describe('matchers/EmojiMatcher', () => {
     VALID_SHORTCODE.forEach((shortcode) => {
       it(`shortcode: ${shortcode}`, () => {
         expect(noConvertMatcher.match(shortcode)).toBe(null);
+      });
+    });
+  });
+
+  describe('doesnt match emoticon when `convertEmoticon` is false', () => {
+    VALID_EMOTICON.forEach((emoticon) => {
+      it(`emoticon: ${emoticon}`, () => {
+        expect(noConvertMatcher.match(emoticon)).toBe(null);
       });
     });
   });
@@ -143,6 +182,18 @@ describe('matchers/EmojiMatcher', () => {
         match: ':man:',
         shortcode: ':man:',
         unicode: MAN_EMOJI,
+      });
+    });
+
+    it('returns null for invalid emoticon match', () => {
+      expect(matcher.match('0)')).toBe(null);
+    });
+
+    it('returns object for valid emoticon match', () => {
+      expect(matcher.match(':)')).toEqual({
+        match: ':)',
+        emoticon: ':)',
+        unicode: '🙂',
       });
     });
   });
