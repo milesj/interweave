@@ -12,30 +12,33 @@ import { fetchFromCDN } from 'emojibase';
 import { SUPPORTED_LOCALES } from 'emojibase/lib/constants';
 import { parseEmojiData } from '../data/emoji';
 
-import type { EmojiLoaderProps, EmojiLoaderState } from '../types';
+import type { EmojiLoaderProps } from '../types';
 
-let promise;
+let loaded = false;
+let promise = null;
 
-export default class EmojiLoader extends React.Component<EmojiLoaderProps, EmojiLoaderState> {
+export default class EmojiLoader extends React.Component<EmojiLoaderProps> {
   static propTypes = {
     children: PropTypes.node.isRequired,
     locale: PropTypes.oneOf(SUPPORTED_LOCALES),
+    version: PropTypes.string,
   };
 
   static defaultProps = {
     locale: 'en',
-  };
-
-  state = {
-    loaded: false,
+    version: 'latest',
   };
 
   componentWillMount() {
-    const { locale } = this.props;
-    const { loaded } = this.state;
+    const { locale, version } = this.props;
 
-    // If currently loading, re-render when complete
-    if (!loaded && promise) {
+    // Abort as we've already loaded data
+    if (loaded) {
+      return;
+    }
+
+    // Or hook into the promise if we're loading
+    if (promise) {
       promise
         .then(() => {
           this.forceUpdate();
@@ -44,17 +47,16 @@ export default class EmojiLoader extends React.Component<EmojiLoaderProps, Emoji
           throw error;
         });
 
-    // Start loading emoji data from the CDN as soon as possible
-    } else if (!loaded) {
-      promise = fetchFromCDN(`${locale}/compact.json`)
+    // Otherwise, start loading emoji data from the CDN
+    } else {
+      promise = fetchFromCDN(`${locale}/compact.json`, version)
         .then((data) => {
-          // Parse the emoji data and make it available to Interweave
+          loaded = true;
+
+          // Parse emoji emoji data and make it available to Interweave
           parseEmojiData(data);
 
-          // Render making the new data available
-          this.setState({
-            loaded: true,
-          });
+          this.forceUpdate();
         })
         .catch((error) => {
           throw error;
