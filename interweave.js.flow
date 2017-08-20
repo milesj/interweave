@@ -54,8 +54,8 @@ declare module 'interweave' {
     matchers: Matcher<*>[],
     noHtml: boolean,
     noHtmlExceptMatchers: boolean,
-    onAfterParse: AfterParseCallback,
-    onBeforeParse: BeforeParseCallback,
+    onAfterParse: ?AfterParseCallback,
+    onBeforeParse: ?BeforeParseCallback,
     tagName: string,
   };
 

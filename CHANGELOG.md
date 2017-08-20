@@ -1,3 +1,27 @@
+# 6.0.0
+#### 💥 Breaking
+* Migrated from `emoji-database` to `emojibase`.
+* Matcher files have been renamed and suffixed with `Matcher`.
+* Renamed all usage of `shortname` to `shortcode`.
+
+#### 🚀 New
+* Added support for React 16.
+* Emoji data is now fetched from a CDN instead of being bundled locally.
+  * Added new `EmojiLoader` component to handle the loading of emoji data.
+  * Added localized emoji data.
+* Emoticon support has been added. Convert emoticons to emoji!
+* Updated `Emoji` component.
+  * Added new `emoticon` prop.
+  * Added `title`, `aria-label`, and `data-emoticon` element attributes.
+  * Renamed `shortname` prop to `shortcode`.
+  * Renamed `data-shortname` to `data-shortcodes`.
+* Updated `EmojiMatcher`.
+  * Added new `convertEmoticon` option.
+  * Renamed `convertShortname` option to `convertShortcode`.
+
+#### 🛠 Internal
+* Fixed and updated Flowtype and React definitions.
+
 # 5.4.0
 * Updated `emoji-database` to 0.9.
 * Updated `enlargeThreshold` to ignore whitespace when counting.
