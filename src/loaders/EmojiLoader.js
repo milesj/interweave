@@ -12,33 +12,44 @@ import { fetchFromCDN } from 'emojibase';
 import { SUPPORTED_LOCALES } from 'emojibase/lib/constants';
 import { parseEmojiData } from '../data/emoji';
 
+import type { Emoji } from 'emojibase'; // eslint-disable-line
 import type { EmojiLoaderProps } from '../types';
 
+// Share between all instances
 let loaded = false;
 let promise = null;
 
 export default class EmojiLoader extends React.Component<EmojiLoaderProps> {
   static propTypes = {
     children: PropTypes.node.isRequired,
+    data: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.arrayOf(PropTypes.object),
+    ]),
     locale: PropTypes.oneOf(SUPPORTED_LOCALES),
     version: PropTypes.string,
   };
 
   static defaultProps = {
+    data: [],
     locale: 'en',
     version: 'latest',
   };
 
   componentWillMount() {
-    const { locale, version } = this.props;
+    const { data, locale, version } = this.props;
 
     // Abort as we've already loaded data
     if (loaded) {
       return;
     }
 
+    // Load data if it was manually passed
+    if (data.length > 0) {
+      this.loadData(data);
+
     // Or hook into the promise if we're loading
-    if (promise) {
+    } else if (promise) {
       promise
         .then(() => {
           this.forceUpdate();
@@ -50,18 +61,24 @@ export default class EmojiLoader extends React.Component<EmojiLoaderProps> {
     // Otherwise, start loading emoji data from the CDN
     } else {
       promise = fetchFromCDN(`${locale}/compact.json`, version)
-        .then((data) => {
-          loaded = true;
-
-          // Parse emoji emoji data and make it available to Interweave
-          parseEmojiData(data);
-
-          this.forceUpdate();
+        .then((response) => {
+          this.loadData(response);
         })
         .catch((error) => {
           throw error;
         });
     }
+  }
+
+  /**
+   * Parse emoji data and make it available to Interweave
+   */
+  loadData(data: string | Emoji[]) {
+    loaded = true;
+
+    parseEmojiData((typeof data === 'string') ? JSON.parse(data) : data);
+
+    this.forceUpdate();
   }
 
   /**

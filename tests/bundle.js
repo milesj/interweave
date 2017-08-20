@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { stripHexcode } from 'emojibase';
-import Interweave from '../src/Interweave';
+import BaseInterweave from '../src/Interweave';
 import EmailMatcher from '../src/matchers/EmailMatcher';
 import EmojiMatcher from '../src/matchers/EmojiMatcher';
 import HashtagMatcher from '../src/matchers/HashtagMatcher';
@@ -10,8 +10,7 @@ import UrlMatcher from '../src/matchers/UrlMatcher';
 import EmojiLoader from '../src/loaders/EmojiLoader';
 import { EMOJIS } from '../src/data/emoji';
 
-function App() {
-  const contentWithNewLines = `This block has multiple new lines.
+const contentWithNewLines = `This block has multiple new lines.
 Like how is this supposed to work.
 Someone please.
 Tell.
@@ -19,35 +18,44 @@ Me.
 
 Help!`;
 
-  const contentWithBrs = `This block has multiple new lines but uses \`br\`s.<br />
+const contentWithBrs = `This block has multiple new lines but uses \`br\`s.<br />
 Like how is this supposed to work.<br />
 Someone please.<br />
 Tell.<br />
 Me.<br /><br />
 Help!`;
 
-  // http://getemoji.com/
-  const emojiProps = {
-    matchers: [
-      new EmojiMatcher('emoji', {
-        convertEmoticon: true,
-        convertShortcode: true,
-        convertUnicode: true,
-      }),
-    ],
-    emojiPath: (hex, large) => (
-      `https://cdn.jsdelivr.net/emojione/assets/3.0/png/${large ? 64 : 32}/${stripHexcode(hex).toLowerCase()}.png`
-    ),
-    emojiSize: 1,
-  };
+// http://getemoji.com/
+const emojiProps = {
+  matchers: [
+    new EmojiMatcher('emoji', {
+      convertEmoticon: true,
+      convertShortcode: true,
+      convertUnicode: true,
+    }),
+  ],
+  emojiPath: (hex, large) => (
+    `https://cdn.jsdelivr.net/emojione/assets/3.0/png/${large ? 64 : 32}/${stripHexcode(hex).toLowerCase()}.png`
+  ),
+  emojiSize: 1,
+};
 
-  const emojiUnicodeProps = {
-    ...emojiProps,
-    matchers: [
-      new EmojiMatcher('emoji', { convertUnicode: true }),
-    ],
-  };
+const emojiUnicodeProps = {
+  ...emojiProps,
+  matchers: [
+    new EmojiMatcher('emoji', { convertUnicode: true }),
+  ],
+};
 
+function Interweave(props) {
+  return (
+    <EmojiLoader>
+      <BaseInterweave {...props} />
+    </EmojiLoader>
+  );
+}
+
+function App() {
   console.log(EMOJIS); // eslint-disable-line
 
   return (
@@ -286,8 +294,4 @@ Help!`;
   );
 }
 
-ReactDOM.render((
-  <EmojiLoader>
-    <App />
-  </EmojiLoader>
-), document.getElementById('app'));
+ReactDOM.render(<App />, document.getElementById('app'));
