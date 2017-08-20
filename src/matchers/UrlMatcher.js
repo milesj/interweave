@@ -9,14 +9,14 @@ import Matcher from '../Matcher';
 import Url from '../components/Url';
 import { URL_PATTERN, TOP_LEVEL_TLDS } from '../constants';
 
-import type { MatchResponse, MatcherFactory, UrlProps, UrlOptions, ReactNode } from '../types';
+import type { MatchResponse, MatcherFactory, UrlOptions, ReactNode } from '../types';
 
 const URL_REGEX = new RegExp(URL_PATTERN, 'i');
 
 export default class UrlMatcher extends Matcher<UrlOptions> {
   options: UrlOptions;
 
-  constructor(name: string, options: Object = {}, factory: ?MatcherFactory = null) {
+  constructor(name: string, options?: Object = {}, factory?: ?MatcherFactory = null) {
     super(name, {
       customTLDs: [],
       validateTLD: true,
@@ -24,7 +24,7 @@ export default class UrlMatcher extends Matcher<UrlOptions> {
     }, factory);
   }
 
-  replaceWith(match: string, props: Object = {}): ReactNode<UrlProps> {
+  replaceWith(match: string, props?: Object = {}): ReactNode {
     if (this.options.validateTLD) {
       const { host } = props.urlParts;
       const validList = TOP_LEVEL_TLDS.concat(this.options.customTLDs);

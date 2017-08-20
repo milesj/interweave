@@ -15,7 +15,7 @@ export default function Link({ children, href, onClick, newWindow }: LinkProps) 
       href={href}
       className="interweave__link"
       target={newWindow ? '_blank' : null}
-      onClick={onClick || null}
+      onClick={onClick}
       rel="noopener noreferrer"
     >
       {children}

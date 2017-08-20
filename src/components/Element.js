@@ -35,7 +35,7 @@ export default function Element({
   }
 
   return (
-    <Tag {...props}>{children || null}</Tag>
+    <Tag {...props}>{children}</Tag>
   );
 }
 

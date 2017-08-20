@@ -4,48 +4,39 @@
  * @flow
  */
 
-import { fromUnicodeToHex, fromHexToCodepoint } from 'emoji-database';
-import json from 'emoji-database/data/extra/shortname-to-unicode.json';
-import EMOJI_REGEX from 'emoji-database/regex';
-import EMOJI_SHORTNAME_REGEX from 'emoji-database/regex/shortname';
+import { flattenEmojiData, generateEmoticonPermutations } from 'emojibase';
+import { TEXT } from 'emojibase/lib/constants';
 
-type StringMap = { [key: string]: string };
-type EmojiMap = {
-  [shortname: string]: {
-    codepoint: number[],
-    hexcode: string,
-    unicode: string,
-  },
-};
+import type { Emoji } from 'emojibase';
 
-const data: StringMap = (typeof json === 'string') ? JSON.parse(json) : json;
-const emoji: EmojiMap = {};
+export const UNICODE_TO_SHORTCODES: { [unicode: string]: string[] } = {};
+export const SHORTCODE_TO_UNICODE: { [shortcode: string]: string } = {};
+export const EMOTICON_TO_UNICODE: { [emoticon: string]: string } = {};
+export const EMOJIS: { [unicode: string]: Emoji } = {};
 
-const UNICODE_TO_SHORTNAME: StringMap = {};
-const SHORTNAME_TO_UNICODE: StringMap = {};
+export function parseEmojiData(data: Emoji[]) {
+  flattenEmojiData(data).forEach((emoji) => {
+    const { emoticon, shortcodes = [] } = emoji;
 
-// Extract the shortname, codepoint, and unicode
-// https://r12a.github.io/apps/conversion/
-Object.keys(data).forEach((name: string) => {
-  const shortname = `:${name}:`;
-  const unicode = data[name];
-  const hexcode = fromUnicodeToHex(unicode);
-  const codepoint = fromHexToCodepoint(hexcode);
+    // Only support the default presentation
+    const unicode = (emoji.text && emoji.type === TEXT) ? emoji.text : emoji.emoji;
 
-  UNICODE_TO_SHORTNAME[unicode] = shortname;
-  SHORTNAME_TO_UNICODE[shortname] = unicode;
+    // Support all shortcodes
+    UNICODE_TO_SHORTCODES[unicode] = shortcodes.map((code) => {
+      const shortcode = `:${code}:`;
 
-  emoji[shortname] = {
-    codepoint,
-    hexcode,
-    unicode,
-  };
-});
+      SHORTCODE_TO_UNICODE[shortcode] = unicode;
 
-export {
-  EMOJI_REGEX,
-  EMOJI_SHORTNAME_REGEX,
-  UNICODE_TO_SHORTNAME,
-  SHORTNAME_TO_UNICODE,
-};
-export default emoji;
+      return shortcode;
+    });
+
+    // Support all emoticons
+    if (emoticon) {
+      generateEmoticonPermutations(emoticon).forEach((emo) => {
+        EMOTICON_TO_UNICODE[emo] = unicode;
+      });
+    }
+
+    EMOJIS[unicode] = emoji;
+  });
+}

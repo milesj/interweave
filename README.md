@@ -1,4 +1,4 @@
-# Interweave v5.4.0
+# Interweave v6.0.0
 [![Build Status](https://travis-ci.org/milesj/interweave.svg?branch=master)](https://travis-ci.org/milesj/interweave)
 
 Interweave is a robust React library that can...
@@ -9,13 +9,14 @@ Interweave is a robust React library that can...
 * Clean HTML attributes using filters.
 * Interpolate components using matchers.
 * Autolink URLs, IPs, emails, and hashtags.
-* Render Emoji characters.
+* Render Emoji and emoticon characters.
 * And much more!
 
 ## Requirements
 
-* React 15+
+* React 15/16+
 * IE 11+
+* `fetch` and `sessionStorage` if using emoji
 
 ## Installation
 
@@ -100,7 +101,9 @@ and `noHtmlExceptMatchers` props mentioned previously.
   * [Emails](#emails)
   * [Hashtags](#hashtags)
 * [Render Emojis](#render-emojis)
-  * [Converting Shortnames](#converting-shortnames)
+  * [Loading Emoji Data](#loading-emoji-data)
+  * [Converting Emoticons](#converting-emoticons)
+  * [Converting Shortcodes](#converting-shortcodes)
   * [Using SVGs or PNGs](#using-svgs-or-pngs)
     * [CSS Styling](#css-styling)
     * [Inline Sizing](#inline-sizing)
@@ -140,7 +143,7 @@ When adding a matcher, a unique name must be passed to the constructor.
 
 ```javascript
 import Interweave from 'interweave';
-import EmojiMatcher from 'interweave/lib/matchers/Emoji';
+import EmojiMatcher from 'interweave/lib/matchers/EmojiMatcher';
 
 <Interweave matchers={[new EmojiMatcher('emoji')]} />
 ```
@@ -301,7 +304,7 @@ query, and fragment.
 
 ```javascript
 import Interweave from 'interweave';
-import UrlMatcher from 'interweave/lib/matchers/Url';
+import UrlMatcher from 'interweave/lib/matchers/UrlMatcher';
 
 <Interweave matchers={[new UrlMatcher('url')]} />
 ```
@@ -345,7 +348,7 @@ valid IPv4 address (IPv6 not supported). Like the `UrlMatcher`, all
 segments are included.
 
 ```javascript
-import IpMatcher from 'interweave/lib/matchers/Ip';
+import IpMatcher from 'interweave/lib/matchers/IpMatcher';
 ```
 
 If a match is found, the same props as `UrlMatcher` is passed.
@@ -357,7 +360,7 @@ The `EmailMatcher` will match an email address and link it using a
 
 ```javascript
 import Interweave from 'interweave';
-import EmailMatcher from 'interweave/lib/matchers/Email';
+import EmailMatcher from 'interweave/lib/matchers/EmailMatcher';
 
 <Interweave matchers={[new EmailMatcher('email')]} />
 ```
@@ -384,7 +387,7 @@ Or a function can be passed, which receives the hashtag as the first argument.
 
 ```javascript
 import Interweave from 'interweave';
-import HashtagMatcher from 'interweave/lib/matchers/Hashtag';
+import HashtagMatcher from 'interweave/lib/matchers/HashtagMatcher';
 
 <Interweave
   hashtagUrl="https://twitter.com/hashtag/{{hashtag}}"
@@ -410,11 +413,11 @@ matcher element will be rendered and passed the following props.
 Who loves emojis? Everyone loves emojis. Interweave has built-in
 support for rendering emoji, either their unicode character, or
 with media, all through the `EmojiMatcher`. The matcher utilizes
-[EmojiOne](http://emojione.com/) for accurate and up-to-date data.
+[Emojibase](https://github.com/milesj/emojibase) for accurate and up-to-date data.
 
 ```javascript
 import Interweave from 'interweave';
-import EmojiMatcher from 'interweave/lib/matchers/Emoji';
+import EmojiMatcher from 'interweave/lib/matchers/EmojiMatcher';
 
 <Interweave matchers={[new EmojiMatcher('emoji')]} />
 ```
@@ -424,40 +427,78 @@ when matching. If a match is found, an [Emoji](#rendered-elements)
 element or matcher element will be rendered and passed the following
 props.
 
-* `shortname` (string) - The shortname when `convertShortname` is on.
-* `unicode` (string) - The unicode literal character. Provided for both
-  shortname and unicode matching.
+* `emoticon` (string) - If applicable, an emoticon for the specific emoji character.
+* `shortcode` (string) - The shortcode for the specific emoji character.
+* `unicode` (string) - The unicode literal character.
 
-#### Converting Shortnames
+#### Loading Emoji Data
 
-Shortnames provide an easy non-unicode alternative for supporting emoji,
-and are represented by a word (or two) surrounded by two colons: `:boy:`.
-A list of all possible shortnames can be found at
-[emoji.codes](http://emoji.codes/family).
-
-To enable conversion of a shortname to a unicode literal character,
-pass the `convertShortname` option to the matcher constructor.
+Before emoji can be rendered, emoji data must be loaded into the application.
+To do this, an `EmojiLoader` component is provided, which will fetch emoji data from
+Emojibase's CDN. This component should wrap `Interweave` in the React tree.
 
 ```javascript
-new EmojiMatcher('emoji', { convertShortname: true });
+import Interweave from 'interweave';
+import EmojiLoader from 'interweave/lib/loaders/EmojiLoader';
+
+<EmojiLoader>
+  <Interweave />
+</EmojiLoader>
+```
+
+This component accepts the following optional props.
+
+* `locale` (string) - The localized data to fetch. Defaults to `en`.
+  [View supported locales](https://github.com/milesj/emojibase#usage).
+* `version` (string) - The `emojibase-data` release version to fetch. Defaults to `latest`.
+  [Read more](https://github.com/milesj/emojibase#fetchfromcdn).
+
+> `EmojiLoader` works best when using [composition](#global-configuration).
+
+#### Converting Emoticons
+
+Emoticons have been around longer than emoji, but emoji are much nicer to look at.
+Some emoji, not all, have an associated emoticon that can be converted to an
+emoji character. For example, `:)` would convert to 🙂.
+
+To enable conversion of an emoticon to a unicode literal character,
+pass the `convertEmoticon` option to the matcher constructor.
+
+```javascript
+new EmojiMatcher('emoji', { convertEmoticon: true });
+```
+
+#### Converting Shortcodes
+
+Shortcodes provide an easy non-unicode alternative for supporting emoji,
+and are represented by a word (or two) surrounded by two colons: `:boy:`.
+A list of all possible shortcodes can be found at
+[emoji.codes](http://emoji.codes/family).
+
+To enable conversion of a shortcode to a unicode literal character,
+pass the `convertShortcode` option to the matcher constructor.
+
+```javascript
+new EmojiMatcher('emoji', { convertShortcode: true });
 ```
 
 #### Using SVGs or PNGs
 
 To begin, we must enable conversion of unicode characters to media (images, vector, etc),
-by enabling the `convertUnicode` option. Secondly, if you want to support shortnames,
-enable `convertShortname`.
+by enabling the `convertUnicode` option. Secondly, if you want to support shortcodes
+or emoticons, enable `convertShortcode` or `convertEmoticon` respectively.
 
 ```javascript
 new EmojiMatcher('emoji', {
-  convertShortname: true,
+  convertEmoticon: true,
+  convertShortcode: true,
   convertUnicode: true,
 });
 ```
 
 Now we need to provide an absolute path to the SVG/PNG file using
 the `emojiPath` prop. This path must contain a `{{hexcode}}` token,
-which will be replaced by the hexadecimal value of the emoji.
+which will be replaced by the hexadecimal codepoint (hexcode) of the emoji.
 
 Or a function can be passed, which receives the hexcode as the 1st argument,
 `enlargeEmoji` value as the 2nd argument, `emojiSize` as the 3rd argument,
@@ -524,8 +565,8 @@ To customize this, define the `emojiLargeSize` prop.
 
 To display native unicode characters as is, pass the `renderUnicode`
 option to the matcher constructor. This option will override the
-rendering of SVGs or PNGs, and works quite well alongside shortname
-conversion.
+rendering of SVGs or PNGs, and works quite well alongside shortcode
+or emoticon conversion.
 
 ```javascript
 new EmojiMatcher('emoji', { renderUnicode: true });
@@ -543,8 +584,7 @@ new EmojiMatcher('emoji', { enlargeThreshold: 3 });
 ```
 
 For example, if `enlargeThreshold` is set to 3, and 3 emojis are found
-within the content, all will be enlarged. If 2 or 4 are found, they
-will not be enlarged.
+within the content, all will be enlarged.
 
 ### HTML Parsing
 
@@ -642,11 +682,13 @@ between Twitter and Instagram hashtags, or PNG or SVG emojis.
 ```javascript
 import React from 'react';
 import PropTypes from 'prop-types';
+import { stripHexcode } from 'emojibase';
 import BaseInterweave, { Filter, Matcher } from 'interweave';
-import IpMatcher from 'interweave/lib/matchers/Ip';
-import UrlMatcher from 'interweave/lib/matchers/Url';
-import EmojiMatcher from 'interweave/lib/matchers/Emoji';
-import HashtagMatcher from 'interweave/lib/matchers/Hashtag';
+import EmojiLoader from 'interweave/lib/loaders/EmojiLoader';
+import IpMatcher from 'interweave/lib/matchers/IpMatcher';
+import UrlMatcher from 'interweave/lib/matchers/UrlMatcher';
+import EmojiMatcher from 'interweave/lib/matchers/EmojiMatcher';
+import HashtagMatcher from 'interweave/lib/matchers/HashtagMatcher';
 
 const globalFilters = [
   new CustomFilter('href'),
@@ -655,12 +697,16 @@ const globalFilters = [
 const globalMatchers = [
   new IpMatcher('ip'),
   new UrlMatcher('url'),
-  new EmojiMatcher('emoji', { convertUnicode: true, convertShortname: true }),
   new HashtagMatcher('hashtag'),
+  new EmojiMatcher('emoji', {
+    convertEmoticon: true,
+    convertShortcode: true,
+    convertUnicode: true,
+  }),
 ];
 
 const emojiPath = (hexcode, enlarged) => (
-  `//cdn.jsdelivr.net/emojione/assets/3.0/png/${enlarged ? 64 : 32}/${hexcode.toLowerCase()}.png`,
+  `//cdn.jsdelivr.net/emojione/assets/3.0/png/${enlarged ? 64 : 32}/${stripHexcode(hexcode).toLowerCase()}.png`,
 );
 
 export default function Interweave({
@@ -668,6 +714,8 @@ export default function Interweave({
   matchers = [],
   twitter = false,
   instagram = false,
+  locale = 'en',
+  version = 'latest',
   ...props
 }) {
   let hashtagUrl = '';
@@ -679,21 +727,23 @@ export default function Interweave({
   }
 
   return (
-    <BaseInterweave
-      filters={[
-        ...globalFilters,
-        ...filters,
-      ]}
-      matchers={[
-        ...globalMatchers,
-        ...matchers,
-      ]}
-      hashtagUrl={hashtagUrl}
-      emojiPath={emojiPath}
-      emojiSize={1}
-      newWindow
-      {...props}
-    />
+    <EmojiLoader locale={locale} version={version}>
+      <BaseInterweave
+        filters={[
+          ...globalFilters,
+          ...filters,
+        ]}
+        matchers={[
+          ...globalMatchers,
+          ...matchers,
+        ]}
+        hashtagUrl={hashtagUrl}
+        emojiPath={emojiPath}
+        emojiSize={1}
+        newWindow
+        {...props}
+      />
+    </EmojiLoader>
   )
 }
 
@@ -702,6 +752,8 @@ Interweave.propTypes = {
   matchers: PropTypes.arrayOf(PropTypes.instanceOf(Matcher)),
   twitter: PropTypes.bool,
   instagram: PropTypes.bool,
+  locale: PropTypes.string,
+  version: PropTypes.string,
 };
 ```
 

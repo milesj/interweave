@@ -5,38 +5,42 @@
  */
 
 import React from 'react';
+import EMOJI_REGEX from 'emojibase-regex';
+import EMOTICON_REGEX from 'emojibase-regex/emoticon';
+import SHORTCODE_REGEX from 'emojibase-regex/shortcode';
 import Matcher from '../Matcher';
 import Emoji from '../components/Emoji';
 import {
-  EMOJI_REGEX,
-  EMOJI_SHORTNAME_REGEX,
-  SHORTNAME_TO_UNICODE,
-  UNICODE_TO_SHORTNAME,
+  EMOJIS,
+  EMOTICON_TO_UNICODE,
+  SHORTCODE_TO_UNICODE,
 } from '../data/emoji';
 
 import type {
   MatchResponse,
   MatcherFactory,
-  EmojiProps,
   EmojiOptions,
   ReactNode,
-  ReactNodeList,
 } from '../types';
+
+// eslint-disable-next-line no-useless-escape
+const EMOTICON_BOUNDARY_REGEX = new RegExp(`(^|\\\b|\\\s)(${EMOTICON_REGEX.source})(?=\\\s|\\\b|$)`);
 
 export default class EmojiMatcher extends Matcher<EmojiOptions> {
   options: EmojiOptions;
 
-  constructor(name: string, options: Object = {}, factory: ?MatcherFactory = null) {
+  constructor(name: string, options?: Object = {}, factory?: ?MatcherFactory = null) {
     super(name, {
-      convertShortname: false,
+      convertEmoticon: false,
+      convertShortcode: false,
       convertUnicode: false,
-      renderUnicode: false,
       enlargeThreshold: 1,
+      renderUnicode: false,
       ...options,
     }, factory);
   }
 
-  replaceWith(match: string, props: Object = {}): ReactNode<EmojiProps> {
+  replaceWith(match: string, props?: Object = {}): ReactNode {
     if (this.options.renderUnicode) {
       return props.unicode;
     }
@@ -53,20 +57,35 @@ export default class EmojiMatcher extends Matcher<EmojiOptions> {
   match(string: string): ?MatchResponse {
     let response = null;
 
-    // Should we convert shortnames to unicode?
-    if (this.options.convertShortname && string.indexOf(':') >= 0) {
-      response = this.doMatch(string, EMOJI_SHORTNAME_REGEX, matches => ({
-        shortname: matches[0].toLowerCase(),
+    // Should we convert emoticons to unicode?
+    if (this.options.convertEmoticon) {
+      response = this.doMatch(string, EMOTICON_BOUNDARY_REGEX, matches => ({
+        emoticon: matches[0].trim(),
       }));
 
-      if (response && response.shortname) {
-        const unicode = SHORTNAME_TO_UNICODE[response.shortname];
+      if (response && response.emoticon) {
+        const unicode = EMOTICON_TO_UNICODE[response.emoticon];
 
-        // We want to render using the unicode value
         if (unicode) {
           response.unicode = unicode;
+          response.match = response.emoticon; // Remove padding
+        } else {
+          response = null;
+        }
+      }
+    }
 
-        // Invalid shortname
+    // Should we convert shortcodes to unicode?
+    if (this.options.convertShortcode && !response && string.indexOf(':') >= 0) {
+      response = this.doMatch(string, SHORTCODE_REGEX, matches => ({
+        shortcode: matches[0].toLowerCase(),
+      }));
+
+      if (response && response.shortcode) {
+        const unicode = SHORTCODE_TO_UNICODE[response.shortcode];
+
+        if (unicode) {
+          response.unicode = unicode;
         } else {
           response = null;
         }
@@ -81,7 +100,7 @@ export default class EmojiMatcher extends Matcher<EmojiOptions> {
 
       if (
         response && response.unicode &&
-        !UNICODE_TO_SHORTNAME[response.unicode]
+        !EMOJIS[response.unicode]
       ) {
         /* istanbul ignore next Hard to test */
         return null;
@@ -94,7 +113,7 @@ export default class EmojiMatcher extends Matcher<EmojiOptions> {
   /**
    * When a single `Emoji` is the only content, enlarge it!
    */
-  onAfterParse(content: ReactNodeList<*>, props: Object): ReactNodeList<*> {
+  onAfterParse(content: ReactNode[], props: Object): ReactNode[] {
     if (content.length === 0) {
       return content;
     }
@@ -113,9 +132,10 @@ export default class EmojiMatcher extends Matcher<EmojiOptions> {
           valid = false;
           break;
         }
+
       } else if (React.isValidElement(item)) {
         // Only count towards emojis
-        if (item.type === Emoji) {
+        if (item && item.type === Emoji) {
           count += 1;
           valid = true;
 
@@ -140,11 +160,13 @@ export default class EmojiMatcher extends Matcher<EmojiOptions> {
     }
 
     return content.map((item) => {
-      if (typeof item === 'string') {
+      if (!item || typeof item === 'string') {
         return item;
       }
 
+      // $FlowIgnore Can't type a React element
       return React.cloneElement(item, {
+        // $FlowIgnore Nor its props
         ...item.props,
         enlargeEmoji: true,
       });

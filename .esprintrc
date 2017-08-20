@@ -1,9 +1,0 @@
-{
-  "paths": [
-    "src/**/*.js"
-  ],
-  "ignored": [
-    "**/node_modules/**/*"
-  ],
-  "port": 1337
-}

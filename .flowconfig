@@ -8,10 +8,20 @@
 
 [libs]
 ./interweave.js.flow
-./node_modules/emoji-database/emoji-database.js.flow
+./node_modules/emojibase/emojibase.js.flow
+./node_modules/emojibase-regex/emojibase-regex.js.flow
+./node_modules/emojibase-test-utils/emojibase-test-utils.js.flow
+
+[lints]
+all=warn
+sketchy-null-bool=off
+sketchy-null-mixed=off
+sketchy-null-number=off
+sketchy-null-string=off
 
 [options]
 emoji=true
+include_warnings=true
 esproposal.class_instance_fields=enable
 esproposal.class_static_fields=enable
 esproposal.export_star_as=enable

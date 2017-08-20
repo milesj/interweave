@@ -4,11 +4,13 @@
  * @flow
  */
 
-/* eslint-disable no-undef */
+/* eslint-disable no-undef, import/prefer-default-export */
 
-import type React from 'react';
+import type { Node as ReactNode } from 'react';
 import type Filter from './Filter';
 import type Matcher from './Matcher';
+
+export type { ReactNode };
 
 export interface NodeInterface {
   attributes?: NamedNodeMap,
@@ -30,19 +32,16 @@ export type NodeConfig = {
   void?: boolean,
 };
 
-export type ReactNode<T> = string | React.Element<T>;
-
-export type ReactNodeList<T> = ReactNode<T>[];
-
 export type PrimitiveType = string | number | boolean;
 
 export type Attributes = { [key: string]: PrimitiveType };
 
-export type MatcherFactory = (match: string, props: Object) => ReactNode<*>;
+export type MatcherFactory = (match: string, props: Object) => ReactNode;
 
 export type MatchResponse = {
+  emoticon?: string,
   match: string,
-  shortname?: string,
+  shortcode?: string,
   unicode?: string,
   [key: string]: mixed,
 };
@@ -54,7 +53,7 @@ export type ParserProps = {
   [key: string]: mixed,
 };
 
-export type AfterParseCallback = (content: ReactNodeList<*>, props: Object) => ReactNodeList<*>;
+export type AfterParseCallback = (content: ReactNode[], props: Object) => ReactNode[];
 
 export type BeforeParseCallback = (content: string, props: Object) => string;
 
@@ -66,13 +65,13 @@ export type InterweaveProps = {
   disableLineBreaks: boolean,
   disableMatchers: boolean,
   disableWhitelist: boolean,
-  emptyContent: ?ReactNode<*>,
+  emptyContent: ?ReactNode,
   filters: Filter[],
   matchers: Matcher<*>[],
   noHtml: boolean,
   noHtmlExceptMatchers: boolean,
-  onAfterParse: AfterParseCallback,
-  onBeforeParse: BeforeParseCallback,
+  onAfterParse: ?AfterParseCallback,
+  onBeforeParse: ?BeforeParseCallback,
   tagName: string,
 };
 
@@ -80,24 +79,24 @@ export type MarkupProps = {
   content: string,
   disableLineBreaks: boolean,
   disableWhitelist: boolean,
-  emptyContent: ?ReactNode<*>,
+  emptyContent: ?ReactNode,
   noHtml: boolean,
   noHtmlExceptMatchers: boolean,
   tagName: string,
 };
 
 export type LinkProps = {
-  children?: mixed,
+  children: ReactNode,
   href: string,
-  newWindow?: boolean,
-  onClick?: () => void,
+  newWindow: boolean,
+  onClick: ?() => void,
 };
 
 export type ElementProps = {
-  attributes?: Attributes,
-  children?: mixed,
-  className?: string,
-  selfClose?: boolean,
+  attributes: Attributes,
+  children: ReactNode,
+  className: string,
+  selfClose: boolean,
   tagName: string,
 };
 
@@ -111,10 +110,10 @@ export type EmailProps = {
 
 export type HashtagProps = {
   children: string,
-  encodeHashtag?: boolean,
+  encodeHashtag: boolean,
   hashtagName: string,
-  hashtagUrl?: string | (hashtag: string) => string,
-  preserveHash?: boolean,
+  hashtagUrl: string | (hashtag: string) => string,
+  preserveHash: boolean,
 };
 
 export type UrlProps = {
@@ -136,17 +135,27 @@ export type UrlOptions = {
 };
 
 export type EmojiProps = {
-  emojiLargeSize?: number,
-  emojiPath?: string |
+  emojiLargeSize: number,
+  emojiPath: string |
     (hexcode: string, enlarge: boolean, size: number, largeSize: number) => string,
-  emojiSize?: number,
-  enlargeEmoji?: boolean,
-  shortname: string,
+  emojiSize: number,
+  emoticon: string,
+  enlargeEmoji: boolean,
+  locale: string,
+  shortcode: string,
   unicode: string,
 };
 
+export type EmojiLoaderProps = {
+  children: ReactNode,
+  data: Object[],
+  locale: string,
+  version: string,
+};
+
 export type EmojiOptions = {
-  convertShortname: boolean,
+  convertEmoticon: boolean,
+  convertShortcode: boolean,
   convertUnicode: boolean,
   enlargeThreshold: number,
   renderUnicode: boolean,

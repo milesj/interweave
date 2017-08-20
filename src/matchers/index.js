@@ -4,10 +4,10 @@
  * @flow
  */
 
-import EmailMatcher from './Email';
-import EmojiMatcher from './Emoji';
-import HashtagMatcher from './Hashtag';
-import IpMatcher from './Ip';
-import UrlMatcher from './Url';
+import EmailMatcher from './EmailMatcher';
+import EmojiMatcher from './EmojiMatcher';
+import HashtagMatcher from './HashtagMatcher';
+import IpMatcher from './IpMatcher';
+import UrlMatcher from './UrlMatcher';
 
 export { EmailMatcher, EmojiMatcher, HashtagMatcher, IpMatcher, UrlMatcher };
