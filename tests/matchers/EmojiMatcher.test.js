@@ -186,7 +186,7 @@ describe('matchers/EmojiMatcher', () => {
     });
 
     it('returns null for invalid emoticon match', () => {
-      expect(matcher.match('0)')).toBe(null);
+      expect(matcher.match('?)')).toBe(null);
     });
 
     it('returns object for valid emoticon match', () => {

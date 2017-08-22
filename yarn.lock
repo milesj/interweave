@@ -2,9 +2,9 @@
 # yarn lockfile v1
 
 
-"@milesj/build-tool-config@^0.19.0":
-  version "0.19.0"
-  resolved "https://registry.yarnpkg.com/@milesj/build-tool-config/-/build-tool-config-0.19.0.tgz#522fdfe9e82764e4cc550e5f69dc5ee1dc5858e9"
+"@milesj/build-tool-config@^0.20.0":
+  version "0.20.0"
+  resolved "https://registry.yarnpkg.com/@milesj/build-tool-config/-/build-tool-config-0.20.0.tgz#6841098372fc94cb5baecfd2457884f033d23775"
   dependencies:
     babel-cli "^6.26.0"
     babel-eslint "^7.2.0"
@@ -27,7 +27,7 @@
     eslint-plugin-jest "^20.0.3"
     eslint-plugin-jsx-a11y "^5.1.1"
     eslint-plugin-promise "^3.5.0"
-    eslint-plugin-react "^7.2.1"
+    eslint-plugin-react "^7.3.0"
     eslint-plugin-unicorn "^2.1.2"
     flow-bin "^0.53.1"
     jest "^20.0.4"
@@ -36,7 +36,7 @@
     react-dom "^15.6.1"
     react-test-renderer "^15.6.1"
     rimraf "^2.6.1"
-    rollup "^0.47.6"
+    rollup "^0.48.2"
     rollup-plugin-babel "^3.0.2"
     rollup-plugin-commonjs "^8.1.0"
     rollup-plugin-json "^2.3.0"
@@ -1772,17 +1772,17 @@ emoji-regex@^6.1.0:
   version "6.4.2"
   resolved "https://registry.yarnpkg.com/emoji-regex/-/emoji-regex-6.4.2.tgz#a30b6fee353d406d96cfb9fa765bdc82897eff6e"
 
-emojibase-regex@^1.0.2:
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/emojibase-regex/-/emojibase-regex-1.0.2.tgz#495f58f28e16ec4352da58f02adb03f2dc36e386"
-
-emojibase-test-utils@^1.0.3:
+emojibase-regex@^1.0.3:
   version "1.0.3"
-  resolved "https://registry.yarnpkg.com/emojibase-test-utils/-/emojibase-test-utils-1.0.3.tgz#c36c0f01652592bd662cfb04251c84b11ed8e8b4"
+  resolved "https://registry.yarnpkg.com/emojibase-regex/-/emojibase-regex-1.0.3.tgz#36fea8330a199c3a76ec83050dc5a4e685e240ad"
 
-emojibase@^1.2.1:
-  version "1.2.1"
-  resolved "https://registry.yarnpkg.com/emojibase/-/emojibase-1.2.1.tgz#a6b39a5a68fc3b292eb4804887b9f95f2a9b04c8"
+emojibase-test-utils@^1.0.4:
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/emojibase-test-utils/-/emojibase-test-utils-1.0.4.tgz#2b7afdf9bb2c4cf854dc7777fb2ca4f7acc72e64"
+
+emojibase@^1.2.2:
+  version "1.2.2"
+  resolved "https://registry.yarnpkg.com/emojibase/-/emojibase-1.2.2.tgz#49b73649bae421ac2fdbb3c57b8f64e8d8c4fb3b"
 
 encodeurl@~1.0.1:
   version "1.0.1"
@@ -1928,13 +1928,14 @@ eslint-plugin-promise@^3.5.0:
   version "3.5.0"
   resolved "https://registry.yarnpkg.com/eslint-plugin-promise/-/eslint-plugin-promise-3.5.0.tgz#78fbb6ffe047201627569e85a6c5373af2a68fca"
 
-eslint-plugin-react@^7.2.1:
-  version "7.2.1"
-  resolved "https://registry.yarnpkg.com/eslint-plugin-react/-/eslint-plugin-react-7.2.1.tgz#c2673526ed6571b08c69c5f453d03f5f13e8ddbe"
+eslint-plugin-react@^7.3.0:
+  version "7.3.0"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-react/-/eslint-plugin-react-7.3.0.tgz#ca9368da36f733fbdc05718ae4e91f778f38e344"
   dependencies:
     doctrine "^2.0.0"
     has "^1.0.1"
     jsx-ast-utils "^2.0.0"
+    prop-types "^15.5.10"
 
 eslint-plugin-unicorn@^2.1.2:
   version "2.1.2"
@@ -4438,9 +4439,9 @@ rollup-watch@^4.3.1:
     require-relative "0.8.7"
     rollup-pluginutils "^2.0.1"
 
-rollup@^0.47.6:
-  version "0.47.6"
-  resolved "https://registry.yarnpkg.com/rollup/-/rollup-0.47.6.tgz#83b90a1890dd3321a3f8d0b2bd216e88483f33de"
+rollup@^0.48.2:
+  version "0.48.2"
+  resolved "https://registry.yarnpkg.com/rollup/-/rollup-0.48.2.tgz#dd9214eaf78d98a7771bf5583123cc80a0b5d6dc"
 
 run-async@^2.2.0:
   version "2.3.0"

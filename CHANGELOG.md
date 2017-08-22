@@ -1,6 +1,6 @@
 # 6.0.0
 #### 💥 Breaking
-* Migrated from `emoji-database` to `emojibase`.
+* Migrated from `emoji-database` to `emojibase`, which is now a peer dependency.
 * Matcher files have been renamed and suffixed with `Matcher`.
 * Renamed all usage of `shortname` to `shortcode`.
 
