@@ -16,7 +16,7 @@ Interweave is a robust React library that can...
 
 * React 15/16+
 * IE 11+
-* `fetch` and `sessionStorage` if using emoji
+* Emoji support: `fetch`, `sessionStorage`
 
 ## Installation
 
