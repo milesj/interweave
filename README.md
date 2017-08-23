@@ -1,4 +1,4 @@
-# Interweave v6.0.0
+# Interweave v6.1.0
 [![Build Status](https://travis-ci.org/milesj/interweave.svg?branch=master)](https://travis-ci.org/milesj/interweave)
 
 Interweave is a robust React library that can...
@@ -20,12 +20,12 @@ Interweave is a robust React library that can...
 
 ## Installation
 
-Interweave requires React as a peer dependency.
+Interweave requires React and Emojibase as a peer dependency.
 
 ```
-npm install interweave react --save
+npm install interweave emojibase react --save
 // Or
-yarn add interweave react
+yarn add interweave emojibase react
 ```
 
 ## Usage
@@ -706,7 +706,7 @@ const globalMatchers = [
 ];
 
 const emojiPath = (hexcode, enlarged) => (
-  `//cdn.jsdelivr.net/emojione/assets/3.0/png/${enlarged ? 64 : 32}/${stripHexcode(hexcode).toLowerCase()}.png`,
+  `//cdn.jsdelivr.net/emojione/assets/3.1/png/${enlarged ? 64 : 32}/${stripHexcode(hexcode).toLowerCase()}.png`,
 );
 
 export default function Interweave({

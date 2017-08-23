@@ -1,6 +1,7 @@
 # 6.1.0
 #### 🐞 Fixed
 * Major improvements to emoticon matching and parsing.
+* Updated Flowtype definitions with more generics.
 
 #### 🛠 Internal
 * Updated `emojibase` to 1.3.0.

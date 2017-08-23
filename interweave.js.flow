@@ -65,19 +65,108 @@ declare module 'interweave' {
   }
 }
 
-declare module 'interweave/lib/components' {
-  declare export class Element extends React.Component {}
-  declare export class Email extends React.Component {}
-  declare export class Emoji extends React.Component {}
-  declare export class Hashtag extends React.Component {}
-  declare export class Link extends React.Component {}
-  declare export class Url extends React.Component {}
+declare module 'interweave/lib/components/Element' {
+  declare export class Element extends React.Component<{
+    attributes: { [key: string]: string | number | boolean },
+    children: React.Node,
+    className: string,
+    selfClose: boolean,
+    tagName: string,
+  }> {}
 }
 
-declare module 'interweave/lib/matchers' {
+declare module 'interweave/lib/components/Email' {
+  declare export class Email extends React.Component<{
+    children: string,
+    emailParts: {
+      host: string,
+      username: string,
+    },
+  }> {}
+}
+
+declare module 'interweave/lib/components/Emoji' {
+  declare export class Emoji extends React.Component<{
+    emojiLargeSize: number,
+    emojiPath: string |
+      (hexcode: string, enlarge: boolean, size: number, largeSize: number) => string,
+    emojiSize: number,
+    emoticon: string,
+    enlargeEmoji: boolean,
+    locale: string,
+    shortcode: string,
+    unicode: string,
+  }> {}
+}
+
+declare module 'interweave/lib/components/Hashtag' {
+  declare export class Hashtag extends React.Component<{
+    children: string,
+    encodeHashtag: boolean,
+    hashtagName: string,
+    hashtagUrl: string | (hashtag: string) => string,
+    preserveHash: boolean,
+  }> {}
+}
+
+declare module 'interweave/lib/components/Link' {
+  declare export class Link extends React.Component<{
+    children: React.Node,
+    href: string,
+    newWindow: boolean,
+    onClick: ?() => void,
+  }> {}
+}
+
+declare module 'interweave/lib/components/Url' {
+  declare export class Url extends React.Component<{
+    children: string,
+    urlParts: {
+      auth: string,
+      fragment: string,
+      host: string,
+      path: string,
+      port: string | number,
+      query: string,
+      scheme: string,
+    },
+  }> {}
+}
+
+declare module 'interweave/lib/components/EmojiLoader' {
+  declare export class EmojiLoader extends React.Component<{
+    children: React.Node,
+    data: Object[],
+    locale: string,
+    version: string,
+  }> {}
+}
+
+declare module 'interweave/lib/matchers/EmailMatcher' {
   declare export class EmailMatcher extends Matcher<Object> {}
-  declare export class EmojiMatcher extends Matcher<Object> {}
+}
+
+declare module 'interweave/lib/matchers/EmojiMatcher' {
+  declare export class EmojiMatcher extends Matcher<{
+    convertEmoticon: boolean,
+    convertShortcode: boolean,
+    convertUnicode: boolean,
+    enlargeThreshold: number,
+    renderUnicode: boolean,
+  }> {}
+}
+
+declare module 'interweave/lib/matchers/HashtagMatcher' {
   declare export class HashtagMatcher extends Matcher<Object> {}
+}
+
+declare module 'interweave/lib/matchers/IpMatcher' {
   declare export class IpMatcher extends Matcher<Object> {}
-  declare export class UrlMatcher extends Matcher<Object> {}
+}
+
+declare module 'interweave/lib/matchers/UrlMatcher' {
+  declare export class UrlMatcher extends Matcher<{
+    customTLDs: string[],
+    validateTLD: boolean,
+  }> {}
 }
