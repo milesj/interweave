@@ -1,3 +1,8 @@
+# 6.1.0
+#### 🛠 Internal
+* Updated `emojibase` to 1.3.0.
+* Updated `emojibase-regex` to 1.0.4.
+
 # 6.0.0
 #### 💥 Breaking
 * Migrated from `emoji-database` to `emojibase`, which is now a peer dependency.
