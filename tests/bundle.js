@@ -35,7 +35,7 @@ const emojiProps = {
     }),
   ],
   emojiPath: (hex, large) => (
-    `https://cdn.jsdelivr.net/emojione/assets/3.0/png/${large ? 64 : 32}/${stripHexcode(hex).toLowerCase()}.png`
+    `https://cdn.jsdelivr.net/emojione/assets/3.1/png/${large ? 64 : 32}/${stripHexcode(hex).toLowerCase()}.png`
   ),
   emojiSize: 1,
 };
@@ -93,6 +93,12 @@ function App() {
         encodeHashtag
       />
 
+      <Interweave
+        tagName="div"
+        matchers={[new HashtagMatcher('hashtag')]}
+        content="#lonely"
+      />
+
       <h1>URLs, IPs</h1>
 
       <Interweave
@@ -109,12 +115,24 @@ function App() {
           https://facebook.github.io/react (I hope). www.github.com."
       />
 
+      <Interweave
+        tagName="div"
+        matchers={[new UrlMatcher('url')]}
+        content="http://milesj.me"
+      />
+
       <h1>Emails</h1>
 
       <Interweave
         tagName="div"
         matchers={[new EmailMatcher('email')]}
         content="This is a string that contains an email: email@domain.com."
+      />
+
+      <Interweave
+        tagName="div"
+        matchers={[new EmailMatcher('email')]}
+        content="email@domain.com"
       />
 
       <h1>Emoticons</h1>
@@ -137,24 +155,48 @@ function App() {
         content="To unicode literals: :) :-D :[ <3 =/ \m/"
       />
 
+      <Interweave
+        {...emojiProps}
+        tagName="span"
+        content=":{>"
+      />
+
+      <Interweave
+        {...emojiProps}
+        tagName="span"
+        content="0)"
+      />
+
+      <Interweave
+        {...emojiProps}
+        tagName="span"
+        content="8#"
+      />
+
       <h1>Shortcodes</h1>
 
       <Interweave
         tagName="div"
-        content="No matchers: :cat: :dog: :man: :family_mwgb:"
+        content="No matchers: :cat_face: :dog_face: :man: :family_mwgb:"
       />
 
       <Interweave
         {...emojiProps}
         tagName="div"
-        content="To PNGs: :cat: :dog: :man: :family_mwgb:"
+        content="To PNGs: :cat_face: :dog_face: :man: :family_mwgb:"
       />
 
       <Interweave
         {...emojiProps}
         tagName="div"
         matchers={[new EmojiMatcher('emoji', { convertShortcode: true, renderUnicode: true })]}
-        content="To unicode literals: :cat: :dog: :man: :family_mwgb:"
+        content="To unicode literals: :cat_face: :dog_face: :man: :family_mwgb:"
+      />
+
+      <Interweave
+        {...emojiProps}
+        tagName="div"
+        content=":cat_face:"
       />
 
       <h1>Unicode Escapes</h1>
@@ -177,6 +219,12 @@ function App() {
         content={'To unicode literals: \uD83D\uDC31 \uD83D\uDC36 \uD83D\uDC68 \uD83D\uDC68\u200D\uD83D\uDC69\u200D\uD83D\uDC67\u200D\uD83D\uDC66'}
       />
 
+      <Interweave
+        {...emojiProps}
+        tagName="div"
+        content={'\uD83D\uDC31'}
+      />
+
       <h1>Unicode Literals</h1>
 
       <Interweave
@@ -195,6 +243,12 @@ function App() {
         tagName="div"
         matchers={[new EmojiMatcher('emoji', { convertUnicode: true, renderUnicode: true })]}
         content="To unicode literals: 🐱 🐶 👨 👨‍👩‍👧‍👦"
+      />
+
+      <Interweave
+        {...emojiProps}
+        tagName="div"
+        content="🐱"
       />
 
       <h1>Emojis</h1>

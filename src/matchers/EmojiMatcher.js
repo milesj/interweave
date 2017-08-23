@@ -55,59 +55,72 @@ export default class EmojiMatcher extends Matcher<EmojiOptions> {
   }
 
   match(string: string): ?MatchResponse {
+    const matchers = [];
     let response = null;
 
     // Should we convert emoticons to unicode?
     if (this.options.convertEmoticon) {
-      response = this.doMatch(string, EMOTICON_BOUNDARY_REGEX, matches => ({
-        emoticon: matches[0].trim(),
-      }));
-
-      if (response && response.emoticon) {
-        const unicode = EMOTICON_TO_UNICODE[response.emoticon];
-
-        if (unicode) {
-          response.unicode = unicode;
-          response.match = response.emoticon; // Remove padding
-        } else {
-          response = null;
-        }
-      }
+      matchers.push(this.matchEmoticon);
     }
 
     // Should we convert shortcodes to unicode?
-    if (this.options.convertShortcode && !response && string.indexOf(':') >= 0) {
-      response = this.doMatch(string, SHORTCODE_REGEX, matches => ({
-        shortcode: matches[0].toLowerCase(),
-      }));
-
-      if (response && response.shortcode) {
-        const unicode = SHORTCODE_TO_UNICODE[response.shortcode];
-
-        if (unicode) {
-          response.unicode = unicode;
-        } else {
-          response = null;
-        }
-      }
+    if (this.options.convertShortcode) {
+      matchers.push(this.matchShortcode);
     }
 
     // Should we convert unicode to SVG/PNG?
-    if (this.options.convertUnicode && !response) {
-      response = this.doMatch(string, EMOJI_REGEX, matches => ({
-        unicode: matches[0],
-      }));
-
-      if (
-        response && response.unicode &&
-        !EMOJIS[response.unicode]
-      ) {
-        /* istanbul ignore next Hard to test */
-        return null;
-      }
+    if (this.options.convertUnicode) {
+      matchers.push(this.matchUnicode);
     }
 
+    matchers.some((matcher) => {
+      response = matcher.call(this, string);
+
+      return !!response;
+    });
+
     return response;
+  }
+
+  matchEmoticon(string: string): ?MatchResponse {
+    const response = this.doMatch(string, EMOTICON_BOUNDARY_REGEX, matches => ({
+      emoticon: matches[0].trim(),
+    }));
+
+    if (response && response.emoticon && EMOTICON_TO_UNICODE[response.emoticon]) {
+      response.unicode = EMOTICON_TO_UNICODE[response.emoticon];
+      response.match = response.emoticon; // Remove padding
+
+      return response;
+    }
+
+    return null;
+  }
+
+  matchShortcode(string: string): ?MatchResponse {
+    const response = this.doMatch(string, SHORTCODE_REGEX, matches => ({
+      shortcode: matches[0].toLowerCase(),
+    }));
+
+    if (response && response.shortcode && SHORTCODE_TO_UNICODE[response.shortcode]) {
+      response.unicode = SHORTCODE_TO_UNICODE[response.shortcode];
+
+      return response;
+    }
+
+    return null;
+  }
+
+  matchUnicode(string: string): ?MatchResponse {
+    const response = this.doMatch(string, EMOJI_REGEX, matches => ({
+      unicode: matches[0],
+    }));
+
+    if (response && response.unicode && EMOJIS[response.unicode]) {
+      return response;
+    }
+
+    return null;
   }
 
   /**

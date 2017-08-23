@@ -5,7 +5,7 @@
  */
 
 import { flattenEmojiData, generateEmoticonPermutations } from 'emojibase';
-import { TEXT } from 'emojibase/lib/constants';
+import { TEXT, EMOTICON_OPTIONS } from 'emojibase/lib/constants';
 
 import type { Emoji } from 'emojibase';
 
@@ -32,7 +32,10 @@ export function parseEmojiData(data: Emoji[]) {
 
     // Support all emoticons
     if (emoticon) {
-      generateEmoticonPermutations(emoticon).forEach((emo) => {
+      generateEmoticonPermutations(
+        emoticon,
+        EMOTICON_OPTIONS[emoticon] || {},
+      ).forEach((emo) => {
         EMOTICON_TO_UNICODE[emo] = unicode;
       });
     }

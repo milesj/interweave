@@ -1,4 +1,7 @@
 # 6.1.0
+#### 🐞 Fixed
+* Major improvements to emoticon matching and parsing.
+
 #### 🛠 Internal
 * Updated `emojibase` to 1.3.0.
 * Updated `emojibase-regex` to 1.0.4.
