@@ -28,12 +28,14 @@ export default class EmojiLoader extends React.Component<EmojiLoaderProps> {
     ]),
     locale: PropTypes.oneOf(SUPPORTED_LOCALES),
     version: PropTypes.string,
+    onLoad: PropTypes.func,
   };
 
   static defaultProps = {
     data: [],
     locale: 'en',
     version: 'latest',
+    onLoad() {},
   };
 
   componentWillMount() {
@@ -76,9 +78,10 @@ export default class EmojiLoader extends React.Component<EmojiLoaderProps> {
   loadData(data: string | Emoji[]) {
     loaded = true;
 
-    parseEmojiData((typeof data === 'string') ? JSON.parse(data) : data);
+    const emojis = parseEmojiData((typeof data === 'string') ? JSON.parse(data) : data);
 
     this.forceUpdate();
+    this.props.onLoad(emojis);
   }
 
   /**

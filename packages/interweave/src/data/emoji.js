@@ -14,7 +14,7 @@ export const SHORTCODE_TO_UNICODE: { [shortcode: string]: string } = {};
 export const EMOTICON_TO_UNICODE: { [emoticon: string]: string } = {};
 export const EMOJIS: { [unicode: string]: Emoji } = {};
 
-export function parseEmojiData(data: Emoji[]) {
+export function parseEmojiData(data: Emoji[]): Emoji[] {
   flattenEmojiData(data).forEach((emoji) => {
     const { emoticon, shortcodes = [] } = emoji;
 
@@ -42,4 +42,6 @@ export function parseEmojiData(data: Emoji[]) {
 
     EMOJIS[unicode] = emoji;
   });
+
+  return data;
 }

@@ -66,7 +66,7 @@ declare module 'interweave' {
 }
 
 declare module 'interweave/lib/components/Element' {
-  declare export class Element extends React.Component<{
+  declare export default class Element extends React.Component<{
     attributes: { [key: string]: string | number | boolean },
     children: React.Node,
     className: string,
@@ -76,7 +76,7 @@ declare module 'interweave/lib/components/Element' {
 }
 
 declare module 'interweave/lib/components/Email' {
-  declare export class Email extends React.Component<{
+  declare export default class Email extends React.Component<{
     children: string,
     emailParts: {
       host: string,
@@ -86,7 +86,7 @@ declare module 'interweave/lib/components/Email' {
 }
 
 declare module 'interweave/lib/components/Emoji' {
-  declare export class Emoji extends React.Component<{
+  declare export default class Emoji extends React.Component<{
     emojiLargeSize: number,
     emojiPath: string |
       (hexcode: string, enlarge: boolean, size: number, largeSize: number) => string,
@@ -100,7 +100,7 @@ declare module 'interweave/lib/components/Emoji' {
 }
 
 declare module 'interweave/lib/components/Hashtag' {
-  declare export class Hashtag extends React.Component<{
+  declare export default class Hashtag extends React.Component<{
     children: string,
     encodeHashtag: boolean,
     hashtagName: string,
@@ -110,7 +110,7 @@ declare module 'interweave/lib/components/Hashtag' {
 }
 
 declare module 'interweave/lib/components/Link' {
-  declare export class Link extends React.Component<{
+  declare export default class Link extends React.Component<{
     children: React.Node,
     href: string,
     newWindow: boolean,
@@ -119,7 +119,7 @@ declare module 'interweave/lib/components/Link' {
 }
 
 declare module 'interweave/lib/components/Url' {
-  declare export class Url extends React.Component<{
+  declare export default class Url extends React.Component<{
     children: string,
     urlParts: {
       auth: string,
@@ -134,7 +134,7 @@ declare module 'interweave/lib/components/Url' {
 }
 
 declare module 'interweave/lib/components/EmojiLoader' {
-  declare export class EmojiLoader extends React.Component<{
+  declare export default class EmojiLoader extends React.Component<{
     children: React.Node,
     data: Object[],
     locale: string,
@@ -143,11 +143,11 @@ declare module 'interweave/lib/components/EmojiLoader' {
 }
 
 declare module 'interweave/lib/matchers/EmailMatcher' {
-  declare export class EmailMatcher extends Matcher<Object> {}
+  declare export default class EmailMatcher extends Matcher<Object> {}
 }
 
 declare module 'interweave/lib/matchers/EmojiMatcher' {
-  declare export class EmojiMatcher extends Matcher<{
+  declare export default class EmojiMatcher extends Matcher<{
     convertEmoticon: boolean,
     convertShortcode: boolean,
     convertUnicode: boolean,
@@ -157,15 +157,15 @@ declare module 'interweave/lib/matchers/EmojiMatcher' {
 }
 
 declare module 'interweave/lib/matchers/HashtagMatcher' {
-  declare export class HashtagMatcher extends Matcher<Object> {}
+  declare export default class HashtagMatcher extends Matcher<Object> {}
 }
 
 declare module 'interweave/lib/matchers/IpMatcher' {
-  declare export class IpMatcher extends Matcher<Object> {}
+  declare export default class IpMatcher extends Matcher<Object> {}
 }
 
 declare module 'interweave/lib/matchers/UrlMatcher' {
-  declare export class UrlMatcher extends Matcher<{
+  declare export default class UrlMatcher extends Matcher<{
     customTLDs: string[],
     validateTLD: boolean,
   }> {}

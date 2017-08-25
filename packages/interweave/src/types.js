@@ -150,6 +150,7 @@ export type EmojiLoaderProps = {
   children: ReactNode,
   data: Object[],
   locale: string,
+  onLoad: (emoji: Object[]) => void,
   version: string,
 };
 

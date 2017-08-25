@@ -10,7 +10,7 @@ import HashtagMatcher from '../packages/interweave/src/matchers/HashtagMatcher';
 import IpMatcher from '../packages/interweave/src/matchers/IpMatcher';
 import UrlMatcher from '../packages/interweave/src/matchers/UrlMatcher';
 import EmojiLoader from '../packages/interweave/src/loaders/EmojiLoader';
-import { EMOJIS } from '../packages/interweave/src/data/emoji';
+import EmojiPicker from '../packages/interweave-emoji-picker/src/Picker';
 
 const contentWithNewLines = `This block has multiple new lines.
 Like how is this supposed to work.
@@ -28,6 +28,10 @@ Me.<br /><br />
 Help!`;
 
 // http://getemoji.com/
+const emojiPath = (hex, large) => (
+  `https://cdn.jsdelivr.net/emojione/assets/3.1/png/${large ? 64 : 32}/${stripHexcode(hex).toLowerCase()}.png`
+);
+
 const emojiProps = {
   matchers: [
     new EmojiMatcher('emoji', {
@@ -36,9 +40,7 @@ const emojiProps = {
       convertUnicode: true,
     }),
   ],
-  emojiPath: (hex, large) => (
-    `https://cdn.jsdelivr.net/emojione/assets/3.1/png/${large ? 64 : 32}/${stripHexcode(hex).toLowerCase()}.png`
-  ),
+  emojiPath,
   emojiSize: 1,
 };
 
@@ -58,10 +60,16 @@ function Interweave(props) {
 }
 
 function App() {
-  console.log(EMOJIS); // eslint-disable-line
-
   return (
     <div className="interweave__examples">
+      <h1>Picker</h1>
+
+      <EmojiPicker
+        emojiPath={emojiPath}
+        onSearch={(query) => { console.log('search', query); }}
+        onSelectEmoji={(emoji) => { console.log('emoji', emoji); }}
+      />
+
       <h1>Copy</h1>
 
       <Interweave
