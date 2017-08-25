@@ -1,0 +1,31 @@
+{
+  "name": "interweave-emoji-picker",
+  "version": "0.0.0",
+  "description": "A React based emoji picker powered by Interweave.",
+  "keywords": [
+    "interweave",
+    "react",
+    "emoji",
+    "picker"
+  ],
+  "main": "./lib/index.js",
+  "scripts": {
+    "build": "build-lib ./src -d ./lib"
+  },
+  "repository": "https://github.com/milesj/interweave/tree/master/packages/interweave-emoji-picker",
+  "license": "MIT",
+  "dependencies": {
+    "babel-runtime": "^6.26.0",
+    "prop-types": "^15.5.10"
+  },
+  "peerDependencies": {
+    "interweave": "^6.1.0",
+    "react": "^15.0.0 || ^16.0.0"
+  },
+  "devDependencies": {
+    "@milesj/build-tool-config": "^0.21.2",
+    "emojibase": "^1.3.0",
+    "interweave": "^6.1.0",
+    "react": "^15.6.1"
+  }
+}
