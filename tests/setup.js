@@ -1,7 +1,7 @@
 /* eslint-disable no-undef */
 
 import { loadEmojiData } from 'emojibase-test-utils';
-import { parseEmojiData } from '../src/data/emoji';
+import { parseEmojiData } from '../packages/interweave/src/data/emoji';
 
 const emojis = loadEmojiData();
 

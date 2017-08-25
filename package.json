@@ -1,38 +1,14 @@
 {
+  "private": true,
   "name": "interweave",
-  "version": "6.1.0",
-  "description": "React library to safely render HTML, filter attributes, autowrap text with matchers, render emoji characters, and much more.",
-  "keywords": [
-    "interweave",
-    "inject",
-    "interpolate",
-    "react",
-    "string",
-    "component",
-    "element",
-    "matcher",
-    "filter",
-    "clean",
-    "email",
-    "url",
-    "autolink",
-    "emoji",
-    "hashtag",
-    "html",
-    "markup",
-    "safe",
-    "render",
-    "html"
-  ],
-  "main": "./lib/index.js",
   "scripts": {
-    "assemble": "yarn run clean && yarn run build && yarn test",
+    "assemble": "yarn run clean && yarn run bootstrap && yarn run build && yarn test",
     "bootstrap": "lerna bootstrap",
     "bootstrap:slow": "lerna bootstrap --concurrency=1",
     "build": "lerna run build",
     "clean": "rimraf ./packages/{*}/lib/ && lerna clean --yes",
     "coverage": "run-coverage",
-    "eslint": "run-linter ./src ./tests ./packages/*/{src,tests}",
+    "eslint": "run-linter ./tests ./packages/*/{src,tests}",
     "flow": "type-check",
     "jest": "run-tests",
     "posttest": "yarn run flow",
@@ -43,28 +19,6 @@
     "test": "yarn run jest",
     "test:live": "NODE_ENV=production bundle-lib -f iife -i ./tests/bundle.js -o ./tests/bundle.min.js && serve ./tests/",
     "updated": "lerna updated"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/milesj/interweave.git"
-  },
-  "author": {
-    "name": "Miles Johnson",
-    "url": "http://milesj.me"
-  },
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/milesj/interweave/issues"
-  },
-  "homepage": "https://github.com/milesj/interweave#readme",
-  "dependencies": {
-    "babel-runtime": "^6.26.0",
-    "emojibase-regex": "^1.0.4",
-    "prop-types": "^15.5.10"
-  },
-  "peerDependencies": {
-    "emojibase": "^1.3.0",
-    "react": "^15.0.0 || ^16.0.0"
   },
   "devDependencies": {
     "@milesj/build-tool-config": "^0.21.2",

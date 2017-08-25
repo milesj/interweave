@@ -1,14 +1,16 @@
+/* eslint-disable no-magic-numbers, react/jsx-no-literals */
+
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { stripHexcode } from 'emojibase';
-import BaseInterweave from '../src/Interweave';
-import EmailMatcher from '../src/matchers/EmailMatcher';
-import EmojiMatcher from '../src/matchers/EmojiMatcher';
-import HashtagMatcher from '../src/matchers/HashtagMatcher';
-import IpMatcher from '../src/matchers/IpMatcher';
-import UrlMatcher from '../src/matchers/UrlMatcher';
-import EmojiLoader from '../src/loaders/EmojiLoader';
-import { EMOJIS } from '../src/data/emoji';
+import BaseInterweave from '../packages/interweave/src/Interweave';
+import EmailMatcher from '../packages/interweave/src/matchers/EmailMatcher';
+import EmojiMatcher from '../packages/interweave/src/matchers/EmojiMatcher';
+import HashtagMatcher from '../packages/interweave/src/matchers/HashtagMatcher';
+import IpMatcher from '../packages/interweave/src/matchers/IpMatcher';
+import UrlMatcher from '../packages/interweave/src/matchers/UrlMatcher';
+import EmojiLoader from '../packages/interweave/src/loaders/EmojiLoader';
+import { EMOJIS } from '../packages/interweave/src/data/emoji';
 
 const contentWithNewLines = `This block has multiple new lines.
 Like how is this supposed to work.
