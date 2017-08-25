@@ -28,19 +28,8 @@
   "scripts": {
     "build": "build-lib ./src -d ./lib"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/milesj/interweave.git"
-  },
-  "author": {
-    "name": "Miles Johnson",
-    "url": "http://milesj.me"
-  },
+  "repository": "https://github.com/milesj/interweave/tree/master/packages/interweave",
   "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/milesj/interweave/issues"
-  },
-  "homepage": "https://github.com/milesj/interweave#readme",
   "dependencies": {
     "babel-runtime": "^6.26.0",
     "emojibase-regex": "^1.0.4",
