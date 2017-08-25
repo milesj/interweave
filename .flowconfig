@@ -1,5 +1,6 @@
 [include]
 ./src
+./packages
 
 [ignore]
 .*/node_modules/.*
@@ -21,9 +22,9 @@ sketchy-null-string=off
 
 [options]
 emoji=true
-include_warnings=true
 esproposal.class_instance_fields=enable
 esproposal.class_static_fields=enable
 esproposal.export_star_as=enable
+include_warnings=true
 module.ignore_non_literal_requires=true
 suppress_comment=\\(.\\|\n\\)*\\$FlowIgnore

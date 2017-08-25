@@ -26,16 +26,23 @@
   ],
   "main": "./lib/index.js",
   "scripts": {
-    "babel": "build-lib ./src -d ./lib",
+    "assemble": "yarn run clean && yarn run build && yarn test",
+    "bootstrap": "lerna bootstrap",
+    "bootstrap:slow": "lerna bootstrap --concurrency=1",
+    "build": "lerna run build",
+    "clean": "rimraf ./packages/{*}/lib/ && lerna clean --yes",
     "coverage": "run-coverage",
-    "eslint": "run-linter ./src ./tests",
+    "eslint": "run-linter ./src ./tests ./packages/*/{src,tests}",
     "flow": "type-check",
     "jest": "run-tests",
     "posttest": "yarn run flow",
     "pretest": "yarn run eslint",
-    "preversion": "yarn test && yarn run babel",
+    "outdated": "yarn outdated; for dir in `find ./packages/ -type d -maxdepth 1`; do (cd \"$dir\" && yarn outdated); done;",
+    "publish": "lerna publish",
+    "publish:force": "lerna publish --force-publish=*",
     "test": "yarn run jest",
-    "test:live": "NODE_ENV=production bundle-lib -f iife -i ./tests/bundle.js -o ./tests/bundle.min.js && serve ./tests/"
+    "test:live": "NODE_ENV=production bundle-lib -f iife -i ./tests/bundle.js -o ./tests/bundle.min.js && serve ./tests/",
+    "updated": "lerna updated"
   },
   "repository": {
     "type": "git",
@@ -60,9 +67,10 @@
     "react": "^15.0.0 || ^16.0.0"
   },
   "devDependencies": {
-    "@milesj/build-tool-config": "^0.20.0",
+    "@milesj/build-tool-config": "^0.21.2",
     "emojibase": "^1.3.0",
     "emojibase-test-utils": "^1.0.5",
+    "lerna": "^2.1.0",
     "serve": "^6.0.6"
   },
   "babel": {
@@ -71,7 +79,17 @@
   "eslintConfig": {
     "extends": "./node_modules/@milesj/build-tool-config/eslint.json5"
   },
+  "eslintIgnore": [
+    "lib/",
+    "*.min.js",
+    "*.map"
+  ],
   "jest": {
-    "preset": "@milesj/build-tool-config"
+    "preset": "@milesj/build-tool-config",
+    "roots": [
+      "./packages",
+      "./tests"
+    ],
+    "testRegex": "./packages/([-a-z]+)?/tests/.*\\.test\\.js$"
   }
 }
