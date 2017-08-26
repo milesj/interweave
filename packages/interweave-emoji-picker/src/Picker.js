@@ -6,18 +6,17 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import EmojiLoader from 'interweave/lib/loaders/EmojiLoader';
+import withEmoji from 'interweave/lib/loaders/withEmoji';
 import EmojiList from './EmojiList';
 import SearchBar from './SearchBar';
 
-export default class Picker extends React.Component {
+class Picker extends React.Component {
   static propTypes = {
     emojiPath: PropTypes.oneOfType([
       PropTypes.string,
       PropTypes.func,
     ]),
-    locale: PropTypes.string,
-    version: PropTypes.string,
+    emojiSize: PropTypes.number,
     onSearch: PropTypes.func,
     onSelectEmoji: PropTypes.func,
     onSelectGroup: PropTypes.func,
@@ -25,8 +24,7 @@ export default class Picker extends React.Component {
 
   static defaultProps = {
     emojiPath: '',
-    locale: 'en',
-    version: 'latest',
+    emojiSize: 1,
     onSearch() {},
     onSelectGroup() {},
     onSelectEmoji() {},
@@ -34,14 +32,7 @@ export default class Picker extends React.Component {
 
   state = {
     activeGroup: 0,
-    emojis: [],
     searchQuery: '',
-  };
-
-  handleLoad = (emojis) => {
-    this.setState({
-      emojis,
-    });
   };
 
   handleSearch = (e) => {
@@ -61,28 +52,26 @@ export default class Picker extends React.Component {
   };
 
   render() {
-    const { emojiPath, locale, version } = this.props;
-    const { activeGroup, emojis, searchQuery } = this.state;
-
-    console.log(this.state);
+    const { emojiPath, emojiSize } = this.props;
+    const { activeGroup, searchQuery } = this.state;
 
     return (
-      <EmojiLoader locale={locale} version={version} onLoad={this.handleLoad}>
-        <div className="iep__picker">
-          <SearchBar
-            query={searchQuery}
-            onChange={this.handleSearch}
-          />
+      <div className="iep__picker">
+        <SearchBar
+          query={searchQuery}
+          onChange={this.handleSearch}
+        />
 
-          <EmojiList
-            emojis={emojis}
-            emojiPath={emojiPath}
-            group={activeGroup}
-            query={searchQuery}
-            onSelect={this.handleSelectEmoji}
-          />
-        </div>
-      </EmojiLoader>
+        <EmojiList
+          emojiPath={emojiPath}
+          emojiSize={emojiSize}
+          group={activeGroup}
+          query={searchQuery}
+          onSelect={this.handleSelectEmoji}
+        />
+      </div>
     );
   }
 }
+
+export default withEmoji(Picker);

@@ -3,6 +3,31 @@
 <head>
   <meta charset="UTF-8">
   <title>Live Interweave Testing</title>
+  <style>
+    body {
+      font-size: 16px;
+    }
+
+    .iep__list-header {
+      padding: 5px;
+      font-weight: bold;
+    }
+
+    .iep__list-body::after {
+      clear: both;
+      display: block;
+      content: '';
+    }
+
+    .iep__emoji {
+      background: transparent;
+      border: 0;
+      padding: 5px;
+      float: left;
+      font-size: inherit;
+      position: relative;
+    }
+  </style>
 </head>
 <body>
   <div id="app"></div>

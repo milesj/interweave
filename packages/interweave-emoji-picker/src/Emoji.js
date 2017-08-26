@@ -13,6 +13,7 @@ export default class Emoji extends React.Component {
   static propTypes = {
     emoji: EmojiShape.isRequired,
     emojiPath: EmojiPathShape.isRequired,
+    emojiSize: PropTypes.number.isRequired,
     onSelect: PropTypes.func.isRequired,
   };
 
@@ -21,19 +22,19 @@ export default class Emoji extends React.Component {
   };
 
   render() {
-    const { emoji, emojiPath } = this.props;
+    const { emoji, emojiPath, emojiSize } = this.props;
 
     return (
       <button
         key={emoji.hexcode}
         type="button"
-        className="iep__list__item"
+        className="iep__emoji"
         onClick={this.handleSelect}
       >
         <EmojiCharacter
           unicode={emoji.emoji || emoji.text}
           emojiPath={emojiPath}
-          emojiSize={1}
+          emojiSize={emojiSize}
         />
       </button>
     );

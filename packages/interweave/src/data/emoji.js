@@ -14,8 +14,25 @@ export const SHORTCODE_TO_UNICODE: { [shortcode: string]: string } = {};
 export const EMOTICON_TO_UNICODE: { [emoticon: string]: string } = {};
 export const EMOJIS: { [unicode: string]: Emoji } = {};
 
-export function parseEmojiData(data: Emoji[]): Emoji[] {
-  flattenEmojiData(data).forEach((emoji) => {
+let emojiList: Emoji[] = [];
+let flatEmojiList: Emoji[] = [];
+
+export function getEmojiData(): Emoji[] {
+  console.log('getEmojiData');
+  return emojiList;
+}
+
+export function getFlatEmojiData(): Emoji[] {
+  console.log('getFlatEmojiData');
+  return flatEmojiList;
+}
+
+export function parseEmojiData(data: Emoji[]) {
+  console.log('parseEmojiData');
+  emojiList = data;
+  flatEmojiList = flattenEmojiData(data);
+
+  flatEmojiList.forEach((emoji) => {
     const { emoticon, shortcodes = [] } = emoji;
 
     // Only support the default presentation
@@ -42,6 +59,4 @@ export function parseEmojiData(data: Emoji[]): Emoji[] {
 
     EMOJIS[unicode] = emoji;
   });
-
-  return data;
 }

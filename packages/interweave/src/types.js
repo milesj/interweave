@@ -6,11 +6,12 @@
 
 /* eslint-disable no-undef, import/prefer-default-export */
 
-import type { Node as ReactNode } from 'react';
+import * as React from 'react';
 import type Filter from './Filter';
 import type Matcher from './Matcher';
 
-export type { ReactNode };
+export type HOCComponent = React.ComponentType<*>;
+export type ReactNode = React.Node;
 
 export interface NodeInterface {
   attributes?: NamedNodeMap,
@@ -36,7 +37,7 @@ export type PrimitiveType = string | number | boolean;
 
 export type Attributes = { [key: string]: PrimitiveType };
 
-export type MatcherFactory = (match: string, props: Object) => ReactNode;
+export type MatcherFactory = (match: string, props: Object) => React.Node;
 
 export type MatchResponse = {
   emoticon?: string,
@@ -53,7 +54,7 @@ export type ParserProps = {
   [key: string]: mixed,
 };
 
-export type AfterParseCallback = (content: ReactNode[], props: Object) => ReactNode[];
+export type AfterParseCallback = (content: React.Node[], props: Object) => React.Node[];
 
 export type BeforeParseCallback = (content: string, props: Object) => string;
 
@@ -65,7 +66,7 @@ export type InterweaveProps = {
   disableLineBreaks: boolean,
   disableMatchers: boolean,
   disableWhitelist: boolean,
-  emptyContent: ?ReactNode,
+  emptyContent: ?React.Node,
   filters: Filter[],
   matchers: Matcher<*>[],
   noHtml: boolean,
@@ -79,14 +80,14 @@ export type MarkupProps = {
   content: string,
   disableLineBreaks: boolean,
   disableWhitelist: boolean,
-  emptyContent: ?ReactNode,
+  emptyContent: ?React.Node,
   noHtml: boolean,
   noHtmlExceptMatchers: boolean,
   tagName: string,
 };
 
 export type LinkProps = {
-  children: ReactNode,
+  children: React.Node,
   href: string,
   newWindow: boolean,
   onClick: ?() => void,
@@ -94,7 +95,7 @@ export type LinkProps = {
 
 export type ElementProps = {
   attributes: Attributes,
-  children: ReactNode,
+  children: React.Node,
   className: string,
   selfClose: boolean,
   tagName: string,
@@ -147,10 +148,9 @@ export type EmojiProps = {
 };
 
 export type EmojiLoaderProps = {
-  children: ReactNode,
-  data: Object[],
+  compact: boolean,
+  emojis: Object[],
   locale: string,
-  onLoad: (emoji: Object[]) => void,
   version: string,
 };
 

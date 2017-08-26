@@ -6,13 +6,15 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
+import { getEmojiData } from 'interweave/lib/data/emoji';
 import Emoji from './Emoji';
-import { EmojiShape, EmojiPathShape } from './shapes';
+import GroupName from './GroupName';
+import { EmojiPathShape } from './shapes';
 
 export default class EmojiList extends React.Component<*> {
   static propTypes = {
     emojiPath: EmojiPathShape.isRequired,
-    emojis: PropTypes.arrayOf(EmojiShape).isRequired,
+    emojiSize: PropTypes.number.isRequired,
     group: PropTypes.number.isRequired,
     query: PropTypes.string.isRequired,
     onSelect: PropTypes.func.isRequired,
@@ -20,11 +22,14 @@ export default class EmojiList extends React.Component<*> {
 
   filterList = (emoji) => {
     const { group, query } = this.props;
-    const lookups = [...emoji.shortcodes];
 
     if (emoji.group !== group) {
       return false;
+    } else if (!query) {
+      return true;
     }
+
+    const lookups = [...emoji.shortcodes];
 
     if (emoji.tags) {
       lookups.push(...emoji.tags);
@@ -38,28 +43,35 @@ export default class EmojiList extends React.Component<*> {
       lookups.push(emoji.emoticon);
     }
 
-    return lookups.some(lookup => lookup.indexOf(query) >= 0);
+    return (lookups.join(' ').indexOf(query) >= 0);
   };
 
   render() {
-    const { emojis, emojiPath, onSelect } = this.props;
+    const { emojiPath, emojiSize, group, onSelect } = this.props;
 
     // Filter by group or search query
-    const filteredEmojis = emojis.filter(this.filterList);
+    const filteredEmojis = getEmojiData().filter(this.filterList);
 
     // Sort by order
     filteredEmojis.sort((a, b) => a.order - b.order);
 
     return (
       <div className="iep__list">
-        {filteredEmojis.map(emoji => (
-          <Emoji
-            key={emoji.hexcode}
-            emoji={emoji}
-            emojiPath={emojiPath}
-            onSelect={onSelect}
-          />
-        ))}
+        <header className="iep__list-header">
+          <GroupName group={group} />
+        </header>
+
+        <section className="iep__list-body">
+          {filteredEmojis.map(emoji => (
+            <Emoji
+              key={emoji.hexcode}
+              emoji={emoji}
+              emojiPath={emojiPath}
+              emojiSize={emojiSize}
+              onSelect={onSelect}
+            />
+          ))}
+        </section>
       </div>
     );
   }

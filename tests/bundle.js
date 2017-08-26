@@ -9,7 +9,7 @@ import EmojiMatcher from '../packages/interweave/src/matchers/EmojiMatcher';
 import HashtagMatcher from '../packages/interweave/src/matchers/HashtagMatcher';
 import IpMatcher from '../packages/interweave/src/matchers/IpMatcher';
 import UrlMatcher from '../packages/interweave/src/matchers/UrlMatcher';
-import EmojiLoader from '../packages/interweave/src/loaders/EmojiLoader';
+import withEmoji from '../packages/interweave/src/loaders/withEmoji';
 import EmojiPicker from '../packages/interweave-emoji-picker/src/Picker';
 
 const contentWithNewLines = `This block has multiple new lines.
@@ -51,13 +51,7 @@ const emojiUnicodeProps = {
   ],
 };
 
-function Interweave(props) {
-  return (
-    <EmojiLoader>
-      <BaseInterweave {...props} />
-    </EmojiLoader>
-  );
-}
+const Interweave = withEmoji(BaseInterweave);
 
 function App() {
   return (
