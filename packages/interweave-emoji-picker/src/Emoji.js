@@ -9,7 +9,7 @@ import PropTypes from 'prop-types';
 import EmojiCharacter from 'interweave/lib/components/Emoji';
 import { EmojiShape, EmojiPathShape } from './shapes';
 
-export default class Emoji extends React.Component {
+export default class Emoji extends React.PureComponent {
   static propTypes = {
     emoji: EmojiShape.isRequired,
     emojiPath: EmojiPathShape.isRequired,

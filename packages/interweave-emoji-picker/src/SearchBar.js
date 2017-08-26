@@ -7,21 +7,42 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-export default function SearchBar({ query, onChange }) {
-  return (
-    <div className="iep__search">
-      <input
-        type="text"
-        className="iep__search__input"
-        placeholder="Search…"
-        value={query}
-        onChange={onChange}
-      />
-    </div>
-  );
-}
+export default class SearchBar extends React.PureComponent {
+  static propTypes = {
+    onChange: PropTypes.func.isRequired,
+  };
 
-SearchBar.propTypes = {
-  query: PropTypes.string.isRequired,
-  onChange: PropTypes.func.isRequired,
-};
+  state = {
+    query: '',
+  };
+
+  handleChange = (e) => {
+    const query = e.target.value;
+
+    // Update the input field immediately
+    this.setState({
+      query,
+    });
+
+    // But defer filtering in the picker
+    clearTimeout(this.timeout);
+
+    this.timeout = setTimeout(() => {
+      this.props.onChange(query);
+    }, 100);
+  };
+
+  render() {
+    return (
+      <div className="iep__search">
+        <input
+          type="text"
+          className="iep__search-input"
+          placeholder="Search…"
+          value={this.state.query}
+          onChange={this.handleChange}
+        />
+      </div>
+    );
+  }
+}

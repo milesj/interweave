@@ -11,7 +11,7 @@ import Emoji from './Emoji';
 import GroupName from './GroupName';
 import { EmojiPathShape } from './shapes';
 
-export default class EmojiList extends React.Component<*> {
+export default class EmojiList extends React.PureComponent<*> {
   static propTypes = {
     emojiPath: EmojiPathShape.isRequired,
     emojiSize: PropTypes.number.isRequired,
@@ -20,34 +20,33 @@ export default class EmojiList extends React.Component<*> {
     onSelect: PropTypes.func.isRequired,
   };
 
-  filterList = (emoji) => {
+  filterList = (emoji: Object) => {
     const { group, query } = this.props;
 
-    if (emoji.group !== group) {
-      return false;
-    } else if (!query) {
-      return true;
+    // Search overrides group filtering
+    if (query) {
+      const lookups = [...emoji.shortcodes];
+
+      if (emoji.tags) {
+        lookups.push(...emoji.tags);
+      }
+
+      if (emoji.annotation) {
+        lookups.push(emoji.annotation);
+      }
+
+      if (emoji.emoticon) {
+        lookups.push(emoji.emoticon);
+      }
+
+      return (lookups.join(' ').indexOf(query) >= 0);
     }
 
-    const lookups = [...emoji.shortcodes];
-
-    if (emoji.tags) {
-      lookups.push(...emoji.tags);
-    }
-
-    if (emoji.annotation) {
-      lookups.push(emoji.annotation);
-    }
-
-    if (emoji.emoticon) {
-      lookups.push(emoji.emoticon);
-    }
-
-    return (lookups.join(' ').indexOf(query) >= 0);
+    return (emoji.group === group);
   };
 
   render() {
-    const { emojiPath, emojiSize, group, onSelect } = this.props;
+    const { emojiPath, emojiSize, group, query, onSelect } = this.props;
 
     // Filter by group or search query
     const filteredEmojis = getEmojiData().filter(this.filterList);
@@ -58,7 +57,7 @@ export default class EmojiList extends React.Component<*> {
     return (
       <div className="iep__list">
         <header className="iep__list-header">
-          <GroupName group={group} />
+          {query ? 'Search results' : <GroupName group={group} />}
         </header>
 
         <section className="iep__list-body">

@@ -17,6 +17,7 @@ class Picker extends React.Component {
       PropTypes.func,
     ]),
     emojiSize: PropTypes.number,
+    showSearch: PropTypes.bool,
     onSearch: PropTypes.func,
     onSelectEmoji: PropTypes.func,
     onSelectGroup: PropTypes.func,
@@ -25,6 +26,7 @@ class Picker extends React.Component {
   static defaultProps = {
     emojiPath: '',
     emojiSize: 1,
+    showSearch: true,
     onSearch() {},
     onSelectGroup() {},
     onSelectEmoji() {},
@@ -35,16 +37,12 @@ class Picker extends React.Component {
     searchQuery: '',
   };
 
-  handleSearch = (e) => {
-    const searchQuery = e.target.value;
-
-    console.log(e, searchQuery);
-
+  handleSearch = (query) => {
     this.setState({
-      searchQuery,
+      searchQuery: query,
     });
 
-    this.props.onSearch(searchQuery);
+    this.props.onSearch(query);
   };
 
   handleSelectEmoji = (emoji) => {
@@ -52,15 +50,14 @@ class Picker extends React.Component {
   };
 
   render() {
-    const { emojiPath, emojiSize } = this.props;
+    const { emojiPath, emojiSize, showSearch } = this.props;
     const { activeGroup, searchQuery } = this.state;
 
     return (
       <div className="iep__picker">
-        <SearchBar
-          query={searchQuery}
-          onChange={this.handleSearch}
-        />
+        {showSearch && (
+          <SearchBar onChange={this.handleSearch} />
+        )}
 
         <EmojiList
           emojiPath={emojiPath}
