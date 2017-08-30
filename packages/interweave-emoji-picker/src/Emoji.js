@@ -9,7 +9,22 @@ import PropTypes from 'prop-types';
 import EmojiCharacter from 'interweave/lib/components/Emoji';
 import { EmojiShape, EmojiPathShape } from './shapes';
 
-export default class Emoji extends React.PureComponent {
+import type { Emoji, EmojiPath } from './types';
+
+type EmojiProps = {
+  emoji: Emoji,
+  emojiPath: EmojiPath,
+  emojiSize: number,
+  onEnter: (emoji: Emoji) => void,
+  onLeave: (emoji: Emoji) => void,
+  onSelect: (emoji: Emoji) => void,
+};
+
+type EmojiState = {
+  active: boolean,
+};
+
+export default class EmojiButton extends React.PureComponent<EmojiProps, EmojiState> {
   static propTypes = {
     emoji: EmojiShape.isRequired,
     emojiPath: EmojiPathShape.isRequired,
@@ -23,7 +38,7 @@ export default class Emoji extends React.PureComponent {
     active: false,
   };
 
-  handleEnter = (e) => {
+  handleEnter = (e: SyntheticMouseEvent<*>) => {
     e.stopPropagation();
 
     this.setState({
@@ -33,7 +48,7 @@ export default class Emoji extends React.PureComponent {
     this.props.onEnter(this.props.emoji);
   };
 
-  handleLeave = (e) => {
+  handleLeave = (e: SyntheticMouseEvent<*>) => {
     e.stopPropagation();
 
     this.setState({
@@ -43,7 +58,7 @@ export default class Emoji extends React.PureComponent {
     this.props.onLeave(this.props.emoji);
   };
 
-  handleSelect = (e) => {
+  handleSelect = (e: SyntheticMouseEvent<*>) => {
     e.stopPropagation();
 
     this.props.onSelect(this.props.emoji);

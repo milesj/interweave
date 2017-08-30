@@ -6,16 +6,29 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import Emoji from './Emoji';
+import EmojiButton from './Emoji';
 import GroupName from './GroupName';
-import { EmojiPathShape } from './shapes';
+import { EmojiShape, EmojiPathShape } from './shapes';
 
-export default class EmojiList extends React.PureComponent {
+import type { Emoji, EmojiPath } from './types';
+
+type EmojiListProps = {
+  emojiPath: EmojiPath,
+  emojis: Emoji[],
+  emojiSize: number,
+  group: string,
+  onEnter: (emoji: Emoji) => void,
+  onLeave: (emoji: Emoji) => void,
+  onSelect: (emoji: Emoji) => void,
+  query: string,
+};
+
+export default class EmojiList extends React.PureComponent<EmojiListProps> {
   static propTypes = {
     emojiPath: EmojiPathShape.isRequired,
     emojiSize: PropTypes.number.isRequired,
-    emojis: PropTypes.arrayOf(PropTypes.object).isRequired,
-    group: PropTypes.number.isRequired,
+    emojis: PropTypes.arrayOf(EmojiShape).isRequired,
+    group: PropTypes.string.isRequired,
     query: PropTypes.string.isRequired,
     onEnter: PropTypes.func.isRequired,
     onLeave: PropTypes.func.isRequired,
@@ -26,23 +39,27 @@ export default class EmojiList extends React.PureComponent {
     this.scrollToGroup(this.props.group);
   }
 
-  componentWillReceiveProps(nextProps) {
+  componentWillReceiveProps(nextProps: EmojiListProps) {
     if (this.props.group !== nextProps.group) {
       this.scrollToGroup(nextProps.group);
     }
   }
 
-  groupList = (emojis: Object[]) => {
+  groupList = (emojis: Emoji[]) => {
     const groups = {};
 
     // Partition into each group
     emojis.forEach((emoji) => {
       const { group } = emoji;
 
-      if (group in groups) {
-        groups[group].push(emoji);
-      } else {
+      if (!group) {
+        return;
+      }
+
+      if (typeof groups[group] === 'undefined') {
         groups[group] = [emoji];
+      } else {
+        groups[group].push(emoji);
       }
     });
 
@@ -62,8 +79,12 @@ export default class EmojiList extends React.PureComponent {
     }
   };
 
-  searchList = (emoji: Object) => {
-    const lookups = [...emoji.shortcodes];
+  searchList = (emoji: Emoji) => {
+    const lookups = [];
+
+    if (emoji.shortcodes) {
+      lookups.push(...emoji.shortcodes);
+    }
 
     if (emoji.tags) {
       lookups.push(...emoji.tags);
@@ -94,7 +115,7 @@ export default class EmojiList extends React.PureComponent {
 
             <div className="iep__list-body">
               {groupedEmojis[group].map(emoji => (
-                <Emoji
+                <EmojiButton
                   key={emoji.hexcode}
                   emoji={emoji}
                   emojiPath={emojiPath}

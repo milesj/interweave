@@ -31,7 +31,10 @@
     "extends": "./node_modules/@milesj/build-tool-config/babel.json5"
   },
   "eslintConfig": {
-    "extends": "./node_modules/@milesj/build-tool-config/eslint.json5"
+    "extends": "./node_modules/@milesj/build-tool-config/eslint.json5",
+    "rules": {
+      "react/sort-comp": "off"
+    }
   },
   "eslintIgnore": [
     "lib/",

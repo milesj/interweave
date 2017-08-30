@@ -4,24 +4,41 @@
  * @flow
  */
 
+/* eslint-disable quote-props */
+
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const NAMES = [
-  'Smileys & People',
-  'Animals & Nature',
-  'Food & Drink',
-  'Travel & Places',
-  'Activities',
-  'Objects',
-  'Symbols',
-  'Flags',
-];
+const GROUPS = {
+  '0': 'smileys-people',
+  '1': 'animals-nature',
+  '2': 'food-drink',
+  '3': 'travel-places',
+  '4': 'activities',
+  '5': 'objects',
+  '6': 'symbols',
+  '7': 'flags',
+};
 
-export default function GroupName({ group }) {
+const NAMES = {
+  'smileys-people': 'Smileys & People',
+  'animals-nature': 'Animals & Nature',
+  'food-drink': 'Food & Drink',
+  'travel-places': 'Travel & Places',
+  activities: 'Activities',
+  objects: 'Objects',
+  symbols: 'Symbols',
+  flags: 'Flags',
+};
+
+type GroupNameProps = {
+  group: string,
+};
+
+export default function GroupName({ group }: GroupNameProps) {
   return (
     <span className="iep__group-name">
-      {NAMES[group]}
+      {NAMES[GROUPS[group]]}
     </span>
   );
 }

@@ -11,7 +11,24 @@ import withEmoji from 'interweave/lib/loaders/withEmoji';
 import EmojiList from './EmojiList';
 import SearchBar from './SearchBar';
 
-class Picker extends React.Component {
+import type { Emoji, EmojiPath } from './types';
+
+type PickerProps = {
+  emojiPath: EmojiPath,
+  emojiSize: number,
+  onHoverEmoji: (emoji: Emoji) => void,
+  onSearch: (query: string) => void,
+  onSelectEmoji: (emoji: Emoji) => void,
+  onSelectGroup: (group: string) => void,
+  showSearch: boolean,
+};
+
+type PickerState = {
+  activeGroup: string,
+  searchQuery: string,
+};
+
+class Picker extends React.Component<PickerProps, PickerState> {
   static propTypes = {
     emojiPath: PropTypes.oneOfType([
       PropTypes.string,
@@ -36,19 +53,19 @@ class Picker extends React.Component {
   };
 
   state = {
-    activeGroup: 0,
+    activeGroup: 'smileys-people',
     searchQuery: '',
   };
 
-  handleEnterEmoji = (emoji) => {
+  handleEnterEmoji = (emoji: Emoji) => {
     this.props.onHoverEmoji(emoji);
   };
 
-  handleLeaveEmoji = (emoji) => {
+  handleLeaveEmoji = (emoji: Emoji) => {
 
   };
 
-  handleSearch = (query) => {
+  handleSearch = (query: string) => {
     this.setState({
       searchQuery: query,
     });
@@ -56,7 +73,7 @@ class Picker extends React.Component {
     this.props.onSearch(query);
   };
 
-  handleSelectEmoji = (emoji) => {
+  handleSelectEmoji = (emoji: Emoji) => {
     this.props.onSelectEmoji(emoji);
   };
 
@@ -66,10 +83,6 @@ class Picker extends React.Component {
 
     return (
       <div className="iep__picker">
-        {showSearch && (
-          <SearchBar onChange={this.handleSearch} />
-        )}
-
         <EmojiList
           emojis={getEmojiData()}
           emojiPath={emojiPath}
@@ -80,6 +93,10 @@ class Picker extends React.Component {
           onLeave={this.handleLeaveEmoji}
           onSelect={this.handleSelectEmoji}
         />
+
+        {showSearch && (
+          <SearchBar onChange={this.handleSearch} />
+        )}
       </div>
     );
   }

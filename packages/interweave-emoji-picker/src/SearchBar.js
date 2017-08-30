@@ -7,7 +7,19 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-export default class SearchBar extends React.PureComponent {
+type SearchBarProps = {
+  onChange: (query: string) => void,
+};
+
+type SearchBarState = {
+  query: string,
+};
+
+const THROTTLE_DELAY: number = 100;
+
+export default class SearchBar extends React.PureComponent<SearchBarProps, SearchBarState> {
+  timeout: number;
+
   static propTypes = {
     onChange: PropTypes.func.isRequired,
   };
@@ -16,7 +28,7 @@ export default class SearchBar extends React.PureComponent {
     query: '',
   };
 
-  handleChange = (e) => {
+  handleChange = (e: SyntheticInputEvent<*>) => {
     const query = e.target.value;
 
     // Update the input field immediately
@@ -29,7 +41,7 @@ export default class SearchBar extends React.PureComponent {
 
     this.timeout = setTimeout(() => {
       this.props.onChange(query);
-    }, 100);
+    }, THROTTLE_DELAY);
   };
 
   render() {
