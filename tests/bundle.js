@@ -60,8 +60,9 @@ function App() {
 
       <EmojiPicker
         emojiPath={emojiPath}
+        onHoverEmoji={(emoji) => { console.log('hover emoji', emoji); }}
         onSearch={(query) => { console.log('search', query); }}
-        onSelectEmoji={(emoji) => { console.log('emoji', emoji); }}
+        onSelectEmoji={(emoji) => { console.log('select emoji', emoji); }}
       />
 
       <h1>Copy</h1>

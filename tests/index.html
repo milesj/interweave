@@ -4,38 +4,81 @@
   <meta charset="UTF-8">
   <title>Live Interweave Testing</title>
   <style>
+    * {
+      box-sizing: border-box;
+    }
+
     body {
       font-size: 16px;
+      font-family: Verdana, sans-serif;
+    }
+
+    .iep__picker {
+      border: 1px solid gray;
+      border-radius: .2em;
+      background: white;
+      width: 295px;
+      position: relative;
     }
 
     .iep__search {
-      padding: 5px;
+      padding: 10px;
+      border-bottom: 1px solid gray;
     }
 
     .iep__search-input {
       padding: 5px;
       font-size: inherit;
       width: 100%;
+      border: 1px solid lightgray;
+      border-radius: .2em;
+    }
+
+    .iep__list {
+      overflow-y: scroll;
+      height: 250px;
+      font-size: 18px;
+      position: relative;
+    }
+
+    .iep__list-section {
+      padding: 5px;
     }
 
     .iep__list-header {
       padding: 5px;
+      padding-bottom: 5px;
       font-weight: bold;
+      position: sticky;
+      top: 0;
+      background: white;
+      z-index: 2;
+    }
+
+    .iep__list-body {
+      z-index: 1;
     }
 
     .iep__list-body::after {
-      clear: both;
       display: block;
       content: '';
+      clear: both;
     }
 
     .iep__emoji {
       background: transparent;
       border: 0;
       padding: 5px;
-      float: left;
       font-size: inherit;
       position: relative;
+      z-index: 1;
+      float: left;
+      cursor: pointer;
+    }
+
+    .iep__emoji--active {
+      background: #eee;
+      border-radius: .2em;
     }
   </style>
 </head>

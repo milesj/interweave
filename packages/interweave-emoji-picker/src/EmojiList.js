@@ -6,71 +6,107 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import { getEmojiData } from 'interweave/lib/data/emoji';
 import Emoji from './Emoji';
 import GroupName from './GroupName';
 import { EmojiPathShape } from './shapes';
 
-export default class EmojiList extends React.PureComponent<*> {
+export default class EmojiList extends React.PureComponent {
   static propTypes = {
     emojiPath: EmojiPathShape.isRequired,
     emojiSize: PropTypes.number.isRequired,
+    emojis: PropTypes.arrayOf(PropTypes.object).isRequired,
     group: PropTypes.number.isRequired,
     query: PropTypes.string.isRequired,
+    onEnter: PropTypes.func.isRequired,
+    onLeave: PropTypes.func.isRequired,
     onSelect: PropTypes.func.isRequired,
   };
 
-  filterList = (emoji: Object) => {
-    const { group, query } = this.props;
+  componentDidMount() {
+    this.scrollToGroup(this.props.group);
+  }
 
-    // Search overrides group filtering
-    if (query) {
-      const lookups = [...emoji.shortcodes];
+  componentWillReceiveProps(nextProps) {
+    if (this.props.group !== nextProps.group) {
+      this.scrollToGroup(nextProps.group);
+    }
+  }
 
-      if (emoji.tags) {
-        lookups.push(...emoji.tags);
+  groupList = (emojis: Object[]) => {
+    const groups = {};
+
+    // Partition into each group
+    emojis.forEach((emoji) => {
+      const { group } = emoji;
+
+      if (group in groups) {
+        groups[group].push(emoji);
+      } else {
+        groups[group] = [emoji];
       }
+    });
 
-      if (emoji.annotation) {
-        lookups.push(emoji.annotation);
-      }
+    // Sort each group by order
+    Object.keys(groups).forEach((group) => {
+      groups[group].sort((a, b) => a.order - b.order);
+    });
 
-      if (emoji.emoticon) {
-        lookups.push(emoji.emoticon);
-      }
+    return groups;
+  };
 
-      return (lookups.join(' ').indexOf(query) >= 0);
+  scrollToGroup = (group: string) => {
+    const element = document.getElementById(`emoji-group-${group}`);
+
+    if (element) {
+      element.scrollIntoView();
+    }
+  };
+
+  searchList = (emoji: Object) => {
+    const lookups = [...emoji.shortcodes];
+
+    if (emoji.tags) {
+      lookups.push(...emoji.tags);
     }
 
-    return (emoji.group === group);
+    if (emoji.annotation) {
+      lookups.push(emoji.annotation);
+    }
+
+    if (emoji.emoticon) {
+      lookups.push(emoji.emoticon);
+    }
+
+    return (lookups.join(' ').indexOf(this.props.query) >= 0);
   };
 
   render() {
-    const { emojiPath, emojiSize, group, query, onSelect } = this.props;
-
-    // Filter by group or search query
-    const filteredEmojis = getEmojiData().filter(this.filterList);
-
-    // Sort by order
-    filteredEmojis.sort((a, b) => a.order - b.order);
+    const { emojis, emojiPath, emojiSize, onEnter, onLeave, onSelect } = this.props;
+    const groupedEmojis = this.groupList(emojis);
 
     return (
       <div className="iep__list">
-        <header className="iep__list-header">
-          {query ? 'Search results' : <GroupName group={group} />}
-        </header>
+        {Object.keys(groupedEmojis).map(group => (
+          <section key={group} className="iep__list-section" id={`emoji-group-${group}`}>
+            <header className="iep__list-header">
+              <GroupName group={group} />
+            </header>
 
-        <section className="iep__list-body">
-          {filteredEmojis.map(emoji => (
-            <Emoji
-              key={emoji.hexcode}
-              emoji={emoji}
-              emojiPath={emojiPath}
-              emojiSize={emojiSize}
-              onSelect={onSelect}
-            />
-          ))}
-        </section>
+            <div className="iep__list-body">
+              {groupedEmojis[group].map(emoji => (
+                <Emoji
+                  key={emoji.hexcode}
+                  emoji={emoji}
+                  emojiPath={emojiPath}
+                  emojiSize={emojiSize}
+                  onEnter={onEnter}
+                  onLeave={onLeave}
+                  onSelect={onSelect}
+                />
+              ))}
+            </div>
+          </section>
+        ))}
       </div>
     );
   }

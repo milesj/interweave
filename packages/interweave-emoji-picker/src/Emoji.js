@@ -14,22 +14,57 @@ export default class Emoji extends React.PureComponent {
     emoji: EmojiShape.isRequired,
     emojiPath: EmojiPathShape.isRequired,
     emojiSize: PropTypes.number.isRequired,
+    onEnter: PropTypes.func.isRequired,
+    onLeave: PropTypes.func.isRequired,
     onSelect: PropTypes.func.isRequired,
   };
 
-  handleSelect = () => {
+  state = {
+    active: false,
+  };
+
+  handleEnter = (e) => {
+    e.stopPropagation();
+
+    this.setState({
+      active: true,
+    });
+
+    this.props.onEnter(this.props.emoji);
+  };
+
+  handleLeave = (e) => {
+    e.stopPropagation();
+
+    this.setState({
+      active: false,
+    });
+
+    this.props.onLeave(this.props.emoji);
+  };
+
+  handleSelect = (e) => {
+    e.stopPropagation();
+
     this.props.onSelect(this.props.emoji);
   };
 
   render() {
     const { emoji, emojiPath, emojiSize } = this.props;
+    let className = 'iep__emoji';
+
+    if (this.state.active) {
+      className += ' iep__emoji--active';
+    }
 
     return (
       <button
         key={emoji.hexcode}
         type="button"
-        className="iep__emoji"
+        className={className}
         onClick={this.handleSelect}
+        onMouseEnter={this.handleEnter}
+        onMouseLeave={this.handleLeave}
       >
         <EmojiCharacter
           unicode={emoji.emoji || emoji.text}

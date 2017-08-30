@@ -6,6 +6,7 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
+import { getEmojiData } from 'interweave/lib/data/emoji';
 import withEmoji from 'interweave/lib/loaders/withEmoji';
 import EmojiList from './EmojiList';
 import SearchBar from './SearchBar';
@@ -18,6 +19,7 @@ class Picker extends React.Component {
     ]),
     emojiSize: PropTypes.number,
     showSearch: PropTypes.bool,
+    onHoverEmoji: PropTypes.func,
     onSearch: PropTypes.func,
     onSelectEmoji: PropTypes.func,
     onSelectGroup: PropTypes.func,
@@ -27,14 +29,23 @@ class Picker extends React.Component {
     emojiPath: '',
     emojiSize: 1,
     showSearch: true,
+    onHoverEmoji() {},
     onSearch() {},
-    onSelectGroup() {},
     onSelectEmoji() {},
+    onSelectGroup() {},
   };
 
   state = {
     activeGroup: 0,
     searchQuery: '',
+  };
+
+  handleEnterEmoji = (emoji) => {
+    this.props.onHoverEmoji(emoji);
+  };
+
+  handleLeaveEmoji = (emoji) => {
+
   };
 
   handleSearch = (query) => {
@@ -60,10 +71,13 @@ class Picker extends React.Component {
         )}
 
         <EmojiList
+          emojis={getEmojiData()}
           emojiPath={emojiPath}
           emojiSize={emojiSize}
           group={activeGroup}
           query={searchQuery}
+          onEnter={this.handleEnterEmoji}
+          onLeave={this.handleLeaveEmoji}
           onSelect={this.handleSelectEmoji}
         />
       </div>
