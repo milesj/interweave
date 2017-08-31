@@ -9,6 +9,7 @@ import PropTypes from 'prop-types';
 import { getEmojiData } from 'interweave/lib/data/emoji';
 import withEmoji from 'interweave/lib/loaders/withEmoji';
 import EmojiList from './EmojiList';
+import PreviewBar from './PreviewBar';
 import SearchBar from './SearchBar';
 
 import type { Emoji, EmojiPath } from './types';
@@ -21,10 +22,13 @@ type PickerProps = {
   onSearch: (query: string) => void,
   onSelectEmoji: (emoji: Emoji) => void,
   onSelectGroup: (group: string) => void,
+  showPreview: boolean,
   showSearch: boolean,
+  showShortcodes: boolean,
 };
 
 type PickerState = {
+  activeEmoji: ?Emoji,
   activeGroup: string,
   searchQuery: string,
 };
@@ -41,7 +45,9 @@ class Picker extends React.Component<PickerProps, PickerState> {
     ]),
     emojiSize: PropTypes.number,
     messages: PropTypes.objectOf(PropTypes.string),
+    showPreview: PropTypes.bool,
     showSearch: PropTypes.bool,
+    showShortcodes: PropTypes.bool,
     onHoverEmoji: PropTypes.func,
     onSearch: PropTypes.func,
     onSelectEmoji: PropTypes.func,
@@ -52,7 +58,9 @@ class Picker extends React.Component<PickerProps, PickerState> {
     emojiPath: '',
     emojiSize: 1,
     messages: {},
+    showPreview: true,
     showSearch: true,
+    showShortcodes: true,
     onHoverEmoji() {},
     onSearch() {},
     onSelectEmoji() {},
@@ -60,6 +68,7 @@ class Picker extends React.Component<PickerProps, PickerState> {
   };
 
   state = {
+    activeEmoji: null,
     activeGroup: 'smileys-people',
     searchQuery: '',
   };
@@ -82,6 +91,7 @@ class Picker extends React.Component<PickerProps, PickerState> {
         // Misc
         search: 'Search…',
         'search-results': 'Search Results',
+        'no-preview': '',
         // Overrides
         ...this.props.messages,
       },
@@ -89,11 +99,17 @@ class Picker extends React.Component<PickerProps, PickerState> {
   }
 
   handleEnterEmoji = (emoji: Emoji) => {
+    this.setState({
+      activeEmoji: emoji,
+    });
+
     this.props.onHoverEmoji(emoji);
   };
 
   handleLeaveEmoji = (emoji: Emoji) => {
-
+    this.setState({
+      activeEmoji: null,
+    });
   };
 
   handleSearch = (query: string) => {
@@ -109,8 +125,8 @@ class Picker extends React.Component<PickerProps, PickerState> {
   };
 
   render() {
-    const { emojiPath, emojiSize, showSearch } = this.props;
-    const { activeGroup, searchQuery } = this.state;
+    const { emojiPath, emojiSize, showPreview, showSearch, showShortcodes } = this.props;
+    const { activeEmoji, activeGroup, searchQuery } = this.state;
 
     return (
       <div className="iep__picker">
@@ -124,6 +140,14 @@ class Picker extends React.Component<PickerProps, PickerState> {
           onLeave={this.handleLeaveEmoji}
           onSelect={this.handleSelectEmoji}
         />
+
+        {showPreview && (
+          <PreviewBar
+            emoji={activeEmoji}
+            emojiPath={emojiPath}
+            showShortcodes={showShortcodes}
+          />
+        )}
 
         {showSearch && (
           <SearchBar onChange={this.handleSearch} />

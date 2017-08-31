@@ -21,7 +21,8 @@
       position: relative;
     }
 
-    .iep__search {
+    .iep__search,
+    .iep__preview {
       padding: 10px;
       border-top: 1px solid gray;
     }
@@ -39,9 +40,6 @@
       height: 250px;
       font-size: 18px;
       position: relative;
-    }
-
-    .iep__list-section {
     }
 
     .iep__list-header {
@@ -78,6 +76,26 @@
     .iep__emoji--active {
       background: #eee;
       border-radius: .2em;
+    }
+
+    .iep__preview {
+      min-height: 60px;
+      display: flex;
+    }
+
+    .iep__preview-emoji {
+      width: 40px;
+      margin-right: 10px;
+    }
+
+    .iep__preview-name {
+      margin-bottom: 5px;
+      font-size: 14px;
+    }
+
+    .iep__preview-shortcodes {
+      font-size: 10px;
+      color: gray;
     }
   </style>
 </head>
