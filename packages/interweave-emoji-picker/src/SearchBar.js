@@ -15,7 +15,7 @@ type SearchBarState = {
   query: string,
 };
 
-const THROTTLE_DELAY: number = 100;
+const THROTTLE_DELAY: number = 250;
 
 export default class SearchBar extends React.PureComponent<SearchBarProps, SearchBarState> {
   timeout: number;

@@ -46,6 +46,28 @@ export default class EmojiList extends React.PureComponent<EmojiListProps> {
     }
   }
 
+  filterForSearch = (emoji: Emoji) => {
+    const lookups = [];
+
+    if (emoji.shortcodes) {
+      lookups.push(...emoji.shortcodes);
+    }
+
+    if (emoji.tags) {
+      lookups.push(...emoji.tags);
+    }
+
+    if (emoji.annotation) {
+      lookups.push(emoji.annotation);
+    }
+
+    if (emoji.emoticon) {
+      lookups.push(emoji.emoticon);
+    }
+
+    return (lookups.join(' ').indexOf(this.props.query) >= 0);
+  };
+
   groupList = (emojis: Emoji[]) => {
     const groups = {};
 
@@ -72,6 +94,10 @@ export default class EmojiList extends React.PureComponent<EmojiListProps> {
     return groups;
   };
 
+  searchList = (emojis: Emoji[]) => ({
+    'search-results': emojis.filter(this.filterForSearch),
+  });
+
   scrollToGroup = (group: string) => {
     const element = document.getElementById(`emoji-group-${group}`);
 
@@ -80,31 +106,9 @@ export default class EmojiList extends React.PureComponent<EmojiListProps> {
     }
   };
 
-  searchList = (emoji: Emoji) => {
-    const lookups = [];
-
-    if (emoji.shortcodes) {
-      lookups.push(...emoji.shortcodes);
-    }
-
-    if (emoji.tags) {
-      lookups.push(...emoji.tags);
-    }
-
-    if (emoji.annotation) {
-      lookups.push(emoji.annotation);
-    }
-
-    if (emoji.emoticon) {
-      lookups.push(emoji.emoticon);
-    }
-
-    return (lookups.join(' ').indexOf(this.props.query) >= 0);
-  };
-
   render() {
-    const { emojis, emojiPath, emojiSize, onEnter, onLeave, onSelect } = this.props;
-    const groupedEmojis = this.groupList(emojis);
+    const { emojis, emojiPath, emojiSize, query, onEnter, onLeave, onSelect } = this.props;
+    const groupedEmojis = query ? this.searchList(emojis) : this.groupList(emojis);
 
     return (
       <div className="iep__list">
