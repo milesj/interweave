@@ -14,7 +14,7 @@ import type { Emoji, EmojiPath } from './types';
 type PreviewBarProps = {
   emoji: ?Emoji,
   emojiPath: EmojiPath,
-  showShortcodes: boolean,
+  hideShortcodes: boolean,
 };
 
 export default class PreviewBar extends React.PureComponent<PreviewBarProps> {
@@ -25,7 +25,7 @@ export default class PreviewBar extends React.PureComponent<PreviewBarProps> {
   static propTypes = {
     emoji: EmojiShape,
     emojiPath: EmojiPathShape.isRequired,
-    showShortcodes: PropTypes.bool.isRequired,
+    hideShortcodes: PropTypes.bool.isRequired,
   };
 
   static defaultProps = {
@@ -44,7 +44,7 @@ export default class PreviewBar extends React.PureComponent<PreviewBarProps> {
   }
 
   render() {
-    const { emoji, emojiPath, showShortcodes } = this.props;
+    const { emoji, emojiPath, hideShortcodes } = this.props;
 
     if (!emoji) {
       return (
@@ -72,7 +72,7 @@ export default class PreviewBar extends React.PureComponent<PreviewBarProps> {
             </div>
           )}
 
-          {showShortcodes && emoji.shortcodes && (
+          {!hideShortcodes && emoji.shortcodes && (
             <div className="iep__preview-shortcodes">
               {this.formatShortcodes(emoji.shortcodes)}
             </div>

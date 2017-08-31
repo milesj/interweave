@@ -16,14 +16,14 @@ import type { Emoji, EmojiPath } from './types';
 
 type PickerProps = {
   emojiPath: EmojiPath,
+  hidePreview: boolean,
+  hideSearch: boolean,
+  hideShortcodes: boolean,
   messages: { [key: string]: string },
   onHoverEmoji: (emoji: Emoji) => void,
   onSearch: (query: string) => void,
   onSelectEmoji: (emoji: Emoji) => void,
   onSelectGroup: (group: string) => void,
-  showPreview: boolean,
-  showSearch: boolean,
-  showShortcodes: boolean,
 };
 
 type PickerState = {
@@ -42,10 +42,10 @@ class Picker extends React.Component<PickerProps, PickerState> {
       PropTypes.string,
       PropTypes.func,
     ]),
+    hidePreview: PropTypes.bool,
+    hideSearch: PropTypes.bool,
+    hideShortcodes: PropTypes.bool,
     messages: PropTypes.objectOf(PropTypes.string),
-    showPreview: PropTypes.bool,
-    showSearch: PropTypes.bool,
-    showShortcodes: PropTypes.bool,
     onHoverEmoji: PropTypes.func,
     onSearch: PropTypes.func,
     onSelectEmoji: PropTypes.func,
@@ -55,9 +55,9 @@ class Picker extends React.Component<PickerProps, PickerState> {
   static defaultProps = {
     emojiPath: '',
     messages: {},
-    showPreview: true,
-    showSearch: true,
-    showShortcodes: true,
+    hidePreview: false,
+    hideSearch: false,
+    hideShortcodes: false,
     onHoverEmoji() {},
     onSearch() {},
     onSelectEmoji() {},
@@ -71,6 +71,8 @@ class Picker extends React.Component<PickerProps, PickerState> {
   };
 
   getChildContext() {
+    const { messages } = this.props;
+
     return {
       messages: {
         // Emoji groups
@@ -90,7 +92,7 @@ class Picker extends React.Component<PickerProps, PickerState> {
         'search-results': 'Search Results',
         'no-preview': '',
         // Overrides
-        ...this.props.messages,
+        ...messages,
       },
     };
   }
@@ -122,7 +124,7 @@ class Picker extends React.Component<PickerProps, PickerState> {
   };
 
   render() {
-    const { emojiPath, showPreview, showSearch, showShortcodes } = this.props;
+    const { emojiPath, hidePreview, hideSearch, hideShortcodes } = this.props;
     const { activeEmoji, activeGroup, searchQuery } = this.state;
 
     return (
@@ -137,15 +139,15 @@ class Picker extends React.Component<PickerProps, PickerState> {
           onSelect={this.handleSelectEmoji}
         />
 
-        {showPreview && (
+        {!hidePreview && (
           <PreviewBar
             emoji={activeEmoji}
             emojiPath={emojiPath}
-            showShortcodes={showShortcodes}
+            hideShortcodes={hideShortcodes}
           />
         )}
 
-        {showSearch && (
+        {!hideSearch && (
           <SearchBar onChange={this.handleSearch} />
         )}
       </div>
