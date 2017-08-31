@@ -9,39 +9,23 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const GROUPS = {
-  '0': 'smileys-people',
-  '1': 'animals-nature',
-  '2': 'food-drink',
-  '3': 'travel-places',
-  '4': 'activities',
-  '5': 'objects',
-  '6': 'symbols',
-  '7': 'flags',
-};
-
-const NAMES = {
-  'smileys-people': 'Smileys & People',
-  'animals-nature': 'Animals & Nature',
-  'food-drink': 'Food & Drink',
-  'travel-places': 'Travel & Places',
-  activities: 'Activities',
-  objects: 'Objects',
-  symbols: 'Symbols',
-  flags: 'Flags',
-};
+import type { ContextProps } from './types';
 
 type GroupNameProps = {
   group: string,
 };
 
-export default function GroupName({ group }: GroupNameProps) {
+export default function GroupName({ group }: GroupNameProps, { messages }: ContextProps) {
   return (
     <span className="iep__group-name">
-      {NAMES[GROUPS[group]]}
+      {messages[group]}
     </span>
   );
 }
+
+GroupName.contextTypes = {
+  messages: PropTypes.objectOf(PropTypes.string),
+};
 
 GroupName.propTypes = {
   group: PropTypes.number.isRequired,

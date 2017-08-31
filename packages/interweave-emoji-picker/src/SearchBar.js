@@ -20,6 +20,10 @@ const THROTTLE_DELAY: number = 100;
 export default class SearchBar extends React.PureComponent<SearchBarProps, SearchBarState> {
   timeout: number;
 
+  static contextTypes = {
+    messages: PropTypes.objectOf(PropTypes.string),
+  };
+
   static propTypes = {
     onChange: PropTypes.func.isRequired,
   };
@@ -50,7 +54,7 @@ export default class SearchBar extends React.PureComponent<SearchBarProps, Searc
         <input
           type="text"
           className="iep__search-input"
-          placeholder="Search…"
+          placeholder={this.context.messages.search}
           value={this.state.query}
           onChange={this.handleChange}
         />

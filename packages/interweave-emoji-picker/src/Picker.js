@@ -16,6 +16,7 @@ import type { Emoji, EmojiPath } from './types';
 type PickerProps = {
   emojiPath: EmojiPath,
   emojiSize: number,
+  messages: { [key: string]: string },
   onHoverEmoji: (emoji: Emoji) => void,
   onSearch: (query: string) => void,
   onSelectEmoji: (emoji: Emoji) => void,
@@ -29,12 +30,17 @@ type PickerState = {
 };
 
 class Picker extends React.Component<PickerProps, PickerState> {
+  static childContextTypes = {
+    messages: PropTypes.objectOf(PropTypes.string),
+  };
+
   static propTypes = {
     emojiPath: PropTypes.oneOfType([
       PropTypes.string,
       PropTypes.func,
     ]),
     emojiSize: PropTypes.number,
+    messages: PropTypes.objectOf(PropTypes.string),
     showSearch: PropTypes.bool,
     onHoverEmoji: PropTypes.func,
     onSearch: PropTypes.func,
@@ -45,6 +51,7 @@ class Picker extends React.Component<PickerProps, PickerState> {
   static defaultProps = {
     emojiPath: '',
     emojiSize: 1,
+    messages: {},
     showSearch: true,
     onHoverEmoji() {},
     onSearch() {},
@@ -56,6 +63,30 @@ class Picker extends React.Component<PickerProps, PickerState> {
     activeGroup: 'smileys-people',
     searchQuery: '',
   };
+
+  getChildContext() {
+    return {
+      messages: {
+        // Emoji groups
+        'smileys-people': 'Smileys & People',
+        'animals-nature': 'Animals & Nature',
+        'food-drink': 'Food & Drink',
+        'travel-places': 'Travel & Places',
+        activities: 'Activities',
+        objects: 'Objects',
+        symbols: 'Symbols',
+        flags: 'Flags',
+        // Custom groups
+        frequent: 'Frequently Used',
+        custom: 'Custom',
+        // Misc
+        search: 'Search…',
+        'search-results': 'Search Results',
+        // Overrides
+        ...this.props.messages,
+      },
+    };
+  }
 
   handleEnterEmoji = (emoji: Emoji) => {
     this.props.onHoverEmoji(emoji);

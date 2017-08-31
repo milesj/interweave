@@ -8,6 +8,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import EmojiButton from './Emoji';
 import GroupName from './GroupName';
+import { GROUPS } from './constants';
 import { EmojiShape, EmojiPathShape } from './shapes';
 
 import type { Emoji, EmojiPath } from './types';
@@ -50,11 +51,11 @@ export default class EmojiList extends React.PureComponent<EmojiListProps> {
 
     // Partition into each group
     emojis.forEach((emoji) => {
-      const { group } = emoji;
-
-      if (!group) {
+      if (typeof emoji.group === 'undefined') {
         return;
       }
+
+      const group = GROUPS[emoji.group];
 
       if (typeof groups[group] === 'undefined') {
         groups[group] = [emoji];
