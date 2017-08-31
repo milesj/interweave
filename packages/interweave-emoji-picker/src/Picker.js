@@ -16,7 +16,6 @@ import type { Emoji, EmojiPath } from './types';
 
 type PickerProps = {
   emojiPath: EmojiPath,
-  emojiSize: number,
   messages: { [key: string]: string },
   onHoverEmoji: (emoji: Emoji) => void,
   onSearch: (query: string) => void,
@@ -43,7 +42,6 @@ class Picker extends React.Component<PickerProps, PickerState> {
       PropTypes.string,
       PropTypes.func,
     ]),
-    emojiSize: PropTypes.number,
     messages: PropTypes.objectOf(PropTypes.string),
     showPreview: PropTypes.bool,
     showSearch: PropTypes.bool,
@@ -56,7 +54,6 @@ class Picker extends React.Component<PickerProps, PickerState> {
 
   static defaultProps = {
     emojiPath: '',
-    emojiSize: 1,
     messages: {},
     showPreview: true,
     showSearch: true,
@@ -125,7 +122,7 @@ class Picker extends React.Component<PickerProps, PickerState> {
   };
 
   render() {
-    const { emojiPath, emojiSize, showPreview, showSearch, showShortcodes } = this.props;
+    const { emojiPath, showPreview, showSearch, showShortcodes } = this.props;
     const { activeEmoji, activeGroup, searchQuery } = this.state;
 
     return (
@@ -133,7 +130,6 @@ class Picker extends React.Component<PickerProps, PickerState> {
         <EmojiList
           emojis={getEmojiData()}
           emojiPath={emojiPath}
-          emojiSize={emojiSize}
           group={activeGroup}
           query={searchQuery}
           onEnter={this.handleEnterEmoji}

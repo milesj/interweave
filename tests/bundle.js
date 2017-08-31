@@ -28,8 +28,8 @@ Me.<br /><br />
 Help!`;
 
 // http://getemoji.com/
-const emojiPath = (hex, large, size) => (
-  `https://cdn.jsdelivr.net/emojione/assets/3.1/png/${(large || size > 1) ? 64 : 32}/${stripHexcode(hex).toLowerCase()}.png`
+const emojiPath = (hex, large) => (
+  `https://cdn.jsdelivr.net/emojione/assets/3.1/png/${large ? 64 : 32}/${stripHexcode(hex).toLowerCase()}.png`
 );
 
 const emojiProps = {

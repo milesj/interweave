@@ -60,7 +60,8 @@ export default class PreviewBar extends React.PureComponent<PreviewBarProps> {
           <EmojiCharacter
             unicode={emoji.emoji || emoji.text}
             emojiPath={emojiPath}
-            emojiSize={2.5}
+            emojiLargeSize={2.5}
+            enlargeEmoji
           />
         </div>
 

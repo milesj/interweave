@@ -14,7 +14,6 @@ import type { Emoji, EmojiPath } from './types';
 type EmojiProps = {
   emoji: Emoji,
   emojiPath: EmojiPath,
-  emojiSize: number,
   onEnter: (emoji: Emoji) => void,
   onLeave: (emoji: Emoji) => void,
   onSelect: (emoji: Emoji) => void,
@@ -28,7 +27,6 @@ export default class EmojiButton extends React.PureComponent<EmojiProps, EmojiSt
   static propTypes = {
     emoji: EmojiShape.isRequired,
     emojiPath: EmojiPathShape.isRequired,
-    emojiSize: PropTypes.number.isRequired,
     onEnter: PropTypes.func.isRequired,
     onLeave: PropTypes.func.isRequired,
     onSelect: PropTypes.func.isRequired,
@@ -65,7 +63,7 @@ export default class EmojiButton extends React.PureComponent<EmojiProps, EmojiSt
   };
 
   render() {
-    const { emoji, emojiPath, emojiSize } = this.props;
+    const { emoji, emojiPath } = this.props;
     let className = 'iep__emoji';
 
     if (this.state.active) {
@@ -84,7 +82,7 @@ export default class EmojiButton extends React.PureComponent<EmojiProps, EmojiSt
         <EmojiCharacter
           unicode={emoji.emoji || emoji.text}
           emojiPath={emojiPath}
-          emojiSize={emojiSize}
+          emojiSize={1}
         />
       </button>
     );

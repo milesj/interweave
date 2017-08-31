@@ -16,7 +16,6 @@ import type { Emoji, EmojiPath } from './types';
 type EmojiListProps = {
   emojiPath: EmojiPath,
   emojis: Emoji[],
-  emojiSize: number,
   group: string,
   onEnter: (emoji: Emoji) => void,
   onLeave: (emoji: Emoji) => void,
@@ -27,7 +26,6 @@ type EmojiListProps = {
 export default class EmojiList extends React.PureComponent<EmojiListProps> {
   static propTypes = {
     emojiPath: EmojiPathShape.isRequired,
-    emojiSize: PropTypes.number.isRequired,
     emojis: PropTypes.arrayOf(EmojiShape).isRequired,
     group: PropTypes.string.isRequired,
     query: PropTypes.string.isRequired,
@@ -107,7 +105,7 @@ export default class EmojiList extends React.PureComponent<EmojiListProps> {
   };
 
   render() {
-    const { emojis, emojiPath, emojiSize, query, onEnter, onLeave, onSelect } = this.props;
+    const { emojis, emojiPath, query, onEnter, onLeave, onSelect } = this.props;
     const groupedEmojis = query ? this.searchList(emojis) : this.groupList(emojis);
 
     return (
@@ -124,7 +122,6 @@ export default class EmojiList extends React.PureComponent<EmojiListProps> {
                   key={emoji.hexcode}
                   emoji={emoji}
                   emojiPath={emojiPath}
-                  emojiSize={emojiSize}
                   onEnter={onEnter}
                   onLeave={onLeave}
                   onSelect={onSelect}
