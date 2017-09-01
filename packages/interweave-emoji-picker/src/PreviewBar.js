@@ -14,17 +14,20 @@ import type { Emoji, EmojiPath } from './types';
 type PreviewBarProps = {
   emoji: ?Emoji,
   emojiPath: EmojiPath,
+  hideEmoticon: boolean,
   hideShortcodes: boolean,
 };
 
 export default class PreviewBar extends React.PureComponent<PreviewBarProps> {
   static contextTypes = {
+    classNames: PropTypes.objectOf(PropTypes.string),
     messages: PropTypes.objectOf(PropTypes.string),
   };
 
   static propTypes = {
     emoji: EmojiShape,
     emojiPath: EmojiPathShape.isRequired,
+    hideEmoticon: PropTypes.bool.isRequired,
     hideShortcodes: PropTypes.bool.isRequired,
   };
 
@@ -40,19 +43,31 @@ export default class PreviewBar extends React.PureComponent<PreviewBarProps> {
   }
 
   render() {
-    const { emoji, emojiPath, hideShortcodes } = this.props;
+    const { emoji, emojiPath, hideEmoticon, hideShortcodes } = this.props;
+    const { classNames } = this.context;
 
     if (!emoji) {
       return (
-        <div className="iep__preview iep__preview--empty">
-          {this.context.messages['no-preview']}
+        <div className={classNames.preview}>
+          <div className={classNames.previewEmpty}>
+            {this.context.messages['no-preview']}
+          </div>
         </div>
       );
     }
+    const subtitle = [];
+
+    if (!hideEmoticon && emoji.emoticon) {
+      subtitle.push(emoji.emoticon);
+    }
+
+    if (!hideShortcodes && emoji.canonical_shortcodes) {
+      subtitle.push(...emoji.canonical_shortcodes);
+    }
 
     return (
-      <div className="iep__preview">
-        <div className="iep__preview-emoji">
+      <div className={classNames.preview}>
+        <div className={classNames.previewEmoji}>
           <EmojiCharacter
             unicode={emoji.emoji || emoji.text}
             emojiPath={emojiPath}
@@ -61,16 +76,16 @@ export default class PreviewBar extends React.PureComponent<PreviewBarProps> {
           />
         </div>
 
-        <div className="iep__preview-content">
+        <div className={classNames.previewContent}>
           {emoji.annotation && (
-            <div className="iep__preview-name">
+            <div className={classNames.previewTitle}>
               {this.formatAnnotation(emoji.annotation)}
             </div>
           )}
 
-          {!hideShortcodes && emoji.canonical_shortcodes && (
-            <div className="iep__preview-shortcodes">
-              {emoji.canonical_shortcodes.join(' ')}
+          {subtitle.length > 0 && (
+            <div className={classNames.previewSubtitle}>
+              {subtitle.join(' ')}
             </div>
           )}
         </div>

@@ -21,6 +21,10 @@ type GroupProps = {
 };
 
 export default class Group extends React.Component<GroupProps> {
+  static contextTypes = {
+    classNames: PropTypes.objectOf(PropTypes.string),
+  };
+
   static propTypes = {
     activeGroup: PropTypes.string.isRequired,
     children: PropTypes.node,
@@ -41,16 +45,17 @@ export default class Group extends React.Component<GroupProps> {
 
   render() {
     const { children, group, activeGroup, emojiPath } = this.props;
-    let className = 'iep__group';
+    const { classNames } = this.context;
+    const className = [classNames.group];
 
     if (group === activeGroup) {
-      className += ' iep__group--active';
+      className.push(classNames.groupActive);
     }
 
     return (
       <button
         type="button"
-        className={className}
+        className={className.join(' ')}
         onClick={this.handleSelect}
       >
         {children || (

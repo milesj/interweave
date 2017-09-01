@@ -21,6 +21,7 @@ export default class SearchBar extends React.PureComponent<SearchBarProps, Searc
   timeout: number;
 
   static contextTypes = {
+    classNames: PropTypes.objectOf(PropTypes.string),
     messages: PropTypes.objectOf(PropTypes.string),
   };
 
@@ -49,12 +50,14 @@ export default class SearchBar extends React.PureComponent<SearchBarProps, Searc
   };
 
   render() {
+    const { classNames, messages } = this.context;
+
     return (
-      <div className="iep__search">
+      <div className={classNames.search}>
         <input
           type="text"
-          className="iep__search-input"
-          placeholder={this.context.messages.search}
+          className={classNames.searchInput}
+          placeholder={messages.search}
           value={this.state.query}
           onChange={this.handleChange}
         />

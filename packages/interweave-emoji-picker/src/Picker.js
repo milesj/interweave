@@ -16,8 +16,10 @@ import SearchBar from './SearchBar';
 import type { Emoji, EmojiPath } from './types';
 
 type PickerProps = {
+  classNames: { [key: string]: string },
   emojiPath: EmojiPath,
   groupIcons: { [key: string]: React$Node },
+  hideEmoticon: boolean,
   hidePreview: boolean,
   hideSearch: boolean,
   hideShortcodes: boolean,
@@ -36,15 +38,18 @@ type PickerState = {
 
 class Picker extends React.Component<PickerProps, PickerState> {
   static childContextTypes = {
+    classNames: PropTypes.objectOf(PropTypes.string),
     messages: PropTypes.objectOf(PropTypes.string),
   };
 
   static propTypes = {
+    classNames: PropTypes.objectOf(PropTypes.string),
     emojiPath: PropTypes.oneOfType([
       PropTypes.string,
       PropTypes.func,
     ]),
     groupIcons: PropTypes.objectOf(PropTypes.node),
+    hideEmoticon: PropTypes.bool,
     hidePreview: PropTypes.bool,
     hideSearch: PropTypes.bool,
     hideShortcodes: PropTypes.bool,
@@ -56,9 +61,11 @@ class Picker extends React.Component<PickerProps, PickerState> {
   };
 
   static defaultProps = {
+    classNames: {},
     emojiPath: '',
     groupIcons: {},
     messages: {},
+    hideEmoticon: false,
     hidePreview: false,
     hideSearch: false,
     hideShortcodes: false,
@@ -75,9 +82,30 @@ class Picker extends React.Component<PickerProps, PickerState> {
   };
 
   getChildContext() {
-    const { messages } = this.props;
+    const { classNames, messages } = this.props;
 
     return {
+      classNames: {
+        emoji: 'interweave-picker__emoji',
+        emojiActive: 'interweave-picker__emoji--active',
+        emojiList: 'interweave-picker__list',
+        emojiListSection: 'interweave-picker__list-section',
+        emojiListHeader: 'interweave-picker__list-header',
+        emojiListBody: 'interweave-picker__list-body',
+        group: 'interweave-picker__group',
+        groupActive: 'interweave-picker__group--active',
+        groups: 'interweave-picker__groups',
+        groupsList: 'interweave-picker__groups-list',
+        preview: 'interweave-picker__preview',
+        previewEmpty: 'interweave-picker__preview-empty',
+        previewEmoji: 'interweave-picker__preview-emoji',
+        previewContent: 'interweave-picker__preview-content',
+        previewTitle: 'interweave-picker__preview-title',
+        previewSubtitle: 'interweave-picker__preview-subtitle',
+        search: 'interweave-picker__search',
+        searchInput: 'interweave-picker__search-input',
+        ...classNames,
+      },
       messages: {
         // Emoji groups
         'smileys-people': 'Smileys & People',
@@ -137,11 +165,19 @@ class Picker extends React.Component<PickerProps, PickerState> {
   };
 
   render() {
-    const { emojiPath, groupIcons, hidePreview, hideSearch, hideShortcodes } = this.props;
+    const {
+      classNames,
+      emojiPath,
+      groupIcons,
+      hideEmoticon,
+      hidePreview,
+      hideSearch,
+      hideShortcodes,
+    } = this.props;
     const { activeEmoji, activeGroup, searchQuery } = this.state;
 
     return (
-      <div className="iep__picker">
+      <div className={classNames.picker || 'interweave-picker__picker'}>
         <GroupsBar
           activeGroup={activeGroup}
           emojiPath={emojiPath}
@@ -163,6 +199,7 @@ class Picker extends React.Component<PickerProps, PickerState> {
           <PreviewBar
             emoji={activeEmoji}
             emojiPath={emojiPath}
+            hideEmoticon={hideEmoticon}
             hideShortcodes={hideShortcodes}
           />
         )}

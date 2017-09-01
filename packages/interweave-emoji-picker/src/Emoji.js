@@ -24,6 +24,10 @@ type EmojiState = {
 };
 
 export default class EmojiButton extends React.PureComponent<EmojiProps, EmojiState> {
+  static contextTypes = {
+    classNames: PropTypes.objectOf(PropTypes.string),
+  };
+
   static propTypes = {
     emoji: EmojiShape.isRequired,
     emojiPath: EmojiPathShape.isRequired,
@@ -64,17 +68,18 @@ export default class EmojiButton extends React.PureComponent<EmojiProps, EmojiSt
 
   render() {
     const { emoji, emojiPath } = this.props;
-    let className = 'iep__emoji';
+    const { classNames } = this.context;
+    const className = [classNames.emoji];
 
     if (this.state.active) {
-      className += ' iep__emoji--active';
+      className.push(classNames.emojiActive);
     }
 
     return (
       <button
         key={emoji.hexcode}
         type="button"
-        className={className}
+        className={className.join(' ')}
         onClick={this.handleSelect}
         onMouseEnter={this.handleEnter}
         onMouseLeave={this.handleLeave}
