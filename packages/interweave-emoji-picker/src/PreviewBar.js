@@ -39,10 +39,6 @@ export default class PreviewBar extends React.PureComponent<PreviewBarProps> {
       .join(' ');
   }
 
-  formatShortcodes(shortcodes: string[]): string {
-    return shortcodes.map(code => `:${code}:`).join(' ');
-  }
-
   render() {
     const { emoji, emojiPath, hideShortcodes } = this.props;
 
@@ -72,9 +68,9 @@ export default class PreviewBar extends React.PureComponent<PreviewBarProps> {
             </div>
           )}
 
-          {!hideShortcodes && emoji.shortcodes && (
+          {!hideShortcodes && emoji.canonical_shortcodes && (
             <div className="iep__preview-shortcodes">
-              {this.formatShortcodes(emoji.shortcodes)}
+              {emoji.canonical_shortcodes.join(' ')}
             </div>
           )}
         </div>

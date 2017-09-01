@@ -18,30 +18,38 @@ let emojiList: Emoji[] = [];
 let flatEmojiList: Emoji[] = [];
 
 export function getEmojiData(): Emoji[] {
-  console.log('getEmojiData');
   return emojiList;
 }
 
 export function getFlatEmojiData(): Emoji[] {
-  console.log('getFlatEmojiData');
   return flatEmojiList;
 }
 
 export function parseEmojiData(data: Emoji[]) {
-  console.log('parseEmojiData');
-  emojiList = data;
-  flatEmojiList = flattenEmojiData(data);
+  // Package the data
+  emojiList = data.map((emoji) => {
+    const nextEmoji = { ...emoji };
+
+    if (nextEmoji.shortcodes) {
+      nextEmoji.canonical_shortcodes = nextEmoji.shortcodes.map(code => `:${code}:`);
+      nextEmoji.primary_shortcode = nextEmoji.canonical_shortcodes[0];
+    }
+
+    return nextEmoji;
+  });
+
+  // Flatten and reference the data
+  flatEmojiList = flattenEmojiData(emojiList);
 
   flatEmojiList.forEach((emoji) => {
-    const { emoticon, shortcodes = [] } = emoji;
+    // $FlowIgnore
+    const { emoticon, canonical_shortcodes: shortcodes = [] } = emoji;
 
     // Only support the default presentation
     const unicode = (emoji.text && emoji.type === TEXT) ? emoji.text : emoji.emoji;
 
     // Support all shortcodes
-    UNICODE_TO_SHORTCODES[unicode] = shortcodes.map((code) => {
-      const shortcode = `:${code}:`;
-
+    UNICODE_TO_SHORTCODES[unicode] = shortcodes.map((shortcode) => {
       SHORTCODE_TO_UNICODE[shortcode] = unicode;
 
       return shortcode;

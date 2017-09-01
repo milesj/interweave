@@ -6,9 +6,13 @@
 
 /* eslint-disable */
 
-import type { Emoji } from 'emojibase';
+import type { Emoji as BaseEmoji } from 'emojibase';
 
-export type { Emoji };
+export type Emoji = {
+  ...BaseEmoji,
+  canonical_shortcodes: string[],
+  primary_shortcode: string,
+};
 
 export type ContextProps = {
   messages: { [key: string]: string },
