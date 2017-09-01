@@ -15,3 +15,14 @@ export const GROUPS: string[] = [
   'symbols',
   'flags',
 ];
+
+export const GROUP_SHORTCODES: { [key: string]: string } = {
+  'smileys-people': ':glad:',
+  'animals-nature': ':herb:',
+  'food-drink': ':apple:',
+  'travel-places': ':airplane:',
+  activities: ':soccer:',
+  objects: ':blue_book:',
+  symbols: ':no_entry:',
+  flags: ':black_flag:',
+};

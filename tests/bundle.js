@@ -63,6 +63,7 @@ function App() {
         onHoverEmoji={(emoji) => { console.log('hover emoji', emoji); }}
         onSearch={(query) => { console.log('search', query); }}
         onSelectEmoji={(emoji) => { console.log('select emoji', emoji); }}
+        onSelectGroup={(group) => { console.log('select group', group); }}
       />
 
       <h1>Copy</h1>

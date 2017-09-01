@@ -9,6 +9,7 @@ import PropTypes from 'prop-types';
 import { getEmojiData } from 'interweave/lib/data/emoji';
 import withEmoji from 'interweave/lib/loaders/withEmoji';
 import EmojiList from './EmojiList';
+import GroupsBar from './GroupsBar';
 import PreviewBar from './PreviewBar';
 import SearchBar from './SearchBar';
 
@@ -86,10 +87,10 @@ class Picker extends React.Component<PickerProps, PickerState> {
         flags: 'Flags',
         // Custom groups
         frequent: 'Frequently Used',
+        'search-results': 'Search Results',
         custom: 'Custom',
         // Misc
         search: 'Search…',
-        'search-results': 'Search Results',
         'no-preview': '',
         // Overrides
         ...messages,
@@ -113,6 +114,7 @@ class Picker extends React.Component<PickerProps, PickerState> {
 
   handleSearch = (query: string) => {
     this.setState({
+      activeGroup: query ? '' : 'smileys-people',
       searchQuery: query,
     });
 
@@ -123,16 +125,30 @@ class Picker extends React.Component<PickerProps, PickerState> {
     this.props.onSelectEmoji(emoji);
   };
 
+  handleSelectGroup = (group: string) => {
+    this.setState({
+      activeGroup: group,
+    });
+
+    this.props.onSelectGroup(group);
+  };
+
   render() {
     const { emojiPath, hidePreview, hideSearch, hideShortcodes } = this.props;
     const { activeEmoji, activeGroup, searchQuery } = this.state;
 
     return (
       <div className="iep__picker">
+        <GroupsBar
+          activeGroup={activeGroup}
+          emojiPath={emojiPath}
+          onSelect={this.handleSelectGroup}
+        />
+
         <EmojiList
           emojis={getEmojiData()}
           emojiPath={emojiPath}
-          group={activeGroup}
+          activeGroup={activeGroup}
           query={searchQuery}
           onEnter={this.handleEnterEmoji}
           onLeave={this.handleLeaveEmoji}

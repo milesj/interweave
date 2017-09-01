@@ -7,16 +7,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import EmojiButton from './Emoji';
-import GroupName from './GroupName';
 import { GROUPS } from './constants';
 import { EmojiShape, EmojiPathShape } from './shapes';
 
 import type { Emoji, EmojiPath } from './types';
 
 type EmojiListProps = {
+  activeGroup: string,
   emojiPath: EmojiPath,
   emojis: Emoji[],
-  group: string,
   onEnter: (emoji: Emoji) => void,
   onLeave: (emoji: Emoji) => void,
   onSelect: (emoji: Emoji) => void,
@@ -24,10 +23,14 @@ type EmojiListProps = {
 };
 
 export default class EmojiList extends React.PureComponent<EmojiListProps> {
+  static contextTypes = {
+    messages: PropTypes.objectOf(PropTypes.string),
+  };
+
   static propTypes = {
+    activeGroup: PropTypes.string.isRequired,
     emojiPath: EmojiPathShape.isRequired,
     emojis: PropTypes.arrayOf(EmojiShape).isRequired,
-    group: PropTypes.string.isRequired,
     query: PropTypes.string.isRequired,
     onEnter: PropTypes.func.isRequired,
     onLeave: PropTypes.func.isRequired,
@@ -35,12 +38,12 @@ export default class EmojiList extends React.PureComponent<EmojiListProps> {
   };
 
   componentDidMount() {
-    this.scrollToGroup(this.props.group);
+    this.scrollToGroup(this.props.activeGroup);
   }
 
-  componentWillReceiveProps(nextProps: EmojiListProps) {
-    if (this.props.group !== nextProps.group) {
-      this.scrollToGroup(nextProps.group);
+  componentWillReceiveProps({ activeGroup }: EmojiListProps) {
+    if (this.props.activeGroup !== activeGroup) {
+      this.scrollToGroup(activeGroup);
     }
   }
 
@@ -77,10 +80,10 @@ export default class EmojiList extends React.PureComponent<EmojiListProps> {
 
       const group = GROUPS[emoji.group];
 
-      if (typeof groups[group] === 'undefined') {
-        groups[group] = [emoji];
-      } else {
+      if (groups[group]) {
         groups[group].push(emoji);
+      } else {
+        groups[group] = [emoji];
       }
     });
 
@@ -99,8 +102,8 @@ export default class EmojiList extends React.PureComponent<EmojiListProps> {
   scrollToGroup = (group: string) => {
     const element = document.getElementById(`emoji-group-${group}`);
 
-    if (element) {
-      element.scrollIntoView();
+    if (element && element.parentElement) {
+      element.parentElement.scrollTop = element.offsetTop;
     }
   };
 
@@ -113,7 +116,7 @@ export default class EmojiList extends React.PureComponent<EmojiListProps> {
         {Object.keys(groupedEmojis).map(group => (
           <section key={group} className="iep__list-section" id={`emoji-group-${group}`}>
             <header className="iep__list-header">
-              <GroupName group={group} />
+              {this.context.messages[group]}
             </header>
 
             <div className="iep__list-body">
