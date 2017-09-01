@@ -60,6 +60,9 @@ function App() {
 
       <EmojiPicker
         emojiPath={emojiPath}
+        groupIcons={{
+          'smileys-people': ':)',
+        }}
         onHoverEmoji={(emoji) => { console.log('hover emoji', emoji); }}
         onSearch={(query) => { console.log('search', query); }}
         onSelectEmoji={(emoji) => { console.log('select emoji', emoji); }}

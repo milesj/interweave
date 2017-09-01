@@ -8,12 +8,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import EmojiCharacter from 'interweave/lib/components/Emoji';
 import { EmojiPathShape } from './shapes';
-import { GROUP_SHORTCODES } from './constants';
+import { GROUP_ICONS } from './constants';
 
 import type { EmojiPath } from './types';
 
 type GroupProps = {
   activeGroup: string,
+  children: React$Node,
   emojiPath: EmojiPath,
   group: string,
   onSelect: (group: string) => void,
@@ -22,9 +23,14 @@ type GroupProps = {
 export default class Group extends React.Component<GroupProps> {
   static propTypes = {
     activeGroup: PropTypes.string.isRequired,
+    children: PropTypes.node,
     emojiPath: EmojiPathShape.isRequired,
     group: PropTypes.string.isRequired,
     onSelect: PropTypes.func.isRequired,
+  };
+
+  static defaultProps = {
+    children: null,
   };
 
   handleSelect = (e: SyntheticMouseEvent<*>) => {
@@ -34,7 +40,7 @@ export default class Group extends React.Component<GroupProps> {
   };
 
   render() {
-    const { group, activeGroup, emojiPath } = this.props;
+    const { children, group, activeGroup, emojiPath } = this.props;
     let className = 'iep__group';
 
     if (group === activeGroup) {
@@ -47,11 +53,13 @@ export default class Group extends React.Component<GroupProps> {
         className={className}
         onClick={this.handleSelect}
       >
-        <EmojiCharacter
-          shortcode={GROUP_SHORTCODES[group]}
-          emojiPath={emojiPath}
-          emojiSize={1}
-        />
+        {children || (
+          <EmojiCharacter
+            unicode={GROUP_ICONS[group]}
+            emojiPath={emojiPath}
+            emojiSize={1}
+          />
+        )}
       </button>
     );
   }

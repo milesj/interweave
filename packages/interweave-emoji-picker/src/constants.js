@@ -16,13 +16,13 @@ export const GROUPS: string[] = [
   'flags',
 ];
 
-export const GROUP_SHORTCODES: { [key: string]: string } = {
-  'smileys-people': ':glad:',
-  'animals-nature': ':herb:',
-  'food-drink': ':apple:',
-  'travel-places': ':airplane:',
-  activities: ':soccer:',
-  objects: ':blue_book:',
-  symbols: ':no_entry:',
-  flags: ':black_flag:',
+export const GROUP_ICONS: { [key: string]: string } = {
+  'smileys-people': '😃',
+  'animals-nature': '🌿',
+  'food-drink': '🍎',
+  'travel-places': '✈️',
+  activities: '⚽️',
+  objects: '📘',
+  symbols: '⛔️',
+  flags: '🏴',
 };

@@ -17,6 +17,7 @@ import type { Emoji, EmojiPath } from './types';
 
 type PickerProps = {
   emojiPath: EmojiPath,
+  groupIcons: { [key: string]: React$Node },
   hidePreview: boolean,
   hideSearch: boolean,
   hideShortcodes: boolean,
@@ -43,6 +44,7 @@ class Picker extends React.Component<PickerProps, PickerState> {
       PropTypes.string,
       PropTypes.func,
     ]),
+    groupIcons: PropTypes.objectOf(PropTypes.node),
     hidePreview: PropTypes.bool,
     hideSearch: PropTypes.bool,
     hideShortcodes: PropTypes.bool,
@@ -55,6 +57,7 @@ class Picker extends React.Component<PickerProps, PickerState> {
 
   static defaultProps = {
     emojiPath: '',
+    groupIcons: {},
     messages: {},
     hidePreview: false,
     hideSearch: false,
@@ -134,7 +137,7 @@ class Picker extends React.Component<PickerProps, PickerState> {
   };
 
   render() {
-    const { emojiPath, hidePreview, hideSearch, hideShortcodes } = this.props;
+    const { emojiPath, groupIcons, hidePreview, hideSearch, hideShortcodes } = this.props;
     const { activeEmoji, activeGroup, searchQuery } = this.state;
 
     return (
@@ -142,6 +145,7 @@ class Picker extends React.Component<PickerProps, PickerState> {
         <GroupsBar
           activeGroup={activeGroup}
           emojiPath={emojiPath}
+          groupIcons={groupIcons}
           onSelect={this.handleSelectGroup}
         />
 
