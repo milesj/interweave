@@ -4,12 +4,12 @@
  * @flow
  */
 
-// Keep in sync with emojibase
+// Group order must match emojibase
 export const GROUPS: string[] = [
-  'smileys-people',
-  'animals-nature',
-  'food-drink',
-  'travel-places',
+  'smileysPeople',
+  'animalsNature',
+  'foodDrink',
+  'travelPlaces',
   'activities',
   'objects',
   'symbols',
@@ -17,12 +17,14 @@ export const GROUPS: string[] = [
 ];
 
 export const GROUP_ICONS: { [key: string]: string } = {
-  'smileys-people': '😃',
-  'animals-nature': '🌿',
-  'food-drink': '🍎',
-  'travel-places': '✈️',
+  smileysPeople: '😃',
+  animalsNature: '🌿',
+  foodDrink: '🍎',
+  travelPlaces: '✈️',
   activities: '⚽️',
   objects: '📘',
   symbols: '⛔️',
   flags: '🏴',
 };
+
+export const DEFAULT_GROUP: string = 'smileysPeople';

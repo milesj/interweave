@@ -97,7 +97,7 @@ export default class EmojiList extends React.PureComponent<EmojiListProps> {
   };
 
   searchList = (emojis: Emoji[]) => ({
-    'search-results': emojis.filter(this.filterForSearch),
+    searchResults: emojis.filter(this.filterForSearch),
   });
 
   scrollToGroup = (group: string) => {
@@ -110,7 +110,7 @@ export default class EmojiList extends React.PureComponent<EmojiListProps> {
 
   render() {
     const { emojis, emojiPath, query, onEnter, onLeave, onSelect } = this.props;
-    const { classNames } = this.context;
+    const { classNames, messages } = this.context;
     const groupedEmojis = query ? this.searchList(emojis) : this.groupList(emojis);
 
     return (
@@ -122,20 +122,26 @@ export default class EmojiList extends React.PureComponent<EmojiListProps> {
             id={`emoji-group-${group}`}
           >
             <header className={classNames.emojisHeader}>
-              {this.context.messages[group]}
+              {messages[group]}
             </header>
 
             <div className={classNames.emojisBody}>
-              {groupedEmojis[group].map(emoji => (
-                <EmojiButton
-                  key={emoji.hexcode}
-                  emoji={emoji}
-                  emojiPath={emojiPath}
-                  onEnter={onEnter}
-                  onLeave={onLeave}
-                  onSelect={onSelect}
-                />
-              ))}
+              {(groupedEmojis[group].length > 0) ? (
+                groupedEmojis[group].map(emoji => (
+                  <EmojiButton
+                    key={emoji.hexcode}
+                    emoji={emoji}
+                    emojiPath={emojiPath}
+                    onEnter={onEnter}
+                    onLeave={onLeave}
+                    onSelect={onSelect}
+                  />
+                ))
+              ) : (
+                <div className={classNames.searchEmpty}>
+                  {messages.noResults}
+                </div>
+              )}
             </div>
           </section>
         ))}

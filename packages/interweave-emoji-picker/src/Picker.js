@@ -12,6 +12,7 @@ import EmojiList from './EmojiList';
 import GroupBar from './GroupBar';
 import PreviewBar from './PreviewBar';
 import SearchBar from './SearchBar';
+import { DEFAULT_GROUP } from './constants';
 
 import type { Emoji, EmojiPath } from './types';
 
@@ -80,7 +81,7 @@ class Picker extends React.Component<PickerProps, PickerState> {
 
   state = {
     activeEmoji: null,
-    activeGroup: 'smileys-people',
+    activeGroup: DEFAULT_GROUP,
     searchQuery: '',
   };
 
@@ -107,25 +108,26 @@ class Picker extends React.Component<PickerProps, PickerState> {
         previewSubtitle: 'interweave-picker__preview-subtitle',
         search: 'interweave-picker__search',
         searchInput: 'interweave-picker__search-input',
+        searchEmpty: 'interweave-picker__search-empty',
         ...classNames,
       },
       messages: {
         // Emoji groups
-        'smileys-people': 'Smileys & People',
-        'animals-nature': 'Animals & Nature',
-        'food-drink': 'Food & Drink',
-        'travel-places': 'Travel & Places',
+        smileysPeople: 'Smileys & People',
+        animalsNature: 'Animals & Nature',
+        foodDrink: 'Food & Drink',
+        travelPlaces: 'Travel & Places',
         activities: 'Activities',
         objects: 'Objects',
         symbols: 'Symbols',
         flags: 'Flags',
         // Custom groups
         frequent: 'Frequently Used',
-        'search-results': 'Search Results',
-        custom: 'Custom',
+        searchResults: 'Search Results',
         // Misc
         search: 'Search…',
-        'no-preview': '',
+        noPreview: '',
+        noResults: 'No results…',
         // Overrides
         ...messages,
       },
@@ -148,7 +150,7 @@ class Picker extends React.Component<PickerProps, PickerState> {
 
   handleSearch = (query: string) => {
     this.setState({
-      activeGroup: query ? '' : 'smileys-people',
+      activeGroup: query ? '' : DEFAULT_GROUP,
       searchQuery: query,
     });
 
