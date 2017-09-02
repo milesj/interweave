@@ -59,6 +59,7 @@ function App() {
       <h1>Picker</h1>
 
       <EmojiPicker
+        locale="ja"
         emojiPath={emojiPath}
         onHoverEmoji={(emoji) => { console.log('hover emoji', emoji); }}
         onSearch={(query) => { console.log('search', query); }}

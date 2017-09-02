@@ -17,6 +17,7 @@ import type { Emoji, EmojiPath } from './types';
 
 type PickerProps = {
   classNames: { [key: string]: string },
+  displayOrder: string[],
   emojiPath: EmojiPath,
   groupIcons: { [key: string]: React$Node },
   hideEmoticon: boolean,
@@ -44,6 +45,7 @@ class Picker extends React.Component<PickerProps, PickerState> {
 
   static propTypes = {
     classNames: PropTypes.objectOf(PropTypes.string),
+    displayOrder: PropTypes.arrayOf(PropTypes.string),
     emojiPath: PropTypes.oneOfType([
       PropTypes.string,
       PropTypes.func,
@@ -62,6 +64,7 @@ class Picker extends React.Component<PickerProps, PickerState> {
 
   static defaultProps = {
     classNames: {},
+    displayOrder: ['preview', 'emojis', 'groups', 'search'],
     emojiPath: '',
     groupIcons: {},
     messages: {},
@@ -167,6 +170,7 @@ class Picker extends React.Component<PickerProps, PickerState> {
   render() {
     const {
       classNames,
+      displayOrder,
       emojiPath,
       groupIcons,
       hideEmoticon,
@@ -175,16 +179,16 @@ class Picker extends React.Component<PickerProps, PickerState> {
       hideShortcodes,
     } = this.props;
     const { activeEmoji, activeGroup, searchQuery } = this.state;
-
-    return (
-      <div className={classNames.picker || 'interweave-picker__picker'}>
-        <GroupsBar
-          activeGroup={activeGroup}
+    const components = {
+      preview: hidePreview ? null : (
+        <PreviewBar
+          emoji={activeEmoji}
           emojiPath={emojiPath}
-          groupIcons={groupIcons}
-          onSelect={this.handleSelectGroup}
+          hideEmoticon={hideEmoticon}
+          hideShortcodes={hideShortcodes}
         />
-
+      ),
+      emojis: (
         <EmojiList
           emojis={getEmojiData()}
           emojiPath={emojiPath}
@@ -194,19 +198,23 @@ class Picker extends React.Component<PickerProps, PickerState> {
           onLeave={this.handleLeaveEmoji}
           onSelect={this.handleSelectEmoji}
         />
+      ),
+      groups: (
+        <GroupsBar
+          activeGroup={activeGroup}
+          emojiPath={emojiPath}
+          groupIcons={groupIcons}
+          onSelect={this.handleSelectGroup}
+        />
+      ),
+      search: hideSearch ? null : (
+        <SearchBar onChange={this.handleSearch} />
+      ),
+    };
 
-        {!hidePreview && (
-          <PreviewBar
-            emoji={activeEmoji}
-            emojiPath={emojiPath}
-            hideEmoticon={hideEmoticon}
-            hideShortcodes={hideShortcodes}
-          />
-        )}
-
-        {!hideSearch && (
-          <SearchBar onChange={this.handleSearch} />
-        )}
+    return (
+      <div className={classNames.picker || 'interweave-picker__picker'}>
+        {displayOrder.map(key => components[key])}
       </div>
     );
   }

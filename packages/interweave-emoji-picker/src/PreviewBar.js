@@ -35,8 +35,8 @@ export default class PreviewBar extends React.PureComponent<PreviewBarProps> {
     emoji: null,
   };
 
-  formatAnnotation(annotation: string): string {
-    return annotation
+  formatTitle(title: string): string {
+    return title.toLowerCase()
       .split(' ')
       .map(word => word.charAt(0).toUpperCase() + word.slice(1))
       .join(' ');
@@ -55,6 +55,7 @@ export default class PreviewBar extends React.PureComponent<PreviewBarProps> {
         </div>
       );
     }
+    const title = emoji.annotation || emoji.name;
     const subtitle = [];
 
     if (!hideEmoticon && emoji.emoticon) {
@@ -77,9 +78,9 @@ export default class PreviewBar extends React.PureComponent<PreviewBarProps> {
         </div>
 
         <div className={classNames.previewContent}>
-          {emoji.annotation && (
+          {title && (
             <div className={classNames.previewTitle}>
-              {this.formatAnnotation(emoji.annotation)}
+              {this.formatTitle(title)}
             </div>
           )}
 

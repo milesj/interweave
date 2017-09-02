@@ -21,10 +21,9 @@
       position: relative;
     }
 
-    .interweave-picker__search,
-    .interweave-picker__preview {
+    .interweave-picker__search {
       padding: 10px;
-      border-top: 1px solid gray;
+      background: gray;
     }
 
     .interweave-picker__search-input {
@@ -40,6 +39,7 @@
       height: 250px;
       font-size: 18px;
       position: relative;
+      border-bottom: 5px solid white;
     }
 
     .interweave-picker__list-header {
@@ -47,7 +47,7 @@
       font-weight: bold;
       position: sticky;
       top: 0;
-      background: white;
+      background: rgba(255, 255, 255, .9);
       z-index: 2;
     }
 
@@ -81,6 +81,8 @@
     .interweave-picker__preview {
       min-height: 65px;
       display: flex;
+      padding: 10px;
+      border-bottom: 1px solid gray;
     }
 
     .interweave-picker__preview-emoji {
@@ -100,8 +102,7 @@
 
     .interweave-picker__groups {
       background: gray;
-      padding: 5px;
-      padding-bottom: 0;
+      padding: 0 10px;
     }
 
     .interweave-picker__groups-list {
@@ -122,8 +123,8 @@
 
     .interweave-picker__group--active {
       background: white;
-      border-top-left-radius: .2em;
-      border-top-right-radius: .2em;
+      border-bottom-left-radius: .2em;
+      border-bottom-right-radius: .2em;
     }
   </style>
 </head>
