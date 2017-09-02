@@ -9,7 +9,7 @@ import PropTypes from 'prop-types';
 import { getEmojiData } from 'interweave/lib/data/emoji';
 import withEmoji from 'interweave/lib/loaders/withEmoji';
 import EmojiList from './EmojiList';
-import GroupsBar from './GroupsBar';
+import GroupBar from './GroupBar';
 import PreviewBar from './PreviewBar';
 import SearchBar from './SearchBar';
 
@@ -91,10 +91,10 @@ class Picker extends React.Component<PickerProps, PickerState> {
       classNames: {
         emoji: 'interweave-picker__emoji',
         emojiActive: 'interweave-picker__emoji--active',
-        emojiList: 'interweave-picker__list',
-        emojiListSection: 'interweave-picker__list-section',
-        emojiListHeader: 'interweave-picker__list-header',
-        emojiListBody: 'interweave-picker__list-body',
+        emojis: 'interweave-picker__emojis',
+        emojisSection: 'interweave-picker__emojis-section',
+        emojisHeader: 'interweave-picker__emojis-header',
+        emojisBody: 'interweave-picker__emojis-body',
         group: 'interweave-picker__group',
         groupActive: 'interweave-picker__group--active',
         groups: 'interweave-picker__groups',
@@ -200,7 +200,7 @@ class Picker extends React.Component<PickerProps, PickerState> {
         />
       ),
       groups: (
-        <GroupsBar
+        <GroupBar
           activeGroup={activeGroup}
           emojiPath={emojiPath}
           groupIcons={groupIcons}

@@ -9,11 +9,11 @@ import PropTypes from 'prop-types';
 import Group from './Group';
 import { GROUPS } from './constants';
 
-type GroupsBarProps = {
+type GroupBarProps = {
   groupIcons: { [key: string]: React$Node },
 };
 
-export default function GroupsBar({ groupIcons, ...props }: GroupsBarProps, { classNames }: *) {
+export default function GroupBar({ groupIcons, ...props }: GroupBarProps, { classNames }: *) {
   return (
     <nav className={classNames.groups}>
       <ul className={classNames.groupsList}>
@@ -29,6 +29,6 @@ export default function GroupsBar({ groupIcons, ...props }: GroupsBarProps, { cl
   );
 }
 
-GroupsBar.contextTypes = {
+GroupBar.contextTypes = {
   classNames: PropTypes.objectOf(PropTypes.string),
 };

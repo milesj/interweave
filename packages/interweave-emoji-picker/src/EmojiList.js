@@ -114,18 +114,18 @@ export default class EmojiList extends React.PureComponent<EmojiListProps> {
     const groupedEmojis = query ? this.searchList(emojis) : this.groupList(emojis);
 
     return (
-      <div className={classNames.emojiList}>
+      <div className={classNames.emojis}>
         {Object.keys(groupedEmojis).map(group => (
           <section
             key={group}
-            className={classNames.emojiListSection}
+            className={classNames.emojisSection}
             id={`emoji-group-${group}`}
           >
-            <header className={classNames.emojiListHeader}>
+            <header className={classNames.emojisHeader}>
               {this.context.messages[group]}
             </header>
 
-            <div className={classNames.emojiListBody}>
+            <div className={classNames.emojisBody}>
               {groupedEmojis[group].map(emoji => (
                 <EmojiButton
                   key={emoji.hexcode}
