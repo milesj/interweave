@@ -13,26 +13,31 @@ type GroupBarProps = {
   icons: { [key: string]: React$Node },
 };
 
-export default function GroupBar({ icons, ...props }: GroupBarProps, { classNames }: *) {
-  return (
-    <nav className={classNames.groups}>
-      <ul className={classNames.groupsList}>
-        {GROUPS.map(group => (
-          <li key={group}>
-            <Group {...props} group={group}>
-              {icons[group] || null}
-            </Group>
-          </li>
-        ))}
-      </ul>
-    </nav>
-  );
+export default class GroupBar extends React.PureComponent<GroupBarProps> {
+  static contextTypes = {
+    classNames: PropTypes.objectOf(PropTypes.string),
+  };
+
+  static propTypes = {
+    icons: PropTypes.objectOf(PropTypes.node).isRequired,
+  };
+
+  render() {
+    const { icons, ...props } = this.props;
+    const { classNames } = this.context;
+
+    return (
+      <nav className={classNames.groups}>
+        <ul className={classNames.groupsList}>
+          {GROUPS.map(group => (
+            <li key={group}>
+              <Group {...props} group={group}>
+                {icons[group] || null}
+              </Group>
+            </li>
+          ))}
+        </ul>
+      </nav>
+    );
+  }
 }
-
-GroupBar.contextTypes = {
-  classNames: PropTypes.objectOf(PropTypes.string),
-};
-
-GroupBar.propTypes = {
-  icons: PropTypes.objectOf(PropTypes.node),
-};
