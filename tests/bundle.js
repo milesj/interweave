@@ -1,4 +1,4 @@
-/* eslint-disable no-magic-numbers, react/jsx-no-literals */
+/* eslint-disable no-console, no-magic-numbers, react/jsx-no-literals */
 
 import React from 'react';
 import ReactDOM from 'react-dom';
@@ -9,7 +9,7 @@ import EmojiMatcher from '../packages/interweave/src/matchers/EmojiMatcher';
 import HashtagMatcher from '../packages/interweave/src/matchers/HashtagMatcher';
 import IpMatcher from '../packages/interweave/src/matchers/IpMatcher';
 import UrlMatcher from '../packages/interweave/src/matchers/UrlMatcher';
-import withEmoji from '../packages/interweave/src/loaders/withEmoji';
+import withEmojiData from '../packages/interweave/src/loaders/withEmojiData';
 import EmojiPicker from '../packages/interweave-emoji-picker/src/Picker';
 
 const contentWithNewLines = `This block has multiple new lines.
@@ -51,7 +51,7 @@ const emojiUnicodeProps = {
   ],
 };
 
-const Interweave = withEmoji(BaseInterweave);
+const Interweave = withEmojiData(BaseInterweave);
 
 function App() {
   return (

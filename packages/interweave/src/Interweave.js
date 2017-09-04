@@ -13,7 +13,7 @@ import Matcher from './Matcher';
 import Parser from './Parser';
 import Element from './components/Element';
 
-import type { ReactNode, InterweaveProps } from './types';
+import type { InterweaveProps } from './types';
 
 export default class Interweave extends React.Component<InterweaveProps> {
   static propTypes = {
@@ -51,7 +51,7 @@ export default class Interweave extends React.Component<InterweaveProps> {
   /**
    * Parse the markup and apply hooks.
    */
-  parseMarkup(): ReactNode[] | ?ReactNode {
+  parseMarkup(): React$Node[] | ?React$Node {
     const {
       tagName, // eslint-disable-line
       content,

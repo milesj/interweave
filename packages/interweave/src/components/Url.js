@@ -10,33 +10,36 @@ import Link from './Link';
 
 import type { UrlProps } from '../types';
 
-export default function Url({ children, ...props }: UrlProps) {
-  let url = children;
+export default class Url extends React.PureComponent<UrlProps> {
+  static propTypes = {
+    children: PropTypes.string.isRequired,
+    urlParts: PropTypes.shape({
+      scheme: PropTypes.string,
+      auth: PropTypes.string,
+      host: PropTypes.string,
+      port: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+      path: PropTypes.string,
+      query: PropTypes.string,
+      fragment: PropTypes.string,
+    }),
+  };
 
-  if (!url.match(/^https?:\/\//)) {
-    url = `http://${url}`;
+  static defaultProps = {
+    urlParts: {},
+  };
+
+  render() {
+    const { children, ...props } = this.props;
+    let url = children;
+
+    if (!url.match(/^https?:\/\//)) {
+      url = `http://${url}`;
+    }
+
+    return (
+      <Link {...props} href={url}>
+        {children}
+      </Link>
+    );
   }
-
-  return (
-    <Link {...props} href={url}>
-      {children}
-    </Link>
-  );
 }
-
-Url.propTypes = {
-  children: PropTypes.string.isRequired,
-  urlParts: PropTypes.shape({
-    scheme: PropTypes.string,
-    auth: PropTypes.string,
-    host: PropTypes.string,
-    port: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-    path: PropTypes.string,
-    query: PropTypes.string,
-    fragment: PropTypes.string,
-  }),
-};
-
-Url.defaultProps = {
-  urlParts: {},
-};

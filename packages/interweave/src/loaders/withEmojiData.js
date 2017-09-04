@@ -13,13 +13,15 @@ import { SUPPORTED_LOCALES } from 'emojibase/lib/constants';
 import { parseEmojiData } from '../data/emoji';
 
 import type { Emoji } from 'emojibase'; // eslint-disable-line
-import type { EmojiLoaderProps, HOCComponent } from '../types';
+import type { EmojiLoaderProps } from '../types';
 
 // Share between all instances
 let loaded = false;
 let promise = null;
 
-export default function withEmoji(Component: HOCComponent): HOCComponent {
+export default function withEmojiData(
+  Component: React$ComponentType<*>,
+): React$ComponentType<EmojiLoaderProps> {
   return class EmojiLoader extends React.Component<EmojiLoaderProps> {
     static propTypes = {
       compact: PropTypes.bool,

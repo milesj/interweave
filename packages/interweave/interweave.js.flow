@@ -1,8 +1,8 @@
-import * as React from 'react';
+import React from 'react';
 import { Matcher } from 'interweave';
 
 declare module 'interweave' {
-  declare export type AfterParseCallback = (content: React.Node[], props: Object) => React.Node[];
+  declare export type AfterParseCallback = (content: React$Node[], props: Object) => React$Node[];
 
   declare export type BeforeParseCallback = (content: string, props: Object) => string;
 
@@ -12,7 +12,7 @@ declare module 'interweave' {
     filter(value: string): string;
   }
 
-  declare export type MatcherFactory = (match: string, props: Object) => React.Node;
+  declare export type MatcherFactory = (match: string, props: Object) => React$Node;
 
   declare export class Matcher<T> {
     factory: ?MatcherFactory;
@@ -20,14 +20,14 @@ declare module 'interweave' {
     options: T;
     propName: string;
     constructor(name: string, options?: T, factory?: ?MatcherFactory): this;
-    createElement(match: string, props?: Object): React.Node;
-    replaceWith(match: string, props?: Object): React.Node;
+    createElement(match: string, props?: Object): React$Node;
+    replaceWith(match: string, props?: Object): React$Node;
     asTag(): string;
     match(string: string): ?{
       match: string,
       [key: string]: any,
     };
-    onAfterParse(content: React.Node[], props: Object): React.Node[];
+    onAfterParse(content: React$Node[], props: Object): React$Node[];
     onBeforeParse(content: string, props: Object): string;
   }
 
@@ -35,7 +35,7 @@ declare module 'interweave' {
     content: string,
     disableLineBreaks: boolean,
     disableWhitelist: boolean,
-    emptyContent: ?React.Node,
+    emptyContent: ?React$Node,
     noHtml: boolean,
     noHtmlExceptMatchers: boolean,
     tagName: string,
@@ -49,7 +49,7 @@ declare module 'interweave' {
     disableLineBreaks: boolean,
     disableMatchers: boolean,
     disableWhitelist: boolean,
-    emptyContent: ?React.Node,
+    emptyContent: ?React$Node,
     filters: Filter[],
     matchers: Matcher<*>[],
     noHtml: boolean,
@@ -60,15 +60,15 @@ declare module 'interweave' {
   };
 
   declare export default class Interweave extends React.Component<InterweaveProps> {
-    parseMarkup(): React.Node[];
-    render(): React.Node;
+    parseMarkup(): React$Node[];
+    render(): React$Node;
   }
 }
 
 declare module 'interweave/lib/components/Element' {
-  declare export default class Element extends React.Component<{
+  declare export default class Element extends React.PureComponent<{
     attributes: { [key: string]: string | number | boolean },
-    children: React.Node,
+    children: React$Node,
     className: string,
     selfClose: boolean,
     tagName: string,
@@ -76,7 +76,7 @@ declare module 'interweave/lib/components/Element' {
 }
 
 declare module 'interweave/lib/components/Email' {
-  declare export default class Email extends React.Component<{
+  declare export default class Email extends React.PureComponent<{
     children: string,
     emailParts: {
       host: string,
@@ -86,7 +86,7 @@ declare module 'interweave/lib/components/Email' {
 }
 
 declare module 'interweave/lib/components/Emoji' {
-  declare export default class Emoji extends React.Component<{
+  declare export default class Emoji extends React.PureComponent<{
     emojiLargeSize: number,
     emojiPath: string |
       (hexcode: string, enlarge: boolean, size: number, largeSize: number) => string,
@@ -100,7 +100,7 @@ declare module 'interweave/lib/components/Emoji' {
 }
 
 declare module 'interweave/lib/components/Hashtag' {
-  declare export default class Hashtag extends React.Component<{
+  declare export default class Hashtag extends React.PureComponent<{
     children: string,
     encodeHashtag: boolean,
     hashtagName: string,
@@ -110,8 +110,8 @@ declare module 'interweave/lib/components/Hashtag' {
 }
 
 declare module 'interweave/lib/components/Link' {
-  declare export default class Link extends React.Component<{
-    children: React.Node,
+  declare export default class Link extends React.PureComponent<{
+    children: React$Node,
     href: string,
     newWindow: boolean,
     onClick: ?() => void,
@@ -119,7 +119,7 @@ declare module 'interweave/lib/components/Link' {
 }
 
 declare module 'interweave/lib/components/Url' {
-  declare export default class Url extends React.Component<{
+  declare export default class Url extends React.PureComponent<{
     children: string,
     urlParts: {
       auth: string,
@@ -133,13 +133,15 @@ declare module 'interweave/lib/components/Url' {
   }> {}
 }
 
-declare module 'interweave/lib/components/EmojiLoader' {
-  declare export default class EmojiLoader extends React.Component<{
-    children: React.Node,
-    data: Object[],
+declare module 'interweave/lib/loaders/withEmojiData' {
+  declare export default function withEmojiData(
+    Component: React$ComponentType<*>,
+  ): React$ComponentType<{
+    compact: boolean,
+    emojis: Object[],
     locale: string,
     version: string,
-  }> {}
+  }>;
 }
 
 declare module 'interweave/lib/matchers/EmailMatcher' {

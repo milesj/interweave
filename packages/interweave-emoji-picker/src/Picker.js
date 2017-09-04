@@ -7,7 +7,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { getEmojiData } from 'interweave/lib/data/emoji';
-import withEmoji from 'interweave/lib/loaders/withEmoji';
+import withEmojiData from 'interweave/lib/loaders/withEmojiData';
 import EmojiList from './EmojiList';
 import GroupBar from './GroupBar';
 import PreviewBar from './PreviewBar';
@@ -247,4 +247,4 @@ class Picker extends React.Component<PickerProps, PickerState> {
   }
 }
 
-export default withEmoji(Picker);
+export default withEmojiData(Picker);

@@ -9,12 +9,12 @@ import Matcher from '../Matcher';
 import Hashtag from '../components/Hashtag';
 import { HASHTAG_PATTERN } from '../constants';
 
-import type { MatchResponse, ReactNode } from '../types';
+import type { MatchResponse } from '../types';
 
-const HASHTAG_REGEX = new RegExp(HASHTAG_PATTERN, 'i');
+const HASHTAG_REGEX: RegExp = new RegExp(HASHTAG_PATTERN, 'i');
 
 export default class HashtagMatcher extends Matcher<Object> {
-  replaceWith(match: string, props?: Object = {}): ReactNode {
+  replaceWith(match: string, props?: Object = {}): React$Node {
     return (
       <Hashtag {...props}>{match}</Hashtag>
     );

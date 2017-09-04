@@ -4,6 +4,8 @@
  * @flow
  */
 
+/* eslint-disable no-param-reassign */
+
 import { flattenEmojiData, generateEmoticonPermutations } from 'emojibase';
 import { TEXT, EMOTICON_OPTIONS } from 'emojibase/lib/constants';
 
@@ -28,20 +30,21 @@ export function getFlatEmojiData(): Emoji[] {
 export function parseEmojiData(data: Emoji[]) {
   // Package the data
   emojiList = data.map((emoji) => {
-    const nextEmoji = { ...emoji };
+    const extra = {};
 
     // Only support the default presentation
-    nextEmoji.unicode = (nextEmoji.text && nextEmoji.type === TEXT)
-      ? nextEmoji.text
-      : nextEmoji.emoji;
+    extra.unicode = (emoji.text && emoji.type === TEXT) ? emoji.text : emoji.emoji;
 
     // Canonicalize the shortcodes for easy reuse
-    if (nextEmoji.shortcodes) {
-      nextEmoji.canonical_shortcodes = nextEmoji.shortcodes.map(code => `:${code}:`);
-      nextEmoji.primary_shortcode = nextEmoji.canonical_shortcodes[0];
+    if (emoji.shortcodes) {
+      extra.canonical_shortcodes = emoji.shortcodes.map(code => `:${code}:`);
+      extra.primary_shortcode = extra.canonical_shortcodes[0]; // eslint-disable-line
     }
 
-    return nextEmoji;
+    return {
+      ...emoji,
+      ...extra,
+    };
   });
 
   // Flatten and reference the data

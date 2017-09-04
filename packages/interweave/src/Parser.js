@@ -27,7 +27,6 @@ import type {
   Attributes,
   NodeConfig,
   NodeInterface, // eslint-disable-line
-  ReactNode,
 } from './types';
 
 const ELEMENT_NODE: number = 1;
@@ -38,7 +37,7 @@ const ARIA_COMPARE_LENGTH: number = 5;
 
 export default class Parser {
   doc: Document;
-  content: ReactNode[];
+  content: React$Node[];
   props: Object;
   matchers: Matcher<*>[];
   filters: Filter[];
@@ -83,7 +82,7 @@ export default class Parser {
   applyMatchers(
     string: string,
     parentConfig: NodeConfig,
-  ): string | ReactNode[] {
+  ): string | React$Node[] {
     const elements = [];
     const { props } = this;
     let matchedString = string;
@@ -371,7 +370,7 @@ export default class Parser {
    * while looping over all child nodes and generating an
    * array to interpolate into JSX.
    */
-  parse(): ReactNode[] {
+  parse(): React$Node[] {
     // $FlowIgnore Body is not null!
     return this.parseNode(this.doc.body, {
       ...CONFIG_BLOCK,
@@ -383,7 +382,7 @@ export default class Parser {
    * Loop over the nodes children and generate a
    * list of text nodes and React elements.
    */
-  parseNode(parentNode: NodeInterface, parentConfig: NodeConfig): ReactNode[] {
+  parseNode(parentNode: NodeInterface, parentConfig: NodeConfig): React$Node[] {
     const { noHtml, noHtmlExceptMatchers, disableWhitelist } = this.props;
     let content = [];
     let mergedText = '';

@@ -6,12 +6,8 @@
 
 /* eslint-disable no-undef, import/prefer-default-export */
 
-import * as React from 'react';
 import type Filter from './Filter';
 import type Matcher from './Matcher';
-
-export type HOCComponent = React.ComponentType<*>;
-export type ReactNode = React.Node;
 
 export interface NodeInterface {
   attributes?: NamedNodeMap,
@@ -37,7 +33,7 @@ export type PrimitiveType = string | number | boolean;
 
 export type Attributes = { [key: string]: PrimitiveType };
 
-export type MatcherFactory = (match: string, props: Object) => React.Node;
+export type MatcherFactory = (match: string, props: Object) => React$Node;
 
 export type MatchResponse = {
   emoticon?: string,
@@ -54,7 +50,7 @@ export type ParserProps = {
   [key: string]: mixed,
 };
 
-export type AfterParseCallback = (content: React.Node[], props: Object) => React.Node[];
+export type AfterParseCallback = (content: React$Node[], props: Object) => React$Node[];
 
 export type BeforeParseCallback = (content: string, props: Object) => string;
 
@@ -66,7 +62,7 @@ export type InterweaveProps = {
   disableLineBreaks: boolean,
   disableMatchers: boolean,
   disableWhitelist: boolean,
-  emptyContent: ?React.Node,
+  emptyContent: ?React$Node,
   filters: Filter[],
   matchers: Matcher<*>[],
   noHtml: boolean,
@@ -80,14 +76,14 @@ export type MarkupProps = {
   content: string,
   disableLineBreaks: boolean,
   disableWhitelist: boolean,
-  emptyContent: ?React.Node,
+  emptyContent: ?React$Node,
   noHtml: boolean,
   noHtmlExceptMatchers: boolean,
   tagName: string,
 };
 
 export type LinkProps = {
-  children: React.Node,
+  children: React$Node,
   href: string,
   newWindow: boolean,
   onClick: ?() => void,
@@ -95,7 +91,7 @@ export type LinkProps = {
 
 export type ElementProps = {
   attributes: Attributes,
-  children: React.Node,
+  children: React$Node,
   className: string,
   selfClose: boolean,
   tagName: string,

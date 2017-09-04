@@ -10,22 +10,26 @@ import Link from './Link';
 
 import type { EmailProps } from '../types';
 
-export default function Email({ children, ...props }: EmailProps) {
-  return (
-    <Link {...props} href={`mailto:${children}`}>
-      {children}
-    </Link>
-  );
+export default class Email extends React.PureComponent<EmailProps> {
+  static propTypes = {
+    children: PropTypes.string.isRequired,
+    emailParts: PropTypes.shape({
+      username: PropTypes.string,
+      host: PropTypes.string,
+    }),
+  };
+
+  static defaultProps = {
+    emailParts: {},
+  };
+
+  render() {
+    const { children, ...props } = this.props;
+
+    return (
+      <Link {...props} href={`mailto:${children}`}>
+        {children}
+      </Link>
+    );
+  }
 }
-
-Email.propTypes = {
-  children: PropTypes.string.isRequired,
-  emailParts: PropTypes.shape({
-    username: PropTypes.string,
-    host: PropTypes.string,
-  }),
-};
-
-Email.defaultProps = {
-  emailParts: {},
-};

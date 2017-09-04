@@ -20,11 +20,10 @@ import type {
   MatchResponse,
   MatcherFactory,
   EmojiOptions,
-  ReactNode,
 } from '../types';
 
 // eslint-disable-next-line no-useless-escape
-const EMOTICON_BOUNDARY_REGEX = new RegExp(`(^|\\\b|\\\s)(${EMOTICON_REGEX.source})(?=\\\s|\\\b|$)`);
+const EMOTICON_BOUNDARY_REGEX: RegExp = new RegExp(`(^|\\\b|\\\s)(${EMOTICON_REGEX.source})(?=\\\s|\\\b|$)`);
 
 export default class EmojiMatcher extends Matcher<EmojiOptions> {
   options: EmojiOptions;
@@ -40,7 +39,7 @@ export default class EmojiMatcher extends Matcher<EmojiOptions> {
     }, factory);
   }
 
-  replaceWith(match: string, props?: Object = {}): ReactNode {
+  replaceWith(match: string, props?: Object = {}): React$Node {
     if (this.options.renderUnicode) {
       return props.unicode;
     }
@@ -126,7 +125,7 @@ export default class EmojiMatcher extends Matcher<EmojiOptions> {
   /**
    * When a single `Emoji` is the only content, enlarge it!
    */
-  onAfterParse(content: ReactNode[], props: Object): ReactNode[] {
+  onAfterParse(content: React$Node[], props: Object): React$Node[] {
     if (content.length === 0) {
       return content;
     }

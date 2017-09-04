@@ -9,7 +9,7 @@
 import type { Emoji as BaseEmoji } from 'emojibase';
 
 export type Emoji = {
-  ...BaseEmoji,
+  ...BaseEmoji, // Breaks ESLint
   canonical_shortcodes: string[],
   hexcode: string,
   primary_shortcode: string,

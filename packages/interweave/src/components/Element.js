@@ -9,51 +9,54 @@ import PropTypes from 'prop-types';
 
 import type { ElementProps } from '../types';
 
-export default function Element({
-  attributes = {},
-  children,
-  className,
-  selfClose,
-  tagName: Tag,
-}: ElementProps) {
-  const props = {
-    ...attributes,
+export default class Element extends React.PureComponent<ElementProps> {
+  static propTypes = {
+    attributes: PropTypes.objectOf(PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.number,
+      PropTypes.bool,
+    ])),
+    children: PropTypes.node,
+    className: PropTypes.string,
+    selfClose: PropTypes.bool,
+    tagName: PropTypes.string.isRequired,
   };
 
-  if (!selfClose || (selfClose && Tag === 'img')) {
-    props.className = [
-      'interweave',
-      className || '',
-      attributes.className || '',
-    ].filter(Boolean).join(' ');
-  }
+  static defaultProps = {
+    attributes: {},
+    className: '',
+    children: null,
+    selfClose: false,
+  };
 
-  if (selfClose) {
+  render() {
+    const {
+      attributes,
+      children,
+      className,
+      selfClose,
+      tagName: Tag,
+    } = this.props;
+    const props = {
+      ...attributes,
+    };
+
+    if (!selfClose || (selfClose && Tag === 'img')) {
+      props.className = [
+        'interweave',
+        className || '',
+        attributes.className || '',
+      ].filter(Boolean).join(' ');
+    }
+
+    if (selfClose) {
+      return (
+        <Tag {...props} />
+      );
+    }
+
     return (
-      <Tag {...props} />
+      <Tag {...props}>{children}</Tag>
     );
   }
-
-  return (
-    <Tag {...props}>{children}</Tag>
-  );
 }
-
-Element.propTypes = {
-  attributes: PropTypes.objectOf(PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.number,
-    PropTypes.bool,
-  ])),
-  children: PropTypes.node,
-  className: PropTypes.string,
-  selfClose: PropTypes.bool,
-  tagName: PropTypes.string.isRequired,
-};
-
-Element.defaultProps = {
-  attributes: {},
-  className: '',
-  children: null,
-  selfClose: false,
-};
