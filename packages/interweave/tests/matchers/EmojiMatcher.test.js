@@ -50,7 +50,7 @@ describe('matchers/EmojiMatcher', () => {
   const shortPattern = new RegExp(`^${SHORTCODE_REGEX.source}$`);
 
   describe('does match valid emoji', () => {
-    VALID_UNICODE.forEach((unicode) => {
+    VALID_UNICODE.forEach((unicode, i) => {
       // Emoji_Tag_Sequences currently do not work
       if (unicode === '🏴󠁧󠁢󠁥󠁮󠁧󠁿' || unicode === '🏴󠁧󠁢󠁳󠁣󠁴󠁿' || unicode === '🏴󠁧󠁢󠁷󠁬󠁳󠁿') {
         return;

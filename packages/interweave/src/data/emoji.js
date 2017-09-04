@@ -6,7 +6,7 @@
 
 /* eslint-disable no-param-reassign */
 
-import { flattenEmojiData, generateEmoticonPermutations } from 'emojibase';
+import { generateEmoticonPermutations } from 'emojibase';
 import { TEXT, EMOTICON_OPTIONS } from 'emojibase/lib/constants';
 
 import type { Emoji } from 'emojibase';
@@ -16,8 +16,8 @@ export const SHORTCODE_TO_UNICODE: { [shortcode: string]: string } = {};
 export const EMOTICON_TO_UNICODE: { [emoticon: string]: string } = {};
 export const EMOJIS: { [unicode: string]: Emoji } = {};
 
-let emojiList: Emoji[] = [];
-let flatEmojiList: Emoji[] = [];
+const emojiList: Emoji[] = [];
+const flatEmojiList: Emoji[] = [];
 
 export function getEmojiData(): Emoji[] {
   return emojiList;
@@ -27,50 +27,50 @@ export function getFlatEmojiData(): Emoji[] {
   return flatEmojiList;
 }
 
-export function parseEmojiData(data: Emoji[]) {
-  // Package the data
-  emojiList = data.map((emoji) => {
-    const extra = {};
+export function packageEmoji(emoji: Object): Emoji {
+  const { emoticon, shortcodes = [] } = emoji;
 
-    // Only support the default presentation
-    extra.unicode = (emoji.text && emoji.type === TEXT) ? emoji.text : emoji.emoji;
+  // Only support the default presentation
+  const unicode = (emoji.text && emoji.type === TEXT) ? emoji.text : emoji.emoji;
+  emoji.unicode = unicode;
 
-    // Canonicalize the shortcodes for easy reuse
-    if (emoji.shortcodes) {
-      extra.canonical_shortcodes = emoji.shortcodes.map(code => `:${code}:`);
-      extra.primary_shortcode = extra.canonical_shortcodes[0]; // eslint-disable-line
-    }
-
-    return {
-      ...emoji,
-      ...extra,
-    };
-  });
-
-  // Flatten and reference the data
-  flatEmojiList = flattenEmojiData(emojiList);
-
-  flatEmojiList.forEach((emoji) => {
-    // $FlowIgnore
-    const { emoticon, canonical_shortcodes: shortcodes = [], unicode } = emoji;
+  // Canonicalize the shortcodes for easy reuse
+  if (shortcodes.length > 0) {
+    emoji.canonical_shortcodes = shortcodes.map(code => `:${code}:`);
+    emoji.primary_shortcode = emoji.canonical_shortcodes[0]; // eslint-disable-line
 
     // Support all shortcodes
-    UNICODE_TO_SHORTCODES[unicode] = shortcodes.map((shortcode) => {
+    UNICODE_TO_SHORTCODES[unicode] = emoji.canonical_shortcodes.map((shortcode) => {
       SHORTCODE_TO_UNICODE[shortcode] = unicode;
 
       return shortcode;
     });
+  }
 
-    // Support all emoticons
-    if (emoticon) {
-      generateEmoticonPermutations(
-        emoticon,
-        EMOTICON_OPTIONS[emoticon] || {},
-      ).forEach((emo) => {
-        EMOTICON_TO_UNICODE[emo] = unicode;
+  // Support all emoticons
+  if (emoticon) {
+    generateEmoticonPermutations(emoticon, EMOTICON_OPTIONS[emoticon]).forEach((emo) => {
+      EMOTICON_TO_UNICODE[emo] = unicode;
+    });
+  }
+
+  EMOJIS[unicode] = emoji;
+
+  return emoji;
+}
+
+export function parseEmojiData(data: Emoji[]) {
+  data.forEach((emoji) => {
+    const packagedEmoji = packageEmoji(emoji);
+
+    emojiList.push(packagedEmoji);
+    flatEmojiList.push(packagedEmoji);
+
+    // Flatten and package skins as well
+    if (packagedEmoji.skins) {
+      packagedEmoji.skins.forEach((skin) => {
+        flatEmojiList.push(packageEmoji(skin));
       });
     }
-
-    EMOJIS[unicode] = emoji;
   });
 }
