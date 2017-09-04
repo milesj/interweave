@@ -12,6 +12,7 @@ export type Emoji = {
   ...BaseEmoji,
   canonical_shortcodes: string[],
   primary_shortcode: string,
+  unicode: string,
 };
 
 export type ContextProps = {

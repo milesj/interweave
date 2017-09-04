@@ -17,6 +17,7 @@ export const EmojiShape = PropTypes.shape({
   shortcodes: PropTypes.arrayOf(PropTypes.string),
   tags: PropTypes.arrayOf(PropTypes.string),
   text: PropTypes.string,
+  unicode: PropTypes.string,
 });
 
 export const EmojiPathShape = PropTypes.oneOfType([

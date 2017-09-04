@@ -85,7 +85,7 @@ export default class EmojiButton extends React.PureComponent<EmojiProps, EmojiSt
         onMouseLeave={this.handleLeave}
       >
         <EmojiCharacter
-          unicode={emoji.emoji || emoji.text}
+          unicode={emoji.unicode}
           emojiPath={emojiPath}
           emojiSize={1}
         />

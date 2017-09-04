@@ -30,6 +30,12 @@ export function parseEmojiData(data: Emoji[]) {
   emojiList = data.map((emoji) => {
     const nextEmoji = { ...emoji };
 
+    // Only support the default presentation
+    nextEmoji.unicode = (nextEmoji.text && nextEmoji.type === TEXT)
+      ? nextEmoji.text
+      : nextEmoji.emoji;
+
+    // Canonicalize the shortcodes for easy reuse
     if (nextEmoji.shortcodes) {
       nextEmoji.canonical_shortcodes = nextEmoji.shortcodes.map(code => `:${code}:`);
       nextEmoji.primary_shortcode = nextEmoji.canonical_shortcodes[0];
@@ -43,10 +49,7 @@ export function parseEmojiData(data: Emoji[]) {
 
   flatEmojiList.forEach((emoji) => {
     // $FlowIgnore
-    const { emoticon, canonical_shortcodes: shortcodes = [] } = emoji;
-
-    // Only support the default presentation
-    const unicode = (emoji.text && emoji.type === TEXT) ? emoji.text : emoji.emoji;
+    const { emoticon, canonical_shortcodes: shortcodes = [], unicode } = emoji;
 
     // Support all shortcodes
     UNICODE_TO_SHORTCODES[unicode] = shortcodes.map((shortcode) => {
