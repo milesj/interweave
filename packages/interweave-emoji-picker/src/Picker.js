@@ -113,6 +113,7 @@ class Picker extends React.Component<PickerProps, PickerState> {
         groupActive: 'interweave-picker__group--active',
         groups: 'interweave-picker__groups',
         groupsList: 'interweave-picker__groups-list',
+        noResults: 'interweave-picker__no-results',
         preview: 'interweave-picker__preview',
         previewEmpty: 'interweave-picker__preview-empty',
         previewEmoji: 'interweave-picker__preview-emoji',
@@ -121,7 +122,6 @@ class Picker extends React.Component<PickerProps, PickerState> {
         previewSubtitle: 'interweave-picker__preview-subtitle',
         search: 'interweave-picker__search',
         searchInput: 'interweave-picker__search-input',
-        searchEmpty: 'interweave-picker__search-empty',
         ...classNames,
       },
       messages: {

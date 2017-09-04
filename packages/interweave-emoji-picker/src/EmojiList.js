@@ -6,7 +6,7 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import EmojiButton from './Emoji';
+import EmojiGrid from './EmojiGrid';
 import { GROUPS } from './constants';
 import { EmojiShape, EmojiPathShape } from './shapes';
 
@@ -134,22 +134,13 @@ export default class EmojiList extends React.PureComponent<EmojiListProps> {
             </header>
 
             <div className={classNames.emojisBody}>
-              {(groupedEmojis[group].length > 0) ? (
-                groupedEmojis[group].map(emoji => (
-                  <EmojiButton
-                    key={emoji.hexcode}
-                    emoji={emoji}
-                    emojiPath={emojiPath}
-                    onEnter={onEnter}
-                    onLeave={onLeave}
-                    onSelect={onSelect}
-                  />
-                ))
-              ) : (
-                <div className={classNames.searchEmpty}>
-                  {messages.noResults}
-                </div>
-              )}
+              <EmojiGrid
+                emojis={groupedEmojis[group]}
+                emojiPath={emojiPath}
+                onEnter={onEnter}
+                onLeave={onLeave}
+                onSelect={onSelect}
+              />
             </div>
           </section>
         ))}
