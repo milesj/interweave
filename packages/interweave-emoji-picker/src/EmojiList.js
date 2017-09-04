@@ -16,6 +16,7 @@ type EmojiListProps = {
   activeGroup: string,
   emojiPath: EmojiPath,
   emojis: Emoji[],
+  exclude: { [hexcode: string]: boolean },
   onEnter: (emoji: Emoji) => void,
   onLeave: (emoji: Emoji) => void,
   onSelect: (emoji: Emoji) => void,
@@ -32,6 +33,7 @@ export default class EmojiList extends React.PureComponent<EmojiListProps> {
     activeGroup: PropTypes.string.isRequired,
     emojiPath: EmojiPathShape.isRequired,
     emojis: PropTypes.arrayOf(EmojiShape).isRequired,
+    exclude: PropTypes.objectOf(PropTypes.bool).isRequired,
     query: PropTypes.string.isRequired,
     onEnter: PropTypes.func.isRequired,
     onLeave: PropTypes.func.isRequired,
@@ -49,7 +51,12 @@ export default class EmojiList extends React.PureComponent<EmojiListProps> {
   }
 
   filterForSearch = (emoji: Emoji) => {
+    const { exclude } = this.props;
     const lookups = [];
+
+    if (exclude[emoji.hexcode]) {
+      return false;
+    }
 
     if (emoji.shortcodes) {
       lookups.push(...emoji.shortcodes);
@@ -71,11 +78,12 @@ export default class EmojiList extends React.PureComponent<EmojiListProps> {
   };
 
   groupList = (emojis: Emoji[]) => {
+    const { exclude } = this.props;
     const groups = {};
 
     // Partition into each group
     emojis.forEach((emoji) => {
-      if (typeof emoji.group === 'undefined') {
+      if (exclude[emoji.hexcode] || typeof emoji.group === 'undefined') {
         return;
       }
 

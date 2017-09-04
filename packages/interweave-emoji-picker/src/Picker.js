@@ -22,6 +22,7 @@ type PickerProps = {
   defaultSearchQuery: string,
   displayOrder: string[],
   emojiPath: EmojiPath,
+  exclude: string[],
   hideEmoticon: boolean,
   hidePreview: boolean,
   hideSearch: boolean,
@@ -55,6 +56,7 @@ class Picker extends React.Component<PickerProps, PickerState> {
       PropTypes.string,
       PropTypes.func,
     ]),
+    exclude: PropTypes.arrayOf(PropTypes.string),
     hideEmoticon: PropTypes.bool,
     hidePreview: PropTypes.bool,
     hideSearch: PropTypes.bool,
@@ -73,6 +75,7 @@ class Picker extends React.Component<PickerProps, PickerState> {
     defaultSearchQuery: '',
     displayOrder: ['preview', 'emojis', 'groups', 'search'],
     emojiPath: '',
+    exclude: [],
     messages: {},
     hideEmoticon: false,
     hidePreview: false,
@@ -144,6 +147,17 @@ class Picker extends React.Component<PickerProps, PickerState> {
     };
   }
 
+  generateExcludeMap() {
+    const map = {};
+
+    // Convert to a map for quicker lookups
+    this.props.exclude.forEach((hexcode) => {
+      map[hexcode] = true;
+    });
+
+    return map;
+  }
+
   handleEnterEmoji = (emoji: Emoji) => {
     this.setState({
       activeEmoji: emoji,
@@ -205,6 +219,7 @@ class Picker extends React.Component<PickerProps, PickerState> {
           emojis={getEmojiData()}
           emojiPath={emojiPath}
           activeGroup={activeGroup}
+          exclude={this.generateExcludeMap()}
           query={searchQuery}
           onEnter={this.handleEnterEmoji}
           onLeave={this.handleLeaveEmoji}
