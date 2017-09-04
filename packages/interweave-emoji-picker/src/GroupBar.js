@@ -10,17 +10,17 @@ import Group from './Group';
 import { GROUPS } from './constants';
 
 type GroupBarProps = {
-  groupIcons: { [key: string]: React$Node },
+  icons: { [key: string]: React$Node },
 };
 
-export default function GroupBar({ groupIcons, ...props }: GroupBarProps, { classNames }: *) {
+export default function GroupBar({ icons, ...props }: GroupBarProps, { classNames }: *) {
   return (
     <nav className={classNames.groups}>
       <ul className={classNames.groupsList}>
         {GROUPS.map(group => (
           <li key={group}>
             <Group {...props} group={group}>
-              {groupIcons[group] || null}
+              {icons[group] || null}
             </Group>
           </li>
         ))}
@@ -31,4 +31,8 @@ export default function GroupBar({ groupIcons, ...props }: GroupBarProps, { clas
 
 GroupBar.contextTypes = {
   classNames: PropTypes.objectOf(PropTypes.string),
+};
+
+GroupBar.propTypes = {
+  icons: PropTypes.objectOf(PropTypes.node),
 };

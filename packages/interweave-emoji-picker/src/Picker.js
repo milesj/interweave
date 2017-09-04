@@ -20,11 +20,11 @@ type PickerProps = {
   classNames: { [key: string]: string },
   displayOrder: string[],
   emojiPath: EmojiPath,
-  groupIcons: { [key: string]: React$Node },
   hideEmoticon: boolean,
   hidePreview: boolean,
   hideSearch: boolean,
   hideShortcodes: boolean,
+  icons: { [key: string]: React$Node },
   messages: { [key: string]: string },
   onHoverEmoji: (emoji: Emoji) => void,
   onSearch: (query: string) => void,
@@ -51,11 +51,11 @@ class Picker extends React.Component<PickerProps, PickerState> {
       PropTypes.string,
       PropTypes.func,
     ]),
-    groupIcons: PropTypes.objectOf(PropTypes.node),
     hideEmoticon: PropTypes.bool,
     hidePreview: PropTypes.bool,
     hideSearch: PropTypes.bool,
     hideShortcodes: PropTypes.bool,
+    icons: PropTypes.objectOf(PropTypes.node),
     messages: PropTypes.objectOf(PropTypes.string),
     onHoverEmoji: PropTypes.func,
     onSearch: PropTypes.func,
@@ -67,12 +67,12 @@ class Picker extends React.Component<PickerProps, PickerState> {
     classNames: {},
     displayOrder: ['preview', 'emojis', 'groups', 'search'],
     emojiPath: '',
-    groupIcons: {},
     messages: {},
     hideEmoticon: false,
     hidePreview: false,
     hideSearch: false,
     hideShortcodes: false,
+    icons: {},
     onHoverEmoji() {},
     onSearch() {},
     onSelectEmoji() {},
@@ -174,11 +174,11 @@ class Picker extends React.Component<PickerProps, PickerState> {
       classNames,
       displayOrder,
       emojiPath,
-      groupIcons,
       hideEmoticon,
       hidePreview,
       hideSearch,
       hideShortcodes,
+      icons,
     } = this.props;
     const { activeEmoji, activeGroup, searchQuery } = this.state;
     const components = {
@@ -205,7 +205,7 @@ class Picker extends React.Component<PickerProps, PickerState> {
         <GroupBar
           activeGroup={activeGroup}
           emojiPath={emojiPath}
-          groupIcons={groupIcons}
+          icons={icons}
           onSelect={this.handleSelectGroup}
         />
       ),
