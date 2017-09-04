@@ -17,6 +17,7 @@
     "url",
     "autolink",
     "emoji",
+    "emojibase",
     "hashtag",
     "html",
     "markup",

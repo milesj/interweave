@@ -1,8 +1,8 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import EmojiLoader from '../../src/loaders/EmojiLoader';
+import withEmojiData from '../../src/loaders/withEmojiData';
 
-describe('loaders/EmojiLoader', () => {
+describe('loaders/withEmojiData', () => {
   beforeEach(() => {
     global.fetch = jest.fn(() => Promise.resolve({
       ok: true,
@@ -16,10 +16,15 @@ describe('loaders/EmojiLoader', () => {
   });
 
   it('fetches data on mount', () => {
+    // eslint-disable-next-line
+    const Component = withEmojiData(function BaseComponent() {
+      return <span>Foo</span>;
+    });
+
     shallow(
-      <EmojiLoader locale="ja" version="1.2.3">
+      <Component locale="ja" version="1.2.3">
         <div>Foo</div>
-      </EmojiLoader>,
+      </Component>,
     );
 
     expect(global.fetch).toBeCalledWith(
