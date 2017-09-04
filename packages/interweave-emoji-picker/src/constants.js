@@ -20,7 +20,7 @@ export const GROUP_ICONS: { [key: string]: string } = {
   smileysPeople: '😃',
   animalsNature: '🌿',
   foodDrink: '🍎',
-  travelPlaces: '✈️',
+  travelPlaces: '🗺️',
   activities: '⚽️',
   objects: '📘',
   symbols: '⛔️',

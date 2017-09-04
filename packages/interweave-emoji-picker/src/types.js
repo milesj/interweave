@@ -16,8 +16,4 @@ export type Emoji = {
   unicode: string,
 };
 
-export type ContextProps = {
-  messages: { [key: string]: string },
-};
-
 export type EmojiPath = string | () => string;
