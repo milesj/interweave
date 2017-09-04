@@ -18,6 +18,8 @@ import type { Emoji, EmojiPath } from './types';
 
 type PickerProps = {
   classNames: { [key: string]: string },
+  defaultGroup: string,
+  defaultSearchQuery: string,
   displayOrder: string[],
   emojiPath: EmojiPath,
   hideEmoticon: boolean,
@@ -46,6 +48,8 @@ class Picker extends React.Component<PickerProps, PickerState> {
 
   static propTypes = {
     classNames: PropTypes.objectOf(PropTypes.string),
+    defaultGroup: PropTypes.string,
+    defaultSearchQuery: PropTypes.string,
     displayOrder: PropTypes.arrayOf(PropTypes.string),
     emojiPath: PropTypes.oneOfType([
       PropTypes.string,
@@ -65,6 +69,8 @@ class Picker extends React.Component<PickerProps, PickerState> {
 
   static defaultProps = {
     classNames: {},
+    defaultGroup: DEFAULT_GROUP,
+    defaultSearchQuery: '',
     displayOrder: ['preview', 'emojis', 'groups', 'search'],
     emojiPath: '',
     messages: {},
@@ -79,11 +85,15 @@ class Picker extends React.Component<PickerProps, PickerState> {
     onSelectGroup() {},
   };
 
-  state = {
-    activeEmoji: null,
-    activeGroup: DEFAULT_GROUP,
-    searchQuery: '',
-  };
+  constructor({ defaultGroup, defaultSearchQuery }: PickerProps) {
+    super();
+
+    this.state = {
+      activeEmoji: null,
+      activeGroup: defaultGroup,
+      searchQuery: defaultSearchQuery,
+    };
+  }
 
   getChildContext() {
     const { classNames, messages } = this.props;
@@ -150,7 +160,7 @@ class Picker extends React.Component<PickerProps, PickerState> {
 
   handleSearch = (query: string) => {
     this.setState({
-      activeGroup: query ? '' : DEFAULT_GROUP,
+      activeGroup: query ? '' : this.props.defaultGroup,
       searchQuery: query,
     });
 
