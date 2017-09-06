@@ -28,7 +28,7 @@ type EmojiListProps = {
 const EMOJI_LISTENERS: Set<ScrollListener> = new Set();
 
 export default class EmojiList extends React.PureComponent<EmojiListProps> {
-  ref: *;
+  container: ?HTMLDivElement;
 
   static contextTypes = {
     classNames: PropTypes.objectOf(PropTypes.string),
@@ -52,13 +52,15 @@ export default class EmojiList extends React.PureComponent<EmojiListProps> {
   }
 
   componentWillReceiveProps({ activeGroup }: EmojiListProps) {
-    if (this.props.activeGroup !== activeGroup) {
+    if (activeGroup && this.props.activeGroup !== activeGroup) {
       this.scrollToGroup(activeGroup);
     }
   }
 
   componentDidUpdate() {
-    this.loadEmojisInView(this.ref);
+    if (this.container) {
+      this.loadEmojisInView(this.container);
+    }
   }
 
   addScrollListener = (listener: ScrollListener) => {
@@ -119,15 +121,15 @@ export default class EmojiList extends React.PureComponent<EmojiListProps> {
     return groups;
   };
 
-  handleRef = (ref: *) => {
-    this.ref = ref;
+  handleRef = (ref: ?HTMLDivElement) => {
+    this.container = ref;
   };
 
-  handleScroll = (e: SyntheticWheelEvent<*>) => {
+  handleScroll = (e: SyntheticWheelEvent<HTMLDivElement>) => {
     e.stopPropagation();
     e.persist();
 
-    this.handleScrollDebounced(e.target);
+    this.handleScrollDebounced(e.currentTarget);
   };
 
   handleScrollDebounced = debounce((target) => {

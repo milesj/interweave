@@ -28,7 +28,7 @@ type EmojiState = {
 };
 
 export default class EmojiButton extends React.PureComponent<EmojiProps, EmojiState> {
-  ref: *;
+  button: ?HTMLButtonElement;
 
   static contextTypes = {
     classNames: PropTypes.objectOf(PropTypes.string),
@@ -57,7 +57,7 @@ export default class EmojiButton extends React.PureComponent<EmojiProps, EmojiSt
     this.props.removeScrollListener(this.handleLazyLoad);
   }
 
-  handleEnter = (e: SyntheticMouseEvent<*>) => {
+  handleEnter = (e: SyntheticMouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
 
     this.setState({
@@ -68,7 +68,10 @@ export default class EmojiButton extends React.PureComponent<EmojiProps, EmojiSt
   };
 
   handleLazyLoad = (container: HTMLDivElement) => {
-    if (this.ref.offsetTop <= (container.scrollTop + container.offsetHeight + SCROLL_LOAD_BUFFER)) {
+    if (
+      this.button &&
+      this.button.offsetTop <= (container.scrollTop + container.offsetHeight + SCROLL_LOAD_BUFFER)
+    ) {
       this.setState({
         loaded: true,
       });
@@ -77,7 +80,7 @@ export default class EmojiButton extends React.PureComponent<EmojiProps, EmojiSt
     }
   };
 
-  handleLeave = (e: SyntheticMouseEvent<*>) => {
+  handleLeave = (e: SyntheticMouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
 
     this.setState({
@@ -87,11 +90,11 @@ export default class EmojiButton extends React.PureComponent<EmojiProps, EmojiSt
     this.props.onLeave(this.props.emoji);
   };
 
-  handleRef = (ref: *) => {
-    this.ref = ref;
+  handleRef = (ref: ?HTMLButtonElement) => {
+    this.button = ref;
   };
 
-  handleSelect = (e: SyntheticMouseEvent<*>) => {
+  handleSelect = (e: SyntheticMouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
 
     this.props.onSelect(this.props.emoji);

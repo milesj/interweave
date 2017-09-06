@@ -55,6 +55,7 @@ export default class PreviewBar extends React.PureComponent<PreviewBarProps> {
         </div>
       );
     }
+
     const title = emoji.annotation || emoji.name;
     const subtitle = [];
 

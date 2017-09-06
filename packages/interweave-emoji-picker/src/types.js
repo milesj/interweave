@@ -18,4 +18,4 @@ export type Emoji = {
 
 export type EmojiPath = string | () => string;
 
-export type ScrollListener = (target: HTMLElement) => void;
+export type ScrollListener = (target: *) => void;
