@@ -188,6 +188,7 @@ class Picker extends React.Component<PickerProps, PickerState> {
   handleSelectGroup = (group: string) => {
     this.setState({
       activeGroup: group,
+      searchQuery: '',
     });
 
     this.props.onSelectGroup(group);
@@ -223,7 +224,8 @@ class Picker extends React.Component<PickerProps, PickerState> {
           query={searchQuery}
           onEnter={this.handleEnterEmoji}
           onLeave={this.handleLeaveEmoji}
-          onSelect={this.handleSelectEmoji}
+          onSelectEmoji={this.handleSelectEmoji}
+          onSelectGroup={this.handleSelectGroup}
         />
       ),
       groups: (

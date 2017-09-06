@@ -59,7 +59,8 @@ function App() {
       <h1>Picker</h1>
 
       <EmojiPicker
-        locale="ja"
+        compact
+        locale="en"
         emojiPath={emojiPath}
         exclude={[
           '1F4A9', // Poop

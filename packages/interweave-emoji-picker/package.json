@@ -17,6 +17,7 @@
   "license": "MIT",
   "dependencies": {
     "babel-runtime": "^6.26.0",
+    "lodash.debounce": "^4.0.8",
     "prop-types": "^15.5.10"
   },
   "peerDependencies": {

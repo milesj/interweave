@@ -6,8 +6,9 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
+import debounce from 'lodash.debounce';
 import EmojiGrid from './EmojiGrid';
-import { GROUPS } from './constants';
+import { GROUPS, SCROLL_DEBOUNCE } from './constants';
 import { EmojiShape, EmojiPathShape } from './shapes';
 
 import type { Emoji, EmojiPath } from './types';
@@ -19,7 +20,8 @@ type EmojiListProps = {
   exclude: { [hexcode: string]: boolean },
   onEnter: (emoji: Emoji) => void,
   onLeave: (emoji: Emoji) => void,
-  onSelect: (emoji: Emoji) => void,
+  onSelectEmoji: (emoji: Emoji) => void,
+  onSelectGroup: (group: string) => void,
   query: string,
 };
 
@@ -37,7 +39,8 @@ export default class EmojiList extends React.PureComponent<EmojiListProps> {
     query: PropTypes.string.isRequired,
     onEnter: PropTypes.func.isRequired,
     onLeave: PropTypes.func.isRequired,
-    onSelect: PropTypes.func.isRequired,
+    onSelectEmoji: PropTypes.func.isRequired,
+    onSelectGroup: PropTypes.func.isRequired,
   };
 
   componentDidMount() {
@@ -104,9 +107,33 @@ export default class EmojiList extends React.PureComponent<EmojiListProps> {
     return groups;
   };
 
+  handleScroll = (e: SyntheticWheelEvent<*>) => {
+    e.stopPropagation();
+    e.persist();
+
+    this.selectActiveGroup(e.target);
+  };
+
   searchList = (emojis: Emoji[]) => ({
     searchResults: emojis.filter(this.filterForSearch),
   });
+
+  selectActiveGroup = debounce((target: HTMLDivElement) => {
+    Array.from(target.children).some(({ id, offsetHeight, offsetTop }) => {
+      const group = id.replace('emoji-group-', '');
+
+      if (offsetTop <= target.scrollTop && (offsetTop + offsetHeight) > target.scrollTop) {
+        // Only update if a different group
+        if (group !== this.props.activeGroup) {
+          this.props.onSelectGroup(group);
+        }
+
+        return true;
+      }
+
+      return false;
+    });
+  }, SCROLL_DEBOUNCE);
 
   scrollToGroup = (group: string) => {
     const element = document.getElementById(`emoji-group-${group}`);
@@ -117,12 +144,12 @@ export default class EmojiList extends React.PureComponent<EmojiListProps> {
   };
 
   render() {
-    const { emojis, emojiPath, query, onEnter, onLeave, onSelect } = this.props;
+    const { emojis, emojiPath, query, onEnter, onLeave, onSelectEmoji } = this.props;
     const { classNames, messages } = this.context;
     const groupedEmojis = query ? this.searchList(emojis) : this.groupList(emojis);
 
     return (
-      <div className={classNames.emojis}>
+      <div className={classNames.emojis} onScroll={this.handleScroll}>
         {Object.keys(groupedEmojis).map(group => (
           <section
             key={group}
@@ -139,7 +166,7 @@ export default class EmojiList extends React.PureComponent<EmojiListProps> {
                 emojiPath={emojiPath}
                 onEnter={onEnter}
                 onLeave={onLeave}
-                onSelect={onSelect}
+                onSelect={onSelectEmoji}
               />
             </div>
           </section>

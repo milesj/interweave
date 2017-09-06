@@ -28,3 +28,5 @@ export const GROUP_ICONS: { [key: string]: string } = {
 };
 
 export const DEFAULT_GROUP: string = 'smileysPeople';
+
+export const SCROLL_DEBOUNCE: number = 50;
