@@ -7,11 +7,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import debounce from 'lodash.debounce';
-import EmojiGrid from './EmojiGrid';
+import EmojiButton from './Emoji';
 import { GROUPS, SCROLL_DEBOUNCE } from './constants';
 import { EmojiShape, EmojiPathShape } from './shapes';
 
-import type { Emoji, EmojiPath } from './types';
+import type { Emoji, EmojiPath, ScrollListener } from './types';
 
 type EmojiListProps = {
   activeGroup: string,
@@ -25,7 +25,11 @@ type EmojiListProps = {
   query: string,
 };
 
+const EMOJI_LISTENERS: Set<ScrollListener> = new Set();
+
 export default class EmojiList extends React.PureComponent<EmojiListProps> {
+  ref: *;
+
   static contextTypes = {
     classNames: PropTypes.objectOf(PropTypes.string),
     messages: PropTypes.objectOf(PropTypes.string),
@@ -52,6 +56,14 @@ export default class EmojiList extends React.PureComponent<EmojiListProps> {
       this.scrollToGroup(activeGroup);
     }
   }
+
+  componentDidUpdate() {
+    this.loadEmojisInView(this.ref);
+  }
+
+  addScrollListener = (listener: ScrollListener) => {
+    EMOJI_LISTENERS.add(listener);
+  };
 
   filterForSearch = (emoji: Emoji) => {
     const { exclude } = this.props;
@@ -107,18 +119,37 @@ export default class EmojiList extends React.PureComponent<EmojiListProps> {
     return groups;
   };
 
+  handleRef = (ref: *) => {
+    this.ref = ref;
+  };
+
   handleScroll = (e: SyntheticWheelEvent<*>) => {
     e.stopPropagation();
     e.persist();
 
-    this.selectActiveGroup(e.target);
+    this.handleScrollDebounced(e.target);
+  };
+
+  handleScrollDebounced = debounce((target) => {
+    this.selectActiveGroup(target);
+    this.loadEmojisInView(target);
+  }, SCROLL_DEBOUNCE);
+
+  loadEmojisInView = (target: HTMLDivElement) => {
+    Array.from(EMOJI_LISTENERS).forEach((listener) => {
+      listener(target);
+    });
+  };
+
+  removeScrollListener = (listener: ScrollListener) => {
+    EMOJI_LISTENERS.delete(listener);
   };
 
   searchList = (emojis: Emoji[]) => ({
     searchResults: emojis.filter(this.filterForSearch),
   });
 
-  selectActiveGroup = debounce((target: HTMLDivElement) => {
+  selectActiveGroup = (target: HTMLDivElement) => {
     Array.from(target.children).some(({ id, offsetHeight, offsetTop }) => {
       const group = id.replace('emoji-group-', '');
 
@@ -133,7 +164,7 @@ export default class EmojiList extends React.PureComponent<EmojiListProps> {
 
       return false;
     });
-  }, SCROLL_DEBOUNCE);
+  };
 
   scrollToGroup = (group: string) => {
     const element = document.getElementById(`emoji-group-${group}`);
@@ -149,7 +180,7 @@ export default class EmojiList extends React.PureComponent<EmojiListProps> {
     const groupedEmojis = query ? this.searchList(emojis) : this.groupList(emojis);
 
     return (
-      <div className={classNames.emojis} onScroll={this.handleScroll}>
+      <div className={classNames.emojis} onScroll={this.handleScroll} ref={this.handleRef}>
         {Object.keys(groupedEmojis).map(group => (
           <section
             key={group}
@@ -161,13 +192,24 @@ export default class EmojiList extends React.PureComponent<EmojiListProps> {
             </header>
 
             <div className={classNames.emojisBody}>
-              <EmojiGrid
-                emojis={groupedEmojis[group]}
-                emojiPath={emojiPath}
-                onEnter={onEnter}
-                onLeave={onLeave}
-                onSelect={onSelectEmoji}
-              />
+              {(groupedEmojis[group] === 0) ? (
+                <div className={classNames.noResults}>
+                  {messages.noResults}
+                </div>
+              ) : (
+                groupedEmojis[group].map(emoji => (
+                  <EmojiButton
+                    key={emoji.hexcode}
+                    emoji={emoji}
+                    emojiPath={emojiPath}
+                    onEnter={onEnter}
+                    onLeave={onLeave}
+                    onSelect={onSelectEmoji}
+                    addScrollListener={this.addScrollListener}
+                    removeScrollListener={this.removeScrollListener}
+                  />
+                ))
+              )}
             </div>
           </section>
         ))}
