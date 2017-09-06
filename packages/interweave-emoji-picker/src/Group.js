@@ -17,7 +17,7 @@ type GroupProps = {
   children: React$Node,
   emojiPath: EmojiPath,
   group: string,
-  onSelect: (group: string) => void,
+  onSelect: (group: string, resetSearch: boolean) => void,
 };
 
 export default class Group extends React.Component<GroupProps> {
@@ -43,7 +43,7 @@ export default class Group extends React.Component<GroupProps> {
   handleSelect = (e: SyntheticMouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
 
-    this.props.onSelect(this.props.group);
+    this.props.onSelect(this.props.group, true);
   };
 
   render() {

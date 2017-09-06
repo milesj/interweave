@@ -16,7 +16,7 @@ type GroupBarProps = {
   activeGroup: string,
   emojiPath: EmojiPath,
   icons: { [key: string]: React$Node },
-  onSelect: (group: string) => void,
+  onSelect: (group: string, resetSearch: boolean) => void,
 };
 
 export default class GroupBar extends React.PureComponent<GroupBarProps> {

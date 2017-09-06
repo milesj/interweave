@@ -21,7 +21,7 @@ type EmojiListProps = {
   onEnter: (emoji: Emoji) => void,
   onLeave: (emoji: Emoji) => void,
   onSelectEmoji: (emoji: Emoji) => void,
-  onSelectGroup: (group: string) => void,
+  onSelectGroup: (group: string, resetSearch: boolean) => void,
   query: string,
 };
 
@@ -60,7 +60,10 @@ export default class EmojiList extends React.PureComponent<EmojiListProps> {
    */
   componentWillReceiveProps({ activeGroup }: EmojiListProps) {
     if (activeGroup && this.props.activeGroup !== activeGroup) {
-      this.scrollToGroup(activeGroup);
+      // Defer the scroll as images may still be loading
+      setTimeout(() => {
+        this.scrollToGroup(activeGroup);
+      }, 0);
     }
   }
 

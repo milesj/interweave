@@ -207,12 +207,12 @@ class Picker extends React.Component<PickerProps, PickerState> {
   /**
    * Triggered when a group tab is clicked or scrolled to.
    */
-  handleSelectGroup = (group: string) => {
-    this.setState({
+  handleSelectGroup = (group: string, resetSearch: boolean = false) => {
+    this.setState(prevState => ({
       activeGroup: group,
       // Reset previous search
-      searchQuery: '',
-    });
+      searchQuery: resetSearch ? '' : prevState.searchQuery,
+    }));
 
     this.props.onSelectGroup(group);
   };
