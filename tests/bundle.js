@@ -59,6 +59,7 @@ function App() {
       <h1>Picker</h1>
 
       <EmojiPicker
+        autoFocus
         compact
         locale="en"
         emojiPath={emojiPath}

@@ -17,6 +17,7 @@ import { DEFAULT_GROUP } from './constants';
 import type { Emoji, EmojiPath } from './types';
 
 type PickerProps = {
+  autoFocus: boolean,
   classNames: { [key: string]: string },
   defaultGroup: string,
   defaultSearchQuery: string,
@@ -48,6 +49,7 @@ class Picker extends React.Component<PickerProps, PickerState> {
   };
 
   static propTypes = {
+    autoFocus: PropTypes.bool,
     classNames: PropTypes.objectOf(PropTypes.string),
     defaultGroup: PropTypes.string,
     defaultSearchQuery: PropTypes.string,
@@ -70,6 +72,7 @@ class Picker extends React.Component<PickerProps, PickerState> {
   };
 
   static defaultProps = {
+    autoFocus: false,
     classNames: {},
     defaultGroup: DEFAULT_GROUP,
     defaultSearchQuery: '',
@@ -196,6 +199,7 @@ class Picker extends React.Component<PickerProps, PickerState> {
 
   render() {
     const {
+      autoFocus,
       classNames,
       displayOrder,
       emojiPath,
@@ -237,7 +241,11 @@ class Picker extends React.Component<PickerProps, PickerState> {
         />
       ),
       search: hideSearch ? null : (
-        <SearchBar onChange={this.handleSearch} />
+        <SearchBar
+          autoFocus={autoFocus}
+          query={searchQuery}
+          onChange={this.handleSearch}
+        />
       ),
     };
 
