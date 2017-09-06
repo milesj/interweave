@@ -6,6 +6,7 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
+import { SEARCH_THROTTLE } from './constants';
 
 type SearchBarProps = {
   autoFocus: boolean,
@@ -17,11 +18,9 @@ type SearchBarState = {
   query: string,
 };
 
-const THROTTLE_DELAY: number = 150;
-
 export default class SearchBar extends React.PureComponent<SearchBarProps, SearchBarState> {
   input: ?HTMLInputElement;
-  timeout: number;
+  timeout: ?number;
 
   static contextTypes = {
     classNames: PropTypes.objectOf(PropTypes.string),
@@ -42,14 +41,19 @@ export default class SearchBar extends React.PureComponent<SearchBarProps, Searc
     };
   }
 
+  /**
+   * Focus the input field if `autoFocus` is true.
+   */
   componentDidMount() {
     if (this.props.autoFocus && this.input) {
       this.input.focus();
     }
   }
 
+  /**
+   * When the parent `Picker` search query is reset, also reset the input field.
+   */
   componentWillReceiveProps({ query }: SearchBarProps) {
-    // When the parent picker query is reset, also reset the input here
     if (query === '') {
       this.setState({
         query,
@@ -57,6 +61,9 @@ export default class SearchBar extends React.PureComponent<SearchBarProps, Searc
     }
   }
 
+  /**
+   * Triggered when the input field value changes.
+   */
   handleChange = (e: SyntheticInputEvent<HTMLInputElement>) => {
     const query = e.currentTarget.value;
 
@@ -70,9 +77,12 @@ export default class SearchBar extends React.PureComponent<SearchBarProps, Searc
 
     this.timeout = setTimeout(() => {
       this.props.onChange(query);
-    }, THROTTLE_DELAY);
+    }, SEARCH_THROTTLE);
   };
 
+  /**
+   * Set input field as reference.
+   */
   handleRef = (ref: ?HTMLInputElement) => {
     this.input = ref;
   };
@@ -83,12 +93,13 @@ export default class SearchBar extends React.PureComponent<SearchBarProps, Searc
     return (
       <div className={classNames.search}>
         <input
-          type="text"
+          type="search"
           className={classNames.searchInput}
           placeholder={messages.search}
           value={this.state.query}
           onChange={this.handleChange}
           ref={this.handleRef}
+          aria-label={messages.searchAria}
         />
       </div>
     );

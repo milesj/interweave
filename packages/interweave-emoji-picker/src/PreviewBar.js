@@ -35,6 +35,9 @@ export default class PreviewBar extends React.PureComponent<PreviewBarProps> {
     emoji: null,
   };
 
+  /**
+   * Format the title by capitalizing each word.
+   */
   formatTitle(title: string): string {
     return title.toLowerCase()
       .split(' ')

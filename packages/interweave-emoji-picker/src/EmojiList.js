@@ -47,16 +47,26 @@ export default class EmojiList extends React.PureComponent<EmojiListProps> {
     onSelectGroup: PropTypes.func.isRequired,
   };
 
+  /**
+   * Scroll to the active group once mounted.
+   */
   componentDidMount() {
     this.scrollToGroup(this.props.activeGroup);
   }
 
+  /**
+   * If the active group changes (is selected by clicking the tab),
+   * scroll the section into view.
+   */
   componentWillReceiveProps({ activeGroup }: EmojiListProps) {
     if (activeGroup && this.props.activeGroup !== activeGroup) {
       this.scrollToGroup(activeGroup);
     }
   }
 
+  /**
+   * Trigger the lazy-loading of all emojis currently within scrollable view.
+   */
   componentDidUpdate() {
     if (this.container) {
       this.loadEmojisInView(this.container);
@@ -67,16 +77,20 @@ export default class EmojiList extends React.PureComponent<EmojiListProps> {
     EMOJI_LISTENERS.add(listener);
   };
 
+  /**
+   * Filter the dataset with the search query against a set of emoji properties.
+   */
   filterForSearch = (emoji: Emoji) => {
     const { exclude } = this.props;
     const lookups = [];
 
+    // Excluded emojis are removed from the list
     if (exclude[emoji.hexcode]) {
       return false;
     }
 
-    if (emoji.shortcodes) {
-      lookups.push(...emoji.shortcodes);
+    if (emoji.canonical_shortcodes) {
+      lookups.push(...emoji.canonical_shortcodes);
     }
 
     if (emoji.tags) {
@@ -94,6 +108,9 @@ export default class EmojiList extends React.PureComponent<EmojiListProps> {
     return (lookups.join(' ').indexOf(this.props.query) >= 0);
   };
 
+  /**
+   * Partition the dataset into multiple arrays based on the group they belong to.
+   */
   groupList = (emojis: Emoji[]) => {
     const { exclude } = this.props;
     const groups = {};
@@ -121,10 +138,16 @@ export default class EmojiList extends React.PureComponent<EmojiListProps> {
     return groups;
   };
 
+  /**
+   * Set the scrollable div as the reference.
+   */
   handleRef = (ref: ?HTMLDivElement) => {
     this.container = ref;
   };
 
+  /**
+   * Triggered when the container is scrolled.
+   */
   handleScroll = (e: SyntheticWheelEvent<HTMLDivElement>) => {
     e.stopPropagation();
     e.persist();
@@ -132,6 +155,9 @@ export default class EmojiList extends React.PureComponent<EmojiListProps> {
     this.handleScrollDebounced(e.currentTarget);
   };
 
+  /**
+   * A scroll handler that is debounced for performance.
+   */
   handleScrollDebounced = debounce((target) => {
     this.selectActiveGroup(target);
     this.loadEmojisInView(target);
@@ -147,10 +173,17 @@ export default class EmojiList extends React.PureComponent<EmojiListProps> {
     EMOJI_LISTENERS.delete(listener);
   };
 
+  /**
+   * Partition the dataset into a single result set based on the search query.
+   */
   searchList = (emojis: Emoji[]) => ({
     searchResults: emojis.filter(this.filterForSearch),
   });
 
+  /**
+   * Loop through group sections within the scrollable container,
+   * and update the active group state once a section is scrolled into view.
+   */
   selectActiveGroup = (target: HTMLDivElement) => {
     Array.from(target.children).some(({ id, offsetHeight, offsetTop }) => {
       const group = id.replace('emoji-group-', '');
@@ -168,6 +201,9 @@ export default class EmojiList extends React.PureComponent<EmojiListProps> {
     });
   };
 
+  /**
+   * Scroll a group section to the top of the scrollable container.
+   */
   scrollToGroup = (group: string) => {
     const element = document.getElementById(`emoji-group-${group}`);
 

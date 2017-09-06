@@ -32,3 +32,5 @@ export const DEFAULT_GROUP: string = 'smileysPeople';
 export const SCROLL_DEBOUNCE: number = 50;
 
 export const SCROLL_LOAD_BUFFER: number = 150;
+
+export const SEARCH_THROTTLE: number = 150;

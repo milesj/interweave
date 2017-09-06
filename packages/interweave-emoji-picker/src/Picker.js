@@ -138,10 +138,11 @@ class Picker extends React.Component<PickerProps, PickerState> {
         symbols: 'Symbols',
         flags: 'Flags',
         // Custom groups
-        frequent: 'Frequently Used',
+        recentlyUsed: 'Recently Used',
         searchResults: 'Search Results',
-        // Misc
+        // Miscellaneous
         search: 'Search…',
+        searchAria: 'Search for emojis by keyword',
         noPreview: '',
         noResults: 'No results…',
         // Overrides
@@ -150,10 +151,12 @@ class Picker extends React.Component<PickerProps, PickerState> {
     };
   }
 
+  /**
+   * Convert the `exclude` prop to a map for quicker lookups.
+   */
   generateExcludeMap() {
     const map = {};
 
-    // Convert to a map for quicker lookups
     this.props.exclude.forEach((hexcode) => {
       map[hexcode] = true;
     });
@@ -161,6 +164,9 @@ class Picker extends React.Component<PickerProps, PickerState> {
     return map;
   }
 
+  /**
+   * Triggered when the mouse hovers an emoji.
+   */
   handleEnterEmoji = (emoji: Emoji) => {
     this.setState({
       activeEmoji: emoji,
@@ -169,28 +175,42 @@ class Picker extends React.Component<PickerProps, PickerState> {
     this.props.onHoverEmoji(emoji);
   };
 
-  handleLeaveEmoji = (emoji: Emoji) => {
+  /**
+   * Triggered when the mouse no longer hovers an emoji.
+   */
+  handleLeaveEmoji = () => {
     this.setState({
       activeEmoji: null,
     });
   };
 
+  /**
+   * Triggered when the search input field value changes.
+   */
   handleSearch = (query: string) => {
     this.setState({
-      activeGroup: query ? '' : this.props.defaultGroup,
       searchQuery: query,
+      // Deactive group tabs
+      activeGroup: query ? '' : this.props.defaultGroup,
     });
 
     this.props.onSearch(query);
   };
 
+  /**
+   * Triggered when an emoji is clicked.
+   */
   handleSelectEmoji = (emoji: Emoji) => {
     this.props.onSelectEmoji(emoji);
   };
 
+  /**
+   * Triggered when a group tab is clicked or scrolled to.
+   */
   handleSelectGroup = (group: string) => {
     this.setState({
       activeGroup: group,
+      // Reset previous search
       searchQuery: '',
     });
 

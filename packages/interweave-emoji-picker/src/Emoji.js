@@ -57,6 +57,9 @@ export default class EmojiButton extends React.PureComponent<EmojiProps, EmojiSt
     this.props.removeScrollListener(this.handleLazyLoad);
   }
 
+  /**
+   * Triggered when the emoji is hovered.
+   */
   handleEnter = (e: SyntheticMouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
 
@@ -80,6 +83,9 @@ export default class EmojiButton extends React.PureComponent<EmojiProps, EmojiSt
     }
   };
 
+  /**
+   * Triggered when the emoji is no longer hovered.
+   */
   handleLeave = (e: SyntheticMouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
 
@@ -90,10 +96,16 @@ export default class EmojiButton extends React.PureComponent<EmojiProps, EmojiSt
     this.props.onLeave(this.props.emoji);
   };
 
+  /**
+   * Set the button as the reference.
+   */
   handleRef = (ref: ?HTMLButtonElement) => {
     this.button = ref;
   };
 
+  /**
+   * Triggered when the emoji is clicked.
+   */
   handleSelect = (e: SyntheticMouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
 
@@ -127,8 +139,8 @@ export default class EmojiButton extends React.PureComponent<EmojiProps, EmojiSt
             emojiSize={1}
           />
         ) : (
-          <span style={{ height: '1em' }}>
-            &nbsp;
+          <span style={{ height: '1em', visibility: 'hidden' }}>
+            {'-'}
           </span>
         )}
       </button>

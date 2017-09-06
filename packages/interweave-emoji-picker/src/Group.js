@@ -37,6 +37,9 @@ export default class Group extends React.Component<GroupProps> {
     children: null,
   };
 
+  /**
+   * Triggered when the button is clicked.
+   */
   handleSelect = (e: SyntheticMouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
 
