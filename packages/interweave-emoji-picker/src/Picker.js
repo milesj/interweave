@@ -29,6 +29,7 @@ type PickerProps = {
   hideSearch: boolean,
   hideShortcodes: boolean,
   icons: { [key: string]: React$Node },
+  loadBuffer: number,
   messages: { [key: string]: string },
   onHoverEmoji: (emoji: Emoji) => void,
   onSearch: (query: string) => void,
@@ -64,6 +65,7 @@ class Picker extends React.Component<PickerProps, PickerState> {
     hideSearch: PropTypes.bool,
     hideShortcodes: PropTypes.bool,
     icons: PropTypes.objectOf(PropTypes.node),
+    loadBuffer: PropTypes.number,
     messages: PropTypes.objectOf(PropTypes.string),
     onHoverEmoji: PropTypes.func,
     onSearch: PropTypes.func,
@@ -85,6 +87,7 @@ class Picker extends React.Component<PickerProps, PickerState> {
     hideSearch: false,
     hideShortcodes: false,
     icons: {},
+    loadBuffer: 200,
     onHoverEmoji() {},
     onSearch() {},
     onSelectEmoji() {},
@@ -228,6 +231,7 @@ class Picker extends React.Component<PickerProps, PickerState> {
       hideSearch,
       hideShortcodes,
       icons,
+      loadBuffer,
     } = this.props;
     const { activeEmoji, activeGroup, searchQuery } = this.state;
     const components = {
@@ -246,6 +250,7 @@ class Picker extends React.Component<PickerProps, PickerState> {
           activeGroup={activeGroup}
           exclude={this.generateExcludeMap()}
           query={searchQuery}
+          loadBuffer={loadBuffer}
           onEnter={this.handleEnterEmoji}
           onLeave={this.handleLeaveEmoji}
           onSelectEmoji={this.handleSelectEmoji}

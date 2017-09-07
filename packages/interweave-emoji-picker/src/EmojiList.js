@@ -11,25 +11,26 @@ import EmojiButton from './Emoji';
 import { GROUPS, SCROLL_DEBOUNCE } from './constants';
 import { EmojiShape, EmojiPathShape } from './shapes';
 
-import type { Emoji, EmojiPath, ScrollListener } from './types';
+import type { Emoji, EmojiPath } from './types';
 
 type EmojiListProps = {
   activeGroup: string,
   emojiPath: EmojiPath,
   emojis: Emoji[],
   exclude: { [hexcode: string]: boolean },
+  loadBuffer: number,
   onEnter: (emoji: Emoji) => void,
   onLeave: (emoji: Emoji) => void,
   onSelectEmoji: (emoji: Emoji) => void,
-  onSelectGroup: (group: string, resetSearch: boolean) => void,
+  onSelectGroup: (group: string, resetSearch?: boolean) => void,
   query: string,
 };
 
-const EMOJI_LISTENERS: Set<ScrollListener> = new Set();
+type EmojiListState = {
+  loadedGroups: Set<string>,
+};
 
-export default class EmojiList extends React.PureComponent<EmojiListProps> {
-  container: ?HTMLDivElement;
-
+export default class EmojiList extends React.PureComponent<EmojiListProps, EmojiListState> {
   static contextTypes = {
     classNames: PropTypes.objectOf(PropTypes.string),
     messages: PropTypes.objectOf(PropTypes.string),
@@ -40,12 +41,21 @@ export default class EmojiList extends React.PureComponent<EmojiListProps> {
     emojiPath: EmojiPathShape.isRequired,
     emojis: PropTypes.arrayOf(EmojiShape).isRequired,
     exclude: PropTypes.objectOf(PropTypes.bool).isRequired,
+    loadBuffer: PropTypes.number.isRequired,
     query: PropTypes.string.isRequired,
     onEnter: PropTypes.func.isRequired,
     onLeave: PropTypes.func.isRequired,
     onSelectEmoji: PropTypes.func.isRequired,
     onSelectGroup: PropTypes.func.isRequired,
   };
+
+  constructor({ activeGroup }: EmojiListProps) {
+    super();
+
+    this.state = {
+      loadedGroups: new Set([activeGroup]),
+    };
+  }
 
   /**
    * Scroll to the active group once mounted.
@@ -63,22 +73,16 @@ export default class EmojiList extends React.PureComponent<EmojiListProps> {
       // Defer the scroll as images may still be loading
       setTimeout(() => {
         this.scrollToGroup(activeGroup);
+
+        this.setState({
+          loadedGroups: new Set([
+            ...this.state.loadedGroups,
+            activeGroup,
+          ]),
+        });
       }, 0);
     }
   }
-
-  /**
-   * Trigger the lazy-loading of all emojis currently within scrollable view.
-   */
-  componentDidUpdate() {
-    if (this.container) {
-      this.loadEmojisInView(this.container);
-    }
-  }
-
-  addScrollListener = (listener: ScrollListener) => {
-    EMOJI_LISTENERS.add(listener);
-  };
 
   /**
    * Filter the dataset with the search query against a set of emoji properties.
@@ -142,13 +146,6 @@ export default class EmojiList extends React.PureComponent<EmojiListProps> {
   };
 
   /**
-   * Set the scrollable div as the reference.
-   */
-  handleRef = (ref: ?HTMLDivElement) => {
-    this.container = ref;
-  };
-
-  /**
    * Triggered when the container is scrolled.
    */
   handleScroll = (e: SyntheticWheelEvent<HTMLDivElement>) => {
@@ -161,20 +158,39 @@ export default class EmojiList extends React.PureComponent<EmojiListProps> {
   /**
    * A scroll handler that is debounced for performance.
    */
-  handleScrollDebounced = debounce((target) => {
-    this.selectActiveGroup(target);
-    this.loadEmojisInView(target);
-  }, SCROLL_DEBOUNCE);
+  handleScrollDebounced = debounce((container) => {
+    const { loadBuffer } = this.props;
+    const { loadedGroups } = this.state;
 
-  loadEmojisInView = (target: HTMLDivElement) => {
-    Array.from(EMOJI_LISTENERS).forEach((listener) => {
-      listener(target);
+    // Loop over group sections within the scrollable container
+    Array.from(container.children).forEach((section) => {
+      const group = section.id.replace('emoji-group-', '');
+
+      // While a group section is within view, update the active group
+      if (
+        section.offsetTop <= container.scrollTop &&
+        (section.offsetTop + section.offsetHeight) > container.scrollTop
+      ) {
+        // Only update if a different group
+        if (group !== this.props.activeGroup) {
+          this.props.onSelectGroup(group);
+        }
+      }
+
+      // Before a group section is scrolled into view, lazy load emoji images
+      if (
+        !loadedGroups.has(group) &&
+        section.offsetTop <= (container.scrollTop + container.offsetHeight + loadBuffer)
+      ) {
+        this.setState({
+          loadedGroups: new Set([
+            ...loadedGroups,
+            group,
+          ]),
+        });
+      }
     });
-  };
-
-  removeScrollListener = (listener: ScrollListener) => {
-    EMOJI_LISTENERS.delete(listener);
-  };
+  }, SCROLL_DEBOUNCE);
 
   /**
    * Partition the dataset into a single result set based on the search query.
@@ -182,27 +198,6 @@ export default class EmojiList extends React.PureComponent<EmojiListProps> {
   searchList = (emojis: Emoji[]) => ({
     searchResults: emojis.filter(this.filterForSearch),
   });
-
-  /**
-   * Loop through group sections within the scrollable container,
-   * and update the active group state once a section is scrolled into view.
-   */
-  selectActiveGroup = (target: HTMLDivElement) => {
-    Array.from(target.children).some(({ id, offsetHeight, offsetTop }) => {
-      const group = id.replace('emoji-group-', '');
-
-      if (offsetTop <= target.scrollTop && (offsetTop + offsetHeight) > target.scrollTop) {
-        // Only update if a different group
-        if (group !== this.props.activeGroup) {
-          this.props.onSelectGroup(group);
-        }
-
-        return true;
-      }
-
-      return false;
-    });
-  };
 
   /**
    * Scroll a group section to the top of the scrollable container.
@@ -218,10 +213,11 @@ export default class EmojiList extends React.PureComponent<EmojiListProps> {
   render() {
     const { emojis, emojiPath, query, onEnter, onLeave, onSelectEmoji } = this.props;
     const { classNames, messages } = this.context;
+    const { loadedGroups } = this.state;
     const groupedEmojis = query ? this.searchList(emojis) : this.groupList(emojis);
 
     return (
-      <div className={classNames.emojis} onScroll={this.handleScroll} ref={this.handleRef}>
+      <div className={classNames.emojis} onScroll={this.handleScroll}>
         {Object.keys(groupedEmojis).map(group => (
           <section
             key={group}
@@ -243,11 +239,10 @@ export default class EmojiList extends React.PureComponent<EmojiListProps> {
                     key={emoji.hexcode}
                     emoji={emoji}
                     emojiPath={emojiPath}
+                    showImage={loadedGroups.has(group)}
                     onEnter={onEnter}
                     onLeave={onLeave}
                     onSelect={onSelectEmoji}
-                    addScrollListener={this.addScrollListener}
-                    removeScrollListener={this.removeScrollListener}
                   />
                 ))
               )}
