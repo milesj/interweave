@@ -93,13 +93,13 @@ export default class SearchBar extends React.PureComponent<SearchBarProps, Searc
     return (
       <div className={classNames.search}>
         <input
-          type="search"
+          aria-label={messages.searchAria}
           className={classNames.searchInput}
           placeholder={messages.search}
+          ref={this.handleRef}
+          type="search"
           value={this.state.query}
           onChange={this.handleChange}
-          ref={this.handleRef}
-          aria-label={messages.searchAria}
         />
       </div>
     );

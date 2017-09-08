@@ -90,17 +90,17 @@ export default class EmojiButton extends React.PureComponent<EmojiProps, EmojiSt
     return (
       <button
         key={emoji.hexcode}
-        type="button"
         className={className.join(' ')}
+        type="button"
         onClick={this.handleSelect}
         onMouseEnter={this.handleEnter}
         onMouseLeave={this.handleLeave}
       >
         {showImage ? (
           <EmojiCharacter
-            unicode={emoji.unicode}
             emojiPath={emojiPath}
             emojiSize={1}
+            unicode={emoji.unicode}
           />
         ) : (
           <div

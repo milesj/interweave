@@ -330,14 +330,14 @@ class Picker extends React.Component<PickerProps, PickerState> {
       ),
       emojis: (
         <EmojiList
-          emojis={getEmojiData()}
-          recentEmojis={recentEmojis}
-          emojiPath={emojiPath}
           activeGroup={activeGroup}
-          hasRecentlyUsed={hasRecentlyUsed}
+          emojis={getEmojiData()}
+          emojiPath={emojiPath}
           exclude={this.generateExcludeMap()}
-          query={searchQuery}
+          hasRecentlyUsed={hasRecentlyUsed}
           loadBuffer={loadBuffer}
+          query={searchQuery}
+          recentEmojis={recentEmojis}
           onEnter={this.handleEnterEmoji}
           onLeave={this.handleLeaveEmoji}
           onSelectEmoji={this.handleSelectEmoji}

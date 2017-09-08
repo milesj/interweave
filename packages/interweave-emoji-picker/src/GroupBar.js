@@ -49,8 +49,8 @@ export default class GroupBar extends React.PureComponent<GroupBarProps> {
             <li key={group}>
               <Group
                 activeGroup={activeGroup}
-                group={group}
                 emojiPath={emojiPath}
+                group={group}
                 onSelect={onSelect}
               >
                 {icons[group] || null}

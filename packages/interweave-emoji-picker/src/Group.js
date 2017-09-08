@@ -20,7 +20,7 @@ type GroupProps = {
   onSelect: (group: string, resetSearch?: boolean) => void,
 };
 
-export default class Group extends React.Component<GroupProps> {
+export default class Group extends React.PureComponent<GroupProps> {
   static contextTypes = {
     classNames: PropTypes.objectOf(PropTypes.string),
   };
@@ -57,15 +57,15 @@ export default class Group extends React.Component<GroupProps> {
 
     return (
       <button
-        type="button"
         className={className.join(' ')}
+        type="button"
         onClick={this.handleSelect}
       >
         {children || (
           <EmojiCharacter
-            unicode={GROUP_ICONS[group]}
             emojiPath={emojiPath}
             emojiSize={1}
+            unicode={GROUP_ICONS[group]}
           />
         )}
       </button>
