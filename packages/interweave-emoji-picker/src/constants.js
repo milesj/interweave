@@ -37,8 +37,33 @@ export const GROUP_ICONS: { [key: string]: string } = {
   [GROUP_FLAGS]: '🏴',
 };
 
-export const SCROLL_DEBOUNCE: number = 50;
+export const SKIN_NONE: string = 'none';
+export const SKIN_LIGHT: string = 'light';
+export const SKIN_MEDIUM_LIGHT: string = 'mediumLight';
+export const SKIN_MEDIUM: string = 'medium';
+export const SKIN_MEDIUM_DARK: string = 'mediumDark';
+export const SKIN_DARK: string = 'dark';
 
+export const SKINS: string[] = [
+  SKIN_NONE,
+  SKIN_LIGHT,
+  SKIN_MEDIUM_LIGHT,
+  SKIN_MEDIUM,
+  SKIN_MEDIUM_DARK,
+  SKIN_DARK,
+];
+
+export const SKIN_COLORS: { [key: string]: string } = {
+  [SKIN_NONE]: '#FFCC22',
+  [SKIN_LIGHT]: '#FADCBC',
+  [SKIN_MEDIUM_LIGHT]: '#E0BB95',
+  [SKIN_MEDIUM]: '#BF8F68',
+  [SKIN_MEDIUM_DARK]: '#9B643D',
+  [SKIN_DARK]: '#5A463A',
+};
+
+export const SCROLL_DEBOUNCE: number = 50;
 export const SEARCH_THROTTLE: number = 100;
 
 export const KEY_RECENTLY_USED: string = 'interweave/emoji/recent';
+export const KEY_SKIN_TONE: string = 'interweave/emoji/skinTone';
