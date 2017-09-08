@@ -25,10 +25,11 @@ export const GROUP_ICONS: { [key: string]: string } = {
   objects: '📘',
   symbols: '⛔️',
   flags: '🏴',
+  recentlyUsed: '🕔️',
 };
-
-export const DEFAULT_GROUP: string = 'smileysPeople';
 
 export const SCROLL_DEBOUNCE: number = 50;
 
 export const SEARCH_THROTTLE: number = 150;
+
+export const KEY_RECENTLY_USED: string = 'interweave/emoji/recent';

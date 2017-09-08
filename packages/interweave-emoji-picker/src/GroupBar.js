@@ -15,6 +15,7 @@ import type { EmojiPath } from './types';
 type GroupBarProps = {
   activeGroup: string,
   emojiPath: EmojiPath,
+  hasRecentlyUsed: boolean,
   icons: { [key: string]: React$Node },
   onSelect: (group: string, resetSearch?: boolean) => void,
 };
@@ -27,18 +28,24 @@ export default class GroupBar extends React.PureComponent<GroupBarProps> {
   static propTypes = {
     activeGroup: PropTypes.string.isRequired,
     emojiPath: EmojiPathShape.isRequired,
+    hasRecentlyUsed: PropTypes.bool.isRequired,
     icons: PropTypes.objectOf(PropTypes.node).isRequired,
     onSelect: PropTypes.func.isRequired,
   };
 
   render() {
-    const { activeGroup, emojiPath, icons, onSelect } = this.props;
+    const { activeGroup, emojiPath, hasRecentlyUsed, icons, onSelect } = this.props;
     const { classNames } = this.context;
+    const groups = [...GROUPS];
+
+    if (hasRecentlyUsed) {
+      groups.unshift('recentlyUsed');
+    }
 
     return (
       <nav className={classNames.groups}>
         <ul className={classNames.groupsList}>
-          {GROUPS.map(group => (
+          {groups.map(group => (
             <li key={group}>
               <Group
                 activeGroup={activeGroup}

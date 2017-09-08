@@ -6,13 +6,13 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import { getEmojiData } from 'interweave/lib/data/emoji';
+import { EMOJIS, getEmojiData } from 'interweave/lib/data/emoji';
 import withEmojiData from 'interweave/lib/loaders/withEmojiData';
 import EmojiList from './EmojiList';
 import GroupBar from './GroupBar';
 import PreviewBar from './PreviewBar';
 import SearchBar from './SearchBar';
-import { DEFAULT_GROUP } from './constants';
+import { KEY_RECENTLY_USED } from './constants';
 
 import type { Emoji, EmojiPath } from './types';
 
@@ -23,6 +23,7 @@ type PickerProps = {
   defaultSearchQuery: string,
   displayOrder: string[],
   emojiPath: EmojiPath,
+  enableRecentlyUsed: boolean,
   exclude: string[],
   hideEmoticon: boolean,
   hidePreview: boolean,
@@ -30,6 +31,7 @@ type PickerProps = {
   hideShortcodes: boolean,
   icons: { [key: string]: React$Node },
   loadBuffer: number,
+  maxRecentlyUsed: number,
   messages: { [key: string]: string },
   onHoverEmoji: (emoji: Emoji) => void,
   onSearch: (query: string) => void,
@@ -40,6 +42,8 @@ type PickerProps = {
 type PickerState = {
   activeEmoji: ?Emoji,
   activeGroup: string,
+  defaultGroup: string,
+  recentEmojis: string[],
   searchQuery: string,
 };
 
@@ -59,6 +63,7 @@ class Picker extends React.Component<PickerProps, PickerState> {
       PropTypes.string,
       PropTypes.func,
     ]),
+    enableRecentlyUsed: PropTypes.bool,
     exclude: PropTypes.arrayOf(PropTypes.string),
     hideEmoticon: PropTypes.bool,
     hidePreview: PropTypes.bool,
@@ -66,6 +71,7 @@ class Picker extends React.Component<PickerProps, PickerState> {
     hideShortcodes: PropTypes.bool,
     icons: PropTypes.objectOf(PropTypes.node),
     loadBuffer: PropTypes.number,
+    maxRecentlyUsed: PropTypes.number,
     messages: PropTypes.objectOf(PropTypes.string),
     onHoverEmoji: PropTypes.func,
     onSearch: PropTypes.func,
@@ -76,9 +82,10 @@ class Picker extends React.Component<PickerProps, PickerState> {
   static defaultProps = {
     autoFocus: false,
     classNames: {},
-    defaultGroup: DEFAULT_GROUP,
+    defaultGroup: '',
     defaultSearchQuery: '',
     displayOrder: ['preview', 'emojis', 'groups', 'search'],
+    enableRecentlyUsed: false,
     emojiPath: '',
     exclude: [],
     messages: {},
@@ -88,18 +95,26 @@ class Picker extends React.Component<PickerProps, PickerState> {
     hideShortcodes: false,
     icons: {},
     loadBuffer: 200,
+    maxRecentlyUsed: 31,
     onHoverEmoji() {},
     onSearch() {},
     onSelectEmoji() {},
     onSelectGroup() {},
   };
 
-  constructor({ defaultGroup, defaultSearchQuery }: PickerProps) {
+  constructor({ defaultGroup, defaultSearchQuery, enableRecentlyUsed }: PickerProps) {
     super();
 
+    const recentEmojis = this.getRecentEmojisFromStorage();
+    const fallbackGroup = (enableRecentlyUsed && recentEmojis.length > 0)
+      ? 'recentlyUsed'
+      : 'smileysPeople';
+
     this.state = {
+      recentEmojis,
       activeEmoji: null,
-      activeGroup: defaultGroup,
+      activeGroup: defaultGroup || fallbackGroup,
+      defaultGroup: defaultGroup || fallbackGroup,
       searchQuery: defaultSearchQuery,
     };
   }
@@ -155,6 +170,41 @@ class Picker extends React.Component<PickerProps, PickerState> {
   }
 
   /**
+   * Add a recent emoji to local storage and update the current state.
+   */
+  addRecentEmoji(emoji: Emoji) {
+    const { enableRecentlyUsed, maxRecentlyUsed } = this.props;
+
+    if (!enableRecentlyUsed) {
+      return;
+    }
+
+    const { recentEmojis } = this.state;
+
+    // Add to the top of the list
+    let emojis = [
+      emoji.unicode,
+      ...recentEmojis,
+    ];
+
+    // Trim to the max
+    emojis = emojis.slice(0, maxRecentlyUsed);
+
+    // Remove duplicates
+    emojis = Array.from(new Set(emojis));
+
+    try {
+      localStorage.setItem(KEY_RECENTLY_USED, JSON.stringify(emojis));
+    } catch (error) {
+      // Do nothing
+    }
+
+    this.setState({
+      recentEmojis: emojis,
+    });
+  }
+
+  /**
    * Convert the `exclude` prop to a map for quicker lookups.
    */
   generateExcludeMap() {
@@ -165,6 +215,25 @@ class Picker extends React.Component<PickerProps, PickerState> {
     });
 
     return map;
+  }
+
+  /**
+   * We only store the unicode character for recent emojis,
+   * so we need to rebuild the recent list with the full emoji objects.
+   */
+  generateRecentEmojis() {
+    return this.state.recentEmojis
+      .map(unicode => EMOJIS[unicode])
+      .filter(Boolean);
+  }
+
+  /**
+   * Return the recently used emojis from local storage.
+   */
+  getRecentEmojisFromStorage() {
+    const recent = localStorage.getItem(KEY_RECENTLY_USED);
+
+    return recent ? JSON.parse(recent) : [];
   }
 
   /**
@@ -194,7 +263,7 @@ class Picker extends React.Component<PickerProps, PickerState> {
     this.setState({
       searchQuery: query,
       // Deactive group tabs
-      activeGroup: query ? '' : this.props.defaultGroup,
+      activeGroup: query ? '' : this.state.defaultGroup,
     });
 
     this.props.onSearch(query);
@@ -205,6 +274,7 @@ class Picker extends React.Component<PickerProps, PickerState> {
    */
   handleSelectEmoji = (emoji: Emoji) => {
     this.props.onSelectEmoji(emoji);
+    this.addRecentEmoji(emoji);
   };
 
   /**
@@ -226,6 +296,7 @@ class Picker extends React.Component<PickerProps, PickerState> {
       classNames,
       displayOrder,
       emojiPath,
+      enableRecentlyUsed,
       hideEmoticon,
       hidePreview,
       hideSearch,
@@ -234,6 +305,8 @@ class Picker extends React.Component<PickerProps, PickerState> {
       loadBuffer,
     } = this.props;
     const { activeEmoji, activeGroup, searchQuery } = this.state;
+    const recentEmojis = this.generateRecentEmojis();
+    const hasRecentlyUsed = (enableRecentlyUsed && recentEmojis.length > 0);
     const components = {
       preview: hidePreview ? null : (
         <PreviewBar
@@ -246,8 +319,10 @@ class Picker extends React.Component<PickerProps, PickerState> {
       emojis: (
         <EmojiList
           emojis={getEmojiData()}
+          recentEmojis={recentEmojis}
           emojiPath={emojiPath}
           activeGroup={activeGroup}
+          hasRecentlyUsed={hasRecentlyUsed}
           exclude={this.generateExcludeMap()}
           query={searchQuery}
           loadBuffer={loadBuffer}
@@ -261,6 +336,7 @@ class Picker extends React.Component<PickerProps, PickerState> {
         <GroupBar
           activeGroup={activeGroup}
           emojiPath={emojiPath}
+          hasRecentlyUsed={hasRecentlyUsed}
           icons={icons}
           onSelect={this.handleSelectGroup}
         />

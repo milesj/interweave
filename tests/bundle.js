@@ -66,6 +66,7 @@ function App() {
         exclude={[
           '1F4A9', // Poop
         ]}
+        enableRecentlyUsed
         onHoverEmoji={(emoji) => { console.log('hover emoji', emoji); }}
         onSearch={(query) => { console.log('search', query); }}
         onSelectEmoji={(emoji) => { console.log('select emoji', emoji); }}

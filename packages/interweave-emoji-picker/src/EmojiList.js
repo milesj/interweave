@@ -18,12 +18,14 @@ type EmojiListProps = {
   emojiPath: EmojiPath,
   emojis: Emoji[],
   exclude: { [hexcode: string]: boolean },
+  hasRecentlyUsed: boolean,
   loadBuffer: number,
   onEnter: (emoji: Emoji) => void,
   onLeave: (emoji: Emoji) => void,
   onSelectEmoji: (emoji: Emoji) => void,
   onSelectGroup: (group: string, resetSearch?: boolean) => void,
   query: string,
+  recentEmojis: Emoji[],
 };
 
 type EmojiListState = {
@@ -41,8 +43,10 @@ export default class EmojiList extends React.PureComponent<EmojiListProps, Emoji
     emojiPath: EmojiPathShape.isRequired,
     emojis: PropTypes.arrayOf(EmojiShape).isRequired,
     exclude: PropTypes.objectOf(PropTypes.bool).isRequired,
+    hasRecentlyUsed: PropTypes.bool.isRequired,
     loadBuffer: PropTypes.number.isRequired,
     query: PropTypes.string.isRequired,
+    recentEmojis: PropTypes.arrayOf(EmojiShape).isRequired,
     onEnter: PropTypes.func.isRequired,
     onLeave: PropTypes.func.isRequired,
     onSelectEmoji: PropTypes.func.isRequired,
@@ -52,8 +56,17 @@ export default class EmojiList extends React.PureComponent<EmojiListProps, Emoji
   constructor({ activeGroup }: EmojiListProps) {
     super();
 
+    const loadedGroups = [activeGroup];
+
+    // When recently used emojis are rendered,
+    // the smileys group is usually within view as well,
+    // so we should preload both of them.
+    if (activeGroup === 'recentlyUsed') {
+      loadedGroups.push('smileysPeople');
+    }
+
     this.state = {
-      loadedGroups: new Set([activeGroup]),
+      loadedGroups: new Set(loadedGroups),
     };
   }
 
@@ -119,8 +132,13 @@ export default class EmojiList extends React.PureComponent<EmojiListProps, Emoji
    * Partition the dataset into multiple arrays based on the group they belong to.
    */
   groupList = (emojis: Emoji[]) => {
-    const { exclude } = this.props;
+    const { exclude, hasRecentlyUsed, recentEmojis } = this.props;
     const groups = {};
+
+    // Add recently used group
+    if (hasRecentlyUsed) {
+      groups.recentlyUsed = recentEmojis;
+    }
 
     // Partition into each group
     emojis.forEach((emoji) => {
@@ -137,9 +155,11 @@ export default class EmojiList extends React.PureComponent<EmojiListProps, Emoji
       }
     });
 
-    // Sort each group by order
+    // Sort each group by order excluding recently used
     Object.keys(groups).forEach((group) => {
-      groups[group].sort((a, b) => a.order - b.order);
+      if (group !== 'recentlyUsed') {
+        groups[group].sort((a, b) => a.order - b.order);
+      }
     });
 
     return groups;
