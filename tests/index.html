@@ -13,6 +13,10 @@
       font-family: Verdana, sans-serif;
     }
 
+    button:focus {
+      outline: none;
+    }
+
     .interweave-picker__picker {
       border: 1px solid gray;
       border-radius: .2em;
@@ -37,7 +41,6 @@
     .interweave-picker__emojis {
       overflow-y: auto;
       height: 250px;
-      font-size: 18px;
       position: relative;
       border-bottom: 5px solid white;
     }
@@ -54,6 +57,7 @@
     .interweave-picker__emojis-body {
       z-index: 1;
       padding: 0 10px 5px 10px;
+      font-size: 18px;
     }
 
     .interweave-picker__emojis-body::after {
@@ -125,6 +129,10 @@
       background: white;
       border-bottom-left-radius: .2em;
       border-bottom-right-radius: .2em;
+    }
+
+    .interweave-picker__no-results {
+      padding: 10px;
     }
   </style>
 </head>

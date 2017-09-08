@@ -13,9 +13,7 @@ export const GROUP_OBJECTS: string = 'objects';
 export const GROUP_SYMBOLS: string = 'symbols';
 export const GROUP_FLAGS: string = 'flags';
 export const GROUP_RECENTLY_USED: string = 'recentlyUsed';
-export const GROUP_SEARCH_RESULTS: string = 'searchResults';
 
-// Group order must match emojibase
 export const GROUPS: string[] = [
   GROUP_SMILEYS_PEOPLE,
   GROUP_ANIMALS_NATURE,
@@ -41,6 +39,6 @@ export const GROUP_ICONS: { [key: string]: string } = {
 
 export const SCROLL_DEBOUNCE: number = 50;
 
-export const SEARCH_THROTTLE: number = 150;
+export const SEARCH_THROTTLE: number = 100;
 
 export const KEY_RECENTLY_USED: string = 'interweave/emoji/recent';

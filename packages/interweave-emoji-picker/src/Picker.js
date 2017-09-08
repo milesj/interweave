@@ -22,7 +22,6 @@ import {
   GROUP_OBJECTS,
   GROUP_SYMBOLS,
   GROUP_FLAGS,
-  GROUP_SEARCH_RESULTS,
   KEY_RECENTLY_USED,
 } from './constants';
 
@@ -107,7 +106,7 @@ class Picker extends React.Component<PickerProps, PickerState> {
     hideShortcodes: false,
     icons: {},
     loadBuffer: 200,
-    maxRecentlyUsed: 31,
+    maxRecentlyUsed: 30,
     onHoverEmoji() {},
     onSearch() {},
     onSelectEmoji() {},
@@ -159,6 +158,7 @@ class Picker extends React.Component<PickerProps, PickerState> {
       },
       messages: {
         // Emoji groups
+        [GROUP_RECENTLY_USED]: 'Recently Used',
         [GROUP_SMILEYS_PEOPLE]: 'Smileys & People',
         [GROUP_ANIMALS_NATURE]: 'Animals & Nature',
         [GROUP_FOOD_DRINK]: 'Food & Drink',
@@ -167,9 +167,6 @@ class Picker extends React.Component<PickerProps, PickerState> {
         [GROUP_OBJECTS]: 'Objects',
         [GROUP_SYMBOLS]: 'Symbols',
         [GROUP_FLAGS]: 'Flags',
-        // Custom groups
-        [GROUP_RECENTLY_USED]: 'Recently Used',
-        [GROUP_SEARCH_RESULTS]: 'Search Results',
         // Miscellaneous
         search: 'Search…',
         searchAria: 'Search for emojis by keyword',
