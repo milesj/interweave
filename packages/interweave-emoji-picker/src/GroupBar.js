@@ -8,7 +8,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Group from './Group';
 import { EmojiPathShape } from './shapes';
-import { GROUPS } from './constants';
+import { GROUPS, GROUP_RECENTLY_USED } from './constants';
 
 import type { EmojiPath } from './types';
 
@@ -39,7 +39,7 @@ export default class GroupBar extends React.PureComponent<GroupBarProps> {
     const groups = [...GROUPS];
 
     if (hasRecentlyUsed) {
-      groups.unshift('recentlyUsed');
+      groups.unshift(GROUP_RECENTLY_USED);
     }
 
     return (

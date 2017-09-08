@@ -12,7 +12,19 @@ import EmojiList from './EmojiList';
 import GroupBar from './GroupBar';
 import PreviewBar from './PreviewBar';
 import SearchBar from './SearchBar';
-import { KEY_RECENTLY_USED } from './constants';
+import {
+  GROUP_RECENTLY_USED,
+  GROUP_SMILEYS_PEOPLE,
+  GROUP_ANIMALS_NATURE,
+  GROUP_FOOD_DRINK,
+  GROUP_TRAVEL_PLACES,
+  GROUP_ACTIVITIES,
+  GROUP_OBJECTS,
+  GROUP_SYMBOLS,
+  GROUP_FLAGS,
+  GROUP_SEARCH_RESULTS,
+  KEY_RECENTLY_USED,
+} from './constants';
 
 import type { Emoji, EmojiPath } from './types';
 
@@ -107,8 +119,8 @@ class Picker extends React.Component<PickerProps, PickerState> {
 
     const recentEmojis = this.getRecentEmojisFromStorage();
     const fallbackGroup = (enableRecentlyUsed && recentEmojis.length > 0)
-      ? 'recentlyUsed'
-      : 'smileysPeople';
+      ? GROUP_RECENTLY_USED
+      : GROUP_SMILEYS_PEOPLE;
 
     this.state = {
       recentEmojis,
@@ -147,17 +159,17 @@ class Picker extends React.Component<PickerProps, PickerState> {
       },
       messages: {
         // Emoji groups
-        smileysPeople: 'Smileys & People',
-        animalsNature: 'Animals & Nature',
-        foodDrink: 'Food & Drink',
-        travelPlaces: 'Travel & Places',
-        activities: 'Activities',
-        objects: 'Objects',
-        symbols: 'Symbols',
-        flags: 'Flags',
+        [GROUP_SMILEYS_PEOPLE]: 'Smileys & People',
+        [GROUP_ANIMALS_NATURE]: 'Animals & Nature',
+        [GROUP_FOOD_DRINK]: 'Food & Drink',
+        [GROUP_TRAVEL_PLACES]: 'Travel & Places',
+        [GROUP_ACTIVITIES]: 'Activities',
+        [GROUP_OBJECTS]: 'Objects',
+        [GROUP_SYMBOLS]: 'Symbols',
+        [GROUP_FLAGS]: 'Flags',
         // Custom groups
-        recentlyUsed: 'Recently Used',
-        searchResults: 'Search Results',
+        [GROUP_RECENTLY_USED]: 'Recently Used',
+        [GROUP_SEARCH_RESULTS]: 'Search Results',
         // Miscellaneous
         search: 'Search…',
         searchAria: 'Search for emojis by keyword',

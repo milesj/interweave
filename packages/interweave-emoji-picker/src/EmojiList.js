@@ -8,7 +8,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import debounce from 'lodash.debounce';
 import EmojiButton from './Emoji';
-import { GROUPS, SCROLL_DEBOUNCE } from './constants';
+import {
+  GROUPS,
+  GROUP_RECENTLY_USED,
+  GROUP_SMILEYS_PEOPLE,
+  GROUP_SEARCH_RESULTS,
+  SCROLL_DEBOUNCE,
+} from './constants';
 import { EmojiShape, EmojiPathShape } from './shapes';
 
 import type { Emoji, EmojiPath } from './types';
@@ -61,8 +67,8 @@ export default class EmojiList extends React.PureComponent<EmojiListProps, Emoji
     // When recently used emojis are rendered,
     // the smileys group is usually within view as well,
     // so we should preload both of them.
-    if (activeGroup === 'recentlyUsed') {
-      loadedGroups.push('smileysPeople');
+    if (activeGroup === GROUP_RECENTLY_USED) {
+      loadedGroups.push(GROUP_SMILEYS_PEOPLE);
     }
 
     this.state = {
@@ -137,7 +143,7 @@ export default class EmojiList extends React.PureComponent<EmojiListProps, Emoji
 
     // Add recently used group
     if (hasRecentlyUsed) {
-      groups.recentlyUsed = recentEmojis;
+      groups[GROUP_RECENTLY_USED] = recentEmojis;
     }
 
     // Partition into each group
@@ -157,7 +163,7 @@ export default class EmojiList extends React.PureComponent<EmojiListProps, Emoji
 
     // Sort each group by order excluding recently used
     Object.keys(groups).forEach((group) => {
-      if (group !== 'recentlyUsed') {
+      if (group !== GROUP_RECENTLY_USED) {
         groups[group].sort((a, b) => a.order - b.order);
       }
     });
@@ -216,7 +222,7 @@ export default class EmojiList extends React.PureComponent<EmojiListProps, Emoji
    * Partition the dataset into a single result set based on the search query.
    */
   searchList = (emojis: Emoji[]) => ({
-    searchResults: emojis.filter(this.filterForSearch),
+    [GROUP_SEARCH_RESULTS]: emojis.filter(this.filterForSearch),
   });
 
   /**

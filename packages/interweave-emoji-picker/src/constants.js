@@ -4,28 +4,39 @@
  * @flow
  */
 
+export const GROUP_SMILEYS_PEOPLE: string = 'smileysPeople';
+export const GROUP_ANIMALS_NATURE: string = 'animalsNature';
+export const GROUP_FOOD_DRINK: string = 'foodDrink';
+export const GROUP_TRAVEL_PLACES: string = 'travelPlaces';
+export const GROUP_ACTIVITIES: string = 'activities';
+export const GROUP_OBJECTS: string = 'objects';
+export const GROUP_SYMBOLS: string = 'symbols';
+export const GROUP_FLAGS: string = 'flags';
+export const GROUP_RECENTLY_USED: string = 'recentlyUsed';
+export const GROUP_SEARCH_RESULTS: string = 'searchResults';
+
 // Group order must match emojibase
 export const GROUPS: string[] = [
-  'smileysPeople',
-  'animalsNature',
-  'foodDrink',
-  'travelPlaces',
-  'activities',
-  'objects',
-  'symbols',
-  'flags',
+  GROUP_SMILEYS_PEOPLE,
+  GROUP_ANIMALS_NATURE,
+  GROUP_FOOD_DRINK,
+  GROUP_TRAVEL_PLACES,
+  GROUP_ACTIVITIES,
+  GROUP_OBJECTS,
+  GROUP_SYMBOLS,
+  GROUP_FLAGS,
 ];
 
 export const GROUP_ICONS: { [key: string]: string } = {
-  smileysPeople: '😃',
-  animalsNature: '🌿',
-  foodDrink: '🍎',
-  travelPlaces: '🗺️',
-  activities: '⚽️',
-  objects: '📘',
-  symbols: '⛔️',
-  flags: '🏴',
-  recentlyUsed: '🕔️',
+  [GROUP_RECENTLY_USED]: '🕑',
+  [GROUP_SMILEYS_PEOPLE]: '😃',
+  [GROUP_ANIMALS_NATURE]: '🌿',
+  [GROUP_FOOD_DRINK]: '🍎',
+  [GROUP_TRAVEL_PLACES]: '🗺️',
+  [GROUP_ACTIVITIES]: '⚽️',
+  [GROUP_OBJECTS]: '📘',
+  [GROUP_SYMBOLS]: '⛔️',
+  [GROUP_FLAGS]: '🏴',
 };
 
 export const SCROLL_DEBOUNCE: number = 50;
