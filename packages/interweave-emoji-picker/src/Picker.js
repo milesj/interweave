@@ -6,13 +6,14 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import { EMOJIS, getEmojiData } from 'interweave/lib/data/emoji';
+import { EMOJIS } from 'interweave/lib/data/emoji';
 import withEmojiData from 'interweave/lib/loaders/withEmojiData';
 import EmojiList from './EmojiList';
 import SkinBar from './SkinBar';
 import GroupBar from './GroupBar';
 import PreviewBar from './PreviewBar';
 import SearchBar from './SearchBar';
+import { EmojiShape, EmojiPathShape } from './shapes';
 import {
   GROUP_RECENTLY_USED,
   GROUP_SMILEYS_PEOPLE,
@@ -47,6 +48,7 @@ type PickerProps = {
   disableSkinTones: boolean,
   displayOrder: string[],
   emojiPath: EmojiPath,
+  emojis: Emoji[],
   exclude: string[],
   hideEmoticon: boolean,
   hideShortcodes: boolean,
@@ -104,10 +106,8 @@ class Picker extends React.Component<PickerProps, PickerState> {
     disableSearch: PropTypes.bool,
     disableSkinTones: PropTypes.bool,
     displayOrder: PropTypes.arrayOf(PropTypes.string),
-    emojiPath: PropTypes.oneOfType([
-      PropTypes.string,
-      PropTypes.func,
-    ]),
+    emojiPath: EmojiPathShape.isRequired,
+    emojis: EmojiShape.isRequired,
     exclude: PropTypes.arrayOf(PropTypes.string),
     hideEmoticon: PropTypes.bool,
     hideShortcodes: PropTypes.bool,
@@ -133,7 +133,6 @@ class Picker extends React.Component<PickerProps, PickerState> {
     disableSearch: false,
     disableSkinTones: false,
     displayOrder: ['preview', 'emojis', 'skins', 'groups', 'search'],
-    emojiPath: '',
     exclude: [],
     messages: {},
     hideEmoticon: false,
@@ -195,9 +194,9 @@ class Picker extends React.Component<PickerProps, PickerState> {
         skin: 'interweave-picker__skin',
         skinActive: 'interweave-picker__skin--active',
         skins: 'interweave-picker__skins',
+        noPreview: 'interweave-picker__no-preview',
         noResults: 'interweave-picker__no-results',
         preview: 'interweave-picker__preview',
-        previewEmpty: 'interweave-picker__preview-empty',
         previewEmoji: 'interweave-picker__preview-emoji',
         previewContent: 'interweave-picker__preview-content',
         previewTitle: 'interweave-picker__preview-title',
@@ -339,8 +338,9 @@ class Picker extends React.Component<PickerProps, PickerState> {
    * Triggered when an emoji is clicked.
    */
   handleSelectEmoji = (emoji: Emoji) => {
-    this.props.onSelectEmoji(emoji);
     this.addRecentEmoji(emoji);
+
+    this.props.onSelectEmoji(emoji);
   };
 
   /**
@@ -364,8 +364,9 @@ class Picker extends React.Component<PickerProps, PickerState> {
       activeSkinTone: skinTone,
     });
 
-    this.props.onSelectSkinTone(skinTone);
     this.setSkinTone(skinTone);
+
+    this.props.onSelectSkinTone(skinTone);
   };
 
   /**
@@ -392,6 +393,7 @@ class Picker extends React.Component<PickerProps, PickerState> {
       classNames,
       displayOrder,
       emojiPath,
+      emojis,
       hideEmoticon,
       disablePreview,
       disableSearch,
@@ -415,8 +417,8 @@ class Picker extends React.Component<PickerProps, PickerState> {
         <EmojiList
           activeGroup={activeGroup}
           activeSkinTone={activeSkinTone}
-          emojis={getEmojiData()}
           emojiPath={emojiPath}
+          emojis={emojis}
           exclude={this.generateExcludeMap()}
           hasRecentlyUsed={this.hasRecentlyUsed()}
           loadBuffer={loadBuffer}

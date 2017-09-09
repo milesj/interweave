@@ -59,7 +59,7 @@ export function packageEmoji(emoji: Object): Emoji {
   return emoji;
 }
 
-export function parseEmojiData(data: Emoji[]) {
+export function parseEmojiData(data: Emoji[]): Emoji[] {
   data.forEach((emoji) => {
     const packagedEmoji = packageEmoji(emoji);
 
@@ -73,4 +73,6 @@ export function parseEmojiData(data: Emoji[]) {
       });
     }
   });
+
+  return emojiList;
 }

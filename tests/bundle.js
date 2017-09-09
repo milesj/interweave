@@ -60,11 +60,12 @@ function App() {
 
       <EmojiPicker
         autoFocus
+        defaultGroup="foodDrink"
+        defaultSkinTone="light"
         emojiPath={emojiPath}
         exclude={[
           '1F4A9', // Poop
         ]}
-        onHoverEmoji={(emoji) => { console.log('hover emoji', emoji); }}
         onSearch={(query) => { console.log('search', query); }}
         onSelectEmoji={(emoji) => { console.log('select emoji', emoji); }}
         onSelectGroup={(group) => { console.log('select group', group); }}

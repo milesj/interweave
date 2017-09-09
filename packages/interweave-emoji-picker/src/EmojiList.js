@@ -12,6 +12,8 @@ import {
   GROUPS,
   GROUP_RECENTLY_USED,
   GROUP_SMILEYS_PEOPLE,
+  SKINS,
+  SKIN_NONE,
   SCROLL_DEBOUNCE,
 } from './constants';
 import { EmojiShape, EmojiPathShape } from './shapes';
@@ -20,6 +22,7 @@ import type { Emoji, EmojiPath } from './types';
 
 type EmojiListProps = {
   activeGroup: string,
+  activeSkinTone: string,
   emojiPath: EmojiPath,
   emojis: Emoji[],
   exclude: { [hexcode: string]: boolean },
@@ -47,6 +50,7 @@ export default class EmojiList extends React.PureComponent<EmojiListProps, Emoji
 
   static propTypes = {
     activeGroup: PropTypes.string.isRequired,
+    activeSkinTone: PropTypes.string.isRequired,
     emojiPath: EmojiPathShape.isRequired,
     emojis: PropTypes.arrayOf(EmojiShape).isRequired,
     exclude: PropTypes.objectOf(PropTypes.bool).isRequired,
@@ -85,32 +89,23 @@ export default class EmojiList extends React.PureComponent<EmojiListProps, Emoji
   }
 
   /**
-   * If the active group changes (is selected by clicking the tab),
-   * scroll the section into view.
-   */
-  componentWillReceiveProps({ activeGroup }: EmojiListProps) {
-    if (activeGroup && this.props.activeGroup !== activeGroup) {
-      // Defer the scroll as images may still be loading
-      setTimeout(() => {
-        this.scrollToGroup(activeGroup);
-
-        this.setState({
-          loadedGroups: new Set([
-            ...this.state.loadedGroups,
-            activeGroup,
-          ]),
-        });
-      }, 0);
-    }
-  }
-
-  /**
    * When a search is triggered, we may need to lazy load emoji images,
    * as the visible sections may have changed.
    */
   componentDidUpdate(prevProps: EmojiListProps) {
-    const { query } = this.props;
+    const { activeGroup, emojis, query } = this.props;
 
+    // Scroll the active group section into view when:
+    if (
+      // Emoji data has been loaded via the `withEmojiData` HOC
+      (emojis.length !== 0 && prevProps.emojis.length === 0) ||
+      // Group is selected by clicking the tab
+      (activeGroup && prevProps.activeGroup !== activeGroup)
+    ) {
+      this.scrollToGroup(activeGroup);
+    }
+
+    // Search is being queried, so reset scroll position and eager load emoji images.
     if (query && query !== prevProps.query && !!this.container) {
       this.container.scrollTop = 0;
       this.loadGroupsAndEmojis(this.container);
@@ -149,6 +144,35 @@ export default class EmojiList extends React.PureComponent<EmojiListProps, Emoji
   };
 
   /**
+   * Return an emoji with skin tone if the active skin tone is set,
+   * otherwise return the default skin tone (yellow).
+   */
+  getSkinnedEmoji(emoji: Emoji): Emoji {
+    const { activeSkinTone } = this.props;
+
+    if (activeSkinTone === SKIN_NONE || !emoji.skins) {
+      return emoji;
+    }
+
+    const toneIndex = SKINS.findIndex(skinTone => (skinTone === activeSkinTone));
+    let skinnedEmoji = emoji;
+
+    if (Array.isArray(emoji.skins)) {
+      emoji.skins.some((skin) => {
+        if (skin.tone && skin.tone === toneIndex) {
+          skinnedEmoji = skin;
+
+          return true;
+        }
+
+        return false;
+      });
+    }
+
+    return skinnedEmoji;
+  }
+
+  /**
    * Partition the dataset into multiple arrays based on the group they belong to.
    */
   groupList = (emojis: Emoji[]) => {
@@ -166,12 +190,13 @@ export default class EmojiList extends React.PureComponent<EmojiListProps, Emoji
         return;
       }
 
-      const group = GROUPS[emoji.group];
+      const skinnedEmoji = this.getSkinnedEmoji(emoji);
+      const group = GROUPS[skinnedEmoji.group];
 
       if (groups[group]) {
-        groups[group].push(emoji);
+        groups[group].push(skinnedEmoji);
       } else {
-        groups[group] = [emoji];
+        groups[group] = [skinnedEmoji];
       }
     });
 
@@ -220,17 +245,6 @@ export default class EmojiList extends React.PureComponent<EmojiListProps, Emoji
   }, SCROLL_DEBOUNCE);
 
   /**
-   * Scroll a group section to the top of the scrollable container.
-   */
-  scrollToGroup = (group: string) => {
-    const element = document.getElementById(`emoji-group-${group}`);
-
-    if (element && element.parentElement) {
-      element.parentElement.scrollTop = element.offsetTop;
-    }
-  };
-
-  /**
    * Loop over each group section within the scrollable container
    * and determine the active group and whether to load emoji images.
    */
@@ -244,12 +258,14 @@ export default class EmojiList extends React.PureComponent<EmojiListProps, Emoji
 
       // While a group section is within view, update the active group
       if (
-        !query &&
         section.offsetTop <= container.scrollTop &&
         (section.offsetTop + section.offsetHeight) > container.scrollTop
       ) {
-        // Only update if a different group
-        if (group !== this.props.activeGroup) {
+        loadedGroups.add(group);
+        updateState = true;
+
+        // Only update if a different group and not searching
+        if (!query && group !== this.props.activeGroup) {
           this.props.onSelectGroup(group);
         }
       }
@@ -270,6 +286,23 @@ export default class EmojiList extends React.PureComponent<EmojiListProps, Emoji
       });
     }
   }
+
+  /**
+   * Scroll a group section to the top of the scrollable container.
+   */
+  scrollToGroup = (group: string) => {
+    const element = document.getElementById(`emoji-group-${group}`);
+
+    if (!element || !this.container) {
+      return;
+    }
+
+    // Scroll to the section
+    this.container.scrollTop = element.offsetTop;
+
+    // Eager load emoji images
+    this.loadGroupsAndEmojis(this.container);
+  };
 
   render() {
     const { emojis, emojiPath, onEnter, onLeave, onSelectEmoji } = this.props;

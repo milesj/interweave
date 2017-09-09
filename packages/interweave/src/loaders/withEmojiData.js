@@ -10,10 +10,20 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { fetchFromCDN } from 'emojibase';
 import { SUPPORTED_LOCALES } from 'emojibase/lib/constants';
-import { parseEmojiData } from '../data/emoji';
+import { getEmojiData, parseEmojiData } from '../data/emoji';
 
 import type { Emoji } from 'emojibase'; // eslint-disable-line
-import type { EmojiLoaderProps } from '../types';
+
+export type EmojiLoaderProps = {
+  compact: boolean,
+  emojis: Emoji[],
+  locale: string,
+  version: string,
+};
+
+type EmojiLoaderState = {
+  emojis: Emoji[],
+};
 
 // Share between all instances
 let loaded = false;
@@ -22,7 +32,7 @@ let promise = null;
 export default function withEmojiData(
   Component: React$ComponentType<*>,
 ): React$ComponentType<EmojiLoaderProps> {
-  return class EmojiLoader extends React.Component<EmojiLoaderProps> {
+  return class EmojiLoader extends React.Component<EmojiLoaderProps, EmojiLoaderState> {
     static propTypes = {
       compact: PropTypes.bool,
       emojis: PropTypes.oneOfType([
@@ -40,11 +50,19 @@ export default function withEmojiData(
       version: 'latest',
     };
 
+    state = {
+      emojis: [],
+    };
+
     componentWillMount() {
       const { compact, emojis, locale, version } = this.props;
 
       // Abort as we've already loaded data
       if (loaded) {
+        this.setState({
+          emojis: getEmojiData(),
+        });
+
         return;
       }
 
@@ -56,7 +74,9 @@ export default function withEmojiData(
       } else if (promise) {
         promise
           .then(() => {
-            this.forceUpdate();
+            this.setState({
+              emojis: getEmojiData(),
+            });
           })
           .catch((error) => {
             throw error;
@@ -78,9 +98,11 @@ export default function withEmojiData(
      * Parse emoji data and make it available to Interweave
      */
     loadData(data: string | Emoji[]) {
-      parseEmojiData((typeof data === 'string') ? JSON.parse(data) : data);
+      const emojis = parseEmojiData((typeof data === 'string') ? JSON.parse(data) : data);
 
-      this.forceUpdate();
+      this.setState({
+        emojis,
+      });
 
       loaded = true;
     }
@@ -92,7 +114,7 @@ export default function withEmojiData(
       const { compact, emojis, locale, version, ...props } = this.props;
 
       return (
-        <Component {...props} />
+        <Component {...props} emojis={this.state.emojis} />
       );
     }
   };

@@ -52,7 +52,7 @@ export default class PreviewBar extends React.PureComponent<PreviewBarProps> {
     if (!emoji) {
       return (
         <div className={classNames.preview}>
-          <div className={classNames.previewEmpty}>
+          <div className={classNames.noPreview}>
             {messages.noPreview}
           </div>
         </div>

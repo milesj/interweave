@@ -143,13 +143,6 @@ export type EmojiProps = {
   unicode: string,
 };
 
-export type EmojiLoaderProps = {
-  compact: boolean,
-  emojis: Object[],
-  locale: string,
-  version: string,
-};
-
 export type EmojiOptions = {
   convertEmoticon: boolean,
   convertShortcode: boolean,
