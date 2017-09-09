@@ -9,8 +9,8 @@ import PropTypes from 'prop-types';
 import { EMOJIS } from 'interweave/lib/data/emoji';
 import withEmojiData from 'interweave/lib/loaders/withEmojiData';
 import EmojiList from './EmojiList';
-import SkinBar from './SkinBar';
-import GroupBar from './GroupBar';
+import SkinTonePalette from './SkinTonePalette';
+import GroupTabs from './GroupTabs';
 import PreviewBar from './PreviewBar';
 import SearchBar from './SearchBar';
 import { EmojiShape, EmojiPathShape } from './shapes';
@@ -191,9 +191,9 @@ class Picker extends React.Component<PickerProps, PickerState> {
         groupActive: 'interweave-picker__group--active',
         groups: 'interweave-picker__groups',
         groupsList: 'interweave-picker__groups-list',
-        skin: 'interweave-picker__skin',
-        skinActive: 'interweave-picker__skin--active',
-        skins: 'interweave-picker__skins',
+        skinTone: 'interweave-picker__skin-tone',
+        skinToneActive: 'interweave-picker__skin-tone--active',
+        skinTones: 'interweave-picker__skin-tones',
         noPreview: 'interweave-picker__no-preview',
         noResults: 'interweave-picker__no-results',
         preview: 'interweave-picker__preview',
@@ -431,13 +431,13 @@ class Picker extends React.Component<PickerProps, PickerState> {
         />
       ),
       skins: disableSkinTones ? null : (
-        <SkinBar
+        <SkinTonePalette
           activeSkinTone={activeSkinTone}
           onSelect={this.handleSelectSkinTone}
         />
       ),
       groups: (
-        <GroupBar
+        <GroupTabs
           activeGroup={activeGroup}
           emojiPath={emojiPath}
           hasRecentlyUsed={this.hasRecentlyUsed()}

@@ -12,7 +12,7 @@ import {
   GROUPS,
   GROUP_RECENTLY_USED,
   GROUP_SMILEYS_PEOPLE,
-  SKINS,
+  SKIN_TONES,
   SKIN_NONE,
   SCROLL_DEBOUNCE,
 } from './constants';
@@ -154,7 +154,7 @@ export default class EmojiList extends React.PureComponent<EmojiListProps, Emoji
       return emoji;
     }
 
-    const toneIndex = SKINS.findIndex(skinTone => (skinTone === activeSkinTone));
+    const toneIndex = SKIN_TONES.findIndex(skinTone => (skinTone === activeSkinTone));
     let skinnedEmoji = emoji;
 
     if (Array.isArray(emoji.skins)) {

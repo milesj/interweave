@@ -3,6 +3,7 @@
 
 [ignore]
 .*/node_modules/.*
+.*/packages/.*/lib/.*
 .*/tests/.*
 .*\.test\.js
 

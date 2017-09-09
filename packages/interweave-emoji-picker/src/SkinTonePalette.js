@@ -6,15 +6,15 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import Skin from './Skin';
-import { SKINS } from './constants';
+import SkinTone from './SkinTone';
+import { SKIN_TONES } from './constants';
 
-type SkinBarProps = {
+type SkinTonePaletteProps = {
   activeSkinTone: string,
-  onSelect: (skin: string) => void,
+  onSelect: (skinTone: string) => void,
 };
 
-export default class SkinBar extends React.PureComponent<SkinBarProps> {
+export default class SkinTonePalette extends React.PureComponent<SkinTonePaletteProps> {
   static contextTypes = {
     classNames: PropTypes.objectOf(PropTypes.string),
   };
@@ -29,12 +29,12 @@ export default class SkinBar extends React.PureComponent<SkinBarProps> {
     const { classNames } = this.context;
 
     return (
-      <div className={classNames.skins}>
-        {SKINS.map(skin => (
-          <Skin
-            key={skin}
+      <div className={classNames.skinTones}>
+        {SKIN_TONES.map(skinTone => (
+          <SkinTone
+            key={skinTone}
             activeSkinTone={activeSkinTone}
-            skinTone={skin}
+            skinTone={skinTone}
             onSelect={onSelect}
           />
         ))}

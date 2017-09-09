@@ -44,7 +44,7 @@ export const SKIN_MEDIUM: string = 'medium';
 export const SKIN_MEDIUM_DARK: string = 'mediumDark';
 export const SKIN_DARK: string = 'dark';
 
-export const SKINS: string[] = [
+export const SKIN_TONES: string[] = [
   SKIN_NONE,
   SKIN_LIGHT,
   SKIN_MEDIUM_LIGHT,

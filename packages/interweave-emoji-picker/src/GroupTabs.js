@@ -12,7 +12,7 @@ import { GROUPS, GROUP_RECENTLY_USED } from './constants';
 
 import type { EmojiPath } from './types';
 
-type GroupBarProps = {
+type GroupTabsProps = {
   activeGroup: string,
   emojiPath: EmojiPath,
   hasRecentlyUsed: boolean,
@@ -20,7 +20,7 @@ type GroupBarProps = {
   onSelect: (group: string, resetSearch?: boolean) => void,
 };
 
-export default class GroupBar extends React.PureComponent<GroupBarProps> {
+export default class GroupTabs extends React.PureComponent<GroupTabsProps> {
   static contextTypes = {
     classNames: PropTypes.objectOf(PropTypes.string),
   };

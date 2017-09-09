@@ -8,13 +8,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { SKIN_COLORS } from './constants';
 
-type SkinProps = {
+type SkinToneProps = {
   activeSkinTone: string,
   onSelect: (skinTone: string) => void,
   skinTone: string,
 };
 
-export default class Skin extends React.PureComponent<SkinProps> {
+export default class SkinTone extends React.PureComponent<SkinToneProps> {
   static contextTypes = {
     classNames: PropTypes.objectOf(PropTypes.string),
   };
@@ -37,11 +37,11 @@ export default class Skin extends React.PureComponent<SkinProps> {
   render() {
     const { activeSkinTone, skinTone } = this.props;
     const { classNames } = this.context;
-    const className = [classNames.skin];
+    const className = [classNames.skinTone];
     const color = SKIN_COLORS[skinTone];
 
     if (skinTone === activeSkinTone) {
-      className.push(classNames.skinActive);
+      className.push(classNames.skinToneActive);
     }
 
     return (
