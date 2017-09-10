@@ -31,9 +31,10 @@ type EmojiListProps = {
   onEnter: (emoji: Emoji) => void,
   onLeave: (emoji: Emoji) => void,
   onSelectEmoji: (emoji: Emoji) => void,
-  onSelectGroup: (group: string, resetSearch?: boolean) => void,
+  onSelectGroup: (group: string, reset?: boolean) => void,
   query: string,
   recentEmojis: Emoji[],
+  scrollToGroup: string,
 };
 
 type EmojiListState = {
@@ -58,6 +59,7 @@ export default class EmojiList extends React.PureComponent<EmojiListProps, Emoji
     loadBuffer: PropTypes.number.isRequired,
     query: PropTypes.string.isRequired,
     recentEmojis: PropTypes.arrayOf(EmojiShape).isRequired,
+    scrollToGroup: PropTypes.string.isRequired,
     onEnter: PropTypes.func.isRequired,
     onLeave: PropTypes.func.isRequired,
     onSelectEmoji: PropTypes.func.isRequired,
@@ -93,16 +95,16 @@ export default class EmojiList extends React.PureComponent<EmojiListProps, Emoji
    * as the visible sections may have changed.
    */
   componentDidUpdate(prevProps: EmojiListProps) {
-    const { activeGroup, emojis, query } = this.props;
+    const { emojis, query, scrollToGroup } = this.props;
 
     // Scroll the active group section into view when:
     if (
       // Emoji data has been loaded via the `withEmojiData` HOC
       (emojis.length !== 0 && prevProps.emojis.length === 0) ||
       // Group is selected by clicking the tab
-      (activeGroup && prevProps.activeGroup !== activeGroup)
+      (scrollToGroup && prevProps.scrollToGroup !== scrollToGroup)
     ) {
-      this.scrollToGroup(activeGroup);
+      this.scrollToGroup(scrollToGroup);
     }
 
     // Search is being queried, so reset scroll position and eager load emoji images.

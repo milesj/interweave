@@ -17,7 +17,7 @@ type GroupTabsProps = {
   emojiPath: EmojiPath,
   hasRecentlyUsed: boolean,
   icons: { [key: string]: React$Node },
-  onSelect: (group: string, resetSearch?: boolean) => void,
+  onSelect: (group: string, reset?: boolean) => void,
 };
 
 export default class GroupTabs extends React.PureComponent<GroupTabsProps> {

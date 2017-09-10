@@ -17,7 +17,7 @@ type GroupProps = {
   children: React$Node,
   emojiPath: EmojiPath,
   group: string,
-  onSelect: (group: string, resetSearch?: boolean) => void,
+  onSelect: (group: string, reset?: boolean) => void,
 };
 
 export default class Group extends React.PureComponent<GroupProps> {

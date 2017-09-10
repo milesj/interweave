@@ -69,6 +69,7 @@ type PickerState = {
   activeSkinTone: string,
   defaultGroup: string,
   recentEmojis: string[],
+  scrollToGroup: string,
   searchQuery: string,
 };
 
@@ -172,6 +173,7 @@ class Picker extends React.Component<PickerProps, PickerState> {
       activeEmoji: null,
       activeGroup: defaultGroup,
       activeSkinTone: skinTone || defaultSkinTone,
+      scrollToGroup: defaultGroup,
       searchQuery: defaultSearchQuery,
     };
   }
@@ -345,12 +347,14 @@ class Picker extends React.Component<PickerProps, PickerState> {
 
   /**
    * Triggered when a group tab is clicked or scrolled to.
+   *
+   * When clicked via the tab, we should reset search and scroll position.
    */
-  handleSelectGroup = (group: string, resetSearch: boolean = false) => {
+  handleSelectGroup = (group: string, reset: boolean = false) => {
     this.setState(prevState => ({
       activeGroup: group,
-      // Reset previous search
-      searchQuery: resetSearch ? '' : prevState.searchQuery,
+      scrollToGroup: reset ? group : '',
+      searchQuery: reset ? '' : prevState.searchQuery,
     }));
 
     this.props.onSelectGroup(group);
@@ -402,7 +406,7 @@ class Picker extends React.Component<PickerProps, PickerState> {
       icons,
       loadBuffer,
     } = this.props;
-    const { activeEmoji, activeGroup, activeSkinTone, searchQuery } = this.state;
+    const { activeEmoji, activeGroup, activeSkinTone, scrollToGroup, searchQuery } = this.state;
     const recentEmojis = this.generateRecentEmojis();
     const components = {
       preview: disablePreview ? null : (
@@ -424,6 +428,7 @@ class Picker extends React.Component<PickerProps, PickerState> {
           loadBuffer={loadBuffer}
           query={searchQuery}
           recentEmojis={recentEmojis}
+          scrollToGroup={scrollToGroup}
           onEnter={this.handleEnterEmoji}
           onLeave={this.handleLeaveEmoji}
           onSelectEmoji={this.handleSelectEmoji}
