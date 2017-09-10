@@ -8,7 +8,18 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Link from './Link';
 
-import type { UrlProps } from '../types';
+type UrlProps = {
+  children: string,
+  urlParts: {
+    auth: string,
+    fragment: string,
+    host: string,
+    path: string,
+    port: string | number,
+    query: string,
+    scheme: string,
+  },
+};
 
 export default class Url extends React.PureComponent<UrlProps> {
   static propTypes = {

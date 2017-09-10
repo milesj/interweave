@@ -19,8 +19,15 @@ import {
 import type {
   MatchResponse,
   MatcherFactory,
-  EmojiOptions,
 } from '../types';
+
+type EmojiOptions = {
+  convertEmoticon: boolean,
+  convertShortcode: boolean,
+  convertUnicode: boolean,
+  enlargeThreshold: number,
+  renderUnicode: boolean,
+};
 
 // eslint-disable-next-line no-useless-escape
 const EMOTICON_BOUNDARY_REGEX: RegExp = new RegExp(`(^|\\\b|\\\s)(${EMOTICON_REGEX.source})(?=\\\s|\\\b|$)`);

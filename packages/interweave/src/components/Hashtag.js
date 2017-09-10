@@ -8,7 +8,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Link from './Link';
 
-import type { HashtagProps } from '../types';
+type HashtagProps = {
+  children: string,
+  encodeHashtag: boolean,
+  hashtagName: string,
+  hashtagUrl: string | (hashtag: string) => string,
+  preserveHash: boolean,
+};
 
 export default class Hashtag extends React.PureComponent<HashtagProps> {
   static propTypes = {

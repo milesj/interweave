@@ -2,6 +2,19 @@ import React from 'react';
 import { Matcher } from 'interweave';
 
 declare module 'interweave' {
+  import type { Emoji as BaseEmoji } from 'emojibase';
+
+  declare export type Emoji = {
+    ...BaseEmoji,
+    canonical_shortcodes: string[],
+    hexcode: string,
+    primary_shortcode: string,
+    unicode: string,
+  };
+
+  declare export type EmojiPath = string |
+    (hexcode: string, enlarged: boolean, smallSize: number, largeSize: number) => string;
+
   declare export type AfterParseCallback = (content: React$Node[], props: Object) => React$Node[];
 
   declare export type BeforeParseCallback = (content: string, props: Object) => string;
@@ -86,10 +99,11 @@ declare module 'interweave/lib/components/Email' {
 }
 
 declare module 'interweave/lib/components/Emoji' {
+  import type { EmojiPath } from 'interweave';
+
   declare export default class Emoji extends React.PureComponent<{
     emojiLargeSize: number,
-    emojiPath: string |
-      (hexcode: string, enlarge: boolean, size: number, largeSize: number) => string,
+    emojiPath: EmojiPath,
     emojiSize: number,
     emoticon: string,
     enlargeEmoji: boolean,
@@ -133,12 +147,28 @@ declare module 'interweave/lib/components/Url' {
   }> {}
 }
 
+declare module 'interweave/lib/data/emoji' {
+  import type { Emoji } from 'interweave';
+
+  declare export var UNICODE_TO_SHORTCODES: { [unicode: string]: string[] };
+  declare export var SHORTCODE_TO_UNICODE: { [shortcode: string]: string };
+  declare export var EMOTICON_TO_UNICODE: { [emoticon: string]: string };
+  declare export var EMOJIS: { [unicode: string]: Emoji };
+
+  declare export function getEmojiData(): Emoji[];
+  declare export function getFlatEmojiData(): Emoji[];
+  declare export function packageEmoji(emoji: Object): Emoji;
+  declare export function parseEmojiData(data: Object[]): Emoji[];
+}
+
 declare module 'interweave/lib/loaders/withEmojiData' {
+  import type { Emoji } from 'interweave';
+
   declare export default function withEmojiData(
     Component: React$ComponentType<*>,
   ): React$ComponentType<{
     compact: boolean,
-    emojis: Object[],
+    emojis: Emoji[],
     locale: string,
     version: string,
   }>;

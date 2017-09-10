@@ -18,7 +18,7 @@ import {
 } from './constants';
 import { EmojiShape, EmojiPathShape } from './shapes';
 
-import type { Emoji, EmojiPath } from './types';
+import type { Emoji, EmojiPath } from 'interweave'; // eslint-disable-line
 
 type EmojiListProps = {
   activeGroup: string,
@@ -188,11 +188,16 @@ export default class EmojiList extends React.PureComponent<EmojiListProps, Emoji
 
     // Partition into each group
     emojis.forEach((emoji) => {
-      if (exclude[emoji.hexcode] || typeof emoji.group === 'undefined') {
+      if (exclude[emoji.hexcode]) {
         return;
       }
 
       const skinnedEmoji = this.getSkinnedEmoji(emoji);
+
+      if (typeof skinnedEmoji.group === 'undefined') {
+        return;
+      }
+
       const group = GROUPS[skinnedEmoji.group];
 
       if (groups[group]) {

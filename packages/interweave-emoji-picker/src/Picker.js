@@ -34,7 +34,7 @@ import {
   KEY_SKIN_TONE,
 } from './constants';
 
-import type { Emoji, EmojiPath } from './types';
+import type { Emoji, EmojiPath } from 'interweave'; // eslint-disable-line
 
 type PickerProps = {
   autoFocus: boolean,

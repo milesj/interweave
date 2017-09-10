@@ -9,7 +9,12 @@ import Matcher from '../Matcher';
 import Url from '../components/Url';
 import { URL_PATTERN, TOP_LEVEL_TLDS } from '../constants';
 
-import type { MatchResponse, MatcherFactory, UrlOptions } from '../types';
+import type { MatchResponse, MatcherFactory } from '../types';
+
+type UrlOptions = {
+  customTLDs: string[],
+  validateTLD: boolean,
+};
 
 const URL_REGEX: RegExp = new RegExp(URL_PATTERN, 'i');
 

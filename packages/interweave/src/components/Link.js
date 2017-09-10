@@ -7,7 +7,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import type { LinkProps } from '../types';
+type LinkProps = {
+  children: React$Node,
+  href: string,
+  newWindow: boolean,
+  onClick: ?() => void,
+};
 
 export default class Link extends React.PureComponent<LinkProps> {
   static propTypes = {

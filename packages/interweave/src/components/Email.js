@@ -8,7 +8,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Link from './Link';
 
-import type { EmailProps } from '../types';
+type EmailProps = {
+  children: string,
+  emailParts: {
+    host: string,
+    username: string,
+  },
+};
 
 export default class Email extends React.PureComponent<EmailProps> {
   static propTypes = {

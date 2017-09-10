@@ -9,7 +9,15 @@ import PropTypes from 'prop-types';
 import Parser from './Parser';
 import Element from './components/Element';
 
-import type { MarkupProps } from './types';
+type MarkupProps = {
+  content: string,
+  disableLineBreaks: boolean,
+  disableWhitelist: boolean,
+  emptyContent: ?React$Node,
+  noHtml: boolean,
+  noHtmlExceptMatchers: boolean,
+  tagName: string,
+};
 
 export default function Markup({
   content,

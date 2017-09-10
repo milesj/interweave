@@ -29,6 +29,13 @@ import type {
   NodeInterface, // eslint-disable-line
 } from './types';
 
+type ParserProps = {
+  disableLineBreaks?: boolean,
+  noHtml?: boolean,
+  noHtmlExceptMatchers?: boolean,
+  [key: string]: mixed,
+};
+
 const ELEMENT_NODE: number = 1;
 const TEXT_NODE: number = 3;
 const INVALID_ROOTS: string[] = ['!DOC', 'HTML', 'HEAD', 'BODY'];
@@ -38,7 +45,7 @@ const ARIA_COMPARE_LENGTH: number = 5;
 export default class Parser {
   doc: Document;
   content: React$Node[];
-  props: Object;
+  props: ParserProps;
   matchers: Matcher<*>[];
   filters: Filter[];
   keyIndex: number;

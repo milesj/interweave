@@ -10,7 +10,7 @@ import EmojiCharacter from 'interweave/lib/components/Emoji';
 import { EmojiPathShape } from './shapes';
 import { GROUP_ICONS } from './constants';
 
-import type { EmojiPath } from './types';
+import type { EmojiPath } from 'interweave'; // eslint-disable-line
 
 type GroupProps = {
   activeGroup: string,

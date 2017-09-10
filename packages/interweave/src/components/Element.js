@@ -7,7 +7,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import type { ElementProps } from '../types';
+import type { Attributes } from '../types';
+
+type ElementProps = {
+  attributes: Attributes,
+  children: React$Node,
+  className: string,
+  selfClose: boolean,
+  tagName: string,
+};
 
 export default class Element extends React.PureComponent<ElementProps> {
   static propTypes = {

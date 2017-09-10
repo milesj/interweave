@@ -16,7 +16,17 @@ import {
   UNICODE_TO_SHORTCODES,
 } from '../data/emoji';
 
-import type { EmojiProps } from '../types';
+type EmojiProps = {
+  emojiLargeSize: number,
+  emojiPath: string |
+    (hexcode: string, enlarged: boolean, smallSize: number, largeSize: number) => string,
+  emojiSize: number,
+  emoticon: string,
+  enlargeEmoji: boolean,
+  locale: string,
+  shortcode: string,
+  unicode: string,
+};
 
 const LARGE_MULTIPLIER: number = 3;
 

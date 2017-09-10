@@ -9,7 +9,7 @@ import PropTypes from 'prop-types';
 import EmojiCharacter from 'interweave/lib/components/Emoji';
 import { EmojiShape, EmojiPathShape } from './shapes';
 
-import type { Emoji, EmojiPath } from './types';
+import type { Emoji, EmojiPath } from 'interweave'; // eslint-disable-line
 
 type EmojiProps = {
   emoji: Emoji,

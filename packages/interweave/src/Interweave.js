@@ -13,7 +13,25 @@ import Matcher from './Matcher';
 import Parser from './Parser';
 import Element from './components/Element';
 
-import type { InterweaveProps } from './types';
+type BeforeParseCallback = (content: string, props: Object) => string;
+
+type AfterParseCallback = (content: React$Node[], props: Object) => React$Node[];
+
+type InterweaveProps = {
+  content: string,
+  disableFilters: boolean,
+  disableLineBreaks: boolean,
+  disableMatchers: boolean,
+  disableWhitelist: boolean,
+  emptyContent: ?React$Node,
+  filters: Filter[],
+  matchers: Matcher<*>[],
+  noHtml: boolean,
+  noHtmlExceptMatchers: boolean,
+  onAfterParse: ?AfterParseCallback,
+  onBeforeParse: ?BeforeParseCallback,
+  tagName: string,
+};
 
 export default class Interweave extends React.Component<InterweaveProps> {
   static propTypes = {
