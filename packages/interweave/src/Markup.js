@@ -19,46 +19,49 @@ type MarkupProps = {
   tagName: string,
 };
 
-export default function Markup({
-  content,
-  emptyContent,
-  disableLineBreaks,
-  disableWhitelist,
-  tagName,
-  noHtml,
-  noHtmlExceptMatchers,
-}: MarkupProps) {
-  const className = (noHtml || noHtmlExceptMatchers) ? 'interweave--no-html' : '';
-  const markup = new Parser(content, {
-    noHtml,
-    noHtmlExceptMatchers,
-    disableLineBreaks,
-    disableWhitelist,
-  }).parse();
+export default class Markup extends React.PureComponent<MarkupProps> {
+  static propTypes = {
+    content: PropTypes.string,
+    disableLineBreaks: PropTypes.bool,
+    disableWhitelist: PropTypes.bool,
+    emptyContent: PropTypes.node,
+    noHtml: PropTypes.bool,
+    noHtmlExceptMatchers: PropTypes.bool,
+    tagName: PropTypes.oneOf(['span', 'div', 'p']),
+  };
 
-  return (
-    <Element tagName={tagName} className={className}>
-      {markup.length ? markup : (emptyContent || null)}
-    </Element>
-  );
+  static defaultProps = {
+    content: '',
+    disableLineBreaks: false,
+    disableWhitelist: false,
+    emptyContent: null,
+    noHtml: false,
+    noHtmlExceptMatchers: false,
+    tagName: 'span',
+  };
+
+  render() {
+    const {
+      content,
+      noHtml,
+      noHtmlExceptMatchers,
+      disableLineBreaks,
+      disableWhitelist,
+      emptyContent,
+      tagName,
+    } = this.props;
+    const className = (noHtml || noHtmlExceptMatchers) ? 'interweave--no-html' : '';
+    const markup = new Parser(content, {
+      noHtml,
+      noHtmlExceptMatchers,
+      disableLineBreaks,
+      disableWhitelist,
+    }).parse();
+
+    return (
+      <Element tagName={tagName} className={className}>
+        {markup.length ? markup : emptyContent}
+      </Element>
+    );
+  }
 }
-
-Markup.propTypes = {
-  content: PropTypes.string,
-  disableLineBreaks: PropTypes.bool,
-  disableWhitelist: PropTypes.bool,
-  emptyContent: PropTypes.node,
-  noHtml: PropTypes.bool,
-  noHtmlExceptMatchers: PropTypes.bool,
-  tagName: PropTypes.oneOf(['span', 'div', 'p']),
-};
-
-Markup.defaultProps = {
-  content: '',
-  disableLineBreaks: false,
-  disableWhitelist: false,
-  emptyContent: null,
-  noHtml: false,
-  noHtmlExceptMatchers: false,
-  tagName: 'span',
-};
