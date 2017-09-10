@@ -1,4 +1,28 @@
-# 6.1.0
+# 7.0.0
+#### 💥 Breaking
+* Updated `react` peer dependency requirement to 15.3.
+* Migrated `Markup`, `Element`, `Email`, `Emoji`, `Hashtag`, `Link`, and `Url`
+  components to extend `React.PureComponent`.
+* Refactored `EmojiLoader` into an HOC named `withEmojiData`, as the original approach
+  would not re-render components correctly in all situations. Furthermore,
+  a few improvements were made to the HOC.
+  * Added a `compact` prop, which will load `compact.json` instead of `data.json` from the CDN.
+  * Added an `emojis` prop, which can be used to manually load emoji data without fetching from the CDN.
+  * Updated the wrapped component to receive an `emojis` prop, which is the list of emojis.
+
+#### 🚀 New
+* Added `Emoji` and `EmojiPath` types to the Flowtype definitions.
+* Added `getEmojiData()` and `getFlatEmojiData()` functions to `data/emoji`.
+* Updated parsed and packaged emoji data to include additional properties.
+  * Added `unicode`, which is either the emoji or text presentation Unicode character.
+  * Added `canonical_shortcodes`, which are an array of shortcodes including surrounding colons.
+  * Added `primary_shortcode`, which is the primary and most common shortcode, with colons.
+
+#### 🛠 Internal
+* Split Interweave into a multi-package repository using Yarn workspaces and Lerna.
+* Major refactor and cleanup on Flowtype usage.
+
+# 6.1.0 - 8/23/17
 #### 🐞 Fixed
 * Major improvements to emoticon matching and parsing.
 * Updated Flowtype definitions with more generics.
@@ -7,7 +31,7 @@
 * Updated `emojibase` to 1.3.0.
 * Updated `emojibase-regex` to 1.0.4.
 
-# 6.0.0
+# 6.0.0 - 8/21/17
 #### 💥 Breaking
 * Migrated from `emoji-database` to `emojibase`, which is now a peer dependency.
 * Matcher files have been renamed and suffixed with `Matcher`.
@@ -31,12 +55,12 @@
 #### 🛠 Internal
 * Fixed and updated Flowtype and React definitions.
 
-# 5.4.0
+# 5.4.0 - 7/12/17
 * Updated `emoji-database` to 0.9.
 * Updated `enlargeThreshold` to ignore whitespace when counting.
 * Fixed a bug in which emoji counts below the `enlargeThreshold` were not being enlarged.
 
-# 5.3.0
+# 5.3.0 - 7/12/17
 * Added a new `emojiLargeSize` prop, which can be used to customize the size of enlarged emoji.
   * Also passed as the 4th argument to the `emojiPath` function.
 * Added a new `enlargeThreshold` option to `EmojiMatcher`, which determines the number of
@@ -46,39 +70,39 @@
 * Wrapped thrown errors in `__DEV__` environment checks.
 * Improvements to Flow definitions.
 
-# 5.2.0
+# 5.2.0 - 7/10/17
 * Added a new `noHtmlExceptMatchers` prop.
 * Fixed a bug in which matcher after callbacks were not triggering properly.
 
-# 5.1.2
+# 5.1.2 - 6/2/17
 * Fixed prefixed TLDs not being matched correctly.
 
-# 5.1.1
+# 5.1.1 - 6/23/17
 * Updated `emoji-database` to 0.8.
 * Fixed IE 10 compiled lib/ issues.
 
-# 5.1.0
+# 5.1.0 - 6/16/17
 * Updated support for `react` 15.6.
 * Updated `emoji-database` to 0.7.
 * Updated `UrlMatcher` to validate against a common whitelist of TLDs (no longer wildcard).
 * Added `customTLDs` and `validateTLD` options to `UrlMatcher`.
 
-# 5.0.1
+# 5.0.1 - 5/16/17
 * Fixed an issue with the index import failing.
 
-# 5.0.0
+# 5.0.0 - 5/10/17
 * Updated IE requirement to 11+.
 * Updated to include src/ files in the published package.
 * Updated Flow definitions.
 * Moved Flow definition to root of project.
 * Moved published files to a lib/ folder.
 
-# 4.1.0
+# 4.1.0 - 4/25/17
 * Updated the `emojiPath` function to receive `enlargeEmoji` as the 2nd argument,
   and `emojiSize` as the 3rd argument.
 * Updated EmojiOne CDN.
 
-# 4.0.0
+# 4.0.0 - 4/22/17
 * Updated support for React 15.5 and the new `prop-types` package.
 * Updated emoji parsing and rendering to use [emoji-database](https://www.npmjs.com/package/emoji-database),
   which also supports EmojiOne 3.0, and the latest emoji unicode specification.
@@ -94,19 +118,19 @@
 * Removed the emoji dataset and regex generation from Interweave.
 * Fixed a few issues with the flowtype definitions.
 
-# 3.1.0
+# 3.1.0 - 3/31/17
 * Added an `emojiSize` prop to the `Emoji` component, which will scale the size
   of the emoji using inline styles.
 * Updated the `Emoji` component to return `img` instead of `span`.
 * Removed the extension specific class name from the `Emoji` element.
 
-# 3.0.2
+# 3.0.2 - 3/30/17
 * Fixed an issue with the published build.
 
-# 3.0.1
+# 3.0.1 - 3/30/17
 * Added support for `/` and `\` in URL query string parsing.
 
-# 3.0.0
+# 3.0.0 - 3/25/17
 * Updated to no longer support parsing entire HTML documents.
   * This includes content that starts with `<!DOCTYPE>`, `<html>`, `<head>`, and `<body>`.
   * Will now throw an error if the content is invalid.
@@ -117,19 +141,19 @@
 * Added `CONFIG_INLINE` and `CONFIG_BLOCK` constants.
 * Removed the `PARSER_PASS_THROUGH` constant.
 
-# 2.0.3
+# 2.0.3 - 2/24/17
 * Added `Parser#isSafe` to verify that a node is safe from injection attacks.
 * Fixed an issue with specific anchor link `javascript:` attacks being permitted.
 
-# 2.0.2
+# 2.0.2 - 1/27/17
 * Fixed an issue with surrogate pair emojis rendering separately. For example, the MWGB family
   emoji should now render as a single emoji, instead of 4 individual.
 * Improved the efficiency of the emoji regex pattern.
 
-# 2.0.1
+# 2.0.1 - 12/13/16
 * Fixed an issue with the NPM package.
 
-# 2.0.0
+# 2.0.0 - 12/12/16
 * Removed the concept of global configuration. Composition should be used instead.
 * When an emoji is the only character parsed as the content, it will automatically be enlarged.
 * Added a `preserveHash` prop to the `Hashtag` component to not strip the hash.
@@ -140,13 +164,13 @@
 * Removed `Interweave#addFilter`, `addMatcher`, `clearFilters`, `clearMatchers`,
   `getFilters`, `getMatchers`, and `configure`.
 
-# 1.2.0
+# 1.2.0 - 12/15/16
 * Updated emoji to the latest EmojiOne dataset.
 
-# 1.1.1
+# 1.1.1 - 11/10/16
 * Fixed an issue with the published build.
 
-# 1.1.0
+# 1.1.0 - 11/10/16
 * Line breaks found in non-HTML strings will now be automatically converted to `<br/>` tags.
 * Added a `disableLineBreaks` prop to `Interweave` and `Markup`,
   which will disable the automatic line break conversion.
@@ -158,9 +182,9 @@
 * Removed the `className` prop from `Interweave` and `Markup`.
 * Fixed an issue where void elements (`br`, `hr`, etc) would not render correctly.
 
-# 1.0.1
+# 1.0.1 - 10/21/16
 * Fixed an issue in which empty parses would pass an empty child to
   `Element`, triggering a prop type failure.
 
-# 1.0.0
+# 1.0.0 - 10/20/16
 * Initial release!
