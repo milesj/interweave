@@ -28,24 +28,22 @@ export function getFlatEmojiData(): Emoji[] {
 }
 
 export function packageEmoji(emoji: Object): Emoji {
-  const { emoticon, shortcodes = [] } = emoji;
+  const { emoticon, shortcodes } = emoji;
 
   // Only support the default presentation
   const unicode = (emoji.text && emoji.type === TEXT) ? emoji.text : emoji.emoji;
   emoji.unicode = unicode;
 
   // Canonicalize the shortcodes for easy reuse
-  if (shortcodes.length > 0) {
-    emoji.canonical_shortcodes = shortcodes.map(code => `:${code}:`);
-    emoji.primary_shortcode = emoji.canonical_shortcodes[0]; // eslint-disable-line
+  emoji.canonical_shortcodes = shortcodes.map(code => `:${code}:`);
+  emoji.primary_shortcode = emoji.canonical_shortcodes[0]; // eslint-disable-line
 
-    // Support all shortcodes
-    UNICODE_TO_SHORTCODES[unicode] = emoji.canonical_shortcodes.map((shortcode) => {
-      SHORTCODE_TO_UNICODE[shortcode] = unicode;
+  // Support all shortcodes
+  UNICODE_TO_SHORTCODES[unicode] = emoji.canonical_shortcodes.map((shortcode) => {
+    SHORTCODE_TO_UNICODE[shortcode] = unicode;
 
-      return shortcode;
-    });
-  }
+    return shortcode;
+  });
 
   // Support all emoticons
   if (emoticon) {

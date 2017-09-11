@@ -14,7 +14,7 @@ import { getEmojiData, parseEmojiData } from '../data/emoji';
 
 import type { Emoji } from 'emojibase'; // eslint-disable-line
 
-export type EmojiLoaderProps = {
+type EmojiLoaderProps = {
   compact: boolean,
   emojis: Emoji[],
   locale: string,
@@ -29,6 +29,13 @@ type EmojiLoaderState = {
 let loaded = false;
 let promise = null;
 
+export function resetLoaded() {
+  if (__DEV__) {
+    loaded = false;
+    promise = null;
+  }
+}
+
 export default function withEmojiData(
   Component: React$ComponentType<*>,
 ): React$ComponentType<EmojiLoaderProps> {
@@ -36,7 +43,7 @@ export default function withEmojiData(
     static propTypes = {
       compact: PropTypes.bool,
       emojis: PropTypes.oneOfType([
-        PropTypes.string,
+        PropTypes.string, // JSON
         PropTypes.arrayOf(PropTypes.object),
       ]),
       locale: PropTypes.oneOf(SUPPORTED_LOCALES),
