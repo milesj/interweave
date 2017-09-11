@@ -1,6 +1,6 @@
 {
   "name": "interweave",
-  "version": "6.1.0",
+  "version": "7.0.0-rc.1",
   "description": "React library to safely render HTML, filter attributes, autowrap text with matchers, render emoji characters, and much more.",
   "keywords": [
     "interweave",
