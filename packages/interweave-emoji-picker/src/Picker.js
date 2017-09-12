@@ -8,7 +8,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import EmojiData from 'interweave/lib/data/EmojiData';
 import withEmojiData from 'interweave/lib/loaders/withEmojiData';
-import { EmojiShape, EmojiPathShape } from 'interweave/lib/shapes';
+import { EmojiShape, EmojiPathShape, EmojiContextShape } from 'interweave/lib/shapes';
 import EmojiList from './EmojiList';
 import SkinTonePalette from './SkinTonePalette';
 import GroupTabs from './GroupTabs';
@@ -76,7 +76,11 @@ type PickerState = {
 class Picker extends React.Component<PickerProps, PickerState> {
   static childContextTypes = {
     classNames: PropTypes.objectOf(PropTypes.string),
-    messages: PropTypes.objectOf(PropTypes.string),
+    messages: PropTypes.objectOf(PropTypes.node),
+  };
+
+  static contextTypes = {
+    emoji: EmojiContextShape.isRequired,
   };
 
   static propTypes = {
@@ -108,14 +112,14 @@ class Picker extends React.Component<PickerProps, PickerState> {
     disableSkinTones: PropTypes.bool,
     displayOrder: PropTypes.arrayOf(PropTypes.string),
     emojiPath: EmojiPathShape.isRequired,
-    emojis: EmojiShape.isRequired,
+    emojis: PropTypes.arrayOf(EmojiShape).isRequired,
     exclude: PropTypes.arrayOf(PropTypes.string),
     hideEmoticon: PropTypes.bool,
     hideShortcodes: PropTypes.bool,
     icons: PropTypes.objectOf(PropTypes.node),
     loadBuffer: PropTypes.number,
     maxRecentlyUsed: PropTypes.number,
-    messages: PropTypes.objectOf(PropTypes.string),
+    messages: PropTypes.objectOf(PropTypes.node),
     onHoverEmoji: PropTypes.func,
     onSearch: PropTypes.func,
     onSelectEmoji: PropTypes.func,
@@ -413,6 +417,7 @@ class Picker extends React.Component<PickerProps, PickerState> {
     const components = {
       preview: disablePreview ? null : (
         <PreviewBar
+          key="preview"
           emoji={activeEmoji}
           emojiPath={emojiPath}
           hideEmoticon={hideEmoticon}
@@ -421,6 +426,7 @@ class Picker extends React.Component<PickerProps, PickerState> {
       ),
       emojis: (
         <EmojiList
+          key="emojis"
           activeGroup={activeGroup}
           activeSkinTone={activeSkinTone}
           emojiPath={emojiPath}
@@ -439,12 +445,14 @@ class Picker extends React.Component<PickerProps, PickerState> {
       ),
       skins: disableSkinTones ? null : (
         <SkinTonePalette
+          key="skins"
           activeSkinTone={activeSkinTone}
           onSelect={this.handleSelectSkinTone}
         />
       ),
       groups: (
         <GroupTabs
+          key="groups"
           activeGroup={activeGroup}
           emojiPath={emojiPath}
           hasRecentlyUsed={this.hasRecentlyUsed()}
@@ -454,6 +462,7 @@ class Picker extends React.Component<PickerProps, PickerState> {
       ),
       search: disableSearch ? null : (
         <SearchBar
+          key="search"
           autoFocus={autoFocus}
           query={searchQuery}
           onChange={this.handleSearch}
