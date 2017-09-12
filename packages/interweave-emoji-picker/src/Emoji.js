@@ -43,29 +43,22 @@ export default class EmojiButton extends React.PureComponent<EmojiProps, EmojiSt
   };
 
   /**
-   * Triggered when the emoji is hovered.
+   * Triggered when the emoji is being hovered.
    */
-  handleEnter = (e: SyntheticMouseEvent<HTMLButtonElement>) => {
+  handleHover = (e: SyntheticMouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
 
-    this.setState({
-      active: true,
-    });
-
-    this.props.onEnter(this.props.emoji);
-  };
-
-  /**
-   * Triggered when the emoji is no longer hovered.
-   */
-  handleLeave = (e: SyntheticMouseEvent<HTMLButtonElement>) => {
-    e.stopPropagation();
+    const prevActive = this.state.active;
 
     this.setState({
-      active: false,
+      active: !prevActive,
     });
 
-    this.props.onLeave(this.props.emoji);
+    if (prevActive) {
+      this.props.onLeave(this.props.emoji);
+    } else {
+      this.props.onEnter(this.props.emoji);
+    }
   };
 
   /**
@@ -73,9 +66,6 @@ export default class EmojiButton extends React.PureComponent<EmojiProps, EmojiSt
    */
   handleSelect = (e: SyntheticMouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
-
-    // Defocus so enter doesnt continually select
-    e.currentTarget.blur();
 
     this.props.onSelect(this.props.emoji);
   };
@@ -96,8 +86,8 @@ export default class EmojiButton extends React.PureComponent<EmojiProps, EmojiSt
         className={className.join(' ')}
         type="button"
         onClick={this.handleSelect}
-        onMouseEnter={this.handleEnter}
-        onMouseLeave={this.handleLeave}
+        onMouseEnter={this.handleHover}
+        onMouseLeave={this.handleHover}
       >
         {showImage ? (
           <EmojiCharacter

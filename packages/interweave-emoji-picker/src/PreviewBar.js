@@ -18,7 +18,7 @@ type PreviewBarProps = {
   hideShortcodes: boolean,
 };
 
-const TITLE_REGEX: RegExp = /(^|\n|\s|-)[a-z]/g;
+const TITLE_REGEX: RegExp = /(^|:|\.)\s?[a-z]/g;
 
 export default class PreviewBar extends React.PureComponent<PreviewBarProps> {
   static contextTypes = {
@@ -38,10 +38,23 @@ export default class PreviewBar extends React.PureComponent<PreviewBarProps> {
   };
 
   /**
-   * Format the title by capitalizing each word.
+   * Format the title by capitalizing to sentence case.
    */
-  formatTitle(title: string): string {
-    return title.toLowerCase().replace(TITLE_REGEX, token => token.toUpperCase());
+  formatTitle(): string {
+    const { emoji } = this.props;
+
+    if (!emoji) {
+      return '';
+    }
+
+    const { annotation, primary_shortcode: shortcode } = emoji;
+
+    // Flags and country names are cased correctly
+    if (shortcode.indexOf('flag_') >= 0) {
+      return annotation;
+    }
+
+    return annotation.replace(TITLE_REGEX, token => token.toUpperCase());
   }
 
   render() {
@@ -83,7 +96,7 @@ export default class PreviewBar extends React.PureComponent<PreviewBarProps> {
         <div className={classNames.previewContent}>
           {title && (
             <div className={classNames.previewTitle}>
-              {this.formatTitle(title)}
+              {this.formatTitle()}
             </div>
           )}
 
