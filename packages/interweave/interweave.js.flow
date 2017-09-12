@@ -9,6 +9,7 @@ declare module 'interweave' {
     ...BaseEmoji,
     annotation: string,
     canonical_shortcodes: string[],
+    group: number,
     hexcode: string,
     primary_shortcode: string,
     unicode: string,

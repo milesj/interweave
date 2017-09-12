@@ -58,19 +58,33 @@ function App() {
     <div className="interweave__examples">
       <h1>Picker</h1>
 
-      <EmojiPicker
-        autoFocus
-        defaultGroup="foodDrink"
-        defaultSkinTone="light"
-        emojiPath={emojiPath}
-        exclude={[
-          '1F4A9', // Poop
-        ]}
-        onSearch={(query) => { console.log('search', query); }}
-        onSelectEmoji={(emoji) => { console.log('select emoji', emoji); }}
-        onSelectGroup={(group) => { console.log('select group', group); }}
-        onSelectSkinTone={(skinTone) => { console.log('select skin', skinTone); }}
-      />
+      <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+        <EmojiPicker
+          autoFocus
+          defaultGroup="foodDrink"
+          defaultSkinTone="light"
+          emojiPath={emojiPath}
+          exclude={[
+            '1F4A9', // Poop
+          ]}
+          onSearch={(query) => { console.log('search', query); }}
+          onSelectEmoji={(emoji) => { console.log('select emoji', emoji); }}
+          onSelectGroup={(group) => { console.log('select group', group); }}
+          onSelectSkinTone={(skinTone) => { console.log('select skin', skinTone); }}
+        />
+
+        <EmojiPicker
+          locale="ja"
+          defaultGroup="travelPlaces"
+          emojiPath={emojiPath}
+        />
+
+        <EmojiPicker
+          locale="it"
+          defaultGroup="flags"
+          emojiPath={emojiPath}
+        />
+      </div>
 
       <h1>Copy</h1>
 
