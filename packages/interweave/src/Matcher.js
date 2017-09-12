@@ -104,14 +104,14 @@ export default class Matcher<T: Object> {
   /**
    * Callback triggered before parsing.
    */
-  onBeforeParse(content: string, props: Object): string {
+  onBeforeParse(content: string, props: Object, context: Object): string {
     return content;
   }
 
   /**
    * Callback triggered after parsing.
    */
-  onAfterParse(content: React$Node[], props: Object): React$Node[] {
+  onAfterParse(content: React$Node[], props: Object, context: Object): React$Node[] {
     return content;
   }
 }

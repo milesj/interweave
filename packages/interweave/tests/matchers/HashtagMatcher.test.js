@@ -1,7 +1,7 @@
 import Parser from '../../src/Parser';
 import HashtagMatcher from '../../src/matchers/HashtagMatcher';
 import { HASHTAG_PATTERN } from '../../src/constants';
-import { TOKEN_LOCATIONS, createExpectedTokenLocations, parentConfig } from '../mocks';
+import { TOKEN_LOCATIONS, createExpectedToken, parentConfig } from '../mocks';
 
 const VALID_HASHTAGS = [
   '#alloneword',
@@ -58,8 +58,6 @@ describe('matchers/HashtagMatcher', () => {
     }));
 
     VALID_HASHTAGS.forEach((hashtag) => {
-      const expected = createExpectedTokenLocations(hashtag, createHashtag);
-
       TOKEN_LOCATIONS.forEach((location, i) => {
         it(`for: ${hashtag} - ${location}`, () => {
           parser.keyIndex = -1; // Reset for easier testing
@@ -68,9 +66,9 @@ describe('matchers/HashtagMatcher', () => {
           const actual = parser.applyMatchers(tokenString, parentConfig);
 
           if (i === 0) {
-            expect(actual).toBe(expected[0]);
+            expect(actual).toBe(createExpectedToken(hashtag, createHashtag, 0));
           } else {
-            expect(actual).toEqual(expected[i]);
+            expect(actual).toEqual(createExpectedToken(hashtag, createHashtag, i));
           }
         });
       });

@@ -1,7 +1,7 @@
 import Parser from '../../src/Parser';
 import IpMatcher from '../../src/matchers/IpMatcher';
 import { IP_PATTERN } from '../../src/constants';
-import { TOKEN_LOCATIONS, createExpectedTokenLocations, parentConfig } from '../mocks';
+import { TOKEN_LOCATIONS, createExpectedToken, parentConfig } from '../mocks';
 
 const VALID_IPS = [
   { ip: '0.0.0.0', scheme: null, host: '0.0.0.0' },
@@ -87,8 +87,6 @@ describe('matchers/IpMatcher', () => {
     };
 
     VALID_IPS.forEach((ipParams) => {
-      const expected = createExpectedTokenLocations(ipParams, createIp);
-
       TOKEN_LOCATIONS.forEach((location, i) => {
         it(`for: ${ipParams.ip} - ${location}`, () => {
           parser.keyIndex = -1; // Reset for easier testing
@@ -97,9 +95,9 @@ describe('matchers/IpMatcher', () => {
           const actual = parser.applyMatchers(tokenString, parentConfig);
 
           if (i === 0) {
-            expect(actual).toBe(expected[0]);
+            expect(actual).toBe(createExpectedToken(ipParams, createIp, 0));
           } else {
-            expect(actual).toEqual(expected[i]);
+            expect(actual).toEqual(createExpectedToken(ipParams, createIp, i));
           }
         });
       });

@@ -5,21 +5,14 @@ import SHORTCODE_REGEX from 'emojibase-regex/shortcode';
 import Parser from '../../src/Parser';
 import Emoji from '../../src/components/Emoji';
 import EmojiMatcher from '../../src/matchers/EmojiMatcher';
-import {
-  EMOJIS,
-  EMOTICON_TO_UNICODE,
-  SHORTCODE_TO_UNICODE,
-} from '../../src/data/emoji';
+import EmojiData from '../../src/data/EmojiData';
 import {
   VALID_EMOJIS,
   TOKEN_LOCATIONS,
-  createExpectedTokenLocations,
+  createExpectedToken,
   parentConfig,
 } from '../mocks';
 
-const VALID_UNICODE = Object.keys(EMOJIS);
-const VALID_SHORTCODE = Object.keys(SHORTCODE_TO_UNICODE);
-const VALID_EMOTICON = Object.keys(EMOTICON_TO_UNICODE);
 const INVALID_UNICODE = [
   '\u02A9',
   '\u03C6',
@@ -36,9 +29,16 @@ const INVALID_EMOTICON = [
   '@=',
   '+[',
 ];
-const MAN_EMOJI = SHORTCODE_TO_UNICODE[':man:'];
+const MAN_EMOJI = '👨';
 
 describe('matchers/EmojiMatcher', () => {
+  let EMOJIS = {};
+  let EMOTICON_TO_UNICODE = {};
+  let SHORTCODE_TO_UNICODE = {};
+  let VALID_UNICODE = [];
+  let VALID_SHORTCODE = [];
+  let VALID_EMOTICON = [];
+
   const matcher = new EmojiMatcher('emoji', {
     convertEmoticon: true,
     convertShortcode: true,
@@ -48,6 +48,22 @@ describe('matchers/EmojiMatcher', () => {
   const pattern = new RegExp(`^${EMOJI_REGEX.source}$`);
   const emoPattern = new RegExp(`^${EMOTICON_REGEX.source}$`);
   const shortPattern = new RegExp(`^${SHORTCODE_REGEX.source}$`);
+
+  beforeEach(() => {
+    const data = EmojiData.getInstance('en');
+
+    ({
+      EMOJIS,
+      EMOTICON_TO_UNICODE,
+      SHORTCODE_TO_UNICODE,
+    } = data);
+
+    VALID_UNICODE = Object.keys(EMOJIS);
+    VALID_SHORTCODE = Object.keys(SHORTCODE_TO_UNICODE);
+    VALID_EMOTICON = Object.keys(EMOTICON_TO_UNICODE);
+
+    matcher.data = data;
+  });
 
   describe('does match valid emoji', () => {
     VALID_UNICODE.forEach((unicode) => {
@@ -128,9 +144,6 @@ describe('matchers/EmojiMatcher', () => {
     });
 
     VALID_EMOJIS.forEach(([, unicode, shortcode]) => {
-      const expectedUnicode = createExpectedTokenLocations(unicode, createUnicode);
-      const expectedShort = createExpectedTokenLocations(shortcode, createShort);
-
       TOKEN_LOCATIONS.forEach((location, i) => {
         it(`for: ${unicode} - ${location}`, () => {
           parser.keyIndex = -1; // Reset for easier testing
@@ -139,9 +152,9 @@ describe('matchers/EmojiMatcher', () => {
           const actual = parser.applyMatchers(tokenString, parentConfig);
 
           if (i === 0) {
-            expect(actual).toBe(expectedUnicode[0]);
+            expect(actual).toBe(createExpectedToken(unicode, createUnicode, 0));
           } else {
-            expect(actual).toEqual(expectedUnicode[i]);
+            expect(actual).toEqual(createExpectedToken(unicode, createUnicode, i));
           }
         });
 
@@ -152,9 +165,9 @@ describe('matchers/EmojiMatcher', () => {
           const actual = parser.applyMatchers(tokenString, parentConfig);
 
           if (i === 0) {
-            expect(actual).toBe(expectedShort[0]);
+            expect(actual).toBe(createExpectedToken(shortcode, createShort, 0));
           } else {
-            expect(actual).toEqual(expectedShort[i]);
+            expect(actual).toEqual(createExpectedToken(shortcode, createShort, i));
           }
         });
       });

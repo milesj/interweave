@@ -1,12 +1,12 @@
 /* eslint-disable no-undef */
 
 import { loadEmojiData } from 'emojibase-test-utils';
-import { parseEmojiData } from '../packages/interweave/src/data/emoji';
+import EmojiData from '../packages/interweave/src/data/EmojiData';
 
 const emojis = loadEmojiData();
 
 // Bootstrap our emoji data using the official en dataset
-parseEmojiData(emojis);
+EmojiData.getInstance('en').parseEmojiData(emojis);
 
 // Mock our fetch and return our bootstrapped data
 global.fetch = () => Promise.resolve({

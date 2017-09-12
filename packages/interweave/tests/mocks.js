@@ -24,32 +24,26 @@ export const TOKEN_LOCATIONS = [
   // 'tokens without {token}{token}{token} spaces',
 ];
 
-export function createExpectedTokenLocations(value, factory, flatten = false) {
-  let expected = [
-    'no tokens',
-    [factory(value, 0)],
-    [' ', factory(value, 0), ' '],
-    [factory(value, 0), ' pattern at beginning'],
-    ['pattern at end ', factory(value, 0)],
-    ['pattern in ', factory(value, 0), ' middle'],
-    [factory(value, 0), ' pattern at beginning and end ', factory(value, 1)],
-    [factory(value, 0), ' pattern on ', factory(value, 1), ' all sides ', factory(value, 2)],
-    ['pattern ', factory(value, 0), ' used ', factory(value, 1), ' multiple ', factory(value, 2), ' times'],
-    ['tokens next ', factory(value, 0), ' ', factory(value, 1), ' ', factory(value, 2), ' to each other'],
-    ['token next to ', factory(value, 0), ', a comma'],
-    ['token by a period ', factory(value, 0), '.'],
-    ['token after a colon: ', factory(value, 0)],
-    ['token after a\n', factory(value, 0), ' new line'],
-    ['token before a ', factory(value, 0), '\n new line'],
-    ['token surrounded by (', factory(value, 0), ') parenthesis'],
-    // ['tokens without ', factory(value, 0), factory(value, 1), factory(value, 2), ' spaces'],
-  ];
-
-  if (flatten) {
-    expected = expected.map(v => (Array.isArray(v) ? v.join('') : v));
+export function createExpectedToken(value, factory, index, join = false) {
+  if (index === 0) {
+    return TOKEN_LOCATIONS[0];
   }
 
-  return expected;
+  let count = -1;
+  const tokens = TOKEN_LOCATIONS[index]
+    .split(/(\{token\})/)
+    .map((row) => {
+      if (row === '{token}') {
+        count += 1;
+
+        return factory(value, count);
+      }
+
+      return row;
+    })
+    .filter(Boolean);
+
+  return join ? tokens.join('') : tokens;
 }
 
 export const VALID_EMOJIS = [

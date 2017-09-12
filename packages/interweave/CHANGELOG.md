@@ -9,15 +9,19 @@
   a few improvements were made to the HOC.
   * Added a `compact` prop, which will load `compact.json` instead of `data.json` from the CDN.
   * Added an `emojis` prop, which can be used to manually load emoji data without fetching from the CDN.
+  * Passes an `emoji` context shape that contains `version`, `locale`, and `compact`.
   * Updated the wrapped component to receive an `emojis` prop, which is the list of emojis.
 
 #### 🚀 New
 * Added `Emoji` and `EmojiPath` types to the Flowtype definitions.
-* Added `getEmojiData()` and `getFlatEmojiData()` functions to `data/emoji`.
+* Added new `EmojiData` class to manage emoji data across locales and versions.
+* Added new `EmojiShape`, `EmojiPathShape`, and `EmojiContextShape` to the `shapes` file.
 * Updated parsed and packaged emoji data to include additional properties.
   * Added `unicode`, which is either the emoji or text presentation Unicode character.
   * Added `canonical_shortcodes`, which are an array of shortcodes including surrounding colons.
   * Added `primary_shortcode`, which is the primary and most common shortcode, with colons.
+* Updated `Interweave` to optionally inherit the context defined by `withEmojiData`.
+* Context is passed as the 3rd argument to before and after `Matcher` callbacks.
 
 #### 🛠 Internal
 * Split Interweave into a multi-package repository using Yarn workspaces and Lerna.

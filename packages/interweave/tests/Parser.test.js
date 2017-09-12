@@ -16,7 +16,7 @@ import {
   HrefFilter,
   TOKEN_LOCATIONS,
   MOCK_MARKUP,
-  createExpectedTokenLocations,
+  createExpectedToken,
   parentConfig,
 } from './mocks';
 
@@ -74,8 +74,6 @@ describe('Parser', () => {
     };
 
     describe('handles matchers correctly', () => {
-      const expected = createExpectedTokenLocations('foo', createElement);
-
       TOKEN_LOCATIONS.forEach((location, i) => {
         it(`for: ${location}`, () => {
           instance.keyIndex = -1; // Reset for easier testing
@@ -84,17 +82,15 @@ describe('Parser', () => {
           const actual = instance.applyMatchers(tokenString, parentConfig);
 
           if (i === 0) {
-            expect(actual).toBe(expected[0]);
+            expect(actual).toBe(createExpectedToken('foo', createElement, 0));
           } else {
-            expect(actual).toEqual(expected[i]);
+            expect(actual).toEqual(createExpectedToken('foo', createElement, i));
           }
         });
       });
     });
 
     describe('handles multiple matchers correctly', () => {
-      const expected = createExpectedTokenLocations('', createMultiElement);
-
       TOKEN_LOCATIONS.forEach((location, i) => {
         it(`for: ${location}`, () => {
           instance.keyIndex = -1; // Reset for easier testing
@@ -106,23 +102,21 @@ describe('Parser', () => {
           const actual = instance.applyMatchers(tokenString, parentConfig);
 
           if (i === 0) {
-            expect(actual).toBe(expected[0]);
+            expect(actual).toBe(createExpectedToken('', createMultiElement, 0));
           } else {
-            expect(actual).toEqual(expected[i]);
+            expect(actual).toEqual(createExpectedToken('', createMultiElement, i));
           }
         });
       });
     });
 
     describe('handles no matchers correctly', () => {
-      const expected = createExpectedTokenLocations('[qux]', value => value, true);
-
       TOKEN_LOCATIONS.forEach((location, i) => {
         it(`for: ${location}`, () => {
           const tokenString = location.replace(/\{token\}/g, '[qux]');
           const actual = instance.applyMatchers(tokenString, parentConfig);
 
-          expect(actual).toBe(expected[i]);
+          expect(actual).toBe(createExpectedToken('[qux]', value => value, i, true));
         });
       });
     });

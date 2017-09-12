@@ -1,7 +1,7 @@
 import Parser from '../../src/Parser';
 import EmailMatcher from '../../src/matchers/EmailMatcher';
 import { EMAIL_PATTERN } from '../../src/constants';
-import { TOKEN_LOCATIONS, createExpectedTokenLocations, parentConfig } from '../mocks';
+import { TOKEN_LOCATIONS, createExpectedToken, parentConfig } from '../mocks';
 
 const VALID_EMAILS = [
   'user@domain.com',
@@ -101,8 +101,6 @@ describe('matchers/EmailMatcher', () => {
     };
 
     VALID_EMAILS.forEach((email) => {
-      const expected = createExpectedTokenLocations(email, createEmail);
-
       TOKEN_LOCATIONS.forEach((location, i) => {
         it(`for: ${email} - ${location}`, () => {
           parser.keyIndex = -1; // Reset for easier testing
@@ -111,9 +109,9 @@ describe('matchers/EmailMatcher', () => {
           const actual = parser.applyMatchers(tokenString, parentConfig);
 
           if (i === 0) {
-            expect(actual).toBe(expected[0]);
+            expect(actual).toBe(createExpectedToken(email, createEmail, 0));
           } else {
-            expect(actual).toEqual(expected[i]);
+            expect(actual).toEqual(createExpectedToken(email, createEmail, i));
           }
         });
       });

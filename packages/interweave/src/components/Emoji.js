@@ -9,12 +9,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { fromHexcodeToCodepoint } from 'emojibase';
-import {
-  EMOJIS,
-  EMOTICON_TO_UNICODE,
-  SHORTCODE_TO_UNICODE,
-  UNICODE_TO_SHORTCODES,
-} from '../data/emoji';
+import EmojiData from '../data/EmojiData';
+import { EmojiContextShape } from '../shapes';
 
 type EmojiProps = {
   emojiLargeSize: number,
@@ -31,6 +27,10 @@ type EmojiProps = {
 const LARGE_MULTIPLIER: number = 3;
 
 export default class Emoji extends React.PureComponent<EmojiProps> {
+  static contextTypes = {
+    emoji: EmojiContextShape.isRequired,
+  };
+
   static propTypes = {
     emojiLargeSize: PropTypes.number,
     emojiPath: PropTypes.oneOfType([
@@ -55,6 +55,7 @@ export default class Emoji extends React.PureComponent<EmojiProps> {
   };
 
   render() {
+    const data = EmojiData.getInstance(this.context.emoji.locale);
     const {
       emojiLargeSize,
       emojiPath,
@@ -75,21 +76,21 @@ export default class Emoji extends React.PureComponent<EmojiProps> {
 
     // Retrieve applicable unicode character
     if (!unicode && shortcode) {
-      unicode = SHORTCODE_TO_UNICODE[shortcode];
+      unicode = data.SHORTCODE_TO_UNICODE[shortcode];
     }
 
     if (!unicode && emoticon) {
-      unicode = EMOTICON_TO_UNICODE[emoticon];
+      unicode = data.EMOTICON_TO_UNICODE[emoticon];
     }
 
     // Return the invalid value instead of erroring
-    if (!unicode || !EMOJIS[unicode]) {
+    if (!unicode || !data.EMOJIS[unicode]) {
       return (
         <span>{unicode || emoticon || shortcode}</span>
       );
     }
 
-    const emoji = EMOJIS[unicode];
+    const emoji = data.EMOJIS[unicode];
     const className = ['interweave__emoji'];
     const styles = {};
 
@@ -134,7 +135,7 @@ export default class Emoji extends React.PureComponent<EmojiProps> {
         data-emoticon={emoji.emoticon || ''}
         data-unicode={unicode}
         data-hexcode={emoji.hexcode}
-        data-shortcodes={UNICODE_TO_SHORTCODES[unicode].join(', ')}
+        data-shortcodes={data.UNICODE_TO_SHORTCODES[unicode].join(', ')}
         data-codepoint={fromHexcodeToCodepoint(emoji.hexcode).join('-')}
       />
     );

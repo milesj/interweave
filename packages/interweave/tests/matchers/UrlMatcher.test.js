@@ -1,7 +1,7 @@
 import Parser from '../../src/Parser';
 import UrlMatcher from '../../src/matchers/UrlMatcher';
 import { URL_PATTERN } from '../../src/constants';
-import { TOKEN_LOCATIONS, createExpectedTokenLocations, parentConfig } from '../mocks';
+import { TOKEN_LOCATIONS, createExpectedToken, parentConfig } from '../mocks';
 
 // Borrowed from: https://github.com/Sporkmonger/Addressable/blob/master/spec/addressable/uri_spec.rb
 const VALID_URLS = [
@@ -155,8 +155,6 @@ describe('matchers/UrlMatcher', () => {
     };
 
     VALID_URLS.forEach((urlParams) => {
-      const expected = createExpectedTokenLocations(urlParams, createUrl);
-
       TOKEN_LOCATIONS.forEach((location, i) => {
         it(`for: ${urlParams.url} - ${location}`, () => {
           parser.keyIndex = -1; // Reset for easier testing
@@ -165,9 +163,9 @@ describe('matchers/UrlMatcher', () => {
           const actual = parser.applyMatchers(tokenString, parentConfig);
 
           if (i === 0) {
-            expect(actual).toBe(expected[0]);
+            expect(actual).toBe(createExpectedToken(urlParams, createUrl, 0));
           } else {
-            expect(actual).toEqual(expected[i]);
+            expect(actual).toEqual(createExpectedToken(urlParams, createUrl, i));
           }
         });
       });

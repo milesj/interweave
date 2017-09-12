@@ -10,11 +10,7 @@ import EMOTICON_REGEX from 'emojibase-regex/emoticon';
 import SHORTCODE_REGEX from 'emojibase-regex/shortcode';
 import Matcher from '../Matcher';
 import Emoji from '../components/Emoji';
-import {
-  EMOJIS,
-  EMOTICON_TO_UNICODE,
-  SHORTCODE_TO_UNICODE,
-} from '../data/emoji';
+import EmojiData from '../data/EmojiData';
 
 import type {
   MatchResponse,
@@ -33,6 +29,7 @@ type EmojiOptions = {
 const EMOTICON_BOUNDARY_REGEX: RegExp = new RegExp(`(^|\\\b|\\\s)(${EMOTICON_REGEX.source})(?=\\\s|\\\b|$)`);
 
 export default class EmojiMatcher extends Matcher<EmojiOptions> {
+  data: EmojiData;
   options: EmojiOptions;
 
   constructor(name: string, options?: Object = {}, factory?: ?MatcherFactory = null) {
@@ -93,8 +90,8 @@ export default class EmojiMatcher extends Matcher<EmojiOptions> {
       emoticon: matches[0].trim(),
     }));
 
-    if (response && response.emoticon && EMOTICON_TO_UNICODE[response.emoticon]) {
-      response.unicode = EMOTICON_TO_UNICODE[response.emoticon];
+    if (response && response.emoticon && this.data.EMOTICON_TO_UNICODE[response.emoticon]) {
+      response.unicode = this.data.EMOTICON_TO_UNICODE[response.emoticon];
       response.match = response.emoticon; // Remove padding
 
       return response;
@@ -108,8 +105,8 @@ export default class EmojiMatcher extends Matcher<EmojiOptions> {
       shortcode: matches[0].toLowerCase(),
     }));
 
-    if (response && response.shortcode && SHORTCODE_TO_UNICODE[response.shortcode]) {
-      response.unicode = SHORTCODE_TO_UNICODE[response.shortcode];
+    if (response && response.shortcode && this.data.SHORTCODE_TO_UNICODE[response.shortcode]) {
+      response.unicode = this.data.SHORTCODE_TO_UNICODE[response.shortcode];
 
       return response;
     }
@@ -122,11 +119,24 @@ export default class EmojiMatcher extends Matcher<EmojiOptions> {
       unicode: matches[0],
     }));
 
-    if (response && response.unicode && EMOJIS[response.unicode]) {
+    if (response && response.unicode && this.data.EMOJIS[response.unicode]) {
       return response;
     }
 
     return null;
+  }
+
+  /**
+   * Load emoji data before matching.
+   */
+  onBeforeParse(content: string, props: Object, context: Object): string {
+    if (context.emoji) {
+      this.data = EmojiData.getInstance(context.emoji.locale);
+    } else if (__DEV__) {
+      throw new Error('Missing emoji data. Have you loaded using `withEmojiData`?');
+    }
+
+    return content;
   }
 
   /**
