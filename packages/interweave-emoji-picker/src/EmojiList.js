@@ -7,6 +7,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import debounce from 'lodash.debounce';
+import { EmojiShape, EmojiPathShape } from 'interweave/lib/shapes';
 import EmojiButton from './Emoji';
 import {
   GROUPS,
@@ -16,7 +17,6 @@ import {
   SKIN_NONE,
   SCROLL_DEBOUNCE,
 } from './constants';
-import { EmojiShape, EmojiPathShape } from './shapes';
 
 import type { Emoji, EmojiPath } from 'interweave'; // eslint-disable-line
 

@@ -6,8 +6,8 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
+import { EmojiPathShape } from 'interweave/lib/shapes';
 import Group from './Group';
-import { EmojiPathShape } from './shapes';
 import { GROUPS, GROUP_RECENTLY_USED } from './constants';
 
 import type { EmojiPath } from 'interweave'; // eslint-disable-line

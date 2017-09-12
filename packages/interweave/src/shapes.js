@@ -12,3 +12,27 @@ export const EmojiContextShape = PropTypes.shape({
   locale: PropTypes.oneOf(SUPPORTED_LOCALES).isRequired,
   version: PropTypes.string.isRequired,
 });
+
+export const EmojiShape = PropTypes.shape({
+  annotation: PropTypes.string,
+  canonical_shortcodes: PropTypes.arrayOf(PropTypes.string),
+  emoji: PropTypes.string,
+  emoticon: PropTypes.string,
+  gender: PropTypes.number,
+  group: PropTypes.number,
+  hexcode: PropTypes.string,
+  name: PropTypes.string,
+  order: PropTypes.number,
+  primary_shortcode: PropTypes.string,
+  shortcodes: PropTypes.arrayOf(PropTypes.string),
+  subgroup: PropTypes.number,
+  tags: PropTypes.arrayOf(PropTypes.string),
+  text: PropTypes.string,
+  tone: PropTypes.number,
+  unicode: PropTypes.string,
+});
+
+export const EmojiPathShape = PropTypes.oneOfType([
+  PropTypes.string,
+  PropTypes.func,
+]);

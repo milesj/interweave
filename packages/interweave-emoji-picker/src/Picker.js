@@ -6,14 +6,14 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import { EMOJIS } from 'interweave/lib/data/emoji';
+import EmojiData from 'interweave/lib/data/EmojiData';
 import withEmojiData from 'interweave/lib/loaders/withEmojiData';
+import { EmojiShape, EmojiPathShape } from 'interweave/lib/shapes';
 import EmojiList from './EmojiList';
 import SkinTonePalette from './SkinTonePalette';
 import GroupTabs from './GroupTabs';
 import PreviewBar from './PreviewBar';
 import SearchBar from './SearchBar';
-import { EmojiShape, EmojiPathShape } from './shapes';
 import {
   GROUP_RECENTLY_USED,
   GROUP_SMILEYS_PEOPLE,
@@ -282,8 +282,10 @@ class Picker extends React.Component<PickerProps, PickerState> {
    * so we need to rebuild the recent list with the full emoji objects.
    */
   generateRecentEmojis() {
+    const data = EmojiData.getInstance(this.context.emoji.locale);
+
     return this.state.recentEmojis
-      .map(unicode => EMOJIS[unicode])
+      .map(unicode => data.EMOJIS[unicode])
       .filter(Boolean);
   }
 
