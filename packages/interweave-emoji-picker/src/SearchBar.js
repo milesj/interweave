@@ -81,6 +81,17 @@ export default class SearchBar extends React.PureComponent<SearchBarProps, Searc
   };
 
   /**
+   * Triggered when keyboard changes occur.
+   */
+  handleKeyUp = (e: SyntheticKeyboardEvent<HTMLInputElement>) => {
+    // Reset search if we hit `esc`
+    if (e.key === 'Escape') {
+      clearTimeout(this.timeout);
+      this.props.onChange('');
+    }
+  }
+
+  /**
    * Set input field as reference.
    */
   handleRef = (ref: ?HTMLInputElement) => {
@@ -100,6 +111,7 @@ export default class SearchBar extends React.PureComponent<SearchBarProps, Searc
           type="search"
           value={this.state.query}
           onChange={this.handleChange}
+          onKeyUp={this.handleKeyUp}
         />
       </div>
     );

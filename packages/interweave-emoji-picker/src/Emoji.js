@@ -12,6 +12,7 @@ import { EmojiShape, EmojiPathShape } from 'interweave/lib/shapes';
 import type { Emoji, EmojiPath } from 'interweave'; // eslint-disable-line
 
 type EmojiProps = {
+  active: boolean,
   emoji: Emoji,
   emojiPath: EmojiPath,
   onEnter: (emoji: Emoji) => void,
@@ -30,6 +31,7 @@ export default class EmojiButton extends React.PureComponent<EmojiProps, EmojiSt
   };
 
   static propTypes = {
+    active: PropTypes.bool.isRequired,
     emoji: EmojiShape.isRequired,
     emojiPath: EmojiPathShape.isRequired,
     showImage: PropTypes.bool.isRequired,
@@ -38,27 +40,46 @@ export default class EmojiButton extends React.PureComponent<EmojiProps, EmojiSt
     onSelect: PropTypes.func.isRequired,
   };
 
-  state = {
-    active: false,
+  constructor({ active }: EmojiProps) {
+    super();
+
+    this.state = {
+      active,
+    };
+  }
+
+  componentWillReceiveProps({ active }: EmojiProps) {
+    if (active !== this.props.active) {
+      this.setState({
+        active,
+      });
+    }
+  }
+
+  /**
+   * Triggered when the emoji is hovered.
+   */
+  handleEnter = (e: SyntheticMouseEvent<HTMLButtonElement>) => {
+    e.stopPropagation();
+
+    this.setState({
+      active: true,
+    });
+
+    this.props.onEnter(this.props.emoji);
   };
 
   /**
-   * Triggered when the emoji is being hovered.
+   * Triggered when the emoji is no longer hovered.
    */
-  handleHover = (e: SyntheticMouseEvent<HTMLButtonElement>) => {
+  handleLeave = (e: SyntheticMouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
 
-    const prevActive = this.state.active;
-
     this.setState({
-      active: !prevActive,
+      active: false,
     });
 
-    if (prevActive) {
-      this.props.onLeave(this.props.emoji);
-    } else {
-      this.props.onEnter(this.props.emoji);
-    }
+    this.props.onLeave(this.props.emoji);
   };
 
   /**
@@ -86,8 +107,8 @@ export default class EmojiButton extends React.PureComponent<EmojiProps, EmojiSt
         className={className.join(' ')}
         type="button"
         onClick={this.handleSelect}
-        onMouseEnter={this.handleHover}
-        onMouseLeave={this.handleHover}
+        onMouseEnter={this.handleEnter}
+        onMouseLeave={this.handleLeave}
       >
         {showImage ? (
           <EmojiCharacter

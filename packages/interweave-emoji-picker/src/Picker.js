@@ -24,6 +24,7 @@ import {
   GROUP_OBJECTS,
   GROUP_SYMBOLS,
   GROUP_FLAGS,
+  GROUP_SEARCH_RESULTS,
   SKIN_NONE,
   SKIN_LIGHT,
   SKIN_MEDIUM_LIGHT,
@@ -39,6 +40,7 @@ import type { Emoji, EmojiPath } from 'interweave'; // eslint-disable-line
 type PickerProps = {
   autoFocus: boolean,
   classNames: { [key: string]: string },
+  columnCount: number,
   defaultGroup: string,
   defaultSearchQuery: string,
   defaultSkinTone: string,
@@ -86,6 +88,7 @@ class Picker extends React.Component<PickerProps, PickerState> {
   static propTypes = {
     autoFocus: PropTypes.bool,
     classNames: PropTypes.objectOf(PropTypes.string),
+    columnCount: PropTypes.number,
     defaultGroup: PropTypes.oneOf([
       GROUP_RECENTLY_USED,
       GROUP_SMILEYS_PEOPLE,
@@ -130,6 +133,7 @@ class Picker extends React.Component<PickerProps, PickerState> {
   static defaultProps = {
     autoFocus: false,
     classNames: {},
+    columnCount: 10,
     defaultGroup: GROUP_RECENTLY_USED,
     defaultSearchQuery: '',
     defaultSkinTone: SKIN_NONE,
@@ -222,6 +226,7 @@ class Picker extends React.Component<PickerProps, PickerState> {
         [GROUP_OBJECTS]: 'Objects',
         [GROUP_SYMBOLS]: 'Symbols',
         [GROUP_FLAGS]: 'Flags',
+        [GROUP_SEARCH_RESULTS]: 'Search Results',
         // Miscellaneous
         search: 'Search…',
         searchAria: 'Search for emojis by keyword',
@@ -401,6 +406,7 @@ class Picker extends React.Component<PickerProps, PickerState> {
     const {
       autoFocus,
       classNames,
+      columnCount,
       displayOrder,
       emojiPath,
       emojis,
@@ -429,6 +435,7 @@ class Picker extends React.Component<PickerProps, PickerState> {
           key="emojis"
           activeGroup={activeGroup}
           activeSkinTone={activeSkinTone}
+          columnCount={columnCount}
           emojiPath={emojiPath}
           emojis={emojis}
           exclude={this.generateExcludeMap()}
@@ -437,8 +444,8 @@ class Picker extends React.Component<PickerProps, PickerState> {
           query={searchQuery}
           recentEmojis={recentEmojis}
           scrollToGroup={scrollToGroup}
-          onEnter={this.handleEnterEmoji}
-          onLeave={this.handleLeaveEmoji}
+          onEnterEmoji={this.handleEnterEmoji}
+          onLeaveEmoji={this.handleLeaveEmoji}
           onSelectEmoji={this.handleSelectEmoji}
           onSelectGroup={this.handleSelectGroup}
         />

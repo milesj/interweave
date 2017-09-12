@@ -12,6 +12,7 @@ import EmojiButton from './Emoji';
 import {
   GROUPS,
   GROUP_RECENTLY_USED,
+  GROUP_SEARCH_RESULTS,
   GROUP_SMILEYS_PEOPLE,
   SKIN_TONES,
   SKIN_NONE,
@@ -23,13 +24,14 @@ import type { Emoji, EmojiPath } from 'interweave'; // eslint-disable-line
 type EmojiListProps = {
   activeGroup: string,
   activeSkinTone: string,
+  columnCount: number,
   emojiPath: EmojiPath,
   emojis: Emoji[],
   exclude: { [hexcode: string]: boolean },
   hasRecentlyUsed: boolean,
   loadBuffer: number,
-  onEnter: (emoji: Emoji) => void,
-  onLeave: (emoji: Emoji) => void,
+  onEnterEmoji: (emoji: Emoji) => void,
+  onLeaveEmoji: (emoji: Emoji) => void,
   onSelectEmoji: (emoji: Emoji) => void,
   onSelectGroup: (group: string, reset?: boolean) => void,
   query: string,
@@ -38,6 +40,7 @@ type EmojiListProps = {
 };
 
 type EmojiListState = {
+  activeIndex: number,
   emojis: Emoji[],
   loadedGroups: Set<string>,
 };
@@ -53,6 +56,7 @@ export default class EmojiList extends React.PureComponent<EmojiListProps, Emoji
   static propTypes = {
     activeGroup: PropTypes.string.isRequired,
     activeSkinTone: PropTypes.string.isRequired,
+    columnCount: PropTypes.number.isRequired,
     emojiPath: EmojiPathShape.isRequired,
     emojis: PropTypes.arrayOf(EmojiShape).isRequired,
     exclude: PropTypes.objectOf(PropTypes.bool).isRequired,
@@ -61,8 +65,8 @@ export default class EmojiList extends React.PureComponent<EmojiListProps, Emoji
     query: PropTypes.string.isRequired,
     recentEmojis: PropTypes.arrayOf(EmojiShape).isRequired,
     scrollToGroup: PropTypes.string.isRequired,
-    onEnter: PropTypes.func.isRequired,
-    onLeave: PropTypes.func.isRequired,
+    onEnterEmoji: PropTypes.func.isRequired,
+    onLeaveEmoji: PropTypes.func.isRequired,
     onSelectEmoji: PropTypes.func.isRequired,
     onSelectGroup: PropTypes.func.isRequired,
   };
@@ -80,9 +84,14 @@ export default class EmojiList extends React.PureComponent<EmojiListProps, Emoji
     }
 
     this.state = {
+      activeIndex: -1,
       emojis: emojis.filter(this.filterForSearch),
       loadedGroups: new Set(loadedGroups),
     };
+  }
+
+  componentWillMount() {
+    window.addEventListener('keyup', this.handleKeyUp);
   }
 
   componentDidMount() {
@@ -90,18 +99,33 @@ export default class EmojiList extends React.PureComponent<EmojiListProps, Emoji
   }
 
   componentWillReceiveProps({ emojis, query, scrollToGroup }: EmojiListProps) {
-    // Filter the emoji list when:
-    if (
-      // Emoji data has been loaded via the `withEmojiData` HOC
-      (emojis.length !== 0 && this.props.emojis.length === 0) ||
-      // Search query has changed
-      (query !== this.props.query)
-    ) {
+    // Emoji data has been loaded via the `withEmojiData` HOC
+    if (emojis.length !== 0 && this.props.emojis.length === 0) {
       this.setState({
+        activeIndex: -1,
         emojis: emojis.filter(this.filterForSearch),
       }, () => {
-        if (scrollToGroup) {
+        // Scroll to group if not searching
+        if (!query && scrollToGroup) {
           this.scrollToGroup(scrollToGroup);
+        }
+      });
+    }
+
+    // Search query has changed
+    if (query !== this.props.query) {
+      const filteredEmojis = emojis.filter(this.filterForSearch);
+
+      // Highlight first emoji by default when searching
+      const activeIndex = (query && filteredEmojis.length > 0) ? 0 : -1;
+
+      this.setState({
+        activeIndex,
+        emojis: filteredEmojis,
+      }, () => {
+        // Set active emoji
+        if (activeIndex >= 0) {
+          this.props.onEnterEmoji(filteredEmojis[activeIndex]);
         }
       });
     }
@@ -120,6 +144,10 @@ export default class EmojiList extends React.PureComponent<EmojiListProps, Emoji
       this.container.scrollTop = 0;
       this.loadGroupsAndEmojis(this.container);
     }
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('keyup', this.handleKeyUp);
   }
 
   /**
@@ -190,7 +218,7 @@ export default class EmojiList extends React.PureComponent<EmojiListProps, Emoji
   /**
    * Partition the dataset into multiple arrays based on the group they belong to.
    */
-  groupList = (emojis: Emoji[]) => {
+  groupEmojis = (emojis: Emoji[]) => {
     const { hasRecentlyUsed, query, recentEmojis } = this.props;
     const groups = {};
 
@@ -199,10 +227,12 @@ export default class EmojiList extends React.PureComponent<EmojiListProps, Emoji
       groups[GROUP_RECENTLY_USED] = recentEmojis;
     }
 
-    // Partition into each group
+    // Partition emojis into a group
     emojis.forEach((emoji) => {
       const skinnedEmoji = this.getSkinnedEmoji(emoji);
-      const group = GROUPS[skinnedEmoji.group];
+
+      // Dump into a single group if searching
+      const group = query ? GROUP_SEARCH_RESULTS : GROUPS[skinnedEmoji.group];
 
       if (groups[group]) {
         groups[group].push(skinnedEmoji);
@@ -211,7 +241,7 @@ export default class EmojiList extends React.PureComponent<EmojiListProps, Emoji
       }
     });
 
-    // Sort and filter each group
+    // Sort each group
     Object.keys(groups).forEach((group) => {
       if (group !== GROUP_RECENTLY_USED) {
         groups[group].sort((a, b) => a.order - b.order);
@@ -224,6 +254,44 @@ export default class EmojiList extends React.PureComponent<EmojiListProps, Emoji
     });
 
     return groups;
+  };
+
+  handleKeyUp = (e: KeyboardEvent) => {
+    const { columnCount, query } = this.props;
+    const { activeIndex, emojis } = this.state;
+
+    // Keyboard functionality is only available while searching
+    if (!query) {
+      return;
+    }
+
+    let nextIndex = -1;
+
+    switch (e.key) {
+      case 'ArrowLeft':
+        nextIndex = activeIndex - 1;
+        break;
+      case 'ArrowRight':
+        nextIndex = activeIndex + 1;
+        break;
+      case 'ArrowUp':
+        nextIndex = activeIndex - columnCount;
+        break;
+      case 'ArrowDown':
+        nextIndex = activeIndex + columnCount;
+        break;
+      default:
+        return;
+    }
+
+    // Set the active emoji
+    if (nextIndex >= 0 && nextIndex < emojis.length) {
+      this.setState({
+        activeIndex: nextIndex,
+      });
+
+      this.props.onEnterEmoji(emojis[nextIndex]);
+    }
   };
 
   /**
@@ -311,10 +379,10 @@ export default class EmojiList extends React.PureComponent<EmojiListProps, Emoji
   };
 
   render() {
-    const { emojiPath, onEnter, onLeave, onSelectEmoji } = this.props;
+    const { emojiPath, onEnterEmoji, onLeaveEmoji, onSelectEmoji } = this.props;
     const { classNames, messages } = this.context;
-    const { emojis, loadedGroups } = this.state;
-    const groupedEmojis = this.groupList(emojis);
+    const { activeIndex, emojis, loadedGroups } = this.state;
+    const groupedEmojis = this.groupEmojis(emojis);
     const noResults = (Object.keys(groupedEmojis).length === 0);
 
     return (
@@ -339,14 +407,15 @@ export default class EmojiList extends React.PureComponent<EmojiListProps, Emoji
               </header>
 
               <div className={classNames.emojisBody}>
-                {groupedEmojis[group].map(emoji => (
+                {groupedEmojis[group].map((emoji, index) => (
                   <EmojiButton
                     key={emoji.hexcode}
+                    active={activeIndex === index}
                     emoji={emoji}
                     emojiPath={emojiPath}
                     showImage={loadedGroups.has(group)}
-                    onEnter={onEnter}
-                    onLeave={onLeave}
+                    onEnter={onEnterEmoji}
+                    onLeave={onLeaveEmoji}
                     onSelect={onSelectEmoji}
                   />
                 ))}
