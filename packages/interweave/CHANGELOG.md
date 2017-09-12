@@ -15,13 +15,13 @@
 #### 🚀 New
 * Added `Emoji` and `EmojiPath` types to the Flowtype definitions.
 * Added new `EmojiData` class to manage emoji data across locales and versions.
-* Added new `EmojiShape`, `EmojiPathShape`, and `EmojiContextShape` to the `shapes` file.
+* Added new `EmojiShape`, `EmojiPathShape`, and `EmojiContextShape` to the new `shapes` file.
 * Updated parsed and packaged emoji data to include additional properties.
   * Added `unicode`, which is either the emoji or text presentation Unicode character.
   * Added `canonical_shortcodes`, which are an array of shortcodes including surrounding colons.
   * Added `primary_shortcode`, which is the primary and most common shortcode, with colons.
-* Updated `Interweave` to optionally inherit the context defined by `withEmojiData`.
-* Context is passed as the 3rd argument to before and after `Matcher` callbacks.
+* Updated `Interweave` and `Emoji` to inherit the context defined by `withEmojiData`.
+  * Context is also passed as the 3rd argument to before and after `Matcher` callbacks.
 
 #### 🛠 Internal
 * Split Interweave into a multi-package repository using Yarn workspaces and Lerna.
