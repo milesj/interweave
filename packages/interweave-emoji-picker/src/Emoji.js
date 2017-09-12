@@ -74,6 +74,9 @@ export default class EmojiButton extends React.PureComponent<EmojiProps, EmojiSt
   handleSelect = (e: SyntheticMouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
 
+    // Defocus so enter doesnt continually select
+    e.currentTarget.blur();
+
     this.props.onSelect(this.props.emoji);
   };
 
