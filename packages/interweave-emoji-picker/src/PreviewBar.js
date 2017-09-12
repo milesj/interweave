@@ -18,6 +18,8 @@ type PreviewBarProps = {
   hideShortcodes: boolean,
 };
 
+const TITLE_REGEX: RegExp = /(^|\n|\s|-)[a-z]/g;
+
 export default class PreviewBar extends React.PureComponent<PreviewBarProps> {
   static contextTypes = {
     classNames: PropTypes.objectOf(PropTypes.string),
@@ -39,10 +41,7 @@ export default class PreviewBar extends React.PureComponent<PreviewBarProps> {
    * Format the title by capitalizing each word.
    */
   formatTitle(title: string): string {
-    return title.toLowerCase()
-      .split(' ')
-      .map(word => word.charAt(0).toUpperCase() + word.slice(1))
-      .join(' ');
+    return title.toLowerCase().replace(TITLE_REGEX, token => token.toUpperCase());
   }
 
   render() {
