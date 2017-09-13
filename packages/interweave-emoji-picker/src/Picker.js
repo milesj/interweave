@@ -246,7 +246,7 @@ class Picker extends React.Component<PickerProps, PickerState> {
     }
   }
 
-  componentDidUpdate({ emojis }: PickerProps, prevState: PickerState) {
+  componentDidUpdate(prevProps: PickerProps, prevState: PickerState) {
     const { activeSkinTone, searchQuery } = this.state;
 
     // Regenerate emoji list when:
@@ -256,8 +256,13 @@ class Picker extends React.Component<PickerProps, PickerState> {
       // Search query changes
       searchQuery !== prevState.searchQuery
     ) {
+      const emojis = this.generateEmojis(prevProps.emojis, searchQuery);
+      const hasResults = (searchQuery && emojis.length > 0);
+
       this.setState({
-        emojis: this.generateEmojis(emojis, searchQuery),
+        emojis,
+        activeEmoji: hasResults ? emojis[0] : null,
+        activeEmojiIndex: hasResults ? 0 : -1,
       });
     }
   }
@@ -429,48 +434,57 @@ class Picker extends React.Component<PickerProps, PickerState> {
    */
   handleKeyUp = (e: SyntheticKeyboardEvent<HTMLInputElement>) => {
     const { columnCount } = this.props;
-    const { activeEmojiIndex, emojis, searchQuery } = this.state;
+    const { activeEmoji, activeEmojiIndex, emojis, searchQuery } = this.state;
 
     // Keyboard functionality is only available while searching
     if (!searchQuery) {
       return;
     }
 
-    let nextIndex = -1;
-
-    switch (e.key) {
-      // Reset search
-      case 'Escape':
-        this.handleSearch('');
-        break;
-
-      // Cycle search results
-      case 'ArrowLeft':
-        nextIndex = activeEmojiIndex - 1;
-        break;
-      case 'ArrowRight':
-        nextIndex = activeEmojiIndex + 1;
-        break;
-      case 'ArrowUp':
-        nextIndex = activeEmojiIndex - columnCount;
-        break;
-      case 'ArrowDown':
-        nextIndex = activeEmojiIndex + columnCount;
-        break;
-
-      default:
-        return;
-    }
-
-    // Set the active emoji
-    if (nextIndex >= 0 && nextIndex < emojis.length) {
+    // Reset search
+    if (e.key === 'Escape') {
       e.preventDefault();
 
-      this.setState({
-        activeEmojiIndex: nextIndex,
-      });
+      this.handleSearch('');
 
-      this.handleEnterEmoji(emojis[nextIndex]);
+    // Select active emoji
+    } else if (e.key === 'Enter') {
+      e.preventDefault();
+
+      if (activeEmoji) {
+        this.handleSelectEmoji(activeEmoji);
+      }
+
+    // Cycle search results
+    } else {
+      e.preventDefault();
+
+      let nextIndex = -1;
+
+      switch (e.key) {
+        case 'ArrowLeft':
+          nextIndex = activeEmojiIndex - 1;
+          break;
+        case 'ArrowRight':
+          nextIndex = activeEmojiIndex + 1;
+          break;
+        case 'ArrowUp':
+          nextIndex = activeEmojiIndex - columnCount;
+          break;
+        case 'ArrowDown':
+          nextIndex = activeEmojiIndex + columnCount;
+          break;
+        default:
+          return;
+      }
+
+      if (nextIndex >= 0 && nextIndex < emojis.length) {
+        this.setState({
+          activeEmojiIndex: nextIndex,
+        });
+
+        this.handleEnterEmoji(emojis[nextIndex]);
+      }
     }
   }
 
