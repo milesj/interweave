@@ -65,7 +65,11 @@ export default class EmojiList extends React.PureComponent<EmojiListProps, Emoji
   constructor({ activeGroup, emojis }: EmojiListProps) {
     super();
 
-    const loadedGroups = [activeGroup, GROUP_SEARCH_RESULTS];
+    const loadedGroups = [
+      activeGroup,
+      GROUP_RECENTLY_USED,
+      GROUP_SEARCH_RESULTS,
+    ];
 
     // When recently used emojis are rendered,
     // the smileys group is usually within view as well,
@@ -79,14 +83,13 @@ export default class EmojiList extends React.PureComponent<EmojiListProps, Emoji
     };
   }
 
-  componentDidMount() {
-    this.scrollToGroup(this.props.activeGroup);
-  }
-
+  /**
+   * Update scroll position after the list has rendered.
+   */
   componentDidUpdate(prevProps: EmojiListProps) {
     const { searchQuery, scrollToGroup } = this.props;
 
-    // Search query has changed, so reset scroll position and trigger load
+    // Search query has changed
     if (searchQuery && searchQuery !== prevProps.searchQuery) {
       this.scrollToGroup(GROUP_SEARCH_RESULTS);
     }
@@ -100,8 +103,8 @@ export default class EmojiList extends React.PureComponent<EmojiListProps, Emoji
   /**
    * Partition the dataset into multiple arrays based on the group they belong to.
    */
-  groupEmojis = (emojis: Emoji[]) => {
-    const { hasRecentlyUsed, searchQuery, recentEmojis } = this.props;
+  groupEmojis(): { [group: string]: Emoji[] } {
+    const { emojis, hasRecentlyUsed, recentEmojis, searchQuery } = this.props;
     const groups = {};
 
     // Add recently used group if not searching
@@ -133,7 +136,7 @@ export default class EmojiList extends React.PureComponent<EmojiListProps, Emoji
     });
 
     return groups;
-  };
+  }
 
   /**
    * Set the container div as the reference.
@@ -177,8 +180,11 @@ export default class EmojiList extends React.PureComponent<EmojiListProps, Emoji
         section.offsetTop <= container.scrollTop &&
         (section.offsetTop + section.offsetHeight) > container.scrollTop
       ) {
-        loadedGroups.add(group);
-        updateState = true;
+        // Only update if not loaded
+        if (!loadedGroups.has(group)) {
+          loadedGroups.add(group);
+          updateState = true;
+        }
 
         // Only update if a different group
         if (group !== this.props.activeGroup) {
@@ -206,7 +212,7 @@ export default class EmojiList extends React.PureComponent<EmojiListProps, Emoji
   /**
    * Scroll a group section to the top of the scrollable container.
    */
-  scrollToGroup = (group: string) => {
+  scrollToGroup(group: string) {
     const element = document.getElementById(`emoji-group-${group}`);
 
     if (!element || !this.container) {
@@ -218,21 +224,22 @@ export default class EmojiList extends React.PureComponent<EmojiListProps, Emoji
 
     // Eager load emoji images
     this.loadEmojiImages(this.container);
-  };
+  }
 
   render() {
     const {
       activeEmojiIndex,
       emojiPath,
-      emojis,
       onEnterEmoji,
       onLeaveEmoji,
       onSelectEmoji,
     } = this.props;
     const { classNames, messages } = this.context;
     const { loadedGroups } = this.state;
-    const groupedEmojis = this.groupEmojis(emojis);
+    const groupedEmojis = this.groupEmojis();
     const noResults = (Object.keys(groupedEmojis).length === 0);
+
+    console.log('EmojiList.render');
 
     return (
       <div

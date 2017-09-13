@@ -17,11 +17,11 @@
     "publish": "lerna publish",
     "publish:force": "lerna publish --force-publish=*",
     "test": "yarn run jest",
-    "test:live": "yarn run build && NODE_ENV=production bundle-lib -f iife -i ./tests/bundle.js -o ./tests/bundle.min.js && serve ./tests/",
+    "test:live": "yarn run build && bundle-lib -f iife -i ./tests/bundle.js -o ./tests/bundle.min.js && serve ./tests/",
     "updated": "lerna updated"
   },
   "devDependencies": {
-    "@milesj/build-tool-config": "^0.23.2",
+    "@milesj/build-tool-config": "^0.23.3",
     "emojibase-test-utils": "^1.0.7",
     "lerna": "^2.1.2",
     "serve": "^6.0.6"

@@ -72,18 +72,6 @@ function App() {
           onSelectGroup={(group) => { console.log('select group', group); }}
           onSelectSkinTone={(skinTone) => { console.log('select skin', skinTone); }}
         />
-
-        <EmojiPicker
-          locale="ja"
-          defaultGroup="travelPlaces"
-          emojiPath={emojiPath}
-        />
-
-        <EmojiPicker
-          locale="it"
-          defaultGroup="flags"
-          emojiPath={emojiPath}
-        />
       </div>
 
       <h1>Copy</h1>
