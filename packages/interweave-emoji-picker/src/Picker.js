@@ -4,6 +4,8 @@
  * @flow
  */
 
+/* eslint-disable react/no-did-update-set-state */
+
 import React from 'react';
 import PropTypes from 'prop-types';
 import EmojiData from 'interweave/lib/data/EmojiData';
@@ -244,6 +246,22 @@ class Picker extends React.Component<PickerProps, PickerState> {
     }
   }
 
+  componentDidUpdate({ emojis }: PickerProps, prevState: PickerState) {
+    const { activeSkinTone, searchQuery } = this.state;
+
+    // Regenerate emoji list when:
+    if (
+      // Skin tone changes
+      activeSkinTone !== prevState.activeSkinTone ||
+      // Search query changes
+      searchQuery !== prevState.searchQuery
+    ) {
+      this.setState({
+        emojis: this.generateEmojis(emojis, searchQuery),
+      });
+    }
+  }
+
   /**
    * Add a recent emoji to local storage and update the current state.
    */
@@ -469,11 +487,12 @@ class Picker extends React.Component<PickerProps, PickerState> {
    * Triggered when the search input field value changes.
    */
   handleSearch = (query: string) => {
+    const defaultGroup = this.getDefaultGroup();
+
     this.setState({
-      emojis: this.generateEmojis(this.props.emojis, query),
+      activeGroup: query ? '' : defaultGroup,
+      scrollToGroup: query ? '' : defaultGroup,
       searchQuery: query,
-      // Deactive group tabs
-      activeGroup: query ? '' : this.getDefaultGroup(),
     });
 
     this.props.onSearch(query);
