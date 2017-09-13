@@ -37,6 +37,8 @@ import {
 
 import type { Emoji, EmojiPath } from 'interweave'; // eslint-disable-line
 
+type ExcludeMap = { [hexcode: string]: boolean };
+
 type PickerProps = {
   autoFocus: boolean,
   classNames: { [key: string]: string },
@@ -66,13 +68,15 @@ type PickerProps = {
 };
 
 type PickerState = {
-  activeEmoji: ?Emoji,
-  activeGroup: string,
-  activeSkinTone: string,
-  defaultGroup: string,
-  recentEmojis: string[],
-  scrollToGroup: string,
-  searchQuery: string,
+  activeEmoji: ?Emoji,        // Emoji to display in the preview
+  activeEmojiIndex: number,   // Index for the highlighted emoji within search results
+  activeGroup: string,        // Currently selected group tab
+  activeSkinTone: string,     // Currently selected skin ton
+  emojis: Emoji[],            // List of emojis with search filtering applied
+  excluded: ExcludeMap,       // Map of excluded emoji hexcodes
+  recentEmojis: string[],     // List of emoji unicode characters recently used
+  scrollToGroup: string,      // Group to scroll to on render
+  searchQuery: string,        // Current search query
 };
 
 class Picker extends React.Component<PickerProps, PickerState> {
@@ -161,27 +165,20 @@ class Picker extends React.Component<PickerProps, PickerState> {
     defaultSearchQuery,
     defaultSkinTone,
     disableRecentlyUsed,
+    emojis,
+    exclude,
   }: PickerProps) {
     super();
 
-    const recentEmojis = this.getRecentEmojisFromStorage();
-    const skinTone = this.getSkinToneFromStorage();
-
-    if (
-      (disableRecentlyUsed && defaultGroup === GROUP_RECENTLY_USED) ||
-      recentEmojis.length === 0
-    ) {
-      // eslint-disable-next-line no-param-reassign
-      defaultGroup = GROUP_SMILEYS_PEOPLE;
-    }
-
     this.state = {
-      defaultGroup,
-      recentEmojis,
+      emojis,
       activeEmoji: null,
+      activeEmojiIndex: -1,
       activeGroup: defaultGroup,
-      activeSkinTone: skinTone || defaultSkinTone,
+      activeSkinTone: this.getSkinToneFromStorage() || defaultSkinTone,
+      excluded: this.generateExcludeMap(exclude),
       scrollToGroup: defaultGroup,
+      recentEmojis: this.getRecentEmojisFromStorage(),
       searchQuery: defaultSearchQuery,
     };
   }
@@ -238,6 +235,16 @@ class Picker extends React.Component<PickerProps, PickerState> {
     };
   }
 
+  componentWillMount() {
+    const activeGroup = this.getDefaultGroup();
+
+    this.setState({
+      activeGroup,
+      emojis: this.props.emojis.filter(this.search),
+      scrollToGroup: activeGroup,
+    });
+  }
+
   /**
    * Add a recent emoji to local storage and update the current state.
    */
@@ -276,10 +283,10 @@ class Picker extends React.Component<PickerProps, PickerState> {
   /**
    * Convert the `exclude` prop to a map for quicker lookups.
    */
-  generateExcludeMap() {
+  generateExcludeMap(exclude: string[]): ExcludeMap {
     const map = {};
 
-    this.props.exclude.forEach((hexcode) => {
+    exclude.forEach((hexcode) => {
       map[hexcode] = true;
     });
 
@@ -290,7 +297,7 @@ class Picker extends React.Component<PickerProps, PickerState> {
    * We only store the unicode character for recent emojis,
    * so we need to rebuild the recent list with the full emoji objects.
    */
-  generateRecentEmojis() {
+  generateRecentEmojis(): Emoji[] {
     const data = EmojiData.getInstance(this.context.emoji.locale);
 
     return this.state.recentEmojis
@@ -299,9 +306,25 @@ class Picker extends React.Component<PickerProps, PickerState> {
   }
 
   /**
+   * Return the default group while handling recently used scenarios.
+   */
+  getDefaultGroup(): string {
+    const { defaultGroup, disableRecentlyUsed } = this.props;
+
+    if (
+      (disableRecentlyUsed && defaultGroup === GROUP_RECENTLY_USED) ||
+      this.state.recentEmojis.length === 0
+    ) {
+      return GROUP_SMILEYS_PEOPLE;
+    }
+
+    return defaultGroup;
+  }
+
+  /**
    * Return the recently used emojis from local storage.
    */
-  getRecentEmojisFromStorage() {
+  getRecentEmojisFromStorage(): string[] {
     const recent = localStorage.getItem(KEY_RECENTLY_USED);
 
     return recent ? JSON.parse(recent) : [];
@@ -310,7 +333,7 @@ class Picker extends React.Component<PickerProps, PickerState> {
   /**
    * Return the user's favorite skin tone from local storage.
    */
-  getSkinToneFromStorage() {
+  getSkinToneFromStorage(): ?string {
     return localStorage.getItem(KEY_SKIN_TONE);
   }
 
@@ -324,6 +347,56 @@ class Picker extends React.Component<PickerProps, PickerState> {
 
     this.props.onHoverEmoji(emoji);
   };
+
+  /**
+   * Triggered when keyboard changes occur.
+   */
+  handleKeyUp = (e: SyntheticKeyboardEvent<HTMLInputElement>) => {
+    const { columnCount } = this.props;
+    const { activeEmojiIndex, emojis, searchQuery } = this.state;
+
+    // Keyboard functionality is only available while searching
+    if (!searchQuery) {
+      return;
+    }
+
+    let nextIndex = -1;
+
+    switch (e.key) {
+      // Reset search
+      case 'Escape':
+        this.handleSearch('');
+        break;
+
+      // Cycle search results
+      case 'ArrowLeft':
+        nextIndex = activeEmojiIndex - 1;
+        break;
+      case 'ArrowRight':
+        nextIndex = activeEmojiIndex + 1;
+        break;
+      case 'ArrowUp':
+        nextIndex = activeEmojiIndex - columnCount;
+        break;
+      case 'ArrowDown':
+        nextIndex = activeEmojiIndex + columnCount;
+        break;
+
+      default:
+        return;
+    }
+
+    // Set the active emoji
+    if (nextIndex >= 0 && nextIndex < emojis.length) {
+      e.preventDefault();
+
+      this.setState({
+        activeEmojiIndex: nextIndex,
+      });
+
+      this.handleEnterEmoji(emojis[nextIndex]);
+    }
+  }
 
   /**
    * Triggered when the mouse no longer hovers an emoji.
@@ -341,7 +414,7 @@ class Picker extends React.Component<PickerProps, PickerState> {
     this.setState({
       searchQuery: query,
       // Deactive group tabs
-      activeGroup: query ? '' : this.state.defaultGroup,
+      activeGroup: query ? '' : this.getDefaultGroup(),
     });
 
     this.props.onSearch(query);
@@ -392,6 +465,42 @@ class Picker extends React.Component<PickerProps, PickerState> {
   }
 
   /**
+   * Filter the dataset with the search query against a set of emoji properties.
+   */
+  search = (emoji: Emoji) => {
+    const { excluded, searchQuery } = this.state;
+    const lookups = [];
+
+    // Excluded emojis are removed from the list
+    if (excluded[emoji.hexcode]) {
+      return false;
+    }
+
+    // No query to filter with
+    if (!searchQuery) {
+      return true;
+    }
+
+    if (emoji.canonical_shortcodes) {
+      lookups.push(...emoji.canonical_shortcodes);
+    }
+
+    if (emoji.tags) {
+      lookups.push(...emoji.tags);
+    }
+
+    if (emoji.annotation) {
+      lookups.push(emoji.annotation);
+    }
+
+    if (emoji.emoticon) {
+      lookups.push(emoji.emoticon);
+    }
+
+    return (lookups.join(' ').indexOf(searchQuery) >= 0);
+  };
+
+  /**
    * Set the users favorite skin tone into local storage.
    */
   setSkinTone(skinTone: string) {
@@ -406,10 +515,8 @@ class Picker extends React.Component<PickerProps, PickerState> {
     const {
       autoFocus,
       classNames,
-      columnCount,
       displayOrder,
       emojiPath,
-      emojis,
       hideEmoticon,
       disablePreview,
       disableSearch,
@@ -418,7 +525,15 @@ class Picker extends React.Component<PickerProps, PickerState> {
       icons,
       loadBuffer,
     } = this.props;
-    const { activeEmoji, activeGroup, activeSkinTone, scrollToGroup, searchQuery } = this.state;
+    const {
+      activeEmoji,
+      activeEmojiIndex,
+      activeGroup,
+      activeSkinTone,
+      emojis,
+      scrollToGroup,
+      searchQuery,
+    } = this.state;
     const recentEmojis = this.generateRecentEmojis();
     const components = {
       preview: disablePreview ? null : (
@@ -433,12 +548,11 @@ class Picker extends React.Component<PickerProps, PickerState> {
       emojis: (
         <EmojiList
           key="emojis"
+          activeEmojiIndex={activeEmojiIndex}
           activeGroup={activeGroup}
           activeSkinTone={activeSkinTone}
-          columnCount={columnCount}
           emojiPath={emojiPath}
           emojis={emojis}
-          exclude={this.generateExcludeMap()}
           hasRecentlyUsed={this.hasRecentlyUsed()}
           loadBuffer={loadBuffer}
           query={searchQuery}
@@ -473,6 +587,7 @@ class Picker extends React.Component<PickerProps, PickerState> {
           autoFocus={autoFocus}
           query={searchQuery}
           onChange={this.handleSearch}
+          onKeyUp={this.handleKeyUp}
         />
       ),
     };

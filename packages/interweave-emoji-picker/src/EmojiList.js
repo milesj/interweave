@@ -22,12 +22,11 @@ import {
 import type { Emoji, EmojiPath } from 'interweave'; // eslint-disable-line
 
 type EmojiListProps = {
+  activeEmojiIndex: number,
   activeGroup: string,
   activeSkinTone: string,
-  columnCount: number,
   emojiPath: EmojiPath,
   emojis: Emoji[],
-  exclude: { [hexcode: string]: boolean },
   hasRecentlyUsed: boolean,
   loadBuffer: number,
   onEnterEmoji: (emoji: Emoji) => void,
@@ -40,7 +39,6 @@ type EmojiListProps = {
 };
 
 type EmojiListState = {
-  activeIndex: number,
   emojis: Emoji[],
   loadedGroups: Set<string>,
 };
@@ -56,10 +54,8 @@ export default class EmojiList extends React.PureComponent<EmojiListProps, Emoji
   static propTypes = {
     activeGroup: PropTypes.string.isRequired,
     activeSkinTone: PropTypes.string.isRequired,
-    columnCount: PropTypes.number.isRequired,
     emojiPath: EmojiPathShape.isRequired,
     emojis: PropTypes.arrayOf(EmojiShape).isRequired,
-    exclude: PropTypes.objectOf(PropTypes.bool).isRequired,
     hasRecentlyUsed: PropTypes.bool.isRequired,
     loadBuffer: PropTypes.number.isRequired,
     query: PropTypes.string.isRequired,
@@ -84,14 +80,9 @@ export default class EmojiList extends React.PureComponent<EmojiListProps, Emoji
     }
 
     this.state = {
-      activeIndex: -1,
       emojis: emojis.filter(this.filterForSearch),
       loadedGroups: new Set(loadedGroups),
     };
-  }
-
-  componentWillMount() {
-    window.addEventListener('keyup', this.handleKeyUp);
   }
 
   componentDidMount() {
@@ -102,7 +93,6 @@ export default class EmojiList extends React.PureComponent<EmojiListProps, Emoji
     // Emoji data has been loaded via the `withEmojiData` HOC
     if (emojis.length !== 0 && this.props.emojis.length === 0) {
       this.setState({
-        activeIndex: -1,
         emojis: emojis.filter(this.filterForSearch),
       }, () => {
         // Scroll to group if not searching
@@ -114,19 +104,8 @@ export default class EmojiList extends React.PureComponent<EmojiListProps, Emoji
 
     // Search query has changed
     if (query !== this.props.query) {
-      const filteredEmojis = emojis.filter(this.filterForSearch);
-
-      // Highlight first emoji by default when searching
-      const activeIndex = (query && filteredEmojis.length > 0) ? 0 : -1;
-
       this.setState({
-        activeIndex,
-        emojis: filteredEmojis,
-      }, () => {
-        // Set active emoji
-        if (activeIndex >= 0) {
-          this.props.onEnterEmoji(filteredEmojis[activeIndex]);
-        }
+        emojis: emojis.filter(this.filterForSearch),
       });
     }
   }
@@ -145,46 +124,6 @@ export default class EmojiList extends React.PureComponent<EmojiListProps, Emoji
       this.loadGroupsAndEmojis(this.container);
     }
   }
-
-  componentWillUnmount() {
-    window.removeEventListener('keyup', this.handleKeyUp);
-  }
-
-  /**
-   * Filter the dataset with the search query against a set of emoji properties.
-   */
-  filterForSearch = (emoji: Emoji) => {
-    const { exclude, query } = this.props;
-    const lookups = [];
-
-    // Excluded emojis are removed from the list
-    if (exclude[emoji.hexcode]) {
-      return false;
-    }
-
-    // No query to filter with
-    if (!query) {
-      return true;
-    }
-
-    if (emoji.canonical_shortcodes) {
-      lookups.push(...emoji.canonical_shortcodes);
-    }
-
-    if (emoji.tags) {
-      lookups.push(...emoji.tags);
-    }
-
-    if (emoji.annotation) {
-      lookups.push(emoji.annotation);
-    }
-
-    if (emoji.emoticon) {
-      lookups.push(emoji.emoticon);
-    }
-
-    return (lookups.join(' ').indexOf(query) >= 0);
-  };
 
   /**
    * Return an emoji with skin tone if the active skin tone is set,
@@ -254,44 +193,6 @@ export default class EmojiList extends React.PureComponent<EmojiListProps, Emoji
     });
 
     return groups;
-  };
-
-  handleKeyUp = (e: KeyboardEvent) => {
-    const { columnCount, query } = this.props;
-    const { activeIndex, emojis } = this.state;
-
-    // Keyboard functionality is only available while searching
-    if (!query) {
-      return;
-    }
-
-    let nextIndex = -1;
-
-    switch (e.key) {
-      case 'ArrowLeft':
-        nextIndex = activeIndex - 1;
-        break;
-      case 'ArrowRight':
-        nextIndex = activeIndex + 1;
-        break;
-      case 'ArrowUp':
-        nextIndex = activeIndex - columnCount;
-        break;
-      case 'ArrowDown':
-        nextIndex = activeIndex + columnCount;
-        break;
-      default:
-        return;
-    }
-
-    // Set the active emoji
-    if (nextIndex >= 0 && nextIndex < emojis.length) {
-      this.setState({
-        activeIndex: nextIndex,
-      });
-
-      this.props.onEnterEmoji(emojis[nextIndex]);
-    }
   };
 
   /**
@@ -379,9 +280,9 @@ export default class EmojiList extends React.PureComponent<EmojiListProps, Emoji
   };
 
   render() {
-    const { emojiPath, onEnterEmoji, onLeaveEmoji, onSelectEmoji } = this.props;
+    const { activeEmojiIndex, emojiPath, onEnterEmoji, onLeaveEmoji, onSelectEmoji } = this.props;
     const { classNames, messages } = this.context;
-    const { activeIndex, emojis, loadedGroups } = this.state;
+    const { emojis, loadedGroups } = this.state;
     const groupedEmojis = this.groupEmojis(emojis);
     const noResults = (Object.keys(groupedEmojis).length === 0);
 
@@ -410,7 +311,7 @@ export default class EmojiList extends React.PureComponent<EmojiListProps, Emoji
                 {groupedEmojis[group].map((emoji, index) => (
                   <EmojiButton
                     key={emoji.hexcode}
-                    active={activeIndex === index}
+                    active={index === activeEmojiIndex}
                     emoji={emoji}
                     emojiPath={emojiPath}
                     showImage={loadedGroups.has(group)}
