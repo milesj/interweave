@@ -2,9 +2,9 @@
 # yarn lockfile v1
 
 
-"@milesj/build-tool-config@^0.23.2":
-  version "0.23.2"
-  resolved "https://registry.yarnpkg.com/@milesj/build-tool-config/-/build-tool-config-0.23.2.tgz#495de4cb6099b5117f6579a759e86f068657bd99"
+"@milesj/build-tool-config@^0.23.3":
+  version "0.23.3"
+  resolved "https://registry.yarnpkg.com/@milesj/build-tool-config/-/build-tool-config-0.23.3.tgz#841bd2dd45ef2f8a0144b2373a4b8261aed15881"
   dependencies:
     babel-cli "^6.26.0"
     babel-core "^6.26.0"
@@ -1469,9 +1469,9 @@ emoji-regex@^6.1.0:
   version "6.5.1"
   resolved "https://registry.yarnpkg.com/emoji-regex/-/emoji-regex-6.5.1.tgz#9baea929b155565c11ea41c6626eaa65cef992c2"
 
-emojibase-regex@^1.0.4:
-  version "1.0.5"
-  resolved "https://registry.yarnpkg.com/emojibase-regex/-/emojibase-regex-1.0.5.tgz#1a283ccd36f8a3ed0974dfd9fef6ca4dc12c5dee"
+emojibase-regex@^1.0.6:
+  version "1.0.6"
+  resolved "https://registry.yarnpkg.com/emojibase-regex/-/emojibase-regex-1.0.6.tgz#79f4ee8151008b03381eb89ffe8454c14367e254"
 
 emojibase@^1.3.2:
   version "1.3.2"
@@ -2273,12 +2273,12 @@ inquirer@^3.0.6:
     strip-ansi "^4.0.0"
     through "^2.3.6"
 
-interweave@^6.1.0:
-  version "6.1.0"
-  resolved "https://registry.yarnpkg.com/interweave/-/interweave-6.1.0.tgz#73ef43408a8788e3481c48ee669cd2bae105c054"
+interweave@^7.0.0-rc.2:
+  version "7.0.0-rc.2"
+  resolved "https://registry.yarnpkg.com/interweave/-/interweave-7.0.0-rc.2.tgz#72ea56b1cdb98763e4196a9b6951464012065697"
   dependencies:
     babel-runtime "^6.26.0"
-    emojibase-regex "^1.0.4"
+    emojibase-regex "^1.0.6"
     prop-types "^15.5.10"
 
 invariant@^2.2.2:
