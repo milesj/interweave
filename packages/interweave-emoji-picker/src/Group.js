@@ -19,6 +19,7 @@ type GroupProps = {
 export default class Group extends React.PureComponent<GroupProps> {
   static contextTypes = {
     classNames: PropTypes.objectOf(PropTypes.string),
+    messages: PropTypes.objectOf(PropTypes.node),
   };
 
   static propTypes = {
@@ -31,7 +32,7 @@ export default class Group extends React.PureComponent<GroupProps> {
   /**
    * Triggered when the button is clicked.
    */
-  handleSelect = (e: SyntheticMouseEvent<HTMLButtonElement>) => {
+  handleClick = (e: SyntheticMouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
 
     this.props.onSelect(this.props.group, true);
@@ -39,7 +40,7 @@ export default class Group extends React.PureComponent<GroupProps> {
 
   render() {
     const { activeGroup, children, group } = this.props;
-    const { classNames } = this.context;
+    const { classNames, messages } = this.context;
     const className = [classNames.group];
 
     if (group === activeGroup) {
@@ -48,9 +49,10 @@ export default class Group extends React.PureComponent<GroupProps> {
 
     return (
       <button
+        aria-label={messages[group]}
         className={className.join(' ')}
         type="button"
-        onClick={this.handleSelect}
+        onClick={this.handleClick}
       >
         {children}
       </button>

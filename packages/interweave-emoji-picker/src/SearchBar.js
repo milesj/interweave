@@ -25,7 +25,7 @@ export default class SearchBar extends React.PureComponent<SearchBarProps, Searc
 
   static contextTypes = {
     classNames: PropTypes.objectOf(PropTypes.string),
-    messages: PropTypes.objectOf(PropTypes.string),
+    messages: PropTypes.objectOf(PropTypes.node),
   };
 
   static propTypes = {
@@ -35,13 +35,9 @@ export default class SearchBar extends React.PureComponent<SearchBarProps, Searc
     onKeyUp: PropTypes.func.isRequired,
   };
 
-  constructor({ searchQuery }: SearchBarProps) {
-    super();
-
-    this.state = {
-      query: searchQuery,
-    };
-  }
+  state = {
+    query: '',
+  };
 
   /**
    * Focus the input field if `autoFocus` is true.
@@ -60,7 +56,7 @@ export default class SearchBar extends React.PureComponent<SearchBarProps, Searc
       clearTimeout(this.timeout);
 
       this.setState({
-        query: searchQuery,
+        query: '',
       });
     }
   }

@@ -23,7 +23,7 @@ const TITLE_REGEX: RegExp = /(^|:|\.)\s?[a-z]/g;
 export default class PreviewBar extends React.PureComponent<PreviewBarProps> {
   static contextTypes = {
     classNames: PropTypes.objectOf(PropTypes.string),
-    messages: PropTypes.objectOf(PropTypes.string),
+    messages: PropTypes.objectOf(PropTypes.node),
   };
 
   static propTypes = {
@@ -64,9 +64,11 @@ export default class PreviewBar extends React.PureComponent<PreviewBarProps> {
     if (!emoji) {
       return (
         <div className={classNames.preview}>
-          <div className={classNames.noPreview}>
-            {messages.noPreview}
-          </div>
+          {messages.noPreview && (
+            <div className={classNames.noPreview}>
+              {messages.noPreview}
+            </div>
+          )}
         </div>
       );
     }

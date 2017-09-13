@@ -44,7 +44,7 @@ export default class EmojiList extends React.PureComponent<EmojiListProps, Emoji
 
   static contextTypes = {
     classNames: PropTypes.objectOf(PropTypes.string),
-    messages: PropTypes.objectOf(PropTypes.string),
+    messages: PropTypes.objectOf(PropTypes.node),
   };
 
   static propTypes = {

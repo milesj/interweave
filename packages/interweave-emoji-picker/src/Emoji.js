@@ -57,6 +57,15 @@ export default class EmojiButton extends React.PureComponent<EmojiProps, EmojiSt
   }
 
   /**
+   * Triggered when the emoji is clicked.
+   */
+  handleClick = (e: SyntheticMouseEvent<HTMLButtonElement>) => {
+    e.stopPropagation();
+
+    this.props.onSelect(this.props.emoji);
+  };
+
+  /**
    * Triggered when the emoji is hovered.
    */
   handleEnter = (e: SyntheticMouseEvent<HTMLButtonElement>) => {
@@ -82,15 +91,6 @@ export default class EmojiButton extends React.PureComponent<EmojiProps, EmojiSt
     this.props.onLeave(this.props.emoji);
   };
 
-  /**
-   * Triggered when the emoji is clicked.
-   */
-  handleSelect = (e: SyntheticMouseEvent<HTMLButtonElement>) => {
-    e.stopPropagation();
-
-    this.props.onSelect(this.props.emoji);
-  };
-
   render() {
     const { emoji, emojiPath, showImage } = this.props;
     const { classNames } = this.context;
@@ -103,10 +103,11 @@ export default class EmojiButton extends React.PureComponent<EmojiProps, EmojiSt
 
     return (
       <button
+        aria-label={emoji.annotation}
         key={emoji.hexcode}
         className={className.join(' ')}
         type="button"
-        onClick={this.handleSelect}
+        onClick={this.handleClick}
         onMouseEnter={this.handleEnter}
         onMouseLeave={this.handleLeave}
       >
