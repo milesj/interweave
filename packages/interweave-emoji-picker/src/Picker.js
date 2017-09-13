@@ -57,7 +57,6 @@ type PickerProps = {
   hideEmoticon: boolean,
   hideShortcodes: boolean,
   icons: { [key: string]: React$Node },
-  loadBuffer: number,
   maxRecentlyUsed: number,
   messages: { [key: string]: string },
   onHoverEmoji: (emoji: Emoji) => void,
@@ -124,7 +123,6 @@ class Picker extends React.Component<PickerProps, PickerState> {
     hideEmoticon: PropTypes.bool,
     hideShortcodes: PropTypes.bool,
     icons: PropTypes.objectOf(PropTypes.node),
-    loadBuffer: PropTypes.number,
     maxRecentlyUsed: PropTypes.number,
     messages: PropTypes.objectOf(PropTypes.node),
     onHoverEmoji: PropTypes.func,
@@ -151,7 +149,6 @@ class Picker extends React.Component<PickerProps, PickerState> {
     hideEmoticon: false,
     hideShortcodes: false,
     icons: {},
-    loadBuffer: 200,
     maxRecentlyUsed: 30,
     onHoverEmoji() {},
     onSearch() {},
@@ -328,6 +325,35 @@ class Picker extends React.Component<PickerProps, PickerState> {
     const recent = localStorage.getItem(KEY_RECENTLY_USED);
 
     return recent ? JSON.parse(recent) : [];
+  }
+
+  /**
+   * Return an emoji with skin tone if the active skin tone is set,
+   * otherwise return the default skin tone (yellow).
+   */
+  getSkinnedEmoji(emoji: Emoji): Emoji {
+    const { activeSkinTone } = this.props;
+
+    if (activeSkinTone === SKIN_NONE || !emoji.skins) {
+      return emoji;
+    }
+
+    const toneIndex = SKIN_TONES.findIndex(skinTone => (skinTone === activeSkinTone));
+    let skinnedEmoji = emoji;
+
+    if (Array.isArray(emoji.skins)) {
+      emoji.skins.some((skin) => {
+        if (skin.tone && skin.tone === toneIndex) {
+          skinnedEmoji = skin;
+
+          return true;
+        }
+
+        return false;
+      });
+    }
+
+    return skinnedEmoji;
   }
 
   /**
@@ -523,7 +549,6 @@ class Picker extends React.Component<PickerProps, PickerState> {
       disableSkinTones,
       hideShortcodes,
       icons,
-      loadBuffer,
     } = this.props;
     const {
       activeEmoji,
@@ -535,6 +560,7 @@ class Picker extends React.Component<PickerProps, PickerState> {
       searchQuery,
     } = this.state;
     const recentEmojis = this.generateRecentEmojis();
+    const hasRecentlyUsed = this.hasRecentlyUsed();
     const components = {
       preview: disablePreview ? null : (
         <PreviewBar
@@ -550,14 +576,12 @@ class Picker extends React.Component<PickerProps, PickerState> {
           key="emojis"
           activeEmojiIndex={activeEmojiIndex}
           activeGroup={activeGroup}
-          activeSkinTone={activeSkinTone}
           emojiPath={emojiPath}
           emojis={emojis}
-          hasRecentlyUsed={this.hasRecentlyUsed()}
-          loadBuffer={loadBuffer}
-          query={searchQuery}
+          hasRecentlyUsed={hasRecentlyUsed}
           recentEmojis={recentEmojis}
           scrollToGroup={scrollToGroup}
+          searchQuery={searchQuery}
           onEnterEmoji={this.handleEnterEmoji}
           onLeaveEmoji={this.handleLeaveEmoji}
           onSelectEmoji={this.handleSelectEmoji}
@@ -576,7 +600,7 @@ class Picker extends React.Component<PickerProps, PickerState> {
           key="groups"
           activeGroup={activeGroup}
           emojiPath={emojiPath}
-          hasRecentlyUsed={this.hasRecentlyUsed()}
+          hasRecentlyUsed={hasRecentlyUsed}
           icons={icons}
           onSelect={this.handleSelectGroup}
         />
@@ -585,7 +609,7 @@ class Picker extends React.Component<PickerProps, PickerState> {
         <SearchBar
           key="search"
           autoFocus={autoFocus}
-          query={searchQuery}
+          searchQuery={searchQuery}
           onChange={this.handleSearch}
           onKeyUp={this.handleKeyUp}
         />

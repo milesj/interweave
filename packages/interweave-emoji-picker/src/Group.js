@@ -6,16 +6,12 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import EmojiCharacter from 'interweave/lib/components/Emoji';
-import { EmojiPathShape } from 'interweave/lib/shapes';
-import { GROUP_ICONS } from './constants';
 
 import type { EmojiPath } from 'interweave'; // eslint-disable-line
 
 type GroupProps = {
   activeGroup: string,
   children: React$Node,
-  emojiPath: EmojiPath,
   group: string,
   onSelect: (group: string, reset?: boolean) => void,
 };
@@ -27,14 +23,9 @@ export default class Group extends React.PureComponent<GroupProps> {
 
   static propTypes = {
     activeGroup: PropTypes.string.isRequired,
-    children: PropTypes.node,
-    emojiPath: EmojiPathShape.isRequired,
+    children: PropTypes.node.isRequired,
     group: PropTypes.string.isRequired,
     onSelect: PropTypes.func.isRequired,
-  };
-
-  static defaultProps = {
-    children: null,
   };
 
   /**
@@ -47,7 +38,7 @@ export default class Group extends React.PureComponent<GroupProps> {
   };
 
   render() {
-    const { children, group, activeGroup, emojiPath } = this.props;
+    const { activeGroup, children, group } = this.props;
     const { classNames } = this.context;
     const className = [classNames.group];
 
@@ -61,13 +52,7 @@ export default class Group extends React.PureComponent<GroupProps> {
         type="button"
         onClick={this.handleSelect}
       >
-        {children || (
-          <EmojiCharacter
-            emojiPath={emojiPath}
-            emojiSize={1}
-            unicode={GROUP_ICONS[group]}
-          />
-        )}
+        {children}
       </button>
     );
   }

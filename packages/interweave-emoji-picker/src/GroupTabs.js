@@ -6,9 +6,10 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
+import EmojiCharacter from 'interweave/lib/components/Emoji';
 import { EmojiPathShape } from 'interweave/lib/shapes';
 import Group from './Group';
-import { GROUPS, GROUP_RECENTLY_USED } from './constants';
+import { GROUPS, GROUP_RECENTLY_USED, GROUP_ICONS } from './constants';
 
 import type { EmojiPath } from 'interweave'; // eslint-disable-line
 
@@ -53,7 +54,13 @@ export default class GroupTabs extends React.PureComponent<GroupTabsProps> {
                 group={group}
                 onSelect={onSelect}
               >
-                {icons[group] || null}
+                {icons[group] || (
+                  <EmojiCharacter
+                    emojiPath={emojiPath}
+                    emojiSize={1}
+                    unicode={GROUP_ICONS[group]}
+                  />
+                )}
               </Group>
             </li>
           ))}

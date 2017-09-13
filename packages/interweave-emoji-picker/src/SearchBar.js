@@ -12,7 +12,7 @@ type SearchBarProps = {
   autoFocus: boolean,
   onChange: (query: string) => void,
   onKeyUp: (event: *) => void,
-  query: string,
+  searchQuery: string,
 };
 
 type SearchBarState = {
@@ -30,16 +30,16 @@ export default class SearchBar extends React.PureComponent<SearchBarProps, Searc
 
   static propTypes = {
     autoFocus: PropTypes.bool.isRequired,
-    query: PropTypes.string.isRequired,
+    searchQuery: PropTypes.string.isRequired,
     onChange: PropTypes.func.isRequired,
     onKeyUp: PropTypes.func.isRequired,
   };
 
-  constructor({ query }: SearchBarProps) {
+  constructor({ searchQuery }: SearchBarProps) {
     super();
 
     this.state = {
-      query,
+      query: searchQuery,
     };
   }
 
@@ -55,12 +55,12 @@ export default class SearchBar extends React.PureComponent<SearchBarProps, Searc
   /**
    * When the parent `Picker` search query is reset, also reset the input field.
    */
-  componentWillReceiveProps({ query }: SearchBarProps) {
-    if (query === '') {
+  componentWillReceiveProps({ searchQuery }: SearchBarProps) {
+    if (searchQuery === '') {
       clearTimeout(this.timeout);
 
       this.setState({
-        query,
+        query: searchQuery,
       });
     }
   }

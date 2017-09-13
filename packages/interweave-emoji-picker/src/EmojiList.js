@@ -14,8 +14,7 @@ import {
   GROUP_RECENTLY_USED,
   GROUP_SEARCH_RESULTS,
   GROUP_SMILEYS_PEOPLE,
-  SKIN_TONES,
-  SKIN_NONE,
+  SCROLL_BUFFER,
   SCROLL_DEBOUNCE,
 } from './constants';
 
@@ -24,22 +23,19 @@ import type { Emoji, EmojiPath } from 'interweave'; // eslint-disable-line
 type EmojiListProps = {
   activeEmojiIndex: number,
   activeGroup: string,
-  activeSkinTone: string,
   emojiPath: EmojiPath,
   emojis: Emoji[],
   hasRecentlyUsed: boolean,
-  loadBuffer: number,
   onEnterEmoji: (emoji: Emoji) => void,
   onLeaveEmoji: (emoji: Emoji) => void,
   onSelectEmoji: (emoji: Emoji) => void,
   onSelectGroup: (group: string, reset?: boolean) => void,
-  query: string,
   recentEmojis: Emoji[],
   scrollToGroup: string,
+  searchQuery: string,
 };
 
 type EmojiListState = {
-  emojis: Emoji[],
   loadedGroups: Set<string>,
 };
 
@@ -52,15 +48,14 @@ export default class EmojiList extends React.PureComponent<EmojiListProps, Emoji
   };
 
   static propTypes = {
+    activeEmojiIndex: PropTypes.number.isRequired,
     activeGroup: PropTypes.string.isRequired,
-    activeSkinTone: PropTypes.string.isRequired,
     emojiPath: EmojiPathShape.isRequired,
     emojis: PropTypes.arrayOf(EmojiShape).isRequired,
     hasRecentlyUsed: PropTypes.bool.isRequired,
-    loadBuffer: PropTypes.number.isRequired,
-    query: PropTypes.string.isRequired,
     recentEmojis: PropTypes.arrayOf(EmojiShape).isRequired,
     scrollToGroup: PropTypes.string.isRequired,
+    searchQuery: PropTypes.string.isRequired,
     onEnterEmoji: PropTypes.func.isRequired,
     onLeaveEmoji: PropTypes.func.isRequired,
     onSelectEmoji: PropTypes.func.isRequired,
@@ -70,7 +65,7 @@ export default class EmojiList extends React.PureComponent<EmojiListProps, Emoji
   constructor({ activeGroup, emojis }: EmojiListProps) {
     super();
 
-    const loadedGroups = [activeGroup];
+    const loadedGroups = [activeGroup, GROUP_SEARCH_RESULTS];
 
     // When recently used emojis are rendered,
     // the smileys group is usually within view as well,
@@ -80,7 +75,6 @@ export default class EmojiList extends React.PureComponent<EmojiListProps, Emoji
     }
 
     this.state = {
-      emojis: emojis.filter(this.filterForSearch),
       loadedGroups: new Set(loadedGroups),
     };
   }
@@ -89,94 +83,40 @@ export default class EmojiList extends React.PureComponent<EmojiListProps, Emoji
     this.scrollToGroup(this.props.activeGroup);
   }
 
-  componentWillReceiveProps({ emojis, query, scrollToGroup }: EmojiListProps) {
-    // Emoji data has been loaded via the `withEmojiData` HOC
-    if (emojis.length !== 0 && this.props.emojis.length === 0) {
-      this.setState({
-        emojis: emojis.filter(this.filterForSearch),
-      }, () => {
-        // Scroll to group if not searching
-        if (!query && scrollToGroup) {
-          this.scrollToGroup(scrollToGroup);
-        }
-      });
-    }
-
-    // Search query has changed
-    if (query !== this.props.query) {
-      this.setState({
-        emojis: emojis.filter(this.filterForSearch),
-      });
-    }
-  }
-
   componentDidUpdate(prevProps: EmojiListProps) {
-    const { query, scrollToGroup } = this.props;
-
-    // Scroll to group when the tab is clicked
-    if (scrollToGroup && prevProps.scrollToGroup !== scrollToGroup) {
-      this.scrollToGroup(scrollToGroup);
-    }
+    const { searchQuery, scrollToGroup } = this.props;
 
     // Search query has changed, so reset scroll position and trigger load
-    if (query && query !== prevProps.query && !!this.container) {
-      this.container.scrollTop = 0;
-      this.loadGroupsAndEmojis(this.container);
-    }
-  }
-
-  /**
-   * Return an emoji with skin tone if the active skin tone is set,
-   * otherwise return the default skin tone (yellow).
-   */
-  getSkinnedEmoji(emoji: Emoji): Emoji {
-    const { activeSkinTone } = this.props;
-
-    if (activeSkinTone === SKIN_NONE || !emoji.skins) {
-      return emoji;
+    if (searchQuery && searchQuery !== prevProps.searchQuery) {
+      this.scrollToGroup(GROUP_SEARCH_RESULTS);
     }
 
-    const toneIndex = SKIN_TONES.findIndex(skinTone => (skinTone === activeSkinTone));
-    let skinnedEmoji = emoji;
-
-    if (Array.isArray(emoji.skins)) {
-      emoji.skins.some((skin) => {
-        if (skin.tone && skin.tone === toneIndex) {
-          skinnedEmoji = skin;
-
-          return true;
-        }
-
-        return false;
-      });
+    // Scroll to group when the tab is clicked
+    if (scrollToGroup && scrollToGroup !== prevProps.scrollToGroup) {
+      this.scrollToGroup(scrollToGroup);
     }
-
-    return skinnedEmoji;
   }
 
   /**
    * Partition the dataset into multiple arrays based on the group they belong to.
    */
   groupEmojis = (emojis: Emoji[]) => {
-    const { hasRecentlyUsed, query, recentEmojis } = this.props;
+    const { hasRecentlyUsed, searchQuery, recentEmojis } = this.props;
     const groups = {};
 
     // Add recently used group if not searching
-    if (!query && hasRecentlyUsed) {
+    if (!searchQuery && hasRecentlyUsed) {
       groups[GROUP_RECENTLY_USED] = recentEmojis;
     }
 
-    // Partition emojis into a group
+    // Partition emojis into separate groups
     emojis.forEach((emoji) => {
-      const skinnedEmoji = this.getSkinnedEmoji(emoji);
-
-      // Dump into a single group if searching
-      const group = query ? GROUP_SEARCH_RESULTS : GROUPS[skinnedEmoji.group];
+      const group = searchQuery ? GROUP_SEARCH_RESULTS : GROUPS[emoji.group];
 
       if (groups[group]) {
-        groups[group].push(skinnedEmoji);
+        groups[group].push(emoji);
       } else {
-        groups[group] = [skinnedEmoji];
+        groups[group] = [emoji];
       }
     });
 
@@ -216,15 +156,15 @@ export default class EmojiList extends React.PureComponent<EmojiListProps, Emoji
    * A scroll handler that is debounced for performance.
    */
   handleScrollDebounced = debounce((container) => {
-    this.loadGroupsAndEmojis(container);
+    this.loadEmojiImages(container);
   }, SCROLL_DEBOUNCE);
 
   /**
    * Loop over each group section within the scrollable container
    * and determine the active group and whether to load emoji images.
    */
-  loadGroupsAndEmojis(container: HTMLDivElement) {
-    const { loadBuffer, query } = this.props;
+  loadEmojiImages(container: HTMLDivElement) {
+    const { searchQuery } = this.props;
     const { loadedGroups } = this.state;
     let updateState = false;
 
@@ -233,14 +173,15 @@ export default class EmojiList extends React.PureComponent<EmojiListProps, Emoji
 
       // While a group section is within view, update the active group
       if (
+        !searchQuery &&
         section.offsetTop <= container.scrollTop &&
         (section.offsetTop + section.offsetHeight) > container.scrollTop
       ) {
         loadedGroups.add(group);
         updateState = true;
 
-        // Only update if a different group and not searching
-        if (!query && group !== this.props.activeGroup) {
+        // Only update if a different group
+        if (group !== this.props.activeGroup) {
           this.props.onSelectGroup(group);
         }
       }
@@ -248,7 +189,7 @@ export default class EmojiList extends React.PureComponent<EmojiListProps, Emoji
       // Before a group section is scrolled into view, lazy load emoji images
       if (
         !loadedGroups.has(group) &&
-        section.offsetTop <= (container.scrollTop + container.offsetHeight + loadBuffer)
+        section.offsetTop <= (container.scrollTop + container.offsetHeight + SCROLL_BUFFER)
       ) {
         loadedGroups.add(group);
         updateState = true;
@@ -276,13 +217,20 @@ export default class EmojiList extends React.PureComponent<EmojiListProps, Emoji
     this.container.scrollTop = element.offsetTop;
 
     // Eager load emoji images
-    this.loadGroupsAndEmojis(this.container);
+    this.loadEmojiImages(this.container);
   };
 
   render() {
-    const { activeEmojiIndex, emojiPath, onEnterEmoji, onLeaveEmoji, onSelectEmoji } = this.props;
+    const {
+      activeEmojiIndex,
+      emojiPath,
+      emojis,
+      onEnterEmoji,
+      onLeaveEmoji,
+      onSelectEmoji,
+    } = this.props;
     const { classNames, messages } = this.context;
-    const { emojis, loadedGroups } = this.state;
+    const { loadedGroups } = this.state;
     const groupedEmojis = this.groupEmojis(emojis);
     const noResults = (Object.keys(groupedEmojis).length === 0);
 

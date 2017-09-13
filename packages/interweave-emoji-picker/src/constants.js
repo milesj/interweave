@@ -63,6 +63,7 @@ export const SKIN_COLORS: { [key: string]: string } = {
   [SKIN_DARK]: '#5A463A',
 };
 
+export const SCROLL_BUFFER: number = 150;
 export const SCROLL_DEBOUNCE: number = 50;
 export const SEARCH_THROTTLE: number = 100;
 

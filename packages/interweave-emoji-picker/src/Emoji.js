@@ -121,9 +121,12 @@ export default class EmojiButton extends React.PureComponent<EmojiProps, EmojiSt
             style={{
               width: '1em',
               height: '1em',
+              overflow: 'hidden',
               visibility: 'hidden',
             }}
-          />
+          >
+            &nbsp;
+          </div>
         )}
       </button>
     );

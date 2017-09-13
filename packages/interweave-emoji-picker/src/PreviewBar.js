@@ -38,7 +38,7 @@ export default class PreviewBar extends React.PureComponent<PreviewBarProps> {
   };
 
   /**
-   * Format the title by capitalizing to sentence case.
+   * Format the title using sentence case.
    */
   formatTitle(): string {
     const { emoji } = this.props;
@@ -100,7 +100,7 @@ export default class PreviewBar extends React.PureComponent<PreviewBarProps> {
             </div>
           )}
 
-          {subtitle.length > 0 && (
+          {(subtitle.length > 0) && (
             <div className={classNames.previewSubtitle}>
               {subtitle.join(' ')}
             </div>
