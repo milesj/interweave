@@ -230,17 +230,17 @@ class Picker extends React.Component<PickerProps, PickerState> {
     };
   }
 
-  componentWillReceiveProps({ emojis }: PickerProps) {
-    // Emoji data has been loaded via the `withEmojiData` HOC
-    if (emojis.length !== 0 && this.props.emojis.length === 0) {
-      const activeGroup = this.getDefaultGroup();
+  componentWillMount() {
+    // Emoji data has already been loaded
+    if (this.props.emojis.length !== 0) {
+      this.setInitialEmojis(this.props.emojis);
+    }
+  }
 
-      this.setState({
-        activeGroup,
-        emojis: this.generateEmojis(emojis),
-        recentEmojis: this.generateRecentEmojis(this.getRecentEmojisFromStorage()),
-        scrollToGroup: activeGroup,
-      });
+  componentWillReceiveProps({ emojis }: PickerProps) {
+    // Emoji data has loaded via the `withEmojiData` HOC
+    if (emojis.length !== 0 && this.props.emojis.length === 0) {
+      this.setInitialEmojis(emojis);
     }
   }
 
@@ -520,7 +520,21 @@ class Picker extends React.Component<PickerProps, PickerState> {
    * Determine whether to show the recently used group.
    */
   hasRecentlyUsed() {
-    return (!this.props.disableRecentlyUsed && this.state.recentEmojis.length > 0);
+    return (!this.props.disableRecentlyUsed && this.getRecentEmojisFromStorage().length > 0);
+  }
+
+  /**
+   * Set the initial emoji state once emoji data has loaded.
+   */
+  setInitialEmojis(emojis: Emoji[]) {
+    const defaultGroup = this.getDefaultGroup();
+
+    this.setState({
+      activeGroup: defaultGroup,
+      emojis: this.generateEmojis(emojis),
+      recentEmojis: this.generateRecentEmojis(this.getRecentEmojisFromStorage()),
+      scrollToGroup: defaultGroup,
+    });
   }
 
   /**
