@@ -64,6 +64,7 @@ function App() {
           defaultGroup="foodDrink"
           defaultSkinTone="light"
           emojiPath={emojiPath}
+          emojiSize={22}
           exclude={[
             '1F4A9', // Poop
           ]}

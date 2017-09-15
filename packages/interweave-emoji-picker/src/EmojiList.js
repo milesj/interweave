@@ -25,6 +25,7 @@ type EmojiListProps = {
   activeGroup: string,
   emojiPath: EmojiPath,
   emojis: Emoji[],
+  emojiSize: number,
   hasRecentlyUsed: boolean,
   onEnterEmoji: (emoji: Emoji) => void,
   onLeaveEmoji: (emoji: Emoji) => void,
@@ -51,6 +52,7 @@ export default class EmojiList extends React.PureComponent<EmojiListProps, Emoji
     activeEmojiIndex: PropTypes.number.isRequired,
     activeGroup: PropTypes.string.isRequired,
     emojiPath: EmojiPathShape.isRequired,
+    emojiSize: PropTypes.number.isRequired,
     emojis: PropTypes.arrayOf(EmojiShape).isRequired,
     hasRecentlyUsed: PropTypes.bool.isRequired,
     recentEmojis: PropTypes.arrayOf(EmojiShape).isRequired,
@@ -230,6 +232,7 @@ export default class EmojiList extends React.PureComponent<EmojiListProps, Emoji
     const {
       activeEmojiIndex,
       emojiPath,
+      emojiSize,
       onEnterEmoji,
       onLeaveEmoji,
       onSelectEmoji,
@@ -269,6 +272,7 @@ export default class EmojiList extends React.PureComponent<EmojiListProps, Emoji
                     active={index === activeEmojiIndex}
                     emoji={emoji}
                     emojiPath={emojiPath}
+                    emojiSize={emojiSize}
                     showImage={loadedGroups.has(group)}
                     onEnter={onEnterEmoji}
                     onLeave={onLeaveEmoji}

@@ -55,6 +55,7 @@ type PickerProps = {
   displayOrder: string[],
   emojiPath: EmojiPath,
   emojis: Emoji[],
+  emojiSize: number,
   exclude: string[],
   hideEmoticon: boolean,
   hideShortcodes: boolean,
@@ -120,6 +121,7 @@ class Picker extends React.Component<PickerProps, PickerState> {
     disableSkinTones: PropTypes.bool,
     displayOrder: PropTypes.arrayOf(PropTypes.string),
     emojiPath: EmojiPathShape.isRequired,
+    emojiSize: PropTypes.number.isRequired,
     emojis: PropTypes.arrayOf(EmojiShape).isRequired,
     exclude: PropTypes.arrayOf(PropTypes.string),
     hideEmoticon: PropTypes.bool,
@@ -344,7 +346,8 @@ class Picker extends React.Component<PickerProps, PickerState> {
 
     const haystack = lookups.join(' ');
 
-    return searchQuery.split(' ').some(needle => haystack.indexOf(searchQuery) >= 0);
+    // Support multi-word searches
+    return searchQuery.split(' ').some(needle => haystack.indexOf(needle) >= 0);
   }
 
   /**
@@ -598,6 +601,7 @@ class Picker extends React.Component<PickerProps, PickerState> {
       classNames,
       displayOrder,
       emojiPath,
+      emojiSize,
       hideEmoticon,
       disablePreview,
       disableSearch,
@@ -633,6 +637,7 @@ class Picker extends React.Component<PickerProps, PickerState> {
           activeGroup={activeGroup}
           emojiPath={emojiPath}
           emojis={emojis}
+          emojiSize={emojiSize}
           hasRecentlyUsed={hasRecentlyUsed}
           recentEmojis={recentEmojis}
           scrollToGroup={scrollToGroup}

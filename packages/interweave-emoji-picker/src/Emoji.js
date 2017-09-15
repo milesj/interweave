@@ -15,6 +15,7 @@ type EmojiProps = {
   active: boolean,
   emoji: Emoji,
   emojiPath: EmojiPath,
+  emojiSize: number,
   onEnter: (emoji: Emoji) => void,
   onLeave: (emoji: Emoji) => void,
   onSelect: (emoji: Emoji) => void,
@@ -34,6 +35,7 @@ export default class EmojiButton extends React.PureComponent<EmojiProps, EmojiSt
     active: PropTypes.bool.isRequired,
     emoji: EmojiShape.isRequired,
     emojiPath: EmojiPathShape.isRequired,
+    emojiSize: PropTypes.number.isRequired,
     showImage: PropTypes.bool.isRequired,
     onEnter: PropTypes.func.isRequired,
     onLeave: PropTypes.func.isRequired,
@@ -92,7 +94,7 @@ export default class EmojiButton extends React.PureComponent<EmojiProps, EmojiSt
   };
 
   render() {
-    const { emoji, emojiPath, showImage } = this.props;
+    const { emoji, emojiPath, emojiSize, showImage } = this.props;
     const { classNames } = this.context;
     const { active } = this.state;
     const className = [classNames.emoji];
@@ -114,14 +116,14 @@ export default class EmojiButton extends React.PureComponent<EmojiProps, EmojiSt
         {showImage ? (
           <EmojiCharacter
             emojiPath={emojiPath}
-            emojiSize={1}
+            emojiSize={emojiSize}
             unicode={emoji.unicode}
           />
         ) : (
           <div
             style={{
-              width: '1em',
-              height: '1em',
+              width: emojiSize,
+              height: emojiSize,
               overflow: 'hidden',
               visibility: 'hidden',
             }}
