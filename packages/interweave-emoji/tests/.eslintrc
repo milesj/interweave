@@ -3,6 +3,7 @@
     "global": true
   },
   "rules": {
+    "no-console": 0,
     "no-magic-numbers": 0,
     "react/jsx-no-literals": 0
   }
