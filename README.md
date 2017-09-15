@@ -1,4 +1,4 @@
-# Interweave v6.1.0
+# Interweave
 [![Build Status](https://travis-ci.org/milesj/interweave.svg?branch=master)](https://travis-ci.org/milesj/interweave)
 
 Interweave is a robust React library that can...
@@ -434,26 +434,26 @@ props.
 #### Loading Emoji Data
 
 Before emoji can be rendered, emoji data must be loaded into the application.
-To do this, an `EmojiLoader` component is provided, which will fetch emoji data from
-Emojibase's CDN. This component should wrap `Interweave` in the React tree.
+To do this, a `withEmojiData` higher-order-component (HOC) is provided,
+which will fetch emoji data from Emojibase's CDN. This component should wrap
+your component that composes `Interweave`.
 
 ```javascript
 import Interweave from 'interweave';
-import EmojiLoader from 'interweave/lib/loaders/EmojiLoader';
+import withEmojiData from 'interweave/lib/loaders/withEmojiData';
 
-<EmojiLoader>
-  <Interweave />
-</EmojiLoader>
+export default withEmojiData(Interweave);
 ```
 
-This component accepts the following optional props.
+This HOC accepts the following optional props.
 
 * `locale` (string) - The localized data to fetch. Defaults to `en`.
   [View supported locales](https://github.com/milesj/emojibase#usage).
 * `version` (string) - The `emojibase-data` release version to fetch. Defaults to `latest`.
   [Read more](https://github.com/milesj/emojibase#fetchfromcdn).
+* `compact` (bool) - Whether to load compact or full data. Defaults to `false`.
 
-> `EmojiLoader` works best when using [composition](#global-configuration).
+> An `emojis` prop will be passed to the underlying component.
 
 #### Converting Emoticons
 
@@ -518,7 +518,7 @@ and `emojiLargeSize` as the 4th argument.
 />
 ```
 
-Both media formats make use of the `img` tag, and will require an
+Both media formats make use of the `img` tag and will require an
 individual file, as sprites and icon fonts are not supported. The
 following resources can be used for downloading SVG/PNG icons.
 

@@ -1870,9 +1870,17 @@ emoji-regex@^6.1.0:
   version "6.5.1"
   resolved "https://registry.yarnpkg.com/emoji-regex/-/emoji-regex-6.5.1.tgz#9baea929b155565c11ea41c6626eaa65cef992c2"
 
+emojibase-regex@^1.0.6:
+  version "1.0.6"
+  resolved "https://registry.yarnpkg.com/emojibase-regex/-/emojibase-regex-1.0.6.tgz#79f4ee8151008b03381eb89ffe8454c14367e254"
+
 emojibase-test-utils@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/emojibase-test-utils/-/emojibase-test-utils-2.0.0.tgz#83df3b3f6960b11ba680605b0451ace30af0b87c"
+
+emojibase@^1.4.0:
+  version "1.4.0"
+  resolved "https://registry.yarnpkg.com/emojibase/-/emojibase-1.4.0.tgz#1ce085283cd3f75298d0a3ede3cf4df2232afb7c"
 
 encodeurl@~1.0.1:
   version "1.0.1"
@@ -3662,6 +3670,10 @@ lodash.camelcase@^4.1.1:
 lodash.cond@^4.3.0:
   version "4.5.2"
   resolved "https://registry.yarnpkg.com/lodash.cond/-/lodash.cond-4.5.2.tgz#f471a1da486be60f6ab955d17115523dd1d255d5"
+
+lodash.debounce@^4.0.8:
+  version "4.0.8"
+  resolved "https://registry.yarnpkg.com/lodash.debounce/-/lodash.debounce-4.0.8.tgz#82d79bff30a67c4005ffd5e2515300ad9ca4d7af"
 
 lodash.defaults@^4.0.1:
   version "4.2.0"
