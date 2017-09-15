@@ -134,7 +134,10 @@ describe('components/Emoji', () => {
   it('sets styles when size is defined', () => {
     const wrapper = shallow(<Emoji shortcode={shortcode} unicode={unicode} />, { context });
 
-    expect(wrapper.prop('style')).toEqual({});
+    expect(wrapper.prop('style')).toEqual({
+      display: 'inline-block',
+      verticalAlign: 'middle',
+    });
 
     wrapper.setProps({
       emojiSize: 1,
@@ -143,7 +146,8 @@ describe('components/Emoji', () => {
     expect(wrapper.prop('style')).toEqual({
       display: 'inline-block',
       verticalAlign: 'middle',
-      width: '1em',
+      width: 1,
+      height: 1,
     });
 
     wrapper.setProps({
@@ -155,6 +159,24 @@ describe('components/Emoji', () => {
       display: 'inline-block',
       verticalAlign: 'middle',
       width: '3em',
+      height: '3em',
+    });
+  });
+
+  it('sets large size when base size is a string', () => {
+    const wrapper = shallow((
+      <Emoji
+        unicode={unicode}
+        emojiSize="2em"
+        enlargeEmoji
+      />
+    ), { context });
+
+    expect(wrapper.prop('style')).toEqual({
+      display: 'inline-block',
+      verticalAlign: 'middle',
+      width: '6em',
+      height: '6em',
     });
   });
 
@@ -172,7 +194,25 @@ describe('components/Emoji', () => {
     expect(wrapper.prop('style')).toEqual({
       display: 'inline-block',
       verticalAlign: 'middle',
-      width: '5em',
+      width: 5,
+      height: 5,
+    });
+  });
+
+  it('can use string sizes', () => {
+    const wrapper = shallow((
+      <Emoji
+        shortcode={shortcode}
+        unicode={unicode}
+        emojiSize="2em"
+      />
+    ), { context });
+
+    expect(wrapper.prop('style')).toEqual({
+      display: 'inline-block',
+      verticalAlign: 'middle',
+      width: '2em',
+      height: '2em',
     });
   });
 });

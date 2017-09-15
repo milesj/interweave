@@ -10,13 +10,19 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { fromHexcodeToCodepoint } from 'emojibase';
 import EmojiData from '../data/EmojiData';
-import { EmojiContextShape } from '../shapes';
+import {
+  EmojiContextShape,
+  EmojiPathShape,
+  EmojiSizeShape,
+} from '../shapes';
+
+type EmojiSize = string | number;
 
 type EmojiProps = {
-  emojiLargeSize: number,
+  emojiLargeSize: EmojiSize,
   emojiPath: string |
-    (hexcode: string, enlarged: boolean, smallSize: number, largeSize: number) => string,
-  emojiSize: number,
+    (hexcode: string, enlarged: boolean, smallSize: EmojiSize, largeSize: EmojiSize) => string,
+  emojiSize: EmojiSize,
   emoticon: string,
   enlargeEmoji: boolean,
   locale: string,
@@ -32,12 +38,9 @@ export default class Emoji extends React.PureComponent<EmojiProps> {
   };
 
   static propTypes = {
-    emojiLargeSize: PropTypes.number,
-    emojiPath: PropTypes.oneOfType([
-      PropTypes.string,
-      PropTypes.func,
-    ]),
-    emojiSize: PropTypes.number,
+    emojiLargeSize: EmojiSizeShape,
+    emojiPath: EmojiPathShape,
+    emojiSize: EmojiSizeShape,
     emoticon: PropTypes.string,
     enlargeEmoji: PropTypes.bool,
     shortcode: PropTypes.string,
@@ -91,14 +94,17 @@ export default class Emoji extends React.PureComponent<EmojiProps> {
     }
 
     const emoji = data.EMOJIS[unicode];
+    const shortcodes = data.UNICODE_TO_SHORTCODES[unicode];
     const className = ['interweave__emoji'];
-    const styles = {};
+    const styles: Object = {
+      display: 'inline-block',
+      verticalAlign: 'middle',
+    };
 
     // Only apply styles if a size is defined
     if (emojiSize) {
-      styles.display = 'inline-block';
-      styles.verticalAlign = 'middle';
-      styles.width = `${emojiSize}em`;
+      styles.width = emojiSize;
+      styles.height = emojiSize;
     }
 
     // Handle large styles
@@ -106,9 +112,14 @@ export default class Emoji extends React.PureComponent<EmojiProps> {
       className.push('interweave__emoji--large');
 
       if (emojiLargeSize) {
-        styles.width = `${emojiLargeSize}em`;
+        styles.width = emojiLargeSize;
+        styles.height = emojiLargeSize;
+
       } else if (emojiSize) {
-        styles.width = `${emojiSize * LARGE_MULTIPLIER}em`;
+        const largeSize = `${parseFloat(emojiSize) * LARGE_MULTIPLIER}em`;
+
+        styles.width = largeSize;
+        styles.height = largeSize;
       }
     }
 
@@ -135,7 +146,7 @@ export default class Emoji extends React.PureComponent<EmojiProps> {
         data-emoticon={emoji.emoticon || ''}
         data-unicode={unicode}
         data-hexcode={emoji.hexcode}
-        data-shortcodes={data.UNICODE_TO_SHORTCODES[unicode].join(', ')}
+        data-shortcodes={shortcodes.join(', ')}
         data-codepoint={fromHexcodeToCodepoint(emoji.hexcode).join('-')}
       />
     );

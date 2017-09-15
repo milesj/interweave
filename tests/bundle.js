@@ -41,7 +41,7 @@ const emojiProps = {
     }),
   ],
   emojiPath,
-  emojiSize: 1,
+  emojiSize: '1em',
 };
 
 const emojiUnicodeProps = {

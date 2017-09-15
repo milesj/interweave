@@ -551,15 +551,18 @@ to you.
 ##### Inline Sizing
 
 If you would like to use inline styles instead of CSS, you can use the
-`emojiSize` prop, which requires a number. This prop will apply a width
-(using `em` scaling) to every emoji with the `style` attribute.
+`emojiSize` prop, which requires a number or string. This prop will apply
+a width and height to every emoji using the `style` attribute.
 
 ```javascript
-<Interweave emojiSize={1} />
+<Interweave emojiSize={1} /> // px
+<Interweave emojiSize="1em" /> // em
 ```
 
 By default, enlarged emojis will increase their size by 3x.
 To customize this, define the `emojiLargeSize` prop.
+
+> I suggest using `em` scaling as the emoji will scale relative to the text around it.
 
 #### Displaying Unicode Characters
 
@@ -739,7 +742,7 @@ export default function Interweave({
         ]}
         hashtagUrl={hashtagUrl}
         emojiPath={emojiPath}
-        emojiSize={1}
+        emojiSize="1em"
         newWindow
         {...props}
       />

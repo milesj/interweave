@@ -4,6 +4,9 @@
 * Updated `emojibase` peer dependency requirement to 1.4.
 * Migrated `Markup`, `Element`, `Email`, `Emoji`, `Hashtag`, `Link`, and `Url`
   components to extend `React.PureComponent`.
+* Updated `emojiSize` prop to accept a string or a number, and to no longer default to `em`.
+  * If passing a number, it will pass through to React (which uses `px`).
+  * To keep legacy functionality, include `em` in the prop: `emojiSize="1em"`.
 * Refactored `EmojiLoader` into an HOC named `withEmojiData`, as the original approach
   would not re-render components correctly in all situations. Furthermore,
   a few improvements were made to the HOC.
@@ -15,7 +18,9 @@
 #### 🚀 New
 * Added `Emoji` and `EmojiPath` types to the Flowtype definitions.
 * Added new `EmojiData` class to manage emoji data across locales and versions.
-* Added new `EmojiShape`, `EmojiPathShape`, and `EmojiContextShape` to the new `shapes` file.
+* Added new `EmojiShape`, `EmojiPathShape`, `EmojiSizeShape`, and `EmojiContextShape`
+  to a new `shapes` file.
+* Updated `emojiSize` prop to also set the `height` style.
 * Updated parsed and packaged emoji data to include additional properties.
   * Added `unicode`, which is either the emoji or text presentation Unicode character.
   * Added `canonical_shortcodes`, which are an array of shortcodes including surrounding colons.

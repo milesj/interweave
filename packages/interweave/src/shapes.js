@@ -30,9 +30,15 @@ export const EmojiShape = PropTypes.shape({
   text: PropTypes.string,
   tone: PropTypes.number,
   unicode: PropTypes.string,
+  version: PropTypes.number,
 });
 
 export const EmojiPathShape = PropTypes.oneOfType([
   PropTypes.string,
   PropTypes.func,
+]);
+
+export const EmojiSizeShape = PropTypes.oneOfType([
+  PropTypes.string,
+  PropTypes.number,
 ]);

@@ -15,8 +15,10 @@ declare module 'interweave' {
     unicode: string,
   };
 
+  declare export type EmojiSize = string | number;
+
   declare export type EmojiPath = string |
-    (hexcode: string, enlarged: boolean, smallSize: number, largeSize: number) => string;
+    (hexcode: string, enlarged: boolean, smallSize: EmojiSize, largeSize: EmojiSize) => string;
 
   declare export type AfterParseCallback = (content: React$Node[], props: Object) => React$Node[];
 
@@ -102,12 +104,12 @@ declare module 'interweave/lib/components/Email' {
 }
 
 declare module 'interweave/lib/components/Emoji' {
-  import type { EmojiPath } from 'interweave';
+  import type { EmojiPath, EmojiSize } from 'interweave';
 
   declare export default class Emoji extends React.PureComponent<{
     emojiLargeSize: number,
     emojiPath: EmojiPath,
-    emojiSize: number,
+    emojiSize: EmojiSize,
     emoticon: string,
     enlargeEmoji: boolean,
     locale: string,
