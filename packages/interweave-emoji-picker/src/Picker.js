@@ -333,7 +333,9 @@ class Picker extends React.Component<PickerProps, PickerState> {
       lookups.push(emoji.emoticon);
     }
 
-    return (lookups.join(' ').indexOf(searchQuery) >= 0);
+    const haystack = lookups.join(' ');
+
+    return searchQuery.split(' ').some(needle => haystack.indexOf(searchQuery) >= 0);
   }
 
   /**

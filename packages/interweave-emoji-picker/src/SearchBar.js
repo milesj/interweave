@@ -66,17 +66,22 @@ export default class SearchBar extends React.PureComponent<SearchBarProps, Searc
    */
   handleChange = (e: SyntheticInputEvent<HTMLInputElement>) => {
     const query = e.currentTarget.value;
+    const trimmedQuery = query.trim();
 
     // Update the input field immediately
     this.setState({
       query,
     });
 
+    if (!trimmedQuery) {
+      return;
+    }
+
     // But defer filtering in the picker
     clearTimeout(this.timeout);
 
     this.timeout = setTimeout(() => {
-      this.props.onChange(query);
+      this.props.onChange(trimmedQuery);
     }, SEARCH_THROTTLE);
   };
 
