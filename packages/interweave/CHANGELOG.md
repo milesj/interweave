@@ -1,7 +1,7 @@
 # 7.0.0
 #### 💥 Breaking
 * Updated `react` peer dependency requirement to 15.3.
-* Updated `emojibase` peer dependency requirement to 1.3.2.
+* Updated `emojibase` peer dependency requirement to 1.4.
 * Migrated `Markup`, `Element`, `Email`, `Emoji`, `Hashtag`, `Link`, and `Url`
   components to extend `React.PureComponent`.
 * Refactored `EmojiLoader` into an HOC named `withEmojiData`, as the original approach
