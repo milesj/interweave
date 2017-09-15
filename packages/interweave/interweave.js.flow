@@ -13,6 +13,7 @@ declare module 'interweave' {
     hexcode: string,
     primary_shortcode: string,
     unicode: string,
+    version: number,
   };
 
   declare export type EmojiSize = string | number;

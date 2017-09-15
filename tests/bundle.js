@@ -67,6 +67,7 @@ function App() {
           exclude={[
             '1F4A9', // Poop
           ]}
+          maxEmojiVersion={4}
           onSearch={(query) => { console.log('search', query); }}
           onSelectEmoji={(emoji) => { console.log('select emoji', emoji); }}
           onSelectGroup={(group) => { console.log('select group', group); }}

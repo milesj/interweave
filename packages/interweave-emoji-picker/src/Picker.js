@@ -59,6 +59,7 @@ type PickerProps = {
   hideEmoticon: boolean,
   hideShortcodes: boolean,
   icons: { [key: string]: React$Node },
+  maxEmojiVersion: number,
   maxRecentlyUsed: number,
   messages: { [key: string]: string },
   onHoverEmoji: (emoji: Emoji) => void,
@@ -124,6 +125,7 @@ class Picker extends React.Component<PickerProps, PickerState> {
     hideEmoticon: PropTypes.bool,
     hideShortcodes: PropTypes.bool,
     icons: PropTypes.objectOf(PropTypes.node),
+    maxEmojiVersion: PropTypes.number,
     maxRecentlyUsed: PropTypes.number,
     messages: PropTypes.objectOf(PropTypes.node),
     onHoverEmoji: PropTypes.func,
@@ -149,6 +151,7 @@ class Picker extends React.Component<PickerProps, PickerState> {
     hideEmoticon: false,
     hideShortcodes: false,
     icons: {},
+    maxEmojiVersion: 5,
     maxRecentlyUsed: 30,
     onHoverEmoji() {},
     onSearch() {},
@@ -302,11 +305,17 @@ class Picker extends React.Component<PickerProps, PickerState> {
   /**
    * Filter the dataset with the search query against a set of emoji properties.
    */
-  filterForSearch(emoji: Emoji, searchQuery: string): boolean {
+  filterOrSearch(emoji: Emoji, searchQuery: string): boolean {
+    const { maxEmojiVersion } = this.props;
     const { excluded } = this.state;
 
-    // Excluded emojis are removed from the list
+    // Remove excluded emojis
     if (excluded[emoji.hexcode]) {
+      return false;
+    }
+
+    // Remove emojis released in newer versions (compact doesnt have a version)
+    if ('version' in emoji && emoji.version > maxEmojiVersion) {
       return false;
     }
 
@@ -344,7 +353,7 @@ class Picker extends React.Component<PickerProps, PickerState> {
    */
   generateEmojis(emojis: Emoji[], searchQuery: string = ''): Emoji[] {
     return emojis
-      .filter(emoji => this.filterForSearch(emoji, searchQuery))
+      .filter(emoji => this.filterOrSearch(emoji, searchQuery))
       .map(emoji => this.getSkinnedEmoji(emoji));
   }
 
