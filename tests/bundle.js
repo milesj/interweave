@@ -274,7 +274,7 @@ function App() {
         {...emojiProps}
         tagName="div"
         content={'This will convert 🐱 \uD83D\uDC36 :man: :3 all 3 emoji types to PNGs and increase the size.'}
-        emojiLargeSize={2}
+        emojiLargeSize="2em"
         enlargeEmoji
       />
 

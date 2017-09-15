@@ -27,30 +27,30 @@ declare module 'interweave-emoji' {
     version?: number,
   };
 
-  declare export type EmojiSize = string | number;
-
   declare export type EmojiPath = string |
     (hexcode: string, enlarged: boolean, smallSize: EmojiSize, largeSize: EmojiSize) => string;
 
-  declare export type EmojiCharacterProps = {
-    emojiData: {
-      compact: boolean,
-      locale: string,
-      version: string,
-    },
+  declare export type EmojiSize = string | number;
+
+  declare export type EmojiSource = {
+    compact: boolean,
+    locale: string,
+    version: string,
+  };
+
+  declare export default class EmojiCharacter extends React.PureComponent<{
     emojiLargeSize: EmojiSize,
     emojiPath: EmojiPath,
     emojiSize: EmojiSize,
+    emojiSource: EmojiSource,
     emoticon: string,
     enlargeEmoji: boolean,
     locale: string,
     shortcode: string,
     unicode: string,
-  };
+  }> {}
 
-  declare export default class EmojiCharacter extends React.PureComponent<EmojiCharacterProps> {}
-
-  declare export default class EmojiData {
+  declare export class EmojiData {
     EMOJIS: { [unicode: string]: Emoji };
     EMOTICON_TO_UNICODE: { [emoticon: string]: string };
     SHORTCODE_TO_UNICODE: { [shortcode: string]: string };
@@ -64,7 +64,7 @@ declare module 'interweave-emoji' {
     parseEmojiData(data: Object[]): Emoji[];
   }
 
-  declare export default class EmojiMatcher extends Matcher<{
+  declare export class EmojiMatcher extends Matcher<{
     convertEmoticon: boolean,
     convertShortcode: boolean,
     convertUnicode: boolean,
@@ -72,12 +72,12 @@ declare module 'interweave-emoji' {
     renderUnicode: boolean,
   }> {}
 
-  declare export default function withEmojiData(
-    Component: React$ComponentType<*>,
-  ): React$ComponentType<*>;
+  declare export function withEmojiData<Props: {}>(
+    Component: React$ComponentType<Props>,
+  ): React$ComponentType<Props>;
 
   declare export var EmojiShape: PropTypes;
-  declare export var EmojiDataShape: PropTypes;
   declare export var EmojiPathShape: PropTypes;
   declare export var EmojiSizeShape: PropTypes;
+  declare export var EmojiSourceShape: PropTypes;
 }

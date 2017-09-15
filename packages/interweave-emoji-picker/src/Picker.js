@@ -12,8 +12,8 @@ import {
   withEmojiData,
   EmojiData,
   EmojiShape,
-  EmojiDataShape,
   EmojiPathShape,
+  EmojiSourceShape,
 } from 'interweave-emoji';
 import EmojiList from './EmojiList';
 import SkinTonePalette from './SkinTonePalette';
@@ -44,7 +44,7 @@ import {
   COMMON_MODE_FREQUENT,
 } from './constants';
 
-import type { Emoji, EmojiPath } from 'interweave-emoji'; // eslint-disable-line
+import type { Emoji, EmojiPath, EmojiSource } from 'interweave-emoji'; // eslint-disable-line
 
 type CommonEmoji = {
   count: number,
@@ -65,14 +65,10 @@ type PickerProps = {
   disableSearch: boolean,
   disableSkinTones: boolean,
   displayOrder: string[],
-  emojiData: {
-    compact: boolean,
-    locale: string,
-    version: string,
-  },
   emojiPath: EmojiPath,
   emojis: Emoji[],
   emojiSize: number,
+  emojiSource: EmojiSource,
   exclude: string[],
   hideEmoticon: boolean,
   hideShortcodes: boolean,
@@ -137,9 +133,9 @@ class Picker extends React.Component<PickerProps, PickerState> {
     disableSearch: PropTypes.bool,
     disableSkinTones: PropTypes.bool,
     displayOrder: PropTypes.arrayOf(PropTypes.string),
-    emojiData: EmojiDataShape.isRequired,
     emojiPath: EmojiPathShape.isRequired,
     emojiSize: PropTypes.number.isRequired,
+    emojiSource: EmojiSourceShape.isRequired,
     emojis: PropTypes.arrayOf(EmojiShape).isRequired,
     exclude: PropTypes.arrayOf(PropTypes.string),
     hideEmoticon: PropTypes.bool,
@@ -362,7 +358,7 @@ class Picker extends React.Component<PickerProps, PickerState> {
     }
 
     // Remove emojis released in newer versions (compact doesnt have a version)
-    if ('version' in emoji && emoji.version > maxEmojiVersion) {
+    if (emoji.version && emoji.version > maxEmojiVersion) {
       return false;
     }
 
@@ -423,7 +419,7 @@ class Picker extends React.Component<PickerProps, PickerState> {
    * so we need to rebuild the list with full emoji objects.
    */
   generateCommonEmojis(commonEmojis: CommonEmoji[]): Emoji[] {
-    const data = EmojiData.getInstance(this.props.emojiData.locale);
+    const data = EmojiData.getInstance(this.props.emojiSource.locale);
 
     return commonEmojis
       .map(emoji => data.EMOJIS[emoji.unicode])
@@ -647,6 +643,7 @@ class Picker extends React.Component<PickerProps, PickerState> {
       displayOrder,
       emojiPath,
       emojiSize,
+      emojiSource,
       hideEmoticon,
       disablePreview,
       disableSearch,
@@ -671,6 +668,7 @@ class Picker extends React.Component<PickerProps, PickerState> {
           key="preview"
           emoji={activeEmoji}
           emojiPath={emojiPath}
+          emojiSource={emojiSource}
           hideEmoticon={hideEmoticon}
           hideShortcodes={hideShortcodes}
         />
@@ -685,6 +683,7 @@ class Picker extends React.Component<PickerProps, PickerState> {
           emojiPath={emojiPath}
           emojis={emojis}
           emojiSize={emojiSize}
+          emojiSource={emojiSource}
           hasCommonlyUsed={hasCommonlyUsed}
           scrollToGroup={scrollToGroup}
           searchQuery={searchQuery}

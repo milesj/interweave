@@ -14,14 +14,14 @@ import EmojiData from './EmojiData';
 
 import type { Emoji } from 'emojibase'; // eslint-disable-line
 
-type EmojiLoaderProps = {
+type EmojiDataLoaderProps = {
   compact: boolean,
   emojis: Emoji[],
   locale: string,
   version: string,
 };
 
-type EmojiLoaderState = {
+type EmojiDataLoaderState = {
   emojis: Emoji[],
 };
 
@@ -38,8 +38,8 @@ export function resetLoaded() {
 
 export default function withEmojiData(
   Component: React$ComponentType<*>,
-): React$ComponentType<EmojiLoaderProps> {
-  return class EmojiDataLoader extends React.Component<EmojiLoaderProps, EmojiLoaderState> {
+): React$ComponentType<EmojiDataLoaderProps> {
+  return class EmojiDataLoader extends React.Component<EmojiDataLoaderProps, EmojiDataLoaderState> {
     static propTypes = {
       compact: PropTypes.bool,
       emojis: PropTypes.oneOfType([
@@ -124,14 +124,14 @@ export default function withEmojiData(
      */
     render() {
       const { compact, emojis, locale, version, ...props } = this.props;
-      const emojiData = {
+      const emojiSource = {
         compact,
         locale,
         version,
       };
 
       return (
-        <Component {...props} emojis={this.state.emojis} emojiData={emojiData} />
+        <Component {...props} emojis={this.state.emojis} emojiSource={emojiSource} />
       );
     }
   };

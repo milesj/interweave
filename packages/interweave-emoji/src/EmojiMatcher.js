@@ -127,10 +127,10 @@ export default class EmojiMatcher extends Matcher<EmojiOptions> {
    * Load emoji data before matching.
    */
   onBeforeParse(content: string, props: Object): string {
-    if (props.emojiData) {
-      this.data = EmojiData.getInstance(props.emojiData.locale);
+    if (props.emojiSource) {
+      this.data = EmojiData.getInstance(props.emojiSource.locale);
     } else if (__DEV__) {
-      throw new Error('Missing emoji data. Have you loaded using `withEmojiData`?');
+      throw new Error('Missing emoji source data. Have you loaded using `withEmojiData`?');
     }
 
     return content;

@@ -7,7 +7,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import debounce from 'lodash.debounce';
-import { EmojiShape, EmojiPathShape } from 'interweave-emoji';
+import { EmojiShape, EmojiPathShape, EmojiSourceShape } from 'interweave-emoji';
 import EmojiButton from './Emoji';
 import {
   GROUPS,
@@ -19,7 +19,7 @@ import {
   COMMON_MODE_RECENT,
 } from './constants';
 
-import type { Emoji, EmojiPath } from 'interweave-emoji'; // eslint-disable-line
+import type { Emoji, EmojiPath, EmojiSource } from 'interweave-emoji'; // eslint-disable-line
 
 type EmojiListProps = {
   activeEmojiIndex: number,
@@ -29,6 +29,7 @@ type EmojiListProps = {
   emojiPath: EmojiPath,
   emojis: Emoji[],
   emojiSize: number,
+  emojiSource: EmojiSource,
   hasCommonlyUsed: boolean,
   onEnterEmoji: (emoji: Emoji) => void,
   onLeaveEmoji: (emoji: Emoji) => void,
@@ -57,6 +58,7 @@ export default class EmojiList extends React.PureComponent<EmojiListProps, Emoji
     commonMode: PropTypes.string.isRequired,
     emojiPath: EmojiPathShape.isRequired,
     emojiSize: PropTypes.number.isRequired,
+    emojiSource: EmojiSourceShape.isRequired,
     emojis: PropTypes.arrayOf(EmojiShape).isRequired,
     hasCommonlyUsed: PropTypes.bool.isRequired,
     scrollToGroup: PropTypes.string.isRequired,
@@ -237,6 +239,7 @@ export default class EmojiList extends React.PureComponent<EmojiListProps, Emoji
       commonMode,
       emojiPath,
       emojiSize,
+      emojiSource,
       onEnterEmoji,
       onLeaveEmoji,
       onSelectEmoji,
@@ -281,6 +284,7 @@ export default class EmojiList extends React.PureComponent<EmojiListProps, Emoji
                     emoji={emoji}
                     emojiPath={emojiPath}
                     emojiSize={emojiSize}
+                    emojiSource={emojiSource}
                     showImage={loadedGroups.has(group)}
                     onEnter={onEnterEmoji}
                     onLeave={onLeaveEmoji}

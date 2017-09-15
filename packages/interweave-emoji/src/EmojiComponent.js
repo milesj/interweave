@@ -10,23 +10,23 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import EmojiData from './EmojiData';
 import {
-  EmojiDataShape,
   EmojiPathShape,
   EmojiSizeShape,
+  EmojiSourceShape,
 } from './shapes';
 
 type EmojiSize = string | number;
 
 type EmojiProps = {
-  emojiData: {
-    compact: boolean,
-    locale: string,
-    version: string,
-  },
   emojiLargeSize: EmojiSize,
   emojiPath: string |
     (hexcode: string, enlarged: boolean, smallSize: EmojiSize, largeSize: EmojiSize) => string,
   emojiSize: EmojiSize,
+  emojiSource: {
+    compact: boolean,
+    locale: string,
+    version: string,
+  },
   emoticon: string,
   enlargeEmoji: boolean,
   locale: string,
@@ -38,10 +38,10 @@ const LARGE_MULTIPLIER: number = 3;
 
 export default class EmojiComponent extends React.PureComponent<EmojiProps> {
   static propTypes = {
-    emojiData: EmojiDataShape.isRequired,
     emojiLargeSize: EmojiSizeShape,
     emojiPath: EmojiPathShape,
     emojiSize: EmojiSizeShape,
+    emojiSource: EmojiSourceShape.isRequired,
     emoticon: PropTypes.string,
     enlargeEmoji: PropTypes.bool,
     shortcode: PropTypes.string,
@@ -59,7 +59,7 @@ export default class EmojiComponent extends React.PureComponent<EmojiProps> {
   };
 
   render() {
-    const data = EmojiData.getInstance(this.props.emojiData.locale);
+    const data = EmojiData.getInstance(this.props.emojiSource.locale);
     const {
       emojiLargeSize,
       emojiPath,

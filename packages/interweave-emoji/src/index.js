@@ -8,10 +8,10 @@ import EmojiComponent from './EmojiComponent';
 import EmojiData from './EmojiData';
 import EmojiMatcher from './EmojiMatcher';
 import withEmojiData from './withEmojiData';
-import { EmojiShape, EmojiDataShape, EmojiPathShape, EmojiSizeShape } from './shapes';
+import { EmojiShape, EmojiPathShape, EmojiSizeShape, EmojiSourceShape } from './shapes';
 
 export {
   EmojiData, EmojiMatcher, withEmojiData,
-  EmojiShape, EmojiDataShape, EmojiPathShape, EmojiSizeShape,
+  EmojiShape, EmojiPathShape, EmojiSizeShape, EmojiSourceShape,
 };
 export default EmojiComponent;

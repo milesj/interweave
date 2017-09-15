@@ -6,13 +6,14 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import EmojiCharacter, { EmojiShape, EmojiPathShape } from 'interweave-emoji';
+import EmojiCharacter, { EmojiShape, EmojiPathShape, EmojiSourceShape } from 'interweave-emoji';
 
-import type { Emoji, EmojiPath } from 'interweave-emoji'; // eslint-disable-line
+import type { Emoji, EmojiPath, EmojiSource } from 'interweave-emoji'; // eslint-disable-line
 
 type PreviewBarProps = {
   emoji: ?Emoji,
   emojiPath: EmojiPath,
+  emojiSource: EmojiSource,
   hideEmoticon: boolean,
   hideShortcodes: boolean,
 };
@@ -28,6 +29,7 @@ export default class PreviewBar extends React.PureComponent<PreviewBarProps> {
   static propTypes = {
     emoji: EmojiShape,
     emojiPath: EmojiPathShape.isRequired,
+    emojiSource: EmojiSourceShape.isRequired,
     hideEmoticon: PropTypes.bool.isRequired,
     hideShortcodes: PropTypes.bool.isRequired,
   };
@@ -57,7 +59,7 @@ export default class PreviewBar extends React.PureComponent<PreviewBarProps> {
   }
 
   render() {
-    const { emoji, emojiPath, hideEmoticon, hideShortcodes } = this.props;
+    const { emoji, emojiPath, emojiSource, hideEmoticon, hideShortcodes } = this.props;
     const { classNames, messages } = this.context;
 
     if (!emoji) {
@@ -87,8 +89,9 @@ export default class PreviewBar extends React.PureComponent<PreviewBarProps> {
       <div className={classNames.preview}>
         <div className={classNames.previewEmoji}>
           <EmojiCharacter
-            emojiPath={emojiPath}
             emojiLargeSize="3em"
+            emojiPath={emojiPath}
+            emojiSource={emojiSource}
             enlargeEmoji
             unicode={emoji.unicode}
           />

@@ -1,4 +1,4 @@
-export const DATA_PROP = {
+export const SOURCE_PROP = {
   compact: false,
   locale: 'en',
   version: 'latest',

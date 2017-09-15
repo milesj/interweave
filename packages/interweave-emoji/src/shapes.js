@@ -29,12 +29,6 @@ export const EmojiShape = PropTypes.shape({
   version: PropTypes.number,
 });
 
-export const EmojiDataShape = PropTypes.shape({
-  compact: PropTypes.bool.isRequired,
-  locale: PropTypes.oneOf(SUPPORTED_LOCALES).isRequired,
-  version: PropTypes.string.isRequired,
-});
-
 export const EmojiPathShape = PropTypes.oneOfType([
   PropTypes.string,
   PropTypes.func,
@@ -44,3 +38,9 @@ export const EmojiSizeShape = PropTypes.oneOfType([
   PropTypes.string,
   PropTypes.number,
 ]);
+
+export const EmojiSourceShape = PropTypes.shape({
+  compact: PropTypes.bool.isRequired,
+  locale: PropTypes.oneOf(SUPPORTED_LOCALES).isRequired,
+  version: PropTypes.string.isRequired,
+});

@@ -1,11 +1,10 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import Interweave from '../../interweave/src/Interweave';
-import Matcher from '../../interweave/src/Matcher';
 import Emoji from '../src/EmojiComponent';
 import EmojiData from '../src/EmojiData';
 import EmojiMatcher from '../src/EmojiMatcher';
-import { DATA_PROP } from './mocks';
+import { SOURCE_PROP } from './mocks';
 
 describe('Interweave (with emoji)', () => {
   let SHORTCODE_TO_UNICODE = {};
@@ -13,7 +12,7 @@ describe('Interweave (with emoji)', () => {
   const extraProps = {
     disableWhitelist: false,
     disableLineBreaks: false,
-    emojiData: DATA_PROP,
+    emojiSource: SOURCE_PROP,
     noHtml: false,
     noHtmlExceptMatchers: false,
   };
@@ -30,7 +29,7 @@ describe('Interweave (with emoji)', () => {
           new EmojiMatcher('emoji', { convertShortcode: true, renderUnicode: true }),
         ]}
         content="This has :cat: and :dog: shortcodes."
-        emojiData={DATA_PROP}
+        emojiSource={SOURCE_PROP}
       />
     )).shallow();
 
@@ -51,7 +50,7 @@ describe('Interweave (with emoji)', () => {
           new EmojiMatcher('emoji', { convertUnicode: true, renderUnicode: true }),
         ]}
         content="This has 🐈️ and 🐕️ shortcodes."
-        emojiData={DATA_PROP}
+        emojiSource={SOURCE_PROP}
       />
     )).shallow();
 
@@ -72,7 +71,7 @@ describe('Interweave (with emoji)', () => {
           new EmojiMatcher('emoji', { convertUnicode: true, renderUnicode: true }),
         ]}
         content={'This has \uD83D\uDC31 and \uD83D\uDC36 shortcodes.'}
-        emojiData={DATA_PROP}
+        emojiSource={SOURCE_PROP}
       />
     )).shallow();
 
@@ -93,7 +92,7 @@ describe('Interweave (with emoji)', () => {
           new EmojiMatcher('emoji', { convertUnicode: true, convertShortcode: true }),
         ]}
         content=":cat:"
-        emojiData={DATA_PROP}
+        emojiSource={SOURCE_PROP}
       />
     )).shallow();
 

@@ -6,15 +6,16 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import EmojiCharacter, { EmojiShape, EmojiPathShape } from 'interweave-emoji';
+import EmojiCharacter, { EmojiShape, EmojiPathShape, EmojiSourceShape } from 'interweave-emoji';
 
-import type { Emoji, EmojiPath } from 'interweave-emoji'; // eslint-disable-line
+import type { Emoji, EmojiPath, EmojiSource } from 'interweave-emoji'; // eslint-disable-line
 
 type EmojiProps = {
   active: boolean,
   emoji: Emoji,
   emojiPath: EmojiPath,
   emojiSize: number,
+  emojiSource: EmojiSource,
   onEnter: (emoji: Emoji) => void,
   onLeave: (emoji: Emoji) => void,
   onSelect: (emoji: Emoji) => void,
@@ -35,6 +36,7 @@ export default class EmojiButton extends React.PureComponent<EmojiProps, EmojiSt
     emoji: EmojiShape.isRequired,
     emojiPath: EmojiPathShape.isRequired,
     emojiSize: PropTypes.number.isRequired,
+    emojiSource: EmojiSourceShape.isRequired,
     showImage: PropTypes.bool.isRequired,
     onEnter: PropTypes.func.isRequired,
     onLeave: PropTypes.func.isRequired,
@@ -93,7 +95,7 @@ export default class EmojiButton extends React.PureComponent<EmojiProps, EmojiSt
   };
 
   render() {
-    const { emoji, emojiPath, emojiSize, showImage } = this.props;
+    const { emoji, emojiPath, emojiSize, emojiSource, showImage } = this.props;
     const { classNames } = this.context;
     const { active } = this.state;
     const className = [classNames.emoji];
@@ -116,6 +118,7 @@ export default class EmojiButton extends React.PureComponent<EmojiProps, EmojiSt
           <EmojiCharacter
             emojiPath={emojiPath}
             emojiSize={emojiSize}
+            emojiSource={emojiSource}
             unicode={emoji.unicode}
           />
         ) : (
