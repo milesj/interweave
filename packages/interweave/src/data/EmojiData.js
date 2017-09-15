@@ -27,6 +27,9 @@ export default class EmojiData {
     this.locale = locale;
   }
 
+  /**
+   * Return or create a singleton instance per locale.
+   */
   static getInstance(locale: string) {
     if (!instances[locale]) {
       instances[locale] = new EmojiData(locale);
@@ -35,20 +38,33 @@ export default class EmojiData {
     return instances[locale];
   }
 
+  /**
+   * Return dataset as a list.
+   */
   getData(): Emoji[] {
     return this.data;
   }
 
+  /**
+   * Return dataset as a flattened list.
+   */
   getFlatData(): Emoji[] {
     return this.flatData;
   }
 
+  /**
+   * Package the emoji object with additional data,
+   * while also extracting and partitioning relevant information.
+   */
   packageEmoji(emoji: Object): Emoji {
     const { emoticon, shortcodes } = emoji;
 
-    // Only support the default presentation
-    const unicode = (emoji.text && emoji.type === TEXT) ? emoji.text : emoji.emoji;
-    emoji.unicode = unicode;
+    // Only support the default presentation (non-compact doesnt have unicode property)
+    if (!emoji.unicode) {
+      emoji.unicode = (emoji.text && emoji.type === TEXT) ? emoji.text : emoji.emoji;
+    }
+
+    const { unicode } = emoji;
 
     // Canonicalize the shortcodes for easy reuse
     emoji.canonical_shortcodes = shortcodes.map(code => `:${code}:`);
@@ -74,6 +90,9 @@ export default class EmojiData {
     return emoji;
   }
 
+  /**
+   * Parse and generate emoji datasets.
+   */
   parseEmojiData(data: Emoji[]): Emoji[] {
     data.forEach((emoji) => {
       const packagedEmoji = this.packageEmoji(emoji);
