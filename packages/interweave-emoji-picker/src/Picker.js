@@ -36,9 +36,16 @@ import {
   SKIN_DARK,
   KEY_COMMONLY_USED,
   KEY_SKIN_TONE,
+  COMMON_MODE_RECENT,
+  COMMON_MODE_FREQUENT,
 } from './constants';
 
 import type { Emoji, EmojiPath } from 'interweave'; // eslint-disable-line
+
+type CommonEmoji = {
+  count: number,
+  unicode: string,
+};
 
 type ExcludeMap = { [hexcode: string]: boolean };
 
@@ -97,7 +104,10 @@ class Picker extends React.Component<PickerProps, PickerState> {
     autoFocus: PropTypes.bool,
     classNames: PropTypes.objectOf(PropTypes.string),
     columnCount: PropTypes.number,
-    commonMode: PropTypes.oneOf(['recent', 'frequent']),
+    commonMode: PropTypes.oneOf([
+      COMMON_MODE_RECENT,
+      COMMON_MODE_FREQUENT,
+    ]),
     defaultGroup: PropTypes.oneOf([
       GROUP_COMMONLY_USED,
       GROUP_SMILEYS_PEOPLE,
@@ -143,7 +153,7 @@ class Picker extends React.Component<PickerProps, PickerState> {
     autoFocus: false,
     classNames: {},
     columnCount: 10,
-    commonMode: 'recent',
+    commonMode: COMMON_MODE_RECENT,
     defaultGroup: GROUP_COMMONLY_USED,
     defaultSkinTone: SKIN_NONE,
     disableCommonlyUsed: false,
@@ -280,31 +290,56 @@ class Picker extends React.Component<PickerProps, PickerState> {
    * Add a common emoji to local storage and update the current state.
    */
   addCommonEmoji(emoji: Emoji) {
-    const { disableCommonlyUsed, maxCommonlyUsed } = this.props;
+    const { commonMode, disableCommonlyUsed, maxCommonlyUsed } = this.props;
+    const { unicode } = emoji;
 
     if (disableCommonlyUsed) {
       return;
     }
 
-    let unicodes = this.state.commonEmojis.map(common => common.unicode);
+    const commonEmojis = this.getCommonEmojisFromStorage();
+    const currentIndex = commonEmojis.findIndex(common => common.unicode === unicode);
 
-    // Add to the top of the list
-    unicodes.unshift(emoji.unicode);
+    // Add to the front of the list if it doesnt exist
+    if (currentIndex === -1) {
+      commonEmojis.unshift({
+        count: 1,
+        unicode,
+      });
+    }
 
-    // Trim to the max
-    unicodes = unicodes.slice(0, maxCommonlyUsed);
+    // Move to the front of the list and increase count
+    if (commonMode === COMMON_MODE_RECENT) {
+      if (currentIndex >= 1) {
+        const [common] = commonEmojis.splice(currentIndex, 1);
 
-    // Remove duplicates
-    unicodes = Array.from(new Set(unicodes));
+        commonEmojis.unshift({
+          count: common.count + 1,
+          unicode,
+        });
+      }
 
+    // Increase count and sort by usage
+    } else if (commonMode === COMMON_MODE_FREQUENT) {
+      if (currentIndex >= 0) {
+        commonEmojis[currentIndex].count += 1;
+      }
+
+      commonEmojis.sort((a, b) => b.count - a.count);
+    }
+
+    // Trim to the max and store locally
     try {
-      localStorage.setItem(KEY_COMMONLY_USED, JSON.stringify(unicodes));
+      localStorage.setItem(
+        KEY_COMMONLY_USED,
+        JSON.stringify(commonEmojis.slice(0, maxCommonlyUsed)),
+      );
     } catch (error) {
       // Do nothing
     }
 
     this.setState({
-      commonEmojis: this.generateCommonEmojis(unicodes),
+      commonEmojis: this.generateCommonEmojis(commonEmojis),
     });
   }
 
@@ -381,11 +416,11 @@ class Picker extends React.Component<PickerProps, PickerState> {
    * We only store the unicode character for commonly used emojis,
    * so we need to rebuild the list with full emoji objects.
    */
-  generateCommonEmojis(unicodes: string[]): Emoji[] {
+  generateCommonEmojis(commonEmojis: CommonEmoji[]): Emoji[] {
     const data = EmojiData.getInstance(this.context.emoji.locale);
 
-    return unicodes
-      .map(unicode => data.EMOJIS[unicode])
+    return commonEmojis
+      .map(emoji => data.EMOJIS[emoji.unicode])
       .filter(Boolean);
   }
 
@@ -405,7 +440,7 @@ class Picker extends React.Component<PickerProps, PickerState> {
   /**
    * Return the commonly used emojis from local storage.
    */
-  getCommonEmojisFromStorage(): string[] {
+  getCommonEmojisFromStorage(): CommonEmoji[] {
     const common = localStorage.getItem(KEY_COMMONLY_USED);
 
     return common ? JSON.parse(common) : [];

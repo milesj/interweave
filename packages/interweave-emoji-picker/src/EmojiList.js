@@ -16,6 +16,7 @@ import {
   GROUP_SMILEYS_PEOPLE,
   SCROLL_BUFFER,
   SCROLL_DEBOUNCE,
+  COMMON_MODE_RECENT,
 } from './constants';
 
 import type { Emoji, EmojiPath } from 'interweave'; // eslint-disable-line
@@ -266,7 +267,7 @@ export default class EmojiList extends React.PureComponent<EmojiListProps, Emoji
             >
               <header className={classNames.emojisHeader}>
                 {(group === GROUP_COMMONLY_USED) ? (
-                  messages[(commonMode === 'recent') ? 'recentlyUsed' : 'frequentlyUsed']
+                  messages[(commonMode === COMMON_MODE_RECENT) ? 'recentlyUsed' : 'frequentlyUsed']
                 ) : (
                   messages[group]
                 )}
