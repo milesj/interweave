@@ -7,7 +7,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import type { EmojiPath } from 'interweave'; // eslint-disable-line
+import type { EmojiPath } from 'interweave-emoji'; // eslint-disable-line
 
 type GroupProps = {
   activeGroup: string,

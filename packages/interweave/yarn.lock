@@ -1469,14 +1469,6 @@ emoji-regex@^6.1.0:
   version "6.5.1"
   resolved "https://registry.yarnpkg.com/emoji-regex/-/emoji-regex-6.5.1.tgz#9baea929b155565c11ea41c6626eaa65cef992c2"
 
-emojibase-regex@^1.0.6:
-  version "1.0.6"
-  resolved "https://registry.yarnpkg.com/emojibase-regex/-/emojibase-regex-1.0.6.tgz#79f4ee8151008b03381eb89ffe8454c14367e254"
-
-emojibase@^1.3.2:
-  version "1.4.0"
-  resolved "https://registry.yarnpkg.com/emojibase/-/emojibase-1.4.0.tgz#1ce085283cd3f75298d0a3ede3cf4df2232afb7c"
-
 encoding@^0.1.11:
   version "0.1.12"
   resolved "https://registry.yarnpkg.com/encoding/-/encoding-0.1.12.tgz#538b66f3ee62cd1ab51ec323829d1f9480c74beb"

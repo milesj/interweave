@@ -30,10 +30,9 @@ export type Attributes = { [key: string]: string | number | boolean };
 
 export type MatcherFactory = (match: string, props: Object) => React$Node;
 
+export type MatchCallback = (matches: string[]) => Object;
+
 export type MatchResponse = {
-  emoticon?: string,
   match: string,
-  shortcode?: string,
-  unicode?: string,
-  [key: string]: mixed,
+  [key: string]: string,
 };

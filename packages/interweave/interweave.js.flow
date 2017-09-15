@@ -3,24 +3,6 @@ import PropTypes from 'prop-types';
 import { Matcher } from 'interweave';
 
 declare module 'interweave' {
-  import type { Emoji as BaseEmoji } from 'emojibase';
-
-  declare export type Emoji = {
-    ...BaseEmoji,
-    annotation: string,
-    canonical_shortcodes: string[],
-    group: number,
-    hexcode: string,
-    primary_shortcode: string,
-    unicode: string,
-    version: number,
-  };
-
-  declare export type EmojiSize = string | number;
-
-  declare export type EmojiPath = string |
-    (hexcode: string, enlarged: boolean, smallSize: EmojiSize, largeSize: EmojiSize) => string;
-
   declare export type AfterParseCallback = (content: React$Node[], props: Object) => React$Node[];
 
   declare export type BeforeParseCallback = (content: string, props: Object) => string;
@@ -33,6 +15,13 @@ declare module 'interweave' {
 
   declare export type MatcherFactory = (match: string, props: Object) => React$Node;
 
+  declare export type MatchCallback = (matches: string[]) => Object;
+
+  declare export type MatchResponse = {
+    match: string,
+    [key: string]: string,
+  };
+
   declare export class Matcher<T> {
     factory: ?MatcherFactory;
     inverseName: string;
@@ -42,10 +31,8 @@ declare module 'interweave' {
     createElement(match: string, props?: Object): React$Node;
     replaceWith(match: string, props?: Object): React$Node;
     asTag(): string;
-    match(string: string): ?{
-      match: string,
-      [key: string]: any,
-    };
+    match(string: string): ?MatchResponse;
+    doMatch(string: string, pattern: string | RegExp, callback: MatchCallback): ?MatchResponse;
     onAfterParse(content: React$Node[], props: Object): React$Node[];
     onBeforeParse(content: string, props: Object): string;
   }
@@ -104,21 +91,6 @@ declare module 'interweave/lib/components/Email' {
   }> {}
 }
 
-declare module 'interweave/lib/components/Emoji' {
-  import type { EmojiPath, EmojiSize } from 'interweave';
-
-  declare export default class Emoji extends React.PureComponent<{
-    emojiLargeSize: number,
-    emojiPath: EmojiPath,
-    emojiSize: EmojiSize,
-    emoticon: string,
-    enlargeEmoji: boolean,
-    locale: string,
-    shortcode: string,
-    unicode: string,
-  }> {}
-}
-
 declare module 'interweave/lib/components/Hashtag' {
   declare export default class Hashtag extends React.PureComponent<{
     children: string,
@@ -153,49 +125,8 @@ declare module 'interweave/lib/components/Url' {
   }> {}
 }
 
-declare module 'interweave/lib/data/EmojiData' {
-  import type { Emoji } from 'interweave';
-
-  declare export default class EmojiData {
-    EMOJIS: { [unicode: string]: Emoji };
-    EMOTICON_TO_UNICODE: { [emoticon: string]: string };
-    SHORTCODE_TO_UNICODE: { [shortcode: string]: string };
-    UNICODE_TO_SHORTCODES: { [unicode: string]: string[] };
-
-    constructor(locale: string): void;
-    static getInstance(locale: string): EmojiData;
-    getData(): Emoji[];
-    getFlatData(): Emoji[];
-    packageEmoji(emoji: Object): Emoji;
-    parseEmojiData(data: Object[]): Emoji[];
-  }
-}
-
-declare module 'interweave/lib/loaders/withEmojiData' {
-  import type { Emoji } from 'interweave';
-
-  declare export default function withEmojiData(
-    Component: React$ComponentType<*>,
-  ): React$ComponentType<{
-    compact: boolean,
-    emojis: Emoji[],
-    locale: string,
-    version: string,
-  }>;
-}
-
 declare module 'interweave/lib/matchers/EmailMatcher' {
   declare export default class EmailMatcher extends Matcher<Object> {}
-}
-
-declare module 'interweave/lib/matchers/EmojiMatcher' {
-  declare export default class EmojiMatcher extends Matcher<{
-    convertEmoticon: boolean,
-    convertShortcode: boolean,
-    convertUnicode: boolean,
-    enlargeThreshold: number,
-    renderUnicode: boolean,
-  }> {}
 }
 
 declare module 'interweave/lib/matchers/HashtagMatcher' {
@@ -211,10 +142,4 @@ declare module 'interweave/lib/matchers/UrlMatcher' {
     customTLDs: string[],
     validateTLD: boolean,
   }> {}
-}
-
-declare module 'interweave/lib/shapes' {
-  declare export var EmojiShape: PropTypes;
-  declare export var EmojiPathShape: PropTypes;
-  declare export var EmojiContextShape: PropTypes;
 }

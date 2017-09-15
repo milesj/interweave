@@ -8,17 +8,21 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import { fromHexcodeToCodepoint } from 'emojibase';
-import EmojiData from '../data/EmojiData';
+import EmojiData from './EmojiData';
 import {
-  EmojiContextShape,
+  EmojiDataShape,
   EmojiPathShape,
   EmojiSizeShape,
-} from '../shapes';
+} from './shapes';
 
 type EmojiSize = string | number;
 
 type EmojiProps = {
+  emojiData: {
+    compact: boolean,
+    locale: string,
+    version: string,
+  },
   emojiLargeSize: EmojiSize,
   emojiPath: string |
     (hexcode: string, enlarged: boolean, smallSize: EmojiSize, largeSize: EmojiSize) => string,
@@ -32,12 +36,9 @@ type EmojiProps = {
 
 const LARGE_MULTIPLIER: number = 3;
 
-export default class Emoji extends React.PureComponent<EmojiProps> {
-  static contextTypes = {
-    emoji: EmojiContextShape.isRequired,
-  };
-
+export default class EmojiComponent extends React.PureComponent<EmojiProps> {
   static propTypes = {
+    emojiData: EmojiDataShape.isRequired,
     emojiLargeSize: EmojiSizeShape,
     emojiPath: EmojiPathShape,
     emojiSize: EmojiSizeShape,
@@ -58,7 +59,7 @@ export default class Emoji extends React.PureComponent<EmojiProps> {
   };
 
   render() {
-    const data = EmojiData.getInstance(this.context.emoji.locale);
+    const data = EmojiData.getInstance(this.props.emojiData.locale);
     const {
       emojiLargeSize,
       emojiPath,
@@ -147,7 +148,6 @@ export default class Emoji extends React.PureComponent<EmojiProps> {
         data-unicode={unicode}
         data-hexcode={emoji.hexcode}
         data-shortcodes={shortcodes.join(', ')}
-        data-codepoint={fromHexcodeToCodepoint(emoji.hexcode).join('-')}
       />
     );
   }

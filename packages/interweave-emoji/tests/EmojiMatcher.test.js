@@ -2,16 +2,12 @@ import React from 'react';
 import EMOJI_REGEX from 'emojibase-regex';
 import EMOTICON_REGEX from 'emojibase-regex/emoticon';
 import SHORTCODE_REGEX from 'emojibase-regex/shortcode';
-import Parser from '../../src/Parser';
-import Emoji from '../../src/components/Emoji';
-import EmojiMatcher from '../../src/matchers/EmojiMatcher';
-import EmojiData from '../../src/data/EmojiData';
-import {
-  VALID_EMOJIS,
-  TOKEN_LOCATIONS,
-  createExpectedToken,
-  parentConfig,
-} from '../mocks';
+import Parser from '../../interweave/src/Parser';
+import { TOKEN_LOCATIONS, createExpectedToken, parentConfig } from '../../interweave/tests/mocks';
+import Emoji from '../src/EmojiComponent';
+import EmojiMatcher from '../src/EmojiMatcher';
+import EmojiData from '../src/EmojiData';
+import { DATA_PROP, VALID_EMOJIS } from './mocks';
 
 const INVALID_UNICODE = [
   '\u02A9',
@@ -31,7 +27,7 @@ const INVALID_EMOTICON = [
 ];
 const MAN_EMOJI = '👨';
 
-describe('matchers/EmojiMatcher', () => {
+describe('EmojiMatcher', () => {
   let EMOJIS = {};
   let EMOTICON_TO_UNICODE = {};
   let SHORTCODE_TO_UNICODE = {};
@@ -135,9 +131,16 @@ describe('matchers/EmojiMatcher', () => {
   });
 
   describe('matches all emojis in a string', () => {
-    const parser = new Parser('', {}, [matcher]);
-    const createUnicode = (unicode, key) => matcher.replaceWith(unicode, { unicode, key });
+    const parser = new Parser('', {
+      emojiData: DATA_PROP,
+    }, [matcher]);
+    const createUnicode = (unicode, key) => matcher.replaceWith(unicode, {
+      emojiData: DATA_PROP,
+      unicode,
+      key,
+    });
     const createShort = (shortcode, key) => matcher.replaceWith(shortcode, {
+      emojiData: DATA_PROP,
       unicode: SHORTCODE_TO_UNICODE[shortcode],
       shortcode,
       key,
@@ -216,11 +219,19 @@ describe('matchers/EmojiMatcher', () => {
       const uniMatcher = new EmojiMatcher('emoji', { renderUnicode: true });
 
       it(`returns the unicode as is when using \`renderUnicode\`: ${shortcode}`, () => {
-        expect(uniMatcher.replaceWith(unicode, { unicode, shortcode })).toBe(unicode);
+        expect(uniMatcher.replaceWith(unicode, {
+          emojiData: DATA_PROP,
+          unicode,
+          shortcode,
+        })).toBe(unicode);
       });
 
       it(`returns the unicode when providing a shortcode using \`renderUnicode\`: ${shortcode}`, () => {
-        expect(uniMatcher.replaceWith(shortcode, { unicode, shortcode })).toBe(unicode);
+        expect(uniMatcher.replaceWith(shortcode, {
+          emojiData: DATA_PROP,
+          unicode,
+          shortcode,
+        })).toBe(unicode);
       });
     });
   });
@@ -228,9 +239,9 @@ describe('matchers/EmojiMatcher', () => {
   describe('onAfterParse', () => {
     it('enlarges a single <Emoji/>', () => {
       expect(matcher.onAfterParse([
-        <Emoji key={0} shortcode=":cat:" />,
+        <Emoji key={0} shortcode=":cat:" emojiData={DATA_PROP} />,
       ])).toEqual([
-        <Emoji key={0} shortcode=":cat:" enlargeEmoji />,
+        <Emoji key={0} shortcode=":cat:" emojiData={DATA_PROP} enlargeEmoji />,
       ]);
     });
 
@@ -238,13 +249,13 @@ describe('matchers/EmojiMatcher', () => {
       matcher.options.enlargeThreshold = 3;
 
       expect(matcher.onAfterParse([
-        <Emoji key={0} shortcode=":cat:" />,
-        <Emoji key={1} shortcode=":dog:" />,
-        <Emoji key={2} shortcode=":man:" />,
+        <Emoji key={0} shortcode=":cat:" emojiData={DATA_PROP} />,
+        <Emoji key={1} shortcode=":dog:" emojiData={DATA_PROP} />,
+        <Emoji key={2} shortcode=":man:" emojiData={DATA_PROP} />,
       ])).toEqual([
-        <Emoji key={0} shortcode=":cat:" enlargeEmoji />,
-        <Emoji key={1} shortcode=":dog:" enlargeEmoji />,
-        <Emoji key={2} shortcode=":man:" enlargeEmoji />,
+        <Emoji key={0} shortcode=":cat:" emojiData={DATA_PROP} enlargeEmoji />,
+        <Emoji key={1} shortcode=":dog:" emojiData={DATA_PROP} enlargeEmoji />,
+        <Emoji key={2} shortcode=":man:" emojiData={DATA_PROP} enlargeEmoji />,
       ]);
     });
 
@@ -252,17 +263,17 @@ describe('matchers/EmojiMatcher', () => {
       matcher.options.enlargeThreshold = 3;
 
       expect(matcher.onAfterParse([
-        <Emoji key={0} shortcode=":cat:" />,
-        <Emoji key={1} shortcode=":man:" />,
+        <Emoji key={0} shortcode=":cat:" emojiData={DATA_PROP} />,
+        <Emoji key={1} shortcode=":man:" emojiData={DATA_PROP} />,
       ])).toEqual([
-        <Emoji key={0} shortcode=":cat:" enlargeEmoji />,
-        <Emoji key={1} shortcode=":man:" enlargeEmoji />,
+        <Emoji key={0} shortcode=":cat:" emojiData={DATA_PROP} enlargeEmoji />,
+        <Emoji key={1} shortcode=":man:" emojiData={DATA_PROP} enlargeEmoji />,
       ]);
 
       expect(matcher.onAfterParse([
-        <Emoji key={0} shortcode=":cat:" />,
+        <Emoji key={0} shortcode=":cat:" emojiData={DATA_PROP} />,
       ])).toEqual([
-        <Emoji key={0} shortcode=":cat:" enlargeEmoji />,
+        <Emoji key={0} shortcode=":cat:" emojiData={DATA_PROP} enlargeEmoji />,
       ]);
     });
 
@@ -270,17 +281,17 @@ describe('matchers/EmojiMatcher', () => {
       matcher.options.enlargeThreshold = 3;
 
       expect(matcher.onAfterParse([
-        <Emoji key={0} shortcode=":cat:" />,
+        <Emoji key={0} shortcode=":cat:" emojiData={DATA_PROP} />,
         ' ',
-        <Emoji key={1} shortcode=":dog:" />,
+        <Emoji key={1} shortcode=":dog:" emojiData={DATA_PROP} />,
         '\n',
-        <Emoji key={2} shortcode=":man:" />,
+        <Emoji key={2} shortcode=":man:" emojiData={DATA_PROP} />,
       ])).toEqual([
-        <Emoji key={0} shortcode=":cat:" enlargeEmoji />,
+        <Emoji key={0} shortcode=":cat:" emojiData={DATA_PROP} enlargeEmoji />,
         ' ',
-        <Emoji key={1} shortcode=":dog:" enlargeEmoji />,
+        <Emoji key={1} shortcode=":dog:" emojiData={DATA_PROP} enlargeEmoji />,
         '\n',
-        <Emoji key={2} shortcode=":man:" enlargeEmoji />,
+        <Emoji key={2} shortcode=":man:" emojiData={DATA_PROP} enlargeEmoji />,
       ]);
     });
 
@@ -288,10 +299,10 @@ describe('matchers/EmojiMatcher', () => {
       matcher.options.enlargeThreshold = 3;
 
       const nodes = [
-        <Emoji key={0} shortcode=":cat:" />,
-        <Emoji key={1} shortcode=":dog:" />,
-        <Emoji key={2} shortcode=":man:" />,
-        <Emoji key={3} shortcode=":woman:" />,
+        <Emoji key={0} shortcode=":cat:" emojiData={DATA_PROP} />,
+        <Emoji key={1} shortcode=":dog:" emojiData={DATA_PROP} />,
+        <Emoji key={2} shortcode=":man:" emojiData={DATA_PROP} />,
+        <Emoji key={3} shortcode=":woman:" emojiData={DATA_PROP} />,
       ];
 
       expect(matcher.onAfterParse(nodes)).toEqual(nodes);
@@ -301,9 +312,9 @@ describe('matchers/EmojiMatcher', () => {
       matcher.options.enlargeThreshold = 3;
 
       const nodes = [
-        <Emoji key={0} shortcode=":cat:" />,
+        <Emoji key={0} shortcode=":cat:" emojiData={DATA_PROP} />,
         'Foo',
-        <Emoji key={2} shortcode=":man:" />,
+        <Emoji key={2} shortcode=":man:" emojiData={DATA_PROP} />,
       ];
 
       expect(matcher.onAfterParse(nodes)).toEqual(nodes);
@@ -313,9 +324,9 @@ describe('matchers/EmojiMatcher', () => {
       matcher.options.enlargeThreshold = 3;
 
       const nodes = [
-        <Emoji key={0} shortcode=":cat:" />,
+        <Emoji key={0} shortcode=":cat:" emojiData={DATA_PROP} />,
         <div key="foo">Foo</div>,
-        <Emoji key={2} shortcode=":man:" />,
+        <Emoji key={2} shortcode=":man:" emojiData={DATA_PROP} />,
       ];
 
       expect(matcher.onAfterParse(nodes)).toEqual(nodes);

@@ -5,17 +5,14 @@
  */
 
 import React from 'react';
+import { Matcher } from 'interweave';
 import EMOJI_REGEX from 'emojibase-regex';
 import EMOTICON_REGEX from 'emojibase-regex/emoticon';
 import SHORTCODE_REGEX from 'emojibase-regex/shortcode';
-import Matcher from '../Matcher';
-import Emoji from '../components/Emoji';
-import EmojiData from '../data/EmojiData';
+import EmojiComponent from './EmojiComponent';
+import EmojiData from './EmojiData';
 
-import type {
-  MatchResponse,
-  MatcherFactory,
-} from '../types';
+import type { MatcherFactory, MatchResponse } from 'interweave'; // eslint-disable-line
 
 type EmojiOptions = {
   convertEmoticon: boolean,
@@ -49,7 +46,7 @@ export default class EmojiMatcher extends Matcher<EmojiOptions> {
     }
 
     return (
-      <Emoji {...props} />
+      <EmojiComponent {...props} />
     );
   }
 
@@ -129,9 +126,9 @@ export default class EmojiMatcher extends Matcher<EmojiOptions> {
   /**
    * Load emoji data before matching.
    */
-  onBeforeParse(content: string, props: Object, context: Object): string {
-    if (context.emoji) {
-      this.data = EmojiData.getInstance(context.emoji.locale);
+  onBeforeParse(content: string, props: Object): string {
+    if (props.emojiData) {
+      this.data = EmojiData.getInstance(props.emojiData.locale);
     } else if (__DEV__) {
       throw new Error('Missing emoji data. Have you loaded using `withEmojiData`?');
     }
@@ -164,7 +161,7 @@ export default class EmojiMatcher extends Matcher<EmojiOptions> {
 
       } else if (React.isValidElement(item)) {
         // Only count towards emojis
-        if (item && item.type === Emoji) {
+        if (item && item.type === EmojiComponent) {
           count += 1;
           valid = true;
 

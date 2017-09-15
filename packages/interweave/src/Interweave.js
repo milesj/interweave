@@ -12,11 +12,10 @@ import Filter from './Filter';
 import Matcher from './Matcher';
 import Parser from './Parser';
 import Element from './components/Element';
-import { EmojiContextShape } from './shapes';
 
-type BeforeParseCallback = (content: string, props: Object, context: Object) => string;
+type BeforeParseCallback = (content: string, props: Object) => string;
 
-type AfterParseCallback = (content: React$Node[], props: Object, context: Object) => React$Node[];
+type AfterParseCallback = (content: React$Node[], props: Object) => React$Node[];
 
 type InterweaveProps = {
   content: string,
@@ -35,10 +34,6 @@ type InterweaveProps = {
 };
 
 export default class Interweave extends React.Component<InterweaveProps> {
-  static contextTypes = {
-    emoji: EmojiContextShape,
-  };
-
   static propTypes = {
     content: PropTypes.string,
     disableFilters: PropTypes.bool,
@@ -101,7 +96,7 @@ export default class Interweave extends React.Component<InterweaveProps> {
 
     // Trigger before callbacks
     const markup = beforeCallbacks.reduce((string, callback) => {
-      const nextString = callback(string, this.props, this.context);
+      const nextString = callback(string, this.props);
 
       if (__DEV__) {
         if (typeof nextString !== 'string') {
@@ -117,7 +112,7 @@ export default class Interweave extends React.Component<InterweaveProps> {
 
     // Trigger after callbacks
     const nodes = afterCallbacks.reduce((parserNodes, callback) => {
-      const nextNodes = callback(parserNodes, this.props, this.context);
+      const nextNodes = callback(parserNodes, this.props);
 
       if (__DEV__) {
         if (!Array.isArray(nextNodes)) {

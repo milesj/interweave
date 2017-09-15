@@ -1,7 +1,7 @@
 {
   "name": "interweave",
   "version": "7.0.0-rc.3",
-  "description": "React library to safely render HTML, filter attributes, autowrap text with matchers, render emoji characters, and much more.",
+  "description": "React library to safely render HTML, filter attributes, autowrap text, autolink URLs and emails, and much more.",
   "keywords": [
     "interweave",
     "inject",
@@ -33,16 +33,13 @@
   "license": "MIT",
   "dependencies": {
     "babel-runtime": "^6.26.0",
-    "emojibase-regex": "^1.0.6",
     "prop-types": "^15.5.10"
   },
   "peerDependencies": {
-    "emojibase": "^1.4.0",
     "react": "^15.3.0 || ^16.0.0"
   },
   "devDependencies": {
     "@milesj/build-tool-config": "^0.24.0",
-    "emojibase": "^1.4.0",
     "react": "^15.6.1"
   }
 }

@@ -1,8 +1,8 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import withEmojiData, { resetLoaded } from '../../src/loaders/withEmojiData';
+import withEmojiData, { resetLoaded } from '../src/withEmojiData';
 
-describe('loaders/withEmojiData', () => {
+describe('withEmojiData', () => {
   beforeEach(() => {
     global.fetch = jest.fn(() => Promise.resolve({
       ok: true,

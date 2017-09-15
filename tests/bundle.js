@@ -5,11 +5,11 @@ import ReactDOM from 'react-dom';
 import { stripHexcode } from 'emojibase';
 import BaseInterweave from '../packages/interweave/src/Interweave';
 import EmailMatcher from '../packages/interweave/src/matchers/EmailMatcher';
-import EmojiMatcher from '../packages/interweave/src/matchers/EmojiMatcher';
 import HashtagMatcher from '../packages/interweave/src/matchers/HashtagMatcher';
 import IpMatcher from '../packages/interweave/src/matchers/IpMatcher';
 import UrlMatcher from '../packages/interweave/src/matchers/UrlMatcher';
-import withEmojiData from '../packages/interweave/src/loaders/withEmojiData';
+import EmojiMatcher from '../packages/interweave-emoji/src/EmojiMatcher';
+import withEmojiData from '../packages/interweave-emoji/src/withEmojiData';
 import EmojiPicker from '../packages/interweave-emoji-picker/src/Picker';
 
 const contentWithNewLines = `This block has multiple new lines.

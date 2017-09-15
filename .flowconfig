@@ -9,6 +9,7 @@
 
 [libs]
 ./packages/interweave/interweave.js.flow
+./packages/interweave-emoji/interweave-emoji.js.flow
 ./node_modules/emojibase/emojibase.js.flow
 ./node_modules/emojibase-regex/emojibase-regex.js.flow
 ./node_modules/emojibase-test-utils/emojibase-test-utils.js.flow

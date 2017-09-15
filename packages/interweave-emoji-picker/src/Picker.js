@@ -8,9 +8,13 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import EmojiData from 'interweave/lib/data/EmojiData';
-import withEmojiData from 'interweave/lib/loaders/withEmojiData';
-import { EmojiShape, EmojiPathShape, EmojiContextShape } from 'interweave/lib/shapes';
+import {
+  withEmojiData,
+  EmojiData,
+  EmojiShape,
+  EmojiDataShape,
+  EmojiPathShape,
+} from 'interweave-emoji';
 import EmojiList from './EmojiList';
 import SkinTonePalette from './SkinTonePalette';
 import GroupTabs from './GroupTabs';
@@ -40,7 +44,7 @@ import {
   COMMON_MODE_FREQUENT,
 } from './constants';
 
-import type { Emoji, EmojiPath } from 'interweave'; // eslint-disable-line
+import type { Emoji, EmojiPath } from 'interweave-emoji'; // eslint-disable-line
 
 type CommonEmoji = {
   count: number,
@@ -61,6 +65,11 @@ type PickerProps = {
   disableSearch: boolean,
   disableSkinTones: boolean,
   displayOrder: string[],
+  emojiData: {
+    compact: boolean,
+    locale: string,
+    version: string,
+  },
   emojiPath: EmojiPath,
   emojis: Emoji[],
   emojiSize: number,
@@ -96,10 +105,6 @@ class Picker extends React.Component<PickerProps, PickerState> {
     messages: PropTypes.objectOf(PropTypes.node),
   };
 
-  static contextTypes = {
-    emoji: EmojiContextShape.isRequired,
-  };
-
   static propTypes = {
     autoFocus: PropTypes.bool,
     classNames: PropTypes.objectOf(PropTypes.string),
@@ -132,6 +137,7 @@ class Picker extends React.Component<PickerProps, PickerState> {
     disableSearch: PropTypes.bool,
     disableSkinTones: PropTypes.bool,
     displayOrder: PropTypes.arrayOf(PropTypes.string),
+    emojiData: EmojiDataShape.isRequired,
     emojiPath: EmojiPathShape.isRequired,
     emojiSize: PropTypes.number.isRequired,
     emojis: PropTypes.arrayOf(EmojiShape).isRequired,
@@ -175,8 +181,8 @@ class Picker extends React.Component<PickerProps, PickerState> {
     onSelectSkinTone() {},
   };
 
-  constructor(props: PickerProps, context: Object) {
-    super(props, context);
+  constructor(props: PickerProps) {
+    super(props);
 
     const {
       defaultGroup,
@@ -417,7 +423,7 @@ class Picker extends React.Component<PickerProps, PickerState> {
    * so we need to rebuild the list with full emoji objects.
    */
   generateCommonEmojis(commonEmojis: CommonEmoji[]): Emoji[] {
-    const data = EmojiData.getInstance(this.context.emoji.locale);
+    const data = EmojiData.getInstance(this.props.emojiData.locale);
 
     return commonEmojis
       .map(emoji => data.EMOJIS[emoji.unicode])
@@ -460,7 +466,6 @@ class Picker extends React.Component<PickerProps, PickerState> {
     const toneIndex = SKIN_TONES.findIndex(skinTone => (skinTone === activeSkinTone));
     const skinnedEmoji = (emoji.skins || []).find(skin => (skin.tone && skin.tone === toneIndex));
 
-    // $FlowIgnore
     return skinnedEmoji || emoji;
   }
 

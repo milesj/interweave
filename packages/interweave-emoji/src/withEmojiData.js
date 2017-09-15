@@ -10,8 +10,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { fetchFromCDN } from 'emojibase';
 import { SUPPORTED_LOCALES } from 'emojibase/lib/constants';
-import EmojiData from '../data/EmojiData';
-import { EmojiContextShape } from '../shapes';
+import EmojiData from './EmojiData';
 
 import type { Emoji } from 'emojibase'; // eslint-disable-line
 
@@ -40,11 +39,7 @@ export function resetLoaded() {
 export default function withEmojiData(
   Component: React$ComponentType<*>,
 ): React$ComponentType<EmojiLoaderProps> {
-  return class EmojiLoader extends React.Component<EmojiLoaderProps, EmojiLoaderState> {
-    static childContextTypes = {
-      emoji: EmojiContextShape,
-    };
-
+  return class EmojiDataLoader extends React.Component<EmojiLoaderProps, EmojiLoaderState> {
     static propTypes = {
       compact: PropTypes.bool,
       emojis: PropTypes.oneOfType([
@@ -65,18 +60,6 @@ export default function withEmojiData(
     state = {
       emojis: [],
     };
-
-    getChildContext() {
-      const { compact, locale, version } = this.props;
-
-      return {
-        emoji: {
-          compact,
-          locale,
-          version,
-        },
-      };
-    }
 
     componentWillMount() {
       const { compact, emojis, locale, version } = this.props;
@@ -141,9 +124,14 @@ export default function withEmojiData(
      */
     render() {
       const { compact, emojis, locale, version, ...props } = this.props;
+      const emojiData = {
+        compact,
+        locale,
+        version,
+      };
 
       return (
-        <Component {...props} emojis={this.state.emojis} />
+        <Component {...props} emojis={this.state.emojis} emojiData={emojiData} />
       );
     }
   };

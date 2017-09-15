@@ -6,9 +6,7 @@
 
 import React from 'react';
 
-import type { MatcherFactory, MatchResponse } from './types';
-
-type MatchCallback = (matches: string[]) => ({ [key: string]: string | Object });
+import type { MatcherFactory, MatchCallback, MatchResponse } from './types';
 
 export default class Matcher<T: Object> {
   options: T;
@@ -104,14 +102,14 @@ export default class Matcher<T: Object> {
   /**
    * Callback triggered before parsing.
    */
-  onBeforeParse(content: string, props: Object, context: Object): string {
+  onBeforeParse(content: string, props: Object): string {
     return content;
   }
 
   /**
    * Callback triggered after parsing.
    */
-  onAfterParse(content: React$Node[], props: Object, context: Object): React$Node[] {
+  onAfterParse(content: React$Node[], props: Object): React$Node[] {
     return content;
   }
 }

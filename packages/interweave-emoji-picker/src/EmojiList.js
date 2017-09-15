@@ -7,7 +7,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import debounce from 'lodash.debounce';
-import { EmojiShape, EmojiPathShape } from 'interweave/lib/shapes';
+import { EmojiShape, EmojiPathShape } from 'interweave-emoji';
 import EmojiButton from './Emoji';
 import {
   GROUPS,
@@ -19,7 +19,7 @@ import {
   COMMON_MODE_RECENT,
 } from './constants';
 
-import type { Emoji, EmojiPath } from 'interweave'; // eslint-disable-line
+import type { Emoji, EmojiPath } from 'interweave-emoji'; // eslint-disable-line
 
 type EmojiListProps = {
   activeEmojiIndex: number,
