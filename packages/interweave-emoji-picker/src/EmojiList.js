@@ -11,7 +11,7 @@ import { EmojiShape, EmojiPathShape } from 'interweave/lib/shapes';
 import EmojiButton from './Emoji';
 import {
   GROUPS,
-  GROUP_RECENTLY_USED,
+  GROUP_COMMONLY_USED,
   GROUP_SEARCH_RESULTS,
   GROUP_SMILEYS_PEOPLE,
   SCROLL_BUFFER,
@@ -23,15 +23,15 @@ import type { Emoji, EmojiPath } from 'interweave'; // eslint-disable-line
 type EmojiListProps = {
   activeEmojiIndex: number,
   activeGroup: string,
+  commonEmojis: Emoji[],
   emojiPath: EmojiPath,
   emojis: Emoji[],
   emojiSize: number,
-  hasRecentlyUsed: boolean,
+  hasCommonlyUsed: boolean,
   onEnterEmoji: (emoji: Emoji) => void,
   onLeaveEmoji: (emoji: Emoji) => void,
   onSelectEmoji: (emoji: Emoji) => void,
   onSelectGroup: (group: string, reset?: boolean) => void,
-  recentEmojis: Emoji[],
   scrollToGroup: string,
   searchQuery: string,
 };
@@ -51,11 +51,11 @@ export default class EmojiList extends React.PureComponent<EmojiListProps, Emoji
   static propTypes = {
     activeEmojiIndex: PropTypes.number.isRequired,
     activeGroup: PropTypes.string.isRequired,
+    commonEmojis: PropTypes.arrayOf(EmojiShape).isRequired,
     emojiPath: EmojiPathShape.isRequired,
     emojiSize: PropTypes.number.isRequired,
     emojis: PropTypes.arrayOf(EmojiShape).isRequired,
-    hasRecentlyUsed: PropTypes.bool.isRequired,
-    recentEmojis: PropTypes.arrayOf(EmojiShape).isRequired,
+    hasCommonlyUsed: PropTypes.bool.isRequired,
     scrollToGroup: PropTypes.string.isRequired,
     searchQuery: PropTypes.string.isRequired,
     onEnterEmoji: PropTypes.func.isRequired,
@@ -69,14 +69,14 @@ export default class EmojiList extends React.PureComponent<EmojiListProps, Emoji
 
     const loadedGroups = [
       activeGroup,
-      GROUP_RECENTLY_USED,
+      GROUP_COMMONLY_USED,
       GROUP_SEARCH_RESULTS,
     ];
 
-    // When recently used emojis are rendered,
+    // When commonly used emojis are rendered,
     // the smileys group is usually within view as well,
     // so we should preload both of them.
-    if (activeGroup === GROUP_RECENTLY_USED) {
+    if (activeGroup === GROUP_COMMONLY_USED) {
       loadedGroups.push(GROUP_SMILEYS_PEOPLE);
     }
 
@@ -106,12 +106,12 @@ export default class EmojiList extends React.PureComponent<EmojiListProps, Emoji
    * Partition the dataset into multiple arrays based on the group they belong to.
    */
   groupEmojis(): { [group: string]: Emoji[] } {
-    const { emojis, hasRecentlyUsed, recentEmojis, searchQuery } = this.props;
+    const { commonEmojis, emojis, hasCommonlyUsed, searchQuery } = this.props;
     const groups = {};
 
-    // Add recently used group if not searching
-    if (!searchQuery && hasRecentlyUsed) {
-      groups[GROUP_RECENTLY_USED] = recentEmojis;
+    // Add commonly used group if not searching
+    if (!searchQuery && hasCommonlyUsed) {
+      groups[GROUP_COMMONLY_USED] = commonEmojis;
     }
 
     // Partition emojis into separate groups
@@ -127,7 +127,7 @@ export default class EmojiList extends React.PureComponent<EmojiListProps, Emoji
 
     // Sort each group
     Object.keys(groups).forEach((group) => {
-      if (group !== GROUP_RECENTLY_USED) {
+      if (group !== GROUP_COMMONLY_USED) {
         groups[group].sort((a, b) => a.order - b.order);
       }
 

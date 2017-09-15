@@ -17,7 +17,7 @@ import GroupTabs from './GroupTabs';
 import PreviewBar from './PreviewBar';
 import SearchBar from './SearchBar';
 import {
-  GROUP_RECENTLY_USED,
+  GROUP_COMMONLY_USED,
   GROUP_SMILEYS_PEOPLE,
   GROUP_ANIMALS_NATURE,
   GROUP_FOOD_DRINK,
@@ -34,7 +34,7 @@ import {
   SKIN_MEDIUM,
   SKIN_MEDIUM_DARK,
   SKIN_DARK,
-  KEY_RECENTLY_USED,
+  KEY_COMMONLY_USED,
   KEY_SKIN_TONE,
 } from './constants';
 
@@ -48,8 +48,8 @@ type PickerProps = {
   columnCount: number,
   defaultGroup: string,
   defaultSkinTone: string,
+  disableCommonlyUsed: boolean,
   disablePreview: boolean,
-  disableRecentlyUsed: boolean,
   disableSearch: boolean,
   disableSkinTones: boolean,
   displayOrder: string[],
@@ -60,8 +60,8 @@ type PickerProps = {
   hideEmoticon: boolean,
   hideShortcodes: boolean,
   icons: { [key: string]: React$Node },
+  maxCommonlyUsed: number,
   maxEmojiVersion: number,
-  maxRecentlyUsed: number,
   messages: { [key: string]: string },
   onHoverEmoji: (emoji: Emoji) => void,
   onSearch: (query: string) => void,
@@ -75,9 +75,9 @@ type PickerState = {
   activeEmojiIndex: number,   // Index for the highlighted emoji within search results
   activeGroup: string,        // Currently selected group tab
   activeSkinTone: string,     // Currently selected skin ton
+  commonEmojis: Emoji[],      // List of emoji unicodes most commonly used
   emojis: Emoji[],            // List of all emojis with search filtering applied
   excluded: ExcludeMap,       // Map of excluded emoji hexcodes
-  recentEmojis: Emoji[],      // List of emojis recently used
   scrollToGroup: string,      // Group to scroll to on render
   searchQuery: string,        // Current search query
 };
@@ -97,7 +97,7 @@ class Picker extends React.Component<PickerProps, PickerState> {
     classNames: PropTypes.objectOf(PropTypes.string),
     columnCount: PropTypes.number,
     defaultGroup: PropTypes.oneOf([
-      GROUP_RECENTLY_USED,
+      GROUP_COMMONLY_USED,
       GROUP_SMILEYS_PEOPLE,
       GROUP_ANIMALS_NATURE,
       GROUP_FOOD_DRINK,
@@ -115,8 +115,8 @@ class Picker extends React.Component<PickerProps, PickerState> {
       SKIN_MEDIUM_DARK,
       SKIN_DARK,
     ]),
+    disableCommonlyUsed: PropTypes.bool,
     disablePreview: PropTypes.bool,
-    disableRecentlyUsed: PropTypes.bool,
     disableSearch: PropTypes.bool,
     disableSkinTones: PropTypes.bool,
     displayOrder: PropTypes.arrayOf(PropTypes.string),
@@ -127,8 +127,8 @@ class Picker extends React.Component<PickerProps, PickerState> {
     hideEmoticon: PropTypes.bool,
     hideShortcodes: PropTypes.bool,
     icons: PropTypes.objectOf(PropTypes.node),
+    maxCommonlyUsed: PropTypes.number,
     maxEmojiVersion: PropTypes.number,
-    maxRecentlyUsed: PropTypes.number,
     messages: PropTypes.objectOf(PropTypes.node),
     onHoverEmoji: PropTypes.func,
     onSearch: PropTypes.func,
@@ -141,10 +141,10 @@ class Picker extends React.Component<PickerProps, PickerState> {
     autoFocus: false,
     classNames: {},
     columnCount: 10,
-    defaultGroup: GROUP_RECENTLY_USED,
+    defaultGroup: GROUP_COMMONLY_USED,
     defaultSkinTone: SKIN_NONE,
+    disableCommonlyUsed: false,
     disablePreview: false,
-    disableRecentlyUsed: false,
     disableSearch: false,
     disableSkinTones: false,
     displayOrder: ['preview', 'emojis', 'skins', 'groups', 'search'],
@@ -153,8 +153,8 @@ class Picker extends React.Component<PickerProps, PickerState> {
     hideEmoticon: false,
     hideShortcodes: false,
     icons: {},
+    maxCommonlyUsed: 30,
     maxEmojiVersion: 5,
-    maxRecentlyUsed: 30,
     onHoverEmoji() {},
     onSearch() {},
     onSelectEmoji() {},
@@ -178,8 +178,8 @@ class Picker extends React.Component<PickerProps, PickerState> {
       activeEmojiIndex: -1,
       activeGroup: defaultGroup,
       activeSkinTone: this.getSkinToneFromStorage() || defaultSkinTone,
+      commonEmojis: [],
       excluded: this.generateExcludeMap(exclude),
-      recentEmojis: [],
       scrollToGroup: '',
       searchQuery: '',
     };
@@ -216,7 +216,8 @@ class Picker extends React.Component<PickerProps, PickerState> {
       },
       messages: {
         // Emoji groups
-        [GROUP_RECENTLY_USED]: 'Recently Used',
+        frequentlyUsed: 'Frequently Used',
+        recentlyUsed: 'Recently Used',
         [GROUP_SMILEYS_PEOPLE]: 'Smileys & People',
         [GROUP_ANIMALS_NATURE]: 'Animals & Nature',
         [GROUP_FOOD_DRINK]: 'Food & Drink',
@@ -273,34 +274,34 @@ class Picker extends React.Component<PickerProps, PickerState> {
   }
 
   /**
-   * Add a recent emoji to local storage and update the current state.
+   * Add a common emoji to local storage and update the current state.
    */
-  addRecentEmoji(emoji: Emoji) {
-    const { disableRecentlyUsed, maxRecentlyUsed } = this.props;
+  addCommonEmoji(emoji: Emoji) {
+    const { disableCommonlyUsed, maxCommonlyUsed } = this.props;
 
-    if (disableRecentlyUsed) {
+    if (disableCommonlyUsed) {
       return;
     }
 
-    let unicodes = this.state.recentEmojis.map(recent => recent.unicode);
+    let unicodes = this.state.commonEmojis.map(common => common.unicode);
 
     // Add to the top of the list
     unicodes.unshift(emoji.unicode);
 
     // Trim to the max
-    unicodes = unicodes.slice(0, maxRecentlyUsed);
+    unicodes = unicodes.slice(0, maxCommonlyUsed);
 
     // Remove duplicates
     unicodes = Array.from(new Set(unicodes));
 
     try {
-      localStorage.setItem(KEY_RECENTLY_USED, JSON.stringify(unicodes));
+      localStorage.setItem(KEY_COMMONLY_USED, JSON.stringify(unicodes));
     } catch (error) {
       // Do nothing
     }
 
     this.setState({
-      recentEmojis: this.generateRecentEmojis(unicodes),
+      commonEmojis: this.generateCommonEmojis(unicodes),
     });
   }
 
@@ -374,10 +375,10 @@ class Picker extends React.Component<PickerProps, PickerState> {
   }
 
   /**
-   * We only store the unicode character for recent emojis,
-   * so we need to rebuild the recent list with the full emoji objects.
+   * We only store the unicode character for commonly used emojis,
+   * so we need to rebuild the list with full emoji objects.
    */
-  generateRecentEmojis(unicodes: string[]): Emoji[] {
+  generateCommonEmojis(unicodes: string[]): Emoji[] {
     const data = EmojiData.getInstance(this.context.emoji.locale);
 
     return unicodes
@@ -386,12 +387,12 @@ class Picker extends React.Component<PickerProps, PickerState> {
   }
 
   /**
-   * Return the default group while handling recently used scenarios.
+   * Return the default group while handling commonly used scenarios.
    */
   getDefaultGroup(): string {
     const { defaultGroup } = this.props;
 
-    if (defaultGroup === GROUP_RECENTLY_USED && !this.hasRecentlyUsed()) {
+    if (defaultGroup === GROUP_COMMONLY_USED && !this.hasCommonlyUsed()) {
       return GROUP_SMILEYS_PEOPLE;
     }
 
@@ -399,12 +400,12 @@ class Picker extends React.Component<PickerProps, PickerState> {
   }
 
   /**
-   * Return the recently used emojis from local storage.
+   * Return the commonly used emojis from local storage.
    */
-  getRecentEmojisFromStorage(): string[] {
-    const recent = localStorage.getItem(KEY_RECENTLY_USED);
+  getCommonEmojisFromStorage(): string[] {
+    const common = localStorage.getItem(KEY_COMMONLY_USED);
 
-    return recent ? JSON.parse(recent) : [];
+    return common ? JSON.parse(common) : [];
   }
 
   /**
@@ -530,7 +531,7 @@ class Picker extends React.Component<PickerProps, PickerState> {
    * Triggered when an emoji is clicked.
    */
   handleSelectEmoji = (emoji: Emoji) => {
-    this.addRecentEmoji(emoji);
+    this.addCommonEmoji(emoji);
 
     this.props.onSelectEmoji(emoji);
   };
@@ -564,10 +565,10 @@ class Picker extends React.Component<PickerProps, PickerState> {
   };
 
   /**
-   * Determine whether to show the recently used group.
+   * Determine whether to show the commonly used group.
    */
-  hasRecentlyUsed() {
-    return (!this.props.disableRecentlyUsed && this.getRecentEmojisFromStorage().length > 0);
+  hasCommonlyUsed() {
+    return (!this.props.disableCommonlyUsed && this.getCommonEmojisFromStorage().length > 0);
   }
 
   /**
@@ -578,8 +579,8 @@ class Picker extends React.Component<PickerProps, PickerState> {
 
     this.setState({
       activeGroup: defaultGroup,
+      commonEmojis: this.generateCommonEmojis(this.getCommonEmojisFromStorage()),
       emojis: this.generateEmojis(emojis),
-      recentEmojis: this.generateRecentEmojis(this.getRecentEmojisFromStorage()),
       scrollToGroup: defaultGroup,
     });
   }
@@ -614,12 +615,12 @@ class Picker extends React.Component<PickerProps, PickerState> {
       activeEmojiIndex,
       activeGroup,
       activeSkinTone,
+      commonEmojis,
       emojis,
-      recentEmojis,
       scrollToGroup,
       searchQuery,
     } = this.state;
-    const hasRecentlyUsed = this.hasRecentlyUsed();
+    const hasCommonlyUsed = this.hasCommonlyUsed();
     const components = {
       preview: disablePreview ? null : (
         <PreviewBar
@@ -635,11 +636,11 @@ class Picker extends React.Component<PickerProps, PickerState> {
           key="emojis"
           activeEmojiIndex={activeEmojiIndex}
           activeGroup={activeGroup}
+          commonEmojis={commonEmojis}
           emojiPath={emojiPath}
           emojis={emojis}
           emojiSize={emojiSize}
-          hasRecentlyUsed={hasRecentlyUsed}
-          recentEmojis={recentEmojis}
+          hasCommonlyUsed={hasCommonlyUsed}
           scrollToGroup={scrollToGroup}
           searchQuery={searchQuery}
           onEnterEmoji={this.handleEnterEmoji}
@@ -660,7 +661,7 @@ class Picker extends React.Component<PickerProps, PickerState> {
           key="groups"
           activeGroup={activeGroup}
           emojiPath={emojiPath}
-          hasRecentlyUsed={hasRecentlyUsed}
+          hasCommonlyUsed={hasCommonlyUsed}
           icons={icons}
           onSelect={this.handleSelectGroup}
         />

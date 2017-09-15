@@ -9,14 +9,14 @@ import PropTypes from 'prop-types';
 import EmojiCharacter from 'interweave/lib/components/Emoji';
 import { EmojiPathShape } from 'interweave/lib/shapes';
 import Group from './Group';
-import { GROUPS, GROUP_RECENTLY_USED, GROUP_ICONS } from './constants';
+import { GROUPS, GROUP_COMMONLY_USED, GROUP_ICONS } from './constants';
 
 import type { EmojiPath } from 'interweave'; // eslint-disable-line
 
 type GroupTabsProps = {
   activeGroup: string,
   emojiPath: EmojiPath,
-  hasRecentlyUsed: boolean,
+  hasCommonlyUsed: boolean,
   icons: { [key: string]: React$Node },
   onSelect: (group: string, reset?: boolean) => void,
 };
@@ -29,18 +29,18 @@ export default class GroupTabs extends React.PureComponent<GroupTabsProps> {
   static propTypes = {
     activeGroup: PropTypes.string.isRequired,
     emojiPath: EmojiPathShape.isRequired,
-    hasRecentlyUsed: PropTypes.bool.isRequired,
+    hasCommonlyUsed: PropTypes.bool.isRequired,
     icons: PropTypes.objectOf(PropTypes.node).isRequired,
     onSelect: PropTypes.func.isRequired,
   };
 
   render() {
-    const { activeGroup, emojiPath, hasRecentlyUsed, icons, onSelect } = this.props;
+    const { activeGroup, emojiPath, hasCommonlyUsed, icons, onSelect } = this.props;
     const { classNames } = this.context;
     const groups = [...GROUPS];
 
-    if (hasRecentlyUsed) {
-      groups.unshift(GROUP_RECENTLY_USED);
+    if (hasCommonlyUsed) {
+      groups.unshift(GROUP_COMMONLY_USED);
     }
 
     return (
