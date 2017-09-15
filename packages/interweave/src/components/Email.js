@@ -20,8 +20,8 @@ export default class Email extends React.PureComponent<EmailProps> {
   static propTypes = {
     children: PropTypes.string.isRequired,
     emailParts: PropTypes.shape({
-      username: PropTypes.string,
       host: PropTypes.string,
+      username: PropTypes.string,
     }),
   };
 

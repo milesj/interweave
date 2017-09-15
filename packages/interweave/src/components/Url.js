@@ -25,13 +25,13 @@ export default class Url extends React.PureComponent<UrlProps> {
   static propTypes = {
     children: PropTypes.string.isRequired,
     urlParts: PropTypes.shape({
-      scheme: PropTypes.string,
       auth: PropTypes.string,
-      host: PropTypes.string,
-      port: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-      path: PropTypes.string,
-      query: PropTypes.string,
       fragment: PropTypes.string,
+      host: PropTypes.string,
+      path: PropTypes.string,
+      port: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+      query: PropTypes.string,
+      scheme: PropTypes.string,
     }),
   };
 
