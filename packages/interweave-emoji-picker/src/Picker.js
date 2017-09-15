@@ -46,6 +46,7 @@ type PickerProps = {
   autoFocus: boolean,
   classNames: { [key: string]: string },
   columnCount: number,
+  commonMode: string,
   defaultGroup: string,
   defaultSkinTone: string,
   disableCommonlyUsed: boolean,
@@ -96,6 +97,7 @@ class Picker extends React.Component<PickerProps, PickerState> {
     autoFocus: PropTypes.bool,
     classNames: PropTypes.objectOf(PropTypes.string),
     columnCount: PropTypes.number,
+    commonMode: PropTypes.oneOf(['recent', 'frequent']),
     defaultGroup: PropTypes.oneOf([
       GROUP_COMMONLY_USED,
       GROUP_SMILEYS_PEOPLE,
@@ -141,6 +143,7 @@ class Picker extends React.Component<PickerProps, PickerState> {
     autoFocus: false,
     classNames: {},
     columnCount: 10,
+    commonMode: 'recent',
     defaultGroup: GROUP_COMMONLY_USED,
     defaultSkinTone: SKIN_NONE,
     disableCommonlyUsed: false,
@@ -600,6 +603,7 @@ class Picker extends React.Component<PickerProps, PickerState> {
     const {
       autoFocus,
       classNames,
+      commonMode,
       displayOrder,
       emojiPath,
       emojiSize,
@@ -637,6 +641,7 @@ class Picker extends React.Component<PickerProps, PickerState> {
           activeEmojiIndex={activeEmojiIndex}
           activeGroup={activeGroup}
           commonEmojis={commonEmojis}
+          commonMode={commonMode}
           emojiPath={emojiPath}
           emojis={emojis}
           emojiSize={emojiSize}

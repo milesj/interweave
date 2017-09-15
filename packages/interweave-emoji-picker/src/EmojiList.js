@@ -24,6 +24,7 @@ type EmojiListProps = {
   activeEmojiIndex: number,
   activeGroup: string,
   commonEmojis: Emoji[],
+  commonMode: string,
   emojiPath: EmojiPath,
   emojis: Emoji[],
   emojiSize: number,
@@ -52,6 +53,7 @@ export default class EmojiList extends React.PureComponent<EmojiListProps, Emoji
     activeEmojiIndex: PropTypes.number.isRequired,
     activeGroup: PropTypes.string.isRequired,
     commonEmojis: PropTypes.arrayOf(EmojiShape).isRequired,
+    commonMode: PropTypes.string.isRequired,
     emojiPath: EmojiPathShape.isRequired,
     emojiSize: PropTypes.number.isRequired,
     emojis: PropTypes.arrayOf(EmojiShape).isRequired,
@@ -231,6 +233,7 @@ export default class EmojiList extends React.PureComponent<EmojiListProps, Emoji
   render() {
     const {
       activeEmojiIndex,
+      commonMode,
       emojiPath,
       emojiSize,
       onEnterEmoji,
@@ -262,7 +265,11 @@ export default class EmojiList extends React.PureComponent<EmojiListProps, Emoji
               id={`emoji-group-${group}`}
             >
               <header className={classNames.emojisHeader}>
-                {messages[group]}
+                {(group === GROUP_COMMONLY_USED) ? (
+                  messages[(commonMode === 'recent') ? 'recentlyUsed' : 'frequentlyUsed']
+                ) : (
+                  messages[group]
+                )}
               </header>
 
               <div className={classNames.emojisBody}>
