@@ -1,29 +1,13 @@
 # 7.0.0
 #### 💥 Breaking
+* Moved emoji functionality to a new package,
+  [interweave-emoji](https://npmjs.com/package/interweave-emoji).
 * Updated `react` peer dependency requirement to 15.3.
-* Updated `emojibase` peer dependency requirement to 1.4.
-* Migrated `Markup`, `Element`, `Email`, `Emoji`, `Hashtag`, `Link`, and `Url`
-  components to extend `React.PureComponent`.
-* Updated `emojiSize` prop to accept a string or a number, and to no longer default to `em`.
-  * If passing a number, it will pass through to React (which uses `px`).
-  * To keep legacy functionality, include `em` in the prop: `emojiSize="1em"`.
-* Refactored `EmojiLoader` into an HOC named `withEmojiData`, as the original approach
-  would not re-render components correctly in all situations. Furthermore,
-  a few improvements were made to the HOC.
-  * Added a `compact` prop, which will load `compact.json` instead of `data.json` from the CDN.
-  * Added an `emojis` prop, which can be used to manually load emoji data without fetching from the CDN.
-  * Passes an `emojiData` prop shape that contains `version`, `locale`, and `compact`.
-  * Updated the wrapped component to receive an `emojis` prop, which is the list of emojis.
+* Migrated `Markup`, `Element`, `Email`, `Hashtag`, `Link`, and `Url`
+  components to `React.PureComponent`.
 
 #### 🚀 New
-* Added `Emoji` and `EmojiPath` types to the Flowtype definitions.
-* Added new `EmojiData` class to manage emoji data across locales and versions.
-* Added new `EmojiShape`, `EmojiPathShape`, `EmojiSizeShape` to a new `shapes` file.
-* Updated `emojiSize` prop to also set the `height` style.
-* Updated parsed and packaged emoji data to include additional properties.
-  * Added `unicode`, which is either the emoji or text presentation Unicode character.
-  * Added `canonical_shortcodes`, which are an array of shortcodes including surrounding colons.
-  * Added `primary_shortcode`, which is the primary and most common shortcode, with colons.
+* Matchers are now available as named exports from the index import `interweave`.
 
 #### 🛠 Internal
 * Split Interweave into a multi-package repository using Yarn workspaces and Lerna.

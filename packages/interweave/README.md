@@ -19,12 +19,12 @@ Interweave is a robust React library that can...
 
 ## Installation
 
-Interweave requires React and Emojibase as a peer dependency.
+Interweave requires React as a peer dependency.
 
 ```
-npm install interweave emojibase react --save
+npm install interweave react --save
 // Or
-yarn add interweave emojibase react
+yarn add interweave react
 ```
 
 ## Usage
