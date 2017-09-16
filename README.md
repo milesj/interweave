@@ -113,7 +113,6 @@ and `noHtmlExceptMatchers` props mentioned previously.
   * [Converting Emoticons](#converting-emoticons)
   * [Converting Shortcodes](#converting-shortcodes)
   * [Using SVGs or PNGs](#using-svgs-or-pngs)
-    * [Sizing](#sizing)
   * [Displaying Unicode Characters](#displaying-unicode-characters)
   * [Automatic Enlargement](#automatic-enlargement)
 * [HTML Parsing](#html-parsing)
@@ -587,14 +586,12 @@ following resources can be used for downloading SVG/PNG icons.
 > locally, or within a CDN under the same domain. Linking to remote SVGs
 > will not work -- use PNGs instead.
 
-##### Sizing
-
-To control the width and height of the emoji, use the `emojiSize` prop, which accepts a
+Lastly, to control the width and height of the `img`, use the `emojiSize` prop, which accepts a
 number or string. If a number is provided, it'll be passed down to React, which defaults to `px`.
 
 ```javascript
-<Interweave emojiSize={32} emojiLargeSize={64} /> // 32px, 64px
-<Interweave emojiSize="1em" emojiLargeSize="2em" /> // 1em, 2em
+<Interweave emojiSize={32} emojiLargeSize={96} /> // 32px, 96px
+<Interweave emojiSize="1em" emojiLargeSize="3em" /> // 1em, 3em
 ```
 
 > I suggest using `em` scaling as the emoji will scale relative to the text around it.
@@ -780,6 +777,7 @@ function Interweave({
       hashtagUrl={hashtagUrl}
       emojiPath={getEmojiPath}
       emojiSize="1em"
+      emojiLargeSize="3em"
       newWindow
       {...props}
     />

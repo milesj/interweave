@@ -249,8 +249,6 @@ export default class EmojiList extends React.PureComponent<EmojiListProps, Emoji
     const groupedEmojis = this.groupEmojis();
     const noResults = (Object.keys(groupedEmojis).length === 0);
 
-    console.log('EmojiList.render');
-
     return (
       <div
         className={classNames.emojis}

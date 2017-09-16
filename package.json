@@ -4,7 +4,7 @@
   "scripts": {
     "assemble": "yarn run clean && yarn run bootstrap && yarn run build && yarn test",
     "bootstrap": "lerna bootstrap --hoist",
-    "bootstrap:slow": "yarn run bootstrap -- --concurrency=1",
+    "bootstrap:slow": "yarn run bootstrap --concurrency=1",
     "build": "lerna run build",
     "clean": "rimraf ./packages/{*}/lib/ && lerna clean --yes",
     "coverage": "run-coverage",
