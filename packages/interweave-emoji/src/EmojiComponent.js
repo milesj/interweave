@@ -34,8 +34,6 @@ type EmojiProps = {
   unicode: string,
 };
 
-const LARGE_MULTIPLIER: number = 3;
-
 export default class EmojiComponent extends React.PureComponent<EmojiProps> {
   static propTypes = {
     emojiLargeSize: EmojiSizeShape,
@@ -49,9 +47,9 @@ export default class EmojiComponent extends React.PureComponent<EmojiProps> {
   };
 
   static defaultProps = {
-    emojiLargeSize: 0,
+    emojiLargeSize: '3em',
     emojiPath: '{{hexcode}}',
-    emojiSize: 0,
+    emojiSize: '1em',
     emoticon: '',
     enlargeEmoji: false,
     shortcode: '',
@@ -115,12 +113,6 @@ export default class EmojiComponent extends React.PureComponent<EmojiProps> {
       if (emojiLargeSize) {
         styles.width = emojiLargeSize;
         styles.height = emojiLargeSize;
-
-      } else if (emojiSize) {
-        const largeSize = `${parseFloat(emojiSize) * LARGE_MULTIPLIER}em`;
-
-        styles.width = largeSize;
-        styles.height = largeSize;
       }
     }
 

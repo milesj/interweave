@@ -138,6 +138,7 @@ describe('EmojiComponent', () => {
     const wrapper = shallow(
       <Emoji
         emojiSource={SOURCE_PROP}
+        emojiSize={1}
         shortcode={shortcode}
         unicode={unicode}
       />,
@@ -146,47 +147,8 @@ describe('EmojiComponent', () => {
     expect(wrapper.prop('style')).toEqual({
       display: 'inline-block',
       verticalAlign: 'middle',
-    });
-
-    wrapper.setProps({
-      emojiSize: 1,
-    });
-
-    expect(wrapper.prop('style')).toEqual({
-      display: 'inline-block',
-      verticalAlign: 'middle',
       width: 1,
       height: 1,
-    });
-
-    wrapper.setProps({
-      emojiSize: 1,
-      enlargeEmoji: true,
-    });
-
-    expect(wrapper.prop('style')).toEqual({
-      display: 'inline-block',
-      verticalAlign: 'middle',
-      width: '3em',
-      height: '3em',
-    });
-  });
-
-  it('sets large size when base size is a string', () => {
-    const wrapper = shallow((
-      <Emoji
-        emojiSource={SOURCE_PROP}
-        unicode={unicode}
-        emojiSize="2em"
-        enlargeEmoji
-      />
-    ));
-
-    expect(wrapper.prop('style')).toEqual({
-      display: 'inline-block',
-      verticalAlign: 'middle',
-      width: '6em',
-      height: '6em',
     });
   });
 

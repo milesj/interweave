@@ -6,14 +6,15 @@
 * Migrated `Emoji` component to `React.PureComponent`.
 * Refactored `EmojiLoader` into an HOC named `withEmojiData`, as the original approach
   would not re-render components correctly in some situations.
-* Updated `emojiSize` prop to no longer default to `em`.
+* Updated `emojiSize` and `emojiLargeSize` props to accept a string or number,
+  and to default to `1em` and `3em` respectively.
   * If using a number, it will pass through to React (which uses `px`).
   * If using a string, it will be used as-is (`1em`).
+* Updated `emojiLargeSize` to no longer auto-multiply size. The prop must be defined manually.
 
 #### 🚀 New
 * Added `Emoji`, `EmojiPath`, `EmojiSize`, and `EmojiSource` types to the Flowtype definitions.
 * Added `EmojiShape`, `EmojiPathShape`, `EmojiSizeShape`, and `EmojiSourceShape` prop types.
-* Updated `emojiSize` prop to accept a string or a number.
 * Updated `emojiSize` prop to also set `height` on the `img` tag.
 * Updated `withEmojiData` to support new props.
   * `compact` - Will load `compact.json` instead of `data.json` from the CDN.
