@@ -498,13 +498,11 @@ import { EmojiMatcher } from 'interweave-emoji';
 The following props are available for `Emoji` components,
 all of which should be passed to an `Interweave` instance.
 
-* `emojiSize` (string | number) - The width and height of emojis.
-* `emojiLargeSize` (string | number) - The width and height of enlarged emojis.
-  Defaults to 3x the size of `emojiSize`, using `em`s.
-* `emojiPath` (string | func) - A path to the PNG or SVG file representing the emoji character.
-  [Learn more about this prop](#using-svsgs-or-pngs).
-* `enlargeEmoji` (bool) - Whether to enlarge the emoji or not. Automatically triggers.
-  Defaults to `false`.
+* `emojiSize` (string | number) - The width and height of emojis. Defaults to `1em`.
+* `emojiLargeSize` (string | number) - The width and height of enlarged emojis. Defaults to `3em`.
+* `emojiPath` (string | func) - A path to the [PNG or SVG file](#using-svsgs-or-pngs).
+* `enlargeEmoji` (bool) - Whether to enlarge the emoji or not. Automatically triggers
+  via the matcher. Defaults to `false`.
 
 ##### Matches
 
@@ -751,7 +749,9 @@ import PropTypes from 'prop-types';
 import { stripHexcode } from 'emojibase';
 import BaseInterweave, {
   Filter,
+  FilterShape,
   Matcher,
+  MatcherShape,
   IpMatcher,
   UrlMatcher,
   HashtagMatcher,
@@ -780,13 +780,7 @@ function getEmojiPath(hexcode, enlarged) {
   return `//cdn.jsdelivr.net/emojione/assets/3.1/png/${enlarged ? 64 : 32}/${stripHexcode(hexcode).toLowerCase()}.png`;
 }
 
-function Interweave({
-  filters = [],
-  matchers = [],
-  twitter = false,
-  instagram = false,
-  ...props
-}) {
+function Interweave({ filters, matchers, twitter, instagram, ...props }) {
   let hashtagUrl = '';
 
   if (twitter) {
@@ -807,8 +801,6 @@ function Interweave({
       ]}
       hashtagUrl={hashtagUrl}
       emojiPath={getEmojiPath}
-      emojiSize="1em"
-      emojiLargeSize="3em"
       newWindow
       {...props}
     />
@@ -816,10 +808,17 @@ function Interweave({
 }
 
 Interweave.propTypes = {
-  filters: PropTypes.arrayOf(PropTypes.instanceOf(Filter)),
-  matchers: PropTypes.arrayOf(PropTypes.instanceOf(Matcher)),
+  filters: PropTypes.arrayOf(FilterShape),
+  matchers: PropTypes.arrayOf(MatcherShape),
   twitter: PropTypes.bool,
   instagram: PropTypes.bool,
+};
+
+Interweave.defaultProps = {
+  filters: [],
+  matchers: [],
+  twitter: false,
+  instagram: false,
 };
 
 export default withEmojiData(Interweave);
