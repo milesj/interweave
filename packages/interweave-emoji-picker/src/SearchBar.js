@@ -73,10 +73,6 @@ export default class SearchBar extends React.PureComponent<SearchBarProps, Searc
       query,
     });
 
-    if (!trimmedQuery) {
-      return;
-    }
-
     // But defer filtering in the picker
     clearTimeout(this.timeout);
 

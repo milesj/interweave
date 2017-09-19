@@ -233,11 +233,14 @@ export default class EmojiList extends React.PureComponent<EmojiListProps, Emoji
       return;
     }
 
-    // Scroll to the section
-    this.container.scrollTop = element.offsetTop;
-
     // Eager load emoji images
     this.loadEmojiImages(this.container);
+
+    // Scroll to the section after a short delay (wait for images to render)
+    setTimeout(() => {
+      // $FlowIgnore
+      this.container.scrollTop = element.offsetTop;
+    });
   }
 
   render() {
