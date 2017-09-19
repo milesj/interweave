@@ -42,6 +42,7 @@ import {
   KEY_SKIN_TONE,
   COMMON_MODE_RECENT,
   COMMON_MODE_FREQUENT,
+  SCROLL_DEBOUNCE,
 } from './constants';
 
 import type { Emoji, EmojiPath, EmojiSource } from 'interweave-emoji'; // eslint-disable-line
@@ -283,11 +284,14 @@ class Picker extends React.Component<PickerProps, PickerState> {
       const emojis = this.generateEmojis(prevProps.emojis, searchQuery);
       const hasResults = (searchQuery && emojis.length > 0);
 
-      this.setState({
-        emojis,
-        activeEmoji: hasResults ? emojis[0] : null,
-        activeEmojiIndex: hasResults ? 0 : -1,
-      });
+      // Defer the update a bit so that the render doesn't look like it's stalling
+      setTimeout(() => {
+        this.setState({
+          emojis,
+          activeEmoji: hasResults ? emojis[0] : null,
+          activeEmojiIndex: hasResults ? 0 : -1,
+        });
+      }, SCROLL_DEBOUNCE);
     }
   }
 
