@@ -26,6 +26,7 @@ type EmojiListProps = {
   activeGroup: string,
   commonEmojis: Emoji[],
   commonMode: string,
+  emojiPadding: number,
   emojiPath: EmojiPath,
   emojis: Emoji[],
   emojiSize: number,
@@ -56,6 +57,7 @@ export default class EmojiList extends React.PureComponent<EmojiListProps, Emoji
     activeGroup: PropTypes.string.isRequired,
     commonEmojis: PropTypes.arrayOf(EmojiShape).isRequired,
     commonMode: PropTypes.string.isRequired,
+    emojiPadding: PropTypes.number.isRequired,
     emojiPath: EmojiPathShape.isRequired,
     emojiSize: PropTypes.number.isRequired,
     emojiSource: EmojiSourceShape.isRequired,
@@ -237,6 +239,7 @@ export default class EmojiList extends React.PureComponent<EmojiListProps, Emoji
     const {
       activeEmojiIndex,
       commonMode,
+      emojiPadding,
       emojiPath,
       emojiSize,
       emojiSource,
@@ -280,6 +283,7 @@ export default class EmojiList extends React.PureComponent<EmojiListProps, Emoji
                     key={emoji.hexcode}
                     active={index === activeEmojiIndex}
                     emoji={emoji}
+                    emojiPadding={emojiPadding}
                     emojiPath={emojiPath}
                     emojiSize={emojiSize}
                     emojiSource={emojiSource}

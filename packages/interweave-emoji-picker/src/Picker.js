@@ -65,6 +65,7 @@ type PickerProps = {
   disableSearch: boolean,
   disableSkinTones: boolean,
   displayOrder: string[],
+  emojiPadding: number,
   emojiPath: EmojiPath,
   emojis: Emoji[],
   emojiSize: number,
@@ -133,6 +134,7 @@ class Picker extends React.Component<PickerProps, PickerState> {
     disableSearch: PropTypes.bool,
     disableSkinTones: PropTypes.bool,
     displayOrder: PropTypes.arrayOf(PropTypes.string),
+    emojiPadding: PropTypes.number,
     emojiPath: EmojiPathShape.isRequired,
     emojiSize: PropTypes.number.isRequired,
     emojiSource: EmojiSourceShape.isRequired,
@@ -163,6 +165,7 @@ class Picker extends React.Component<PickerProps, PickerState> {
     disableSearch: false,
     disableSkinTones: false,
     displayOrder: ['preview', 'emojis', 'skins', 'groups', 'search'],
+    emojiPadding: 0,
     exclude: [],
     messages: {},
     hideEmoticon: false,
@@ -641,6 +644,7 @@ class Picker extends React.Component<PickerProps, PickerState> {
       classNames,
       commonMode,
       displayOrder,
+      emojiPadding,
       emojiPath,
       emojiSize,
       emojiSource,
@@ -680,6 +684,7 @@ class Picker extends React.Component<PickerProps, PickerState> {
           activeGroup={activeGroup}
           commonEmojis={commonEmojis}
           commonMode={commonMode}
+          emojiPadding={emojiPadding}
           emojiPath={emojiPath}
           emojis={emojis}
           emojiSize={emojiSize}

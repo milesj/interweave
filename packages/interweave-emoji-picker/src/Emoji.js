@@ -13,6 +13,7 @@ import type { Emoji, EmojiPath, EmojiSource } from 'interweave-emoji'; // eslint
 type EmojiProps = {
   active: boolean,
   emoji: Emoji,
+  emojiPadding: number,
   emojiPath: EmojiPath,
   emojiSize: number,
   emojiSource: EmojiSource,
@@ -34,6 +35,7 @@ export default class EmojiButton extends React.PureComponent<EmojiProps, EmojiSt
   static propTypes = {
     active: PropTypes.bool.isRequired,
     emoji: EmojiShape.isRequired,
+    emojiPadding: PropTypes.number.isRequired,
     emojiPath: EmojiPathShape.isRequired,
     emojiSize: PropTypes.number.isRequired,
     emojiSource: EmojiSourceShape.isRequired,
@@ -95,9 +97,10 @@ export default class EmojiButton extends React.PureComponent<EmojiProps, EmojiSt
   };
 
   render() {
-    const { emoji, emojiPath, emojiSize, emojiSource, showImage } = this.props;
+    const { emoji, emojiPadding, emojiPath, emojiSize, emojiSource, showImage } = this.props;
     const { classNames } = this.context;
     const { active } = this.state;
+    const dimension = emojiPadding + emojiPadding + emojiSize;
     const className = [classNames.emoji];
 
     if (active) {
@@ -109,6 +112,11 @@ export default class EmojiButton extends React.PureComponent<EmojiProps, EmojiSt
         aria-label={emoji.annotation}
         key={emoji.hexcode}
         className={className.join(' ')}
+        style={{
+          padding: emojiPadding,
+          width: dimension,
+          height: dimension,
+        }}
         type="button"
         onClick={this.handleClick}
         onMouseEnter={this.handleEnter}
