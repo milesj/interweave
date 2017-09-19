@@ -16,14 +16,14 @@ import { FilterShape, MatcherShape } from './shapes';
 
 export {
   Markup,
+  Filter,
+  FilterShape,
   Matcher,
   MatcherShape,
   EmailMatcher,
   HashtagMatcher,
   IpMatcher,
   UrlMatcher,
-  Filter,
-  FilterShape,
 };
 
 export default Interweave;

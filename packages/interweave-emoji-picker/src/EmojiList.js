@@ -38,6 +38,7 @@ type EmojiListProps = {
   onSelectGroup: (group: string, reset?: boolean) => void,
   scrollToGroup: string,
   searchQuery: string,
+  skinTonePalette: React$Node,
 };
 
 type EmojiListState = {
@@ -65,10 +66,15 @@ export default class EmojiList extends React.PureComponent<EmojiListProps, Emoji
     hasCommonlyUsed: PropTypes.bool.isRequired,
     scrollToGroup: PropTypes.string.isRequired,
     searchQuery: PropTypes.string.isRequired,
+    skinTonePalette: PropTypes.node,
     onEnterEmoji: PropTypes.func.isRequired,
     onLeaveEmoji: PropTypes.func.isRequired,
     onSelectEmoji: PropTypes.func.isRequired,
     onSelectGroup: PropTypes.func.isRequired,
+  };
+
+  static defaultProps = {
+    skinTonePalette: null,
   };
 
   constructor({ activeGroup, emojis }: EmojiListProps) {
@@ -243,6 +249,7 @@ export default class EmojiList extends React.PureComponent<EmojiListProps, Emoji
       emojiPath,
       emojiSize,
       emojiSource,
+      skinTonePalette,
       onEnterEmoji,
       onLeaveEmoji,
       onSelectEmoji,
@@ -270,6 +277,10 @@ export default class EmojiList extends React.PureComponent<EmojiListProps, Emoji
               id={`emoji-group-${group}`}
             >
               <header className={classNames.emojisHeader}>
+                {(group === GROUP_SMILEYS_PEOPLE || group === GROUP_SEARCH_RESULTS) && (
+                  skinTonePalette
+                )}
+
                 {(group === GROUP_COMMONLY_USED) ? (
                   messages[(commonMode === COMMON_MODE_RECENT) ? 'recentlyUsed' : 'frequentlyUsed']
                 ) : (

@@ -14,4 +14,5 @@ export {
   EmojiData, EmojiMatcher, withEmojiData,
   EmojiShape, EmojiPathShape, EmojiSizeShape, EmojiSourceShape,
 };
+
 export default EmojiComponent;

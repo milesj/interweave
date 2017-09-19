@@ -164,7 +164,7 @@ class Picker extends React.Component<PickerProps, PickerState> {
     disablePreview: false,
     disableSearch: false,
     disableSkinTones: false,
-    displayOrder: ['preview', 'emojis', 'skins', 'groups', 'search'],
+    displayOrder: ['preview', 'emojis', 'groups', 'search'],
     emojiPadding: 0,
     exclude: [],
     messages: {},
@@ -692,17 +692,17 @@ class Picker extends React.Component<PickerProps, PickerState> {
           hasCommonlyUsed={hasCommonlyUsed}
           scrollToGroup={scrollToGroup}
           searchQuery={searchQuery}
+          skinTonePalette={disableSkinTones ? null : (
+            <SkinTonePalette
+              key="skins"
+              activeSkinTone={activeSkinTone}
+              onSelect={this.handleSelectSkinTone}
+            />
+          )}
           onEnterEmoji={this.handleEnterEmoji}
           onLeaveEmoji={this.handleLeaveEmoji}
           onSelectEmoji={this.handleSelectEmoji}
           onSelectGroup={this.handleSelectGroup}
-        />
-      ),
-      skins: disableSkinTones ? null : (
-        <SkinTonePalette
-          key="skins"
-          activeSkinTone={activeSkinTone}
-          onSelect={this.handleSelectSkinTone}
         />
       ),
       groups: (
