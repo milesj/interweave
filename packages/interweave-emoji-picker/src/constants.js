@@ -70,5 +70,5 @@ export const SEARCH_THROTTLE: number = 100;
 export const KEY_COMMONLY_USED: string = 'interweave/emoji/commonlyUsed';
 export const KEY_SKIN_TONE: string = 'interweave/emoji/skinTone';
 
-export const COMMON_MODE_RECENT: string = 'recent';
-export const COMMON_MODE_FREQUENT: string = 'frequent';
+export const COMMON_MODE_RECENT: string = 'recentlyUsed';
+export const COMMON_MODE_FREQUENT: string = 'frequentlyUsed';

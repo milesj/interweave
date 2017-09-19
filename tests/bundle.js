@@ -60,7 +60,7 @@ function App() {
       <div style={{ display: 'flex', justifyContent: 'space-between' }}>
         <EmojiPicker
           autoFocus
-          commonMode="frequent"
+          commonMode="frequentlyUsed"
           defaultGroup="foodDrink"
           defaultSkinTone="light"
           emojiPath={emojiPath}

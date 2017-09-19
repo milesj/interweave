@@ -234,8 +234,8 @@ class Picker extends React.Component<PickerProps, PickerState> {
       },
       messages: {
         // Emoji groups
-        frequentlyUsed: 'Frequently Used',
-        recentlyUsed: 'Recently Used',
+        [COMMON_MODE_FREQUENT]: 'Frequently Used',
+        [COMMON_MODE_RECENT]: 'Recently Used',
         [GROUP_SMILEYS_PEOPLE]: 'Smileys & People',
         [GROUP_ANIMALS_NATURE]: 'Animals & Nature',
         [GROUP_FOOD_DRINK]: 'Food & Drink',
