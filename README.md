@@ -169,8 +169,9 @@ Using the example above, you can pass a `noFoo` prop.
 
 #### Creating A Matcher
 
-To create a custom matcher, extend the base `Matcher` class, and
-define the following methods.
+To create a custom matcher, implement a class that extends the base `Matcher` class,
+or use a plain object. Both approaches will require the following methods to be defined
+(excluding callbacks).
 
 * `match(string)` - Match the passed string using a regex pattern.
   This method must return `null` if no match is found, else it must
@@ -181,34 +182,40 @@ define the following methods.
   the matched content in the string. The match is passed as the 1st
   argument, and any matched props or parent props are passed as the
   2nd argument.
+* `createElement(match, props)` - The same as `replaceWith` but used in object matchers.
 * `asTag()` - The HTML tag name of the replacement element.
-* `onBeforeParse` (func) - Callback that fires before parsing. Is
+* `onBeforeParse(content, props)` (func) - Callback that fires before parsing. Is
   passed the source string and must return a string.
-* `onAfterParse` (func) - Callback that fires after parsing. Is
+* `onAfterParse(nodes, props)` (func) - Callback that fires after parsing. Is
   passed an array of strings/elements and must return an array.
+
+> Using the plain object approach requires more implementation and a higher overhead.
 
 ```javascript
 import { Matcher } from 'interweave';
 
-export default class FooMatcher extends Matcher {
+function match(string) {
+  const matches = string.match(/foo/);
+
+  if (!matches) {
+    return null;
+  }
+
+  return {
+    match: matches[0],
+    extraProp: 'foo', // or matches[1], etc
+  };
+}
+
+// Class
+class FooMatcher extends Matcher {
   match(string) {
-    const matches = string.match(/foo/);
-
-    if (!matches) {
-      return null;
-    }
-
-    return {
-      match: matches[0],
-      extraProp: 'foo', // or matches[1], etc
-    };
+    return match(string);
   }
 
   replaceWith(match, props) {
-    const Tag = this.asTag();
-
     return (
-      <Tag {...props}>{match}</Tag>
+      <span {...props}>{match}</span>
     );
   }
 
@@ -216,17 +223,32 @@ export default class FooMatcher extends Matcher {
     return 'span';
   }
 }
+
+const matcher = new FooMatcher('foo');
+
+// Object
+const matcher = {
+  inverseName: 'noFoo',
+  propName: 'foo',
+  asTag: () => 'span',
+  createElement: (match, props) => <span {...props}>{match}</span>,
+  match,
+};
 ```
 
-To ease the matching process, there is a `doMatch` method that
+To ease the matching process, there is a `doMatch` method on `Matcher` that
 handles the `null` and object building logic. Simply pass it a regex
 pattern and a callback to build the object.
 
 ```javascript
-match(string) {
-  return this.doMatch(string, /foo/, matches => ({
-    extraProp: 'foo',
-  }));
+class FooMatcher extends Matcher {
+  // ...
+
+  match(string) {
+    return this.doMatch(string, /foo/, matches => ({
+      extraProp: 'foo',
+    }));
+  }
 }
 ```
 
@@ -273,18 +295,27 @@ To disable all filters, pass the `disableFilters` prop.
 
 #### Creating A Filter
 
-Creating a custom filter is easy. Simply extend the base `Filter` class
-and define a `filter` method. This method will receive the attribute
-value as the 1st argument, and it must return a string.
+Creating a custom filter is easy. Simply extend the base `Filter` class,
+or use a plain object, and define a `filter` method. This method will receive
+the attribute value as the 1st argument, and it must return a string.
 
 ```javascript
 import { Filter } from 'interweave';
 
-export default class SourceFilter extends Filter {
+// Class
+class SourceFilter extends Filter {
   filter(value) {
     return encodeURIComponent(value); // Clean attribute value
   }
 }
+
+const filter = new Filter('src');
+
+// Object
+const filter = {
+  attribute: 'src',
+  filter: value => encodeURIComponent(value),
+};
 ```
 
 ### Autolinking

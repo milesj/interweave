@@ -7,10 +7,25 @@ declare module 'interweave' {
 
   declare export type BeforeParseCallback = (content: string, props: Object) => string;
 
+  declare export interface FilterInterface {
+    attribute: string,
+    filter(value: string): string,
+  }
+
   declare export class Filter {
     attribute: string;
     constructor(attribute: string): this;
     filter(value: string): string;
+  }
+
+  declare export interface MatcherInterface {
+    inverseName: string,
+    propName: string,
+    asTag(): string,
+    createElement(match: string, props?: Object): React$Node,
+    match(value: string): ?MatchResponse,
+    onBeforeParse(content: string, props: Object): string,
+    onAfterParse(content: React$Node[], props: Object): React$Node[],
   }
 
   declare export type MatcherFactory = (match: string, props: Object) => React$Node;
@@ -56,8 +71,8 @@ declare module 'interweave' {
     disableMatchers: boolean,
     disableWhitelist: boolean,
     emptyContent: ?React$Node,
-    filters: Filter[],
-    matchers: Matcher<*>[],
+    filters: FilterInterface[],
+    matchers: MatcherInterface[],
     noHtml: boolean,
     noHtmlExceptMatchers: boolean,
     onAfterParse: ?AfterParseCallback,

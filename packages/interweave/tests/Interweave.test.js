@@ -1,4 +1,4 @@
-/* eslint-disable comma-dangle */
+/* eslint-disable comma-dangle, react/prop-types */
 
 import React from 'react';
 import ReactDOMServer from 'react-dom/server';
@@ -6,7 +6,7 @@ import { shallow } from 'enzyme';
 import Interweave from '../src/Interweave';
 import { Element, Email, Hashtag, Url } from '../src/components';
 import { EmailMatcher, HashtagMatcher, IpMatcher, UrlMatcher } from '../src/matchers';
-import { MOCK_INVALID_MARKUP, HrefFilter, CodeTagMatcher } from './mocks';
+import { MOCK_INVALID_MARKUP, HrefFilter, CodeTagMatcher, matchCodeTag } from './mocks';
 
 describe('Interweave', () => {
   const extraProps = {
@@ -62,6 +62,26 @@ describe('Interweave', () => {
     ]);
   });
 
+  it('can pass object based filters through props', () => {
+    const wrapper = shallow(
+      <Interweave
+        filters={[
+          {
+            attribute: 'href',
+            filter: value => value.replace('foo.com', 'bar.net'),
+          },
+        ]}
+        content={'Foo <a href="foo.com">Bar</a> Baz'}
+      />
+    ).shallow();
+
+    expect(wrapper.prop('children')).toEqual([
+      'Foo ',
+      <Element tagName="a" key="0" attributes={{ href: 'bar.net' }}>{['Bar']}</Element>,
+      ' Baz',
+    ]);
+  });
+
   it('can disable all filters using `disableFilters`', () => {
     const wrapper = shallow(
       <Interweave
@@ -89,6 +109,33 @@ describe('Interweave', () => {
     expect(wrapper.prop('children')).toEqual([
       'Foo ',
       <Element {...extraProps} tagName="span" key="1" customProp="foo">B</Element>,
+      ' Bar Baz',
+    ]);
+  });
+
+  it('can pass object based matchers through props', () => {
+    const wrapper = shallow(
+      <Interweave
+        matchers={[
+          {
+            inverseName: 'noB',
+            propName: 'b',
+            asTag: () => 'span',
+            createElement: (match, props) => (
+              <Element key="0" tagName="span" {...props}>
+                {props.children.toUpperCase()}
+              </Element>
+            ),
+            match: string => matchCodeTag(string, 'b'),
+          },
+        ]}
+        content="Foo [b] Bar Baz"
+      />
+    ).shallow();
+
+    expect(wrapper.prop('children')).toEqual([
+      'Foo ',
+      <Element {...extraProps} tagName="span" key="0" customProp="foo">B</Element>,
       ' Bar Baz',
     ]);
   });

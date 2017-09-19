@@ -9,7 +9,6 @@ import { SOURCE_PROP } from './mocks';
 describe('Interweave (with emoji)', () => {
   let SHORTCODE_TO_UNICODE = {};
 
-  const oldError = console.error;
   const extraProps = {
     disableWhitelist: false,
     disableLineBreaks: false,
@@ -20,18 +19,6 @@ describe('Interweave (with emoji)', () => {
 
   beforeEach(() => {
     ({ SHORTCODE_TO_UNICODE } = EmojiData.getInstance('en'));
-
-    // There's a possible issue between Babel, Lerna, and linking to the correct files,
-    // as the `EmojiMatcher` throws prop type errors when used within `Interweave`,
-    // so silence them all together for now.
-    //
-    // Warning: Failed prop type: Invalid prop `matchers[0]` of type `EmojiMatcher`
-    // supplied to `Interweave`, expected instance of `Matcher`.
-    console.error = () => {};
-  });
-
-  afterEach(() => {
-    console.error = oldError;
   });
 
   it('renders emoji shortcode as unicode', () => {

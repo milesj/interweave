@@ -8,14 +8,16 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import Filter from './Filter';
-import Matcher from './Matcher';
 import Parser from './Parser';
 import Element from './components/Element';
+import { FilterShape, MatcherShape } from './shapes';
 
-type BeforeParseCallback = (content: string, props: Object) => string;
-
-type AfterParseCallback = (content: React$Node[], props: Object) => React$Node[];
+import type {
+  FilterInterface,
+  MatcherInterface,
+  AfterParseCallback,
+  BeforeParseCallback,
+} from './types';
 
 type InterweaveProps = {
   content: string,
@@ -24,8 +26,8 @@ type InterweaveProps = {
   disableMatchers: boolean,
   disableWhitelist: boolean,
   emptyContent: ?React$Node,
-  filters: Filter[],
-  matchers: Matcher<*>[],
+  filters: FilterInterface[],
+  matchers: MatcherInterface[],
   noHtml: boolean,
   noHtmlExceptMatchers: boolean,
   onAfterParse: ?AfterParseCallback,
@@ -41,8 +43,8 @@ export default class Interweave extends React.Component<InterweaveProps> {
     disableMatchers: PropTypes.bool,
     disableWhitelist: PropTypes.bool,
     emptyContent: PropTypes.node,
-    filters: PropTypes.arrayOf(PropTypes.instanceOf(Filter)),
-    matchers: PropTypes.arrayOf(PropTypes.instanceOf(Matcher)),
+    filters: PropTypes.arrayOf(FilterShape),
+    matchers: PropTypes.arrayOf(MatcherShape),
     noHtml: PropTypes.bool,
     noHtmlExceptMatchers: PropTypes.bool,
     tagName: PropTypes.oneOf(['span', 'div', 'p']),
@@ -90,8 +92,13 @@ export default class Interweave extends React.Component<InterweaveProps> {
 
     // Inherit callbacks from matchers
     allMatchers.forEach((matcher) => {
-      beforeCallbacks.push(matcher.onBeforeParse.bind(matcher));
-      afterCallbacks.push(matcher.onAfterParse.bind(matcher));
+      if (matcher.onBeforeParse) {
+        beforeCallbacks.push(matcher.onBeforeParse.bind(matcher));
+      }
+
+      if (matcher.onAfterParse) {
+        afterCallbacks.push(matcher.onAfterParse.bind(matcher));
+      }
     });
 
     // Trigger before callbacks

@@ -6,7 +6,9 @@
 
 import { ATTRIBUTES } from './constants';
 
-export default class Filter {
+import type { FilterInterface } from './types';
+
+export default class Filter implements FilterInterface {
   attribute: string;
 
   constructor(attribute: string) {

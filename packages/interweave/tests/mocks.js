@@ -73,6 +73,20 @@ export const parentConfig = {
   children: [],
 };
 
+export function matchCodeTag(string, tag) {
+  const matches = string.match(new RegExp(`\\[${tag}\\]`));
+
+  if (!matches) {
+    return null;
+  }
+
+  return {
+    match: matches[0],
+    children: tag,
+    customProp: 'foo',
+  };
+}
+
 export class CodeTagMatcher extends Matcher {
   constructor(tag, key = null) {
     super(tag);
@@ -101,18 +115,7 @@ export class CodeTagMatcher extends Matcher {
   }
 
   match(string) {
-    const { tag } = this;
-    const matches = string.match(new RegExp(`\\[${tag}\\]`));
-
-    if (!matches) {
-      return null;
-    }
-
-    return {
-      match: matches[0],
-      children: tag,
-      customProp: 'foo',
-    };
+    return matchCodeTag(string, this.tag);
   }
 }
 

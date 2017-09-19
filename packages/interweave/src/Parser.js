@@ -7,8 +7,6 @@
 /* eslint-disable no-cond-assign, no-undef */
 
 import React from 'react';
-import Matcher from './Matcher';
-import Filter from './Filter';
 import ElementComponent from './components/Element';
 import {
   FILTER_DENY,
@@ -27,6 +25,8 @@ import type {
   Attributes,
   NodeConfig,
   NodeInterface, // eslint-disable-line
+  FilterInterface,
+  MatcherInterface,
 } from './types';
 
 type ParserProps = {
@@ -46,15 +46,15 @@ export default class Parser {
   doc: Document;
   content: React$Node[];
   props: ParserProps;
-  matchers: Matcher<*>[];
-  filters: Filter[];
+  matchers: MatcherInterface[];
+  filters: FilterInterface[];
   keyIndex: number;
 
   constructor(
     markup: string,
     props: Object = {},
-    matchers: Matcher<*>[] = [],
-    filters: Filter[] = [],
+    matchers: MatcherInterface[] = [],
+    filters: FilterInterface[] = [],
   ) {
     if (!markup) {
       markup = ''; // eslint-disable-line

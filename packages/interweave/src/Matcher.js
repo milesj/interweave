@@ -6,9 +6,9 @@
 
 import React from 'react';
 
-import type { MatcherFactory, MatchCallback, MatchResponse } from './types';
+import type { MatcherInterface, MatcherFactory, MatchCallback, MatchResponse } from './types';
 
-export default class Matcher<T: Object> {
+export default class Matcher<T: Object> implements MatcherInterface {
   options: T;
   propName: string;
   inverseName: string;

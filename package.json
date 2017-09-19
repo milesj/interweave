@@ -17,13 +17,13 @@
     "publish": "lerna publish",
     "publish:force": "lerna publish --force-publish=*",
     "test": "yarn run jest",
-    "test:live": "yarn run build && bundle-lib -f iife -i ./tests/bundle.js -o ./tests/bundle.min.js && serve ./tests/",
+    "test:live": "yarn run build && bundle-lib ./tests/bundle.js ./tests/bundle.min.js && serve ./tests/",
     "updated": "lerna updated"
   },
   "devDependencies": {
-    "@milesj/build-tool-config": "^0.24.0",
+    "@milesj/build-tool-config": "^0.27.0",
     "emojibase-test-utils": "^2.0.0",
-    "lerna": "^2.1.2",
+    "lerna": "^2.2.0",
     "serve": "^6.1.0"
   },
   "babel": {

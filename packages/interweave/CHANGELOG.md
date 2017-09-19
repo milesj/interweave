@@ -7,7 +7,10 @@
   components to `React.PureComponent`.
 
 #### 🚀 New
-* Matchers are now available as named exports from the index import `interweave`.
+* Matchers are now available as named exports from the `interweave` index.
+* Matchers can now be defined as objects instead of a class that extends `Matcher`.
+* Filters can now be defined as objects instead of a class that extends `Filter`.
+* Added `FilterShape` and `MatcherShape` prop types.
 
 #### 🛠 Internal
 * Split Interweave into a multi-package repository using Yarn workspaces and Lerna.
