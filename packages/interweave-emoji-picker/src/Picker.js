@@ -392,10 +392,10 @@ class Picker extends React.Component<PickerProps, PickerState> {
       lookups.push(emoji.emoticon);
     }
 
-    const haystack = lookups.join(' ');
+    const haystack = lookups.join(' ').toLowerCase();
 
-    // Support multi-word searches
-    return searchQuery.split(' ').some(needle => haystack.indexOf(needle) >= 0);
+    // Support multi-word and case-insensitive searches
+    return searchQuery.toLowerCase().split(' ').some(needle => haystack.indexOf(needle) >= 0);
   }
 
   /**
