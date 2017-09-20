@@ -9,7 +9,7 @@ import { Matcher } from 'interweave';
 import EMOJI_REGEX from 'emojibase-regex';
 import EMOTICON_REGEX from 'emojibase-regex/emoticon';
 import SHORTCODE_REGEX from 'emojibase-regex/shortcode';
-import EmojiComponent from './EmojiComponent';
+import Emoji from './Emoji';
 import EmojiData from './EmojiData';
 
 import type { MatcherFactory, MatchResponse } from 'interweave'; // eslint-disable-line
@@ -46,7 +46,7 @@ export default class EmojiMatcher extends Matcher<EmojiOptions> {
     }
 
     return (
-      <EmojiComponent {...props} />
+      <Emoji {...props} />
     );
   }
 
@@ -161,7 +161,7 @@ export default class EmojiMatcher extends Matcher<EmojiOptions> {
 
       } else if (React.isValidElement(item)) {
         // Only count towards emojis
-        if (item && item.type === EmojiComponent) {
+        if (item && item.type === Emoji) {
           count += 1;
           valid = true;
 

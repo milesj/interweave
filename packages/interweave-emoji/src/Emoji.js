@@ -34,7 +34,7 @@ type EmojiProps = {
   unicode: string,
 };
 
-export default class EmojiComponent extends React.PureComponent<EmojiProps> {
+export default class Emoji extends React.PureComponent<EmojiProps> {
   static propTypes = {
     emojiLargeSize: EmojiSizeShape,
     emojiPath: EmojiPathShape,

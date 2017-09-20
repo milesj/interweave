@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import Interweave from '../../interweave/src/Interweave';
-import Emoji from '../src/EmojiComponent';
+import Emoji from '../src/Emoji';
 import EmojiData from '../src/EmojiData';
 import EmojiMatcher from '../src/EmojiMatcher';
 import { EXTRA_PROPS, SOURCE_PROP } from '../../../tests/mocks';

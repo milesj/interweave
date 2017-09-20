@@ -4,15 +4,20 @@
  * @flow
  */
 
-import EmojiComponent from './EmojiComponent';
+import Emoji from './Emoji';
 import EmojiData from './EmojiData';
 import EmojiMatcher from './EmojiMatcher';
 import withEmojiData from './withEmojiData';
 import { EmojiShape, EmojiPathShape, EmojiSizeShape, EmojiSourceShape } from './shapes';
 
 export {
-  EmojiData, EmojiMatcher, withEmojiData,
-  EmojiShape, EmojiPathShape, EmojiSizeShape, EmojiSourceShape,
+  withEmojiData,
+  EmojiData,
+  EmojiMatcher,
+  EmojiShape,
+  EmojiPathShape,
+  EmojiSizeShape,
+  EmojiSourceShape,
 };
 
-export default EmojiComponent;
+export default Emoji;
