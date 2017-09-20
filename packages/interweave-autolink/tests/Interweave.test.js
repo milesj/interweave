@@ -10,15 +10,9 @@ import EmailMatcher from '../src/EmailMatcher';
 import HashtagMatcher from '../src/HashtagMatcher';
 import UrlMatcher from '../src/UrlMatcher';
 import IpMatcher from '../src/IpMatcher';
-// import { SOURCE_PROP } from '../../../tests/mocks';
+import { EXTRA_PROPS } from '../../../tests/mocks';
 
 describe('Interweave (with autolinking)', () => {
-  const extraProps = {
-    disableWhitelist: false,
-    disableLineBreaks: false,
-    noHtml: false,
-    noHtmlExceptMatchers: false,
-  };
   const urlParts = {
     scheme: 'http',
     auth: '',
@@ -49,26 +43,26 @@ Curabitur lectus odio, tempus quis velit vitae, cursus sagittis nulla. Maecenas 
 
     expect(wrapper.prop('children')).toEqual([
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec massa lorem, mollis non commodo quis, ultricies at elit. ',
-      <Email key="0" {...extraProps} emailParts={{ username: 'email', host: 'domain.com' }}>email@domain.com</Email>,
+      <Email key="0" {...EXTRA_PROPS} emailParts={{ username: 'email', host: 'domain.com' }}>email@domain.com</Email>,
       '. Aliquam a arcu porttitor, aliquam eros sed, convallis massa. Nunc vitae vehicula quam, in feugiat ligula. ',
-      <Hashtag key="1" {...extraProps} hashtagName="interweave">#interweave</Hashtag>,
+      <Hashtag key="1" {...EXTRA_PROPS} hashtagName="interweave">#interweave</Hashtag>,
       ' Donec eu sem non nibh condimentum luctus. Vivamus pharetra feugiat blandit. Vestibulum neque velit, semper id vestibulum id, viverra a felis. Integer convallis in orci nec bibendum. Ut consequat posuere metus, ',
-      <Url key="2" {...extraProps} urlParts={{ ...urlParts, host: 'www.domain.com' }}>www.domain.com</Url>,
+      <Url key="2" {...EXTRA_PROPS} urlParts={{ ...urlParts, host: 'www.domain.com' }}>www.domain.com</Url>,
       '.',
       <Element key="3" tagName="br" selfClose>{[]}</Element>,
       <Element key="4" tagName="br" selfClose>{[]}</Element>,
       'Curabitur lectus odio, tempus quis velit vitae, cursus sagittis nulla. Maecenas sem nulla, tempor nec risus nec, ultricies ultricies magna. ',
-      <Url key="5" {...extraProps} urlParts={{ ...urlParts, scheme: 'https', host: '127.0.0.1', path: '/foo' }}>https://127.0.0.1/foo</Url>,
+      <Url key="5" {...EXTRA_PROPS} urlParts={{ ...urlParts, scheme: 'https', host: '127.0.0.1', path: '/foo' }}>https://127.0.0.1/foo</Url>,
       ' Nulla malesuada lacinia libero non mollis. Curabitur id lacus id dolor vestibulum ornare quis a nisi (',
-      <Url key="6" {...extraProps} urlParts={{ ...urlParts, host: 'domain.com', path: '/some/path', query: '?with=query' }}>http://domain.com/some/path?with=query</Url>,
+      <Url key="6" {...EXTRA_PROPS} urlParts={{ ...urlParts, host: 'domain.com', path: '/some/path', query: '?with=query' }}>http://domain.com/some/path?with=query</Url>,
       '). Pellentesque ac finibus mauris. Sed eu luctus diam. Quisque porta lectus in turpis imperdiet dapibus.',
       <Element key="7" tagName="br" selfClose>{[]}</Element>,
       <Element key="8" tagName="br" selfClose>{[]}</Element>,
-      <Hashtag key="9" {...extraProps} hashtagName="blessed">#blessed</Hashtag>,
+      <Hashtag key="9" {...EXTRA_PROPS} hashtagName="blessed">#blessed</Hashtag>,
       ' ',
-      <Hashtag key="10" {...extraProps} hashtagName="interweave">#interweave</Hashtag>,
+      <Hashtag key="10" {...EXTRA_PROPS} hashtagName="interweave">#interweave</Hashtag>,
       ' ',
-      <Hashtag key="11" {...extraProps} hashtagName="milesj">#milesj</Hashtag>,
+      <Hashtag key="11" {...EXTRA_PROPS} hashtagName="milesj">#milesj</Hashtag>,
     ]);
   });
 
@@ -99,9 +93,9 @@ Curabitur lectus odio, tempus quis velit vitae, cursus sagittis nulla. Maecenas 
         {[
           <Element key="2" tagName="b">{['Consectetur adipiscing elit.']}</Element>,
           ' Donec massa lorem, mollis non commodo quis, ultricies at elit. ',
-          <Email key="3" {...extraProps} emailParts={{ username: 'email', host: 'domain.com' }}>email@domain.com</Email>,
+          <Email key="3" {...EXTRA_PROPS} emailParts={{ username: 'email', host: 'domain.com' }}>email@domain.com</Email>,
           '. Aliquam a arcu porttitor, aliquam eros sed, convallis massa. Nunc vitae vehicula quam, in feugiat ligula. ',
-          <Hashtag key="4" {...extraProps} hashtagName="interweave">#interweave</Hashtag>,
+          <Hashtag key="4" {...EXTRA_PROPS} hashtagName="interweave">#interweave</Hashtag>,
           ' Donec eu sem non nibh condimentum luctus. Vivamus pharetra feugiat blandit. Vestibulum neque velit, semper id vestibulum id, viverra a felis. Integer convallis in orci nec bibendum. Ut consequat posuere metus, ',
           <Element key="5" tagName="a" attributes={{ href: 'www.domain.com' }}>{['www.domain.com']}</Element>,
           '.',
@@ -113,20 +107,20 @@ Curabitur lectus odio, tempus quis velit vitae, cursus sagittis nulla. Maecenas 
           'Curabitur lectus odio, ',
           <Element key="7" tagName="em">{['tempus quis velit vitae, cursus sagittis nulla']}</Element>,
           '. Maecenas sem nulla, tempor nec risus nec, ultricies ultricies magna. ',
-          <Url key="8" {...extraProps} urlParts={{ ...urlParts, scheme: 'https', host: '127.0.0.1', path: '/foo' }}>https://127.0.0.1/foo</Url>,
+          <Url key="8" {...EXTRA_PROPS} urlParts={{ ...urlParts, scheme: 'https', host: '127.0.0.1', path: '/foo' }}>https://127.0.0.1/foo</Url>,
           ' Nulla malesuada lacinia libero non mollis. Curabitur id lacus id dolor vestibulum ornare quis a nisi (',
-          <Url key="9" {...extraProps} urlParts={{ ...urlParts, host: 'domain.com', path: '/some/path', query: '?with=query' }}>http://domain.com/some/path?with=query</Url>,
+          <Url key="9" {...EXTRA_PROPS} urlParts={{ ...urlParts, host: 'domain.com', path: '/some/path', query: '?with=query' }}>http://domain.com/some/path?with=query</Url>,
           '). Pellentesque ac finibus mauris. Sed eu luctus diam. Quisque porta lectus in turpis imperdiet dapibus.',
         ]}
       </Element>,
       '\n\n',
       <Element key="10" tagName="section">
         {[
-          <Hashtag key="11" {...extraProps} hashtagName="blessed">#blessed</Hashtag>,
+          <Hashtag key="11" {...EXTRA_PROPS} hashtagName="blessed">#blessed</Hashtag>,
           ' ',
-          <Hashtag key="12" {...extraProps} hashtagName="interweave">#interweave</Hashtag>,
+          <Hashtag key="12" {...EXTRA_PROPS} hashtagName="interweave">#interweave</Hashtag>,
           ' ',
-          <Hashtag key="13" {...extraProps} hashtagName="milesj">#milesj</Hashtag>,
+          <Hashtag key="13" {...EXTRA_PROPS} hashtagName="milesj">#milesj</Hashtag>,
         ]}
       </Element>,
     ]);
@@ -151,11 +145,11 @@ Curabitur lectus odio, tempus quis velit vitae, cursus sagittis nulla. Maecenas 
 
     expect(wrapper.prop('children')).toEqual([
       '- ',
-      <Url key="0" {...extraProps} urlParts={{ ...urlParts, scheme: 'https', host: '127.0.0.1', path: '/foo' }}>https://127.0.0.1/foo</Url>,
+      <Url key="0" {...EXTRA_PROPS} urlParts={{ ...urlParts, scheme: 'https', host: '127.0.0.1', path: '/foo' }}>https://127.0.0.1/foo</Url>,
       '\n- ',
       <Element key="1" tagName="a" attributes={{ href: 'www.domain.com' }}>{['www.domain.com']}</Element>,
       '\n- (',
-      <Url key="2" {...extraProps} urlParts={{ ...urlParts, host: 'domain.com', path: '/some/path', query: '?with=query' }}>http://domain.com/some/path?with=query</Url>,
+      <Url key="2" {...EXTRA_PROPS} urlParts={{ ...urlParts, host: 'domain.com', path: '/some/path', query: '?with=query' }}>http://domain.com/some/path?with=query</Url>,
       ')\n- ',
       <Element key="3" tagName="a" attributes={{ href: 'http://domain.com' }}>{['This text should stay']}</Element>,
     ]);

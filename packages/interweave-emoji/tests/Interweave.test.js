@@ -4,18 +4,10 @@ import Interweave from '../../interweave/src/Interweave';
 import Emoji from '../src/EmojiComponent';
 import EmojiData from '../src/EmojiData';
 import EmojiMatcher from '../src/EmojiMatcher';
-import { SOURCE_PROP } from '../../../tests/mocks';
+import { EXTRA_PROPS, SOURCE_PROP } from '../../../tests/mocks';
 
 describe('Interweave (with emoji)', () => {
   let SHORTCODE_TO_UNICODE = {};
-
-  const extraProps = {
-    disableWhitelist: false,
-    disableLineBreaks: false,
-    emojiSource: SOURCE_PROP,
-    noHtml: false,
-    noHtmlExceptMatchers: false,
-  };
 
   beforeEach(() => {
     ({ SHORTCODE_TO_UNICODE } = EmojiData.getInstance('en'));
@@ -97,7 +89,14 @@ describe('Interweave (with emoji)', () => {
     )).shallow();
 
     expect(wrapper.prop('children')).toEqual([
-      <Emoji {...extraProps} key={0} shortcode=":cat:" unicode="🐈️" enlargeEmoji />,
+      <Emoji
+        {...EXTRA_PROPS}
+        emojiSource={SOURCE_PROP}
+        key={0}
+        shortcode=":cat:"
+        unicode="🐈️"
+        enlargeEmoji
+      />,
     ]);
   });
 });

@@ -5,16 +5,15 @@ import ReactDOMServer from 'react-dom/server';
 import { shallow } from 'enzyme';
 import Interweave from '../src/Interweave';
 import Element from '../src/Element';
-import { MOCK_INVALID_MARKUP, HrefFilter, CodeTagMatcher, matchCodeTag } from '../../../tests/mocks';
+import {
+  EXTRA_PROPS,
+  MOCK_INVALID_MARKUP,
+  HrefFilter,
+  CodeTagMatcher,
+  matchCodeTag,
+} from '../../../tests/mocks';
 
 describe('Interweave', () => {
-  const extraProps = {
-    disableWhitelist: false,
-    disableLineBreaks: false,
-    noHtml: false,
-    noHtmlExceptMatchers: false,
-  };
-
   it('sets the `noHtml` class name', () => {
     const wrapper = shallow(
       <Interweave
@@ -98,7 +97,7 @@ describe('Interweave', () => {
 
     expect(wrapper.prop('children')).toEqual([
       'Foo ',
-      <Element {...extraProps} tagName="span" key="1" customProp="foo">B</Element>,
+      <Element {...EXTRA_PROPS} tagName="span" key="1" customProp="foo">B</Element>,
       ' Bar Baz',
     ]);
   });
@@ -125,7 +124,7 @@ describe('Interweave', () => {
 
     expect(wrapper.prop('children')).toEqual([
       'Foo ',
-      <Element {...extraProps} tagName="span" key="0" customProp="foo">B</Element>,
+      <Element {...EXTRA_PROPS} tagName="span" key="0" customProp="foo">B</Element>,
       ' Bar Baz',
     ]);
   });
