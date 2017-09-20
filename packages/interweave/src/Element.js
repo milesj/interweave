@@ -7,7 +7,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import type { Attributes } from '../types';
+import type { Attributes } from './types';
 
 type ElementProps = {
   attributes: Attributes,

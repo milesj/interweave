@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import Url from '../../src/components/Url';
+import Url from '../src/Url';
 
 describe('components/Url', () => {
   it('passes the child as an href', () => {

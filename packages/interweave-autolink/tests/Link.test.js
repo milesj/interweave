@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import Link from '../../src/components/Link';
+import Link from '../src/Link';
 
 describe('components/Link', () => {
   it('renders a link with href', () => {

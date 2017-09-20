@@ -1,8 +1,8 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import Markup from '../src/Markup';
-import Element from '../src/components/Element';
-import { MOCK_MARKUP } from './mocks';
+import Element from '../src/Element';
+import { MOCK_MARKUP } from '../../../tests/mocks';
 
 describe('Markup', () => {
   it('sets the `noHtml` class name', () => {

@@ -7,7 +7,7 @@
 /* eslint-disable no-cond-assign, no-undef */
 
 import React from 'react';
-import ElementComponent from './components/Element';
+import Element from './Element';
 import {
   FILTER_DENY,
   FILTER_CAST_NUMBER,
@@ -437,9 +437,9 @@ export default class Parser {
           }
 
           content.push((
-            <ElementComponent {...elementProps}>
+            <Element {...elementProps}>
               {this.parseNode(node, config)}
-            </ElementComponent>
+            </Element>
           ));
 
         // Render the children of the current element only.

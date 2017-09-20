@@ -1,0 +1,6 @@
+{
+  "rules": {
+    "no-magic-numbers": 0,
+    "react/jsx-no-literals": 0
+  }
+}

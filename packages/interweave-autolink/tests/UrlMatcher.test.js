@@ -1,7 +1,7 @@
-import Parser from '../../src/Parser';
-import UrlMatcher from '../../src/matchers/UrlMatcher';
-import { URL_PATTERN } from '../../src/constants';
-import { TOKEN_LOCATIONS, createExpectedToken, parentConfig } from '../mocks';
+import Parser from '../../interweave/src/Parser';
+import UrlMatcher from '../src/UrlMatcher';
+import { URL_PATTERN } from '../src/constants';
+import { TOKEN_LOCATIONS, createExpectedToken, parentConfig } from '../../../tests/mocks';
 
 // Borrowed from: https://github.com/Sporkmonger/Addressable/blob/master/spec/addressable/uri_spec.rb
 const VALID_URLS = [

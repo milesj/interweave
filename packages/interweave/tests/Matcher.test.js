@@ -1,7 +1,7 @@
 import React from 'react';
 import Matcher from '../src/Matcher';
-import Element from '../src/components/Element';
-import { CodeTagMatcher } from './mocks';
+import Element from '../src/Element';
+import { CodeTagMatcher } from '../../../tests/mocks';
 
 describe('Matcher', () => {
   const matcher = new CodeTagMatcher('foo', '1');

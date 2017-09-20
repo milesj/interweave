@@ -4,7 +4,7 @@ import Interweave from '../../interweave/src/Interweave';
 import Emoji from '../src/EmojiComponent';
 import EmojiData from '../src/EmojiData';
 import EmojiMatcher from '../src/EmojiMatcher';
-import { SOURCE_PROP } from './mocks';
+import { SOURCE_PROP } from '../../../tests/mocks';
 
 describe('Interweave (with emoji)', () => {
   let SHORTCODE_TO_UNICODE = {};

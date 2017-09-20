@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import Email from '../../src/components/Email';
+import Email from '../src/Email';
 
 describe('components/Email', () => {
   it('can pass props to Link', () => {

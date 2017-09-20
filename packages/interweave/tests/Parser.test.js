@@ -1,6 +1,6 @@
 import React from 'react';
 import Parser from '../src/Parser';
-import Element from '../src/components/Element';
+import Element from '../src/Element';
 import {
   TAGS,
   ATTRIBUTES,
@@ -14,11 +14,11 @@ import {
 import {
   CodeTagMatcher,
   HrefFilter,
-  TOKEN_LOCATIONS,
-  MOCK_MARKUP,
   createExpectedToken,
   parentConfig,
-} from './mocks';
+  TOKEN_LOCATIONS,
+  MOCK_MARKUP,
+} from '../../../tests/mocks';
 
 function createChild(tag, text) {
   const child = document.createElement(tag);

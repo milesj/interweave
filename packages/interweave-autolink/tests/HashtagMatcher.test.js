@@ -1,7 +1,7 @@
-import Parser from '../../src/Parser';
-import HashtagMatcher from '../../src/matchers/HashtagMatcher';
-import { HASHTAG_PATTERN } from '../../src/constants';
-import { TOKEN_LOCATIONS, createExpectedToken, parentConfig } from '../mocks';
+import Parser from '../../interweave/src/Parser';
+import HashtagMatcher from '../src/HashtagMatcher';
+import { HASHTAG_PATTERN } from '../src/constants';
+import { TOKEN_LOCATIONS, createExpectedToken, parentConfig } from '../../../tests/mocks';
 
 const VALID_HASHTAGS = [
   '#alloneword',

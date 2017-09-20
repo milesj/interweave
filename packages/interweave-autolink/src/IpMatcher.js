@@ -5,9 +5,9 @@
  */
 
 import UrlMatcher from './UrlMatcher';
-import { IP_PATTERN } from '../constants';
+import { IP_PATTERN } from './constants';
 
-import type { MatchResponse, MatcherFactory } from '../types';
+import type { MatchResponse, MatcherFactory } from 'interweave'; // eslint-disable-line
 
 const IP_REGEX: RegExp = new RegExp(IP_PATTERN, 'i');
 

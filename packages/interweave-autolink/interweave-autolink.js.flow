@@ -1,0 +1,51 @@
+import React from 'react';
+import { Matcher } from 'interweave';
+
+declare module 'interweave-autolink' {
+  declare export class Email extends React.PureComponent<{
+    children: string,
+    emailParts: {
+      host: string,
+      username: string,
+    },
+  }> {}
+
+  declare export class Hashtag extends React.PureComponent<{
+    children: string,
+    encodeHashtag: boolean,
+    hashtagName: string,
+    hashtagUrl: string | (hashtag: string) => string,
+    preserveHash: boolean,
+  }> {}
+
+  declare export class Link extends React.PureComponent<{
+    children: React$Node,
+    href: string,
+    newWindow: boolean,
+    onClick: ?() => void,
+  }> {}
+
+  declare export class Url extends React.PureComponent<{
+    children: string,
+    urlParts: {
+      auth: string,
+      fragment: string,
+      host: string,
+      path: string,
+      port: string | number,
+      query: string,
+      scheme: string,
+    },
+  }> {}
+
+  declare export class EmailMatcher extends Matcher<Object> {}
+
+  declare export class HashtagMatcher extends Matcher<Object> {}
+
+  declare export class IpMatcher extends Matcher<Object> {}
+
+  declare export class UrlMatcher extends Matcher<{
+    customTLDs: string[],
+    validateTLD: boolean,
+  }> {}
+}

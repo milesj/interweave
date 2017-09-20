@@ -8,10 +8,6 @@ import Interweave from './Interweave';
 import Markup from './Markup';
 import Filter from './Filter';
 import Matcher from './Matcher';
-import EmailMatcher from './matchers/EmailMatcher';
-import HashtagMatcher from './matchers/HashtagMatcher';
-import IpMatcher from './matchers/IpMatcher';
-import UrlMatcher from './matchers/UrlMatcher';
 import { FilterShape, MatcherShape } from './shapes';
 
 export {
@@ -20,10 +16,6 @@ export {
   FilterShape,
   Matcher,
   MatcherShape,
-  EmailMatcher,
-  HashtagMatcher,
-  IpMatcher,
-  UrlMatcher,
 };
 
 export default Interweave;

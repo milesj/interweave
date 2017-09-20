@@ -6,8 +6,8 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
+import Element from './Element';
 import Parser from './Parser';
-import Element from './components/Element';
 
 type MarkupProps = {
   content: string,

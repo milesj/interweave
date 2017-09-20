@@ -1,0 +1,33 @@
+{
+  "name": "interweave-autolink",
+  "version": "0.0.0",
+  "description": "URL, IP, email, and hashtag autolinking support for Interweave.",
+  "keywords": [
+    "interweave",
+    "react",
+    "url",
+    "ip",
+    "email",
+    "hashtag",
+    "autolink"
+  ],
+  "main": "./lib/index.js",
+  "scripts": {
+    "build": "build-lib ./src -d ./lib"
+  },
+  "repository": "https://github.com/milesj/interweave/tree/master/packages/interweave-autolink",
+  "license": "MIT",
+  "dependencies": {
+    "babel-runtime": "^6.26.0",
+    "prop-types": "^15.5.10"
+  },
+  "peerDependencies": {
+    "interweave": "^7.0.0-rc.5",
+    "react": "^15.3.0 || ^16.0.0"
+  },
+  "devDependencies": {
+    "@milesj/build-tool-config": "^0.27.0",
+    "interweave": "^7.0.0-rc.5",
+    "react": "^15.6.1"
+  }
+}

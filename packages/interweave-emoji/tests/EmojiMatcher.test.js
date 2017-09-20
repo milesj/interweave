@@ -3,11 +3,16 @@ import EMOJI_REGEX from 'emojibase-regex';
 import EMOTICON_REGEX from 'emojibase-regex/emoticon';
 import SHORTCODE_REGEX from 'emojibase-regex/shortcode';
 import Parser from '../../interweave/src/Parser';
-import { TOKEN_LOCATIONS, createExpectedToken, parentConfig } from '../../interweave/tests/mocks';
 import Emoji from '../src/EmojiComponent';
 import EmojiMatcher from '../src/EmojiMatcher';
 import EmojiData from '../src/EmojiData';
-import { SOURCE_PROP, VALID_EMOJIS } from './mocks';
+import {
+  SOURCE_PROP,
+  VALID_EMOJIS,
+  TOKEN_LOCATIONS,
+  createExpectedToken,
+  parentConfig,
+} from '../../../tests/mocks';
 
 const INVALID_UNICODE = [
   '\u02A9',

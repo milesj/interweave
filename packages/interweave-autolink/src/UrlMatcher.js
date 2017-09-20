@@ -5,11 +5,11 @@
  */
 
 import React from 'react';
-import Matcher from '../Matcher';
-import Url from '../components/Url';
-import { URL_PATTERN, TOP_LEVEL_TLDS } from '../constants';
+import { Matcher } from 'interweave';
+import Url from './Url';
+import { URL_PATTERN, TOP_LEVEL_TLDS } from './constants';
 
-import type { MatchResponse, MatcherFactory } from '../types';
+import type { MatchResponse, MatcherFactory } from 'interweave'; // eslint-disable-line
 
 type UrlOptions = {
   customTLDs: string[],

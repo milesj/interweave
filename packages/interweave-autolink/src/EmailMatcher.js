@@ -5,11 +5,11 @@
  */
 
 import React from 'react';
-import Matcher from '../Matcher';
-import Email from '../components/Email';
-import { EMAIL_PATTERN } from '../constants';
+import { Matcher } from 'interweave';
+import Email from './Email';
+import { EMAIL_PATTERN } from './constants';
 
-import type { MatchResponse } from '../types';
+import type { MatchResponse } from 'interweave'; // eslint-disable-line
 
 const EMAIL_REGEX: RegExp = new RegExp(EMAIL_PATTERN, 'i');
 

@@ -84,77 +84,7 @@ declare module 'interweave' {
     parseMarkup(): React$Node[];
     render(): React$Node;
   }
-}
 
-declare module 'interweave/lib/components/Element' {
-  declare export default class Element extends React.PureComponent<{
-    attributes: { [key: string]: string | number | boolean },
-    children: React$Node,
-    className: string,
-    selfClose: boolean,
-    tagName: string,
-  }> {}
-}
-
-declare module 'interweave/lib/components/Email' {
-  declare export default class Email extends React.PureComponent<{
-    children: string,
-    emailParts: {
-      host: string,
-      username: string,
-    },
-  }> {}
-}
-
-declare module 'interweave/lib/components/Hashtag' {
-  declare export default class Hashtag extends React.PureComponent<{
-    children: string,
-    encodeHashtag: boolean,
-    hashtagName: string,
-    hashtagUrl: string | (hashtag: string) => string,
-    preserveHash: boolean,
-  }> {}
-}
-
-declare module 'interweave/lib/components/Link' {
-  declare export default class Link extends React.PureComponent<{
-    children: React$Node,
-    href: string,
-    newWindow: boolean,
-    onClick: ?() => void,
-  }> {}
-}
-
-declare module 'interweave/lib/components/Url' {
-  declare export default class Url extends React.PureComponent<{
-    children: string,
-    urlParts: {
-      auth: string,
-      fragment: string,
-      host: string,
-      path: string,
-      port: string | number,
-      query: string,
-      scheme: string,
-    },
-  }> {}
-}
-
-declare module 'interweave/lib/matchers/EmailMatcher' {
-  declare export default class EmailMatcher extends Matcher<Object> {}
-}
-
-declare module 'interweave/lib/matchers/HashtagMatcher' {
-  declare export default class HashtagMatcher extends Matcher<Object> {}
-}
-
-declare module 'interweave/lib/matchers/IpMatcher' {
-  declare export default class IpMatcher extends Matcher<Object> {}
-}
-
-declare module 'interweave/lib/matchers/UrlMatcher' {
-  declare export default class UrlMatcher extends Matcher<{
-    customTLDs: string[],
-    validateTLD: boolean,
-  }> {}
+  declare export var FilterShape: PropTypes;
+  declare export var MatcherShape: PropTypes;
 }

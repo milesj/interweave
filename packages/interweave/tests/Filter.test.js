@@ -1,5 +1,5 @@
 import Filter from '../src/Filter';
-import { HrefFilter } from './mocks';
+import { HrefFilter } from '../../../tests/mocks';
 
 describe('Filter', () => {
   it('errors if not defined', () => {

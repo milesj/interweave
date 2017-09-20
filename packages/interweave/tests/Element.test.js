@@ -1,8 +1,8 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import Element from '../../src/components/Element';
+import Element from '../src/Element';
 
-describe('components/Element', () => {
+describe('Element', () => {
   it('can set the class name', () => {
     const wrapper = shallow(<Element className="foo-bar" tagName="div">Foo</Element>);
 

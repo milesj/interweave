@@ -5,11 +5,11 @@
  */
 
 import React from 'react';
-import Matcher from '../Matcher';
-import Hashtag from '../components/Hashtag';
-import { HASHTAG_PATTERN } from '../constants';
+import { Matcher } from 'interweave';
+import Hashtag from './Hashtag';
+import { HASHTAG_PATTERN } from './constants';
 
-import type { MatchResponse } from '../types';
+import type { MatchResponse } from 'interweave'; // eslint-disable-line
 
 const HASHTAG_REGEX: RegExp = new RegExp(HASHTAG_PATTERN, 'i');
 
