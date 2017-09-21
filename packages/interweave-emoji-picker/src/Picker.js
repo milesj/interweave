@@ -66,6 +66,7 @@ type PickerProps = {
   disableSearch: boolean,
   disableSkinTones: boolean,
   displayOrder: string[],
+  emojiLargeSize: number,
   emojiPadding: number,
   emojiPath: EmojiPath,
   emojis: Emoji[],
@@ -135,6 +136,7 @@ class Picker extends React.Component<PickerProps, PickerState> {
     disableSearch: PropTypes.bool,
     disableSkinTones: PropTypes.bool,
     displayOrder: PropTypes.arrayOf(PropTypes.string),
+    emojiLargeSize: PropTypes.number.isRequired,
     emojiPadding: PropTypes.number,
     emojiPath: EmojiPathShape.isRequired,
     emojiSize: PropTypes.number.isRequired,
@@ -648,6 +650,7 @@ class Picker extends React.Component<PickerProps, PickerState> {
       classNames,
       commonMode,
       displayOrder,
+      emojiLargeSize,
       emojiPadding,
       emojiPath,
       emojiSize,
@@ -675,6 +678,7 @@ class Picker extends React.Component<PickerProps, PickerState> {
         <PreviewBar
           key="preview"
           emoji={activeEmoji}
+          emojiLargeSize={emojiLargeSize}
           emojiPath={emojiPath}
           emojiSource={emojiSource}
           hideEmoticon={hideEmoticon}
