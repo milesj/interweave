@@ -2725,9 +2725,9 @@ interpret@^1.0.0:
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/interpret/-/interpret-1.0.4.tgz#820cdd588b868ffb191a809506d6c9c8f212b1b0"
 
-interweave-emoji@^1.0.0-rc.0:
-  version "1.0.0-rc.0"
-  resolved "https://registry.yarnpkg.com/interweave-emoji/-/interweave-emoji-1.0.0-rc.0.tgz#b11e03c8dd9e15e14a44d85169a452623966251d"
+interweave-emoji@^1.0.0-rc.1:
+  version "1.0.0-rc.1"
+  resolved "https://registry.yarnpkg.com/interweave-emoji/-/interweave-emoji-1.0.0-rc.1.tgz#78dff0f5c2e08f7ff5e9d01e5037c9b39722e803"
   dependencies:
     babel-runtime "^6.26.0"
     emojibase-regex "^1.0.6"

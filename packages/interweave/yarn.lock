@@ -2,9 +2,9 @@
 # yarn lockfile v1
 
 
-"@milesj/build-tool-config@^0.25.0":
-  version "0.25.0"
-  resolved "https://registry.yarnpkg.com/@milesj/build-tool-config/-/build-tool-config-0.25.0.tgz#fc1d7bf12083ccb17eba756844666f485d5e273a"
+"@milesj/build-tool-config@^0.27.0":
+  version "0.27.0"
+  resolved "https://registry.yarnpkg.com/@milesj/build-tool-config/-/build-tool-config-0.27.0.tgz#3b26b2cfdfe2cabfa8cb5d8b1c67164e0f615494"
   dependencies:
     babel-cli "^6.26.0"
     babel-core "^6.26.0"
@@ -23,7 +23,7 @@
     clean-webpack-plugin "^0.1.16"
     copy "^0.3.1"
     enzyme "^2.9.1"
-    eslint "^4.7.0"
+    eslint "^4.7.1"
     eslint-config-airbnb "^15.1.0"
     eslint-plugin-flowtype "2.34.1"
     eslint-plugin-import "^2.7.0"
@@ -1993,7 +1993,7 @@ eslint-scope@^3.7.1:
     esrecurse "^4.1.0"
     estraverse "^4.1.1"
 
-eslint@^4.7.0:
+eslint@^4.7.1:
   version "4.7.1"
   resolved "https://registry.yarnpkg.com/eslint/-/eslint-4.7.1.tgz#849804136953ebe366782f9f8611e2cbd1b54681"
   dependencies:

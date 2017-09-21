@@ -322,7 +322,14 @@ const filter = {
 
 Autolinking is the concept of matching patterns within a string and
 wrapping the matched result in a link (an `<a>` tag).
-This can be achieved with the [matchers](#matchers) described below.
+This can be achieved with the [matchers](#matchers) described below,
+and the `interweave-autolink` package.
+
+```
+npm install interweave-autolink --save
+// Or
+yarn add interweave-autolink
+```
 
 > Note: The regex patterns in use for autolinking do not conform to the
 > official RFC specifications, as we need to take into account word
