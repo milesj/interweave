@@ -238,8 +238,10 @@ export default class EmojiList extends React.PureComponent<EmojiListProps, Emoji
 
     // Scroll to the section after a short delay (wait for images to render)
     setTimeout(() => {
-      // $FlowIgnore
-      this.container.scrollTop = element.offsetTop;
+      // Check container again as it could be unmounted
+      if (this.container) {
+        this.container.scrollTop = element.offsetTop;
+      }
     });
   }
 
