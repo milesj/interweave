@@ -15,7 +15,7 @@ type GroupTabsProps = {
   activeGroup: string,
   hasCommonlyUsed: boolean,
   icons: { [key: string]: React$Node },
-  onSelect: (group: string, reset?: boolean) => void,
+  onSelect: (group: string, reset?: boolean, e?: SyntheticEvent<*>) => void,
 };
 
 export default class GroupTabs extends React.PureComponent<GroupTabsProps> {

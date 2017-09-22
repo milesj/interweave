@@ -17,9 +17,9 @@ type EmojiProps = {
   emojiPath: EmojiPath,
   emojiSize: number,
   emojiSource: EmojiSource,
-  onEnter: (emoji: Emoji) => void,
-  onLeave: (emoji: Emoji) => void,
-  onSelect: (emoji: Emoji) => void,
+  onEnter: (emoji: Emoji, e: *) => void,
+  onLeave: (emoji: Emoji, e: *) => void,
+  onSelect: (emoji: Emoji, e: *) => void,
   showImage: boolean,
 };
 
@@ -67,7 +67,7 @@ export default class EmojiButton extends React.PureComponent<EmojiProps, EmojiSt
   handleClick = (e: SyntheticMouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
 
-    this.props.onSelect(this.props.emoji);
+    this.props.onSelect(this.props.emoji, e);
   };
 
   /**
@@ -80,7 +80,7 @@ export default class EmojiButton extends React.PureComponent<EmojiProps, EmojiSt
       active: true,
     });
 
-    this.props.onEnter(this.props.emoji);
+    this.props.onEnter(this.props.emoji, e);
   };
 
   /**
@@ -93,7 +93,7 @@ export default class EmojiButton extends React.PureComponent<EmojiProps, EmojiSt
       active: false,
     });
 
-    this.props.onLeave(this.props.emoji);
+    this.props.onLeave(this.props.emoji, e);
   };
 
   render() {

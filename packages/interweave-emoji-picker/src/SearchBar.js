@@ -10,8 +10,8 @@ import { SEARCH_THROTTLE } from './constants';
 
 type SearchBarProps = {
   autoFocus: boolean,
-  onChange: (query: string) => void,
-  onKeyUp: (event: *) => void,
+  onChange: (query: string, e: *) => void,
+  onKeyUp: (e: *) => void,
   searchQuery: string,
 };
 
@@ -65,6 +65,8 @@ export default class SearchBar extends React.PureComponent<SearchBarProps, Searc
    * Triggered when the input field value changes.
    */
   handleChange = (e: SyntheticInputEvent<HTMLInputElement>) => {
+    e.persist();
+
     const query = e.currentTarget.value;
     const trimmedQuery = query.trim();
 
@@ -77,7 +79,7 @@ export default class SearchBar extends React.PureComponent<SearchBarProps, Searc
     clearTimeout(this.timeout);
 
     this.timeout = setTimeout(() => {
-      this.props.onChange(trimmedQuery);
+      this.props.onChange(trimmedQuery, e);
     }, SEARCH_THROTTLE);
   };
 

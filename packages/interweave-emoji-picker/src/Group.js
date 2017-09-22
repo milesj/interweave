@@ -13,7 +13,7 @@ type GroupProps = {
   activeGroup: string,
   children: React$Node,
   group: string,
-  onSelect: (group: string, reset?: boolean) => void,
+  onSelect: (group: string, reset?: boolean, e?: SyntheticEvent<*>) => void,
 };
 
 export default class Group extends React.PureComponent<GroupProps> {
@@ -35,7 +35,7 @@ export default class Group extends React.PureComponent<GroupProps> {
   handleClick = (e: SyntheticMouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
 
-    this.props.onSelect(this.props.group, true);
+    this.props.onSelect(this.props.group, true, e);
   };
 
   render() {

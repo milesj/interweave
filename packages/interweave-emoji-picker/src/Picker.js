@@ -79,11 +79,11 @@ type PickerProps = {
   maxCommonlyUsed: number,
   maxEmojiVersion: number,
   messages: { [key: string]: string },
-  onHoverEmoji: (emoji: Emoji) => void,
-  onSearch: (query: string) => void,
-  onSelectEmoji: (emoji: Emoji) => void,
-  onSelectGroup: (group: string) => void,
-  onSelectSkinTone: (skinTone: string) => void,
+  onHoverEmoji: (emoji: Emoji, e: *) => void,
+  onSearch: (query: string, e: *) => void,
+  onSelectEmoji: (emoji: Emoji, e: *) => void,
+  onSelectGroup: (group: string, e: *) => void,
+  onSelectSkinTone: (skinTone: string, e: *) => void,
 };
 
 type PickerState = {
@@ -484,12 +484,12 @@ class Picker extends React.Component<PickerProps, PickerState> {
   /**
    * Triggered when the mouse hovers an emoji.
    */
-  handleEnterEmoji = (emoji: Emoji) => {
+  handleEnterEmoji = (emoji: Emoji, e: SyntheticEvent<*>) => {
     this.setState({
       activeEmoji: emoji,
     });
 
-    this.props.onHoverEmoji(emoji);
+    this.props.onHoverEmoji(emoji, e);
   };
 
   /**
@@ -508,14 +508,14 @@ class Picker extends React.Component<PickerProps, PickerState> {
     if (e.key === 'Escape') {
       e.preventDefault();
 
-      this.handleSearch('');
+      this.handleSearch('', e);
 
     // Select active emoji
     } else if (e.key === 'Enter') {
       e.preventDefault();
 
       if (activeEmoji) {
-        this.handleSelectEmoji(activeEmoji);
+        this.handleSelectEmoji(activeEmoji, e);
       }
 
     // Cycle search results
@@ -546,7 +546,7 @@ class Picker extends React.Component<PickerProps, PickerState> {
           activeEmojiIndex: nextIndex,
         });
 
-        this.handleEnterEmoji(emojis[nextIndex]);
+        this.handleEnterEmoji(emojis[nextIndex], e);
       }
     }
   }
@@ -563,7 +563,7 @@ class Picker extends React.Component<PickerProps, PickerState> {
   /**
    * Triggered when the search input field value changes.
    */
-  handleSearch = (query: string) => {
+  handleSearch = (query: string, e: SyntheticEvent<*>) => {
     const defaultGroup = this.getDefaultGroup();
 
     this.setState({
@@ -572,16 +572,16 @@ class Picker extends React.Component<PickerProps, PickerState> {
       searchQuery: query,
     });
 
-    this.props.onSearch(query);
+    this.props.onSearch(query, e);
   };
 
   /**
    * Triggered when an emoji is clicked.
    */
-  handleSelectEmoji = (emoji: Emoji) => {
+  handleSelectEmoji = (emoji: Emoji, e: SyntheticEvent<*>) => {
     this.addCommonEmoji(emoji);
 
-    this.props.onSelectEmoji(emoji);
+    this.props.onSelectEmoji(emoji, e);
   };
 
   /**
@@ -589,27 +589,27 @@ class Picker extends React.Component<PickerProps, PickerState> {
    *
    * When clicked via the tab, we should reset search and scroll position.
    */
-  handleSelectGroup = (group: string, reset: boolean = false) => {
+  handleSelectGroup = (group: string, reset?: boolean = false, e?: SyntheticEvent<*>) => {
     this.setState(prevState => ({
       activeGroup: group,
       scrollToGroup: reset ? group : '',
       searchQuery: reset ? '' : prevState.searchQuery,
     }));
 
-    this.props.onSelectGroup(group);
+    this.props.onSelectGroup(group, e);
   };
 
   /**
    * Triggered when a skin tone is clicked.
    */
-  handleSelectSkinTone = (skinTone: string) => {
+  handleSelectSkinTone = (skinTone: string, e: SyntheticEvent<*>) => {
     this.setState({
       activeSkinTone: skinTone,
     });
 
     this.setSkinTone(skinTone);
 
-    this.props.onSelectSkinTone(skinTone);
+    this.props.onSelectSkinTone(skinTone, e);
   };
 
   /**

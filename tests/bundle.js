@@ -71,10 +71,11 @@ function App() {
             '1F4A9', // Poop
           ]}
           maxEmojiVersion={4}
-          onSearch={(query) => { console.log('search', query); }}
-          onSelectEmoji={(emoji) => { console.log('select emoji', emoji); }}
-          onSelectGroup={(group) => { console.log('select group', group); }}
-          onSelectSkinTone={(skinTone) => { console.log('select skin', skinTone); }}
+          onSearch={(query, e) => { console.log('search', query, e); }}
+          onHoverEmoji={(emoji, e) => { console.log('hover emoji', emoji, e); }}
+          onSelectEmoji={(emoji, e) => { console.log('select emoji', emoji, e); }}
+          onSelectGroup={(group, e) => { console.log('select group', group, e); }}
+          onSelectSkinTone={(skinTone, e) => { console.log('select skin', skinTone, e); }}
         />
       </div>
 

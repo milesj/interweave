@@ -11,7 +11,7 @@ import { SKIN_TONES } from './constants';
 
 type SkinTonePaletteProps = {
   activeSkinTone: string,
-  onSelect: (skinTone: string) => void,
+  onSelect: (skinTone: string, e: *) => void,
 };
 
 export default class SkinTonePalette extends React.PureComponent<SkinTonePaletteProps> {

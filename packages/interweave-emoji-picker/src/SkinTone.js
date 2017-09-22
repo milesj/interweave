@@ -10,7 +10,7 @@ import { SKIN_COLORS } from './constants';
 
 type SkinToneProps = {
   activeSkinTone: string,
-  onSelect: (skinTone: string) => void,
+  onSelect: (skinTone: string, e: *) => void,
   skinTone: string,
 };
 
@@ -31,7 +31,7 @@ export default class SkinTone extends React.PureComponent<SkinToneProps> {
   handleClick = (e: SyntheticMouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
 
-    this.props.onSelect(this.props.skinTone);
+    this.props.onSelect(this.props.skinTone, e);
   };
 
   render() {
