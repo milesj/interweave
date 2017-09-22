@@ -32,7 +32,7 @@ describe('withEmojiData', () => {
   beforeEach(() => {
     global.fetch = jest.fn(() => Promise.resolve({
       ok: true,
-      json: () => Promise.resolve([]),
+      json: () => mockEmojis,
     }));
 
     global.sessionStorage = {
@@ -49,7 +49,7 @@ describe('withEmojiData', () => {
   });
 
   it('fetches data on mount', () => {
-    shallow(
+    const wrapper = shallow(
       <Component locale="ja" version="1.2.3">
         <div>Foo</div>
       </Component>,
@@ -59,6 +59,10 @@ describe('withEmojiData', () => {
       'https://cdn.jsdelivr.net/npm/emojibase-data@1.2.3/ja/data.json',
       fetchOptions,
     );
+
+    setTimeout(() => {
+      expect(wrapper.state('emojis')).toEqual(mockEmojis);
+    });
   });
 
   it('doesnt fetch multiple times', () => {
@@ -78,23 +82,31 @@ describe('withEmojiData', () => {
   });
 
   it('doesnt fetch when emojis are passed manually', () => {
-    shallow(
+    const wrapper = shallow(
       <Component emojis={mockEmojis}>
         <div>Foo</div>
       </Component>,
     );
 
     expect(global.fetch).not.toBeCalled();
+
+    setTimeout(() => {
+      expect(wrapper.state('emojis')).toEqual(mockEmojis);
+    });
   });
 
   it('supports emoji data as a JSON string', () => {
-    shallow(
+    const wrapper = shallow(
       <Component emojis={JSON.stringify(mockEmojis)}>
         <div>Foo</div>
       </Component>,
     );
 
     expect(global.fetch).not.toBeCalled();
+
+    setTimeout(() => {
+      expect(wrapper.state('emojis')).toEqual(mockEmojis);
+    });
   });
 
   it('supports compact datasets', () => {
