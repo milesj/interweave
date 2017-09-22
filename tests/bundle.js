@@ -66,6 +66,7 @@ function App() {
           emojiPath={emojiPath}
           emojiPadding={5}
           emojiSize={22}
+          emojiLargeSize={48}
           exclude={[
             '1F4A9', // Poop
           ]}

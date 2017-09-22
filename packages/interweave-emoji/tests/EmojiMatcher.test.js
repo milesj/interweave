@@ -241,7 +241,25 @@ describe('EmojiMatcher', () => {
     });
   });
 
+  describe('onBeforeParse()', () => {
+    it('errors when no emojiSource', () => {
+      expect(() => {
+        matcher.onBeforeParse('', {});
+      }).toThrowError('Missing emoji source data. Have you loaded using `withEmojiData`?');
+    });
+
+    it('doesnt error when emojiSource is passed', () => {
+      expect(() => {
+        matcher.onBeforeParse('', { emojiSource: SOURCE_PROP });
+      }).not.toThrowError();
+    });
+  });
+
   describe('onAfterParse', () => {
+    it('returns when an empty array', () => {
+      expect(matcher.onAfterParse([])).toEqual([]);
+    });
+
     it('enlarges a single <Emoji/>', () => {
       expect(matcher.onAfterParse([
         <Emoji key={0} shortcode=":cat:" emojiSource={SOURCE_PROP} />,
