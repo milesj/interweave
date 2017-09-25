@@ -64,8 +64,8 @@ export const SKIN_COLORS: { [key: string]: string } = {
 };
 
 export const SCROLL_BUFFER: number = 150;
-export const SCROLL_DEBOUNCE: number = 50;
-export const SEARCH_THROTTLE: number = 100;
+export const SCROLL_DEBOUNCE: number = 100;
+export const SEARCH_THROTTLE: number = 250;
 
 export const KEY_COMMONLY_USED: string = 'interweave/emoji/commonlyUsed';
 export const KEY_SKIN_TONE: string = 'interweave/emoji/skinTone';

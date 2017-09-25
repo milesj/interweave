@@ -6,7 +6,7 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import debounce from 'lodash.debounce';
+import debounce from 'lodash/debounce';
 import { EmojiShape, EmojiPathShape, EmojiSourceShape } from 'interweave-emoji';
 import EmojiButton from './Emoji';
 import {

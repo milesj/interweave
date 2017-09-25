@@ -2725,9 +2725,9 @@ interpret@^1.0.0:
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/interpret/-/interpret-1.0.4.tgz#820cdd588b868ffb191a809506d6c9c8f212b1b0"
 
-interweave-emoji@^1.0.0-rc.1:
-  version "1.0.0-rc.1"
-  resolved "https://registry.yarnpkg.com/interweave-emoji/-/interweave-emoji-1.0.0-rc.1.tgz#78dff0f5c2e08f7ff5e9d01e5037c9b39722e803"
+interweave-emoji@^1.0.0-rc.3:
+  version "1.0.0-rc.3"
+  resolved "https://registry.yarnpkg.com/interweave-emoji/-/interweave-emoji-1.0.0-rc.3.tgz#5eff0d024fe2bde7a69bfdeff4094596761f7a27"
   dependencies:
     babel-runtime "^6.26.0"
     emojibase-regex "^1.0.6"
@@ -3453,10 +3453,6 @@ lodash.camelcase@^4.1.1:
 lodash.cond@^4.3.0:
   version "4.5.2"
   resolved "https://registry.yarnpkg.com/lodash.cond/-/lodash.cond-4.5.2.tgz#f471a1da486be60f6ab955d17115523dd1d255d5"
-
-lodash.debounce@^4.0.8:
-  version "4.0.8"
-  resolved "https://registry.yarnpkg.com/lodash.debounce/-/lodash.debounce-4.0.8.tgz#82d79bff30a67c4005ffd5e2515300ad9ca4d7af"
 
 lodash.defaults@^4.0.1:
   version "4.2.0"
