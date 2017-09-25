@@ -1,5 +1,7 @@
-# 7.0.0
+# 7.0.0 - 9/25/17
 #### 💥 Breaking
+* Moved autolinking functionality to a new package,
+  [interweave-autolink](https://npmjs.com/package/interweave-autolink).
 * Moved emoji functionality to a new package,
   [interweave-emoji](https://npmjs.com/package/interweave-emoji).
 * Updated `react` peer dependency requirement to 15.3.
@@ -7,7 +9,6 @@
   components to `React.PureComponent`.
 
 #### 🚀 New
-* Matchers are now available as named exports from the `interweave` index.
 * Matchers can now be defined as objects instead of a class that extends `Matcher`.
 * Filters can now be defined as objects instead of a class that extends `Filter`.
 * Added `FilterShape` and `MatcherShape` prop types.
