@@ -99,6 +99,8 @@ type PickerState = {
 };
 
 class Picker extends React.Component<PickerProps, PickerState> {
+  mounted: boolean;
+
   static childContextTypes = {
     classNames: PropTypes.objectOf(PropTypes.string),
     messages: PropTypes.objectOf(PropTypes.node),
@@ -193,6 +195,7 @@ class Picker extends React.Component<PickerProps, PickerState> {
       exclude,
     } = props;
 
+    this.mounted = false;
     this.state = {
       emojis,
       activeEmoji: null,
@@ -266,6 +269,10 @@ class Picker extends React.Component<PickerProps, PickerState> {
     }
   }
 
+  componentDidMount() {
+    this.mounted = true;
+  }
+
   componentWillReceiveProps({ emojis }: PickerProps) {
     // Emoji data has loaded via the `withEmojiData` HOC
     if (emojis.length !== 0 && this.props.emojis.length === 0) {
@@ -288,13 +295,20 @@ class Picker extends React.Component<PickerProps, PickerState> {
 
       // Defer the update a bit so that the render doesn't look like it's stalling
       setTimeout(() => {
-        this.setState({
-          emojis,
-          activeEmoji: hasResults ? emojis[0] : null,
-          activeEmojiIndex: hasResults ? 0 : -1,
-        });
+        // Check if were still mounted
+        if (this.mounted) {
+          this.setState({
+            emojis,
+            activeEmoji: hasResults ? emojis[0] : null,
+            activeEmojiIndex: hasResults ? 0 : -1,
+          });
+        }
       }, SCROLL_DEBOUNCE);
     }
+  }
+
+  componentWillUnmount() {
+    this.mounted = false;
   }
 
   /**

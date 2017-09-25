@@ -79,7 +79,10 @@ export default class SearchBar extends React.PureComponent<SearchBarProps, Searc
     clearTimeout(this.timeout);
 
     this.timeout = setTimeout(() => {
-      this.props.onChange(trimmedQuery, e);
+      // Check if were still mounted
+      if (this.input) {
+        this.props.onChange(trimmedQuery, e);
+      }
     }, SEARCH_THROTTLE);
   };
 
