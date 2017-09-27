@@ -33,13 +33,13 @@
   "license": "MIT",
   "dependencies": {
     "babel-runtime": "^6.26.0",
-    "prop-types": "^15.5.10"
+    "prop-types": "^15.6.0"
   },
   "peerDependencies": {
     "react": "^15.3.0 || ^16.0.0"
   },
   "devDependencies": {
-    "@milesj/build-tool-config": "^0.27.0",
-    "react": "^15.6.1"
+    "@milesj/build-tool-config": "^0.30.2",
+    "react": "^16.0.0"
   }
 }
