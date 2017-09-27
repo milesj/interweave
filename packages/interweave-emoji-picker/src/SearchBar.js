@@ -6,6 +6,7 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
+import debounce from 'lodash/debounce';
 import { SEARCH_THROTTLE } from './constants';
 
 type SearchBarProps = {
@@ -21,7 +22,6 @@ type SearchBarState = {
 
 export default class SearchBar extends React.PureComponent<SearchBarProps, SearchBarState> {
   input: ?HTMLInputElement;
-  timeout: ?number;
 
   static contextTypes = {
     classNames: PropTypes.objectOf(PropTypes.string),
@@ -53,8 +53,6 @@ export default class SearchBar extends React.PureComponent<SearchBarProps, Searc
    */
   componentWillReceiveProps({ searchQuery }: SearchBarProps) {
     if (searchQuery === '') {
-      clearTimeout(this.timeout);
-
       this.setState({
         query: '',
       });
@@ -67,24 +65,24 @@ export default class SearchBar extends React.PureComponent<SearchBarProps, Searc
   handleChange = (e: SyntheticInputEvent<HTMLInputElement>) => {
     e.persist();
 
-    const query = e.currentTarget.value;
-    const trimmedQuery = query.trim();
-
     // Update the input field immediately
     this.setState({
-      query,
+      query: e.currentTarget.value,
     });
 
     // But defer filtering in the picker
-    clearTimeout(this.timeout);
-
-    this.timeout = setTimeout(() => {
-      // Check if were still mounted
-      if (this.input) {
-        this.props.onChange(trimmedQuery, e);
-      }
-    }, SEARCH_THROTTLE);
+    this.handleChangeDebounced(e);
   };
+
+  /**
+   * A change handler that is debounced for performance.
+   */
+  handleChangeDebounced = debounce((e) => {
+    // Check if were still mounted
+    if (this.input) {
+      this.props.onChange(this.input.value.trim(), e);
+    }
+  }, SEARCH_THROTTLE);
 
   /**
    * Set input field as reference.
