@@ -1,6 +1,6 @@
 {
   "name": "interweave-emoji-picker",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "React based emoji picker powered by Interweave and Emojibase.",
   "keywords": [
     "interweave",
@@ -21,13 +21,13 @@
     "prop-types": "^15.6.0"
   },
   "peerDependencies": {
-    "interweave-emoji": "^1.0.0",
+    "interweave-emoji": "^1.1.0",
     "react": "^15.3.0 || ^16.0.0"
   },
   "devDependencies": {
     "@milesj/build-tool-config": "^0.30.2",
     "emojibase": "^1.4.1",
-    "interweave-emoji": "^1.0.0",
+    "interweave-emoji": "^1.1.0",
     "react": "^16.0.0"
   }
 }
