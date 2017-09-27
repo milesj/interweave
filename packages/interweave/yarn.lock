@@ -2,9 +2,9 @@
 # yarn lockfile v1
 
 
-"@milesj/build-tool-config@^0.28.0":
-  version "0.28.0"
-  resolved "https://registry.yarnpkg.com/@milesj/build-tool-config/-/build-tool-config-0.28.0.tgz#7e3b81f9bee13b5897883bc6dbf9a3a6c6333dcf"
+"@milesj/build-tool-config@^0.30.2":
+  version "0.30.2"
+  resolved "https://registry.yarnpkg.com/@milesj/build-tool-config/-/build-tool-config-0.30.2.tgz#2ff6cc619c46491d76a1a30b21c93ad2ed437033"
   dependencies:
     babel-cli "^6.26.0"
     babel-core "^6.26.0"
@@ -23,6 +23,7 @@
     clean-webpack-plugin "^0.1.17"
     copy "^0.3.1"
     enzyme "^3.0.0"
+    enzyme-adapter-react-16 "^1.0.0"
     eslint "^4.7.2"
     eslint-config-airbnb "^15.1.0"
     eslint-plugin-flowtype "2.34.1"
@@ -1769,6 +1770,24 @@ enhanced-resolve@^3.4.0:
 entities@^1.1.1, entities@~1.1.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/entities/-/entities-1.1.1.tgz#6e5c2d0a5621b5dadaecef80b90edfb5cd7772f0"
+
+enzyme-adapter-react-16@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/enzyme-adapter-react-16/-/enzyme-adapter-react-16-1.0.0.tgz#e7edd5536743818dcbef336d40d7da59b3a7db8e"
+  dependencies:
+    enzyme-adapter-utils "^1.0.0"
+    lodash "^4.17.4"
+    object.assign "^4.0.4"
+    object.values "^1.0.4"
+    prop-types "^15.5.10"
+
+enzyme-adapter-utils@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/enzyme-adapter-utils/-/enzyme-adapter-utils-1.0.0.tgz#e94eee63da9a798d498adb1162a2102ed04fc638"
+  dependencies:
+    lodash "^4.17.4"
+    object.assign "^4.0.4"
+    prop-types "^15.5.10"
 
 enzyme@^3.0.0:
   version "3.0.0"
