@@ -1,3 +1,10 @@
+# 7.1.0 - 9/26/17
+#### 🚀 New
+* Updated `prop-types` to 15.6.
+
+#### 🛠 Internal
+* Tested against React 16.
+
 # 7.0.0 - 9/25/17
 #### 💥 Breaking
 * Moved autolinking functionality to a new package,
