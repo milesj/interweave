@@ -90,7 +90,7 @@ export default class EmojiList extends React.PureComponent<EmojiListProps, Emoji
     // When commonly used emojis are rendered,
     // the smileys group is usually within view as well,
     // so we should preload both of them.
-    if (activeGroup === GROUP_COMMONLY_USED) {
+    if (activeGroup && activeGroup === GROUP_COMMONLY_USED) {
       loadedGroups.push(GROUP_SMILEYS_PEOPLE);
     }
 
