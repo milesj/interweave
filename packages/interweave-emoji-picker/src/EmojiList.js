@@ -35,8 +35,8 @@ type EmojiListProps = {
   hasCommonlyUsed: boolean,
   onEnterEmoji: (emoji: Emoji, e: *) => void,
   onLeaveEmoji: (emoji: Emoji, e: *) => void,
+  onScrollGroup: (group: string, e: *) => void,
   onSelectEmoji: (emoji: Emoji, e: *) => void,
-  onSelectGroup: (group: string, reset?: boolean, e?: SyntheticEvent<*>) => void,
   scrollToGroup: string,
   searchQuery: string,
   skinTonePalette: React$Node,
@@ -70,8 +70,8 @@ export default class EmojiList extends React.PureComponent<EmojiListProps, Emoji
     skinTonePalette: PropTypes.node,
     onEnterEmoji: PropTypes.func.isRequired,
     onLeaveEmoji: PropTypes.func.isRequired,
+    onScrollGroup: PropTypes.func.isRequired,
     onSelectEmoji: PropTypes.func.isRequired,
-    onSelectGroup: PropTypes.func.isRequired,
   };
 
   static defaultProps = {
@@ -173,51 +173,54 @@ export default class EmojiList extends React.PureComponent<EmojiListProps, Emoji
     e.stopPropagation();
     e.persist();
 
-    this.handleScrollDebounced(e.currentTarget);
+    this.handleScrollDebounced(e);
   };
 
   /**
    * A scroll handler that is debounced for performance.
    */
-  handleScrollDebounced = debounce((container) => {
-    this.loadEmojiImages(container);
+  handleScrollDebounced = debounce((e: SyntheticWheelEvent<HTMLDivElement>) => {
+    // $FlowIgnore
+    this.loadEmojiImages(e.target, e);
   }, SCROLL_DEBOUNCE);
 
   /**
    * Loop over each group section within the scrollable container
    * and determine the active group and whether to load emoji images.
    */
-  loadEmojiImages(container: HTMLDivElement) {
+  loadEmojiImages(container: HTMLDivElement, e?: SyntheticWheelEvent<HTMLDivElement>) {
+    const { scrollTop } = container;
     const { searchQuery } = this.props;
     const { loadedGroups } = this.state;
     let updateState = false;
 
     Array.from(container.children).forEach((section) => {
       const group = section.id.replace('emoji-group-', '');
+      let load = false;
 
-      // While a group section is within view, update the active group
+      // While a group section is partially within view, update the active group
       if (
         !searchQuery &&
-        section.offsetTop <= container.scrollTop &&
-        (section.offsetTop + section.offsetHeight) > container.scrollTop
+        // Top is partially in view
+        (section.offsetTop - SCROLL_BUFFER) <= scrollTop &&
+        // Bottom is partially in view
+        ((section.offsetTop + section.offsetHeight) - SCROLL_BUFFER) > scrollTop
       ) {
-        // Only update if not loaded
-        if (!loadedGroups.has(group)) {
-          loadedGroups.add(group);
-          updateState = true;
-        }
+        load = true;
 
-        // Only update if a different group
-        if (group !== this.props.activeGroup) {
-          this.props.onSelectGroup(group);
+        // Only update during a scroll event and if a different group
+        if (e && group !== this.props.activeGroup) {
+          this.props.onScrollGroup(group, e);
         }
       }
 
       // Before a group section is scrolled into view, lazy load emoji images
-      if (
-        !loadedGroups.has(group) &&
-        section.offsetTop <= (container.scrollTop + container.offsetHeight + SCROLL_BUFFER)
-      ) {
+      if (section.offsetTop <= (scrollTop + container.offsetHeight + SCROLL_BUFFER)) {
+        load = true;
+      }
+
+      // Only update if not loaded
+      if (load && !loadedGroups.has(group)) {
         loadedGroups.add(group);
         updateState = true;
       }
@@ -245,7 +248,7 @@ export default class EmojiList extends React.PureComponent<EmojiListProps, Emoji
 
     // Scroll to the section after a short delay (wait for images to render)
     setTimeout(() => {
-      // Check if were still mounted
+      // Check if we're still mounted
       if (this.container) {
         this.container.scrollTop = element.offsetTop;
       }

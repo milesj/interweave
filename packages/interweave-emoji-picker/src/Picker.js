@@ -42,7 +42,6 @@ import {
   KEY_SKIN_TONE,
   COMMON_MODE_RECENT,
   COMMON_MODE_FREQUENT,
-  SCROLL_DEBOUNCE,
 } from './constants';
 
 import type { Emoji, EmojiPath, EmojiSource } from 'interweave-emoji'; // eslint-disable-line
@@ -80,6 +79,7 @@ type PickerProps = {
   maxEmojiVersion: number,
   messages: { [key: string]: string },
   onHoverEmoji: (emoji: Emoji, e: *) => void,
+  onScrollGroup: (group: string, e: *) => void,
   onSearch: (query: string, e: *) => void,
   onSelectEmoji: (emoji: Emoji, e: *) => void,
   onSelectGroup: (group: string, e: *) => void,
@@ -152,6 +152,7 @@ class Picker extends React.Component<PickerProps, PickerState> {
     maxEmojiVersion: PropTypes.number,
     messages: PropTypes.objectOf(PropTypes.node),
     onHoverEmoji: PropTypes.func,
+    onScrollGroup: PropTypes.func,
     onSearch: PropTypes.func,
     onSelectEmoji: PropTypes.func,
     onSelectGroup: PropTypes.func,
@@ -179,6 +180,7 @@ class Picker extends React.Component<PickerProps, PickerState> {
     maxCommonlyUsed: 30,
     maxEmojiVersion: 5,
     onHoverEmoji() {},
+    onScrollGroup() {},
     onSearch() {},
     onSelectEmoji() {},
     onSelectGroup() {},
@@ -544,6 +546,17 @@ class Picker extends React.Component<PickerProps, PickerState> {
   };
 
   /**
+   * Triggered when a group is scrolled into view.
+   */
+  handleScrollGroup = (group: string, e: SyntheticEvent<*>) => {
+    this.setState({
+      activeGroup: group,
+    });
+
+    this.props.onScrollGroup(group, e);
+  };
+
+  /**
    * Triggered when the search input field value changes.
    */
   handleSearch = (query: string, e: SyntheticEvent<*>) => {
@@ -570,15 +583,13 @@ class Picker extends React.Component<PickerProps, PickerState> {
   };
 
   /**
-   * Triggered when a group tab is clicked or scrolled to.
-   *
-   * When clicked via the tab, we should reset search and scroll position.
+   * Triggered when a group tab is clicked. We should reset search and scroll position.
    */
-  handleSelectGroup = (group: string, reset?: boolean = false, e?: SyntheticEvent<*>) => {
+  handleSelectGroup = (group: string, e: SyntheticEvent<*>) => {
     this.setState(prevState => ({
       activeGroup: group,
-      scrollToGroup: reset ? group : '',
-      searchQuery: reset ? '' : prevState.searchQuery,
+      scrollToGroup: group,
+      searchQuery: '',
     }));
 
     this.props.onSelectGroup(group, e);
@@ -709,8 +720,8 @@ class Picker extends React.Component<PickerProps, PickerState> {
           )}
           onEnterEmoji={this.handleEnterEmoji}
           onLeaveEmoji={this.handleLeaveEmoji}
+          onScrollGroup={this.handleScrollGroup}
           onSelectEmoji={this.handleSelectEmoji}
-          onSelectGroup={this.handleSelectGroup}
         />
       ),
       groups: (

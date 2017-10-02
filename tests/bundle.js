@@ -73,6 +73,7 @@ function App() {
           maxEmojiVersion={4}
           onSearch={(query, e) => { console.log('search', query, e); }}
           onHoverEmoji={(emoji, e) => { console.log('hover emoji', emoji, e); }}
+          onScrollGroup={(group, e) => { console.log('scroll group', group, e); }}
           onSelectEmoji={(emoji, e) => { console.log('select emoji', emoji, e); }}
           onSelectGroup={(group, e) => { console.log('select group', group, e); }}
           onSelectSkinTone={(skinTone, e) => { console.log('select skin', skinTone, e); }}
