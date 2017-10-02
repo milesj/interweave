@@ -662,8 +662,13 @@ class Picker extends React.Component<PickerProps, PickerState> {
   /**
    * When the skin tone or search query changes, update the emoji list.
    */
+<<<<<<< HEAD
   setUpdatedEmojis(searchQuery: string, skinTone: string) {
     const emojis = this.generateEmojis(this.props.emojis, searchQuery, skinTone);
+=======
+  setUpdatedEmojis(searchQuery: string) {
+    const emojis = this.generateEmojis(this.props.emojis, searchQuery);
+>>>>>>> [picker] Rebuild emojis before cDU.
     const hasResults = (searchQuery && emojis.length > 0);
 
     this.setState({
