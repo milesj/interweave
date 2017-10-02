@@ -1,8 +1,17 @@
 # 1.2.0
 #### 🚀 New
-* Added new `onScrollGroup` prop that will trigger the group that was scrolled into view.
+* Added virtual list rendering support with `react-virtualized`.
+  * Pass a `virtual` prop to enable it.
+  * Pass a `rowCount` prop to control the number of rows rendered.
+* Added an `onScrollGroup` prop that will trigger the group that was scrolled into view.
   * `onSelectGroup` prop will no longer trigger during scroll.
   * The synthetic scroll event is now passed as the callback's 2nd argument.
+* Updated `classNames` to support virtual lists.
+  * `emojisContainer` - The scrollable container provided by `react-virtualized`.
+  * `emojisRow` - A row within the container. Wraps emojis or group headers.
+
+#### 🐞 Fixed
+* Updated search bar input type to `text` from `search` to resolve browser specific issues.
 
 #### 🛠 Internal
 * Improvements to emoji re-rendering performance.

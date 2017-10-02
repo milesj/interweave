@@ -45,6 +45,15 @@
       border-bottom: 5px solid #fff;
     }
 
+    .interweave-picker__picker--virtual .interweave-picker__emojis {
+      overflow-y: auto;
+      height: auto;
+    }
+
+    .interweave-picker__emojis-container {
+      padding: 0 10px;
+    }
+
     .interweave-picker__emojis-header {
       padding: 10px;
       font-weight: bold;
@@ -54,10 +63,19 @@
       z-index: 2;
     }
 
+    .interweave-picker__picker--virtual .interweave-picker__emojis-header {
+      padding: 8px 0;
+      position: static;
+    }
+
     .interweave-picker__emojis-body {
       z-index: 1;
       padding: 0 10px 5px 10px;
       font-size: 18px;
+    }
+
+    .interweave-picker__picker--virtual .interweave-picker__emojis-body {
+      padding: 0;
     }
 
     .interweave-picker__emojis-body::after {
@@ -133,6 +151,10 @@
 
     .interweave-picker__no-results {
       padding: 10px;
+    }
+
+    .interweave-picker__picker--virtual .interweave-picker__no-results {
+      padding: 10px 0;
     }
 
     .interweave-picker__skin-tones {

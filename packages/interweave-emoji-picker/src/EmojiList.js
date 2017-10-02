@@ -23,7 +23,7 @@ import {
 import type { Emoji, EmojiPath, EmojiSource } from 'interweave-emoji'; // eslint-disable-line
 
 type EmojiListProps = {
-  activeEmojiIndex: number,
+  activeEmoji: ?Emoji,
   activeGroup: string,
   commonEmojis: Emoji[],
   commonMode: string,
@@ -55,7 +55,7 @@ export default class EmojiList extends React.PureComponent<EmojiListProps, Emoji
   };
 
   static propTypes = {
-    activeEmojiIndex: PropTypes.number.isRequired,
+    activeEmoji: EmojiShape,
     activeGroup: PropTypes.string.isRequired,
     commonEmojis: PropTypes.arrayOf(EmojiShape).isRequired,
     commonMode: PropTypes.string.isRequired,
@@ -75,6 +75,7 @@ export default class EmojiList extends React.PureComponent<EmojiListProps, Emoji
   };
 
   static defaultProps = {
+    activeEmoji: null,
     skinTonePalette: null,
   };
 
@@ -257,7 +258,7 @@ export default class EmojiList extends React.PureComponent<EmojiListProps, Emoji
 
   render() {
     const {
-      activeEmojiIndex,
+      activeEmoji,
       commonMode,
       emojiPadding,
       emojiPath,
@@ -306,7 +307,7 @@ export default class EmojiList extends React.PureComponent<EmojiListProps, Emoji
                 {groupedEmojis[group].map((emoji, index) => (
                   <EmojiButton
                     key={emoji.hexcode}
-                    active={index === activeEmojiIndex}
+                    active={activeEmoji ? (activeEmoji.hexcode === emoji.hexcode) : false}
                     emoji={emoji}
                     emojiPadding={emojiPadding}
                     emojiPath={emojiPath}

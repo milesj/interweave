@@ -102,7 +102,7 @@ export default class SearchBar extends React.PureComponent<SearchBarProps, Searc
           className={classNames.searchInput}
           placeholder={messages.search}
           ref={this.handleRef}
-          type="search"
+          type="text"
           value={this.state.query}
           onChange={this.handleChange}
           onKeyUp={onKeyUp}

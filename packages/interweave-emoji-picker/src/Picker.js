@@ -16,6 +16,7 @@ import {
   EmojiSourceShape,
 } from 'interweave-emoji';
 import EmojiList from './EmojiList';
+import EmojiVirtualList from './EmojiVirtualList';
 import SkinTonePalette from './SkinTonePalette';
 import GroupTabs from './GroupTabs';
 import PreviewBar from './PreviewBar';
@@ -84,6 +85,8 @@ type PickerProps = {
   onSelectEmoji: (emoji: Emoji, e: *) => void,
   onSelectGroup: (group: string, e: *) => void,
   onSelectSkinTone: (skinTone: string, e: *) => void,
+  rowCount: number,
+  virtual: boolean,
 };
 
 type PickerState = {
@@ -151,6 +154,8 @@ class Picker extends React.Component<PickerProps, PickerState> {
     maxCommonlyUsed: PropTypes.number,
     maxEmojiVersion: PropTypes.number,
     messages: PropTypes.objectOf(PropTypes.node),
+    rowCount: PropTypes.number,
+    virtual: PropTypes.bool,
     onHoverEmoji: PropTypes.func,
     onScrollGroup: PropTypes.func,
     onSearch: PropTypes.func,
@@ -179,6 +184,8 @@ class Picker extends React.Component<PickerProps, PickerState> {
     icons: {},
     maxCommonlyUsed: 30,
     maxEmojiVersion: 5,
+    rowCount: 8,
+    virtual: false,
     onHoverEmoji() {},
     onScrollGroup() {},
     onSearch() {},
@@ -215,10 +222,14 @@ class Picker extends React.Component<PickerProps, PickerState> {
 
     return {
       classNames: {
+        picker: 'interweave-picker__picker',
+        pickerVirtual: 'interweave-picker__picker--virtual',
         emoji: 'interweave-picker__emoji',
         emojiActive: 'interweave-picker__emoji--active',
         emojis: 'interweave-picker__emojis',
         emojisSection: 'interweave-picker__emojis-section',
+        emojisContainer: 'interweave-picker__emojis-container',
+        emojisRow: 'interweave-picker__emojis-row',
         emojisHeader: 'interweave-picker__emojis-header',
         emojisBody: 'interweave-picker__emojis-body',
         group: 'interweave-picker__group',
@@ -564,8 +575,8 @@ class Picker extends React.Component<PickerProps, PickerState> {
     this.setUpdatedEmojis(query, this.state.activeSkinTone);
 
     this.setState({
-      activeGroup: query ? '' : defaultGroup,
-      scrollToGroup: query ? '' : defaultGroup,
+      activeGroup: query ? GROUP_SEARCH_RESULTS : defaultGroup,
+      scrollToGroup: query ? GROUP_SEARCH_RESULTS : defaultGroup,
       searchQuery: query,
     });
 
@@ -662,8 +673,11 @@ class Picker extends React.Component<PickerProps, PickerState> {
   render() {
     const {
       autoFocus,
-      classNames,
+      columnCount,
       commonMode,
+      disablePreview,
+      disableSearch,
+      disableSkinTones,
       displayOrder,
       emojiLargeSize,
       emojiPadding,
@@ -671,15 +685,13 @@ class Picker extends React.Component<PickerProps, PickerState> {
       emojiSize,
       emojiSource,
       hideEmoticon,
-      disablePreview,
-      disableSearch,
-      disableSkinTones,
       hideShortcodes,
       icons,
+      rowCount,
+      virtual,
     } = this.props;
     const {
       activeEmoji,
-      activeEmojiIndex,
       activeGroup,
       activeSkinTone,
       commonEmojis,
@@ -687,6 +699,7 @@ class Picker extends React.Component<PickerProps, PickerState> {
       scrollToGroup,
       searchQuery,
     } = this.state;
+    const List = virtual ? EmojiVirtualList : EmojiList;
     const hasCommonlyUsed = this.hasCommonlyUsed();
     const components = {
       preview: disablePreview ? null : (
@@ -701,10 +714,11 @@ class Picker extends React.Component<PickerProps, PickerState> {
         />
       ),
       emojis: (
-        <EmojiList
+        <List
           key="emojis"
-          activeEmojiIndex={activeEmojiIndex}
+          activeEmoji={activeEmoji}
           activeGroup={activeGroup}
+          columnCount={columnCount}
           commonEmojis={commonEmojis}
           commonMode={commonMode}
           emojiPadding={emojiPadding}
@@ -713,6 +727,7 @@ class Picker extends React.Component<PickerProps, PickerState> {
           emojiSize={emojiSize}
           emojiSource={emojiSource}
           hasCommonlyUsed={hasCommonlyUsed}
+          rowCount={rowCount}
           scrollToGroup={scrollToGroup}
           searchQuery={searchQuery}
           skinTonePalette={disableSkinTones ? null : (
@@ -748,9 +763,15 @@ class Picker extends React.Component<PickerProps, PickerState> {
         />
       ),
     };
+    const { classNames } = this.getChildContext();
+    const classes = [classNames.picker];
+
+    if (virtual) {
+      classes.push(classNames.pickerVirtual);
+    }
 
     return (
-      <div className={classNames.picker || 'interweave-picker__picker'}>
+      <div className={classes.join(' ')}>
         {displayOrder.map(key => components[key])}
       </div>
     );
