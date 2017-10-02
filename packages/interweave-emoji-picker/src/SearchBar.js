@@ -52,9 +52,9 @@ export default class SearchBar extends React.PureComponent<SearchBarProps, Searc
    * When the parent `Picker` search query is reset, also reset the input field.
    */
   componentWillReceiveProps({ searchQuery }: SearchBarProps) {
-    if (searchQuery === '') {
+    if (searchQuery === '' && this.props.searchQuery) {
       this.setState({
-        query: '',
+        query: searchQuery,
       });
     }
   }
