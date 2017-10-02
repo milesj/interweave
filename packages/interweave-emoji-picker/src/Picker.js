@@ -195,7 +195,6 @@ class Picker extends React.Component<PickerProps, PickerState> {
       exclude,
     } = props;
 
-    this.mounted = false;
     this.state = {
       emojis,
       activeEmoji: null,
@@ -269,46 +268,11 @@ class Picker extends React.Component<PickerProps, PickerState> {
     }
   }
 
-  componentDidMount() {
-    this.mounted = true;
-  }
-
   componentWillReceiveProps({ emojis }: PickerProps) {
     // Emoji data has loaded via the `withEmojiData` HOC
     if (emojis.length !== 0 && this.props.emojis.length === 0) {
       this.setInitialEmojis(emojis);
     }
-  }
-
-  componentDidUpdate(prevProps: PickerProps, prevState: PickerState) {
-    const { activeSkinTone, searchQuery } = this.state;
-
-    // Regenerate emoji list when:
-    if (
-      // Skin tone changes
-      activeSkinTone !== prevState.activeSkinTone ||
-      // Search query changes
-      searchQuery !== prevState.searchQuery
-    ) {
-      const emojis = this.generateEmojis(prevProps.emojis, searchQuery);
-      const hasResults = (searchQuery && emojis.length > 0);
-
-      // Defer the update a bit so that the render doesn't look like it's stalling
-      setTimeout(() => {
-        // Check if were still mounted
-        if (this.mounted) {
-          this.setState({
-            emojis,
-            activeEmoji: hasResults ? emojis[0] : null,
-            activeEmojiIndex: hasResults ? 0 : -1,
-          });
-        }
-      }, SCROLL_DEBOUNCE);
-    }
-  }
-
-  componentWillUnmount() {
-    this.mounted = false;
   }
 
   /**
@@ -585,6 +549,8 @@ class Picker extends React.Component<PickerProps, PickerState> {
   handleSearch = (query: string, e: SyntheticEvent<*>) => {
     const defaultGroup = this.getDefaultGroup();
 
+    this.setUpdatedEmojis(query);
+
     this.setState({
       activeGroup: query ? '' : defaultGroup,
       scrollToGroup: query ? '' : defaultGroup,
@@ -622,11 +588,12 @@ class Picker extends React.Component<PickerProps, PickerState> {
    * Triggered when a skin tone is clicked.
    */
   handleSelectSkinTone = (skinTone: string, e: SyntheticEvent<*>) => {
+    this.setUpdatedEmojis(this.state.searchQuery);
+    this.setSkinTone(skinTone);
+
     this.setState({
       activeSkinTone: skinTone,
     });
-
-    this.setSkinTone(skinTone);
 
     this.props.onSelectSkinTone(skinTone, e);
   };
@@ -661,6 +628,20 @@ class Picker extends React.Component<PickerProps, PickerState> {
     } catch (error) {
       // Do nothing
     }
+  }
+
+  /**
+   * When the skin tone or search query changes, update the emoji list.
+   */
+  setUpdatedEmojis(searchQuery: string) {
+    const emojis = this.generateEmojis(this.props.emojis, searchQuery);
+    const hasResults = (searchQuery && emojis.length > 0);
+
+    this.setState({
+      emojis,
+      activeEmoji: hasResults ? emojis[0] : null,
+      activeEmojiIndex: hasResults ? 0 : -1,
+    });
   }
 
   render() {
