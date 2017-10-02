@@ -57,7 +57,7 @@ function App() {
     <div className="interweave__examples">
       <h1>Picker</h1>
 
-      <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+      <div className="demo-grid">
         <EmojiPicker
           autoFocus
           commonMode="recentlyUsed"
@@ -71,10 +71,9 @@ function App() {
             '1F4A9', // Poop
           ]}
           maxEmojiVersion={4}
-          onSearch={(query, e) => { console.info('search', query, e); }}
           onHoverEmoji={(emoji, e) => { console.info('hover emoji', emoji, e); }}
-          onScroll={(e) => { console.info('scroll', e); }}
           onScrollGroup={(group, e) => { console.info('scroll group', group, e); }}
+          onSearch={(query, e) => { console.info('search', query, e); }}
           onSelectEmoji={(emoji, e) => { console.info('select emoji', emoji, e); }}
           onSelectGroup={(group, e) => { console.info('select group', group, e); }}
           onSelectSkinTone={(skinTone, e) => { console.info('select skin', skinTone, e); }}
@@ -82,22 +81,16 @@ function App() {
 
         <EmojiPicker
           virtual
-          autoFocus
           commonMode="frequentlyUsed"
-          defaultGroup="foodDrink"
-          defaultSkinTone="light"
+          defaultGroup="travelPlaces"
+          defaultSkinTone="medium"
           emojiPath={emojiPath}
           emojiPadding={5}
           emojiSize={22}
           emojiLargeSize={48}
-          exclude={[
-            '1F4A9', // Poop
-          ]}
-          maxEmojiVersion={4}
-          onSearch={(query, e) => { console.info('search', query, e); }}
           onHoverEmoji={(emoji, e) => { console.info('hover emoji', emoji, e); }}
-          onScroll={(e) => { console.info('scroll', e); }}
           onScrollGroup={(group, e) => { console.info('scroll group', group, e); }}
+          onSearch={(query, e) => { console.info('search', query, e); }}
           onSelectEmoji={(emoji, e) => { console.info('select emoji', emoji, e); }}
           onSelectGroup={(group, e) => { console.info('select group', group, e); }}
           onSelectSkinTone={(skinTone, e) => { console.info('select skin', skinTone, e); }}
