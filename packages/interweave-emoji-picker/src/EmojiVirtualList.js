@@ -19,8 +19,6 @@ import {
 
 import type { Emoji, EmojiPath, EmojiSource } from 'interweave-emoji'; // eslint-disable-line
 
-type ListRow = (string | Emoji[])[];
-
 type EmojiListProps = {
   activeEmoji: ?Emoji,
   activeGroup: string,
@@ -46,7 +44,7 @@ type EmojiListProps = {
 
 type EmojiListState = {
   groupIndices: { [key: string]: number },
-  rows: ListRow,
+  rows: (string | Emoji[])[],
 };
 
 export default class EmojiVirtualList extends React.PureComponent<EmojiListProps, EmojiListState> {
@@ -93,11 +91,15 @@ export default class EmojiVirtualList extends React.PureComponent<EmojiListProps
   }
 
   componentWillReceiveProps(props: EmojiListProps) {
-    // We re-use the same array unless it has been rebuilt,
+    const { activeEmoji, commonEmojis, emojis, searchQuery } = props;
+
+    // We re-use the same array for emojis unless it has been rebuilt,
     // so this check will work correctly. No lengthy checks needed.
     if (
-      props.emojis !== this.props.emojis ||
-      props.searchQuery !== this.props.searchQuery
+      activeEmoji !== this.props.activeEmoji ||
+      commonEmojis !== this.props.commonEmojis ||
+      emojis !== this.props.emojis ||
+      searchQuery !== this.props.searchQuery
     ) {
       this.groupEmojisIntoRows(props);
     }
@@ -266,11 +268,13 @@ export default class EmojiVirtualList extends React.PureComponent<EmojiListProps
     const {
       activeEmoji,
       columnCount,
+      commonEmojis,
       emojiPadding,
       emojis,
       emojiSize,
       rowCount,
       scrollToGroup,
+      searchQuery,
       onScroll,
     } = this.props;
     const { classNames } = this.context;
@@ -284,7 +288,9 @@ export default class EmojiVirtualList extends React.PureComponent<EmojiListProps
     // we can pass our own props to trigger the re-render.
     const renderProps = {
       activeEmoji,
+      commonEmojis,
       emojis,
+      searchQuery,
     };
 
     return (

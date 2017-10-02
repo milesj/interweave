@@ -12,11 +12,12 @@
   * `emojisRow` - A row within the container. Wraps emojis or group headers.
 
 #### 🐞 Fixed
+* Active emoji will now be scrolled into view while using arrow keys within search results.
 * Updated search bar input type to `text` from `search` to resolve browser specific issues.
 * Resolved an issue where search input would be reset to an empty string on first search.
 
 #### 🛠 Internal
-* Improvements to emoji re-rendering performance.
+* Improvements to emoji rendering performance.
   * Removed `setTimeout` race conditions.
 * Improvements to scroll event handling.
 
