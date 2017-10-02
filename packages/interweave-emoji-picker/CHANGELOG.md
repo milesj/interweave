@@ -3,7 +3,8 @@
 * Added virtual list rendering support with `react-virtualized`.
   * Pass a `virtual` prop to enable it.
   * Pass a `rowCount` prop to control the number of rows rendered.
-* Added an `onScrollGroup` prop that will trigger when a group scrolls into view.
+* Added an `onScroll` prop that is triggered while scrolling the container.
+* Added an `onScrollGroup` prop that is triggered when a group scrolls into view.
   * `onSelectGroup` prop will no longer trigger during scroll.
   * The synthetic scroll event is now passed as the callback's 2nd argument (non-virtual).
 * Updated `classNames` context to support virtual lists.

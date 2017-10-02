@@ -35,6 +35,7 @@ type EmojiListProps = {
   hasCommonlyUsed: boolean,
   onEnterEmoji: (emoji: Emoji, e: *) => void,
   onLeaveEmoji: (emoji: Emoji, e: *) => void,
+  onScroll: (e: *) => void,
   onScrollGroup: (group: string, e: *) => void,
   onSelectEmoji: (emoji: Emoji, e: *) => void,
   rowCount: number,
@@ -72,6 +73,7 @@ export default class EmojiVirtualList extends React.PureComponent<EmojiListProps
     skinTonePalette: PropTypes.node,
     onEnterEmoji: PropTypes.func.isRequired,
     onLeaveEmoji: PropTypes.func.isRequired,
+    onScroll: PropTypes.func.isRequired,
     onScrollGroup: PropTypes.func.isRequired,
     onSelectEmoji: PropTypes.func.isRequired,
   };
@@ -269,6 +271,7 @@ export default class EmojiVirtualList extends React.PureComponent<EmojiListProps
       emojiSize,
       rowCount,
       scrollToGroup,
+      onScroll,
     } = this.props;
     const { classNames } = this.context;
     const { groupIndices, rows } = this.state;
@@ -299,6 +302,7 @@ export default class EmojiVirtualList extends React.PureComponent<EmojiListProps
           scrollToIndex={groupIndices[scrollToGroup]}
           width={(size * columnCount) + padding + padding}
           onRowsRendered={this.handleRendered}
+          onScroll={onScroll}
           {...renderProps}
         />
       </div>

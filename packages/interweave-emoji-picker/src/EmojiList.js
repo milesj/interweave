@@ -35,6 +35,7 @@ type EmojiListProps = {
   hasCommonlyUsed: boolean,
   onEnterEmoji: (emoji: Emoji, e: *) => void,
   onLeaveEmoji: (emoji: Emoji, e: *) => void,
+  onScroll: (e: *) => void,
   onScrollGroup: (group: string, e: *) => void,
   onSelectEmoji: (emoji: Emoji, e: *) => void,
   scrollToGroup: string,
@@ -70,6 +71,7 @@ export default class EmojiList extends React.PureComponent<EmojiListProps, Emoji
     skinTonePalette: PropTypes.node,
     onEnterEmoji: PropTypes.func.isRequired,
     onLeaveEmoji: PropTypes.func.isRequired,
+    onScroll: PropTypes.func.isRequired,
     onScrollGroup: PropTypes.func.isRequired,
     onSelectEmoji: PropTypes.func.isRequired,
   };
@@ -175,6 +177,7 @@ export default class EmojiList extends React.PureComponent<EmojiListProps, Emoji
     e.persist();
 
     this.handleScrollDebounced(e);
+    this.props.onScroll(e);
   };
 
   /**

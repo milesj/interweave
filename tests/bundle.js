@@ -73,6 +73,7 @@ function App() {
           maxEmojiVersion={4}
           onSearch={(query, e) => { console.info('search', query, e); }}
           onHoverEmoji={(emoji, e) => { console.info('hover emoji', emoji, e); }}
+          onScroll={(e) => { console.info('scroll', e); }}
           onScrollGroup={(group, e) => { console.info('scroll group', group, e); }}
           onSelectEmoji={(emoji, e) => { console.info('select emoji', emoji, e); }}
           onSelectGroup={(group, e) => { console.info('select group', group, e); }}
@@ -95,6 +96,7 @@ function App() {
           maxEmojiVersion={4}
           onSearch={(query, e) => { console.info('search', query, e); }}
           onHoverEmoji={(emoji, e) => { console.info('hover emoji', emoji, e); }}
+          onScroll={(e) => { console.info('scroll', e); }}
           onScrollGroup={(group, e) => { console.info('scroll group', group, e); }}
           onSelectEmoji={(emoji, e) => { console.info('select emoji', emoji, e); }}
           onSelectGroup={(group, e) => { console.info('select group', group, e); }}

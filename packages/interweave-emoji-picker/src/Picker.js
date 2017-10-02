@@ -80,6 +80,7 @@ type PickerProps = {
   maxEmojiVersion: number,
   messages: { [key: string]: string },
   onHoverEmoji: (emoji: Emoji, e: *) => void,
+  onScroll: (e: *) => void,
   onScrollGroup: (group: string, e: *) => void,
   onSearch: (query: string, e: *) => void,
   onSelectEmoji: (emoji: Emoji, e: *) => void,
@@ -157,6 +158,7 @@ class Picker extends React.Component<PickerProps, PickerState> {
     rowCount: PropTypes.number,
     virtual: PropTypes.bool,
     onHoverEmoji: PropTypes.func,
+    onScroll: PropTypes.func,
     onScrollGroup: PropTypes.func,
     onSearch: PropTypes.func,
     onSelectEmoji: PropTypes.func,
@@ -187,6 +189,7 @@ class Picker extends React.Component<PickerProps, PickerState> {
     rowCount: 8,
     virtual: false,
     onHoverEmoji() {},
+    onScroll() {},
     onScrollGroup() {},
     onSearch() {},
     onSelectEmoji() {},
@@ -689,6 +692,7 @@ class Picker extends React.Component<PickerProps, PickerState> {
       icons,
       rowCount,
       virtual,
+      onScroll,
     } = this.props;
     const {
       activeEmoji,
@@ -739,6 +743,7 @@ class Picker extends React.Component<PickerProps, PickerState> {
           )}
           onEnterEmoji={this.handleEnterEmoji}
           onLeaveEmoji={this.handleLeaveEmoji}
+          onScroll={onScroll}
           onScrollGroup={this.handleScrollGroup}
           onSelectEmoji={this.handleSelectEmoji}
         />
