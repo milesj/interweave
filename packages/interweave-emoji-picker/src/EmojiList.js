@@ -194,38 +194,50 @@ export default class EmojiList extends React.PureComponent<EmojiListProps, Emoji
     const { searchQuery } = this.props;
     const { loadedGroups } = this.state;
     let updateState = false;
+    let lastGroup = '';
 
-    Array.from(container.children).forEach((section) => {
+    Array.from(container.children).some((section) => {
       const group = section.id.replace('emoji-group-', '');
-      let load = false;
+      let loadImages = false;
+
+      // Special case for commonly used and smileys,
+      // as they usually both render in the same view
+      if (scrollTop === 0) {
+        if (section.offsetTop === 0) {
+          loadImages = true;
+          lastGroup = group;
+        }
 
       // While a group section is partially within view, update the active group
-      if (
+      } else if (
         !searchQuery &&
         // Top is partially in view
         (section.offsetTop - SCROLL_BUFFER) <= scrollTop &&
         // Bottom is partially in view
         ((section.offsetTop + section.offsetHeight) - SCROLL_BUFFER) > scrollTop
       ) {
-        load = true;
-
-        // Only update during a scroll event and if a different group
-        if (e && group !== this.props.activeGroup) {
-          this.props.onScrollGroup(group, e);
-        }
+        loadImages = true;
+        lastGroup = group;
       }
 
       // Before a group section is scrolled into view, lazy load emoji images
       if (section.offsetTop <= (scrollTop + container.offsetHeight + SCROLL_BUFFER)) {
-        load = true;
+        loadImages = true;
       }
 
       // Only update if not loaded
-      if (load && !loadedGroups.has(group)) {
+      if (loadImages && !loadedGroups.has(group)) {
         loadedGroups.add(group);
         updateState = true;
       }
+
+      return (section.offsetTop > scrollTop);
     });
+
+    // Only update during a scroll event and if a different group
+    if (e && lastGroup !== this.props.activeGroup) {
+      this.props.onScrollGroup(lastGroup, e);
+    }
 
     if (updateState) {
       this.setState({
@@ -244,16 +256,11 @@ export default class EmojiList extends React.PureComponent<EmojiListProps, Emoji
       return;
     }
 
+    // Scroll to the container
+    this.container.scrollTop = element.offsetTop;
+
     // Eager load emoji images
     this.loadEmojiImages(this.container);
-
-    // Scroll to the section after a short delay (wait for images to render)
-    setTimeout(() => {
-      // Check if we're still mounted
-      if (this.container) {
-        this.container.scrollTop = element.offsetTop;
-      }
-    });
   }
 
   render() {
