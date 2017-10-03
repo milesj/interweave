@@ -2157,6 +2157,7 @@ emoji-regex@^6.1.0:
   version "6.5.1"
   resolved "https://registry.yarnpkg.com/emoji-regex/-/emoji-regex-6.5.1.tgz#9baea929b155565c11ea41c6626eaa65cef992c2"
 
+<<<<<<< HEAD
 emojibase-regex@^1.0.7:
   version "1.0.7"
   resolved "https://registry.yarnpkg.com/emojibase-regex/-/emojibase-regex-1.0.7.tgz#41d351806350e353db8413c88a2057dc126d3aae"
@@ -2169,6 +2170,12 @@ emojibase@^1.4.2:
   version "1.4.2"
   resolved "https://registry.yarnpkg.com/emojibase/-/emojibase-1.4.2.tgz#763454f248039542e4d7d55b2716a3c217ade5a4"
 
+=======
+emojibase-test-utils@^2.1.0:
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/emojibase-test-utils/-/emojibase-test-utils-2.1.0.tgz#e3c0b502b67ccde7b1b49ed81629d6960f9b710f"
+
+>>>>>>> be44df8... Updated deps.
 emojis-list@^2.0.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/emojis-list/-/emojis-list-2.1.0.tgz#4daa4d9db00f9819880c79fa457ae5b09a1fd389"
@@ -4054,9 +4061,15 @@ lcid@^1.0.0:
   dependencies:
     invert-kv "^1.0.0"
 
+<<<<<<< HEAD
 lerna@^2.4.0:
   version "2.4.0"
   resolved "https://registry.yarnpkg.com/lerna/-/lerna-2.4.0.tgz#7b76446b154bafb9cba8996f3dc233f1cb6ca7c3"
+=======
+lerna@^2.3.1:
+  version "2.3.1"
+  resolved "https://registry.yarnpkg.com/lerna/-/lerna-2.3.1.tgz#16397bc8ad8703381c8435e42ae0cd02086e8ee3"
+>>>>>>> be44df8... Updated deps.
   dependencies:
     async "^1.5.0"
     chalk "^2.1.0"
