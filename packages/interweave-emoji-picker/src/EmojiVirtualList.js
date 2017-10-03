@@ -298,9 +298,11 @@ export default class EmojiVirtualList extends React.PureComponent<EmojiListProps
         <List
           className={classNames.emojisContainer}
           emojis={emojis}
+          estimatedColumnSize={columnCount}
+          estimatedRowSize={rowCount}
           height={size * rowCount}
           noRowsRenderer={this.renderNoResults}
-          overscanRowCount={rowCount + rowCount}
+          overscanRowCount={rowCount}
           rowCount={rows.length}
           rowHeight={size}
           rowRenderer={this.renderRow}
