@@ -1,9 +1,5 @@
 {
-<<<<<<< HEAD
   "lerna": "2.4.0",
-=======
-  "lerna": "2.3.1",
->>>>>>> be44df8... Updated deps.
   "version": "independent",
   "npmClient": "yarn",
   "useWorkspaces": true,
