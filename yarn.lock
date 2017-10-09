@@ -1031,7 +1031,7 @@ babel-register@^6.26.0:
     mkdirp "^0.5.1"
     source-map-support "^0.4.15"
 
-babel-runtime@^6.18.0, babel-runtime@^6.22.0, babel-runtime@^6.26.0:
+babel-runtime@^6.18.0, babel-runtime@^6.22.0, babel-runtime@^6.23.0, babel-runtime@^6.26.0:
   version "6.26.0"
   resolved "https://registry.yarnpkg.com/babel-runtime/-/babel-runtime-6.26.0.tgz#965c7058668e82b55d7bfe04ff2337bc8b5647fe"
   dependencies:
@@ -1401,6 +1401,10 @@ cipher-base@^1.0.0, cipher-base@^1.0.1, cipher-base@^1.0.3:
 circular-json@^0.3.1:
   version "0.3.3"
   resolved "https://registry.yarnpkg.com/circular-json/-/circular-json-0.3.3.tgz#815c99ea84f6809529d2f45791bdf82711352d66"
+
+classnames@^2.2.3:
+  version "2.2.5"
+  resolved "https://registry.yarnpkg.com/classnames/-/classnames-2.2.5.tgz#fb3801d453467649ef3603c7d61a02bd129bde6d"
 
 clean-webpack-plugin@^0.1.17:
   version "0.1.17"
@@ -2058,6 +2062,10 @@ doctrine@^2.0.0:
     esutils "^2.0.2"
     isarray "^1.0.0"
 
+"dom-helpers@^2.4.0 || ^3.0.0":
+  version "3.2.1"
+  resolved "https://registry.yarnpkg.com/dom-helpers/-/dom-helpers-3.2.1.tgz#3203e07fed217bd1f424b019735582fc37b2825a"
+
 dom-serializer@0, dom-serializer@~0.1.0:
   version "0.1.0"
   resolved "https://registry.yarnpkg.com/dom-serializer/-/dom-serializer-0.1.0.tgz#073c697546ce0780ce23be4a28e293e40bc30c82"
@@ -2160,6 +2168,10 @@ emojibase-test-utils@^2.1.1:
 emojibase@^1.4.2:
   version "1.4.2"
   resolved "https://registry.yarnpkg.com/emojibase/-/emojibase-1.4.2.tgz#763454f248039542e4d7d55b2716a3c217ade5a4"
+
+emojibase@^1.4.1:
+  version "1.4.1"
+  resolved "https://registry.yarnpkg.com/emojibase/-/emojibase-1.4.1.tgz#5e9df287f994e1201ee2b0b19d6462739d4cbf38"
 
 emojis-list@^2.0.0:
   version "2.1.0"
@@ -4202,7 +4214,7 @@ longest@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/longest/-/longest-1.0.1.tgz#30a0b2da38f73770e8294a0d22e6625ed77d0097"
 
-loose-envify@^1.0.0, loose-envify@^1.1.0, loose-envify@^1.3.1:
+loose-envify@^1.0.0, loose-envify@^1.1.0, loose-envify@^1.3.0, loose-envify@^1.3.1:
   version "1.3.1"
   resolved "https://registry.yarnpkg.com/loose-envify/-/loose-envify-1.3.1.tgz#d1a8ad33fa9ce0e713d65fdd0ac8b748d478c848"
   dependencies:
@@ -4969,7 +4981,7 @@ prop-types@^15.5.10:
     fbjs "^0.8.9"
     loose-envify "^1.3.1"
 
-prop-types@^15.6.0:
+prop-types@^15.5.4, prop-types@^15.6.0:
   version "15.6.0"
   resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.6.0.tgz#ceaf083022fc46b4a35f69e13ef75aed0d639856"
   dependencies:
@@ -5101,6 +5113,16 @@ react-test-renderer@^16.0.0:
   dependencies:
     fbjs "^0.8.16"
     object-assign "^4.1.1"
+
+react-virtualized@^9.10.1:
+  version "9.10.1"
+  resolved "https://registry.yarnpkg.com/react-virtualized/-/react-virtualized-9.10.1.tgz#d32365d0edf49debbe25fbfe73b5f55f6d9d8c72"
+  dependencies:
+    babel-runtime "^6.23.0"
+    classnames "^2.2.3"
+    dom-helpers "^2.4.0 || ^3.0.0"
+    loose-envify "^1.3.0"
+    prop-types "^15.5.4"
 
 react@^16.0.0:
   version "16.0.0"
