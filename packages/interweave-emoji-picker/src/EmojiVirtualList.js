@@ -91,7 +91,12 @@ export default class EmojiVirtualList extends React.PureComponent<EmojiListProps
   }
 
   componentWillReceiveProps(props: EmojiListProps) {
-    const { activeEmoji, commonEmojis, emojis, searchQuery } = props;
+    const {
+      activeEmoji,
+      commonEmojis,
+      emojis,
+      searchQuery,
+    } = props;
 
     // We re-use the same array for emojis unless it has been rebuilt,
     // so this check will work correctly. No lengthy checks needed.
@@ -109,7 +114,13 @@ export default class EmojiVirtualList extends React.PureComponent<EmojiListProps
    * Partition the dataset into multiple rows based on the group they belong to.
    */
   groupEmojisIntoRows(props: EmojiListProps) {
-    const { columnCount, commonEmojis, emojis, hasCommonlyUsed, searchQuery } = props;
+    const {
+      columnCount,
+      commonEmojis,
+      emojis,
+      hasCommonlyUsed,
+      searchQuery,
+    } = props;
     const groups = {};
     const rows = [];
     const groupIndices = {
@@ -211,7 +222,13 @@ export default class EmojiVirtualList extends React.PureComponent<EmojiListProps
   /**
    * Render the list row. Either a group header or a row of emoji columns.
    */
-  renderRow = ({ key, index, isVisible, style }: Object) => {
+  renderRow = ({
+    key,
+    index,
+    isVisible,
+    style,
+    // eslint-disable-next-line
+  }: Object) => {
     const {
       activeEmoji,
       commonMode,
