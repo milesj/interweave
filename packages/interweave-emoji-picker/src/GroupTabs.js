@@ -31,7 +31,12 @@ export default class GroupTabs extends React.PureComponent<GroupTabsProps> {
   };
 
   render() {
-    const { activeGroup, hasCommonlyUsed, icons, onSelect } = this.props;
+    const {
+      activeGroup,
+      hasCommonlyUsed,
+      icons,
+      onSelect,
+    } = this.props;
     const { classNames } = this.context;
     const groups = [...GROUPS];
 

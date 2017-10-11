@@ -97,7 +97,14 @@ export default class EmojiButton extends React.PureComponent<EmojiProps, EmojiSt
   };
 
   render() {
-    const { emoji, emojiPadding, emojiPath, emojiSize, emojiSource, showImage } = this.props;
+    const {
+      emoji,
+      emojiPadding,
+      emojiPath,
+      emojiSize,
+      emojiSource,
+      showImage,
+    } = this.props;
     const { classNames } = this.context;
     const { active } = this.state;
     const dimension = emojiPadding + emojiPadding + emojiSize;

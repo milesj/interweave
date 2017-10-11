@@ -87,15 +87,15 @@ type PickerProps = {
 };
 
 type PickerState = {
-  activeEmoji: ?Emoji,        // Emoji to display in the preview
-  activeEmojiIndex: number,   // Index for the highlighted emoji within search results
-  activeGroup: string,        // Currently selected group tab
-  activeSkinTone: string,     // Currently selected skin ton
-  commonEmojis: Emoji[],      // List of emoji unicodes most commonly used
-  emojis: Emoji[],            // List of all emojis with search filtering applied
-  excluded: ExcludeMap,       // Map of excluded emoji hexcodes
-  scrollToGroup: string,      // Group to scroll to on render
-  searchQuery: string,        // Current search query
+  activeEmoji: ?Emoji, // Emoji to display in the preview
+  activeEmojiIndex: number, // Index for the highlighted emoji within search results
+  activeGroup: string, // Currently selected group tab
+  activeSkinTone: string, // Currently selected skin ton
+  commonEmojis: Emoji[], // List of emoji unicodes most commonly used
+  emojis: Emoji[], // List of all emojis with search filtering applied
+  excluded: ExcludeMap, // Map of excluded emoji hexcodes
+  scrollToGroup: string, // Group to scroll to on render
+  searchQuery: string, // Current search query
 };
 
 class Picker extends React.Component<PickerProps, PickerState> {
@@ -511,7 +511,12 @@ class Picker extends React.Component<PickerProps, PickerState> {
    */
   handleKeyUp = (e: SyntheticKeyboardEvent<HTMLInputElement>) => {
     const { columnCount } = this.props;
-    const { activeEmoji, activeEmojiIndex, emojis, searchQuery } = this.state;
+    const {
+      activeEmoji,
+      activeEmojiIndex,
+      emojis,
+      searchQuery,
+    } = this.state;
 
     // Keyboard functionality is only available while searching
     if (!searchQuery) {

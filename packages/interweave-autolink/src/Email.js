@@ -31,9 +31,10 @@ export default class Email extends React.PureComponent<EmailProps> {
 
   render() {
     const { children, ...props } = this.props;
+    const href = `mailto:${children}`;
 
     return (
-      <Link {...props} href={`mailto:${children}`}>
+      <Link {...props} href={href}>
         {children}
       </Link>
     );

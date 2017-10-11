@@ -62,7 +62,12 @@ export default function withEmojiData(
     };
 
     componentWillMount() {
-      const { compact, emojis, locale, version } = this.props;
+      const {
+        compact,
+        emojis,
+        locale,
+        version,
+      } = this.props;
       const data = this.getDataInstance();
 
       // Abort as we've already loaded data
@@ -123,7 +128,13 @@ export default function withEmojiData(
      * Clone the element so that it re-renders itself.
      */
     render() {
-      const { compact, emojis, locale, version, ...props } = this.props;
+      const {
+        compact,
+        emojis,
+        locale,
+        version,
+        ...props
+      } = this.props;
       const emojiSource = {
         compact,
         locale,

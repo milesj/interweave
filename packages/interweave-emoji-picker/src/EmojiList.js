@@ -4,6 +4,8 @@
  * @flow
  */
 
+/* eslint-disable react/jsx-no-literals */
+
 import React from 'react';
 import PropTypes from 'prop-types';
 import debounce from 'lodash/debounce';
@@ -118,7 +120,12 @@ export default class EmojiList extends React.PureComponent<EmojiListProps, Emoji
    * Partition the dataset into multiple arrays based on the group they belong to.
    */
   groupEmojis(): { [group: string]: Emoji[] } {
-    const { commonEmojis, emojis, hasCommonlyUsed, searchQuery } = this.props;
+    const {
+      commonEmojis,
+      emojis,
+      hasCommonlyUsed,
+      searchQuery,
+    } = this.props;
     const groups = {};
 
     // Add commonly used group if not searching

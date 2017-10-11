@@ -3,8 +3,9 @@
     "global": true
   },
   "rules": {
-    "no-console": 0,
     "no-magic-numbers": 0,
-    "react/jsx-no-literals": 0
+    "object-curly-newline": 0,
+    "react/jsx-no-literals": 0,
+    "react/jsx-curly-brace-presence": 0
   }
 }
