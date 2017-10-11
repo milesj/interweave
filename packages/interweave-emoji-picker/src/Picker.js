@@ -43,6 +43,8 @@ import {
   KEY_SKIN_TONE,
   COMMON_MODE_RECENT,
   COMMON_MODE_FREQUENT,
+  CONTEXT_CLASSNAMES,
+  CONTEXT_MESSAGES,
 } from './constants';
 
 import type { Emoji, EmojiPath, EmojiSource } from 'interweave-emoji'; // eslint-disable-line
@@ -225,53 +227,11 @@ class Picker extends React.Component<PickerProps, PickerState> {
 
     return {
       classNames: {
-        picker: 'interweave-picker__picker',
-        pickerVirtual: 'interweave-picker__picker--virtual',
-        emoji: 'interweave-picker__emoji',
-        emojiActive: 'interweave-picker__emoji--active',
-        emojis: 'interweave-picker__emojis',
-        emojisSection: 'interweave-picker__emojis-section',
-        emojisContainer: 'interweave-picker__emojis-container',
-        emojisRow: 'interweave-picker__emojis-row',
-        emojisHeader: 'interweave-picker__emojis-header',
-        emojisBody: 'interweave-picker__emojis-body',
-        group: 'interweave-picker__group',
-        groupActive: 'interweave-picker__group--active',
-        groups: 'interweave-picker__groups',
-        groupsList: 'interweave-picker__groups-list',
-        skinTone: 'interweave-picker__skin-tone',
-        skinToneActive: 'interweave-picker__skin-tone--active',
-        skinTones: 'interweave-picker__skin-tones',
-        noPreview: 'interweave-picker__no-preview',
-        noResults: 'interweave-picker__no-results',
-        preview: 'interweave-picker__preview',
-        previewEmoji: 'interweave-picker__preview-emoji',
-        previewContent: 'interweave-picker__preview-content',
-        previewTitle: 'interweave-picker__preview-title',
-        previewSubtitle: 'interweave-picker__preview-subtitle',
-        search: 'interweave-picker__search',
-        searchInput: 'interweave-picker__search-input',
+        ...CONTEXT_CLASSNAMES,
         ...classNames,
       },
       messages: {
-        // Emoji groups
-        [COMMON_MODE_FREQUENT]: 'Frequently Used',
-        [COMMON_MODE_RECENT]: 'Recently Used',
-        [GROUP_SMILEYS_PEOPLE]: 'Smileys & People',
-        [GROUP_ANIMALS_NATURE]: 'Animals & Nature',
-        [GROUP_FOOD_DRINK]: 'Food & Drink',
-        [GROUP_TRAVEL_PLACES]: 'Travel & Places',
-        [GROUP_ACTIVITIES]: 'Activities',
-        [GROUP_OBJECTS]: 'Objects',
-        [GROUP_SYMBOLS]: 'Symbols',
-        [GROUP_FLAGS]: 'Flags',
-        [GROUP_SEARCH_RESULTS]: 'Search Results',
-        // Miscellaneous
-        search: 'Search…',
-        searchAria: 'Search for emojis by keyword',
-        noPreview: '',
-        noResults: 'No results…',
-        // Overrides
+        ...CONTEXT_MESSAGES,
         ...messages,
       },
     };
@@ -662,13 +622,8 @@ class Picker extends React.Component<PickerProps, PickerState> {
   /**
    * When the skin tone or search query changes, update the emoji list.
    */
-<<<<<<< HEAD
   setUpdatedEmojis(searchQuery: string, skinTone: string) {
     const emojis = this.generateEmojis(this.props.emojis, searchQuery, skinTone);
-=======
-  setUpdatedEmojis(searchQuery: string) {
-    const emojis = this.generateEmojis(this.props.emojis, searchQuery);
->>>>>>> [picker] Rebuild emojis before cDU.
     const hasResults = (searchQuery && emojis.length > 0);
 
     this.setState({
