@@ -16,7 +16,7 @@
   "license": "MIT",
   "dependencies": {
     "babel-runtime": "^6.26.0",
-    "emojibase-regex": "^1.0.6",
+    "emojibase-regex": "^1.0.7",
     "prop-types": "^15.6.0"
   },
   "peerDependencies": {
@@ -25,8 +25,8 @@
     "react": "^15.3.0 || ^16.0.0"
   },
   "devDependencies": {
-    "@milesj/build-tool-config": "^0.30.2",
-    "emojibase": "^1.4.1",
+    "@milesj/build-tool-config": "^0.31.0",
+    "emojibase": "^1.4.2",
     "interweave": "^7.1.0",
     "react": "^16.0.0"
   }

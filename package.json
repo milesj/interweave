@@ -21,10 +21,10 @@
     "updated": "lerna updated"
   },
   "devDependencies": {
-    "@milesj/build-tool-config": "^0.30.2",
-    "emojibase-test-utils": "^2.1.0",
-    "lerna": "^2.2.0",
-    "serve": "^6.1.0"
+    "@milesj/build-tool-config": "^0.31.0",
+    "emojibase-test-utils": "^2.1.1",
+    "lerna": "^2.4.0",
+    "serve": "^6.2.0"
   },
   "babel": {
     "extends": "./node_modules/@milesj/build-tool-config/babel.json5"
@@ -47,5 +47,8 @@
       "./tests"
     ],
     "testRegex": "./packages/([-a-z]+)?/tests/.*\\.test\\.js$"
-  }
+  },
+  "workspaces": [
+    "packages/*"
+  ]
 }
