@@ -2169,10 +2169,6 @@ emojibase@^1.4.2:
   version "1.4.2"
   resolved "https://registry.yarnpkg.com/emojibase/-/emojibase-1.4.2.tgz#763454f248039542e4d7d55b2716a3c217ade5a4"
 
-emojibase@^1.4.1:
-  version "1.4.1"
-  resolved "https://registry.yarnpkg.com/emojibase/-/emojibase-1.4.1.tgz#5e9df287f994e1201ee2b0b19d6462739d4cbf38"
-
 emojis-list@^2.0.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/emojis-list/-/emojis-list-2.1.0.tgz#4daa4d9db00f9819880c79fa457ae5b09a1fd389"
