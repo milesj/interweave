@@ -177,7 +177,6 @@ export default class EmojiList extends React.PureComponent<EmojiListProps, Emoji
     e.persist();
 
     this.handleScrollDebounced(e);
-    this.props.onScroll(e);
   };
 
   /**
@@ -186,6 +185,7 @@ export default class EmojiList extends React.PureComponent<EmojiListProps, Emoji
   handleScrollDebounced = debounce((e: SyntheticWheelEvent<HTMLDivElement>) => {
     // $FlowIgnore
     this.loadEmojiImages(e.target, e);
+    this.props.onScroll(e);
   }, SCROLL_DEBOUNCE);
 
   /**
