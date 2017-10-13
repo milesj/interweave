@@ -16,7 +16,7 @@
   "license": "MIT",
   "dependencies": {
     "babel-runtime": "^6.26.0",
-    "emojibase-regex": "^1.0.7",
+    "emojibase-regex": "^1.0.8",
     "prop-types": "^15.6.0"
   },
   "peerDependencies": {

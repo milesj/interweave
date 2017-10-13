@@ -16,6 +16,7 @@ import {
   EmojiSourceShape,
 } from 'interweave-emoji';
 import EmojiList from './EmojiList';
+import EmojiVirtualList from './EmojiVirtualList';
 import SkinTonePalette from './SkinTonePalette';
 import GroupTabs from './GroupTabs';
 import PreviewBar from './PreviewBar';
@@ -42,7 +43,8 @@ import {
   KEY_SKIN_TONE,
   COMMON_MODE_RECENT,
   COMMON_MODE_FREQUENT,
-  SCROLL_DEBOUNCE,
+  CONTEXT_CLASSNAMES,
+  CONTEXT_MESSAGES,
 } from './constants';
 
 import type { Emoji, EmojiPath, EmojiSource } from 'interweave-emoji'; // eslint-disable-line
@@ -80,10 +82,14 @@ type PickerProps = {
   maxEmojiVersion: number,
   messages: { [key: string]: string },
   onHoverEmoji: (emoji: Emoji, e: *) => void,
+  onScroll: (e: *) => void,
+  onScrollGroup: (group: string, e: *) => void,
   onSearch: (query: string, e: *) => void,
   onSelectEmoji: (emoji: Emoji, e: *) => void,
   onSelectGroup: (group: string, e: *) => void,
   onSelectSkinTone: (skinTone: string, e: *) => void,
+  rowCount: number,
+  virtual: boolean,
 };
 
 type PickerState = {
@@ -151,7 +157,11 @@ class Picker extends React.Component<PickerProps, PickerState> {
     maxCommonlyUsed: PropTypes.number,
     maxEmojiVersion: PropTypes.number,
     messages: PropTypes.objectOf(PropTypes.node),
+    rowCount: PropTypes.number,
+    virtual: PropTypes.bool,
     onHoverEmoji: PropTypes.func,
+    onScroll: PropTypes.func,
+    onScrollGroup: PropTypes.func,
     onSearch: PropTypes.func,
     onSelectEmoji: PropTypes.func,
     onSelectGroup: PropTypes.func,
@@ -178,7 +188,11 @@ class Picker extends React.Component<PickerProps, PickerState> {
     icons: {},
     maxCommonlyUsed: 30,
     maxEmojiVersion: 5,
+    rowCount: 8,
+    virtual: false,
     onHoverEmoji() {},
+    onScroll() {},
+    onScrollGroup() {},
     onSearch() {},
     onSelectEmoji() {},
     onSelectGroup() {},
@@ -195,7 +209,6 @@ class Picker extends React.Component<PickerProps, PickerState> {
       exclude,
     } = props;
 
-    this.mounted = false;
     this.state = {
       emojis,
       activeEmoji: null,
@@ -214,49 +227,11 @@ class Picker extends React.Component<PickerProps, PickerState> {
 
     return {
       classNames: {
-        emoji: 'interweave-picker__emoji',
-        emojiActive: 'interweave-picker__emoji--active',
-        emojis: 'interweave-picker__emojis',
-        emojisSection: 'interweave-picker__emojis-section',
-        emojisHeader: 'interweave-picker__emojis-header',
-        emojisBody: 'interweave-picker__emojis-body',
-        group: 'interweave-picker__group',
-        groupActive: 'interweave-picker__group--active',
-        groups: 'interweave-picker__groups',
-        groupsList: 'interweave-picker__groups-list',
-        skinTone: 'interweave-picker__skin-tone',
-        skinToneActive: 'interweave-picker__skin-tone--active',
-        skinTones: 'interweave-picker__skin-tones',
-        noPreview: 'interweave-picker__no-preview',
-        noResults: 'interweave-picker__no-results',
-        preview: 'interweave-picker__preview',
-        previewEmoji: 'interweave-picker__preview-emoji',
-        previewContent: 'interweave-picker__preview-content',
-        previewTitle: 'interweave-picker__preview-title',
-        previewSubtitle: 'interweave-picker__preview-subtitle',
-        search: 'interweave-picker__search',
-        searchInput: 'interweave-picker__search-input',
+        ...CONTEXT_CLASSNAMES,
         ...classNames,
       },
       messages: {
-        // Emoji groups
-        [COMMON_MODE_FREQUENT]: 'Frequently Used',
-        [COMMON_MODE_RECENT]: 'Recently Used',
-        [GROUP_SMILEYS_PEOPLE]: 'Smileys & People',
-        [GROUP_ANIMALS_NATURE]: 'Animals & Nature',
-        [GROUP_FOOD_DRINK]: 'Food & Drink',
-        [GROUP_TRAVEL_PLACES]: 'Travel & Places',
-        [GROUP_ACTIVITIES]: 'Activities',
-        [GROUP_OBJECTS]: 'Objects',
-        [GROUP_SYMBOLS]: 'Symbols',
-        [GROUP_FLAGS]: 'Flags',
-        [GROUP_SEARCH_RESULTS]: 'Search Results',
-        // Miscellaneous
-        search: 'Search…',
-        searchAria: 'Search for emojis by keyword',
-        noPreview: '',
-        noResults: 'No results…',
-        // Overrides
+        ...CONTEXT_MESSAGES,
         ...messages,
       },
     };
@@ -269,46 +244,11 @@ class Picker extends React.Component<PickerProps, PickerState> {
     }
   }
 
-  componentDidMount() {
-    this.mounted = true;
-  }
-
   componentWillReceiveProps({ emojis }: PickerProps) {
     // Emoji data has loaded via the `withEmojiData` HOC
     if (emojis.length !== 0 && this.props.emojis.length === 0) {
       this.setInitialEmojis(emojis);
     }
-  }
-
-  componentDidUpdate(prevProps: PickerProps, prevState: PickerState) {
-    const { activeSkinTone, searchQuery } = this.state;
-
-    // Regenerate emoji list when:
-    if (
-      // Skin tone changes
-      activeSkinTone !== prevState.activeSkinTone ||
-      // Search query changes
-      searchQuery !== prevState.searchQuery
-    ) {
-      const emojis = this.generateEmojis(prevProps.emojis, searchQuery);
-      const hasResults = (searchQuery && emojis.length > 0);
-
-      // Defer the update a bit so that the render doesn't look like it's stalling
-      setTimeout(() => {
-        // Check if were still mounted
-        if (this.mounted) {
-          this.setState({
-            emojis,
-            activeEmoji: hasResults ? emojis[0] : null,
-            activeEmojiIndex: hasResults ? 0 : -1,
-          });
-        }
-      }, SCROLL_DEBOUNCE);
-    }
-  }
-
-  componentWillUnmount() {
-    this.mounted = false;
   }
 
   /**
@@ -418,10 +358,10 @@ class Picker extends React.Component<PickerProps, PickerState> {
    * Return the list of emojis filtered with the search query if applicable,
    * and with skin tone applied if set.
    */
-  generateEmojis(emojis: Emoji[], searchQuery: string = ''): Emoji[] {
+  generateEmojis(emojis: Emoji[], searchQuery: string, skinTone: string): Emoji[] {
     return emojis
       .filter(emoji => this.filterOrSearch(emoji, searchQuery))
-      .map(emoji => this.getSkinnedEmoji(emoji));
+      .map(emoji => this.getSkinnedEmoji(emoji, skinTone));
   }
 
   /**
@@ -475,14 +415,12 @@ class Picker extends React.Component<PickerProps, PickerState> {
    * Return an emoji with skin tone if the active skin tone is set,
    * otherwise return the default skin tone (yellow).
    */
-  getSkinnedEmoji(emoji: Emoji): Emoji {
-    const { activeSkinTone } = this.state;
-
-    if (activeSkinTone === SKIN_NONE || !emoji.skins) {
+  getSkinnedEmoji(emoji: Emoji, skinTone: string): Emoji {
+    if (skinTone === SKIN_NONE || !emoji.skins) {
       return emoji;
     }
 
-    const toneIndex = SKIN_TONES.findIndex(skinTone => (skinTone === activeSkinTone));
+    const toneIndex = SKIN_TONES.findIndex(tone => (tone === skinTone));
     const skinnedEmoji = (emoji.skins || []).find(skin => (skin.tone && skin.tone === toneIndex));
 
     return skinnedEmoji || emoji;
@@ -580,14 +518,28 @@ class Picker extends React.Component<PickerProps, PickerState> {
   };
 
   /**
+   * Triggered when a group is scrolled into view.
+   */
+  handleScrollGroup = (group: string, e: SyntheticEvent<*>) => {
+    this.setState({
+      activeGroup: group,
+      scrollToGroup: '',
+    });
+
+    this.props.onScrollGroup(group, e);
+  };
+
+  /**
    * Triggered when the search input field value changes.
    */
   handleSearch = (query: string, e: SyntheticEvent<*>) => {
     const defaultGroup = this.getDefaultGroup();
 
+    this.setUpdatedEmojis(query, this.state.activeSkinTone);
+
     this.setState({
-      activeGroup: query ? '' : defaultGroup,
-      scrollToGroup: query ? '' : defaultGroup,
+      activeGroup: query ? GROUP_SEARCH_RESULTS : defaultGroup,
+      scrollToGroup: query ? GROUP_SEARCH_RESULTS : defaultGroup,
       searchQuery: query,
     });
 
@@ -604,16 +556,19 @@ class Picker extends React.Component<PickerProps, PickerState> {
   };
 
   /**
-   * Triggered when a group tab is clicked or scrolled to.
-   *
-   * When clicked via the tab, we should reset search and scroll position.
+   * Triggered when a group tab is clicked. We should reset search and scroll position.
    */
-  handleSelectGroup = (group: string, reset?: boolean = false, e?: SyntheticEvent<*>) => {
-    this.setState(prevState => ({
+  handleSelectGroup = (group: string, e: SyntheticEvent<*>) => {
+    // Search is being reset, so rebuild emojis
+    if (this.state.searchQuery !== '') {
+      this.setUpdatedEmojis('', this.state.activeSkinTone);
+    }
+
+    this.setState({
       activeGroup: group,
-      scrollToGroup: reset ? group : '',
-      searchQuery: reset ? '' : prevState.searchQuery,
-    }));
+      scrollToGroup: group,
+      searchQuery: '',
+    });
 
     this.props.onSelectGroup(group, e);
   };
@@ -622,11 +577,12 @@ class Picker extends React.Component<PickerProps, PickerState> {
    * Triggered when a skin tone is clicked.
    */
   handleSelectSkinTone = (skinTone: string, e: SyntheticEvent<*>) => {
+    this.setUpdatedEmojis(this.state.searchQuery, skinTone);
+    this.setSkinTone(skinTone);
+
     this.setState({
       activeSkinTone: skinTone,
     });
-
-    this.setSkinTone(skinTone);
 
     this.props.onSelectSkinTone(skinTone, e);
   };
@@ -647,7 +603,7 @@ class Picker extends React.Component<PickerProps, PickerState> {
     this.setState({
       activeGroup: defaultGroup,
       commonEmojis: this.generateCommonEmojis(this.getCommonEmojisFromStorage()),
-      emojis: this.generateEmojis(emojis),
+      emojis: this.generateEmojis(emojis, '', this.state.activeSkinTone),
       scrollToGroup: defaultGroup,
     });
   }
@@ -663,11 +619,28 @@ class Picker extends React.Component<PickerProps, PickerState> {
     }
   }
 
+  /**
+   * When the skin tone or search query changes, update the emoji list.
+   */
+  setUpdatedEmojis(searchQuery: string, skinTone: string) {
+    const emojis = this.generateEmojis(this.props.emojis, searchQuery, skinTone);
+    const hasResults = (searchQuery && emojis.length > 0);
+
+    this.setState({
+      emojis,
+      activeEmoji: hasResults ? emojis[0] : null,
+      activeEmojiIndex: hasResults ? 0 : -1,
+    });
+  }
+
   render() {
     const {
       autoFocus,
-      classNames,
+      columnCount,
       commonMode,
+      disablePreview,
+      disableSearch,
+      disableSkinTones,
       displayOrder,
       emojiLargeSize,
       emojiPadding,
@@ -675,15 +648,14 @@ class Picker extends React.Component<PickerProps, PickerState> {
       emojiSize,
       emojiSource,
       hideEmoticon,
-      disablePreview,
-      disableSearch,
-      disableSkinTones,
       hideShortcodes,
       icons,
+      rowCount,
+      virtual,
+      onScroll,
     } = this.props;
     const {
       activeEmoji,
-      activeEmojiIndex,
       activeGroup,
       activeSkinTone,
       commonEmojis,
@@ -691,6 +663,7 @@ class Picker extends React.Component<PickerProps, PickerState> {
       scrollToGroup,
       searchQuery,
     } = this.state;
+    const List = virtual ? EmojiVirtualList : EmojiList;
     const hasCommonlyUsed = this.hasCommonlyUsed();
     const components = {
       preview: disablePreview ? null : (
@@ -705,10 +678,11 @@ class Picker extends React.Component<PickerProps, PickerState> {
         />
       ),
       emojis: (
-        <EmojiList
+        <List
           key="emojis"
-          activeEmojiIndex={activeEmojiIndex}
+          activeEmoji={activeEmoji}
           activeGroup={activeGroup}
+          columnCount={columnCount}
           commonEmojis={commonEmojis}
           commonMode={commonMode}
           emojiPadding={emojiPadding}
@@ -717,6 +691,7 @@ class Picker extends React.Component<PickerProps, PickerState> {
           emojiSize={emojiSize}
           emojiSource={emojiSource}
           hasCommonlyUsed={hasCommonlyUsed}
+          rowCount={rowCount}
           scrollToGroup={scrollToGroup}
           searchQuery={searchQuery}
           skinTonePalette={disableSkinTones ? null : (
@@ -728,8 +703,9 @@ class Picker extends React.Component<PickerProps, PickerState> {
           )}
           onEnterEmoji={this.handleEnterEmoji}
           onLeaveEmoji={this.handleLeaveEmoji}
+          onScroll={onScroll}
+          onScrollGroup={this.handleScrollGroup}
           onSelectEmoji={this.handleSelectEmoji}
-          onSelectGroup={this.handleSelectGroup}
         />
       ),
       groups: (
@@ -752,9 +728,15 @@ class Picker extends React.Component<PickerProps, PickerState> {
         />
       ),
     };
+    const { classNames } = this.getChildContext();
+    const classes = [classNames.picker];
+
+    if (virtual) {
+      classes.push(classNames.pickerVirtual);
+    }
 
     return (
-      <div className={classNames.picker || 'interweave-picker__picker'}>
+      <div className={classes.join(' ')}>
         {displayOrder.map(key => components[key])}
       </div>
     );

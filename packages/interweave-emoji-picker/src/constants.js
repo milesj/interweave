@@ -72,3 +72,52 @@ export const KEY_SKIN_TONE: string = 'interweave/emoji/skinTone';
 
 export const COMMON_MODE_RECENT: string = 'recentlyUsed';
 export const COMMON_MODE_FREQUENT: string = 'frequentlyUsed';
+
+export const CONTEXT_CLASSNAMES: Object = {
+  picker: 'interweave-picker__picker',
+  pickerVirtual: 'interweave-picker__picker--virtual',
+  emoji: 'interweave-picker__emoji',
+  emojiActive: 'interweave-picker__emoji--active',
+  emojis: 'interweave-picker__emojis',
+  emojisSection: 'interweave-picker__emojis-section',
+  emojisContainer: 'interweave-picker__emojis-container',
+  emojisRow: 'interweave-picker__emojis-row',
+  emojisHeader: 'interweave-picker__emojis-header',
+  emojisBody: 'interweave-picker__emojis-body',
+  group: 'interweave-picker__group',
+  groupActive: 'interweave-picker__group--active',
+  groups: 'interweave-picker__groups',
+  groupsList: 'interweave-picker__groups-list',
+  skinTone: 'interweave-picker__skin-tone',
+  skinToneActive: 'interweave-picker__skin-tone--active',
+  skinTones: 'interweave-picker__skin-tones',
+  noPreview: 'interweave-picker__no-preview',
+  noResults: 'interweave-picker__no-results',
+  preview: 'interweave-picker__preview',
+  previewEmoji: 'interweave-picker__preview-emoji',
+  previewContent: 'interweave-picker__preview-content',
+  previewTitle: 'interweave-picker__preview-title',
+  previewSubtitle: 'interweave-picker__preview-subtitle',
+  search: 'interweave-picker__search',
+  searchInput: 'interweave-picker__search-input',
+};
+
+export const CONTEXT_MESSAGES: Object = {
+  // Emoji groups
+  [COMMON_MODE_FREQUENT]: 'Frequently Used',
+  [COMMON_MODE_RECENT]: 'Recently Used',
+  [GROUP_SMILEYS_PEOPLE]: 'Smileys & People',
+  [GROUP_ANIMALS_NATURE]: 'Animals & Nature',
+  [GROUP_FOOD_DRINK]: 'Food & Drink',
+  [GROUP_TRAVEL_PLACES]: 'Travel & Places',
+  [GROUP_ACTIVITIES]: 'Activities',
+  [GROUP_OBJECTS]: 'Objects',
+  [GROUP_SYMBOLS]: 'Symbols',
+  [GROUP_FLAGS]: 'Flags',
+  [GROUP_SEARCH_RESULTS]: 'Search Results',
+  // Miscellaneous
+  search: 'Search…',
+  searchAria: 'Search for emojis by keyword',
+  noPreview: '',
+  noResults: 'No results…',
+};

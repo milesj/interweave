@@ -18,7 +18,8 @@
   "dependencies": {
     "babel-runtime": "^6.26.0",
     "lodash": "^4.17.4",
-    "prop-types": "^15.6.0"
+    "prop-types": "^15.6.0",
+    "react-virtualized": "^9.10.1"
   },
   "peerDependencies": {
     "interweave-emoji": "^1.1.0",

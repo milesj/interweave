@@ -28,6 +28,8 @@ type EmojiState = {
 };
 
 export default class EmojiButton extends React.PureComponent<EmojiProps, EmojiState> {
+  button: ?HTMLButtonElement;
+
   static contextTypes = {
     classNames: PropTypes.objectOf(PropTypes.string),
   };
@@ -58,6 +60,15 @@ export default class EmojiButton extends React.PureComponent<EmojiProps, EmojiSt
       this.setState({
         active,
       });
+    }
+
+    if (active && this.button) {
+      if (this.button.scrollIntoViewIfNeeded) {
+        // $FlowIgnore
+        this.button.scrollIntoViewIfNeeded();
+      } else {
+        this.button.scrollIntoView();
+      }
     }
   }
 
@@ -96,6 +107,10 @@ export default class EmojiButton extends React.PureComponent<EmojiProps, EmojiSt
     this.props.onLeave(this.props.emoji, e);
   };
 
+  handleRef = (ref: ?HTMLButtonElement) => {
+    this.button = ref;
+  };
+
   render() {
     const {
       emoji,
@@ -119,6 +134,7 @@ export default class EmojiButton extends React.PureComponent<EmojiProps, EmojiSt
         aria-label={emoji.annotation}
         key={emoji.hexcode}
         className={className.join(' ')}
+        ref={this.handleRef}
         style={{
           padding: emojiPadding,
           width: dimension,

@@ -23,7 +23,7 @@ import {
 import type { Emoji, EmojiPath, EmojiSource } from 'interweave-emoji'; // eslint-disable-line
 
 type EmojiListProps = {
-  activeEmojiIndex: number,
+  activeEmoji: ?Emoji,
   activeGroup: string,
   commonEmojis: Emoji[],
   commonMode: string,
@@ -35,8 +35,9 @@ type EmojiListProps = {
   hasCommonlyUsed: boolean,
   onEnterEmoji: (emoji: Emoji, e: *) => void,
   onLeaveEmoji: (emoji: Emoji, e: *) => void,
+  onScroll: (e: *) => void,
+  onScrollGroup: (group: string, e: *) => void,
   onSelectEmoji: (emoji: Emoji, e: *) => void,
-  onSelectGroup: (group: string, reset?: boolean, e?: SyntheticEvent<*>) => void,
   scrollToGroup: string,
   searchQuery: string,
   skinTonePalette: React$Node,
@@ -55,7 +56,7 @@ export default class EmojiList extends React.PureComponent<EmojiListProps, Emoji
   };
 
   static propTypes = {
-    activeEmojiIndex: PropTypes.number.isRequired,
+    activeEmoji: EmojiShape,
     activeGroup: PropTypes.string.isRequired,
     commonEmojis: PropTypes.arrayOf(EmojiShape).isRequired,
     commonMode: PropTypes.string.isRequired,
@@ -70,11 +71,13 @@ export default class EmojiList extends React.PureComponent<EmojiListProps, Emoji
     skinTonePalette: PropTypes.node,
     onEnterEmoji: PropTypes.func.isRequired,
     onLeaveEmoji: PropTypes.func.isRequired,
+    onScroll: PropTypes.func.isRequired,
+    onScrollGroup: PropTypes.func.isRequired,
     onSelectEmoji: PropTypes.func.isRequired,
-    onSelectGroup: PropTypes.func.isRequired,
   };
 
   static defaultProps = {
+    activeEmoji: null,
     skinTonePalette: null,
   };
 
@@ -90,7 +93,7 @@ export default class EmojiList extends React.PureComponent<EmojiListProps, Emoji
     // When commonly used emojis are rendered,
     // the smileys group is usually within view as well,
     // so we should preload both of them.
-    if (activeGroup === GROUP_COMMONLY_USED) {
+    if (activeGroup && activeGroup === GROUP_COMMONLY_USED) {
       loadedGroups.push(GROUP_SMILEYS_PEOPLE);
     }
 
@@ -173,55 +176,71 @@ export default class EmojiList extends React.PureComponent<EmojiListProps, Emoji
     e.stopPropagation();
     e.persist();
 
-    this.handleScrollDebounced(e.currentTarget);
+    this.handleScrollDebounced(e);
   };
 
   /**
    * A scroll handler that is debounced for performance.
    */
-  handleScrollDebounced = debounce((container) => {
-    this.loadEmojiImages(container);
+  handleScrollDebounced = debounce((e: SyntheticWheelEvent<HTMLDivElement>) => {
+    // $FlowIgnore
+    this.loadEmojiImages(e.target, e);
+    this.props.onScroll(e);
   }, SCROLL_DEBOUNCE);
 
   /**
    * Loop over each group section within the scrollable container
    * and determine the active group and whether to load emoji images.
    */
-  loadEmojiImages(container: HTMLDivElement) {
+  loadEmojiImages(container: HTMLDivElement, e?: SyntheticWheelEvent<HTMLDivElement>) {
+    const { scrollTop } = container;
     const { searchQuery } = this.props;
     const { loadedGroups } = this.state;
     let updateState = false;
+    let lastGroup = '';
 
-    Array.from(container.children).forEach((section) => {
+    Array.from(container.children).some((section) => {
       const group = section.id.replace('emoji-group-', '');
+      let loadImages = false;
 
-      // While a group section is within view, update the active group
-      if (
+      // Special case for commonly used and smileys,
+      // as they usually both render in the same view
+      if (scrollTop === 0) {
+        if (section.offsetTop === 0) {
+          loadImages = true;
+          lastGroup = group;
+        }
+
+      // While a group section is partially within view, update the active group
+      } else if (
         !searchQuery &&
-        section.offsetTop <= container.scrollTop &&
-        (section.offsetTop + section.offsetHeight) > container.scrollTop
+        // Top is partially in view
+        (section.offsetTop - SCROLL_BUFFER) <= scrollTop &&
+        // Bottom is partially in view
+        ((section.offsetTop + section.offsetHeight) - SCROLL_BUFFER) > scrollTop
       ) {
-        // Only update if not loaded
-        if (!loadedGroups.has(group)) {
-          loadedGroups.add(group);
-          updateState = true;
-        }
-
-        // Only update if a different group
-        if (group !== this.props.activeGroup) {
-          this.props.onSelectGroup(group);
-        }
+        loadImages = true;
+        lastGroup = group;
       }
 
       // Before a group section is scrolled into view, lazy load emoji images
-      if (
-        !loadedGroups.has(group) &&
-        section.offsetTop <= (container.scrollTop + container.offsetHeight + SCROLL_BUFFER)
-      ) {
+      if (section.offsetTop <= (scrollTop + container.offsetHeight + SCROLL_BUFFER)) {
+        loadImages = true;
+      }
+
+      // Only update if not loaded
+      if (loadImages && !loadedGroups.has(group)) {
         loadedGroups.add(group);
         updateState = true;
       }
+
+      return (section.offsetTop > scrollTop);
     });
+
+    // Only update during a scroll event and if a different group
+    if (e && lastGroup !== this.props.activeGroup) {
+      this.props.onScrollGroup(lastGroup, e);
+    }
 
     if (updateState) {
       this.setState({
@@ -240,21 +259,16 @@ export default class EmojiList extends React.PureComponent<EmojiListProps, Emoji
       return;
     }
 
+    // Scroll to the container
+    this.container.scrollTop = element.offsetTop;
+
     // Eager load emoji images
     this.loadEmojiImages(this.container);
-
-    // Scroll to the section after a short delay (wait for images to render)
-    setTimeout(() => {
-      // Check if were still mounted
-      if (this.container) {
-        this.container.scrollTop = element.offsetTop;
-      }
-    });
   }
 
   render() {
     const {
-      activeEmojiIndex,
+      activeEmoji,
       commonMode,
       emojiPadding,
       emojiPath,
@@ -303,7 +317,7 @@ export default class EmojiList extends React.PureComponent<EmojiListProps, Emoji
                 {groupedEmojis[group].map((emoji, index) => (
                   <EmojiButton
                     key={emoji.hexcode}
-                    active={index === activeEmojiIndex}
+                    active={activeEmoji ? (activeEmoji.hexcode === emoji.hexcode) : false}
                     emoji={emoji}
                     emojiPadding={emojiPadding}
                     emojiPath={emojiPath}
