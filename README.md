@@ -30,13 +30,11 @@ yarn add interweave react
 
 ## Usage
 
-Interweave can primarily be used with the `Interweave` and `Markup`
-components, both of which provide an easy, straight-forward implementation
-for safely [parsing and rendering HTML](#html-parsing) without using
-`dangerouslySetInnerHTML` ([Facebook][dangerhtml]).
+Interweave can primarily be used with the `Interweave` and `Markup` components, both of which
+provide an easy, straight-forward implementation for safely [parsing and rendering HTML](#html-parsing) without using `dangerouslySetInnerHTML` ([Facebook][dangerhtml]).
 
-The `Interweave` component has the additional benefit of utilizing
-[filters](#filters), [matchers](#matchers), and callbacks.
+The `Interweave` component has the additional benefit of utilizing [filters](#filters),
+[matchers](#matchers), and callbacks.
 
 ```javascript
 import Interweave from 'interweave';
@@ -71,9 +69,9 @@ import Interweave from 'interweave';
 
 ### Markup
 
-Unlike the `Interweave` component, the `Markup` component does not
-support matchers, filters, or callbacks. This component is preferred
-when rendering strings that contain HTML is the primary use case.
+Unlike the `Interweave` component, the `Markup` component does not support matchers, filters,
+or callbacks. This component is preferred when rendering strings that contain HTML is the
+primary use case.
 
 ```javascript
 import { Markup } from 'interweave';
@@ -83,9 +81,8 @@ import { Markup } from 'interweave';
 
 #### Props
 
-The `Markup` component only supports the `content`, `emptyContent`,
-`tagName`, `disableLineBreaks`, `disableWhitelist`, `noHtml`,
-and `noHtmlExceptMatchers` props mentioned previously.
+The `Markup` component only supports the `content`, `emptyContent`, `tagName`, `disableLineBreaks`,
+`disableWhitelist`, `noHtml`, and `noHtmlExceptMatchers` props mentioned previously.
 
 ## Documentation
 
@@ -108,16 +105,14 @@ and `noHtmlExceptMatchers` props mentioned previously.
 
 ### Matchers
 
-Matchers are the backbone of Interweave as they allow arbitrary
-insertion of React elements into strings, through the use of regex
-matching. This feature is quite powerful and opens up many possibilities.
+Matchers are the backbone of Interweave as they allow arbitrary insertion of React elements
+into strings, through the use of regex matching. This feature is quite powerful and opens up
+many possibilities.
 
-It works by matching patterns within a string, deconstructing it into
-tokens, and reconstructing it back into an array of strings and React
-elements, therefore, permitting it to be rendered by React's virtual
-DOM layer. For example, take the following string "Check out my
-website, github.com/milesj!", and a `UrlMatcher`, you'd get the
-following array.
+It works by matching patterns within a string, deconstructing it into tokens, and reconstructing
+it back into an array of strings and React elements, therefore, permitting it to be rendered by
+React's virtual DOM layer. For example, take the following string "Check out my website,
+github.com/milesj!", and a `UrlMatcher`, you'd get the following array.
 
 ```javascript
 [
@@ -127,8 +122,8 @@ following array.
 ]
 ```
 
-Matchers can be passed to each instance of `Interweave`.
-When adding a matcher, a unique name must be passed to the constructor.
+Matchers can be passed to each instance of `Interweave`. When adding a matcher, a unique name
+must be passed to the constructor.
 
 ```javascript
 import Interweave from 'interweave';
@@ -142,9 +137,9 @@ To disable all matchers per instance, pass the `disableMatchers` prop.
 <Interweave disableMatchers />
 ```
 
-To disable a single matcher, you can pass a prop that starts with "no",
-and ends with the unique name of the matcher (the one passed to the constructor).
-Using the example above, you can pass a `noFoo` prop.
+To disable a single matcher, you can pass a prop that starts with "no", and ends with the
+unique name of the matcher (the one passed to the constructor). Using the example above,
+you can pass a `noFoo` prop.
 
 ```javascript
 <Interweave noFoo />
@@ -156,15 +151,13 @@ To create a custom matcher, implement a class that extends the base `Matcher` cl
 or use a plain object. Both approaches will require the following methods to be defined
 (excluding callbacks).
 
-* `match(string)` - Match the passed string using a regex pattern.
-  This method must return `null` if no match is found, else it must
-  return an object with a `match` key and the matched value.
-  Furthermore, any additional keys defined in this object will be
-  passed as props to the created element.
-* `replaceWith(match, props)` - Returns a React element that replaces
-  the matched content in the string. The match is passed as the 1st
-  argument, and any matched props or parent props are passed as the
-  2nd argument.
+* `match(string)` - Match the passed string using a regex pattern. This method must return
+  `null` if no match is found, else it must return an object with a `match` key and the
+  matched value. Furthermore, any additional keys defined in this object will be passed as
+  props to the created element.
+* `replaceWith(match, props)` - Returns a React element that replaces the matched content in
+  the string. The match is passed as the 1st argument, and any matched props or parent props
+  are passed as the 2nd argument.
 * `createElement(match, props)` - The same as `replaceWith` but used in object matchers.
 * `asTag()` - The HTML tag name of the replacement element.
 * `onBeforeParse(content, props)` (func) - Callback that fires before parsing. Is
@@ -219,9 +212,8 @@ const matcher = {
 };
 ```
 
-To ease the matching process, there is a `doMatch` method on `Matcher` that
-handles the `null` and object building logic. Simply pass it a regex
-pattern and a callback to build the object.
+To ease the matching process, there is a `doMatch` method on `Matcher` that handles the `null`
+and object building logic. Simply pass it a regex pattern and a callback to build the object.
 
 ```javascript
 class CustomMatcher extends Matcher {
@@ -237,15 +229,13 @@ class CustomMatcher extends Matcher {
 
 #### Rendered Elements
 
-When a match is found, a React element is rendered (from a React
-component) from either the matcher's `replaceWith` method, or from a
-factory. What's a factory you ask? Simply put, it's a function passed
-to the constructor of a matcher, allowing the rendered element to be
+When a match is found, a React element is rendered (from a React component) from either the
+matcher's `replaceWith` method, or from a factory. What's a factory you ask? Simply put,
+it's a function passed to the constructor of a matcher, allowing the rendered element to be
 customized for built-in or third-party matchers.
 
-To define a factory, simply pass a function to the 3rd argument of a
-matcher constructor. The factory function receives the same arguments
-as `replaceWith`.
+To define a factory, simply pass a function to the 3rd argument of a matcher constructor.
+The factory function receives the same arguments as `replaceWith`.
 
 ```javascript
 new CustomMatcher('foo', {}, (match, props) => (
@@ -258,13 +248,10 @@ new CustomMatcher('foo', {}, (match, props) => (
 
 ### Filters
 
-Filters provide an easy way of cleaning HTML attribute values during
-the [parsing cycle](#html-parsing). This is especially useful for `src`
-and `href` attributes.
+Filters provide an easy way of cleaning HTML attributes and nodes during the
+[parsing cycle](#html-parsing). This is especially useful for `src` and `href` attributes.
 
-Filters can be added to each instance of `Interweave`.
-When adding a filter, the name of the attribute to clean must be
-passed as the 1st argument to the constructor.
+Filters can be added to each instance of `Interweave`
 
 ```javascript
 <Interweave filters={[new LinkFilter()]} />
@@ -278,52 +265,61 @@ To disable all filters, pass the `disableFilters` prop.
 
 #### Creating A Filter
 
-Creating a custom filter is easy. Simply extend the base `Filter` class,
-or use a plain object, and define a `filter` method. This method will receive
-the attribute value as the 1st argument, and it must return a string.
+Creating a custom filter is easy. Simply extend the base `Filter` class, or use a plain object,
+and define the `attribute` or `node` methods. These methods receive the attribute or tag name
+as the 1st argument, and the value as the 2nd, respectively.
 
 ```javascript
 import { Filter } from 'interweave';
 
 // Class
-class SourceFilter extends Filter {
-  filter(value) {
-    return encodeURIComponent(value); // Clean attribute value
+class LinkFilter extends Filter {
+  attribute(name, value) {
+    if (name === 'href') {
+      return encodeURIComponent(value);
+    }
+
+    return value;
+  }
+
+  node(name, node) {
+    if (name === 'a') {
+      node.setAttribute('target', '_blank');
+    }
+
+    return node;
   }
 }
 
-const filter = new Filter('src');
+const filter = new LinkFilter();
 
 // Object
 const filter = {
-  attribute: 'src',
-  filter: value => encodeURIComponent(value),
+  attribute: (name, value) => value,
+  node: (name, node) => node,
 };
 ```
 
+> Attribute values and nodes must be returned from filter methods!
+
 ### HTML Parsing
 
-Interweave doesn't rely on an HTML parser for rendering HTML safely,
-instead, it uses the DOM itself. It accomplishes this by using
-`DOMImplementation.createHTMLDocument` ([MDN][domhtml]), which creates
-an HTML document in memory, allowing us to easily set markup,
-aggregate nodes, and generate React elements. This implementation is
-supported by all modern browsers and IE9+.
+Interweave doesn't rely on an HTML parser for rendering HTML safely, instead, it uses the
+DOM itself. It accomplishes this by using `DOMImplementation.createHTMLDocument` ([MDN][domhtml]),
+which creates an HTML document in memory, allowing us to easily set markup, aggregate nodes,
+and generate React elements. This implementation is supported by all modern browsers and IE9+.
 
-`DOMImplementation` has the added benefit of not requesting resources
-(images, scripts, etc) until the document has been rendered to the page.
-This provides an extra layer of security by avoiding possible CSRF
-and arbitrary code execution.
+`DOMImplementation` has the added benefit of not requesting resources (images, scripts, etc)
+until the document has been rendered to the page.This provides an extra layer of security by
+avoiding possible CSRF and arbitrary code execution.
 
-Furthermore, Interweave manages a whitelist of both HTML tags and
-attributes, further increasing security, and reducing the risk of XSS
-and vulnerabilities.
+Furthermore, Interweave manages a whitelist of both HTML tags and attributes, further increasing
+security, and reducing the risk of XSS and vulnerabilities.
 
 #### Tag Whitelist
 
-Interweave keeps a mapping of valid [HTML tags to parsing
-configurations][tagwhitelist]. These configurations handle the following
-rules and processes.
+Interweave keeps a mapping of valid [HTML tags to parsing configurations][tagwhitelist].
+These configurations handle the following rules and processes.
 
 * Defines the type of rule: allow or deny.
 * Defines the type of tag: inline, block, inline-block.
@@ -333,8 +329,8 @@ rules and processes.
 * Maps the parent tags the current element can render in.
 * Maps the child tags the current element can render.
 
-Lastly, any tag not found in the mapping will be flagged using the
-rule "deny", and promptly not rendered.
+Lastly, any tag not found in the mapping will be flagged using the rule "deny",
+and promptly not rendered.
 
 The following tags are not supported, but their children will still be rendered.
 
@@ -354,34 +350,30 @@ even when the whitelist is disabled.
 
 #### Attribute Whitelist
 
-Interweave takes parsing a step further, by also [filtering](#filters)
-attribute values on all parsed HTML elements. Like tags, a mapping of
-valid [HTML attributes to parser rules][attrwhitelist] exist. A rule
-can be one of: allow and cast to string (default), allow and cast to
-number, allow and cast to boolean, and finally, deny.
+Interweave takes parsing a step further, by also [filtering](#filters) attribute values
+and HTML nodes. Like tags, a mapping of valid [HTML attributes to parser rules][attrwhitelist]
+exist. A rule can be one of: allow and cast to string (default), allow and cast to number,
+allow and cast to boolean, and finally, deny.
 
-Also like the tag whitelist, any attribute not found in the mapping is
-ignored.
+Also like the tag whitelist, any attribute not found in the mapping is ignored.
 
 #### By-passing the Whitelist
 
-If need be, the whitelist can be disabled with the `disableWhitelist` prop.
-This is highly discouraged as it opens up possible XSS and injection attacks,
-and should only be used if the markup passed to `Interweave` has been
-sanitized beforehand.
+If need be, the whitelist can be disabled with the `disableWhitelist` prop. This is highly
+discouraged as it opens up possible XSS and injection attacks, and should only be used if the
+markup passed to `Interweave` has been sanitized beforehand.
 
-That being said, specific tags like `script`, `iframe`, `applet`, and a few
-others are consistently removed.
+That being said, specific tags like `script`, `iframe`, `applet`, and a few others are
+consistently removed.
 
 #### Disabling HTML
 
-The HTML parser cannot be disabled, however, a `noHtml` boolean prop can
-be passed to both the `Interweave` and `Markup` components. This prop
-will mark all HTML elements as pass-through, simply rendering text nodes
-recursively, including matchers.
+The HTML parser cannot be disabled, however, a `noHtml` boolean prop can be passed to both
+the `Interweave` and `Markup` components. This prop will mark all HTML elements as pass-through,
+simply rendering text nodes recursively, including matchers.
 
-If you want to strip user provided HTML, but allow HTML from matchers,
-use the `noHtmlExceptMatchers` prop instead.
+If you want to strip user provided HTML, but allow HTML from matchers, use the
+`noHtmlExceptMatchers` prop instead.
 
 ### Global Configuration
 
@@ -414,7 +406,7 @@ import {
 } from 'interweave-emoji';
 
 const globalFilters = [
-  new CustomFilter('href'),
+  new CustomFilter(),
 ];
 
 const globalMatchers = [

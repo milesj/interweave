@@ -54,6 +54,7 @@ to an `Interweave` instance.
 * `emojiPath` (string | func) - A path to the [PNG or SVG file](#displaying-svgs-or-pngs).
 * `enlargeEmoji` (bool) - Whether to enlarge the emoji or not. Automatically triggers
   via the matcher but can be forced with this prop. Defaults to `false`.
+* `renderUnicode` (bool) - Render the unicode character instead of an image. Defaults to `false`.
 
 #### Match Result
 
@@ -61,6 +62,7 @@ Both unicode literal characters and escape sequences are supported when matching
 If a match is found, an `Emoji` component will be rendered and passed some of the following props.
 
 * `emoticon` (string) - If applicable, an emoticon for the specific emoji character.
+* `hexcode` (string) - The hexcode for the specific emoji character.
 * `shortcode` (string) - The shortcode for the specific emoji character.
 * `unicode` (string) - The unicode literal character.
 
