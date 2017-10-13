@@ -154,19 +154,22 @@ export class MockMatcher extends Matcher {
   }
 }
 
-export class HrefFilter extends Filter {
-  constructor() {
-    super('href');
-  }
+export class LinkFilter extends Filter {
+  attribute(name, value) {
+    if (name === 'href') {
+      return value.replace('foo.com', 'bar.net');
+    }
 
-  filter(value) {
-    return value.replace('foo.com', 'bar.net');
-  }
-}
-
-export class MockFilter extends Filter {
-  /* istanbul ignore next */
-  filter(value) {
     return value;
   }
+
+  node(name, node) {
+    if (name === 'a') {
+      node.setAttribute('target', '_blank');
+    }
+
+    return node;
+  }
 }
+
+export class MockFilter extends Filter {}

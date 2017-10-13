@@ -1,3 +1,10 @@
+# 8.0.0
+#### 💥 Breaking
+* The API for filters have changed. Filters now support nodes as well as attributes.
+  * The `filter()` method has been removed.
+  * A new `attribute(name, value)` method has been added (works like the previous implementation).
+  * A new `node(tagName, node)` method has been added.
+
 # 7.1.0 - 9/26/17
 #### 🚀 New
 * Updated `prop-types` to 15.6.

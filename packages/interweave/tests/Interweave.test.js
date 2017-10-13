@@ -8,7 +8,7 @@ import Element from '../src/Element';
 import {
   EXTRA_PROPS,
   MOCK_INVALID_MARKUP,
-  HrefFilter,
+  LinkFilter,
   CodeTagMatcher,
   matchCodeTag,
 } from '../../../tests/mocks';
@@ -39,14 +39,14 @@ describe('Interweave', () => {
   it('can pass filters through props', () => {
     const wrapper = shallow(
       <Interweave
-        filters={[new HrefFilter()]}
+        filters={[new LinkFilter()]}
         content={'Foo <a href="foo.com">Bar</a> Baz'}
       />
     ).shallow();
 
     expect(wrapper.prop('children')).toEqual([
       'Foo ',
-      <Element tagName="a" key="0" attributes={{ href: 'bar.net' }}>{['Bar']}</Element>,
+      <Element tagName="a" key="0" attributes={{ href: 'bar.net', target: '_blank' }}>{['Bar']}</Element>,
       ' Baz',
     ]);
   });
@@ -56,8 +56,9 @@ describe('Interweave', () => {
       <Interweave
         filters={[
           {
-            attribute: 'href',
-            filter: value => value.replace('foo.com', 'bar.net'),
+            attribute: (name, value) => (
+              (name === 'href') ? value.replace('foo.com', 'bar.net') : value
+            ),
           },
         ]}
         content={'Foo <a href="foo.com">Bar</a> Baz'}
@@ -74,7 +75,7 @@ describe('Interweave', () => {
   it('can disable all filters using `disableFilters`', () => {
     const wrapper = shallow(
       <Interweave
-        filters={[new HrefFilter()]}
+        filters={[new LinkFilter()]}
         disableFilters
         content={'Foo <a href="foo.com">Bar</a> Baz'}
       />
@@ -351,12 +352,12 @@ describe('Interweave', () => {
     it('supports filters', () => {
       const actual = ReactDOMServer.renderToStaticMarkup(
         <Interweave
-          filters={[new HrefFilter()]}
+          filters={[new LinkFilter()]}
           content={'Foo <a href="foo.com">Bar</a> Baz'}
         />
       );
 
-      expect(actual).toBe('<span class="interweave">Foo <a href="bar.net" class="interweave">Bar</a> Baz</span>');
+      expect(actual).toBe('<span class="interweave">Foo <a href="bar.net" target="_blank" class="interweave">Bar</a> Baz</span>');
     });
 
     it('supports matchers', () => {

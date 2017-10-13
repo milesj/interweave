@@ -8,14 +8,13 @@ declare module 'interweave' {
   declare export type BeforeParseCallback = (content: string, props: Object) => string;
 
   declare export interface FilterInterface {
-    attribute: string,
-    filter(value: string): string,
+    attribute(name: string, value: string): string,
+    node(name: string, node: Node): Node,
   }
 
   declare export class Filter {
-    attribute: string;
-    constructor(attribute: string): this;
-    filter(value: string): string;
+    attribute(name: string, value: string): string;
+    node(name: string, node: Node): Node;
   }
 
   declare export interface MatcherInterface {

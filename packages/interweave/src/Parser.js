@@ -24,7 +24,7 @@ import {
 import type {
   Attributes,
   NodeConfig,
-  NodeInterface, // eslint-disable-line
+  NodeInterface,
   FilterInterface,
   MatcherInterface,
 } from './types';
@@ -72,13 +72,29 @@ export default class Parser {
   }
 
   /**
-   * Loop through and apply all registered attribute filters to the
-   * provided value.
+   * Loop through and apply all registered attribute filters.
    */
-  applyFilters(attribute: string, value: string): string {
-    return this.filters.reduce((newValue, filter) => (
-      (filter.attribute === attribute) ? filter.filter(newValue) : newValue
-    ), value);
+  applyAttributeFilters(name: string, value: string): string {
+    return this.filters.reduce((nextValue, filter) => {
+      if (typeof filter.attribute === 'function') {
+        return filter.attribute(name, nextValue);
+      }
+
+      return nextValue;
+    }, value);
+  }
+
+  /**
+   * Loop through and apply all registered node filters.
+   */
+  applyNodeFilters(name: string, node: NodeInterface): NodeInterface {
+    return this.filters.reduce((nextNode, filter) => {
+      if (typeof filter.node === 'function') {
+        return filter.node(name, nextNode);
+      }
+
+      return nextNode;
+    }, node);
   }
 
   /**
@@ -298,8 +314,8 @@ export default class Parser {
         }
       }
 
-      // Apply filters
-      value = this.applyFilters(name, value);
+      // Apply attribute filters
+      value = this.applyAttributeFilters(name, value);
 
       // Cast to boolean
       if (filter === FILTER_CAST_BOOL) {
@@ -412,6 +428,9 @@ export default class Parser {
           mergedText = '';
         }
 
+        // Apply node filters
+        const nextNode = this.applyNodeFilters(tagName, node);
+
         // Only render when the following criteria is met:
         //  - HTML has not been disabled
         //  - Whitelist is disabled OR the child is valid within the parent
@@ -422,7 +441,7 @@ export default class Parser {
           this.keyIndex += 1;
 
           // Build the props as it makes it easier to test
-          const attributes = this.extractAttributes(node);
+          const attributes = this.extractAttributes(nextNode);
           const elementProps: Object = {
             key: this.keyIndex,
             tagName,
@@ -438,7 +457,7 @@ export default class Parser {
 
           content.push((
             <Element {...elementProps}>
-              {this.parseNode(node, config)}
+              {this.parseNode(nextNode, config)}
             </Element>
           ));
 
@@ -446,7 +465,9 @@ export default class Parser {
         // Important: If the current element is not whitelisted,
         // use the parent element for the next scope.
         } else {
-          content = content.concat(this.parseNode(node, config.tagName ? config : parentConfig));
+          content = content.concat(
+            this.parseNode(nextNode, config.tagName ? config : parentConfig),
+          );
         }
 
       // Apply matchers if a text node

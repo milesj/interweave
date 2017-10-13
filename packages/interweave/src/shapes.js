@@ -7,8 +7,8 @@
 import PropTypes from 'prop-types';
 
 export const FilterShape = PropTypes.shape({
-  attribute: PropTypes.string.isRequired,
-  filter: PropTypes.func.isRequired,
+  attribute: PropTypes.func,
+  node: PropTypes.func,
 });
 
 export const MatcherShape = PropTypes.shape({

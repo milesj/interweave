@@ -4,32 +4,20 @@
  * @flow
  */
 
-import { ATTRIBUTES } from './constants';
-
-import type { FilterInterface } from './types';
+import type { NodeInterface, FilterInterface } from './types';
 
 export default class Filter implements FilterInterface {
-  attribute: string;
-
-  constructor(attribute: string) {
-    if (__DEV__) {
-      if (!attribute || !ATTRIBUTES[attribute]) {
-        throw new Error(`Attribute "${attribute}" is not supported.`);
-      }
-    }
-
-    this.attribute = attribute;
+  /**
+   * Filter and clean an HTML attribute value.
+   */
+  attribute(name: string, value: string): string {
+    return value;
   }
 
   /**
-   * Filter and clean an attribute value if applicable.
-   * Can return an empty value to omit the attribute.
+   * Filter and clean an HTML node.
    */
-  filter(value: string): string {
-    if (__DEV__) {
-      throw new Error(`${this.constructor.name} must define a filter.`);
-    }
-
-    return value;
+  node(name: string, node: NodeInterface): NodeInterface {
+    return node;
   }
 }

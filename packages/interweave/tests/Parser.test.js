@@ -13,7 +13,7 @@ import {
 } from '../src/constants';
 import {
   CodeTagMatcher,
-  HrefFilter,
+  LinkFilter,
   createExpectedToken,
   parentConfig,
   TOKEN_LOCATIONS,
@@ -37,7 +37,7 @@ describe('Parser', () => {
       new CodeTagMatcher('bar'),
       new CodeTagMatcher('baz'),
     ], [
-      new HrefFilter(),
+      new LinkFilter(),
     ]);
   });
 
@@ -53,10 +53,22 @@ describe('Parser', () => {
     });
   });
 
-  describe('applyFilters()', () => {
+  describe('applyAttributeFilters()', () => {
     it('applies filters for the attribute name', () => {
-      expect(instance.applyFilters('src', 'foo.com')).toBe('foo.com');
-      expect(instance.applyFilters('href', 'foo.com')).toBe('bar.net');
+      expect(instance.applyAttributeFilters('src', 'foo.com')).toBe('foo.com');
+      expect(instance.applyAttributeFilters('href', 'foo.com')).toBe('bar.net');
+    });
+  });
+
+  describe('applyNodeFilters()', () => {
+    it('applies filters to the node', () => {
+      const a = document.createElement('a');
+
+      expect(a.getAttribute('target')).toBe(null);
+
+      instance.applyNodeFilters('a', a);
+
+      expect(a.getAttribute('target')).toBe('_blank');
     });
   });
 
@@ -673,7 +685,7 @@ describe('Parser', () => {
         tagName: 'span',
       })).toEqual([
         'Foo',
-        <Element key="0" tagName="a">{['Bar']}</Element>,
+        <Element key="0" tagName="a" attributes={{ target: '_blank' }}>{['Bar']}</Element>,
         'Baz',
       ]);
     });
@@ -687,7 +699,7 @@ describe('Parser', () => {
         ...parentConfig,
       })).toEqual([
         'Foo',
-        <Element key="0" tagName="a">{['Bar']}</Element>,
+        <Element key="0" tagName="a" attributes={{ target: '_blank' }}>{['Bar']}</Element>,
         'Baz',
       ]);
     });
@@ -736,7 +748,7 @@ describe('Parser', () => {
         ...TAGS.span,
         tagName: 'span',
       })).toEqual([
-        <Element key="0" tagName="a">{['Link']}</Element>,
+        <Element key="0" tagName="a" attributes={{ target: '_blank' }}>{['Link']}</Element>,
       ]);
     });
   });

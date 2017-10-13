@@ -267,7 +267,7 @@ When adding a filter, the name of the attribute to clean must be
 passed as the 1st argument to the constructor.
 
 ```javascript
-<Interweave filters={[new HrefFilter('href')]} />
+<Interweave filters={[new LinkFilter()]} />
 ```
 
 To disable all filters, pass the `disableFilters` prop.
