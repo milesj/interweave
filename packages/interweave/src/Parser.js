@@ -89,7 +89,8 @@ export default class Parser {
    */
   applyNodeFilters(name: string, node: NodeInterface): NodeInterface {
     return this.filters.reduce((nextNode, filter) => {
-      if (typeof filter.node === 'function') {
+      // Allow null to be returned
+      if (nextNode && typeof filter.node === 'function') {
         return filter.node(name, nextNode);
       }
 
@@ -430,6 +431,10 @@ export default class Parser {
 
         // Apply node filters
         const nextNode = this.applyNodeFilters(tagName, node);
+
+        if (!nextNode) {
+          return;
+        }
 
         // Only render when the following criteria is met:
         //  - HTML has not been disabled

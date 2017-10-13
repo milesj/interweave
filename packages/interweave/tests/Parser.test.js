@@ -674,6 +674,17 @@ describe('Parser', () => {
       ]);
     });
 
+    it('doesnt render elements where a filter returns null', () => {
+      element.appendChild(document.createTextNode('Foo'));
+      element.appendChild(createChild('link', 'Bar'));
+      element.appendChild(document.createTextNode('Baz'));
+
+      expect(instance.parseNode(element, parentConfig)).toEqual([
+        'Foo',
+        'Baz',
+      ]);
+    });
+
     it('does render an `a` tag within inline', () => {
       element = document.createElement('span');
       element.appendChild(document.createTextNode('Foo'));

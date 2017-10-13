@@ -166,6 +166,9 @@ export class LinkFilter extends Filter {
   node(name, node) {
     if (name === 'a') {
       node.setAttribute('target', '_blank');
+
+    } else if (name === 'link') {
+      return null;
     }
 
     return node;

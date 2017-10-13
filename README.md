@@ -302,6 +302,8 @@ const filter = {
 
 > Attribute values and nodes must be returned from filter methods!
 
+> Returning `null` for a node will remove it from the DOM tree.
+
 ### HTML Parsing
 
 Interweave doesn't rely on an HTML parser for rendering HTML safely, instead, it uses the
