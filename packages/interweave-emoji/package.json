@@ -1,6 +1,6 @@
 {
   "name": "interweave-emoji",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "Emoji support for Interweave.",
   "keywords": [
     "interweave",
@@ -27,7 +27,7 @@
   "devDependencies": {
     "@milesj/build-tool-config": "^0.31.0",
     "emojibase": "^1.4.2",
-    "interweave": "^7.1.0",
+    "interweave": "^8.0.0",
     "react": "^16.0.0"
   }
 }
