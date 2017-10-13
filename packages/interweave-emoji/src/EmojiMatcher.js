@@ -41,12 +41,8 @@ export default class EmojiMatcher extends Matcher<EmojiOptions> {
   }
 
   replaceWith(match: string, props?: Object = {}): React$Node {
-    if (this.options.renderUnicode) {
-      return props.unicode;
-    }
-
     return (
-      <Emoji {...props} />
+      <Emoji {...props} renderUnicode={this.options.renderUnicode} />
     );
   }
 
@@ -87,8 +83,8 @@ export default class EmojiMatcher extends Matcher<EmojiOptions> {
       emoticon: matches[0].trim(),
     }));
 
-    if (response && response.emoticon && this.data.EMOTICON_TO_UNICODE[response.emoticon]) {
-      response.unicode = this.data.EMOTICON_TO_UNICODE[response.emoticon];
+    if (response && response.emoticon && this.data.EMOTICON_TO_HEXCODE[response.emoticon]) {
+      response.hexcode = this.data.EMOTICON_TO_HEXCODE[response.emoticon];
       response.match = response.emoticon; // Remove padding
 
       return response;
@@ -102,8 +98,8 @@ export default class EmojiMatcher extends Matcher<EmojiOptions> {
       shortcode: matches[0].toLowerCase(),
     }));
 
-    if (response && response.shortcode && this.data.SHORTCODE_TO_UNICODE[response.shortcode]) {
-      response.unicode = this.data.SHORTCODE_TO_UNICODE[response.shortcode];
+    if (response && response.shortcode && this.data.SHORTCODE_TO_HEXCODE[response.shortcode]) {
+      response.hexcode = this.data.SHORTCODE_TO_HEXCODE[response.shortcode];
 
       return response;
     }
@@ -116,7 +112,9 @@ export default class EmojiMatcher extends Matcher<EmojiOptions> {
       unicode: matches[0],
     }));
 
-    if (response && response.unicode && this.data.EMOJIS[response.unicode]) {
+    if (response && response.unicode && this.data.UNICODE_TO_HEXCODE[response.unicode]) {
+      response.hexcode = this.data.UNICODE_TO_HEXCODE[response.unicode];
+
       return response;
     }
 

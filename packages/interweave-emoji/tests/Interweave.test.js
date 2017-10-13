@@ -2,17 +2,10 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import Interweave from '../../interweave/src/Interweave';
 import Emoji from '../src/Emoji';
-import EmojiData from '../src/EmojiData';
 import EmojiMatcher from '../src/EmojiMatcher';
 import { EXTRA_PROPS, SOURCE_PROP } from '../../../tests/mocks';
 
 describe('Interweave (with emoji)', () => {
-  let SHORTCODE_TO_UNICODE = {};
-
-  beforeEach(() => {
-    ({ SHORTCODE_TO_UNICODE } = EmojiData.getInstance('en'));
-  });
-
   it('renders emoji shortcode as unicode', () => {
     const wrapper = shallow((
       <Interweave
@@ -27,9 +20,23 @@ describe('Interweave (with emoji)', () => {
 
     expect(wrapper.prop('children')).toEqual([
       'This has ',
-      SHORTCODE_TO_UNICODE[':cat:'],
+      <Emoji
+        key="0"
+        {...EXTRA_PROPS}
+        emojiSource={SOURCE_PROP}
+        shortcode=":cat:"
+        hexcode="1F408"
+        renderUnicode
+      />,
       ' and ',
-      SHORTCODE_TO_UNICODE[':dog:'],
+      <Emoji
+        key="1"
+        {...EXTRA_PROPS}
+        emojiSource={SOURCE_PROP}
+        shortcode=":dog:"
+        hexcode="1F415"
+        renderUnicode
+      />,
       ' shortcodes.',
     ]);
   });
@@ -48,9 +55,23 @@ describe('Interweave (with emoji)', () => {
 
     expect(wrapper.prop('children')).toEqual([
       'This has ',
-      SHORTCODE_TO_UNICODE[':cat:'],
+      <Emoji
+        key="0"
+        {...EXTRA_PROPS}
+        emojiSource={SOURCE_PROP}
+        unicode="🐈️"
+        hexcode="1F408"
+        renderUnicode
+      />,
       ' and ',
-      SHORTCODE_TO_UNICODE[':dog:'],
+      <Emoji
+        key="1"
+        {...EXTRA_PROPS}
+        emojiSource={SOURCE_PROP}
+        unicode="🐕️"
+        hexcode="1F415"
+        renderUnicode
+      />,
       ' shortcodes.',
     ]);
   });
@@ -69,9 +90,23 @@ describe('Interweave (with emoji)', () => {
 
     expect(wrapper.prop('children')).toEqual([
       'This has ',
-      SHORTCODE_TO_UNICODE[':cat_face:'],
+      <Emoji
+        key="0"
+        {...EXTRA_PROPS}
+        emojiSource={SOURCE_PROP}
+        unicode="🐱"
+        hexcode="1F431"
+        renderUnicode
+      />,
       ' and ',
-      SHORTCODE_TO_UNICODE[':dog_face:'],
+      <Emoji
+        key="1"
+        {...EXTRA_PROPS}
+        emojiSource={SOURCE_PROP}
+        unicode="🐶"
+        hexcode="1F436"
+        renderUnicode
+      />,
       ' shortcodes.',
     ]);
   });
@@ -94,7 +129,7 @@ describe('Interweave (with emoji)', () => {
         emojiSource={SOURCE_PROP}
         key={0}
         shortcode=":cat:"
-        unicode="🐈️"
+        hexcode="1F408"
         enlargeEmoji
       />,
     ]);

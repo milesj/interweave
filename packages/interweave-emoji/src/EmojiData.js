@@ -6,7 +6,11 @@
 
 /* eslint-disable no-param-reassign */
 
-import { generateEmoticonPermutations } from 'emojibase';
+import {
+  fromCodepointToUnicode,
+  fromHexcodeToCodepoint,
+  generateEmoticonPermutations,
+} from 'emojibase';
 import { TEXT, EMOTICON_OPTIONS } from 'emojibase/lib/constants';
 
 import type { Emoji } from 'emojibase';
@@ -14,10 +18,10 @@ import type { Emoji } from 'emojibase';
 const instances: { [locale: string]: EmojiData } = {}; // eslint-disable-line
 
 export default class EmojiData {
-  EMOJIS: { [unicode: string]: Emoji } = {};
-  EMOTICON_TO_UNICODE: { [emoticon: string]: string } = {};
-  SHORTCODE_TO_UNICODE: { [shortcode: string]: string } = {};
-  UNICODE_TO_SHORTCODES: { [unicode: string]: string[] } = {};
+  EMOJIS: { [hexcode: string]: Emoji } = {};
+  EMOTICON_TO_HEXCODE: { [emoticon: string]: string } = {};
+  SHORTCODE_TO_HEXCODE: { [shortcode: string]: string } = {};
+  UNICODE_TO_HEXCODE: { [unicode: string]: string } = {};
 
   data: Emoji[] = [];
   flatData: Emoji[] = [];
@@ -57,35 +61,42 @@ export default class EmojiData {
    * while also extracting and partitioning relevant information.
    */
   packageEmoji(emoji: Object): Emoji {
-    const { emoticon, shortcodes } = emoji;
+    const { emoticon, hexcode, shortcodes } = emoji;
 
-    // Only support the default presentation (non-compact doesnt have unicode property)
+    // Make our lives easier
     if (!emoji.unicode) {
       emoji.unicode = (emoji.text && emoji.type === TEXT) ? emoji.text : emoji.emoji;
     }
-
-    const { unicode } = emoji;
 
     // Canonicalize the shortcodes for easy reuse
     emoji.canonical_shortcodes = shortcodes.map(code => `:${code}:`);
     emoji.primary_shortcode = emoji.canonical_shortcodes[0]; // eslint-disable-line
 
     // Support all shortcodes
-    this.UNICODE_TO_SHORTCODES[unicode] = emoji.canonical_shortcodes.map((shortcode) => {
-      this.SHORTCODE_TO_UNICODE[shortcode] = unicode;
-
-      return shortcode;
+    emoji.canonical_shortcodes.forEach((shortcode) => {
+      this.SHORTCODE_TO_HEXCODE[shortcode] = hexcode;
     });
 
     // Support all emoticons
     if (emoticon) {
       generateEmoticonPermutations(emoticon, EMOTICON_OPTIONS[emoticon]).forEach((emo) => {
-        this.EMOTICON_TO_UNICODE[emo] = unicode;
+        this.EMOTICON_TO_HEXCODE[emo] = hexcode;
       });
     }
 
-    // Map each emoji by unicode
-    this.EMOJIS[unicode] = emoji;
+    // Support all presentations (even no variation selectors)
+    this.UNICODE_TO_HEXCODE[fromCodepointToUnicode(fromHexcodeToCodepoint(hexcode))] = hexcode;
+
+    if (emoji.emoji) {
+      this.UNICODE_TO_HEXCODE[emoji.emoji] = hexcode;
+    }
+
+    if (emoji.text) {
+      this.UNICODE_TO_HEXCODE[emoji.text] = hexcode;
+    }
+
+    // Map each emoji
+    this.EMOJIS[hexcode] = emoji;
 
     return emoji;
   }

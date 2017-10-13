@@ -9,7 +9,13 @@ describe('Emoji', () => {
 
   it('errors if no emoticon, shortcode or unicode', () => {
     expect(() => shallow(<Emoji emojiSource={SOURCE_PROP} />))
-      .toThrowError('Emoji component requires a `unicode` character, `emoticon`, or a `shortcode`.');
+      .toThrowError('Emoji component requires a `unicode` character, `emoticon`, `hexcode`, or a `shortcode`.');
+  });
+
+  it('returns value for invalid hexcode', () => {
+    const wrapper = shallow(<Emoji emojiSource={SOURCE_PROP} hexcode="FA" />);
+
+    expect(wrapper.prop('children')).toBe('FA');
   });
 
   it('returns value for invalid emoticon', () => {
@@ -48,6 +54,15 @@ describe('Emoji', () => {
     expect(wrapper.prop('data-shortcodes')).toBe(shortcodes);
   });
 
+  it('renders with only the hexcode', () => {
+    const wrapper = shallow(<Emoji emojiSource={SOURCE_PROP} hexcode={hexcode} />);
+
+    expect(wrapper.prop('data-emoticon')).toBe(emoticon);
+    expect(wrapper.prop('data-unicode')).toBe(unicode);
+    expect(wrapper.prop('data-hexcode')).toBe(hexcode);
+    expect(wrapper.prop('data-shortcodes')).toBe(shortcodes);
+  });
+
   it('renders with only the unicode', () => {
     const wrapper = shallow(<Emoji emojiSource={SOURCE_PROP} unicode={unicode} />);
 
@@ -69,6 +84,19 @@ describe('Emoji', () => {
     expect(wrapper.prop('data-unicode')).toBe(unicode);
     expect(wrapper.prop('data-hexcode')).toBe(hexcode);
     expect(wrapper.prop('data-shortcodes')).toBe(shortcodes);
+  });
+
+  it('renders the unicode character', () => {
+    const wrapper = shallow(
+      <Emoji
+        emojiSource={SOURCE_PROP}
+        unicode={unicode}
+        renderUnicode
+      />,
+    );
+
+    expect(wrapper.is('span')).toBe(true);
+    expect(wrapper.text()).toBe(unicode);
   });
 
   it('can define the path', () => {

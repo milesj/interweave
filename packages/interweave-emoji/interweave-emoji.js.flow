@@ -51,10 +51,10 @@ declare module 'interweave-emoji' {
   }> {}
 
   declare export class EmojiData {
-    EMOJIS: { [unicode: string]: Emoji };
-    EMOTICON_TO_UNICODE: { [emoticon: string]: string };
-    SHORTCODE_TO_UNICODE: { [shortcode: string]: string };
-    UNICODE_TO_SHORTCODES: { [unicode: string]: string[] };
+    EMOJIS: { [hexcode: string]: Emoji };
+    EMOTICON_TO_HEXCODE: { [emoticon: string]: string };
+    SHORTCODE_TO_HEXCODE: { [shortcode: string]: string };
+    UNICODE_TO_HEXCODE: { [unicode: string]: string };
 
     constructor(locale: string): void;
     static getInstance(locale: string): EmojiData;

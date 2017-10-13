@@ -33,12 +33,12 @@ const INVALID_EMOTICON = [
 const MAN_EMOJI = '👨';
 
 describe('EmojiMatcher', () => {
-  let EMOJIS = {};
-  let EMOTICON_TO_UNICODE = {};
-  let SHORTCODE_TO_UNICODE = {};
-  let VALID_UNICODE = [];
-  let VALID_SHORTCODE = [];
+  let EMOTICON_TO_HEXCODE = {};
+  let SHORTCODE_TO_HEXCODE = {};
+  let UNICODE_TO_HEXCODE = {};
   let VALID_EMOTICON = [];
+  let VALID_SHORTCODE = [];
+  let VALID_UNICODE = [];
 
   const matcher = new EmojiMatcher('emoji', {
     convertEmoticon: true,
@@ -54,14 +54,14 @@ describe('EmojiMatcher', () => {
     const data = EmojiData.getInstance('en');
 
     ({
-      EMOJIS,
-      EMOTICON_TO_UNICODE,
-      SHORTCODE_TO_UNICODE,
+      EMOTICON_TO_HEXCODE,
+      SHORTCODE_TO_HEXCODE,
+      UNICODE_TO_HEXCODE,
     } = data);
 
-    VALID_UNICODE = Object.keys(EMOJIS);
-    VALID_SHORTCODE = Object.keys(SHORTCODE_TO_UNICODE);
-    VALID_EMOTICON = Object.keys(EMOTICON_TO_UNICODE);
+    VALID_EMOTICON = Object.keys(EMOTICON_TO_HEXCODE);
+    VALID_SHORTCODE = Object.keys(SHORTCODE_TO_HEXCODE);
+    VALID_UNICODE = Object.keys(UNICODE_TO_HEXCODE);
 
     matcher.data = data;
   });
@@ -141,12 +141,13 @@ describe('EmojiMatcher', () => {
     }, [matcher]);
     const createUnicode = (unicode, key) => matcher.replaceWith(unicode, {
       emojiSource: SOURCE_PROP,
+      hexcode: UNICODE_TO_HEXCODE[unicode],
       unicode,
       key,
     });
     const createShort = (shortcode, key) => matcher.replaceWith(shortcode, {
       emojiSource: SOURCE_PROP,
-      unicode: SHORTCODE_TO_UNICODE[shortcode],
+      hexcode: SHORTCODE_TO_HEXCODE[shortcode],
       shortcode,
       key,
     });
@@ -191,6 +192,7 @@ describe('EmojiMatcher', () => {
       expect(matcher.match(MAN_EMOJI)).toEqual({
         match: MAN_EMOJI,
         unicode: MAN_EMOJI,
+        hexcode: UNICODE_TO_HEXCODE[MAN_EMOJI],
       });
     });
 
@@ -202,7 +204,7 @@ describe('EmojiMatcher', () => {
       expect(matcher.match(':man:')).toEqual({
         match: ':man:',
         shortcode: ':man:',
-        unicode: MAN_EMOJI,
+        hexcode: SHORTCODE_TO_HEXCODE[':man:'],
       });
     });
 
@@ -214,29 +216,7 @@ describe('EmojiMatcher', () => {
       expect(matcher.match(':)')).toEqual({
         match: ':)',
         emoticon: ':)',
-        unicode: '🙂',
-      });
-    });
-  });
-
-  describe('replaceWith()', () => {
-    VALID_EMOJIS.forEach(([, unicode, shortcode]) => {
-      const uniMatcher = new EmojiMatcher('emoji', { renderUnicode: true });
-
-      it(`returns the unicode as is when using \`renderUnicode\`: ${shortcode}`, () => {
-        expect(uniMatcher.replaceWith(unicode, {
-          emojiSource: SOURCE_PROP,
-          unicode,
-          shortcode,
-        })).toBe(unicode);
-      });
-
-      it(`returns the unicode when providing a shortcode using \`renderUnicode\`: ${shortcode}`, () => {
-        expect(uniMatcher.replaceWith(shortcode, {
-          emojiSource: SOURCE_PROP,
-          unicode,
-          shortcode,
-        })).toBe(unicode);
+        hexcode: EMOTICON_TO_HEXCODE[':)'],
       });
     });
   });

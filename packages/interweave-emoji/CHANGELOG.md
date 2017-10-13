@@ -1,3 +1,13 @@
+# 1.2.0
+#### 🚀 New
+* Added a `renderUnicode` prop to the `Emoji` component.
+
+#### 🐞 Fixed
+* Emojis with multiple presentation variants will no longer break the matching process.
+
+#### 🛠 Internal
+* Updated `EmojiData` to map data using hexcodes instead of unicode characters.
+
 # 1.1.0 - 9/26/17
 #### 🚀 New
 * Updated `prop-types` to 15.6.

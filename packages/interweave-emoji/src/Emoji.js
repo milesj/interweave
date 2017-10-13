@@ -29,7 +29,8 @@ type EmojiProps = {
   },
   emoticon: string,
   enlargeEmoji: boolean,
-  locale: string,
+  hexcode: string,
+  renderUnicode: boolean,
   shortcode: string,
   unicode: string,
 };
@@ -42,6 +43,8 @@ export default class Emoji extends React.PureComponent<EmojiProps> {
     emojiSource: EmojiSourceShape.isRequired,
     emoticon: PropTypes.string,
     enlargeEmoji: PropTypes.bool,
+    hexcode: PropTypes.string,
+    renderUnicode: PropTypes.bool,
     shortcode: PropTypes.string,
     unicode: PropTypes.string,
   };
@@ -52,6 +55,8 @@ export default class Emoji extends React.PureComponent<EmojiProps> {
     emojiSize: '1em',
     emoticon: '',
     enlargeEmoji: false,
+    hexcode: '',
+    renderUnicode: false,
     shortcode: '',
     unicode: '',
   };
@@ -64,36 +69,48 @@ export default class Emoji extends React.PureComponent<EmojiProps> {
       emojiSize,
       emoticon,
       enlargeEmoji,
+      renderUnicode,
       shortcode,
+      unicode,
     } = this.props;
-    let { unicode } = this.props;
+    let { hexcode } = this.props;
 
     if (__DEV__) {
-      if (!emoticon && !shortcode && !unicode) {
+      if (!emoticon && !shortcode && !unicode && !hexcode) {
         throw new Error(
-          'Emoji component requires a `unicode` character, `emoticon`, or a `shortcode`.',
+          'Emoji component requires a `unicode` character, `emoticon`, `hexcode`, or a `shortcode`.',
         );
       }
     }
 
     // Retrieve applicable unicode character
-    if (!unicode && shortcode) {
-      unicode = data.SHORTCODE_TO_UNICODE[shortcode];
+    if (!hexcode && shortcode) {
+      hexcode = data.SHORTCODE_TO_HEXCODE[shortcode];
     }
 
-    if (!unicode && emoticon) {
-      unicode = data.EMOTICON_TO_UNICODE[emoticon];
+    if (!hexcode && emoticon) {
+      hexcode = data.EMOTICON_TO_HEXCODE[emoticon];
+    }
+
+    if (!hexcode && unicode) {
+      hexcode = data.UNICODE_TO_HEXCODE[unicode];
     }
 
     // Return the invalid value instead of erroring
-    if (!unicode || !data.EMOJIS[unicode]) {
+    if (!hexcode || !data.EMOJIS[hexcode]) {
       return (
-        <span>{unicode || emoticon || shortcode}</span>
+        <span>{unicode || emoticon || shortcode || hexcode}</span>
       );
     }
 
-    const emoji = data.EMOJIS[unicode];
-    const shortcodes = data.UNICODE_TO_SHORTCODES[unicode];
+    const emoji = data.EMOJIS[hexcode];
+
+    if (renderUnicode) {
+      return (
+        <span>{emoji.unicode}</span>
+      );
+    }
+
     const className = ['interweave__emoji'];
     const styles: Object = {
       display: 'inline-block',
@@ -131,15 +148,16 @@ export default class Emoji extends React.PureComponent<EmojiProps> {
     return (
       <img
         src={path}
-        alt={unicode}
+        alt={emoji.unicode}
         title={emoji.annotation || ''}
         style={styles}
         className={className.join(' ')}
         aria-label={emoji.annotation || ''}
         data-emoticon={emoji.emoticon || ''}
-        data-unicode={unicode}
+        data-unicode={emoji.unicode}
         data-hexcode={emoji.hexcode}
-        data-shortcodes={shortcodes.join(', ')}
+        /* $FlowIgnore */
+        data-shortcodes={emoji.canonical_shortcodes.join(', ')}
       />
     );
   }
