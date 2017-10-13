@@ -1,4 +1,4 @@
-# 8.0.0
+# 8.0.0 - 10/12/17
 #### 💥 Breaking
 * The API for filters have changed. Filters now support nodes as well as attributes.
   * The `filter()` method has been removed.

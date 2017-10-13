@@ -22,7 +22,7 @@
     "prop-types": "^15.6.0"
   },
   "peerDependencies": {
-    "interweave": "^7.1.0",
+    "interweave": "^8.0.0",
     "react": "^15.3.0 || ^16.0.0"
   },
   "devDependencies": {

@@ -1,5 +1,6 @@
-# 1.2.0
+# 1.2.0 - 10/12/17
 #### 🚀 New
+* Updated `interweave` peer dependency to 8.0.
 * Added a `renderUnicode` prop to the `Emoji` component.
 
 #### 🐞 Fixed

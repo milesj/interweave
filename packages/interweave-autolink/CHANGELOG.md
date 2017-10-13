@@ -1,3 +1,7 @@
+# 1.2.0 - 10/12/17
+#### 🚀 New
+* Updated `interweave` peer dependency to 8.0.
+
 # 1.1.0 - 9/26/17
 #### 🚀 New
 * Updated `prop-types` to 15.6.

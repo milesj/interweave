@@ -1,5 +1,6 @@
-# 1.2.0
+# 1.2.0 - 10/12/17
 #### 🚀 New
+* Updated `interweave` peer dependency to 8.0.
 * Added virtual list rendering support with `react-virtualized`.
   * Pass a `virtual` prop to enable it.
   * Pass a `rowCount` prop to control the number of rows rendered.
