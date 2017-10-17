@@ -1,3 +1,11 @@
+# 1.2.1 - 10/17/17
+#### 🚀 New
+* Updated `react-virtualized` to 9.11.
+
+#### 🐞 Fixed
+* Fixed a regression caused by recent `interweave-emoji` changes in which commonly used emojis
+  were not being rendered correctly.
+
 # 1.2.0 - 10/12/17
 #### 🚀 New
 * Updated `interweave` peer dependency to 8.0.

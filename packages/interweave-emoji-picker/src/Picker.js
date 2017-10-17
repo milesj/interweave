@@ -385,7 +385,7 @@ class Picker extends React.Component<PickerProps, PickerState> {
     const data = EmojiData.getInstance(this.props.emojiSource.locale);
 
     return commonEmojis
-      .map(emoji => data.EMOJIS[emoji.unicode])
+      .map(emoji => data.EMOJIS[data.UNICODE_TO_HEXCODE[emoji.unicode]])
       .filter(Boolean);
   }
 
