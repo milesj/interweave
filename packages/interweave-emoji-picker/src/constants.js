@@ -16,6 +16,7 @@ export const GROUP_SYMBOLS: string = 'symbols';
 export const GROUP_FLAGS: string = 'flags';
 export const GROUP_COMMONLY_USED: string = 'commonlyUsed';
 export const GROUP_SEARCH_RESULTS: string = 'searchResults';
+export const GROUP_NONE: string = 'none';
 
 export const GROUPS: string[] = [
   GROUP_SMILEYS_PEOPLE,
@@ -117,6 +118,7 @@ export const CONTEXT_MESSAGES: Object = {
   [GROUP_SYMBOLS]: 'Symbols',
   [GROUP_FLAGS]: 'Flags',
   [GROUP_SEARCH_RESULTS]: 'Search Results',
+  [GROUP_NONE]: 'All Emojis',
   // Miscellaneous
   search: 'Search…',
   searchAria: 'Search for emojis by keyword',

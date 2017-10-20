@@ -85,34 +85,23 @@ function App() {
 
         <EmojiPicker
           {...emojiPickerProps}
-          virtual
           commonMode="frequentlyUsed"
           defaultGroup="travelPlaces"
           defaultSkinTone="medium"
+          virtual
         />
 
         <EmojiPicker
           {...emojiPickerProps}
-          disableCommonlyUsed
-          emojis={[
-            {
-              name: 'GRINNING FACE',
-              hexcode: '1F600',
-              shortcodes: [
-                'gleeful',
-              ],
-              emoji: '😀',
-              type: 1,
-              order: 1,
-              group: 0,
-              subgroup: 0,
-              annotation: 'grinning face',
-              tags: [
-                'face',
-                'grin',
-              ],
-            },
-          ]}
+          defaultGroup="commonlyUsed"
+          disableGroups
+          disableSearch
+        />
+
+        <EmojiPicker
+          {...emojiPickerProps}
+          disableGroups
+          virtual
         />
       </div>
 

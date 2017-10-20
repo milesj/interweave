@@ -4,18 +4,18 @@
  * @flow
  */
 
-/* eslint-disable react/jsx-no-literals */
-
 import React from 'react';
 import PropTypes from 'prop-types';
 import debounce from 'lodash/debounce';
 import { EmojiShape, EmojiPathShape, EmojiSourceShape } from 'interweave-emoji';
 import EmojiButton from './Emoji';
+import GroupListHeader from './GroupListHeader';
 import {
   GROUPS,
   GROUP_COMMONLY_USED,
   GROUP_SEARCH_RESULTS,
   GROUP_SMILEYS_PEOPLE,
+  GROUP_NONE,
   SCROLL_BUFFER,
   SCROLL_DEBOUNCE,
 } from './constants';
@@ -27,6 +27,7 @@ type EmojiListProps = {
   activeGroup: string,
   commonEmojis: Emoji[],
   commonMode: string,
+  disableGroups: boolean,
   emojiPadding: number,
   emojiPath: EmojiPath,
   emojis: Emoji[],
@@ -60,6 +61,7 @@ export default class EmojiList extends React.PureComponent<EmojiListProps, Emoji
     activeGroup: PropTypes.string.isRequired,
     commonEmojis: PropTypes.arrayOf(EmojiShape).isRequired,
     commonMode: PropTypes.string.isRequired,
+    disableGroups: PropTypes.bool.isRequired,
     emojiPadding: PropTypes.number.isRequired,
     emojiPath: EmojiPathShape.isRequired,
     emojis: PropTypes.arrayOf(EmojiShape).isRequired,
@@ -125,6 +127,7 @@ export default class EmojiList extends React.PureComponent<EmojiListProps, Emoji
   groupEmojis(): { [group: string]: Emoji[] } {
     const {
       commonEmojis,
+      disableGroups,
       emojis,
       hasCommonlyUsed,
       searchQuery,
@@ -138,7 +141,13 @@ export default class EmojiList extends React.PureComponent<EmojiListProps, Emoji
 
     // Partition emojis into separate groups
     emojis.forEach((emoji) => {
-      const group = searchQuery ? GROUP_SEARCH_RESULTS : GROUPS[emoji.group];
+      let group = GROUPS[emoji.group];
+
+      if (searchQuery) {
+        group = GROUP_SEARCH_RESULTS;
+      } else if (disableGroups) {
+        group = GROUP_NONE;
+      }
 
       if (groups[group]) {
         groups[group].push(emoji);
@@ -301,17 +310,11 @@ export default class EmojiList extends React.PureComponent<EmojiListProps, Emoji
               className={classNames.emojisSection}
               id={`emoji-group-${group}`}
             >
-              <header className={classNames.emojisHeader}>
-                {(group === GROUP_SMILEYS_PEOPLE || group === GROUP_SEARCH_RESULTS) && (
-                  skinTonePalette
-                )}
-
-                {(group === GROUP_COMMONLY_USED) ? (
-                  messages[commonMode]
-                ) : (
-                  messages[group]
-                )}
-              </header>
+              <GroupListHeader
+                commonMode={commonMode}
+                group={group}
+                skinTonePalette={skinTonePalette}
+              />
 
               <div className={classNames.emojisBody}>
                 {groupedEmojis[group].map((emoji, index) => (

@@ -10,11 +10,12 @@ import List from 'react-virtualized/dist/commonjs/List';
 import chunk from 'lodash/chunk';
 import { EmojiShape, EmojiPathShape, EmojiSourceShape } from 'interweave-emoji';
 import EmojiButton from './Emoji';
+import GroupListHeader from './GroupListHeader';
 import {
   GROUPS,
   GROUP_COMMONLY_USED,
   GROUP_SEARCH_RESULTS,
-  GROUP_SMILEYS_PEOPLE,
+  GROUP_NONE,
 } from './constants';
 
 import type { Emoji, EmojiPath, EmojiSource } from 'interweave-emoji'; // eslint-disable-line
@@ -25,6 +26,7 @@ type EmojiListProps = {
   columnCount: number,
   commonEmojis: Emoji[],
   commonMode: string,
+  disableGroups: boolean,
   emojiPadding: number,
   emojiPath: EmojiPath,
   emojis: Emoji[],
@@ -59,6 +61,7 @@ export default class EmojiVirtualList extends React.PureComponent<EmojiListProps
     columnCount: PropTypes.number.isRequired,
     commonEmojis: PropTypes.arrayOf(EmojiShape).isRequired,
     commonMode: PropTypes.string.isRequired,
+    disableGroups: PropTypes.bool.isRequired,
     emojiPadding: PropTypes.number.isRequired,
     emojiPath: EmojiPathShape.isRequired,
     emojis: PropTypes.arrayOf(EmojiShape).isRequired,
@@ -117,6 +120,7 @@ export default class EmojiVirtualList extends React.PureComponent<EmojiListProps
     const {
       columnCount,
       commonEmojis,
+      disableGroups,
       emojis,
       hasCommonlyUsed,
       searchQuery,
@@ -135,7 +139,13 @@ export default class EmojiVirtualList extends React.PureComponent<EmojiListProps
 
     // Partition emojis into separate groups
     emojis.forEach((emoji) => {
-      const group = searchQuery ? GROUP_SEARCH_RESULTS : GROUPS[emoji.group];
+      let group = GROUPS[emoji.group];
+
+      if (searchQuery) {
+        group = GROUP_SEARCH_RESULTS;
+      } else if (disableGroups) {
+        group = GROUP_NONE;
+      }
 
       if (groups[group]) {
         groups[group].push(emoji);
@@ -222,13 +232,13 @@ export default class EmojiVirtualList extends React.PureComponent<EmojiListProps
   /**
    * Render the list row. Either a group header or a row of emoji columns.
    */
-  renderRow = ({
-    key,
-    index,
-    isVisible,
-    style,
-    // eslint-disable-next-line
-  }: Object) => {
+  renderRow = (params: Object) => {
+    const {
+      key,
+      index,
+      isVisible,
+      style,
+    } = params;
     const {
       activeEmoji,
       commonMode,
@@ -241,7 +251,7 @@ export default class EmojiVirtualList extends React.PureComponent<EmojiListProps
       onLeaveEmoji,
       onSelectEmoji,
     } = this.props;
-    const { classNames, messages } = this.context;
+    const { classNames } = this.context;
     const row = this.state.rows[index];
 
     return (
@@ -265,17 +275,11 @@ export default class EmojiVirtualList extends React.PureComponent<EmojiListProps
             ))}
           </div>
         ) : (
-          <header className={classNames.emojisHeader}>
-            {(row === GROUP_SMILEYS_PEOPLE || row === GROUP_SEARCH_RESULTS) && (
-              skinTonePalette
-            )}
-
-            {(row === GROUP_COMMONLY_USED) ? (
-              messages[commonMode]
-            ) : (
-              messages[row]
-            )}
-          </header>
+          <GroupListHeader
+            commonMode={commonMode}
+            group={row}
+            skinTonePalette={skinTonePalette}
+          />
         )}
       </div>
     );

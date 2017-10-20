@@ -4,8 +4,6 @@
  * @flow
  */
 
-/* eslint-disable react/no-did-update-set-state */
-
 import React from 'react';
 import PropTypes from 'prop-types';
 import {
@@ -32,6 +30,7 @@ import {
   GROUP_SYMBOLS,
   GROUP_FLAGS,
   GROUP_SEARCH_RESULTS,
+  GROUP_NONE,
   SKIN_TONES,
   SKIN_NONE,
   SKIN_LIGHT,
@@ -64,6 +63,7 @@ type PickerProps = {
   defaultGroup: string,
   defaultSkinTone: string,
   disableCommonlyUsed: boolean,
+  disableGroups: boolean,
   disablePreview: boolean,
   disableSearch: boolean,
   disableSkinTones: boolean,
@@ -140,6 +140,7 @@ class Picker extends React.Component<PickerProps, PickerState> {
       SKIN_DARK,
     ]),
     disableCommonlyUsed: PropTypes.bool,
+    disableGroups: PropTypes.bool,
     disablePreview: PropTypes.bool,
     disableSearch: PropTypes.bool,
     disableSkinTones: PropTypes.bool,
@@ -176,6 +177,7 @@ class Picker extends React.Component<PickerProps, PickerState> {
     defaultGroup: GROUP_COMMONLY_USED,
     defaultSkinTone: SKIN_NONE,
     disableCommonlyUsed: false,
+    disableGroups: false,
     disablePreview: false,
     disableSearch: false,
     disableSkinTones: false,
@@ -393,13 +395,19 @@ class Picker extends React.Component<PickerProps, PickerState> {
    * Return the default group while handling commonly used scenarios.
    */
   getDefaultGroup(): string {
-    const { defaultGroup } = this.props;
+    const { defaultGroup, disableGroups } = this.props;
+    let group = defaultGroup;
 
-    if (defaultGroup === GROUP_COMMONLY_USED && !this.hasCommonlyUsed()) {
-      return GROUP_SMILEYS_PEOPLE;
+    // Allow commonly used before "none" groups
+    if (group === GROUP_COMMONLY_USED) {
+      if (this.hasCommonlyUsed()) {
+        return GROUP_COMMONLY_USED;
+      }
+
+      group = GROUP_SMILEYS_PEOPLE;
     }
 
-    return defaultGroup;
+    return disableGroups ? GROUP_NONE : group;
   }
 
   /**
@@ -651,6 +659,7 @@ class Picker extends React.Component<PickerProps, PickerState> {
       autoFocus,
       columnCount,
       commonMode,
+      disableGroups,
       disablePreview,
       disableSearch,
       disableSkinTones,
@@ -687,6 +696,7 @@ class Picker extends React.Component<PickerProps, PickerState> {
           columnCount={columnCount}
           commonEmojis={commonEmojis}
           commonMode={commonMode}
+          disableGroups={disableGroups}
           emojiPadding={emojiPadding}
           emojiPath={emojiPath}
           emojis={emojis}
@@ -710,7 +720,7 @@ class Picker extends React.Component<PickerProps, PickerState> {
           onSelectEmoji={this.handleSelectEmoji}
         />
       ),
-      groups: (
+      groups: disableGroups ? null : (
         <GroupTabs
           key="groups"
           activeGroup={activeGroup}

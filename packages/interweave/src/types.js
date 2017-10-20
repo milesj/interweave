@@ -4,7 +4,7 @@
  * @flow
  */
 
-/* eslint-disable no-use-before-define, flowtype/sort-keys */
+/* eslint-disable */
 
 export interface NodeInterface {
   attributes?: NamedNodeMap,

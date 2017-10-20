@@ -118,11 +118,8 @@ export default function withEmojiData(
             loaded[locale] = true;
 
             // Parse the data and make it available through our data layer.
-            // We should do this first so that the custom data can hook into it.
+            // We should do this first so that the custom emojis can hook into it.
             this.getDataInstance().parseEmojiData(response);
-
-            // If a list of custom emoji data has been passed,
-            // use it instead of the parsed data.
             this.setEmojis(props.emojis);
           })
           .catch((error) => {
@@ -131,7 +128,11 @@ export default function withEmojiData(
       }
     }
 
-    setEmojis(emojis: Emoji[]) {
+    /**
+     * Set a list of emojis. If a list of custom emoji data has been passed,
+     * use it instead of the parsed data.
+     */
+    setEmojis(emojis: Emoji[] = []) {
       this.setState({
         emojis: (emojis.length > 0) ? emojis : this.getDataInstance().getData(),
       });
@@ -148,14 +149,17 @@ export default function withEmojiData(
         version,
         ...props
       } = this.props;
-      const emojiSource = {
-        compact,
-        locale,
-        version,
-      };
 
       return (
-        <Component {...props} emojis={this.state.emojis} emojiSource={emojiSource} />
+        <Component
+          {...props}
+          emojis={this.state.emojis}
+          emojiSource={{
+            compact,
+            locale,
+            version,
+          }}
+        />
       );
     }
   };
