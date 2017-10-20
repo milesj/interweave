@@ -1,3 +1,5 @@
+/* eslint-disable sort-keys */
+
 import React from 'react';
 import Filter from '../packages/interweave/src/Filter';
 import Matcher from '../packages/interweave/src/Matcher';

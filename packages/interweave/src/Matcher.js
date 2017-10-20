@@ -10,8 +10,11 @@ import type { MatcherInterface, MatcherFactory, MatchCallback, MatchResponse } f
 
 export default class Matcher<T: Object> implements MatcherInterface {
   options: T;
+
   propName: string;
+
   inverseName: string;
+
   factory: ?MatcherFactory;
 
   constructor(name: string, options: T, factory?: ?MatcherFactory = null) {

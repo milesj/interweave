@@ -19,12 +19,17 @@ const instances: { [locale: string]: EmojiData } = {}; // eslint-disable-line
 
 export default class EmojiData {
   EMOJIS: { [hexcode: string]: Emoji } = {};
+
   EMOTICON_TO_HEXCODE: { [emoticon: string]: string } = {};
+
   SHORTCODE_TO_HEXCODE: { [shortcode: string]: string } = {};
+
   UNICODE_TO_HEXCODE: { [unicode: string]: string } = {};
 
   data: Emoji[] = [];
+
   flatData: Emoji[] = [];
+
   locale: string = 'en';
 
   constructor(locale: string) {
@@ -34,7 +39,7 @@ export default class EmojiData {
   /**
    * Return or create a singleton instance per locale.
    */
-  static getInstance(locale: string) {
+  static getInstance(locale: string): EmojiData {
     if (!instances[locale]) {
       instances[locale] = new EmojiData(locale);
     }

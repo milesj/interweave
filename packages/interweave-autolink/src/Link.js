@@ -27,7 +27,7 @@ export default class Link extends React.PureComponent<LinkProps> {
     onClick: null,
   };
 
-  render() {
+  render(): React$Node {
     const {
       children,
       href,

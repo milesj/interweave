@@ -21,8 +21,8 @@ export default class SkinTone extends React.PureComponent<SkinToneProps> {
 
   static propTypes = {
     activeSkinTone: PropTypes.string.isRequired,
-    skinTone: PropTypes.string.isRequired,
     onSelect: PropTypes.func.isRequired,
+    skinTone: PropTypes.string.isRequired,
   };
 
   /**
@@ -34,7 +34,7 @@ export default class SkinTone extends React.PureComponent<SkinToneProps> {
     this.props.onSelect(this.props.skinTone, e);
   };
 
-  render() {
+  render(): React$Node {
     const { activeSkinTone, skinTone } = this.props;
     const { classNames } = this.context;
     const className = [classNames.skinTone];

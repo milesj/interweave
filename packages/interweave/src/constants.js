@@ -4,6 +4,8 @@
  * @flow
  */
 
+/* eslint-disable sort-keys */
+
 import type { NodeConfig } from './types';
 
 type ConfigMap = { [key: string]: NodeConfig };
@@ -164,7 +166,7 @@ const tagConfigs = {
   },
 };
 
-function createConfigBuilder(config: NodeConfig) {
+function createConfigBuilder(config: NodeConfig): (string) => void {
   return (tagName: string) => {
     tagConfigs[tagName] = {
       ...config,

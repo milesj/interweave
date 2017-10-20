@@ -24,7 +24,7 @@ export default class SkinTonePalette extends React.PureComponent<SkinTonePalette
     onSelect: PropTypes.func.isRequired,
   };
 
-  render() {
+  render(): React$Node {
     const { activeSkinTone, onSelect } = this.props;
     const { classNames } = this.context;
 

@@ -32,12 +32,12 @@ export default class Element extends React.PureComponent<ElementProps> {
 
   static defaultProps = {
     attributes: {},
-    className: '',
     children: null,
+    className: '',
     selfClose: false,
   };
 
-  render() {
+  render(): React$Node {
     const {
       attributes,
       children,

@@ -4,6 +4,8 @@
  * @flow
  */
 
+/* eslint-disable sort-keys */
+
 export const GROUP_SMILEYS_PEOPLE: string = 'smileysPeople';
 export const GROUP_ANIMALS_NATURE: string = 'animalsNature';
 export const GROUP_FOOD_DRINK: string = 'foodDrink';

@@ -61,7 +61,7 @@ export default class Emoji extends React.PureComponent<EmojiProps> {
     unicode: '',
   };
 
-  render() {
+  render(): React$Node {
     const data = EmojiData.getInstance(this.props.emojiSource.locale);
     const {
       emojiLargeSize,

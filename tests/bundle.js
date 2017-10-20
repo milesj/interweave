@@ -33,6 +33,7 @@ const emojiPath = (hex, large) => (
 );
 
 const emojiProps = {
+  emojiPath,
   matchers: [
     new EmojiMatcher('emoji', {
       convertEmoticon: true,
@@ -40,7 +41,6 @@ const emojiProps = {
       convertUnicode: true,
     }),
   ],
-  emojiPath,
 };
 
 const emojiUnicodeProps = {

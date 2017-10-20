@@ -40,7 +40,7 @@ export default class Markup extends React.PureComponent<MarkupProps> {
     tagName: 'span',
   };
 
-  render() {
+  render(): React$Node {
     const {
       content,
       noHtml,
@@ -52,10 +52,10 @@ export default class Markup extends React.PureComponent<MarkupProps> {
     } = this.props;
     const className = (noHtml || noHtmlExceptMatchers) ? 'interweave--no-html' : '';
     const markup = new Parser(content, {
-      noHtml,
-      noHtmlExceptMatchers,
       disableLineBreaks,
       disableWhitelist,
+      noHtml,
+      noHtmlExceptMatchers,
     }).parse();
 
     return (

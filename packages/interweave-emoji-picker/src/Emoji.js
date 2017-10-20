@@ -41,10 +41,10 @@ export default class EmojiButton extends React.PureComponent<EmojiProps, EmojiSt
     emojiPath: EmojiPathShape.isRequired,
     emojiSize: PropTypes.number.isRequired,
     emojiSource: EmojiSourceShape.isRequired,
-    showImage: PropTypes.bool.isRequired,
     onEnter: PropTypes.func.isRequired,
     onLeave: PropTypes.func.isRequired,
     onSelect: PropTypes.func.isRequired,
+    showImage: PropTypes.bool.isRequired,
   };
 
   constructor({ active }: EmojiProps) {
@@ -111,7 +111,7 @@ export default class EmojiButton extends React.PureComponent<EmojiProps, EmojiSt
     this.button = ref;
   };
 
-  render() {
+  render(): React$Node {
     const {
       emoji,
       emojiPadding,
@@ -136,9 +136,9 @@ export default class EmojiButton extends React.PureComponent<EmojiProps, EmojiSt
         className={className.join(' ')}
         ref={this.handleRef}
         style={{
+          height: dimension,
           padding: emojiPadding,
           width: dimension,
-          height: dimension,
         }}
         type="button"
         onClick={this.handleClick}
@@ -155,10 +155,10 @@ export default class EmojiButton extends React.PureComponent<EmojiProps, EmojiSt
         ) : (
           <div
             style={{
-              width: emojiSize,
               height: emojiSize,
               overflow: 'hidden',
               visibility: 'hidden',
+              width: emojiSize,
             }}
           >
             &nbsp;

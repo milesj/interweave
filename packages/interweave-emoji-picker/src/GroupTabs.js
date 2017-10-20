@@ -30,7 +30,7 @@ export default class GroupTabs extends React.PureComponent<GroupTabsProps> {
     onSelect: PropTypes.func.isRequired,
   };
 
-  render() {
+  render(): React$Node {
     const {
       activeGroup,
       hasCommonlyUsed,

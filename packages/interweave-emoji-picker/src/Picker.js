@@ -147,9 +147,9 @@ class Picker extends React.Component<PickerProps, PickerState> {
     emojiLargeSize: PropTypes.number.isRequired,
     emojiPadding: PropTypes.number,
     emojiPath: EmojiPathShape.isRequired,
+    emojis: PropTypes.arrayOf(EmojiShape).isRequired,
     emojiSize: PropTypes.number.isRequired,
     emojiSource: EmojiSourceShape.isRequired,
-    emojis: PropTypes.arrayOf(EmojiShape).isRequired,
     exclude: PropTypes.arrayOf(PropTypes.string),
     hideEmoticon: PropTypes.bool,
     hideShortcodes: PropTypes.bool,
@@ -157,8 +157,6 @@ class Picker extends React.Component<PickerProps, PickerState> {
     maxCommonlyUsed: PropTypes.number,
     maxEmojiVersion: PropTypes.number,
     messages: PropTypes.objectOf(PropTypes.node),
-    rowCount: PropTypes.number,
-    virtual: PropTypes.bool,
     onHoverEmoji: PropTypes.func,
     onScroll: PropTypes.func,
     onScrollGroup: PropTypes.func,
@@ -166,6 +164,8 @@ class Picker extends React.Component<PickerProps, PickerState> {
     onSelectEmoji: PropTypes.func,
     onSelectGroup: PropTypes.func,
     onSelectSkinTone: PropTypes.func,
+    rowCount: PropTypes.number,
+    virtual: PropTypes.bool,
   };
 
   static defaultProps = {
@@ -182,14 +182,12 @@ class Picker extends React.Component<PickerProps, PickerState> {
     displayOrder: ['preview', 'emojis', 'groups', 'search'],
     emojiPadding: 0,
     exclude: [],
-    messages: {},
     hideEmoticon: false,
     hideShortcodes: false,
     icons: {},
     maxCommonlyUsed: 30,
     maxEmojiVersion: 5,
-    rowCount: 8,
-    virtual: false,
+    messages: {},
     onHoverEmoji() {},
     onScroll() {},
     onScrollGroup() {},
@@ -197,6 +195,8 @@ class Picker extends React.Component<PickerProps, PickerState> {
     onSelectEmoji() {},
     onSelectGroup() {},
     onSelectSkinTone() {},
+    rowCount: 8,
+    virtual: false,
   };
 
   constructor(props: PickerProps) {
@@ -210,19 +210,19 @@ class Picker extends React.Component<PickerProps, PickerState> {
     } = props;
 
     this.state = {
-      emojis,
       activeEmoji: null,
       activeEmojiIndex: -1,
       activeGroup: defaultGroup,
       activeSkinTone: this.getSkinToneFromStorage() || defaultSkinTone,
       commonEmojis: [],
+      emojis,
       excluded: this.generateExcludeMap(exclude),
       scrollToGroup: '',
       searchQuery: '',
     };
   }
 
-  getChildContext() {
+  getChildContext(): Object {
     const { classNames, messages } = this.props;
 
     return {
@@ -590,7 +590,7 @@ class Picker extends React.Component<PickerProps, PickerState> {
   /**
    * Determine whether to show the commonly used group.
    */
-  hasCommonlyUsed() {
+  hasCommonlyUsed(): boolean {
     return (!this.props.disableCommonlyUsed && this.getCommonEmojisFromStorage().length > 0);
   }
 
@@ -627,13 +627,13 @@ class Picker extends React.Component<PickerProps, PickerState> {
     const hasResults = (searchQuery && emojis.length > 0);
 
     this.setState({
-      emojis,
       activeEmoji: hasResults ? emojis[0] : null,
       activeEmojiIndex: hasResults ? 0 : -1,
+      emojis,
     });
   }
 
-  render() {
+  render(): React$Node {
     const {
       autoFocus,
       columnCount,
@@ -666,17 +666,6 @@ class Picker extends React.Component<PickerProps, PickerState> {
     const List = virtual ? EmojiVirtualList : EmojiList;
     const hasCommonlyUsed = this.hasCommonlyUsed();
     const components = {
-      preview: disablePreview ? null : (
-        <PreviewBar
-          key="preview"
-          emoji={activeEmoji}
-          emojiLargeSize={emojiLargeSize}
-          emojiPath={emojiPath}
-          emojiSource={emojiSource}
-          hideEmoticon={hideEmoticon}
-          hideShortcodes={hideShortcodes}
-        />
-      ),
       emojis: (
         <List
           key="emojis"
@@ -716,6 +705,17 @@ class Picker extends React.Component<PickerProps, PickerState> {
           hasCommonlyUsed={hasCommonlyUsed}
           icons={icons}
           onSelect={this.handleSelectGroup}
+        />
+      ),
+      preview: disablePreview ? null : (
+        <PreviewBar
+          key="preview"
+          emoji={activeEmoji}
+          emojiLargeSize={emojiLargeSize}
+          emojiPath={emojiPath}
+          emojiSource={emojiSource}
+          hideEmoticon={hideEmoticon}
+          hideShortcodes={hideShortcodes}
         />
       ),
       search: disableSearch ? null : (

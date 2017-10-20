@@ -61,19 +61,19 @@ export default class EmojiVirtualList extends React.PureComponent<EmojiListProps
     commonMode: PropTypes.string.isRequired,
     emojiPadding: PropTypes.number.isRequired,
     emojiPath: EmojiPathShape.isRequired,
+    emojis: PropTypes.arrayOf(EmojiShape).isRequired,
     emojiSize: PropTypes.number.isRequired,
     emojiSource: EmojiSourceShape.isRequired,
-    emojis: PropTypes.arrayOf(EmojiShape).isRequired,
     hasCommonlyUsed: PropTypes.bool.isRequired,
-    rowCount: PropTypes.number.isRequired,
-    scrollToGroup: PropTypes.string.isRequired,
-    searchQuery: PropTypes.string.isRequired,
-    skinTonePalette: PropTypes.node,
     onEnterEmoji: PropTypes.func.isRequired,
     onLeaveEmoji: PropTypes.func.isRequired,
     onScroll: PropTypes.func.isRequired,
     onScrollGroup: PropTypes.func.isRequired,
     onSelectEmoji: PropTypes.func.isRequired,
+    rowCount: PropTypes.number.isRequired,
+    scrollToGroup: PropTypes.string.isRequired,
+    searchQuery: PropTypes.string.isRequired,
+    skinTonePalette: PropTypes.node,
   };
 
   static defaultProps = {
@@ -281,7 +281,7 @@ export default class EmojiVirtualList extends React.PureComponent<EmojiListProps
     );
   };
 
-  render() {
+  render(): React$Node {
     const {
       activeEmoji,
       columnCount,
@@ -296,7 +296,8 @@ export default class EmojiVirtualList extends React.PureComponent<EmojiListProps
     } = this.props;
     const { classNames } = this.context;
     const { groupIndices, rows } = this.state;
-    const size = emojiSize + (emojiPadding * 2);
+    const padding = (emojiPadding * 2); // Both sides
+    const size = emojiSize + padding;
 
     // `List` utilizes shallow comparison by extending PureComponent.
     // Because of this, row changes may not be reflected without
@@ -321,7 +322,7 @@ export default class EmojiVirtualList extends React.PureComponent<EmojiListProps
           rowRenderer={this.renderRow}
           scrollToAlignment="start"
           scrollToIndex={groupIndices[scrollToGroup]}
-          width={(size * columnCount) + (emojiPadding * 4)}
+          width={(size * columnCount) + (padding * 2)}
           onRowsRendered={this.handleRendered}
           onScroll={onScroll}
           {...renderProps}

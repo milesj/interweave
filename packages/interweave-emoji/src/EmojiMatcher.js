@@ -27,6 +27,7 @@ const EMOTICON_BOUNDARY_REGEX: RegExp = new RegExp(`(^|\\\b|\\\s)(${EMOTICON_REG
 
 export default class EmojiMatcher extends Matcher<EmojiOptions> {
   data: EmojiData;
+
   options: EmojiOptions;
 
   constructor(name: string, options?: Object = {}, factory?: ?MatcherFactory = null) {
@@ -159,6 +160,7 @@ export default class EmojiMatcher extends Matcher<EmojiOptions> {
 
       } else if (React.isValidElement(item)) {
         // Only count towards emojis
+        // $FlowIgnore Portals are finnicky
         if (item && item.type === Emoji) {
           count += 1;
           valid = true;

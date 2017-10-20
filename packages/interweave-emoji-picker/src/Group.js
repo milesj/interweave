@@ -38,7 +38,7 @@ export default class Group extends React.PureComponent<GroupProps> {
     this.props.onSelect(this.props.group, e);
   };
 
-  render() {
+  render(): React$Node {
     const { activeGroup, children, group } = this.props;
     const { classNames, messages } = this.context;
     const className = [classNames.group];

@@ -62,18 +62,18 @@ export default class EmojiList extends React.PureComponent<EmojiListProps, Emoji
     commonMode: PropTypes.string.isRequired,
     emojiPadding: PropTypes.number.isRequired,
     emojiPath: EmojiPathShape.isRequired,
+    emojis: PropTypes.arrayOf(EmojiShape).isRequired,
     emojiSize: PropTypes.number.isRequired,
     emojiSource: EmojiSourceShape.isRequired,
-    emojis: PropTypes.arrayOf(EmojiShape).isRequired,
     hasCommonlyUsed: PropTypes.bool.isRequired,
-    scrollToGroup: PropTypes.string.isRequired,
-    searchQuery: PropTypes.string.isRequired,
-    skinTonePalette: PropTypes.node,
     onEnterEmoji: PropTypes.func.isRequired,
     onLeaveEmoji: PropTypes.func.isRequired,
     onScroll: PropTypes.func.isRequired,
     onScrollGroup: PropTypes.func.isRequired,
     onSelectEmoji: PropTypes.func.isRequired,
+    scrollToGroup: PropTypes.string.isRequired,
+    searchQuery: PropTypes.string.isRequired,
+    skinTonePalette: PropTypes.node,
   };
 
   static defaultProps = {
@@ -266,7 +266,7 @@ export default class EmojiList extends React.PureComponent<EmojiListProps, Emoji
     this.loadEmojiImages(this.container);
   }
 
-  render() {
+  render(): React$Node {
     const {
       activeEmoji,
       commonMode,

@@ -35,7 +35,7 @@ export default class Hashtag extends React.PureComponent<HashtagProps> {
     preserveHash: false,
   };
 
-  render() {
+  render(): React$Node {
     const {
       children,
       encodeHashtag,

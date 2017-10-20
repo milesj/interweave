@@ -60,7 +60,7 @@ export default class PreviewBar extends React.PureComponent<PreviewBarProps> {
     return annotation.replace(TITLE_REGEX, token => token.toUpperCase());
   }
 
-  render() {
+  render(): React$Node {
     const {
       emoji,
       emojiLargeSize,

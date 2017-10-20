@@ -27,8 +27,8 @@ export default class EmailMatcher extends Matcher<Object> {
   match(string: string): ?MatchResponse {
     return this.doMatch(string, EMAIL_REGEX, matches => ({
       emailParts: {
-        username: matches[1],
         host: matches[2],
+        username: matches[1],
       },
     }));
   }

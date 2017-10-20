@@ -44,10 +44,15 @@ const ARIA_COMPARE_LENGTH: number = 5;
 
 export default class Parser {
   doc: Document;
+
   content: React$Node[];
+
   props: ParserProps;
+
   matchers: MatcherInterface[];
+
   filters: FilterInterface[];
+
   keyIndex: number;
 
   constructor(

@@ -12,11 +12,11 @@ export const FilterShape = PropTypes.shape({
 });
 
 export const MatcherShape = PropTypes.shape({
-  inverseName: PropTypes.string.isRequired,
-  propName: PropTypes.string.isRequired,
   asTag: PropTypes.func.isRequired,
   createElement: PropTypes.func.isRequired,
+  inverseName: PropTypes.string.isRequired,
   match: PropTypes.func.isRequired,
-  onBeforeParse: PropTypes.func,
   onAfterParse: PropTypes.func,
+  onBeforeParse: PropTypes.func,
+  propName: PropTypes.string.isRequired,
 });

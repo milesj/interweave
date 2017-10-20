@@ -29,7 +29,7 @@ export default class Email extends React.PureComponent<EmailProps> {
     emailParts: {},
   };
 
-  render() {
+  render(): React$Node {
     const { children, ...props } = this.props;
     const href = `mailto:${children}`;
 

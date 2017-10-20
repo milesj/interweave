@@ -10,6 +10,6 @@ EmojiData.getInstance('en').parseEmojiData(emojis);
 
 // Mock our fetch and return our bootstrapped data
 global.fetch = () => Promise.resolve({
-  ok: true,
   json: () => emojis,
+  ok: true,
 });

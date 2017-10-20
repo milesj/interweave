@@ -127,7 +127,7 @@ export default function withEmojiData(
     /**
      * Clone the element so that it re-renders itself.
      */
-    render() {
+    render(): React$Node {
       const {
         compact,
         emojis,

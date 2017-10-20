@@ -30,9 +30,9 @@ export default class SearchBar extends React.PureComponent<SearchBarProps, Searc
 
   static propTypes = {
     autoFocus: PropTypes.bool.isRequired,
-    searchQuery: PropTypes.string.isRequired,
     onChange: PropTypes.func.isRequired,
     onKeyUp: PropTypes.func.isRequired,
+    searchQuery: PropTypes.string.isRequired,
   };
 
   state = {
@@ -91,7 +91,7 @@ export default class SearchBar extends React.PureComponent<SearchBarProps, Searc
     this.input = ref;
   };
 
-  render() {
+  render(): React$Node {
     const { classNames, messages } = this.context;
     const { onKeyUp } = this.props;
 
