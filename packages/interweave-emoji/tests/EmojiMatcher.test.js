@@ -19,17 +19,20 @@ const INVALID_UNICODE = [
   '\u03C6',
   '\u0544',
 ];
+
 const INVALID_SHORTCODE = [
   ':no_ending',
   'no_beginning:',
   ':no spaces:',
   ':no#($*chars:',
 ];
+
 const INVALID_EMOTICON = [
   '[:',
   '@=',
   '+[',
 ];
+
 const MAN_EMOJI = '👨';
 
 describe('EmojiMatcher', () => {

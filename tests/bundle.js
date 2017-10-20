@@ -1,4 +1,4 @@
-/* eslint-disable no-console, no-magic-numbers, react/jsx-no-literals, react/jsx-curly-brace-presence, max-len */
+/* eslint-disable no-console, no-magic-numbers, react/jsx-no-literals, react/jsx-curly-brace-presence, max-len, sort-keys */
 
 import React from 'react';
 import ReactDOM from 'react-dom';
@@ -43,6 +43,19 @@ const emojiProps = {
   ],
 };
 
+const emojiPickerProps = {
+  emojiLargeSize: 48,
+  emojiPadding: 5,
+  emojiPath,
+  emojiSize: 22,
+  onHoverEmoji(emoji, e) { console.info('hover emoji', emoji, e); },
+  onScrollGroup(group, e) { console.info('scroll group', group, e); },
+  onSearch(query, e) { console.info('search', query, e); },
+  onSelectEmoji(emoji, e) { console.info('select emoji', emoji, e); },
+  onSelectGroup(group, e) { console.info('select group', group, e); },
+  onSelectSkinTone(skinTone, e) { console.info('select skin', skinTone, e); },
+};
+
 const emojiUnicodeProps = {
   ...emojiProps,
   matchers: [
@@ -59,41 +72,47 @@ function App() {
 
       <div className="demo-grid">
         <EmojiPicker
+          {...emojiPickerProps}
           autoFocus
           commonMode="recentlyUsed"
           defaultGroup="foodDrink"
           defaultSkinTone="light"
-          emojiPath={emojiPath}
-          emojiPadding={5}
-          emojiSize={22}
-          emojiLargeSize={48}
           exclude={[
             '1F4A9', // Poop
           ]}
           maxEmojiVersion={4}
-          onHoverEmoji={(emoji, e) => { console.info('hover emoji', emoji, e); }}
-          onScrollGroup={(group, e) => { console.info('scroll group', group, e); }}
-          onSearch={(query, e) => { console.info('search', query, e); }}
-          onSelectEmoji={(emoji, e) => { console.info('select emoji', emoji, e); }}
-          onSelectGroup={(group, e) => { console.info('select group', group, e); }}
-          onSelectSkinTone={(skinTone, e) => { console.info('select skin', skinTone, e); }}
         />
 
         <EmojiPicker
+          {...emojiPickerProps}
           virtual
           commonMode="frequentlyUsed"
           defaultGroup="travelPlaces"
           defaultSkinTone="medium"
-          emojiPath={emojiPath}
-          emojiPadding={5}
-          emojiSize={22}
-          emojiLargeSize={48}
-          onHoverEmoji={(emoji, e) => { console.info('hover emoji', emoji, e); }}
-          onScrollGroup={(group, e) => { console.info('scroll group', group, e); }}
-          onSearch={(query, e) => { console.info('search', query, e); }}
-          onSelectEmoji={(emoji, e) => { console.info('select emoji', emoji, e); }}
-          onSelectGroup={(group, e) => { console.info('select group', group, e); }}
-          onSelectSkinTone={(skinTone, e) => { console.info('select skin', skinTone, e); }}
+        />
+
+        <EmojiPicker
+          {...emojiPickerProps}
+          disableCommonlyUsed
+          emojis={[
+            {
+              name: 'GRINNING FACE',
+              hexcode: '1F600',
+              shortcodes: [
+                'gleeful',
+              ],
+              emoji: '😀',
+              type: 1,
+              order: 1,
+              group: 0,
+              subgroup: 0,
+              annotation: 'grinning face',
+              tags: [
+                'face',
+                'grin',
+              ],
+            },
+          ]}
         />
       </div>
 

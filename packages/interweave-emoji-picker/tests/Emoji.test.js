@@ -35,7 +35,7 @@ describe('Emoji', () => {
     const char = wrapper.find('Emoji');
 
     expect(char).toHaveLength(1);
-    expect(char.prop('unicode')).toBe(props.emoji.unicode);
+    expect(char.prop('hexcode')).toBe(props.emoji.hexcode);
   });
 
   it('renders a placeholder if images are hidden', () => {

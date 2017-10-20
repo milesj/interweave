@@ -53,7 +53,7 @@ export default class PreviewBar extends React.PureComponent<PreviewBarProps> {
     const { annotation, primary_shortcode: shortcode } = emoji;
 
     // Flags and country names are cased correctly
-    if (shortcode.indexOf('flag_') >= 0) {
+    if (shortcode && shortcode.indexOf('flag_') >= 0) {
       return annotation;
     }
 
@@ -102,7 +102,7 @@ export default class PreviewBar extends React.PureComponent<PreviewBarProps> {
             emojiPath={emojiPath}
             emojiSource={emojiSource}
             enlargeEmoji
-            unicode={emoji.unicode}
+            hexcode={emoji.hexcode}
           />
         </div>
 

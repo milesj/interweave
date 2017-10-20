@@ -66,6 +66,23 @@ describe('withEmojiData', () => {
     });
   });
 
+  it('fetches when emojis are passed manually', () => {
+    const wrapper = shallow(
+      <Component emojis={mockEmojis}>
+        <div>Foo</div>
+      </Component>,
+    );
+
+    expect(global.fetch).toBeCalledWith(
+      'https://cdn.jsdelivr.net/npm/emojibase-data@latest/en/data.json',
+      fetchOptions,
+    );
+
+    setTimeout(() => {
+      expect(wrapper.state('emojis')).toEqual(mockEmojis);
+    });
+  });
+
   it('doesnt fetch multiple times', () => {
     shallow(
       <Component>
@@ -82,20 +99,6 @@ describe('withEmojiData', () => {
     expect(global.fetch).toHaveBeenCalledTimes(1);
   });
 
-  it('doesnt fetch when emojis are passed manually', () => {
-    const wrapper = shallow(
-      <Component emojis={mockEmojis}>
-        <div>Foo</div>
-      </Component>,
-    );
-
-    expect(global.fetch).not.toBeCalled();
-
-    setTimeout(() => {
-      expect(wrapper.state('emojis')).toEqual(mockEmojis);
-    });
-  });
-
   it('doesnt mutate `EmojiData` when emojis are passed manually', () => {
     EmojiData.getInstance('en').EMOJIS = {};
 
@@ -106,20 +109,6 @@ describe('withEmojiData', () => {
     );
 
     expect(EmojiData.getInstance('en').EMOJIS).toEqual({});
-  });
-
-  it('supports emoji data as a JSON string', () => {
-    const wrapper = shallow(
-      <Component emojis={JSON.stringify(mockEmojis)}>
-        <div>Foo</div>
-      </Component>,
-    );
-
-    expect(global.fetch).not.toBeCalled();
-
-    setTimeout(() => {
-      expect(wrapper.state('emojis')).toEqual(mockEmojis);
-    });
   });
 
   it('supports compact datasets', () => {

@@ -1,3 +1,7 @@
+# 1.3.0
+#### 🛠 Internal
+* Commonly used emojis now store the `hexcode` instead of the `unicode` character.
+
 # 1.2.1 - 10/17/17
 #### 🚀 New
 * Updated `react-virtualized` to 9.11.

@@ -51,7 +51,7 @@ import type { Emoji, EmojiPath, EmojiSource } from 'interweave-emoji'; // eslint
 
 type CommonEmoji = {
   count: number,
-  unicode: string,
+  hexcode: string,
 };
 
 type ExcludeMap = { [hexcode: string]: boolean };
@@ -97,7 +97,7 @@ type PickerState = {
   activeEmojiIndex: number, // Index for the highlighted emoji within search results
   activeGroup: string, // Currently selected group tab
   activeSkinTone: string, // Currently selected skin ton
-  commonEmojis: Emoji[], // List of emoji unicodes most commonly used
+  commonEmojis: Emoji[], // List of emoji hexcodes most commonly used
   emojis: Emoji[], // List of all emojis with search filtering applied
   excluded: ExcludeMap, // Map of excluded emoji hexcodes
   scrollToGroup: string, // Group to scroll to on render
@@ -256,20 +256,20 @@ class Picker extends React.Component<PickerProps, PickerState> {
    */
   addCommonEmoji(emoji: Emoji) {
     const { commonMode, disableCommonlyUsed, maxCommonlyUsed } = this.props;
-    const { unicode } = emoji;
+    const { hexcode } = emoji;
 
     if (disableCommonlyUsed) {
       return;
     }
 
     const commonEmojis = this.getCommonEmojisFromStorage();
-    const currentIndex = commonEmojis.findIndex(common => common.unicode === unicode);
+    const currentIndex = commonEmojis.findIndex(common => common.hexcode === hexcode);
 
     // Add to the front of the list if it doesnt exist
     if (currentIndex === -1) {
       commonEmojis.unshift({
         count: 1,
-        unicode,
+        hexcode,
       });
     }
 
@@ -280,7 +280,7 @@ class Picker extends React.Component<PickerProps, PickerState> {
 
         commonEmojis.unshift({
           count: common.count + 1,
-          unicode,
+          hexcode,
         });
       }
 
@@ -378,14 +378,14 @@ class Picker extends React.Component<PickerProps, PickerState> {
   }
 
   /**
-   * We only store the unicode character for commonly used emojis,
+   * We only store the hexcode character for commonly used emojis,
    * so we need to rebuild the list with full emoji objects.
    */
   generateCommonEmojis(commonEmojis: CommonEmoji[]): Emoji[] {
     const data = EmojiData.getInstance(this.props.emojiSource.locale);
 
     return commonEmojis
-      .map(emoji => data.EMOJIS[data.UNICODE_TO_HEXCODE[emoji.unicode]])
+      .map(emoji => data.EMOJIS[emoji.hexcode])
       .filter(Boolean);
   }
 
@@ -406,9 +406,22 @@ class Picker extends React.Component<PickerProps, PickerState> {
    * Return the commonly used emojis from local storage.
    */
   getCommonEmojisFromStorage(): CommonEmoji[] {
-    const common = localStorage.getItem(KEY_COMMONLY_USED);
+    const rawCommon = localStorage.getItem(KEY_COMMONLY_USED);
+    const common = rawCommon ? JSON.parse(rawCommon) : [];
+    const data = EmojiData.getInstance(this.props.emojiSource.locale);
 
-    return common ? JSON.parse(common) : [];
+    // Previous versions stored the unicode character,
+    // while newer ones store a hexcode. We should support both.
+    return common.map((row) => {
+      if (row.unicode) {
+        return {
+          count: row.count,
+          hexcode: data.UNICODE_TO_HEXCODE[row.unicode],
+        };
+      }
+
+      return row;
+    });
   }
 
   /**
@@ -591,7 +604,7 @@ class Picker extends React.Component<PickerProps, PickerState> {
    * Determine whether to show the commonly used group.
    */
   hasCommonlyUsed(): boolean {
-    return (!this.props.disableCommonlyUsed && this.getCommonEmojisFromStorage().length > 0);
+    return (!this.props.disableCommonlyUsed && this.state.commonEmojis.length > 0);
   }
 
   /**

@@ -46,10 +46,7 @@ export default function withEmojiData(
   > {
     static propTypes = {
       compact: PropTypes.bool,
-      emojis: PropTypes.oneOfType([
-        PropTypes.string, // JSON
-        PropTypes.arrayOf(EmojiShape),
-      ]),
+      emojis: PropTypes.arrayOf(EmojiShape),
       locale: PropTypes.oneOf(SUPPORTED_LOCALES),
       version: PropTypes.string,
     };
@@ -98,33 +95,17 @@ export default function withEmojiData(
      * Load and parse emoji data from the CDN or use the provided dataset.
      */
     loadEmojis(props: EmojiDataLoaderProps) {
-      const {
-        compact,
-        emojis,
-        locale,
-        version,
-      } = props;
-      const data = this.getDataInstance();
+      const { compact, locale, version } = props;
 
       // Abort as we've already loaded data
       if (loaded[locale]) {
-        this.setState({
-          emojis: data.getData(),
-        });
-
-      // Load data if it was manually passed
-      } else if (emojis.length > 0) {
-        this.setState({
-          emojis,
-        });
+        this.setEmojis(props.emojis);
 
       // Or hook into the promise if we're loading
       } else if (promise[locale]) {
         promise[locale]
           .then(() => {
-            this.setState({
-              emojis: data.getData(),
-            });
+            this.setEmojis(props.emojis);
           })
           .catch((error) => {
             throw error;
@@ -134,18 +115,26 @@ export default function withEmojiData(
       } else {
         promise[locale] = fetchFromCDN(`${locale}/${compact ? 'compact' : 'data'}.json`, version)
           .then((response) => {
-            this.setState({
-              emojis: data.parseEmojiData(
-                Array.isArray(response) ? response : JSON.parse(response),
-              ),
-            });
-
             loaded[locale] = true;
+
+            // Parse the data and make it available through our data layer.
+            // We should do this first so that the custom data can hook into it.
+            this.getDataInstance().parseEmojiData(response);
+
+            // If a list of custom emoji data has been passed,
+            // use it instead of the parsed data.
+            this.setEmojis(props.emojis);
           })
           .catch((error) => {
             throw error;
           });
       }
+    }
+
+    setEmojis(emojis: Emoji[]) {
+      this.setState({
+        emojis: (emojis.length > 0) ? emojis : this.getDataInstance().getData(),
+      });
     }
 
     /**

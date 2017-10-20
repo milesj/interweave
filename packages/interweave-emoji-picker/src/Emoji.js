@@ -150,7 +150,7 @@ export default class EmojiButton extends React.PureComponent<EmojiProps, EmojiSt
             emojiPath={emojiPath}
             emojiSize={emojiSize}
             emojiSource={emojiSource}
-            unicode={emoji.unicode}
+            hexcode={emoji.hexcode}
           />
         ) : (
           <div
