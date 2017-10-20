@@ -1,5 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
+import EmojiData from '../src/EmojiData';
 import withEmojiData, { resetLoaded } from '../src/withEmojiData';
 
 describe('withEmojiData', () => {
@@ -93,6 +94,18 @@ describe('withEmojiData', () => {
     setTimeout(() => {
       expect(wrapper.state('emojis')).toEqual(mockEmojis);
     });
+  });
+
+  it('doesnt mutate `EmojiData` when emojis are passed manually', () => {
+    EmojiData.getInstance('en').EMOJIS = {};
+
+    shallow(
+      <Component locale="en" emojis={mockEmojis}>
+        <div>Foo</div>
+      </Component>,
+    );
+
+    expect(EmojiData.getInstance('en').EMOJIS).toEqual({});
   });
 
   it('supports emoji data as a JSON string', () => {

@@ -1,3 +1,10 @@
+# 1.3.0
+#### 🚀 New
+* Updated `withEmojiData` to refresh data if props change.
+
+#### 🐞 Fixed
+* Passing custom `emoijs` to `withEmojiData` will no longer mutate official data in `EmojiData`.
+
 # 1.2.0 - 10/12/17
 #### 🚀 New
 * Updated `interweave` peer dependency to 8.0.

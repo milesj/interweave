@@ -11,6 +11,7 @@ import PropTypes from 'prop-types';
 import { fetchFromCDN } from 'emojibase';
 import { SUPPORTED_LOCALES } from 'emojibase/lib/constants';
 import EmojiData from './EmojiData';
+import { EmojiShape } from './shapes';
 
 import type { Emoji } from 'emojibase'; // eslint-disable-line
 
@@ -39,12 +40,15 @@ export function resetLoaded() {
 export default function withEmojiData(
   Component: React$ComponentType<*>,
 ): React$ComponentType<EmojiDataLoaderProps> {
-  return class EmojiDataLoader extends React.Component<EmojiDataLoaderProps, EmojiDataLoaderState> {
+  return class EmojiDataLoader extends React.PureComponent<
+    EmojiDataLoaderProps,
+    EmojiDataLoaderState,
+  > {
     static propTypes = {
       compact: PropTypes.bool,
       emojis: PropTypes.oneOfType([
         PropTypes.string, // JSON
-        PropTypes.arrayOf(PropTypes.object),
+        PropTypes.arrayOf(EmojiShape),
       ]),
       locale: PropTypes.oneOf(SUPPORTED_LOCALES),
       version: PropTypes.string,
@@ -62,12 +66,44 @@ export default function withEmojiData(
     };
 
     componentWillMount() {
+      this.loadEmojis(this.props);
+    }
+
+    componentWillReceiveProps(nextProps: EmojiDataLoaderProps) {
       const {
         compact,
         emojis,
         locale,
         version,
       } = this.props;
+
+      if (
+        nextProps.compact !== compact ||
+        nextProps.emojis !== emojis ||
+        nextProps.locale !== locale ||
+        nextProps.version !== version
+      ) {
+        this.loadEmojis(nextProps);
+      }
+    }
+
+    /**
+     * Create or return the data instance.
+     */
+    getDataInstance(): EmojiData {
+      return EmojiData.getInstance(this.props.locale);
+    }
+
+    /**
+     * Load and parse emoji data from the CDN or use the provided dataset.
+     */
+    loadEmojis(props: EmojiDataLoaderProps) {
+      const {
+        compact,
+        emojis,
+        locale,
+        version,
+      } = props;
       const data = this.getDataInstance();
 
       // Abort as we've already loaded data
@@ -78,7 +114,9 @@ export default function withEmojiData(
 
       // Load data if it was manually passed
       } else if (emojis.length > 0) {
-        this.loadData(emojis);
+        this.setState({
+          emojis,
+        });
 
       // Or hook into the promise if we're loading
       } else if (promise[locale]) {
@@ -96,32 +134,18 @@ export default function withEmojiData(
       } else {
         promise[locale] = fetchFromCDN(`${locale}/${compact ? 'compact' : 'data'}.json`, version)
           .then((response) => {
-            this.loadData(response);
+            this.setState({
+              emojis: data.parseEmojiData(
+                Array.isArray(response) ? response : JSON.parse(response),
+              ),
+            });
+
+            loaded[locale] = true;
           })
           .catch((error) => {
             throw error;
           });
       }
-    }
-
-    /**
-     * Create or return the data instance.
-     */
-    getDataInstance(): EmojiData {
-      return EmojiData.getInstance(this.props.locale);
-    }
-
-    /**
-     * Parse emoji data and make it available to Interweave
-     */
-    loadData(data: string | Emoji[]) {
-      this.setState({
-        emojis: this.getDataInstance().parseEmojiData(
-          Array.isArray(data) ? data : JSON.parse(data),
-        ),
-      });
-
-      loaded[this.props.locale] = true;
     }
 
     /**
