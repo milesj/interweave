@@ -5,12 +5,14 @@ declare module 'interweave-emoji-picker' {
 
   declare export default class Picker extends React.Component<{
     autoFocus: boolean,
+    blacklist: string[],
     classNames: { [key: string]: string },
     columnCount: number,
     commonMode: string,
     defaultGroup: string,
     defaultSkinTone: string,
     disableCommonlyUsed: boolean,
+    disableGroups: boolean,
     disablePreview: boolean,
     disableSearch: boolean,
     disableSkinTones: boolean,
@@ -21,7 +23,6 @@ declare module 'interweave-emoji-picker' {
     emojis: Emoji[],
     emojiSize: number,
     emojiSource: EmojiSource,
-    exclude: string[],
     hideEmoticon: boolean,
     hideShortcodes: boolean,
     icons: { [key: string]: React$Node },
@@ -29,9 +30,14 @@ declare module 'interweave-emoji-picker' {
     maxEmojiVersion: number,
     messages: { [key: string]: string },
     onHoverEmoji: (emoji: Emoji, e: *) => void,
+    onScroll: (e: *) => void,
+    onScrollGroup: (group: string, e: *) => void,
     onSearch: (query: string, e: *) => void,
     onSelectEmoji: (emoji: Emoji, e: *) => void,
     onSelectGroup: (group: string, e: *) => void,
     onSelectSkinTone: (skinTone: string, e: *) => void,
+    rowCount: number,
+    virtual: boolean,
+    whitelist: string[],
   }> {}
 }

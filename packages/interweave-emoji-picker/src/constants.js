@@ -16,7 +16,7 @@ export const GROUP_SYMBOLS: string = 'symbols';
 export const GROUP_FLAGS: string = 'flags';
 export const GROUP_COMMONLY_USED: string = 'commonlyUsed';
 export const GROUP_SEARCH_RESULTS: string = 'searchResults';
-export const GROUP_NONE: string = 'none';
+export const GROUP_NONE: string = 'noGroups';
 
 export const GROUPS: string[] = [
   GROUP_SMILEYS_PEOPLE,

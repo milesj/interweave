@@ -77,7 +77,7 @@ function App() {
           commonMode="recentlyUsed"
           defaultGroup="foodDrink"
           defaultSkinTone="light"
-          exclude={[
+          blacklist={[
             '1F4A9', // Poop
           ]}
           maxEmojiVersion={4}
@@ -93,13 +93,28 @@ function App() {
 
         <EmojiPicker
           {...emojiPickerProps}
-          defaultGroup="commonlyUsed"
+          disableCommonlyUsed
           disableGroups
           disableSearch
+          messages={{
+            noGroups: 'Fantasy',
+          }}
+          whitelist={[
+            '1F479',
+            '1F9D9-200D-2642-FE0F',
+            '1F9DA-200D-2640-FE0F',
+            '1F9DF-200D-2642-FE0F',
+            '1F9DB-200D-2642-FE0F',
+            '1F9DC-200D-2640-FE0F',
+            '1F9DD',
+            '1F9DE-200D-2642-FE0F',
+            '1F478',
+          ]}
         />
 
         <EmojiPicker
           {...emojiPickerProps}
+          defaultGroup="commonlyUsed"
           disableGroups
           virtual
         />

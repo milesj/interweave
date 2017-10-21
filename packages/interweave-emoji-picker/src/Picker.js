@@ -53,10 +53,11 @@ type CommonEmoji = {
   hexcode: string,
 };
 
-type ExcludeMap = { [hexcode: string]: boolean };
+type BlackWhiteMap = { [hexcode: string]: boolean };
 
 type PickerProps = {
   autoFocus: boolean,
+  blacklist: string[],
   classNames: { [key: string]: string },
   columnCount: number,
   commonMode: string,
@@ -74,7 +75,6 @@ type PickerProps = {
   emojis: Emoji[],
   emojiSize: number,
   emojiSource: EmojiSource,
-  exclude: string[],
   hideEmoticon: boolean,
   hideShortcodes: boolean,
   icons: { [key: string]: React$Node },
@@ -90,6 +90,7 @@ type PickerProps = {
   onSelectSkinTone: (skinTone: string, e: *) => void,
   rowCount: number,
   virtual: boolean,
+  whitelist: string[],
 };
 
 type PickerState = {
@@ -97,12 +98,15 @@ type PickerState = {
   activeEmojiIndex: number, // Index for the highlighted emoji within search results
   activeGroup: string, // Currently selected group tab
   activeSkinTone: string, // Currently selected skin ton
+  blacklisted: BlackWhiteMap, // Map of blacklisted emoji hexcodes (without skin modifier)
   commonEmojis: Emoji[], // List of emoji hexcodes most commonly used
   emojis: Emoji[], // List of all emojis with search filtering applied
-  excluded: ExcludeMap, // Map of excluded emoji hexcodes
   scrollToGroup: string, // Group to scroll to on render
   searchQuery: string, // Current search query
+  whitelisted: BlackWhiteMap, // Map of whitelisted emoji hexcodes (without skin modifier)
 };
+
+const SKIN_MODIFIER_PATTERN: RegExp = /1F3FB|1F3FC|1F3FD|1F3FE|1F3FF/g;
 
 class Picker extends React.Component<PickerProps, PickerState> {
   mounted: boolean;
@@ -114,6 +118,7 @@ class Picker extends React.Component<PickerProps, PickerState> {
 
   static propTypes = {
     autoFocus: PropTypes.bool,
+    blacklist: PropTypes.arrayOf(PropTypes.string),
     classNames: PropTypes.objectOf(PropTypes.string),
     columnCount: PropTypes.number,
     commonMode: PropTypes.oneOf([
@@ -151,7 +156,6 @@ class Picker extends React.Component<PickerProps, PickerState> {
     emojis: PropTypes.arrayOf(EmojiShape).isRequired,
     emojiSize: PropTypes.number.isRequired,
     emojiSource: EmojiSourceShape.isRequired,
-    exclude: PropTypes.arrayOf(PropTypes.string),
     hideEmoticon: PropTypes.bool,
     hideShortcodes: PropTypes.bool,
     icons: PropTypes.objectOf(PropTypes.node),
@@ -167,10 +171,12 @@ class Picker extends React.Component<PickerProps, PickerState> {
     onSelectSkinTone: PropTypes.func,
     rowCount: PropTypes.number,
     virtual: PropTypes.bool,
+    whitelist: PropTypes.arrayOf(PropTypes.string),
   };
 
   static defaultProps = {
     autoFocus: false,
+    blacklist: [],
     classNames: {},
     columnCount: 10,
     commonMode: COMMON_MODE_RECENT,
@@ -183,7 +189,6 @@ class Picker extends React.Component<PickerProps, PickerState> {
     disableSkinTones: false,
     displayOrder: ['preview', 'emojis', 'groups', 'search'],
     emojiPadding: 0,
-    exclude: [],
     hideEmoticon: false,
     hideShortcodes: false,
     icons: {},
@@ -199,16 +204,18 @@ class Picker extends React.Component<PickerProps, PickerState> {
     onSelectSkinTone() {},
     rowCount: 8,
     virtual: false,
+    whitelist: [],
   };
 
   constructor(props: PickerProps) {
     super(props);
 
     const {
+      blacklist,
       defaultGroup,
       defaultSkinTone,
       emojis,
-      exclude,
+      whitelist,
     } = props;
 
     this.state = {
@@ -216,11 +223,12 @@ class Picker extends React.Component<PickerProps, PickerState> {
       activeEmojiIndex: -1,
       activeGroup: defaultGroup,
       activeSkinTone: this.getSkinToneFromStorage() || defaultSkinTone,
+      blacklisted: this.generateBlackWhiteMap(blacklist),
       commonEmojis: [],
       emojis,
-      excluded: this.generateExcludeMap(exclude),
       scrollToGroup: '',
       searchQuery: '',
+      whitelisted: this.generateBlackWhiteMap(whitelist),
     };
   }
 
@@ -314,11 +322,14 @@ class Picker extends React.Component<PickerProps, PickerState> {
    * Filter the dataset with the search query against a set of emoji properties.
    */
   filterOrSearch(emoji: Emoji, searchQuery: string): boolean {
-    const { maxEmojiVersion } = this.props;
-    const { excluded } = this.state;
+    const { blacklist, maxEmojiVersion, whitelist } = this.props;
+    const { blacklisted, whitelisted } = this.state;
 
-    // Remove excluded emojis
-    if (excluded[emoji.hexcode]) {
+    // Remove blacklisted emojis and non-whitelisted emojis
+    if (
+      (blacklist.length > 0 && blacklisted[emoji.hexcode]) ||
+      (whitelist.length > 0 && !whitelisted[emoji.hexcode])
+    ) {
       return false;
     }
 
@@ -367,12 +378,22 @@ class Picker extends React.Component<PickerProps, PickerState> {
   }
 
   /**
-   * Convert the `exclude` prop to a map for quicker lookups.
+   * Convert the `blacklist` or `whitelist` prop to a map for quicker lookups.
    */
-  generateExcludeMap(exclude: string[]): ExcludeMap {
+  generateBlackWhiteMap(list: string[]): BlackWhiteMap {
     const map = {};
 
-    exclude.forEach((hexcode) => {
+    list.forEach((hexcode) => {
+      if (__DEV__) {
+        if (hexcode.match(SKIN_MODIFIER_PATTERN)) {
+          // eslint-disable-next-line no-console
+          console.warn(
+            `Hexcode with a skin modifier has been detected: ${hexcode}`,
+            'Emojis without skin modifiers are required for blacklist/whitelist.',
+          );
+        }
+      }
+
       map[hexcode] = true;
     });
 
