@@ -4,50 +4,166 @@
  * @flow
  */
 
-/* eslint-disable no-useless-escape, max-len */
+export function combinePatterns(patterns: RegExp[], options?: Object = {}): RegExp {
+  let regex = patterns.map(pattern => pattern.source).join(options.join || '');
 
+  if (options.capture) {
+    regex = `(${regex})`;
+  } else if (options.nonCapture) {
+    regex = `(?:${regex})`;
+  }
+
+  if (options.match) {
+    regex += options.match;
+  }
+
+  return new RegExp(regex, options.flags || '');
+}
+
+// https://www.ietf.org/rfc/rfc3986.txt
 // https://blog.codinghorror.com/the-problem-with-urls/
 // http://www.regular-expressions.info/email.html
 
-// This pattern will be used at the start or end of other patterns,
-// making it easier to apply matches without capturing special chars.
-export const ALNUM_CHAR: string = '[a-z0-9]{1}';
+export const VALID_ALNUM_CHARS: RegExp = /[a-z0-9]/;
+export const VALID_PATH_CHARS: RegExp = /(?:[a-zA-Z\u0400-\u04FF0-9\-_~!$&'()[\]\\/*+,;=.%]*)/;
 
-export const HASHTAG_PATTERN: string = '#([-a-z0-9_]+)';
+export const URL_SCHEME: RegExp = /(https?:\/\/)?/;
 
-export const URL_CHAR_PART: string = 'a-z0-9-_~%!$&\'*+;:@'; // Disallow . , ( )
-export const URL_SCHEME_PATTERN: string = '(https?://)?';
-export const URL_AUTH_PATTERN: string = `([${URL_CHAR_PART}]+@)?`;
-export const URL_HOST_PATTERN: string = `((?:www\\.)?${ALNUM_CHAR}[-a-z0-9.]*[-a-z0-9]+\\.[a-z]{2,24}(?:\\.[a-z]{2,24})?)`;
-export const URL_PORT_PATTERN: string = '(:[0-9]+)?';
-export const URL_PATH_PATTERN: string = `(/[${URL_CHAR_PART}/]*(?:\\.[a-z]{2,8})?)?`;
-export const URL_QUERY_PATTERN: string = `(\\?[${URL_CHAR_PART}=\\[\\]/\\\\\]*)?`;
-export const URL_FRAGMENT_PATTERN: string = '(#[\\w%/]*)?';
-export const URL_PATTERN: string = [
-  URL_SCHEME_PATTERN,
-  URL_AUTH_PATTERN,
-  URL_HOST_PATTERN,
-  URL_PORT_PATTERN,
-  URL_PATH_PATTERN,
-  URL_QUERY_PATTERN,
-  URL_FRAGMENT_PATTERN,
-].join('');
+export const URL_AUTH: RegExp = combinePatterns([
+  /[a-z\u0400-\u04FF0-9\-_~!$&'()*+,;=.:]+/, // Includes colon
+  /@/,
+], {
+  capture: true,
+  match: '?',
+});
 
-export const IP_V4_PART: string = '(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)';
-export const IP_V4_PATTERN: string = `(${IP_V4_PART}\\.${IP_V4_PART}\\.${IP_V4_PART}\\.${IP_V4_PART})`;
-export const IP_PATTERN: string = [
-  URL_SCHEME_PATTERN,
-  URL_AUTH_PATTERN,
-  IP_V4_PATTERN,
-  URL_PORT_PATTERN,
-  URL_PATH_PATTERN,
-  URL_QUERY_PATTERN,
-  URL_FRAGMENT_PATTERN,
-].join('');
+export const URL_HOST: RegExp = combinePatterns([
+  /(?:(?:[a-z0-9](?:[-a-z0-9_]*[a-z0-9])?)\.)*/, // Subdomain
+  /(?:(?:[a-z0-9](?:[-a-z0-9]*[a-z0-9])?)\.)/, // Domain
+  /(?:[a-z](?:[-a-z0-9]*[a-z0-9])?)/, // TLD
+], {
+  capture: true,
+});
 
-export const EMAIL_CLASS_PART: string = '[a-z0-9!#$%&?*+=_{|}~-]+';
-export const EMAIL_USERNAME_PATTERN: string = `(${ALNUM_CHAR}${EMAIL_CLASS_PART}(?:\\.${EMAIL_CLASS_PART})*${ALNUM_CHAR})`;
-export const EMAIL_PATTERN: string = `${EMAIL_USERNAME_PATTERN}@${URL_HOST_PATTERN}`;
+export const URL_PORT: RegExp = /(?::([0-9]{1,5}))?/;
+
+export const URL_PATH: RegExp = combinePatterns([
+  /\//,
+  combinePatterns([
+    /[-+a-z0-9!*';:=,.$/%[\]_~@|&]*/,
+    /[-+a-z0-9/]/, // Valid ending chars
+  ], {
+    match: '*',
+    nonCapture: true,
+  }),
+], {
+  capture: true,
+  match: '?',
+});
+
+export const URL_QUERY: RegExp = combinePatterns([
+  /\?/,
+  combinePatterns([
+    VALID_PATH_CHARS,
+    /[a-z0-9_&=]/, // Valid ending chars
+  ], {
+    match: '?',
+    nonCapture: true,
+  }),
+], {
+  capture: true,
+  match: '?',
+});
+
+export const URL_FRAGMENT: RegExp = combinePatterns([
+  /#/,
+  combinePatterns([
+    VALID_PATH_CHARS,
+    /[a-z0-9]/, // Valid ending chars
+  ], {
+    match: '?',
+    nonCapture: true,
+  }),
+], {
+  capture: true,
+  match: '?',
+});
+
+export const URL_PATTERN: RegExp = combinePatterns([
+  URL_SCHEME,
+  URL_AUTH,
+  URL_HOST,
+  URL_PORT,
+  URL_PATH,
+  URL_QUERY,
+  URL_FRAGMENT,
+], {
+  flags: 'i',
+});
+
+export const IP_V4_PART: RegExp = /(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)/;
+
+export const IP_V4: RegExp = combinePatterns([
+  IP_V4_PART,
+  IP_V4_PART,
+  IP_V4_PART,
+  IP_V4_PART,
+], {
+  capture: true,
+  join: '\\.',
+});
+
+export const IP_PATTERN: RegExp = combinePatterns([
+  URL_SCHEME,
+  URL_AUTH,
+  IP_V4,
+  URL_PORT,
+  URL_PATH,
+  URL_QUERY,
+  URL_FRAGMENT,
+], {
+  flags: 'i',
+});
+
+export const HASHTAG_PATTERN: RegExp = combinePatterns([
+  /#/,
+  combinePatterns([
+    VALID_ALNUM_CHARS,
+    /[-a-z0-9_]*/,
+    VALID_ALNUM_CHARS,
+  ], {
+    capture: true,
+  }),
+], {
+  flags: 'i',
+});
+
+export const EMAIL_USERNAME_PART: RegExp = /[a-z0-9!#$%&?*+=_{|}~-]+/;
+
+export const EMAIL_USERNAME: RegExp = combinePatterns([
+  VALID_ALNUM_CHARS,
+  EMAIL_USERNAME_PART,
+  VALID_ALNUM_CHARS,
+  combinePatterns([
+    /\./,
+    VALID_ALNUM_CHARS,
+    EMAIL_USERNAME_PART,
+    VALID_ALNUM_CHARS,
+  ], {
+    match: '?',
+    nonCapture: true,
+  }),
+], {
+  capture: true,
+});
+
+export const EMAIL_PATTERN: RegExp = combinePatterns([
+  EMAIL_USERNAME,
+  URL_HOST,
+], {
+  flags: 'i',
+  join: '@',
+});
 
 // Properly and efficiently detecting URLs + all TLDs is nigh impossible,
 // instead we will only support the most common top-level TLDs.

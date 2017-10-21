@@ -173,13 +173,13 @@ function App() {
         tagName="div"
         matchers={[new UrlMatcher('url')]}
         content="And of course URLS: milesj.me. This should work just fine,
-          https://facebook.github.io/react (I hope). www.github.com."
+          https://facebook.github.io:1337/react (I hope). www.github.com."
       />
 
       <Interweave
         tagName="div"
         matchers={[new UrlMatcher('url')]}
-        content="http://milesj.me"
+        content="http://milesj.me?foo=bar"
       />
 
       <h1>Emails</h1>

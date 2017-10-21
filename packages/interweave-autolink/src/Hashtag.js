@@ -47,7 +47,7 @@ export default class Hashtag extends React.PureComponent<HashtagProps> {
 
     // Prepare the hashtag
     if (!preserveHash && hashtag.charAt(0) === '#') {
-      hashtag = hashtag.substr(1);
+      hashtag = hashtag.slice(1);
     }
 
     if (encodeHashtag) {

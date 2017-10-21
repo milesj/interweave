@@ -59,7 +59,7 @@ const INVALID_EMAILS = [
 
 describe('matchers/EmailMatcher', () => {
   const matcher = new EmailMatcher('email');
-  const pattern = new RegExp(`^${EMAIL_PATTERN}$`, 'i');
+  const pattern = new RegExp(`^${EMAIL_PATTERN.source}$`, 'i');
 
   describe('does match valid email:', () => {
     VALID_EMAILS.forEach((email) => {

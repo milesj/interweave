@@ -10,10 +10,7 @@ const VALID_HASHTAGS = [
   '#with_underscores',
   '#with_multiple_underscores',
   '#with_VaryIng-casEs-and-90123-numbers',
-  // These pass but should they?
   '#1234567',
-  '#-----',
-  '#_____',
 ];
 
 const INVALID_HASHTAGS = [
@@ -21,18 +18,20 @@ const INVALID_HASHTAGS = [
   '#with$special&#characters',
   '#with~more@#chars',
   '#and90-=even<>more',
+  '#-----',
+  '#_____',
 ];
 
 describe('matchers/HashtagMatcher', () => {
   const matcher = new HashtagMatcher('hashtag');
-  const pattern = new RegExp(`^${HASHTAG_PATTERN}$`, 'i');
+  const pattern = new RegExp(`^${HASHTAG_PATTERN.source}$`, 'i');
 
   describe('does match valid hashtag:', () => {
     VALID_HASHTAGS.forEach((hashtag) => {
       it(hashtag, () => {
         const expected = [
           hashtag,
-          hashtag.substr(1),
+          hashtag.slice(1),
         ];
         expected.index = 0;
         expected.input = hashtag;
@@ -53,7 +52,7 @@ describe('matchers/HashtagMatcher', () => {
   describe('matches all hashtags in a string', () => {
     const parser = new Parser('', {}, [matcher]);
     const createHashtag = (hashtag, key) => (matcher.replaceWith(hashtag, {
-      hashtagName: hashtag.substr(1),
+      hashtagName: hashtag.slice(1),
       key,
     }));
 

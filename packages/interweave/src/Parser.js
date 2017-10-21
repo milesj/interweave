@@ -168,7 +168,7 @@ export default class Parser {
 
       // Extract the previous string
       if (lastIndex !== index) {
-        matchedArray.push(matchedString.substring(lastIndex, index));
+        matchedArray.push(matchedString.slice(lastIndex, index));
       }
 
       // Inject the element
@@ -184,7 +184,7 @@ export default class Parser {
 
     // Extra the remaining string
     if (lastIndex < matchedString.length) {
-      matchedArray.push(matchedString.substring(lastIndex));
+      matchedArray.push(matchedString.slice(lastIndex));
     }
 
     return matchedArray;
@@ -309,7 +309,7 @@ export default class Parser {
 
       // Do not allow blacklisted attributes excluding ARIA attributes
       // Do not allow events or XSS injections
-      if (name.substr(0, ARIA_COMPARE_LENGTH) !== 'aria-') {
+      if (name.slice(0, ARIA_COMPARE_LENGTH) !== 'aria-') {
         if (
           (!disableWhitelist && (!filter || filter === FILTER_DENY)) ||
           // eslint-disable-next-line unicorn/prefer-starts-ends-with

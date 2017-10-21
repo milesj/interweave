@@ -7,6 +7,7 @@ import { TOKEN_LOCATIONS, createExpectedToken, parentConfig } from '../../../tes
 const VALID_URLS = [
   { url: 'example.com', scheme: null, host: 'example.com' },
   { url: 'www.example.com', scheme: null, host: 'www.example.com' },
+  { url: 'http://under_score.example.com/', host: 'under_score.example.com', path: '/' },
   { url: 'http://example.com/', path: '/' },
   { url: 'http://example.uk/', path: '/', host: 'example.uk' },
   { url: 'http://example.co.uk/', path: '/', host: 'example.co.uk' },
@@ -14,9 +15,9 @@ const VALID_URLS = [
   { url: 'http://example.com/path/to/resource/', path: '/path/to/resource/' },
   { url: 'http://example.com/?q=string', path: '/', query: '?q=string' },
   { url: 'http://example.com/?x=1&y=2', path: '/', query: '?x=1&y=2' },
-  { url: 'http://example.com:80/', path: '/', port: ':80' },
-  { url: 'http://example.com:8080/', path: '/', port: ':8080' },
-  { url: 'http://example.com:8080/path?query=value#fragment', port: ':8080', path: '/path', query: '?query=value', fragment: '#fragment' },
+  { url: 'http://example.com:80/', path: '/', port: '80' },
+  { url: 'http://example.com:8080/', path: '/', port: '8080' },
+  { url: 'http://example.com:8080/path?query=value#fragment', port: '8080', path: '/path', query: '?query=value', fragment: '#fragment' },
   { url: 'http://example.com/path/to/resource?query=x#fragment', path: '/path/to/resource', query: '?query=x', fragment: '#fragment' },
   { url: 'http://example.com/file.txt', path: '/file.txt' },
   { url: 'https://ftp.is.co.za/rfc/rfc1808.txt', scheme: 'https://', host: 'ftp.is.co.za', path: '/rfc/rfc1808.txt' },
@@ -53,6 +54,8 @@ const VALID_URLS = [
   { url: 'http://example.com/?one[two][three][0]=four&one[two][three][1]=five', path: '/', query: '?one[two][three][0]=four&one[two][three][1]=five' },
   { url: 'http://example.com/?one[two][three][1]=four&one[two][three][0]=five', path: '/', query: '?one[two][three][1]=four&one[two][three][0]=five' },
   { url: 'http://example.com/?one[two][three][2]=four&one[two][three][1]=five', path: '/', query: '?one[two][three][2]=four&one[two][three][1]=five' },
+  { url: 'http://example.com/?one.two.three=four', path: '/', query: '?one.two.three=four' },
+  { url: 'http://example.com/?one.two.three=four&one.two.five=six', path: '/', query: '?one.two.three=four&one.two.five=six' },
   { url: 'http://www.xn--8ws00zhy3a.com/', path: '/', host: 'www.xn--8ws00zhy3a.com' },
   { url: 'http://user:@example.com', auth: 'user:@' },
   { url: 'http://:pass@example.com', auth: ':pass@' },
@@ -60,6 +63,7 @@ const VALID_URLS = [
   { url: 'http://user:pass@example.com/path/to/resource?query=x#fragment', auth: 'user:pass@', path: '/path/to/resource', query: '?query=x', fragment: '#fragment' },
   // I feel like these should be invalid
   { url: 'http://:@example.com/', auth: ':@', path: '/' },
+  { url: 'http://example.com/indirect/path/./to/../resource/', path: '/indirect/path/./to/../resource/' },
 ];
 
 const INVALID_URLS = [
@@ -72,16 +76,12 @@ const INVALID_URLS = [
   { url: 'http://www.詹姆斯.com/atomtests/iri/詹.html' },
   { url: 'http:example.com' },
   { url: 'https:example.com/' },
-  { url: 'http://under_score.example.com/' },
   { url: 'http://@example.com/' },
   { url: 'HTTP://example.com.:%38%30/%70a%74%68?a=%31#1%323' },
   { url: 'http://example.com/(path)/' },
   // Sorry, no periods
   { url: 'http://example.com/..', path: '/..' },
   { url: 'http://example.com/../..', path: '/../..' },
-  { url: 'http://example.com/indirect/path/./to/../resource/', path: '/indirect/path/./to/../resource/' },
-  { url: 'http://example.com/?one.two.three=four', path: '/', query: '?one.two.three=four' },
-  { url: 'http://example.com/?one.two.three=four&one.two.five=six', path: '/', query: '?one.two.three=four&one.two.five=six' },
   // This matcher doesn't support IPs
   { url: '192.0.2.16' },
   { url: 'https://192.0.2.16?query' },
@@ -98,7 +98,7 @@ const INVALID_URLS = [
 
 describe('matchers/UrlMatcher', () => {
   let matcher = new UrlMatcher('url');
-  const pattern = new RegExp(`^${URL_PATTERN}$`, 'i');
+  const pattern = new RegExp(`^${URL_PATTERN.source}$`, 'i');
 
   beforeEach(() => {
     matcher = new UrlMatcher('url');
@@ -147,8 +147,8 @@ describe('matchers/UrlMatcher', () => {
           fragment: '',
           ...params,
           scheme: params.scheme ? params.scheme.replace('://', '') : 'http',
-          auth: params.auth ? params.auth.substr(0, params.auth.length - 1) : '',
-          port: params.port ? params.port.substr(1) : '',
+          auth: params.auth ? params.auth.slice(0, -1) : '',
+          port: params.port || '',
         },
         key,
       });

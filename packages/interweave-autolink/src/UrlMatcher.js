@@ -16,8 +16,6 @@ type UrlOptions = {
   validateTLD: boolean,
 };
 
-const URL_REGEX: RegExp = new RegExp(URL_PATTERN, 'i');
-
 export default class UrlMatcher extends Matcher<UrlOptions> {
   options: UrlOptions;
 
@@ -50,7 +48,7 @@ export default class UrlMatcher extends Matcher<UrlOptions> {
   }
 
   match(string: string): ?MatchResponse {
-    return this.doMatch(string, URL_REGEX, this.handleMatches);
+    return this.doMatch(string, URL_PATTERN, this.handleMatches);
   }
 
   /**
@@ -59,11 +57,11 @@ export default class UrlMatcher extends Matcher<UrlOptions> {
   handleMatches(matches: string[]): { [key: string]: string | Object } {
     return {
       urlParts: {
-        auth: matches[2] ? matches[2].substr(0, matches[2].length - 1) : '',
+        auth: matches[2] ? matches[2].slice(0, -1) : '',
         fragment: matches[7] || '',
         host: matches[3],
         path: matches[5] || '',
-        port: matches[4] ? matches[4].substr(1) : '',
+        port: matches[4] ? matches[4] : '',
         query: matches[6] || '',
         scheme: matches[1] ? matches[1].replace('://', '') : 'http',
       },

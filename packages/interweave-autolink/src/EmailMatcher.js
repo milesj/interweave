@@ -11,8 +11,6 @@ import { EMAIL_PATTERN } from './constants';
 
 import type { MatchResponse } from 'interweave'; // eslint-disable-line
 
-const EMAIL_REGEX: RegExp = new RegExp(EMAIL_PATTERN, 'i');
-
 export default class EmailMatcher extends Matcher<Object> {
   replaceWith(match: string, props?: Object = {}): React$Node {
     return (
@@ -25,7 +23,7 @@ export default class EmailMatcher extends Matcher<Object> {
   }
 
   match(string: string): ?MatchResponse {
-    return this.doMatch(string, EMAIL_REGEX, matches => ({
+    return this.doMatch(string, EMAIL_PATTERN, matches => ({
       emailParts: {
         host: matches[2],
         username: matches[1],

@@ -11,8 +11,6 @@ import { HASHTAG_PATTERN } from './constants';
 
 import type { MatchResponse } from 'interweave'; // eslint-disable-line
 
-const HASHTAG_REGEX: RegExp = new RegExp(HASHTAG_PATTERN, 'i');
-
 export default class HashtagMatcher extends Matcher<Object> {
   replaceWith(match: string, props?: Object = {}): React$Node {
     return (
@@ -25,7 +23,7 @@ export default class HashtagMatcher extends Matcher<Object> {
   }
 
   match(string: string): ?MatchResponse {
-    return this.doMatch(string, HASHTAG_REGEX, matches => ({
+    return this.doMatch(string, HASHTAG_PATTERN, matches => ({
       hashtagName: matches[1],
     }));
   }

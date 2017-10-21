@@ -1,3 +1,8 @@
+# 1.3.0
+#### 🚀 New
+* Rewrote all regex patterns to more efficiently and accurately match their targets.
+  * URLs are now properly captured, even when suffixed with a period (end of sentence).
+
 # 1.2.0 - 10/12/17
 #### 🚀 New
 * Updated `interweave` peer dependency to 8.0.

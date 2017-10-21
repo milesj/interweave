@@ -8,7 +8,7 @@ const VALID_IPS = [
   { ip: '118.99.81.204', scheme: null, host: '118.99.81.204' },
   { ip: '118.99.81.204/', scheme: null, host: '118.99.81.204', path: '/' },
   { ip: '192.0.2.16', scheme: null, host: '192.0.2.16' },
-  { ip: '192.0.2.16:8000/path', scheme: null, host: '192.0.2.16', port: ':8000', path: '/path' },
+  { ip: '192.0.2.16:8000/path', scheme: null, host: '192.0.2.16', port: '8000', path: '/path' },
   { ip: 'https://192.0.2.16?query', scheme: 'https://', host: '192.0.2.16', query: '?query' },
   { ip: 'http://2.184.31.2', host: '2.184.31.2' },
   { ip: 'http://93.126.11.189/foo', host: '93.126.11.189', path: '/foo' },
@@ -19,7 +19,7 @@ const VALID_IPS = [
   { ip: 'http://27.191.194.106/?q=a&&x=b', host: '27.191.194.106', path: '/', query: '?q=a&&x=b' },
   { ip: 'http://218.75.205.44', host: '218.75.205.44' },
   { ip: 'https://10.48.0.200/some/path.html', scheme: 'https://', host: '10.48.0.200', path: '/some/path.html' },
-  { ip: 'http://46.130.14.41:1337', host: '46.130.14.41', port: ':1337' },
+  { ip: 'http://46.130.14.41:1337', host: '46.130.14.41', port: '1337' },
 ];
 
 const INVALID_IPS = [
@@ -34,7 +34,7 @@ const INVALID_IPS = [
 
 describe('matchers/IpMatcher', () => {
   const matcher = new IpMatcher('ip');
-  const pattern = new RegExp(`^${IP_PATTERN}$`, 'i');
+  const pattern = new RegExp(`^${IP_PATTERN.source}$`, 'i');
 
   describe('does match valid ip:', () => {
     VALID_IPS.forEach((ipParams) => {
@@ -79,8 +79,8 @@ describe('matchers/IpMatcher', () => {
           fragment: '',
           ...params,
           scheme: params.scheme ? params.scheme.replace('://', '') : 'http',
-          auth: params.auth ? params.auth.substr(0, params.auth.length - 1) : '',
-          port: params.port ? params.port.substr(1) : '',
+          auth: params.auth ? params.auth.slice(0, -1) : '',
+          port: params.port || '',
         },
         key,
       });
