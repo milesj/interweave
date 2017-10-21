@@ -1,9 +1,10 @@
 # 1.3.0
 #### 🚀 New
-* Added a new `disableGroups` prop to `Picker`, which will hide the tabs and disable group headers.
+* Added a `disableGroups` prop to `Picker`, which will hide the tabs and disable group headers.
   * Emojis will now be grouped into a "none" group.
   * Commonly used emojis and searching are still available in this mode.
-* Added new `blacklist` and `whitelist` props to `Picker`, both of which accept an
+* Added a `hideGroupHeaders` prop to `Picker`, which should be self-explanatory.
+* Added `blacklist` and `whitelist` props to `Picker`, both of which accept an
   array of hexcodes.
 
 #### 🛠 Internal

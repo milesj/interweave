@@ -76,6 +76,7 @@ type PickerProps = {
   emojiSize: number,
   emojiSource: EmojiSource,
   hideEmoticon: boolean,
+  hideGroupHeaders: boolean,
   hideShortcodes: boolean,
   icons: { [key: string]: React$Node },
   maxCommonlyUsed: number,
@@ -157,6 +158,7 @@ class Picker extends React.Component<PickerProps, PickerState> {
     emojiSize: PropTypes.number.isRequired,
     emojiSource: EmojiSourceShape.isRequired,
     hideEmoticon: PropTypes.bool,
+    hideGroupHeaders: PropTypes.bool,
     hideShortcodes: PropTypes.bool,
     icons: PropTypes.objectOf(PropTypes.node),
     maxCommonlyUsed: PropTypes.number,
@@ -190,6 +192,7 @@ class Picker extends React.Component<PickerProps, PickerState> {
     displayOrder: ['preview', 'emojis', 'groups', 'search'],
     emojiPadding: 0,
     hideEmoticon: false,
+    hideGroupHeaders: false,
     hideShortcodes: false,
     icons: {},
     maxCommonlyUsed: 30,
@@ -691,6 +694,7 @@ class Picker extends React.Component<PickerProps, PickerState> {
       emojiSize,
       emojiSource,
       hideEmoticon,
+      hideGroupHeaders,
       hideShortcodes,
       icons,
       rowCount,
@@ -724,6 +728,7 @@ class Picker extends React.Component<PickerProps, PickerState> {
           emojiSize={emojiSize}
           emojiSource={emojiSource}
           hasCommonlyUsed={hasCommonlyUsed}
+          hideGroupHeaders={hideGroupHeaders}
           rowCount={rowCount}
           scrollToGroup={scrollToGroup}
           searchQuery={searchQuery}

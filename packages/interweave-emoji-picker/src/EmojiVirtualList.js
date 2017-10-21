@@ -33,6 +33,7 @@ type EmojiListProps = {
   emojiSize: number,
   emojiSource: EmojiSource,
   hasCommonlyUsed: boolean,
+  hideGroupHeaders: boolean,
   onEnterEmoji: (emoji: Emoji, e: *) => void,
   onLeaveEmoji: (emoji: Emoji, e: *) => void,
   onScroll: (e: *) => void,
@@ -68,6 +69,7 @@ export default class EmojiVirtualList extends React.PureComponent<EmojiListProps
     emojiSize: PropTypes.number.isRequired,
     emojiSource: EmojiSourceShape.isRequired,
     hasCommonlyUsed: PropTypes.bool.isRequired,
+    hideGroupHeaders: PropTypes.bool.isRequired,
     onEnterEmoji: PropTypes.func.isRequired,
     onLeaveEmoji: PropTypes.func.isRequired,
     onScroll: PropTypes.func.isRequired,
@@ -123,6 +125,7 @@ export default class EmojiVirtualList extends React.PureComponent<EmojiListProps
       disableGroups,
       emojis,
       hasCommonlyUsed,
+      hideGroupHeaders,
       searchQuery,
     } = props;
     const groups = {};
@@ -166,10 +169,11 @@ export default class EmojiVirtualList extends React.PureComponent<EmojiListProps
 
       groupIndices[group] = rows.length;
 
-      rows.push(
-        group,
-        ...chunk(groups[group], columnCount),
-      );
+      if (!hideGroupHeaders) {
+        rows.push(group);
+      }
+
+      rows.push(...chunk(groups[group], columnCount));
     });
 
     this.setState({

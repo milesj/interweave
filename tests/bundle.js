@@ -96,6 +96,7 @@ function App() {
           disableCommonlyUsed
           disableGroups
           disableSearch
+          hideGroupHeaders
           messages={{
             noGroups: 'Fantasy',
           }}

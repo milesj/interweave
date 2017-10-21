@@ -34,6 +34,7 @@ type EmojiListProps = {
   emojiSize: number,
   emojiSource: EmojiSource,
   hasCommonlyUsed: boolean,
+  hideGroupHeaders: boolean,
   onEnterEmoji: (emoji: Emoji, e: *) => void,
   onLeaveEmoji: (emoji: Emoji, e: *) => void,
   onScroll: (e: *) => void,
@@ -68,6 +69,7 @@ export default class EmojiList extends React.PureComponent<EmojiListProps, Emoji
     emojiSize: PropTypes.number.isRequired,
     emojiSource: EmojiSourceShape.isRequired,
     hasCommonlyUsed: PropTypes.bool.isRequired,
+    hideGroupHeaders: PropTypes.bool.isRequired,
     onEnterEmoji: PropTypes.func.isRequired,
     onLeaveEmoji: PropTypes.func.isRequired,
     onScroll: PropTypes.func.isRequired,
@@ -283,6 +285,7 @@ export default class EmojiList extends React.PureComponent<EmojiListProps, Emoji
       emojiPath,
       emojiSize,
       emojiSource,
+      hideGroupHeaders,
       skinTonePalette,
       onEnterEmoji,
       onLeaveEmoji,
@@ -310,11 +313,13 @@ export default class EmojiList extends React.PureComponent<EmojiListProps, Emoji
               className={classNames.emojisSection}
               id={`emoji-group-${group}`}
             >
-              <GroupListHeader
-                commonMode={commonMode}
-                group={group}
-                skinTonePalette={skinTonePalette}
-              />
+              {!hideGroupHeaders && (
+                <GroupListHeader
+                  commonMode={commonMode}
+                  group={group}
+                  skinTonePalette={skinTonePalette}
+                />
+              )}
 
               <div className={classNames.emojisBody}>
                 {groupedEmojis[group].map((emoji, index) => (
