@@ -408,6 +408,10 @@ class Picker extends React.Component<PickerProps, PickerState> {
    * so we need to rebuild the list with full emoji objects.
    */
   generateCommonEmojis(commonEmojis: CommonEmoji[]): Emoji[] {
+    if (this.props.disableCommonlyUsed) {
+      return [];
+    }
+
     const data = EmojiData.getInstance(this.props.emojiSource.locale);
 
     return commonEmojis
@@ -424,7 +428,7 @@ class Picker extends React.Component<PickerProps, PickerState> {
 
     // Allow commonly used before "none" groups
     if (group === GROUP_COMMONLY_USED) {
-      if (this.hasCommonlyUsed()) {
+      if (this.state.commonEmojis.length > 0) {
         return GROUP_COMMONLY_USED;
       }
 
@@ -438,6 +442,10 @@ class Picker extends React.Component<PickerProps, PickerState> {
    * Return the commonly used emojis from local storage.
    */
   getCommonEmojisFromStorage(): CommonEmoji[] {
+    if (this.props.disableCommonlyUsed) {
+      return [];
+    }
+
     const rawCommon = localStorage.getItem(KEY_COMMONLY_USED);
     const common = rawCommon ? JSON.parse(rawCommon) : [];
     const data = EmojiData.getInstance(this.props.emojiSource.locale);
@@ -633,13 +641,6 @@ class Picker extends React.Component<PickerProps, PickerState> {
   };
 
   /**
-   * Determine whether to show the commonly used group.
-   */
-  hasCommonlyUsed(): boolean {
-    return (!this.props.disableCommonlyUsed && this.state.commonEmojis.length > 0);
-  }
-
-  /**
    * Set the initial emoji state once emoji data has loaded.
    */
   setInitialEmojis(emojis: Emoji[]) {
@@ -711,7 +712,6 @@ class Picker extends React.Component<PickerProps, PickerState> {
       searchQuery,
     } = this.state;
     const List = virtual ? EmojiVirtualList : EmojiList;
-    const hasCommonlyUsed = this.hasCommonlyUsed();
     const components = {
       emojis: (
         <List
@@ -727,7 +727,6 @@ class Picker extends React.Component<PickerProps, PickerState> {
           emojis={emojis}
           emojiSize={emojiSize}
           emojiSource={emojiSource}
-          hasCommonlyUsed={hasCommonlyUsed}
           hideGroupHeaders={hideGroupHeaders}
           rowCount={rowCount}
           scrollToGroup={scrollToGroup}
@@ -750,8 +749,8 @@ class Picker extends React.Component<PickerProps, PickerState> {
         <GroupTabs
           key="groups"
           activeGroup={activeGroup}
+          commonEmojis={commonEmojis}
           emojiPath={emojiPath}
-          hasCommonlyUsed={hasCommonlyUsed}
           icons={icons}
           onSelect={this.handleSelectGroup}
         />

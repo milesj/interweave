@@ -6,14 +6,15 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
+import { EmojiShape } from 'interweave-emoji';
 import Group from './Group';
 import { GROUPS, GROUP_COMMONLY_USED, GROUP_ICONS } from './constants';
 
-import type { EmojiPath } from 'interweave-emoji'; // eslint-disable-line
+import type { Emoji, EmojiPath } from 'interweave-emoji'; // eslint-disable-line
 
 type GroupTabsProps = {
   activeGroup: string,
-  hasCommonlyUsed: boolean,
+  commonEmojis: Emoji[],
   icons: { [key: string]: React$Node },
   onSelect: (group: string, e: SyntheticEvent<*>) => void,
 };
@@ -25,7 +26,7 @@ export default class GroupTabs extends React.PureComponent<GroupTabsProps> {
 
   static propTypes = {
     activeGroup: PropTypes.string.isRequired,
-    hasCommonlyUsed: PropTypes.bool.isRequired,
+    commonEmojis: PropTypes.arrayOf(EmojiShape).isRequired,
     icons: PropTypes.objectOf(PropTypes.node).isRequired,
     onSelect: PropTypes.func.isRequired,
   };
@@ -33,14 +34,14 @@ export default class GroupTabs extends React.PureComponent<GroupTabsProps> {
   render(): React$Node {
     const {
       activeGroup,
-      hasCommonlyUsed,
+      commonEmojis,
       icons,
       onSelect,
     } = this.props;
     const { classNames } = this.context;
     const groups = [...GROUPS];
 
-    if (hasCommonlyUsed) {
+    if (commonEmojis.length > 0) {
       groups.unshift(GROUP_COMMONLY_USED);
     }
 

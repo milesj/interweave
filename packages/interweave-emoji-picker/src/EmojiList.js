@@ -33,7 +33,6 @@ type EmojiListProps = {
   emojis: Emoji[],
   emojiSize: number,
   emojiSource: EmojiSource,
-  hasCommonlyUsed: boolean,
   hideGroupHeaders: boolean,
   onEnterEmoji: (emoji: Emoji, e: *) => void,
   onLeaveEmoji: (emoji: Emoji, e: *) => void,
@@ -68,7 +67,6 @@ export default class EmojiList extends React.PureComponent<EmojiListProps, Emoji
     emojis: PropTypes.arrayOf(EmojiShape).isRequired,
     emojiSize: PropTypes.number.isRequired,
     emojiSource: EmojiSourceShape.isRequired,
-    hasCommonlyUsed: PropTypes.bool.isRequired,
     hideGroupHeaders: PropTypes.bool.isRequired,
     onEnterEmoji: PropTypes.func.isRequired,
     onLeaveEmoji: PropTypes.func.isRequired,
@@ -131,13 +129,12 @@ export default class EmojiList extends React.PureComponent<EmojiListProps, Emoji
       commonEmojis,
       disableGroups,
       emojis,
-      hasCommonlyUsed,
       searchQuery,
     } = this.props;
     const groups = {};
 
     // Add commonly used group if not searching
-    if (!searchQuery && hasCommonlyUsed) {
+    if (!searchQuery && commonEmojis.length > 0) {
       groups[GROUP_COMMONLY_USED] = commonEmojis;
     }
 
