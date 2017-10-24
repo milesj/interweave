@@ -21,7 +21,7 @@
     "updated": "lerna updated"
   },
   "devDependencies": {
-    "@milesj/build-tool-config": "^0.34.1",
+    "@milesj/build-tool-config": "^0.35.0",
     "emojibase-test-utils": "^2.1.1",
     "lerna": "^2.4.0",
     "serve": "^6.3.1"

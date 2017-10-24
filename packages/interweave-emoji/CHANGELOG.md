@@ -1,4 +1,4 @@
-# 1.3.0
+# 1.3.0 - 10/23/17
 #### 🚀 New
 * Updated `withEmojiData` to refresh data if props change.
 

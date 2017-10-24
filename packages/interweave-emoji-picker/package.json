@@ -19,14 +19,14 @@
     "babel-runtime": "^6.26.0",
     "lodash": "^4.17.4",
     "prop-types": "^15.6.0",
-    "react-virtualized": "^9.11.1"
+    "react-virtualized": "^9.12.0"
   },
   "peerDependencies": {
     "interweave-emoji": "^1.2.0",
     "react": "^15.3.0 || ^16.0.0"
   },
   "devDependencies": {
-    "@milesj/build-tool-config": "^0.34.1",
+    "@milesj/build-tool-config": "^0.35.0",
     "emojibase": "^1.4.2",
     "interweave-emoji": "^1.2.0",
     "react": "^16.0.0"

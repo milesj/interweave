@@ -1,4 +1,4 @@
-# 1.3.0
+# 1.3.0 - 10/23/17
 #### 🚀 New
 * Rewrote all regex patterns to more efficiently and accurately match their targets.
   * URLs are now properly captured, even when suffixed with a period (end of sentence).

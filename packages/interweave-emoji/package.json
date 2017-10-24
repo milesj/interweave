@@ -25,7 +25,7 @@
     "react": "^15.3.0 || ^16.0.0"
   },
   "devDependencies": {
-    "@milesj/build-tool-config": "^0.34.1",
+    "@milesj/build-tool-config": "^0.35.0",
     "emojibase": "^1.4.2",
     "interweave": "^8.0.0",
     "react": "^16.0.0"
