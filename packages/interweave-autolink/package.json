@@ -12,8 +12,9 @@
     "autolink"
   ],
   "main": "./lib/index.js",
+  "module": "./esm/index.js",
   "scripts": {
-    "build": "build-lib ./src -d ./lib"
+    "build": "build-lib"
   },
   "repository": "https://github.com/milesj/interweave/tree/master/packages/interweave-autolink",
   "license": "MIT",
@@ -26,7 +27,7 @@
     "react": "^15.3.0 || ^16.0.0"
   },
   "devDependencies": {
-    "@milesj/build-tool-config": "^0.35.0",
+    "@milesj/build-tool-config": "^0.39.0",
     "interweave": "^8.0.1",
     "react": "^16.0.0"
   }
