@@ -21,7 +21,7 @@
     "updated": "lerna updated"
   },
   "devDependencies": {
-    "@milesj/build-tool-config": "^0.39.0",
+    "@milesj/build-tool-config": "^0.40.0",
     "emojibase-test-utils": "^2.1.1",
     "lerna": "^2.4.0",
     "serve": "^6.3.1"
@@ -38,14 +38,6 @@
     "*.min.js",
     "*.map"
   ],
-  "jest": {
-    "preset": "@milesj/build-tool-config",
-    "roots": [
-      "./packages",
-      "./tests"
-    ],
-    "testRegex": "./packages/([-a-z]+)?/tests/.*\\.test\\.js$"
-  },
   "workspaces": [
     "packages/*"
   ]

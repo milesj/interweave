@@ -11,7 +11,7 @@
   "main": "./lib/index.js",
   "module": "./esm/index.js",
   "scripts": {
-    "build": "build-lib"
+    "build": "build-lib --react"
   },
   "repository": "https://github.com/milesj/interweave/tree/master/packages/interweave-emoji",
   "license": "MIT",
@@ -26,7 +26,7 @@
     "react": "^15.3.0 || ^16.0.0"
   },
   "devDependencies": {
-    "@milesj/build-tool-config": "^0.39.0",
+    "@milesj/build-tool-config": "^0.40.0",
     "emojibase": "^1.4.2",
     "interweave": "^8.0.1",
     "react": "^16.0.0"
