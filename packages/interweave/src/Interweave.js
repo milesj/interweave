@@ -112,7 +112,7 @@ export default class Interweave extends React.Component<InterweaveProps> {
       }
 
       return nextString;
-    }, content);
+    }, content || '');
 
     // Parse the markup
     const parser = new Parser(markup, props, allMatchers, allFilters);

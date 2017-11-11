@@ -150,6 +150,12 @@ describe('Interweave', () => {
     expect(wrapper.prop('children')).toBe(null);
   });
 
+  it('allows empty `content` to be passed when using callbacks', () => {
+    const wrapper = shallow(<Interweave content={null} onBeforeParse={value => value} />);
+
+    expect(wrapper.prop('children')).toBe(null);
+  });
+
   it('will render the `emptyContent` if no content exists', () => {
     const empty = <div>Foo</div>;
     const wrapper = shallow(<Interweave content="" emptyContent={empty} />);
