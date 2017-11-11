@@ -3,7 +3,7 @@
   "name": "interweave",
   "scripts": {
     "assemble": "yarn run bootstrap && yarn run build && yarn test",
-    "bootstrap": "lerna bootstrap --hoist",
+    "bootstrap": "lerna bootstrap",
     "bootstrap:slow": "yarn run bootstrap --concurrency 1",
     "build": "lerna run build",
     "clean": "lerna clean --yes",
@@ -13,7 +13,6 @@
     "jest": "run-tests",
     "posttest": "yarn run flow",
     "pretest": "yarn run eslint",
-    "outdated": "yarn outdated; for dir in `find ./packages/ -type d -maxdepth 1`; do (cd \"$dir\" && yarn outdated); done;",
     "publish": "lerna publish",
     "publish:force": "lerna publish --force-publish *",
     "test": "yarn run jest",
@@ -21,10 +20,10 @@
     "updated": "lerna updated"
   },
   "devDependencies": {
-    "@milesj/build-tool-config": "^0.40.0",
-    "emojibase-test-utils": "^2.1.1",
-    "lerna": "^2.4.0",
-    "serve": "^6.3.1"
+    "@milesj/build-tool-config": "^0.41.2",
+    "emojibase-test-utils": "^2.1.2",
+    "lerna": "^2.5.1",
+    "serve": "^6.4.1"
   },
   "babel": {
     "presets": "@milesj/build-tool-config/babel"
