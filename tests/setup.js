@@ -1,5 +1,3 @@
-/* eslint-disable no-undef */
-
 import { loadEmojiData } from 'emojibase-test-utils';
 import EmojiData from '../packages/interweave-emoji/src/EmojiData';
 

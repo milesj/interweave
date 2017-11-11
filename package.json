@@ -2,52 +2,41 @@
   "private": true,
   "name": "interweave",
   "scripts": {
-    "assemble": "yarn run clean && yarn run bootstrap && yarn run build && yarn test",
-    "bootstrap": "lerna bootstrap --hoist",
-    "bootstrap:slow": "yarn run bootstrap --concurrency=1",
+    "assemble": "yarn run bootstrap && yarn run build && yarn test",
+    "bootstrap": "lerna bootstrap",
+    "bootstrap:slow": "yarn run bootstrap --concurrency 1",
     "build": "lerna run build",
-    "clean": "rimraf ./packages/{*}/lib/ && lerna clean --yes",
-    "coverage": "run-coverage",
-    "eslint": "run-linter ./tests ./packages/*/{src,tests}",
+    "clean": "lerna clean --yes",
+    "coverage": "run-tests --coverage",
+    "eslint": "run-linter",
     "flow": "type-check",
     "jest": "run-tests",
     "posttest": "yarn run flow",
     "pretest": "yarn run eslint",
-    "outdated": "yarn outdated; for dir in `find ./packages/ -type d -maxdepth 1`; do (cd \"$dir\" && yarn outdated); done;",
     "publish": "lerna publish",
-    "publish:force": "lerna publish --force-publish=*",
+    "publish:force": "lerna publish --force-publish *",
     "test": "yarn run jest",
     "test:live": "yarn run build && bundle-lib ./tests/bundle.js ./tests/bundle.min.js && serve ./tests/",
     "updated": "lerna updated"
   },
   "devDependencies": {
-    "@milesj/build-tool-config": "^0.35.0",
-    "emojibase-test-utils": "^2.1.1",
-    "lerna": "^2.4.0",
-    "serve": "^6.3.1"
+    "@milesj/build-tool-config": "^0.41.2",
+    "emojibase-test-utils": "^2.1.2",
+    "lerna": "^2.5.1",
+    "serve": "^6.4.1"
   },
   "babel": {
-    "extends": "./node_modules/@milesj/build-tool-config/babel.json5"
+    "presets": "@milesj/build-tool-config/babel"
   },
   "eslintConfig": {
-    "extends": "./node_modules/@milesj/build-tool-config/eslint.json5",
-    "rules": {
-      "react/sort-comp": "off"
-    }
+    "extends": "./node_modules/@milesj/build-tool-config/eslint.js"
   },
   "eslintIgnore": [
+    "esm/",
     "lib/",
     "*.min.js",
     "*.map"
   ],
-  "jest": {
-    "preset": "@milesj/build-tool-config",
-    "roots": [
-      "./packages",
-      "./tests"
-    ],
-    "testRegex": "./packages/([-a-z]+)?/tests/.*\\.test\\.js$"
-  },
   "workspaces": [
     "packages/*"
   ]

@@ -1,4 +1,4 @@
-/* eslint-disable no-console, no-magic-numbers, react/jsx-no-literals, react/jsx-curly-brace-presence, max-len, sort-keys */
+/* eslint-disable no-console, no-magic-numbers, react/jsx-curly-brace-presence */
 
 import React from 'react';
 import ReactDOM from 'react-dom';

@@ -13,7 +13,7 @@
   ],
   "main": "./lib/index.js",
   "scripts": {
-    "build": "build-lib ./src -d ./lib"
+    "build": "build-lib --react"
   },
   "repository": "https://github.com/milesj/interweave/tree/master/packages/interweave-autolink",
   "license": "MIT",
@@ -26,8 +26,8 @@
     "react": "^15.3.0 || ^16.0.0"
   },
   "devDependencies": {
-    "@milesj/build-tool-config": "^0.35.0",
+    "@milesj/build-tool-config": "^0.41.2",
     "interweave": "^8.0.1",
-    "react": "^16.0.0"
+    "react": "^16.1.0"
   }
 }

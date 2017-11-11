@@ -10,13 +10,13 @@
   ],
   "main": "./lib/index.js",
   "scripts": {
-    "build": "build-lib ./src -d ./lib"
+    "build": "build-lib --react"
   },
   "repository": "https://github.com/milesj/interweave/tree/master/packages/interweave-emoji",
   "license": "MIT",
   "dependencies": {
     "babel-runtime": "^6.26.0",
-    "emojibase-regex": "^1.0.8",
+    "emojibase-regex": "^1.0.9",
     "prop-types": "^15.6.0"
   },
   "peerDependencies": {
@@ -25,9 +25,9 @@
     "react": "^15.3.0 || ^16.0.0"
   },
   "devDependencies": {
-    "@milesj/build-tool-config": "^0.35.0",
-    "emojibase": "^1.4.2",
+    "@milesj/build-tool-config": "^0.41.2",
+    "emojibase": "^1.4.3",
     "interweave": "^8.0.1",
-    "react": "^16.0.0"
+    "react": "^16.1.0"
   }
 }
