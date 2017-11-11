@@ -1,3 +1,8 @@
+# 1.3.1 - 11/10/17
+#### 🛠 Internal
+* Tested against React 16.1.
+* Improved build process.
+
 # 1.3.0 - 10/23/17
 #### 🚀 New
 * Added a `disableGroups` prop to `Picker`, which will hide the tabs and disable group headers.

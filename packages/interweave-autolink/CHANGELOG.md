@@ -1,3 +1,8 @@
+# 1.3.1 - 11/10/17
+#### 🛠 Internal
+* Tested against React 16.1.
+* Improved build process.
+
 # 1.3.0 - 10/23/17
 #### 🚀 New
 * Rewrote all regex patterns to more efficiently and accurately match their targets.

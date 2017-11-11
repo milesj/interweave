@@ -1,3 +1,11 @@
+# 1.3.1 - 11/10/17
+#### 🚀 New
+* Updated `emojibase-regex` to 1.0.9.
+
+#### 🛠 Internal
+* Tested against React 16.1.
+* Improved build process.
+
 # 1.3.0 - 10/23/17
 #### 🚀 New
 * Updated `withEmojiData` to refresh data if props change.
