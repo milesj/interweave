@@ -1,10 +1,14 @@
-# 8.0.1 - 11/10/17
+# 8.0.2 - 11/10/17
 #### 🐞 Fixed
 * Fixed a bug where passing a `null` content with `onBeforeParse` would throw errors.
 
 #### 🛠 Internal
 * Tested against React 16.1.
 * Improved build process.
+
+# 8.0.1 - 10/23/17
+#### 🛠 Internal
+* Fixed dependencies.
 
 # 8.0.0 - 10/12/17
 #### 💥 Breaking
