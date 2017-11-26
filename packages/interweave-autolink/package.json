@@ -26,8 +26,8 @@
     "react": "^15.3.0 || ^16.0.0"
   },
   "devDependencies": {
-    "@milesj/build-tool-config": "^0.41.2",
+    "@milesj/build-tool-config": "^0.42.0",
     "interweave": "^8.0.2",
-    "react": "^16.1.0"
+    "react": "^16.1.1"
   }
 }

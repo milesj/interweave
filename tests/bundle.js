@@ -1,4 +1,4 @@
-/* eslint-disable no-console, no-magic-numbers, react/jsx-curly-brace-presence */
+/* eslint-disable no-console, no-magic-numbers */
 
 import React from 'react';
 import ReactDOM from 'react-dom';
@@ -68,7 +68,9 @@ const Interweave = withEmojiData(BaseInterweave);
 function App() {
   return (
     <div className="interweave__examples">
-      <h1>Picker</h1>
+      <h1>
+        Picker
+      </h1>
 
       <div className="demo-grid">
         <EmojiPicker
@@ -121,7 +123,9 @@ function App() {
         />
       </div>
 
-      <h1>Copy</h1>
+      <h1>
+        Copy
+      </h1>
 
       <Interweave
         tagName="div"
@@ -138,7 +142,9 @@ function App() {
         content={contentWithBrs}
       />
 
-      <h1>Hashtags</h1>
+      <h1>
+        Hashtags
+      </h1>
 
       <Interweave
         tagName="div"
@@ -160,7 +166,9 @@ function App() {
         content="#lonely"
       />
 
-      <h1>URLs, IPs</h1>
+      <h1>
+        URLs, IPs
+      </h1>
 
       <Interweave
         tagName="div"
@@ -182,7 +190,9 @@ function App() {
         content="http://milesj.me?foo=bar"
       />
 
-      <h1>Emails</h1>
+      <h1>
+        Emails
+      </h1>
 
       <Interweave
         tagName="div"
@@ -196,7 +206,9 @@ function App() {
         content="email@domain.com"
       />
 
-      <h1>Emoticons</h1>
+      <h1>
+        Emoticons
+      </h1>
 
       <Interweave
         tagName="div"
@@ -234,7 +246,9 @@ function App() {
         content="8#"
       />
 
-      <h1>Shortcodes</h1>
+      <h1>
+        Shortcodes
+      </h1>
 
       <Interweave
         tagName="div"
@@ -260,7 +274,9 @@ function App() {
         content=":cat_face:"
       />
 
-      <h1>Unicode Escapes</h1>
+      <h1>
+        Unicode Escapes
+      </h1>
 
       <Interweave
         tagName="div"
@@ -286,7 +302,9 @@ function App() {
         content={'\uD83D\uDC31'}
       />
 
-      <h1>Unicode Literals</h1>
+      <h1>
+        Unicode Literals
+      </h1>
 
       <Interweave
         tagName="div"
@@ -312,7 +330,9 @@ function App() {
         content="🐱"
       />
 
-      <h1>Emojis</h1>
+      <h1>
+        Emojis
+      </h1>
 
       <Interweave
         {...emojiProps}
