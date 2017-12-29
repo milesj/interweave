@@ -1,3 +1,7 @@
+# 1.3.2
+#### 🐞 Fixed
+* Fixed a bug where the list would jump around while using the arrow keys.
+
 # 1.3.1 - 11/10/17
 #### 🛠 Internal
 * Tested against React 16.1.
