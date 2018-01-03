@@ -39,16 +39,16 @@ import EmojiPicker from 'interweave-emoji-picker';
 
 #### Props
 
-* `autoFocus` (bool) - When rendered, focus the search field. Defaults to `false`.
+* `autoFocus` (bool) - Focus the search field on mount. Defaults to `false`.
 * `blacklist` (string[]) - List of hexcodes to exclude.
 * `classNames` (object) - Mapping of custom CSS class names.
 * `columnCount` (number) - Number of columns in the list. Defaults to `10`.
 * `commonMode` (enum) - Type of commonly used mode. Defaults to recently used.
-  [View mode enums](https://github.com/milesj/interweave/blob/master/packages/interweave-emoji-picker/src/constants.js#L76).
+  [View available modes][modes].
 * `defaultGroup` (enum) - Group tab selected by default. Defaults to common mode.
-  [View group enums](https://github.com/milesj/interweave/blob/master/packages/interweave-emoji-picker/src/constants.js#L9).
+  [View available groups][groups].
 * `defaultSkinTone` (enum) - Skin tone selected by default. Defaults to none (yellow).
-  [View skin tone enums](https://github.com/milesj/interweave/blob/master/packages/interweave-emoji-picker/src/constants.js#L44).
+  [View available skin tones][skins].
 * `disableCommonlyUsed` (bool) - Disable the commonly used feature. Defaults to `false`.
 * `disableGroups` (bool) - Disable emoji group tabs and sections. Defaults to `false`.
 * `disablePreview` (bool) - Disable and hide the emoji preview on hover. Defaults to `false`.
@@ -70,15 +70,13 @@ import EmojiPicker from 'interweave-emoji-picker';
 * `onSelectGroup` (function) - Callback triggered when a group tab is clicked.
 * `onSelectSkinTone` (function) - Callback triggered when a skin tone tab is clicked.
 * `rowCount` (number) - Number of rows in the visible list. Defaults to `8`.
-* `virtual` (bool) - Use `react-virtualized` when rendering the list. Defaults to `false`.
+* `virtual` (bool) - Use [react-virtualized][react-virtualized] when rendering the list. Defaults to `false`.
 * `whitelist` (string[]) - List of hexcodes to only display.
 
 ### Blacklist / Whitelist
 
-Sometimes there are situations where specific emojis should not be used, like the poop emoji.
-This can easily be achieved with the `blacklist` prop, which accepts an array of hexcodes.
-
-> Not sure where to find a hexcode? Dig around [Emojibase][emojibase].
+Sometimes specific emojis should not be used, like the poop emoji. This can easily be achieved
+with the `blacklist` prop, which accepts an array of hexcodes.
 
 ```javascript
 <EmojiPicker
@@ -90,7 +88,7 @@ This can easily be achieved with the `blacklist` prop, which accepts an array of
 ```
 
 The inverse, the `whitelist` prop, can be used for situations where a restricted list of emojis
-should only be used. This also accepts an array of hexcodes.
+should *only* be used. This also accepts an array of hexcodes.
 
 ```javascript
 // Only trees
@@ -105,7 +103,7 @@ should only be used. This also accepts an array of hexcodes.
 />
 ```
 
-[emojibase]: https://github.com/milesj/emojibase
+> Not sure where to find a hexcode? Dig around [Emojibase][emojibase].
 
 ### Commonly Used
 
@@ -114,7 +112,7 @@ a custom group within the emoji list. This history has two modes, recently used 
 used, and can be customized with the `commonMode` prop. Selected emojis that fall past the
 `maxCommonlyUsed` prop are trimmed from the history.
 
-* `recentlyUsed` - Tracks selected emojis from latest to oldest.
+* `recentlyUsed` - Tracks selected emojis from most recently selected to oldest.
 * `frequentlyUsed` - Tracks selected emojis using a counter, in descending order.
 
 ```javascript
@@ -129,17 +127,112 @@ The commonly used feature can be disabled with the `disableCommonlyUsed` prop.
 
 ### Changing Appearance
 
-TODO
+This picker is quite customizable, if not the most customizable, when it comes to its visual
+appearance. Every aspect of the picker can be changed, whether it be the order of elements, hiding
+or showing elements, the number of emojis to render, and more. I'll try to keep this rather short.
+
+To change the number of visible emojis rendered in the list, define the `columnCount` and
+`rowCount` props. Furthermore, to render the emoji using [react-virtualized][react-virtualized],
+pass a `virtual` prop.
+
+```javascript
+<EmojiPicker
+  columnCount={15}
+  rowCount={5}
+  virtual
+/>
+```
+
+To change the default selected group tab or skin tone palette, define the `defaultGroup`
+([list][groups]) and `defaultSkinTone` ([list][skins]) props respectively.
+
+```javascript
+<EmojiPicker
+  defaultGroup="foodDrink"
+  defaultSkinTone="medium"
+/>
+```
+
+By default, the picker renders elements in the following order: emoji being hovered preview at the
+top, followed by the list of emojis, the search bar, and the group tabs. This order can be
+changed with the `displayOrder` prop, which accepts an array of strings.
+
+```javascript
+<EmojiPicker
+  displayOrder={['groups', 'search', 'emojis', 'preview']}
+/>
+```
+
+To disable one of the elements mentioned previously, pass a `disableGroups`, `disablePreview`,
+`disableSearch`, or `disableSkinTones` prop.
+
+```javascript
+<EmojiPicker
+  disableSearch
+  disableSkinTones
+/>
+```
+
+To hide emoticons or shortcodes within the preview, pass the `hideEmoticon` or `hideShortcodes`
+props. Furthermore, to hide group headers (but still use group tabs), pass `hideGroupHeaders`.
+
+```javascript
+<EmojiPicker
+  hideEmoticon
+  hideGroupHeaders
+/>
+```
+
+And lastly, to customize the icons displayed in the group tabs, pass an object of nodes to
+the `icons` ([list][icons]) prop. By default the picker uses native emoji but can render
+React components.
+
+```javascript
+<EmojiPicker
+  icons={{
+    activities: <IconBasketball />,
+  }}
+/>
+```
 
 ### Customizing Styles
 
-TODO
+The picker is not styled by default as it allows consumers to easily customize the CSS to match
+their application. There are 2 approaches to styling the picker, the first by writing CSS that
+follows the [class names provided by Interweave][classes].
+
+```css
+.interweave-picker__picker {
+  position: 'absolute';
+  bottom: 100%;
+}
+```
+
+The second by writing CSS and passing an object of custom class names to the `classNames` prop.
+This approach enables non-standard solutions, like CSS modules and CSS-in-JS.
+
+```javascript
+<EmojiPicker
+  classNames={{
+    picker: 'picker-7sa92dsd',
+  }}
+/>
+```
+
+The `emojiPadding` prop is an exception to the CSS pattern, as it pads the emoji button using
+inline styles. This is necessary for correctly computing widths and heights.
+
+```javascript
+<EmojiPicker
+  emojiPadding={5}
+/>
+```
 
 ### Translating Messages
 
 Localization is important, and thus, all messages within the picker can be translated with the
 `messages` prop. This prop accepts an object of message keys to translated strings. The list of
-[all available messages can be found here](https://github.com/milesj/interweave/blob/master/packages/interweave-emoji-picker/src/constants.js#L108).
+[available messages can be found here][messages].
 
 ```javascript
 <EmojiPicker
@@ -151,3 +244,12 @@ Localization is important, and thus, all messages within the picker can be trans
 ```
 
 > Messages are treated as React nodes and may contain elements / components.
+
+[classes]: https://github.com/milesj/interweave/blob/master/packages/interweave-emoji-picker/src/constants.js#L79
+[groups]: https://github.com/milesj/interweave/blob/master/packages/interweave-emoji-picker/src/constants.js#L9
+[icons]: https://github.com/milesj/interweave/blob/master/packages/interweave-emoji-picker/src/constants.js#L32
+[messages]: https://github.com/milesj/interweave/blob/master/packages/interweave-emoji-picker/src/constants.js#L108
+[modes]: https://github.com/milesj/interweave/blob/master/packages/interweave-emoji-picker/src/constants.js#L76
+[skins]: https://github.com/milesj/interweave/blob/master/packages/interweave-emoji-picker/src/constants.js#L44
+[emojibase]: https://github.com/milesj/emojibase
+[react-virtualized]: https://github.com/bvaughn/react-virtualized
