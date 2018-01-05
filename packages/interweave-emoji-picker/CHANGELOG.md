@@ -1,6 +1,7 @@
-# 1.3.2
+# 1.4.0
 #### 🐞 Fixed
-* Fixed a bug where the list would jump around while using the arrow keys.
+* Fixed a bug where the emoji list would jump around while using the arrow keys.
+* Fixed a bug where strings weren't acceptable values for `emojiLargeSize` in the preview.
 
 # 1.3.1 - 11/10/17
 #### 🛠 Internal

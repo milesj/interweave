@@ -6,7 +6,12 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import EmojiCharacter, { EmojiShape, EmojiPathShape, EmojiSourceShape } from 'interweave-emoji';
+import EmojiCharacter, {
+  EmojiShape,
+  EmojiPathShape,
+  EmojiSizeShape,
+  EmojiSourceShape,
+} from 'interweave-emoji';
 
 import type { Emoji, EmojiPath, EmojiSize, EmojiSource } from 'interweave-emoji'; // eslint-disable-line
 
@@ -29,7 +34,7 @@ export default class PreviewBar extends React.PureComponent<PreviewBarProps> {
 
   static propTypes = {
     emoji: EmojiShape,
-    emojiLargeSize: PropTypes.number.isRequired,
+    emojiLargeSize: EmojiSizeShape.isRequired,
     emojiPath: EmojiPathShape.isRequired,
     emojiSource: EmojiSourceShape.isRequired,
     hideEmoticon: PropTypes.bool.isRequired,
@@ -43,21 +48,22 @@ export default class PreviewBar extends React.PureComponent<PreviewBarProps> {
   /**
    * Format the title using sentence case.
    */
-  formatTitle(): string {
+  formatTitle(title: string): string {
     const { emoji } = this.props;
 
     if (!emoji) {
       return '';
     }
 
-    const { annotation, primary_shortcode: shortcode } = emoji;
+    const { annotation, primary_shortcode: shortcode = '' } = emoji;
 
-    // Flags and country names are cased correctly
-    if (shortcode && shortcode.indexOf('flag_') >= 0) {
+    // Flag and country names are cased correctly
+    if (annotation && shortcode.indexOf('flag_') >= 0) {
       return annotation;
     }
 
-    return annotation.replace(TITLE_REGEX, token => token.toUpperCase());
+    // Uppercase certain characters
+    return title.replace(TITLE_REGEX, token => token.toUpperCase());
   }
 
   render(): React$Node {
@@ -109,7 +115,7 @@ export default class PreviewBar extends React.PureComponent<PreviewBarProps> {
         <div className={classNames.previewContent}>
           {title && (
             <div className={classNames.previewTitle}>
-              {this.formatTitle()}
+              {this.formatTitle(title)}
             </div>
           )}
 

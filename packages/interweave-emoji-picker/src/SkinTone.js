@@ -9,7 +9,7 @@ import PropTypes from 'prop-types';
 import { SKIN_COLORS } from './constants';
 
 type SkinToneProps = {
-  activeSkinTone: string,
+  active: boolean,
   onSelect: (skinTone: string, e: *) => void,
   skinTone: string,
 };
@@ -20,7 +20,7 @@ export default class SkinTone extends React.PureComponent<SkinToneProps> {
   };
 
   static propTypes = {
-    activeSkinTone: PropTypes.string.isRequired,
+    active: PropTypes.bool.isRequired,
     onSelect: PropTypes.func.isRequired,
     skinTone: PropTypes.string.isRequired,
   };
@@ -35,12 +35,12 @@ export default class SkinTone extends React.PureComponent<SkinToneProps> {
   };
 
   render(): React$Node {
-    const { activeSkinTone, skinTone } = this.props;
+    const { active, skinTone } = this.props;
     const { classNames } = this.context;
     const className = [classNames.skinTone];
     const color = SKIN_COLORS[skinTone];
 
-    if (skinTone === activeSkinTone) {
+    if (active) {
       className.push(classNames.skinToneActive);
     }
 

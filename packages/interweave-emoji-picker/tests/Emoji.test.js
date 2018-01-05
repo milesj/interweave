@@ -34,6 +34,7 @@ describe('Emoji', () => {
     const wrapper = shallow(<Emoji {...props} />, { context });
     const char = wrapper.find('Emoji');
 
+    expect(wrapper).toMatchSnapshot();
     expect(char).toHaveLength(1);
     expect(char.prop('hexcode')).toBe(props.emoji.hexcode);
   });
@@ -61,6 +62,21 @@ describe('Emoji', () => {
 
     expect(wrapper.prop('className'))
       .toBe('interweave-picker__emoji interweave-picker__emoji--active');
+  });
+
+  it('can customize class name', () => {
+    const wrapper = shallow(<Emoji {...props} active />, {
+      context: {
+        ...context,
+        classNames: {
+          ...context.classNames,
+          emoji: 'test-emoji',
+          emojiActive: 'test-emoji--active',
+        },
+      },
+    });
+
+    expect(wrapper.prop('className')).toBe('test-emoji test-emoji--active');
   });
 
   it('sets correct sizes', () => {

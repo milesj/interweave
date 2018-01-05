@@ -1,0 +1,411 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<PreviewBar /> renders a preview 1`] = `
+ShallowWrapper {
+  "length": 1,
+  Symbol(enzyme.__root__): [Circular],
+  Symbol(enzyme.__unrendered__): <PreviewBar
+    emoji={
+      Object {
+        "annotation": "slightly smiling face",
+        "canonical_shortcodes": Array [
+          ":pleased:",
+        ],
+        "emoji": "🙂",
+        "emoticon": ":)",
+        "group": 0,
+        "hexcode": "1F642",
+        "name": "SLIGHTLY SMILING FACE",
+        "order": 20,
+        "primary_shortcode": ":pleased:",
+        "shortcodes": Array [
+          "pleased",
+        ],
+        "subgroup": 0,
+        "tags": Array [
+          "face",
+          "smile",
+        ],
+        "type": 1,
+        "unicode": "🙂",
+        "version": 1,
+      }
+    }
+    emojiLargeSize="3em"
+    emojiPath="{{hexcode}}"
+    emojiSource={
+      Object {
+        "compact": false,
+        "locale": "en",
+        "version": "latest",
+      }
+    }
+    hideEmoticon={false}
+    hideShortcodes={false}
+  />,
+  Symbol(enzyme.__renderer__): Object {
+    "batchedUpdates": [Function],
+    "getNode": [Function],
+    "render": [Function],
+    "simulateEvent": [Function],
+    "unmount": [Function],
+  },
+  Symbol(enzyme.__node__): Object {
+    "instance": null,
+    "key": undefined,
+    "nodeType": "host",
+    "props": Object {
+      "children": Array [
+        <div
+          className="interweave-picker__preview-emoji"
+        >
+          <Emoji
+            emojiLargeSize="3em"
+            emojiPath="{{hexcode}}"
+            emojiSize="1em"
+            emojiSource={
+              Object {
+                "compact": false,
+                "locale": "en",
+                "version": "latest",
+              }
+            }
+            emoticon=""
+            enlargeEmoji={true}
+            hexcode="1F642"
+            renderUnicode={false}
+            shortcode=""
+            unicode=""
+          />
+        </div>,
+        <div
+          className="interweave-picker__preview-content"
+        >
+          <div
+            className="interweave-picker__preview-title"
+          >
+            Slightly smiling face
+          </div>
+          <div
+            className="interweave-picker__preview-subtitle"
+          >
+            :) :pleased:
+          </div>
+        </div>,
+      ],
+      "className": "interweave-picker__preview",
+    },
+    "ref": null,
+    "rendered": Array [
+      Object {
+        "instance": null,
+        "key": undefined,
+        "nodeType": "host",
+        "props": Object {
+          "children": <Emoji
+            emojiLargeSize="3em"
+            emojiPath="{{hexcode}}"
+            emojiSize="1em"
+            emojiSource={
+              Object {
+                "compact": false,
+                "locale": "en",
+                "version": "latest",
+              }
+            }
+            emoticon=""
+            enlargeEmoji={true}
+            hexcode="1F642"
+            renderUnicode={false}
+            shortcode=""
+            unicode=""
+          />,
+          "className": "interweave-picker__preview-emoji",
+        },
+        "ref": null,
+        "rendered": Object {
+          "instance": null,
+          "key": undefined,
+          "nodeType": "class",
+          "props": Object {
+            "emojiLargeSize": "3em",
+            "emojiPath": "{{hexcode}}",
+            "emojiSize": "1em",
+            "emojiSource": Object {
+              "compact": false,
+              "locale": "en",
+              "version": "latest",
+            },
+            "emoticon": "",
+            "enlargeEmoji": true,
+            "hexcode": "1F642",
+            "renderUnicode": false,
+            "shortcode": "",
+            "unicode": "",
+          },
+          "ref": null,
+          "rendered": null,
+          "type": [Function],
+        },
+        "type": "div",
+      },
+      Object {
+        "instance": null,
+        "key": undefined,
+        "nodeType": "host",
+        "props": Object {
+          "children": Array [
+            <div
+              className="interweave-picker__preview-title"
+            >
+              Slightly smiling face
+            </div>,
+            <div
+              className="interweave-picker__preview-subtitle"
+            >
+              :) :pleased:
+            </div>,
+          ],
+          "className": "interweave-picker__preview-content",
+        },
+        "ref": null,
+        "rendered": Array [
+          Object {
+            "instance": null,
+            "key": undefined,
+            "nodeType": "host",
+            "props": Object {
+              "children": "Slightly smiling face",
+              "className": "interweave-picker__preview-title",
+            },
+            "ref": null,
+            "rendered": "Slightly smiling face",
+            "type": "div",
+          },
+          Object {
+            "instance": null,
+            "key": undefined,
+            "nodeType": "host",
+            "props": Object {
+              "children": ":) :pleased:",
+              "className": "interweave-picker__preview-subtitle",
+            },
+            "ref": null,
+            "rendered": ":) :pleased:",
+            "type": "div",
+          },
+        ],
+        "type": "div",
+      },
+    ],
+    "type": "div",
+  },
+  Symbol(enzyme.__nodes__): Array [
+    Object {
+      "instance": null,
+      "key": undefined,
+      "nodeType": "host",
+      "props": Object {
+        "children": Array [
+          <div
+            className="interweave-picker__preview-emoji"
+          >
+            <Emoji
+              emojiLargeSize="3em"
+              emojiPath="{{hexcode}}"
+              emojiSize="1em"
+              emojiSource={
+                Object {
+                  "compact": false,
+                  "locale": "en",
+                  "version": "latest",
+                }
+              }
+              emoticon=""
+              enlargeEmoji={true}
+              hexcode="1F642"
+              renderUnicode={false}
+              shortcode=""
+              unicode=""
+            />
+          </div>,
+          <div
+            className="interweave-picker__preview-content"
+          >
+            <div
+              className="interweave-picker__preview-title"
+            >
+              Slightly smiling face
+            </div>
+            <div
+              className="interweave-picker__preview-subtitle"
+            >
+              :) :pleased:
+            </div>
+          </div>,
+        ],
+        "className": "interweave-picker__preview",
+      },
+      "ref": null,
+      "rendered": Array [
+        Object {
+          "instance": null,
+          "key": undefined,
+          "nodeType": "host",
+          "props": Object {
+            "children": <Emoji
+              emojiLargeSize="3em"
+              emojiPath="{{hexcode}}"
+              emojiSize="1em"
+              emojiSource={
+                Object {
+                  "compact": false,
+                  "locale": "en",
+                  "version": "latest",
+                }
+              }
+              emoticon=""
+              enlargeEmoji={true}
+              hexcode="1F642"
+              renderUnicode={false}
+              shortcode=""
+              unicode=""
+            />,
+            "className": "interweave-picker__preview-emoji",
+          },
+          "ref": null,
+          "rendered": Object {
+            "instance": null,
+            "key": undefined,
+            "nodeType": "class",
+            "props": Object {
+              "emojiLargeSize": "3em",
+              "emojiPath": "{{hexcode}}",
+              "emojiSize": "1em",
+              "emojiSource": Object {
+                "compact": false,
+                "locale": "en",
+                "version": "latest",
+              },
+              "emoticon": "",
+              "enlargeEmoji": true,
+              "hexcode": "1F642",
+              "renderUnicode": false,
+              "shortcode": "",
+              "unicode": "",
+            },
+            "ref": null,
+            "rendered": null,
+            "type": [Function],
+          },
+          "type": "div",
+        },
+        Object {
+          "instance": null,
+          "key": undefined,
+          "nodeType": "host",
+          "props": Object {
+            "children": Array [
+              <div
+                className="interweave-picker__preview-title"
+              >
+                Slightly smiling face
+              </div>,
+              <div
+                className="interweave-picker__preview-subtitle"
+              >
+                :) :pleased:
+              </div>,
+            ],
+            "className": "interweave-picker__preview-content",
+          },
+          "ref": null,
+          "rendered": Array [
+            Object {
+              "instance": null,
+              "key": undefined,
+              "nodeType": "host",
+              "props": Object {
+                "children": "Slightly smiling face",
+                "className": "interweave-picker__preview-title",
+              },
+              "ref": null,
+              "rendered": "Slightly smiling face",
+              "type": "div",
+            },
+            Object {
+              "instance": null,
+              "key": undefined,
+              "nodeType": "host",
+              "props": Object {
+                "children": ":) :pleased:",
+                "className": "interweave-picker__preview-subtitle",
+              },
+              "ref": null,
+              "rendered": ":) :pleased:",
+              "type": "div",
+            },
+          ],
+          "type": "div",
+        },
+      ],
+      "type": "div",
+    },
+  ],
+  Symbol(enzyme.__options__): Object {
+    "adapter": ReactSixteenAdapter {
+      "options": Object {
+        "enableComponentDidUpdateOnSetState": true,
+      },
+    },
+    "context": Object {
+      "classNames": Object {
+        "emoji": "interweave-picker__emoji",
+        "emojiActive": "interweave-picker__emoji--active",
+        "emojis": "interweave-picker__emojis",
+        "emojisBody": "interweave-picker__emojis-body",
+        "emojisContainer": "interweave-picker__emojis-container",
+        "emojisHeader": "interweave-picker__emojis-header",
+        "emojisRow": "interweave-picker__emojis-row",
+        "emojisSection": "interweave-picker__emojis-section",
+        "group": "interweave-picker__group",
+        "groupActive": "interweave-picker__group--active",
+        "groups": "interweave-picker__groups",
+        "groupsList": "interweave-picker__groups-list",
+        "noPreview": "interweave-picker__no-preview",
+        "noResults": "interweave-picker__no-results",
+        "picker": "interweave-picker__picker",
+        "pickerVirtual": "interweave-picker__picker--virtual",
+        "preview": "interweave-picker__preview",
+        "previewContent": "interweave-picker__preview-content",
+        "previewEmoji": "interweave-picker__preview-emoji",
+        "previewSubtitle": "interweave-picker__preview-subtitle",
+        "previewTitle": "interweave-picker__preview-title",
+        "search": "interweave-picker__search",
+        "searchInput": "interweave-picker__search-input",
+        "skinTone": "interweave-picker__skin-tone",
+        "skinToneActive": "interweave-picker__skin-tone--active",
+        "skinTones": "interweave-picker__skin-tones",
+      },
+      "messages": Object {
+        "activities": "Activities",
+        "animalsNature": "Animals & Nature",
+        "flags": "Flags",
+        "foodDrink": "Food & Drink",
+        "frequentlyUsed": "Frequently Used",
+        "noGroups": "All Emojis",
+        "noPreview": "No emoji to display",
+        "noResults": "No results…",
+        "objects": "Objects",
+        "recentlyUsed": "Recently Used",
+        "search": "Search…",
+        "searchA11y": "Search for emojis by keyword",
+        "searchResults": "Search Results",
+        "smileysPeople": "Smileys & People",
+        "symbols": "Symbols",
+        "travelPlaces": "Travel & Places",
+      },
+    },
+  },
+}
+`;

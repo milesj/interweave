@@ -1,0 +1,320 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<SkinTonePalette /> renders a palette 1`] = `
+ShallowWrapper {
+  "length": 1,
+  Symbol(enzyme.__root__): [Circular],
+  Symbol(enzyme.__unrendered__): <SkinTonePalette
+    activeSkinTone="none"
+    onSelect={[Function]}
+  />,
+  Symbol(enzyme.__renderer__): Object {
+    "batchedUpdates": [Function],
+    "getNode": [Function],
+    "render": [Function],
+    "simulateEvent": [Function],
+    "unmount": [Function],
+  },
+  Symbol(enzyme.__node__): Object {
+    "instance": null,
+    "key": undefined,
+    "nodeType": "host",
+    "props": Object {
+      "children": Array [
+        <SkinTone
+          active={true}
+          onSelect={[Function]}
+          skinTone="none"
+        />,
+        <SkinTone
+          active={false}
+          onSelect={[Function]}
+          skinTone="light"
+        />,
+        <SkinTone
+          active={false}
+          onSelect={[Function]}
+          skinTone="mediumLight"
+        />,
+        <SkinTone
+          active={false}
+          onSelect={[Function]}
+          skinTone="medium"
+        />,
+        <SkinTone
+          active={false}
+          onSelect={[Function]}
+          skinTone="mediumDark"
+        />,
+        <SkinTone
+          active={false}
+          onSelect={[Function]}
+          skinTone="dark"
+        />,
+      ],
+      "className": "interweave-picker__skin-tones",
+    },
+    "ref": null,
+    "rendered": Array [
+      Object {
+        "instance": null,
+        "key": "none",
+        "nodeType": "class",
+        "props": Object {
+          "active": true,
+          "onSelect": [Function],
+          "skinTone": "none",
+        },
+        "ref": null,
+        "rendered": null,
+        "type": [Function],
+      },
+      Object {
+        "instance": null,
+        "key": "light",
+        "nodeType": "class",
+        "props": Object {
+          "active": false,
+          "onSelect": [Function],
+          "skinTone": "light",
+        },
+        "ref": null,
+        "rendered": null,
+        "type": [Function],
+      },
+      Object {
+        "instance": null,
+        "key": "mediumLight",
+        "nodeType": "class",
+        "props": Object {
+          "active": false,
+          "onSelect": [Function],
+          "skinTone": "mediumLight",
+        },
+        "ref": null,
+        "rendered": null,
+        "type": [Function],
+      },
+      Object {
+        "instance": null,
+        "key": "medium",
+        "nodeType": "class",
+        "props": Object {
+          "active": false,
+          "onSelect": [Function],
+          "skinTone": "medium",
+        },
+        "ref": null,
+        "rendered": null,
+        "type": [Function],
+      },
+      Object {
+        "instance": null,
+        "key": "mediumDark",
+        "nodeType": "class",
+        "props": Object {
+          "active": false,
+          "onSelect": [Function],
+          "skinTone": "mediumDark",
+        },
+        "ref": null,
+        "rendered": null,
+        "type": [Function],
+      },
+      Object {
+        "instance": null,
+        "key": "dark",
+        "nodeType": "class",
+        "props": Object {
+          "active": false,
+          "onSelect": [Function],
+          "skinTone": "dark",
+        },
+        "ref": null,
+        "rendered": null,
+        "type": [Function],
+      },
+    ],
+    "type": "div",
+  },
+  Symbol(enzyme.__nodes__): Array [
+    Object {
+      "instance": null,
+      "key": undefined,
+      "nodeType": "host",
+      "props": Object {
+        "children": Array [
+          <SkinTone
+            active={true}
+            onSelect={[Function]}
+            skinTone="none"
+          />,
+          <SkinTone
+            active={false}
+            onSelect={[Function]}
+            skinTone="light"
+          />,
+          <SkinTone
+            active={false}
+            onSelect={[Function]}
+            skinTone="mediumLight"
+          />,
+          <SkinTone
+            active={false}
+            onSelect={[Function]}
+            skinTone="medium"
+          />,
+          <SkinTone
+            active={false}
+            onSelect={[Function]}
+            skinTone="mediumDark"
+          />,
+          <SkinTone
+            active={false}
+            onSelect={[Function]}
+            skinTone="dark"
+          />,
+        ],
+        "className": "interweave-picker__skin-tones",
+      },
+      "ref": null,
+      "rendered": Array [
+        Object {
+          "instance": null,
+          "key": "none",
+          "nodeType": "class",
+          "props": Object {
+            "active": true,
+            "onSelect": [Function],
+            "skinTone": "none",
+          },
+          "ref": null,
+          "rendered": null,
+          "type": [Function],
+        },
+        Object {
+          "instance": null,
+          "key": "light",
+          "nodeType": "class",
+          "props": Object {
+            "active": false,
+            "onSelect": [Function],
+            "skinTone": "light",
+          },
+          "ref": null,
+          "rendered": null,
+          "type": [Function],
+        },
+        Object {
+          "instance": null,
+          "key": "mediumLight",
+          "nodeType": "class",
+          "props": Object {
+            "active": false,
+            "onSelect": [Function],
+            "skinTone": "mediumLight",
+          },
+          "ref": null,
+          "rendered": null,
+          "type": [Function],
+        },
+        Object {
+          "instance": null,
+          "key": "medium",
+          "nodeType": "class",
+          "props": Object {
+            "active": false,
+            "onSelect": [Function],
+            "skinTone": "medium",
+          },
+          "ref": null,
+          "rendered": null,
+          "type": [Function],
+        },
+        Object {
+          "instance": null,
+          "key": "mediumDark",
+          "nodeType": "class",
+          "props": Object {
+            "active": false,
+            "onSelect": [Function],
+            "skinTone": "mediumDark",
+          },
+          "ref": null,
+          "rendered": null,
+          "type": [Function],
+        },
+        Object {
+          "instance": null,
+          "key": "dark",
+          "nodeType": "class",
+          "props": Object {
+            "active": false,
+            "onSelect": [Function],
+            "skinTone": "dark",
+          },
+          "ref": null,
+          "rendered": null,
+          "type": [Function],
+        },
+      ],
+      "type": "div",
+    },
+  ],
+  Symbol(enzyme.__options__): Object {
+    "adapter": ReactSixteenAdapter {
+      "options": Object {
+        "enableComponentDidUpdateOnSetState": true,
+      },
+    },
+    "context": Object {
+      "classNames": Object {
+        "emoji": "interweave-picker__emoji",
+        "emojiActive": "interweave-picker__emoji--active",
+        "emojis": "interweave-picker__emojis",
+        "emojisBody": "interweave-picker__emojis-body",
+        "emojisContainer": "interweave-picker__emojis-container",
+        "emojisHeader": "interweave-picker__emojis-header",
+        "emojisRow": "interweave-picker__emojis-row",
+        "emojisSection": "interweave-picker__emojis-section",
+        "group": "interweave-picker__group",
+        "groupActive": "interweave-picker__group--active",
+        "groups": "interweave-picker__groups",
+        "groupsList": "interweave-picker__groups-list",
+        "noPreview": "interweave-picker__no-preview",
+        "noResults": "interweave-picker__no-results",
+        "picker": "interweave-picker__picker",
+        "pickerVirtual": "interweave-picker__picker--virtual",
+        "preview": "interweave-picker__preview",
+        "previewContent": "interweave-picker__preview-content",
+        "previewEmoji": "interweave-picker__preview-emoji",
+        "previewSubtitle": "interweave-picker__preview-subtitle",
+        "previewTitle": "interweave-picker__preview-title",
+        "search": "interweave-picker__search",
+        "searchInput": "interweave-picker__search-input",
+        "skinTone": "interweave-picker__skin-tone",
+        "skinToneActive": "interweave-picker__skin-tone--active",
+        "skinTones": "interweave-picker__skin-tones",
+      },
+      "messages": Object {
+        "activities": "Activities",
+        "animalsNature": "Animals & Nature",
+        "flags": "Flags",
+        "foodDrink": "Food & Drink",
+        "frequentlyUsed": "Frequently Used",
+        "noGroups": "All Emojis",
+        "noPreview": "No emoji to display",
+        "noResults": "No results…",
+        "objects": "Objects",
+        "recentlyUsed": "Recently Used",
+        "search": "Search…",
+        "searchA11y": "Search for emojis by keyword",
+        "searchResults": "Search Results",
+        "smileysPeople": "Smileys & People",
+        "symbols": "Symbols",
+        "travelPlaces": "Travel & Places",
+      },
+    },
+  },
+}
+`;

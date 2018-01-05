@@ -33,7 +33,7 @@ export default class SkinTonePalette extends React.PureComponent<SkinTonePalette
         {SKIN_TONES.map(skinTone => (
           <SkinTone
             key={skinTone}
-            activeSkinTone={activeSkinTone}
+            active={activeSkinTone === skinTone}
             skinTone={skinTone}
             onSelect={onSelect}
           />

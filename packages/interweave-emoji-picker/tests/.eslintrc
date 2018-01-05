@@ -7,6 +7,7 @@
     "object-curly-newline": 0,
     "sort-keys": 0,
     "react/jsx-no-literals": 0,
-    "react/jsx-curly-brace-presence": 0
+    "react/jsx-curly-brace-presence": 0,
+    "unicorn/no-fn-reference-in-iterator": 0
   }
 }

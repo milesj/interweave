@@ -35,9 +35,13 @@ export default class SearchBar extends React.PureComponent<SearchBarProps, Searc
     searchQuery: PropTypes.string.isRequired,
   };
 
-  state = {
-    query: '',
-  };
+  constructor({ searchQuery }: SearchBarProps) {
+    super();
+
+    this.state = {
+      query: searchQuery,
+    };
+  }
 
   /**
    * Focus the input field if `autoFocus` is true.
@@ -67,7 +71,7 @@ export default class SearchBar extends React.PureComponent<SearchBarProps, Searc
 
     // Update the input field immediately
     this.setState({
-      query: e.currentTarget.value,
+      query: e.target.value,
     });
 
     // But defer filtering in the picker
@@ -80,7 +84,7 @@ export default class SearchBar extends React.PureComponent<SearchBarProps, Searc
   handleChangeDebounced = debounce((e) => {
     // Check if were still mounted
     if (this.input) {
-      this.props.onChange(this.input.value.trim(), e);
+      this.props.onChange(e.target.value.trim(), e);
     }
   }, SEARCH_THROTTLE);
 
