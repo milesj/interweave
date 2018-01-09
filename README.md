@@ -31,7 +31,7 @@ yarn add interweave react
 ## Usage
 
 Interweave can primarily be used with the `Interweave` and `Markup` components, both of which
-provide an easy, straight-forward implementation for safely [parsing and rendering HTML](#html-parsing) without using `dangerouslySetInnerHTML` ([Facebook][dangerhtml]).
+provide an easy, straight-forward implementation for safely [parsing and rendering HTML](#html-parsing) without using `dangerouslySetInnerHTML` ([React][dangerhtml]).
 
 The `Interweave` component has the additional benefit of utilizing [filters](#filters),
 [matchers](#matchers), and callbacks.
@@ -495,7 +495,7 @@ global.window = new JSDOM('', { url: 'http://localhost' });
 global.document = global.window.document;
 ```
 
-[dangerhtml]: https://facebook.github.io/react/tips/dangerously-set-inner-html.html
+[dangerhtml]: https://reactjs.org/docs/dom-elements.html
 [domhtml]: https://developer.mozilla.org/en-US/docs/Web/API/DOMImplementation/createHTMLDocument
 [tagwhitelist]: https://github.com/milesj/interweave/blob/master/src/constants.js#L88
 [attrwhitelist]: https://github.com/milesj/interweave/blob/master/src/constants.js#L381
