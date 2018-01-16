@@ -75,10 +75,10 @@ type PickerProps = {
   emojis: Emoji[],
   emojiSize: number,
   emojiSource: EmojiSource,
+  groupIcons: { [key: string]: React$Node },
   hideEmoticon: boolean,
   hideGroupHeaders: boolean,
   hideShortcodes: boolean,
-  icons: { [key: string]: React$Node },
   maxCommonlyUsed: number,
   maxEmojiVersion: number,
   messages: { [key: string]: string },
@@ -90,6 +90,7 @@ type PickerProps = {
   onSelectGroup: (group: string, e: *) => void,
   onSelectSkinTone: (skinTone: string, e: *) => void,
   rowCount: number,
+  skinIcons: { [key: string]: React$Node },
   virtual: boolean,
   whitelist: string[],
 };
@@ -157,10 +158,10 @@ class Picker extends React.Component<PickerProps, PickerState> {
     emojis: PropTypes.arrayOf(EmojiShape).isRequired,
     emojiSize: PropTypes.number.isRequired,
     emojiSource: EmojiSourceShape.isRequired,
+    groupIcons: PropTypes.objectOf(PropTypes.node),
     hideEmoticon: PropTypes.bool,
     hideGroupHeaders: PropTypes.bool,
     hideShortcodes: PropTypes.bool,
-    icons: PropTypes.objectOf(PropTypes.node),
     maxCommonlyUsed: PropTypes.number,
     maxEmojiVersion: PropTypes.number,
     messages: PropTypes.objectOf(PropTypes.node),
@@ -172,6 +173,7 @@ class Picker extends React.Component<PickerProps, PickerState> {
     onSelectGroup: PropTypes.func,
     onSelectSkinTone: PropTypes.func,
     rowCount: PropTypes.number,
+    skinIcons: PropTypes.objectOf(PropTypes.node),
     virtual: PropTypes.bool,
     whitelist: PropTypes.arrayOf(PropTypes.string),
   };
@@ -191,10 +193,10 @@ class Picker extends React.Component<PickerProps, PickerState> {
     disableSkinTones: false,
     displayOrder: ['preview', 'emojis', 'groups', 'search'],
     emojiPadding: 0,
+    groupIcons: {},
     hideEmoticon: false,
     hideGroupHeaders: false,
     hideShortcodes: false,
-    icons: {},
     maxCommonlyUsed: 30,
     maxEmojiVersion: 5,
     messages: {},
@@ -206,6 +208,7 @@ class Picker extends React.Component<PickerProps, PickerState> {
     onSelectGroup() {},
     onSelectSkinTone() {},
     rowCount: 8,
+    skinIcons: {},
     virtual: false,
     whitelist: [],
   };
@@ -694,11 +697,12 @@ class Picker extends React.Component<PickerProps, PickerState> {
       emojiPath,
       emojiSize,
       emojiSource,
+      groupIcons,
       hideEmoticon,
       hideGroupHeaders,
       hideShortcodes,
-      icons,
       rowCount,
+      skinIcons,
       virtual,
       onScroll,
     } = this.props;
@@ -735,6 +739,7 @@ class Picker extends React.Component<PickerProps, PickerState> {
             <SkinTonePalette
               key="skins"
               activeSkinTone={activeSkinTone}
+              icons={skinIcons}
               onSelect={this.handleSelectSkinTone}
             />
           )}
@@ -751,7 +756,7 @@ class Picker extends React.Component<PickerProps, PickerState> {
           activeGroup={activeGroup}
           commonEmojis={commonEmojis}
           emojiPath={emojiPath}
-          icons={icons}
+          icons={groupIcons}
           onSelect={this.handleSelectGroup}
         />
       ),

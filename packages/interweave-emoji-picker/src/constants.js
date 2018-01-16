@@ -120,8 +120,8 @@ export const CONTEXT_MESSAGES: Object = {
   [GROUP_SEARCH_RESULTS]: 'Search Results',
   [GROUP_NONE]: 'All Emojis',
   // Miscellaneous
-  search: 'Search…',
+  search: 'Search',
   searchA11y: 'Search for emojis by keyword',
   noPreview: '',
-  noResults: 'No results…',
+  noResults: 'No results',
 };
