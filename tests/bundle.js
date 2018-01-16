@@ -1,4 +1,4 @@
-/* eslint-disable no-console, no-magic-numbers */
+/* eslint-disable no-console, no-magic-numbers, sort-keys */
 
 import React from 'react';
 import ReactDOM from 'react-dom';
@@ -63,6 +63,27 @@ const emojiUnicodeProps = {
   ],
 };
 
+const slackGroupIcons = {
+  commonlyUsed: <i className="fas fa-clock" />,
+  smileysPeople: <i className="fas fa-smile" />,
+  animalsNature: <i className="fas fa-leaf" />,
+  foodDrink: <i className="fas fa-coffee" />,
+  travelPlaces: <i className="fas fa-plane" />,
+  activities: <i className="fas fa-futbol" />,
+  objects: <i className="fas fa-lightbulb" />,
+  symbols: <i className="fas fa-heart" />,
+  flags: <i className="fas fa-flag" />,
+};
+
+const slackSkinIcons = {
+  none: <i className="fas fa-hand-paper" />,
+  light: <i className="fas fa-hand-paper" />,
+  mediumLight: <i className="fas fa-hand-paper" />,
+  medium: <i className="fas fa-hand-paper" />,
+  mediumDark: <i className="fas fa-hand-paper" />,
+  dark: <i className="fas fa-hand-paper" />,
+};
+
 const Interweave = withEmojiData(BaseInterweave);
 
 function App() {
@@ -73,25 +94,43 @@ function App() {
       </h1>
 
       <div className="demo-grid">
-        <EmojiPicker
-          {...emojiPickerProps}
-          autoFocus
-          commonMode="recentlyUsed"
-          defaultGroup="foodDrink"
-          defaultSkinTone="light"
-          blacklist={[
-            '1F4A9', // Poop
-          ]}
-          maxEmojiVersion={4}
-        />
+        <div className="slack">
+          Slack
+          <br />
 
-        <EmojiPicker
-          {...emojiPickerProps}
-          commonMode="frequentlyUsed"
-          defaultGroup="travelPlaces"
-          defaultSkinTone="medium"
-          virtual
-        />
+          <EmojiPicker
+            {...emojiPickerProps}
+            commonMode="recentlyUsed"
+            displayOrder={['groups', 'search', 'emojis', 'preview']}
+            emojiPadding={6}
+            groupIcons={slackGroupIcons}
+            messages={{
+              noPreview: 'Emoji Deluxe™',
+            }}
+            skinIcons={slackSkinIcons}
+          />
+        </div>
+
+        <div className="slack">
+          Slack (virtual)
+          <br />
+
+          <EmojiPicker
+            {...emojiPickerProps}
+            columnCount={10}
+            commonMode="frequentlyUsed"
+            defaultGroup="travelPlaces"
+            defaultSkinTone="medium"
+            displayOrder={['groups', 'search', 'emojis', 'preview']}
+            emojiPadding={6}
+            groupIcons={slackGroupIcons}
+            messages={{
+              noPreview: 'Emoji Deluxe™',
+            }}
+            skinIcons={slackSkinIcons}
+            virtual
+          />
+        </div>
 
         <EmojiPicker
           {...emojiPickerProps}
