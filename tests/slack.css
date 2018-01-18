@@ -1,3 +1,7 @@
+.slack {
+  margin: 10px;
+}
+
 .slack .interweave-picker__picker {
   border: 1px solid #D2D2D2;
   border-radius: 6px;
@@ -93,7 +97,6 @@
   float: left;
   cursor: pointer;
   transition: background 0.05s ease-out;
-  float: left;
 }
 
 .slack .interweave-picker__emoji img {
@@ -165,10 +168,12 @@
   margin-left: 4px;
   cursor: pointer;
   font-size: 1em;
+  opacity: 0.65;
 }
 
+.slack .interweave-picker__skin-tone--active,
 .slack .interweave-picker__skin-tone:hover {
-  opacity: 0.5;
+  opacity: 1;
 }
 
 .slack .interweave-picker__no-preview {

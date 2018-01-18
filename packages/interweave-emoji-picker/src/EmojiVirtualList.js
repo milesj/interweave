@@ -24,6 +24,7 @@ type EmojiListProps = {
   activeEmoji: ?Emoji,
   activeGroup: string,
   columnCount: number,
+  columnPadding: number,
   commonEmojis: Emoji[],
   commonMode: string,
   disableGroups: boolean,
@@ -39,6 +40,7 @@ type EmojiListProps = {
   onScrollGroup: (group: string, e: *) => void,
   onSelectEmoji: (emoji: Emoji, e: *) => void,
   rowCount: number,
+  rowPadding: number,
   scrollToGroup: string,
   searchQuery: string,
   skinTonePalette: React$Node,
@@ -59,6 +61,7 @@ export default class EmojiVirtualList extends React.PureComponent<EmojiListProps
     activeEmoji: EmojiShape,
     activeGroup: PropTypes.string.isRequired,
     columnCount: PropTypes.number.isRequired,
+    columnPadding: PropTypes.number,
     commonEmojis: PropTypes.arrayOf(EmojiShape).isRequired,
     commonMode: PropTypes.string.isRequired,
     disableGroups: PropTypes.bool.isRequired,
@@ -74,6 +77,7 @@ export default class EmojiVirtualList extends React.PureComponent<EmojiListProps
     onScrollGroup: PropTypes.func.isRequired,
     onSelectEmoji: PropTypes.func.isRequired,
     rowCount: PropTypes.number.isRequired,
+    rowPadding: PropTypes.number,
     scrollToGroup: PropTypes.string.isRequired,
     searchQuery: PropTypes.string.isRequired,
     skinTonePalette: PropTypes.node,
@@ -81,6 +85,8 @@ export default class EmojiVirtualList extends React.PureComponent<EmojiListProps
 
   static defaultProps = {
     activeEmoji: null,
+    columnPadding: 0,
+    rowPadding: 0,
     skinTonePalette: null,
   };
 
@@ -290,19 +296,22 @@ export default class EmojiVirtualList extends React.PureComponent<EmojiListProps
     const {
       activeEmoji,
       columnCount,
+      columnPadding,
       commonEmojis,
       emojiPadding,
       emojis,
       emojiSize,
       rowCount,
+      rowPadding,
       scrollToGroup,
       searchQuery,
       onScroll,
     } = this.props;
     const { classNames } = this.context;
     const { groupIndices, rows } = this.state;
-    const padding = (emojiPadding * 2); // Both sides
-    const size = emojiSize + padding;
+    const size = emojiSize + (emojiPadding * 2);
+    const rowHeight = size + (rowPadding * 2);
+    const columnWidth = size + (columnPadding * 2);
 
     // `List` utilizes shallow comparison by extending PureComponent.
     // Because of this, row changes may not be reflected without
@@ -319,15 +328,15 @@ export default class EmojiVirtualList extends React.PureComponent<EmojiListProps
       <div className={classNames.emojis}>
         <List
           className={classNames.emojisContainer}
-          height={size * rowCount}
+          height={rowHeight * rowCount}
           noRowsRenderer={this.renderNoResults}
           overscanRowCount={rowCount}
           rowCount={rows.length}
-          rowHeight={size}
+          rowHeight={rowHeight}
           rowRenderer={this.renderRow}
           scrollToAlignment="start"
           scrollToIndex={groupIndices[scrollToGroup]}
-          width={(size * columnCount) + (padding * 2)}
+          width={columnWidth * columnCount}
           onRowsRendered={this.handleRendered}
           onScroll={onScroll}
           {...renderProps}

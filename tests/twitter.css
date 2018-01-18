@@ -1,0 +1,173 @@
+.twitter {
+  margin: 10px;
+}
+
+.twitter .interweave-picker__picker {
+  height: 350px;
+  width: 280px;
+  background: #fff;
+  border-radius: 4px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.25);
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 14px;
+  line-height: 20px;
+}
+
+.twitter .interweave-picker__emojis-body::after,
+.twitter .interweave-picker__picker::after {
+  display: block;
+  content: "";
+  clear: both;
+}
+
+.twitter .interweave-picker__groups {
+  height: 350px;
+  width: 50px;
+  padding: 13px;
+  border-right: 1px solid #e6ecf0;
+  border-top-left-radius: 4px;
+  float: left;
+}
+
+.twitter .interweave-picker__groups-list {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  justify-content: space-between;
+  height: 100%;
+}
+
+.twitter .interweave-picker__group {
+  background: transparent;
+  border: 0;
+  padding: 0;
+  position: relative;
+  cursor: pointer;
+  filter: grayscale(100%);
+}
+
+.twitter .interweave-picker__group--active,
+.twitter .interweave-picker__group:hover {
+  filter: none;
+}
+
+.twitter .interweave-picker__search {
+  float: left;
+  width: 230px;
+  padding: 8px;
+  background-color: #f5f8fa;
+  background-image: linear-gradient(#fff,#f5f8fa);
+  background-repeat: repeat-x;
+  border-bottom: 1px solid #e6ecf0;
+  border-radius: 4px 4px 0 0;
+}
+
+.twitter .interweave-picker__search-input {
+  padding: 4px 24px 4px 8px;
+  width: 100%;
+  background-color: #fff;
+  border: 1px solid #BDD5E5;
+  border-radius: 3px;
+  box-shadow: 0 0 0 1px #BDD5E5;
+  font-size: 14px;
+  line-height: 20px;
+  outline: none;
+}
+
+.twitter .interweave-picker__search-input::placeholder {
+  color: #657786;
+}
+
+.twitter .interweave-picker__emojis {
+  float: left;
+  width: 230px;
+  height: 272px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  position: relative;
+}
+
+.twitter .interweave-picker__emojis-body {
+  padding: 8px 12px;
+}
+
+.twitter .interweave-picker__no-results,
+.twitter .interweave-picker__emojis-header {
+  padding: 6px 18px;
+  color: #657786;
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  background: #fff;
+  border-bottom: 1px solid #e6ecf0;
+  font-weight: bold;
+}
+
+.twitter .interweave-picker__emoji {
+  background: transparent;
+  border: 0;
+  position: relative;
+  z-index: 1;
+  cursor: pointer;
+  float: left;
+  margin: 1.5px;
+  padding: 0;
+}
+
+.twitter .interweave-picker__emoji img {
+  display: block !important;
+}
+
+.twitter .interweave-picker__emoji:hover,
+.twitter .interweave-picker__emoji--active {
+  transform: scale(1.5);
+}
+
+.twitter .interweave-picker__skin-tones {
+  float: left;
+  width: 230px;
+  background: #fff;
+  border-top: 1px solid #e6ecf0;
+  padding: 5px 30px;
+  text-align: right;
+}
+
+.twitter .interweave-picker__skin-tone {
+  border-radius: 2px;
+  display: inline-block;
+  height: 17px;
+  width: 17px;
+  position: relative;
+  margin-left: 4px;
+  cursor: pointer;
+}
+
+.twitter .interweave-picker__skin-tone--active::after {
+  content: "✓";
+  color: #fff !important;
+  text-shadow: .5px 1.5px 0 rgba(0, 0, 0, 0.25);
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 2px;
+}
+
+/* Virtual list */
+
+.twitter .interweave-picker__picker--virtual .interweave-picker__emojis {
+  height: auto;
+}
+
+.twitter .interweave-picker__picker--virtual .interweave-picker__emojis-container {
+  margin: 8px auto;
+}
+
+.twitter .interweave-picker__picker--virtual .interweave-picker__emojis-body {
+  padding: 0;
+}
+
+.twitter .interweave-picker__picker--virtual .interweave-picker__emojis-header {
+  padding: 3.25px 0;
+}

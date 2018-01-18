@@ -208,7 +208,7 @@ export default class EmojiList extends React.PureComponent<EmojiListProps, Emoji
     let lastGroup = '';
 
     Array.from(container.children).some((section) => {
-      const group = section.id.replace('emoji-group-', '');
+      const group = section.getAttribute('data-group');
       let loadImages = false;
 
       // Special case for commonly used and smileys,
@@ -261,7 +261,11 @@ export default class EmojiList extends React.PureComponent<EmojiListProps, Emoji
    * Scroll a group section to the top of the scrollable container.
    */
   scrollToGroup(group: string) {
-    const element = document.getElementById(`emoji-group-${group}`);
+    if (!this.container) {
+      return;
+    }
+
+    const element = this.container.querySelector(`section[data-group="${group}"]`);
 
     if (!element || !this.container) {
       return;
@@ -308,7 +312,7 @@ export default class EmojiList extends React.PureComponent<EmojiListProps, Emoji
             <section
               key={group}
               className={classNames.emojisSection}
-              id={`emoji-group-${group}`}
+              data-group={group}
             >
               {!hideGroupHeaders && (
                 <GroupListHeader

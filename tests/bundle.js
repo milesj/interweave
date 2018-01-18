@@ -8,6 +8,7 @@ import EmailMatcher from '../packages/interweave-autolink/src/EmailMatcher';
 import HashtagMatcher from '../packages/interweave-autolink/src/HashtagMatcher';
 import IpMatcher from '../packages/interweave-autolink/src/IpMatcher';
 import UrlMatcher from '../packages/interweave-autolink/src/UrlMatcher';
+import BaseEmoji from '../packages/interweave-emoji/src/Emoji';
 import EmojiMatcher from '../packages/interweave-emoji/src/EmojiMatcher';
 import withEmojiData from '../packages/interweave-emoji/src/withEmojiData';
 import EmojiPicker from '../packages/interweave-emoji-picker/src/Picker';
@@ -31,6 +32,8 @@ Help!`;
 const emojiPath = (hex, large) => (
   `https://cdn.jsdelivr.net/emojione/assets/3.1/png/${large ? 64 : 32}/${stripHexcode(hex).toLowerCase()}.png`
 );
+
+const Emoji = withEmojiData(BaseEmoji);
 
 const emojiProps = {
   emojiPath,
@@ -75,7 +78,19 @@ const slackGroupIcons = {
   flags: <i className="fas fa-flag" />,
 };
 
-const slackSkinIcons = {
+const twitterGroupIcons = {
+  commonlyUsed: <Emoji hexcode="1F552" emojiSize="24px" emojiPath={emojiPath} />,
+  smileysPeople: <Emoji hexcode="1F603" emojiSize="24px" emojiPath={emojiPath} />,
+  animalsNature: <Emoji hexcode="1F436" emojiSize="24px" emojiPath={emojiPath} />,
+  foodDrink: <Emoji hexcode="1F374" emojiSize="24px" emojiPath={emojiPath} />,
+  travelPlaces: <Emoji hexcode="1F698" emojiSize="24px" emojiPath={emojiPath} />,
+  activities: <Emoji hexcode="26BD" emojiSize="24px" emojiPath={emojiPath} />,
+  objects: <Emoji hexcode="1F4A1" emojiSize="24px" emojiPath={emojiPath} />,
+  symbols: <Emoji hexcode="2049" emojiSize="24px" emojiPath={emojiPath} />,
+  flags: <Emoji hexcode="1F6A9" emojiSize="24px" emojiPath={emojiPath} />,
+};
+
+const skinIcons = {
   none: <i className="fas fa-hand-paper" />,
   light: <i className="fas fa-hand-paper" />,
   mediumLight: <i className="fas fa-hand-paper" />,
@@ -95,8 +110,9 @@ function App() {
 
       <div className="demo-grid">
         <div className="slack">
-          Slack
-          <br />
+          <h3>
+            Slack
+          </h3>
 
           <EmojiPicker
             {...emojiPickerProps}
@@ -107,17 +123,17 @@ function App() {
             messages={{
               noPreview: 'Emoji Deluxe™',
             }}
-            skinIcons={slackSkinIcons}
+            skinIcons={skinIcons}
           />
         </div>
 
         <div className="slack">
-          Slack (virtual)
-          <br />
+          <h4>
+            Slack (virtual)
+          </h4>
 
           <EmojiPicker
             {...emojiPickerProps}
-            columnCount={10}
             commonMode="frequentlyUsed"
             defaultGroup="travelPlaces"
             defaultSkinTone="medium"
@@ -127,39 +143,60 @@ function App() {
             messages={{
               noPreview: 'Emoji Deluxe™',
             }}
-            skinIcons={slackSkinIcons}
+            skinIcons={skinIcons}
             virtual
           />
         </div>
+      </div>
 
-        <EmojiPicker
-          {...emojiPickerProps}
-          disableCommonlyUsed
-          disableGroups
-          disableSearch
-          hideGroupHeaders
-          messages={{
-            noGroups: 'Fantasy',
-          }}
-          whitelist={[
-            '1F479',
-            '1F9D9-200D-2642-FE0F',
-            '1F9DA-200D-2640-FE0F',
-            '1F9DF-200D-2642-FE0F',
-            '1F9DB-200D-2642-FE0F',
-            '1F9DC-200D-2640-FE0F',
-            '1F9DD',
-            '1F9DE-200D-2642-FE0F',
-            '1F478',
-          ]}
-        />
+      <div className="demo-grid">
+        <div className="twitter">
+          <h4>
+            Twitter
+          </h4>
 
-        <EmojiPicker
-          {...emojiPickerProps}
-          defaultGroup="commonlyUsed"
-          disableGroups
-          virtual
-        />
+          <EmojiPicker
+            {...emojiPickerProps}
+            columnCount={7}
+            commonMode="recentlyUsed"
+            disablePreview
+            displayOrder={['groups', 'search', 'emojis', 'skinTones']}
+            emojiPadding={3.5}
+            emojiSize={17.5}
+            groupIcons={twitterGroupIcons}
+            messages={{
+              search: 'Search for emoji',
+            }}
+          />
+        </div>
+
+
+        <div className="twitter">
+          <h4>
+            Twitter (virtual)
+          </h4>
+
+          <EmojiPicker
+            {...emojiPickerProps}
+            columnCount={8}
+            commonMode="frequentlyUsed"
+            defaultGroup="flags"
+            defaultSkinTone="dark"
+            disablePreview
+            displayOrder={['groups', 'search', 'emojis', 'skinTones']}
+            emojiPadding={3.5}
+            emojiSize={17.5}
+            groupIcons={twitterGroupIcons}
+            messages={{
+              search: 'Search for emoji',
+            }}
+            rowCount={9}
+            virtual={{
+              columnPadding: 1.5,
+              rowPadding: 1.5,
+            }}
+          />
+        </div>
       </div>
 
       <h1>

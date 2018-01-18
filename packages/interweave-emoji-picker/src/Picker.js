@@ -174,7 +174,13 @@ class Picker extends React.Component<PickerProps, PickerState> {
     onSelectSkinTone: PropTypes.func,
     rowCount: PropTypes.number,
     skinIcons: PropTypes.objectOf(PropTypes.node),
-    virtual: PropTypes.bool,
+    virtual: PropTypes.oneOfType([
+      PropTypes.bool,
+      PropTypes.shape({
+        columnPadding: PropTypes.number,
+        rowPadding: PropTypes.number,
+      }),
+    ]),
     whitelist: PropTypes.arrayOf(PropTypes.string),
   };
 
@@ -716,10 +722,19 @@ class Picker extends React.Component<PickerProps, PickerState> {
       searchQuery,
     } = this.state;
     const List = virtual ? EmojiVirtualList : EmojiList;
+    const skinTones = disableSkinTones ? null : (
+      <SkinTonePalette
+        key="skins"
+        activeSkinTone={activeSkinTone}
+        icons={skinIcons}
+        onSelect={this.handleSelectSkinTone}
+      />
+    );
     const components = {
       emojis: (
         <List
           key="emojis"
+          {...(typeof virtual === 'object' ? virtual : {})}
           activeEmoji={activeEmoji}
           activeGroup={activeGroup}
           columnCount={columnCount}
@@ -735,14 +750,7 @@ class Picker extends React.Component<PickerProps, PickerState> {
           rowCount={rowCount}
           scrollToGroup={scrollToGroup}
           searchQuery={searchQuery}
-          skinTonePalette={disableSkinTones ? null : (
-            <SkinTonePalette
-              key="skins"
-              activeSkinTone={activeSkinTone}
-              icons={skinIcons}
-              onSelect={this.handleSelectSkinTone}
-            />
-          )}
+          skinTonePalette={displayOrder.includes('skinTones') ? null : skinTones}
           onEnterEmoji={this.handleEnterEmoji}
           onLeaveEmoji={this.handleLeaveEmoji}
           onScroll={onScroll}
@@ -780,6 +788,7 @@ class Picker extends React.Component<PickerProps, PickerState> {
           onKeyUp={this.handleKeyUp}
         />
       ),
+      skinTones,
     };
     const { classNames } = this.getChildContext();
     const classes = [classNames.picker];
