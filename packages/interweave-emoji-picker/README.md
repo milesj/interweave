@@ -15,8 +15,8 @@ and [Emojibase][emojibase]. Supports the following features:
 * Virtualized rendering.
 * And much more!
 
-![Slack theme](https://raw.githubusercontent.com/milesj/interweave/master/docs/slack.png)
-![Twitter theme](https://raw.githubusercontent.com/milesj/interweave/master/docs/twitter.png)
+<img src="https://raw.githubusercontent.com/milesj/interweave/master/docs/slack.png" height="350">
+<img src="https://raw.githubusercontent.com/milesj/interweave/master/docs/twitter.png" height="350">
 
 > [Slack](https://github.com/milesj/interweave/blob/master/tests/slack.css) and
 > [Twitter](https://github.com/milesj/interweave/blob/master/tests/twitter.css) themes
