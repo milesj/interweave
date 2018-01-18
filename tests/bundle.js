@@ -99,6 +99,19 @@ const skinIcons = {
   dark: <i className="fas fa-hand-paper" />,
 };
 
+const japaneseMessages = {
+  frequentlyUsed: '頻繁に使用される',
+  smileysPeople: 'スマイリーと人々',
+  animalsNature: '動物と自然',
+  foodDrink: '飲食',
+  travelPlaces: '旅行と場所',
+  activities: 'アクティビティ',
+  objects: 'オブジェクト',
+  symbols: 'シンボル',
+  flags: 'フラグ',
+  search: 'サーチ',
+};
+
 const Interweave = withEmojiData(BaseInterweave);
 
 function App() {
@@ -120,9 +133,7 @@ function App() {
             displayOrder={['groups', 'search', 'emojis', 'preview']}
             emojiPadding={6}
             groupIcons={slackGroupIcons}
-            messages={{
-              noPreview: 'Emoji Deluxe™',
-            }}
+            messages={{ noPreview: 'Emoji Deluxe™' }}
             skinIcons={skinIcons}
           />
         </div>
@@ -140,9 +151,7 @@ function App() {
             displayOrder={['groups', 'search', 'emojis', 'preview']}
             emojiPadding={6}
             groupIcons={slackGroupIcons}
-            messages={{
-              noPreview: 'Emoji Deluxe™',
-            }}
+            messages={{ noPreview: 'Emoji Deluxe™' }}
             skinIcons={skinIcons}
             virtual
           />
@@ -164,9 +173,8 @@ function App() {
             emojiPadding={3.5}
             emojiSize={17.5}
             groupIcons={twitterGroupIcons}
-            messages={{
-              search: 'Search for emoji',
-            }}
+            locale="ja"
+            messages={japaneseMessages}
           />
         </div>
 
@@ -187,9 +195,8 @@ function App() {
             emojiPadding={3.5}
             emojiSize={17.5}
             groupIcons={twitterGroupIcons}
-            messages={{
-              search: 'Search for emoji',
-            }}
+            locale="ja"
+            messages={japaneseMessages}
             rowCount={9}
             virtual={{
               columnPadding: 1.5,

@@ -1,7 +1,26 @@
 # Interweave Emoji Picker
 
 A React based emoji picker powered by [Interweave](https://github.com/milesj/interweave)
-and [Emojibase][emojibase].
+and [Emojibase][emojibase]. Supports the following features:
+
+* Customizable theme, styles, and icons.
+* Configurable element and render order.
+* Localized emoji annotations.
+* Emoji grouping and categorization.
+* Multi-word deep search.
+* Skin tone palette selector.
+* Enlarged preview on hover.
+* Emoticons and shortcodes.
+* Recently and frequently used.
+* Virtualized rendering.
+* And much more!
+
+![Slack theme](https://raw.githubusercontent.com/milesj/interweave/master/docs/slack.png)
+![Twitter theme](https://raw.githubusercontent.com/milesj/interweave/master/docs/twitter.png)
+
+> [Slack](https://github.com/milesj/interweave/blob/master/tests/slack.css) and
+> [Twitter](https://github.com/milesj/interweave/blob/master/tests/twitter.css) themes
+> provided as an example of the library's robustness.
 
 ## Requirements
 
@@ -220,7 +239,7 @@ This approach enables non-standard solutions, like CSS modules and CSS-in-JS.
 ```
 
 The `emojiPadding` prop is an exception to the CSS pattern, as it pads the emoji button using
-inline styles. This is necessary for correctly computing widths and heights.
+inline styles. This is necessary for accurately computing widths and heights.
 
 ```javascript
 <EmojiPicker
