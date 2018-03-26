@@ -441,6 +441,7 @@ export default class Parser {
           return;
         }
 
+        // Apply transformation if available
         const children = this.parseNode(nextNode, config);
         const transformed = transform ? transform(node, children, config) : null;
         if (transformed === null) {
