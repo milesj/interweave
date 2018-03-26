@@ -443,7 +443,7 @@ export default class Parser {
 
         // Apply transformation if available
         const children = this.parseNode(nextNode, config);
-        const transformed = transform ? transform(node, children, config) : null;
+        const transformed = transform ? transform(nextNode, children, config) : null;
         if (transformed === null) {
           return;
         } else if (transformed !== undefined) {
