@@ -450,7 +450,7 @@ export default class Parser {
           this.keyIndex += 1;
           content.push((
             <React.Fragment key={this.keyIndex}>
-              { transformed }
+              {transformed}
             </React.Fragment>
           ));
           return;
