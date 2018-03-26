@@ -412,7 +412,7 @@ export default class Parser {
    * list of text nodes and React elements.
    */
   parseNode(parentNode: NodeInterface, parentConfig: NodeConfig): React$Node[] {
-    const { noHtml, noHtmlExceptMatchers, disableWhitelist } = this.props;
+    const { noHtml, noHtmlExceptMatchers, disableWhitelist, transform } = this.props;
     let content = [];
     let mergedText = '';
 
@@ -438,6 +438,20 @@ export default class Parser {
         const nextNode = this.applyNodeFilters(tagName, node);
 
         if (!nextNode) {
+          return;
+        }
+
+        const children = this.parseNode(nextNode, config);
+        const transformed = transform ? transform(node, children, config) : null;
+        if (transformed === null) {
+          return;
+        } else if (transformed !== undefined) {
+          this.keyIndex += 1;
+          content.push((
+            <React.Fragment key={this.keyIndex}>
+              { transformed }
+            </React.Fragment>
+          ));
           return;
         }
 
@@ -467,7 +481,7 @@ export default class Parser {
 
           content.push((
             <Element {...elementProps}>
-              {this.parseNode(nextNode, config)}
+              {children}
             </Element>
           ));
 
