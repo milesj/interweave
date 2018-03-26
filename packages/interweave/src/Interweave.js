@@ -32,6 +32,7 @@ type InterweaveProps = {
   noHtmlExceptMatchers: boolean,
   onAfterParse: ?AfterParseCallback,
   onBeforeParse: ?BeforeParseCallback,
+  transform: ?TransformCallback,
   tagName: string,
 };
 
@@ -49,6 +50,7 @@ export default class Interweave extends React.Component<InterweaveProps> {
     noHtmlExceptMatchers: PropTypes.bool,
     onAfterParse: PropTypes.func,
     onBeforeParse: PropTypes.func,
+    transform: PropTypes.func,
     tagName: PropTypes.oneOf(['span', 'div', 'p']),
   };
 
@@ -65,6 +67,7 @@ export default class Interweave extends React.Component<InterweaveProps> {
     noHtmlExceptMatchers: false,
     onAfterParse: null,
     onBeforeParse: null,
+    transform: null,
     tagName: 'span',
   };
 
