@@ -446,7 +446,7 @@ export default class Parser {
         const transformed = transform ? transform(nextNode, children, config) : undefined;
         if (transformed === null) {
           return;
-        } else if (transformed !== undefined) {
+        } else if (typeof transformed !== 'undefined') {
           this.keyIndex += 1;
           content.push((
             <React.Fragment key={this.keyIndex}>
