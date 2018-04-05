@@ -448,11 +448,8 @@ export default class Parser {
           return;
         } else if (typeof transformed !== 'undefined') {
           this.keyIndex += 1;
-          content.push((
-            <React.Fragment key={this.keyIndex}>
-              {transformed}
-            </React.Fragment>
-          ));
+          const transformedWithKey = React.cloneElement(transformed, {key: this.keyIndex});
+          content.push(transformedWithKey);
           return;
         }
 
