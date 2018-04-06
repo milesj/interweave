@@ -27,12 +27,14 @@ import type {
   NodeInterface,
   FilterInterface,
   MatcherInterface,
+  TransformCallback
 } from './types';
 
 type ParserProps = {
   disableLineBreaks?: boolean,
   noHtml?: boolean,
   noHtmlExceptMatchers?: boolean,
+  transform?: TransformCallback,
   [key: string]: mixed,
 };
 

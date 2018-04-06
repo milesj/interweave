@@ -17,6 +17,7 @@ import type {
   MatcherInterface,
   AfterParseCallback,
   BeforeParseCallback,
+  TransformCallback,
 } from './types';
 
 type InterweaveProps = {

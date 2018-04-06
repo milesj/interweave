@@ -32,7 +32,7 @@ export type AfterParseCallback = (content: React$Node[], props: Object) => React
 
 export type BeforeParseCallback = (content: string, props: Object) => string;
 
-export type TransformCallback = (node: NodeInterface, children: React$Node[], config: NodeConfig) => React$Node | null | undefined;
+export type TransformCallback = (node: NodeInterface, children: React$Node[], config: NodeConfig) => React$Node | null | void;
 
 export interface FilterInterface {
   attribute(name: string, value: string): string,
