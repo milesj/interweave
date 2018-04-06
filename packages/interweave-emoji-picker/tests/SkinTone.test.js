@@ -53,6 +53,7 @@ describe('<SkinTone />', () => {
     expect(wrapper.prop('style')).toEqual({
       backgroundColor: SKIN_COLORS[SKIN_DARK],
       borderColor: SKIN_COLORS[SKIN_DARK],
+      color: SKIN_COLORS[SKIN_DARK],
     });
 
     wrapper.setProps({
@@ -62,6 +63,7 @@ describe('<SkinTone />', () => {
     expect(wrapper.prop('style')).toEqual({
       backgroundColor: SKIN_COLORS[SKIN_NONE],
       borderColor: SKIN_COLORS[SKIN_NONE],
+      color: SKIN_COLORS[SKIN_NONE],
     });
   });
 

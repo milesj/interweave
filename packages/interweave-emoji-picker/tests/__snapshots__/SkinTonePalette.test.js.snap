@@ -6,6 +6,7 @@ ShallowWrapper {
   Symbol(enzyme.__root__): [Circular],
   Symbol(enzyme.__unrendered__): <SkinTonePalette
     activeSkinTone="none"
+    icons={Object {}}
     onSelect={[Function]}
   />,
   Symbol(enzyme.__renderer__): Object {
@@ -62,6 +63,7 @@ ShallowWrapper {
         "nodeType": "class",
         "props": Object {
           "active": true,
+          "children": null,
           "onSelect": [Function],
           "skinTone": "none",
         },
@@ -75,6 +77,7 @@ ShallowWrapper {
         "nodeType": "class",
         "props": Object {
           "active": false,
+          "children": null,
           "onSelect": [Function],
           "skinTone": "light",
         },
@@ -88,6 +91,7 @@ ShallowWrapper {
         "nodeType": "class",
         "props": Object {
           "active": false,
+          "children": null,
           "onSelect": [Function],
           "skinTone": "mediumLight",
         },
@@ -101,6 +105,7 @@ ShallowWrapper {
         "nodeType": "class",
         "props": Object {
           "active": false,
+          "children": null,
           "onSelect": [Function],
           "skinTone": "medium",
         },
@@ -114,6 +119,7 @@ ShallowWrapper {
         "nodeType": "class",
         "props": Object {
           "active": false,
+          "children": null,
           "onSelect": [Function],
           "skinTone": "mediumDark",
         },
@@ -127,6 +133,7 @@ ShallowWrapper {
         "nodeType": "class",
         "props": Object {
           "active": false,
+          "children": null,
           "onSelect": [Function],
           "skinTone": "dark",
         },
@@ -185,6 +192,7 @@ ShallowWrapper {
           "nodeType": "class",
           "props": Object {
             "active": true,
+            "children": null,
             "onSelect": [Function],
             "skinTone": "none",
           },
@@ -198,6 +206,7 @@ ShallowWrapper {
           "nodeType": "class",
           "props": Object {
             "active": false,
+            "children": null,
             "onSelect": [Function],
             "skinTone": "light",
           },
@@ -211,6 +220,7 @@ ShallowWrapper {
           "nodeType": "class",
           "props": Object {
             "active": false,
+            "children": null,
             "onSelect": [Function],
             "skinTone": "mediumLight",
           },
@@ -224,6 +234,7 @@ ShallowWrapper {
           "nodeType": "class",
           "props": Object {
             "active": false,
+            "children": null,
             "onSelect": [Function],
             "skinTone": "medium",
           },
@@ -237,6 +248,7 @@ ShallowWrapper {
           "nodeType": "class",
           "props": Object {
             "active": false,
+            "children": null,
             "onSelect": [Function],
             "skinTone": "mediumDark",
           },
@@ -250,6 +262,7 @@ ShallowWrapper {
           "nodeType": "class",
           "props": Object {
             "active": false,
+            "children": null,
             "onSelect": [Function],
             "skinTone": "dark",
           },
@@ -304,10 +317,10 @@ ShallowWrapper {
         "frequentlyUsed": "Frequently Used",
         "noGroups": "All Emojis",
         "noPreview": "No emoji to display",
-        "noResults": "No results…",
+        "noResults": "No results",
         "objects": "Objects",
         "recentlyUsed": "Recently Used",
-        "search": "Search…",
+        "search": "Search",
         "searchA11y": "Search for emojis by keyword",
         "searchResults": "Search Results",
         "smileysPeople": "Smileys & People",

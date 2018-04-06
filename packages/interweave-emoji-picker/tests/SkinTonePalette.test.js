@@ -10,6 +10,7 @@ describe('<SkinTonePalette />', () => {
 
   const props = {
     activeSkinTone: SKIN_NONE,
+    icons: {},
     onSelect() {},
   };
 

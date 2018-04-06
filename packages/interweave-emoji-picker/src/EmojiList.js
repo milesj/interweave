@@ -237,7 +237,7 @@ export default class EmojiList extends React.PureComponent<EmojiListProps, Emoji
       }
 
       // Only update if not loaded
-      if (loadImages && !loadedGroups.has(group)) {
+      if (loadImages && group && !loadedGroups.has(group)) {
         loadedGroups.add(group);
         updateState = true;
       }
