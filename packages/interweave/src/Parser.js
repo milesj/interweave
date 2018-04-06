@@ -442,13 +442,14 @@ export default class Parser {
         }
 
         // Apply transformation if available
+        this.keyIndex += 1;
+        const key = this.keyIndex;
         const children = this.parseNode(nextNode, config);
         const transformed = transform ? transform(nextNode, children, config) : undefined;
         if (transformed === null) {
           return;
         } else if (typeof transformed !== 'undefined') {
-          this.keyIndex += 1;
-          const transformedWithKey = React.cloneElement(transformed, {key: this.keyIndex});
+          const transformedWithKey = React.cloneElement(transformed, {key});
           content.push(transformedWithKey);
           return;
         }
@@ -460,12 +461,10 @@ export default class Parser {
           !(noHtml || noHtmlExceptMatchers) &&
           (disableWhitelist || this.canRenderChild(parentConfig, config))
         ) {
-          this.keyIndex += 1;
-
           // Build the props as it makes it easier to test
           const attributes = this.extractAttributes(nextNode);
           const elementProps: Object = {
-            key: this.keyIndex,
+            key,
             tagName,
           };
 
@@ -487,6 +486,8 @@ export default class Parser {
         // Important: If the current element is not whitelisted,
         // use the parent element for the next scope.
         } else {
+          // Restore previous key.
+          this.keyIndex = key - 1;
           content = content.concat(
             this.parseNode(nextNode, config.tagName ? config : parentConfig),
           );
