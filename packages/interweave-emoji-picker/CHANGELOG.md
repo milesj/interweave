@@ -1,3 +1,7 @@
+# 1.5.0
+#### 🐞 Fixed
+* Updated `componentWillMount` to `componentDidMount` and `componentWillReceiveProps` to `componentDidUpdate` in preparation for React 16.3.
+
 # 1.4.0
 #### 🐞 Fixed
 * Fixed a bug where the emoji list would jump around while using the arrow keys.

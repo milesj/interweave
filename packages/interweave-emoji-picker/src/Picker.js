@@ -259,17 +259,17 @@ class Picker extends React.Component<PickerProps, PickerState> {
     };
   }
 
-  componentWillMount() {
+  componentDidMount() {
     // Emoji data has already been loaded
     if (this.props.emojis.length !== 0) {
-      this.setInitialEmojis(this.props.emojis);
+      this.setInitialEmojis();
     }
   }
 
-  componentWillReceiveProps({ emojis }: PickerProps) {
+  componentDidUpdate(prevProps: PickerProps) {
     // Emoji data has loaded via the `withEmojiData` HOC
-    if (emojis.length !== 0 && this.props.emojis.length === 0) {
-      this.setInitialEmojis(emojis);
+    if (this.props.emojis.length !== 0 && prevProps.emojis.length === 0) {
+      this.setInitialEmojis();
     }
   }
 
@@ -652,15 +652,16 @@ class Picker extends React.Component<PickerProps, PickerState> {
   /**
    * Set the initial emoji state once emoji data has loaded.
    */
-  setInitialEmojis(emojis: Emoji[]) {
+  setInitialEmojis() {
     const defaultGroup = this.getDefaultGroup();
+    const { emojis } = this.props;
 
-    this.setState({
+    this.setState(prevState => ({
       activeGroup: defaultGroup,
       commonEmojis: this.generateCommonEmojis(this.getCommonEmojisFromStorage()),
-      emojis: this.generateEmojis(emojis, '', this.state.activeSkinTone),
+      emojis: this.generateEmojis(emojis, '', prevState.activeSkinTone),
       scrollToGroup: defaultGroup,
-    });
+    }));
   }
 
   /**

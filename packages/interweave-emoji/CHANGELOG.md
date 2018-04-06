@@ -1,3 +1,7 @@
+# 1.4.0
+#### 🐞 Fixed
+* Updated `componentWillMount` to `componentDidMount` and `componentWillReceiveProps` to `componentDidUpdate` in preparation for React 16.3.
+
 # 1.3.1 - 11/10/17
 #### 🚀 New
 * Updated `emojibase-regex` to 1.0.9.

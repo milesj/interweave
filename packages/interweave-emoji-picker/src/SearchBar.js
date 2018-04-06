@@ -35,13 +35,9 @@ export default class SearchBar extends React.PureComponent<SearchBarProps, Searc
     searchQuery: PropTypes.string.isRequired,
   };
 
-  constructor({ searchQuery }: SearchBarProps) {
-    super();
-
-    this.state = {
-      query: searchQuery,
-    };
-  }
+  state = {
+    query: this.props.searchQuery,
+  };
 
   /**
    * Focus the input field if `autoFocus` is true.
@@ -55,10 +51,10 @@ export default class SearchBar extends React.PureComponent<SearchBarProps, Searc
   /**
    * When the parent `Picker` search query is reset, also reset the input field.
    */
-  componentWillReceiveProps({ searchQuery }: SearchBarProps) {
-    if (searchQuery === '' && this.props.searchQuery) {
+  componentDidUpdate(prevProps: SearchBarProps) {
+    if (this.props.searchQuery === '' && prevProps.searchQuery) {
       this.setState({
-        query: searchQuery,
+        query: '',
       });
     }
   }

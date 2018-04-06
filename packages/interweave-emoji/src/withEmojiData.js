@@ -62,11 +62,11 @@ export default function withEmojiData(
       emojis: [],
     };
 
-    componentWillMount() {
-      this.loadEmojis(this.props);
+    componentDidMount() {
+      this.loadEmojis();
     }
 
-    componentWillReceiveProps(nextProps: EmojiDataLoaderProps) {
+    componentDidUpdate(prevProps: EmojiDataLoaderProps) {
       const {
         compact,
         emojis,
@@ -75,12 +75,12 @@ export default function withEmojiData(
       } = this.props;
 
       if (
-        nextProps.compact !== compact ||
-        nextProps.emojis !== emojis ||
-        nextProps.locale !== locale ||
-        nextProps.version !== version
+        prevProps.compact !== compact ||
+        prevProps.emojis !== emojis ||
+        prevProps.locale !== locale ||
+        prevProps.version !== version
       ) {
-        this.loadEmojis(nextProps);
+        this.loadEmojis();
       }
     }
 
@@ -94,18 +94,18 @@ export default function withEmojiData(
     /**
      * Load and parse emoji data from the CDN or use the provided dataset.
      */
-    loadEmojis(props: EmojiDataLoaderProps) {
-      const { compact, locale, version } = props;
+    loadEmojis() {
+      const { compact, emojis, locale, version } = this.props;
 
       // Abort as we've already loaded data
       if (loaded[locale]) {
-        this.setEmojis(props.emojis);
+        this.setEmojis(emojis);
 
       // Or hook into the promise if we're loading
       } else if (promise[locale]) {
         promise[locale]
           .then(() => {
-            this.setEmojis(props.emojis);
+            this.setEmojis(emojis);
           })
           .catch((error) => {
             throw error;
@@ -120,7 +120,7 @@ export default function withEmojiData(
             // Parse the data and make it available through our data layer.
             // We should do this first so that the custom emojis can hook into it.
             this.getDataInstance().parseEmojiData(response);
-            this.setEmojis(props.emojis);
+            this.setEmojis(emojis);
           })
           .catch((error) => {
             throw error;

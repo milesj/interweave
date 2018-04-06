@@ -45,18 +45,14 @@ export default class EmojiButton extends React.PureComponent<EmojiProps, EmojiSt
     showImage: PropTypes.bool.isRequired,
   };
 
-  constructor({ active }: EmojiProps) {
-    super();
+  state = {
+    active: this.props.active,
+  };
 
-    this.state = {
-      active,
-    };
-  }
-
-  componentWillReceiveProps({ active }: EmojiProps) {
-    if (active !== this.props.active) {
+  componentDidUpdate(prevProps: EmojiProps) {
+    if (this.props.active !== prevProps.active) {
       this.setState({
-        active,
+        active: this.props.active,
       });
     }
   }
