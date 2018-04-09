@@ -381,7 +381,6 @@ describe('Interweave', () => {
   describe('transform prop', () => {
     it('skips the element', () => {
       const transform = node => {
-        console.log( node );
         return node.nodeName === 'IMG' ? null : undefined;
       };
       const wrapper = shallow(<Interweave content={'Foo <img/> Bar'} transform={transform} />);
