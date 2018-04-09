@@ -58,7 +58,7 @@ export default class Element extends React.PureComponent<ElementProps> {
         commonClass,
         className || '',
         attributes.className || '',
-      ].filter(Boolean).join(' ');
+      ].filter(Boolean).join(' ') || null;
     }
 
     if (selfClose) {
