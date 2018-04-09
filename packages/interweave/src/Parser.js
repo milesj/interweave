@@ -445,7 +445,7 @@ export default class Parser {
 
         // Apply transformation if available
         let children;
-        if (this.props.transform) {
+        if (transform) {
           this.keyIndex += 1;
           const key = this.keyIndex;
           children = this.parseNode(nextNode, config);
