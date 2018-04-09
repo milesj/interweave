@@ -13,6 +13,7 @@ type ElementProps = {
   attributes: Attributes,
   children: React$Node,
   className: string,
+  commonClass: ?string,
   selfClose: boolean,
   tagName: string,
 };
@@ -26,6 +27,7 @@ export default class Element extends React.PureComponent<ElementProps> {
     ])),
     children: PropTypes.node,
     className: PropTypes.string,
+    commonClass: PropTypes.string,
     selfClose: PropTypes.bool,
     tagName: PropTypes.string.isRequired,
   };
@@ -34,6 +36,7 @@ export default class Element extends React.PureComponent<ElementProps> {
     attributes: {},
     children: null,
     className: '',
+    commonClass: 'interweave',
     selfClose: false,
   };
 
@@ -42,6 +45,7 @@ export default class Element extends React.PureComponent<ElementProps> {
       attributes,
       children,
       className,
+      commonClass,
       selfClose,
       tagName: Tag,
     } = this.props;
@@ -51,7 +55,7 @@ export default class Element extends React.PureComponent<ElementProps> {
 
     if (!selfClose || (selfClose && Tag === 'img')) {
       props.className = [
-        'interweave',
+        commonClass,
         className || '',
         attributes.className || '',
       ].filter(Boolean).join(' ');

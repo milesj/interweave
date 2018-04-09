@@ -238,6 +238,26 @@ describe('Interweave', () => {
         ' Baz',
       ]);
     });
+
+    it('renders with a custom common class', () => {
+      const wrapper = shallow(<Interweave commonClass="not-interweave" content={'Foo <b>Bar</b> Baz'} />).shallow();
+
+      expect(wrapper.prop('children')).toEqual([
+        'Foo ',
+        <Element commonClass="not-interweave" tagName="b" key="0">{['Bar']}</Element>,
+        ' Baz',
+      ]);
+    });
+
+    it('renders without a common class', () => {
+      const wrapper = shallow(<Interweave commonClass={null} content={'Foo <b>Bar</b> Baz'} />).shallow();
+
+      expect(wrapper.prop('children')).toEqual([
+        'Foo ',
+        <Element commonClass={null} tagName="b" key="0">{['Bar']}</Element>,
+        ' Baz',
+      ]);
+    })
   });
 
   describe('parsing and rendering', () => {

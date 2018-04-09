@@ -30,6 +30,7 @@ import type {
 } from './types';
 
 type ParserProps = {
+  commonClass: string,
   disableLineBreaks?: boolean,
   noHtml?: boolean,
   noHtmlExceptMatchers?: boolean,
@@ -412,7 +413,7 @@ export default class Parser {
    * list of text nodes and React elements.
    */
   parseNode(parentNode: NodeInterface, parentConfig: NodeConfig): React$Node[] {
-    const { noHtml, noHtmlExceptMatchers, disableWhitelist } = this.props;
+    const { commonClass, noHtml, noHtmlExceptMatchers, disableWhitelist } = this.props;
     let content = [];
     let mergedText = '';
 
@@ -455,6 +456,7 @@ export default class Parser {
           const elementProps: Object = {
             key: this.keyIndex,
             tagName,
+            commonClass,
           };
 
           if (attributes) {
