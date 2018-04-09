@@ -53,6 +53,8 @@ import Interweave from 'interweave';
   rendered.
 * `tagName` (div | span | p) - The HTML element tag name to wrap the
   output with. Defaults to "span".
+* `commonClass` (string | null) - Class to apply to all rendered elements.
+  Defaults to "interweave". Set to null to skip.
 * `filters` (Filter[]) - Filters to apply to this instance.
 * `matchers` (Matcher[]) - Matchers to apply to this instance.
 * `disableFilters` (boolean) - Disables all filters.
