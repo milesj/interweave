@@ -394,6 +394,9 @@ const transform = node => {
 <Interweave transform={transform} />
 ```
 
+Note that `transform` is run before checking the whitelist, allowing you to use non-whitelisted
+tags in a controlled way. Blacklisted tags like `script` will not be transformed.
+
 #### Disabling HTML
 
 The HTML parser cannot be disabled, however, a `noHtml` boolean prop can be passed to both
