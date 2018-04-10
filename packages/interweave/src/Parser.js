@@ -454,6 +454,7 @@ export default class Parser {
           if (transformed === null) {
             return;
           } else if (typeof transformed !== 'undefined') {
+            // $FlowIgnore
             const transformedWithKey = React.cloneElement(transformed, {key});
             content.push(transformedWithKey);
             return;
