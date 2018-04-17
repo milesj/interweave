@@ -33,6 +33,7 @@ export const SOURCE_PROP = {
 };
 
 export const EXTRA_PROPS = {
+  commonClass: 'interweave',
   disableWhitelist: false,
   disableLineBreaks: false,
   noHtml: false,

@@ -21,6 +21,7 @@ import type {
 } from './types';
 
 type InterweaveProps = {
+  commonClass: ?string,
   content: string,
   disableFilters: boolean,
   disableLineBreaks: boolean,
@@ -39,6 +40,7 @@ type InterweaveProps = {
 
 export default class Interweave extends React.Component<InterweaveProps> {
   static propTypes = {
+    commonClass: PropTypes.string,
     content: PropTypes.string,
     disableFilters: PropTypes.bool,
     disableLineBreaks: PropTypes.bool,
@@ -57,6 +59,7 @@ export default class Interweave extends React.Component<InterweaveProps> {
 
   static defaultProps = {
     content: '',
+    commonClass: 'interweave',
     disableFilters: false,
     disableLineBreaks: false,
     disableMatchers: false,
