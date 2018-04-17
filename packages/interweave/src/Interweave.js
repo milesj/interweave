@@ -10,6 +10,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Element from './Element';
 import Parser from './Parser';
+import Markup from './Markup';
 import { FilterShape, MatcherShape } from './shapes';
 
 import type {
@@ -54,7 +55,7 @@ export default class Interweave extends React.Component<InterweaveProps> {
     onAfterParse: PropTypes.func,
     onBeforeParse: PropTypes.func,
     transform: PropTypes.func,
-    tagName: PropTypes.oneOf(['span', 'div', 'p']),
+    tagName: PropTypes.string,
   };
 
   static defaultProps = {
@@ -150,13 +151,25 @@ export default class Interweave extends React.Component<InterweaveProps> {
    * Render the component by parsing the markup.
    */
   render(): React$Node {
-    const { tagName, noHtml, noHtmlExceptMatchers } = this.props;
-    const className = (noHtml || noHtmlExceptMatchers) ? 'interweave--no-html' : '';
+    const {
+      disableLineBreaks,
+      disableWhitelist,
+      emptyContent,
+      noHtml,
+      noHtmlExceptMatchers,
+      tagName,
+    } = this.props;
 
     return (
-      <Element tagName={tagName} className={className}>
-        {this.parseMarkup()}
-      </Element>
+      <Markup
+        disableLineBreaks={disableLineBreaks}
+        disableWhitelist={disableWhitelist}
+        emptyContent={emptyContent}
+        noHtml={noHtml}
+        noHtmlExceptMatchers={noHtmlExceptMatchers}
+        tagName={tagName}
+        parsedContent={this.parseMarkup()}
+      />
     );
   }
 }

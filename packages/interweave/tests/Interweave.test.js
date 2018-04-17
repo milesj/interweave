@@ -5,6 +5,7 @@ import ReactDOMServer from 'react-dom/server';
 import { shallow } from 'enzyme';
 import Interweave from '../src/Interweave';
 import Element from '../src/Element';
+import Markup from '../src/Markup';
 import {
   EXTRA_PROPS,
   MOCK_INVALID_MARKUP,
@@ -14,28 +15,6 @@ import {
 } from '../../../tests/mocks';
 
 describe('Interweave', () => {
-  it('sets the `noHtml` class name', () => {
-    const wrapper = shallow(
-      <Interweave
-        noHtml
-        content="Foo Bar"
-      />
-    );
-
-    expect(wrapper.prop('className')).toBe('interweave--no-html');
-  });
-
-  it('sets the `noHtmlExceptMatchers` class name', () => {
-    const wrapper = shallow(
-      <Interweave
-        noHtmlExceptMatchers
-        content="Foo Bar"
-      />
-    );
-
-    expect(wrapper.prop('className')).toBe('interweave--no-html');
-  });
-
   it('can pass filters through props', () => {
     const wrapper = shallow(
       <Interweave
@@ -147,20 +126,13 @@ describe('Interweave', () => {
   it('allows empty `content` to be passed', () => {
     const wrapper = shallow(<Interweave content={null} />);
 
-    expect(wrapper.prop('children')).toBe(null);
+    expect(wrapper.prop('parsedContent')).toBe(null);
   });
 
   it('allows empty `content` to be passed when using callbacks', () => {
     const wrapper = shallow(<Interweave content={null} onBeforeParse={value => value} />);
 
-    expect(wrapper.prop('children')).toBe(null);
-  });
-
-  it('will render the `emptyContent` if no content exists', () => {
-    const empty = <div>Foo</div>;
-    const wrapper = shallow(<Interweave content="" emptyContent={empty} />);
-
-    expect(wrapper.contains(empty)).toBe(true);
+    expect(wrapper.prop('parsedContent')).toBe(null);
   });
 
   describe('parseMarkup()', () => {
@@ -214,25 +186,22 @@ describe('Interweave', () => {
 
   describe('render()', () => {
     it('renders with a default tag name', () => {
-      const wrapper = shallow(<Interweave content="Foo" />).shallow();
+      const wrapper = shallow(<Interweave content="Foo" />);
 
-      expect(wrapper.find('span')).toHaveLength(1);
-      expect(wrapper.text()).toBe('Foo');
+      expect(wrapper.prop('tagName')).toBe('span');
     });
 
     it('renders with a custom tag name', () => {
-      const wrapper = shallow(<Interweave tagName="div" content="Foo" />).shallow();
+      const wrapper = shallow(<Interweave tagName="div" content="Foo" />);
 
-      expect(wrapper.find('div')).toHaveLength(1);
-      expect(wrapper.text()).toBe('Foo');
+      expect(wrapper.prop('tagName')).toBe('div');
     });
 
     it('parses HTML', () => {
-      const wrapper = shallow(<Interweave tagName="div" content={'Foo <b>Bar</b> Baz'} />).shallow();
+      const wrapper = shallow(<Interweave tagName="div" content={'Foo <b>Bar</b> Baz'} />);
 
-      expect(wrapper.find('div')).toHaveLength(1);
-      expect(wrapper.find('Element').prop('tagName')).toBe('b');
-      expect(wrapper.prop('children')).toEqual([
+      expect(wrapper.prop('tagName')).toBe('div');
+      expect(wrapper.prop('parsedContent')).toEqual([
         'Foo ',
         <Element tagName="b" key="0">{['Bar']}</Element>,
         ' Baz',
@@ -284,7 +253,7 @@ describe('Interweave', () => {
     it('converts line breaks', () => {
       const wrapper = shallow(<Interweave content={'Foo\nBar'} />);
 
-      expect(wrapper.prop('children')).toEqual([
+      expect(wrapper.prop('parsedContent')).toEqual([
         'Foo',
         <Element key="0" tagName="br" selfClose>{[]}</Element>,
         'Bar',
@@ -294,7 +263,7 @@ describe('Interweave', () => {
     it('doesnt convert line breaks', () => {
       const wrapper = shallow(<Interweave content={'Foo\nBar'} disableLineBreaks />);
 
-      expect(wrapper.prop('children')).toEqual([
+      expect(wrapper.prop('parsedContent')).toEqual([
         'Foo\nBar',
       ]);
     });
@@ -302,7 +271,7 @@ describe('Interweave', () => {
     it('doesnt convert line breaks if it contains HTML', () => {
       const wrapper = shallow(<Interweave content={'Foo\n<br/>Bar'} />);
 
-      expect(wrapper.prop('children')).toEqual([
+      expect(wrapper.prop('parsedContent')).toEqual([
         'Foo\n',
         <Element key="0" tagName="br" selfClose>{[]}</Element>,
         'Bar',
@@ -314,7 +283,7 @@ describe('Interweave', () => {
     it('filters invalid tags and attributes', () => {
       const wrapper = shallow(<Interweave content={MOCK_INVALID_MARKUP} />);
 
-      expect(wrapper.prop('children')).toEqual([
+      expect(wrapper.prop('parsedContent')).toEqual([
         <Element key="0" tagName="div">
           {[
             '\n  ',
@@ -336,7 +305,7 @@ describe('Interweave', () => {
     it('doesnt filter invalid tags and attributes when disabled', () => {
       const wrapper = shallow(<Interweave content={MOCK_INVALID_MARKUP} disableWhitelist />);
 
-      expect(wrapper.prop('children')).toEqual([
+      expect(wrapper.prop('parsedContent')).toEqual([
         <Element key="0" attributes={{ bgcolor: 'black' }} tagName="div">
           {[
             '\n  ',
@@ -405,7 +374,7 @@ describe('Interweave', () => {
       };
       const wrapper = shallow(<Interweave content={'Foo <img/> Bar'} transform={transform} />);
 
-      expect(wrapper.prop('children')).toEqual([
+      expect(wrapper.prop('parsedContent')).toEqual([
         'Foo ',
         ' Bar',
       ]);
@@ -415,7 +384,7 @@ describe('Interweave', () => {
       const transform = node => node.nodeName === 'IMG' ? <Dummy /> : undefined;
       const wrapper = shallow(<Interweave content={'Foo <img/> Bar'} transform={transform} />);
 
-      expect(wrapper.prop('children')).toEqual([
+      expect(wrapper.prop('parsedContent')).toEqual([
         'Foo ',
         <Dummy key="0" />,
         ' Bar',

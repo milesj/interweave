@@ -5,6 +5,29 @@ import Element from '../src/Element';
 import { MOCK_MARKUP } from '../../../tests/mocks';
 
 describe('Markup', () => {
+  it('can change `tagName`', () => {
+    const wrapper = shallow((
+      <Markup
+        tagName="p"
+        content="Foo Bar"
+      />
+    ));
+
+    expect(wrapper.is(Element)).toBe(true);
+    expect(wrapper.prop('tagName')).toBe('p');
+  });
+
+  it('can use a fragment', () => {
+    const wrapper = shallow((
+      <Markup
+        tagName="fragment"
+        content="Foo Bar"
+      />
+    ));
+
+    expect(wrapper.is(Element)).toBe(false);
+  });
+
   it('sets the `noHtml` class name', () => {
     const wrapper = shallow((
       <Markup

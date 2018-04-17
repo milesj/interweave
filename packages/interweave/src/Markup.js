@@ -16,6 +16,7 @@ type MarkupProps = {
   emptyContent: ?React$Node,
   noHtml: boolean,
   noHtmlExceptMatchers: boolean,
+  parsedContent: ?React$Node,
   tagName: string,
 };
 
@@ -27,7 +28,8 @@ export default class Markup extends React.PureComponent<MarkupProps> {
     emptyContent: PropTypes.node,
     noHtml: PropTypes.bool,
     noHtmlExceptMatchers: PropTypes.bool,
-    tagName: PropTypes.oneOf(['span', 'div', 'p']),
+    parsedContent: PropTypes.node,
+    tagName: PropTypes.oneOf(['span', 'div', 'p', 'fragment']),
   };
 
   static defaultProps = {
@@ -37,10 +39,11 @@ export default class Markup extends React.PureComponent<MarkupProps> {
     emptyContent: null,
     noHtml: false,
     noHtmlExceptMatchers: false,
+    parsedContent: null,
     tagName: 'span',
   };
 
-  render(): React$Node {
+  getContent(): React$Node {
     const {
       content,
       noHtml,
@@ -48,9 +51,13 @@ export default class Markup extends React.PureComponent<MarkupProps> {
       disableLineBreaks,
       disableWhitelist,
       emptyContent,
-      tagName,
+      parsedContent,
     } = this.props;
-    const className = (noHtml || noHtmlExceptMatchers) ? 'interweave--no-html' : '';
+
+    if (parsedContent) {
+      return parsedContent;
+    }
+
     const markup = new Parser(content, {
       disableLineBreaks,
       disableWhitelist,
@@ -58,9 +65,31 @@ export default class Markup extends React.PureComponent<MarkupProps> {
       noHtmlExceptMatchers,
     }).parse();
 
+    return markup.length ? markup : emptyContent;
+  }
+
+  render(): React$Node {
+    const { tagName, noHtml, noHtmlExceptMatchers } = this.props;
+    const className = (noHtml || noHtmlExceptMatchers) ? 'interweave--no-html' : '';
+    const content = this.getContent();
+    let tag = tagName;
+
+    if (tag === 'fragment') {
+      if (React.Fragment) {
+        return (
+          <React.Fragment>
+            {content}
+          </React.Fragment>
+        );
+      }
+
+      // Not supported
+      tag = 'div';
+    }
+
     return (
-      <Element tagName={tagName} className={className}>
-        {markup.length ? markup : emptyContent}
+      <Element tagName={tag} className={className}>
+        {content}
       </Element>
     );
   }
