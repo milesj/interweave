@@ -397,4 +397,29 @@ describe('Interweave', () => {
       expect(actual).toBe('<span class="interweave">Foo <span class="interweave">B</span> Bar Baz</span>');
     });
   });
+
+  describe('transform prop', () => {
+    it('skips the element', () => {
+      const transform = node => {
+        return node.nodeName === 'IMG' ? null : undefined;
+      };
+      const wrapper = shallow(<Interweave content={'Foo <img/> Bar'} transform={transform} />);
+
+      expect(wrapper.prop('children')).toEqual([
+        'Foo ',
+        ' Bar',
+      ]);
+    });
+    it('replaces the element', () => {
+      const Dummy = props => <div />;
+      const transform = node => node.nodeName === 'IMG' ? <Dummy /> : undefined;
+      const wrapper = shallow(<Interweave content={'Foo <img/> Bar'} transform={transform} />);
+
+      expect(wrapper.prop('children')).toEqual([
+        'Foo ',
+        <Dummy key="0" />,
+        ' Bar',
+      ]);
+    });
+  });
 });

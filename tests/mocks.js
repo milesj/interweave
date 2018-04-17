@@ -38,6 +38,7 @@ export const EXTRA_PROPS = {
   disableLineBreaks: false,
   noHtml: false,
   noHtmlExceptMatchers: false,
+  transform: null,
 };
 
 export const VALID_EMOJIS = [

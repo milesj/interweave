@@ -27,6 +27,7 @@ import type {
   NodeInterface,
   FilterInterface,
   MatcherInterface,
+  TransformCallback
 } from './types';
 
 type ParserProps = {
@@ -34,6 +35,7 @@ type ParserProps = {
   disableLineBreaks?: boolean,
   noHtml?: boolean,
   noHtmlExceptMatchers?: boolean,
+  transform?: TransformCallback,
   [key: string]: mixed,
 };
 
@@ -413,7 +415,7 @@ export default class Parser {
    * list of text nodes and React elements.
    */
   parseNode(parentNode: NodeInterface, parentConfig: NodeConfig): React$Node[] {
-    const { commonClass, noHtml, noHtmlExceptMatchers, disableWhitelist } = this.props;
+    const { commonClass, noHtml, noHtmlExceptMatchers, disableWhitelist, transform } = this.props;
     let content = [];
     let mergedText = '';
 
@@ -440,6 +442,27 @@ export default class Parser {
 
         if (!nextNode) {
           return;
+        }
+
+        // Apply transformation if available
+        let children;
+        if (transform) {
+          this.keyIndex += 1;
+          const key = this.keyIndex;
+          children = this.parseNode(nextNode, config);
+
+          const transformed = transform(nextNode, children, config);
+          if (transformed === null) {
+            return;
+          } else if (typeof transformed !== 'undefined') {
+            // $FlowIgnore
+            const transformedWithKey = React.cloneElement(transformed, {key});
+            content.push(transformedWithKey);
+            return;
+          }
+
+          // Reset keyIndex back, as we're not using the transformation.
+          this.keyIndex = key - 1;
         }
 
         // Only render when the following criteria is met:
@@ -469,7 +492,7 @@ export default class Parser {
 
           content.push((
             <Element {...elementProps}>
-              {this.parseNode(nextNode, config)}
+              {children || this.parseNode(nextNode, config)}
             </Element>
           ));
 
