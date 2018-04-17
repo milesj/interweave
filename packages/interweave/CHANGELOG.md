@@ -1,4 +1,4 @@
-# 8.1.0
+# 8.1.0 - 04/16/18
 #### 🚀 New
 * Added a `commonClass` prop to control the class name for all Interweave elements.
 * Added a `transform` prop to hook into the parsing process.

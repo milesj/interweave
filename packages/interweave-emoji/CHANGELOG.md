@@ -1,4 +1,4 @@
-# 1.4.0
+# 1.4.0 - 04/16/18
 #### 🐞 Fixed
 * Updated `componentWillMount` to `componentDidMount` and `componentWillReceiveProps` to `componentDidUpdate` in preparation for React 16.3.
 

@@ -1,3 +1,7 @@
+# 1.4.0 - 04/16/18
+#### 🛠 Internal
+* Tested against React 16.3.
+
 # 1.3.1 - 11/10/17
 #### 🛠 Internal
 * Tested against React 16.1.
