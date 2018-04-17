@@ -22,8 +22,8 @@
   "devDependencies": {
     "@milesj/build-tool-config": "^0.50.0",
     "emojibase-test-utils": "^2.2.0",
-    "lerna": "^2.9.1",
-    "serve": "^6.5.3"
+    "lerna": "^2.10.2",
+    "serve": "^6.5.5"
   },
   "babel": {
     "presets": "@milesj/build-tool-config/babel"

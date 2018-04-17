@@ -40,6 +40,6 @@
   },
   "devDependencies": {
     "@milesj/build-tool-config": "^0.50.0",
-    "react": "^16.2.0"
+    "react": "^16.3.2"
   }
 }
