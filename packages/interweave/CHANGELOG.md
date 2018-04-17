@@ -1,3 +1,9 @@
+# 8.1.0
+#### 🚀 New
+* Added a `commonClass` prop to control the class name for all Interweave elements.
+* Added a `transform` prop to hook into the parsing process.
+* Updated `tagName` prop to accept "fragment", in which a `React.Fragment` will be rendered.
+
 # 8.0.2 - 11/10/17
 #### 🐞 Fixed
 * Fixed a bug where passing a `null` content with `onBeforeParse` would throw errors.

@@ -51,7 +51,7 @@ import Interweave from 'interweave';
   filters to. Supports HTML.
 * `emptyContent` (node) - React node to render if no content was
   rendered.
-* `tagName` (div | span | p) - The HTML element tag name to wrap the
+* `tagName` (div | span | p | fragment) - The HTML element tag name to wrap the
   output with. Defaults to "span".
 * `commonClass` (string | null) - Class to apply to all rendered elements.
   Defaults to "interweave". Set to null to skip.
