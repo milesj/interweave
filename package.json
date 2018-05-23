@@ -1,23 +1,27 @@
 {
+  "name": "interweave-root",
   "private": true,
-  "name": "interweave",
   "scripts": {
-    "assemble": "yarn run bootstrap && yarn run build && yarn test",
-    "bootstrap": "lerna bootstrap",
-    "bootstrap:slow": "yarn run bootstrap --concurrency 1",
-    "build": "lerna run build",
-    "clean": "lerna clean --yes",
-    "coverage": "run-tests --coverage",
-    "eslint": "run-linter",
-    "flow": "type-check",
-    "jest": "run-tests",
-    "posttest": "yarn run flow",
-    "pretest": "yarn run eslint",
-    "publish": "lerna publish",
-    "publish:force": "lerna publish --force-publish *",
+    "build": "beemo typescript --workspaces=* --priority=interweave",
+    "clean": "rimraf ./packages/*/{lib,esm}/ && lerna clean --yes",
+    "coverage": "yarn run jest --coverage",
+    "docs": "gitbook build --debug --log=debug",
+    "docs:serve": "gitbook serve",
+    "docs:install": "gitbook install",
+    "eslint": "beemo eslint",
+    "jest": "beemo jest --react",
+    "posttest": "yarn run eslint",
+    "pretest": "yarn run type",
     "test": "yarn run jest",
-    "test:live": "yarn run build && bundle-lib ./tests/bundle.js ./tests/bundle.min.js && serve ./tests/",
-    "updated": "lerna updated"
+    "test:live":
+      "yarn run build && bundle-lib ./tests/bundle.js ./tests/bundle.min.js && serve ./tests/",
+    "updated": "lerna updated",
+    "package": "yarn run clean && yarn install && yarn run build && yarn test",
+    "prettier": "beemo prettier",
+    "prerelease": "yarn run package",
+    "release": "lerna publish",
+    "release:force": "npm run release -- --force-publish=*",
+    "type": "beemo typescript --workspaces --noEmit"
   },
   "devDependencies": {
     "@milesj/build-tool-config": "^0.94.0",
@@ -25,19 +29,16 @@
     "lerna": "^2.11.0",
     "serve": "^6.5.8"
   },
-  "babel": {
-    "presets": "@milesj/build-tool-config/babel"
+  "workspaces": ["packages/*"],
+  "beemo": {
+    "module": "@milesj/build-tool-config",
+    "drivers": ["babel", "eslint", "jest", "prettier", "typescript"],
+    "eslint": {
+      "rules": {
+        "no-magic-numbers": "off",
+        "no-param-reassign": "off"
+      }
+    }
   },
-  "eslintConfig": {
-    "extends": "./node_modules/@milesj/build-tool-config/eslint.js"
-  },
-  "eslintIgnore": [
-    "esm/",
-    "lib/",
-    "*.min.js",
-    "*.map"
-  ],
-  "workspaces": [
-    "packages/*"
-  ]
+  "browserslist": ["ie 10"]
 }
