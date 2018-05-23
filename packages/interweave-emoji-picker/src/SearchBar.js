@@ -91,7 +91,7 @@ export default class SearchBar extends React.PureComponent<SearchBarProps, Searc
     this.input = ref;
   };
 
-  render(): React$Node {
+  render(): React.ReactNode {
     const { classNames, messages } = this.context;
     const { onKeyUp } = this.props;
 

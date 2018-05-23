@@ -92,7 +92,7 @@ export default class EmojiButton extends React.PureComponent<EmojiProps, EmojiSt
     this.props.onLeave(this.props.emoji, e);
   };
 
-  render(): React$Node {
+  render(): React.ReactNode {
     const { emoji, emojiPadding, emojiPath, emojiSize, emojiSource, showImage } = this.props;
     const { classNames } = this.context;
     const { active } = this.state;

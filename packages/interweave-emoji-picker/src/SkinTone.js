@@ -10,7 +10,7 @@ import { SKIN_COLORS } from './constants';
 
 type SkinToneProps = {
   active: boolean,
-  children: React$Node,
+  children: React.ReactNode,
   onSelect: (skinTone: string, e: *) => void,
   skinTone: string,
 };
@@ -40,7 +40,7 @@ export default class SkinTone extends React.PureComponent<SkinToneProps> {
     this.props.onSelect(this.props.skinTone, e);
   };
 
-  render(): React$Node {
+  render(): React.ReactNode {
     const { active, children, skinTone } = this.props;
     const { classNames } = this.context;
     const className = [classNames.skinTone];

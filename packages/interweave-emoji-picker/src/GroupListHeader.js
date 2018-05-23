@@ -18,7 +18,7 @@ import type { EmojiPath } from 'interweave-emoji'; // eslint-disable-line
 type GroupListHeaderProps = {
   commonMode: string,
   group: string,
-  skinTonePalette: React$Node,
+  skinTonePalette: React.ReactNode,
 };
 
 export default class GroupListHeader extends React.PureComponent<GroupListHeaderProps> {
@@ -37,7 +37,7 @@ export default class GroupListHeader extends React.PureComponent<GroupListHeader
     skinTonePalette: null,
   };
 
-  render(): React$Node {
+  render(): React.ReactNode {
     const { commonMode, group, skinTonePalette } = this.props;
     const { classNames, messages } = this.context;
     const showPalette =

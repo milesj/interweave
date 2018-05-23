@@ -15,7 +15,7 @@ import type { Emoji, EmojiPath } from 'interweave-emoji'; // eslint-disable-line
 type GroupTabsProps = {
   activeGroup: string,
   commonEmojis: Emoji[],
-  icons: { [key: string]: React$Node },
+  icons: { [key: string]: React.ReactNode },
   onSelect: (group: string, e: SyntheticEvent<*>) => void,
 };
 
@@ -31,7 +31,7 @@ export default class GroupTabs extends React.PureComponent<GroupTabsProps> {
     onSelect: PropTypes.func.isRequired,
   };
 
-  render(): React$Node {
+  render(): React.ReactNode {
     const { activeGroup, commonEmojis, icons, onSelect } = this.props;
     const { classNames } = this.context;
     const groups = [...GROUPS];

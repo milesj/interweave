@@ -11,7 +11,7 @@ import type { EmojiPath } from 'interweave-emoji'; // eslint-disable-line
 
 type GroupProps = {
   activeGroup: string,
-  children: React$Node,
+  children: React.ReactNode,
   group: string,
   onSelect: (group: string, e: SyntheticEvent<*>) => void,
 };
@@ -38,7 +38,7 @@ export default class Group extends React.PureComponent<GroupProps> {
     this.props.onSelect(this.props.group, e);
   };
 
-  render(): React$Node {
+  render(): React.ReactNode {
     const { activeGroup, children, group } = this.props;
     const { classNames, messages } = this.context;
     const className = [classNames.group];

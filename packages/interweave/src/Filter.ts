@@ -1,10 +1,9 @@
 /**
  * @copyright   2016, Miles Johnson
  * @license     https://opensource.org/licenses/MIT
- * @flow
  */
 
-import type { NodeInterface, FilterInterface } from './types';
+import { NodeInterface, FilterInterface } from './types';
 
 export default class Filter implements FilterInterface {
   /**

@@ -1,19 +1,16 @@
 /**
  * @copyright   2016, Miles Johnson
  * @license     https://opensource.org/licenses/MIT
- * @flow
  */
-
-/* eslint-disable react/no-unused-prop-types */
 
 import React from 'react';
 import PropTypes from 'prop-types';
 import Element from './Element';
 import Parser from './Parser';
-import Markup from './Markup';
+import Markup, { MarkupProps } from './Markup';
 import { FilterShape, MatcherShape } from './shapes';
-
-import type {
+import {
+  Props,
   FilterInterface,
   MatcherInterface,
   AfterParseCallback,
@@ -21,27 +18,18 @@ import type {
   TransformCallback,
 } from './types';
 
-type InterweaveProps = {
-  commonClass: ?string,
-  content: string,
-  disableFilters: boolean,
-  disableLineBreaks: boolean,
-  disableMatchers: boolean,
-  disableWhitelist: boolean,
-  emptyContent: ?React$Node,
-  filters: FilterInterface[],
-  matchers: MatcherInterface[],
-  noHtml: boolean,
-  noHtmlExceptMatchers: boolean,
-  onAfterParse: ?AfterParseCallback,
-  onBeforeParse: ?BeforeParseCallback,
-  transform: ?TransformCallback,
-  tagName: string,
-};
+export interface InterweaveProps extends MarkupProps {
+  disableFilters?: boolean;
+  disableMatchers?: boolean;
+  filters?: FilterInterface[];
+  matchers?: MatcherInterface[];
+  onAfterParse?: AfterParseCallback | null;
+  onBeforeParse?: BeforeParseCallback | null;
+  transform?: TransformCallback | null;
+}
 
 export default class Interweave extends React.Component<InterweaveProps> {
   static propTypes = {
-    commonClass: PropTypes.string,
     content: PropTypes.string,
     disableFilters: PropTypes.bool,
     disableLineBreaks: PropTypes.bool,
@@ -54,13 +42,12 @@ export default class Interweave extends React.Component<InterweaveProps> {
     noHtmlExceptMatchers: PropTypes.bool,
     onAfterParse: PropTypes.func,
     onBeforeParse: PropTypes.func,
-    transform: PropTypes.func,
     tagName: PropTypes.string,
+    transform: PropTypes.func,
   };
 
   static defaultProps = {
     content: '',
-    commonClass: 'interweave',
     disableFilters: false,
     disableLineBreaks: false,
     disableMatchers: false,
@@ -72,16 +59,16 @@ export default class Interweave extends React.Component<InterweaveProps> {
     noHtmlExceptMatchers: false,
     onAfterParse: null,
     onBeforeParse: null,
-    transform: null,
     tagName: 'span',
+    transform: null,
   };
 
   /**
    * Parse the markup and apply hooks.
    */
-  parseMarkup(): React$Node[] | ?React$Node {
+  parseMarkup(): React.ReactNode[] | React.ReactNode {
     const {
-      tagName, // eslint-disable-line
+      tagName,
       content,
       emptyContent,
       onBeforeParse,
@@ -91,7 +78,7 @@ export default class Interweave extends React.Component<InterweaveProps> {
       filters,
       disableFilters,
       ...props
-    } = this.props;
+    } = this.props as Required<InterweaveProps>;
 
     const allMatchers = disableMatchers ? [] : matchers;
     const allFilters = disableFilters ? [] : filters;
@@ -113,7 +100,7 @@ export default class Interweave extends React.Component<InterweaveProps> {
     const markup = beforeCallbacks.reduce((string, callback) => {
       const nextString = callback(string, this.props);
 
-      if (__DEV__) {
+      if (process.env.NODE_ENV !== 'production') {
         if (typeof nextString !== 'string') {
           throw new TypeError('Interweave `onBeforeParse` must return a valid HTML string.');
         }
@@ -123,13 +110,13 @@ export default class Interweave extends React.Component<InterweaveProps> {
     }, content || '');
 
     // Parse the markup
-    const parser = new Parser(markup, props, allMatchers, allFilters);
+    const parser = new Parser(markup, props as Props, allMatchers, allFilters);
 
     // Trigger after callbacks
     const nodes = afterCallbacks.reduce((parserNodes, callback) => {
       const nextNodes = callback(parserNodes, this.props);
 
-      if (__DEV__) {
+      if (process.env.NODE_ENV !== 'production') {
         if (!Array.isArray(nextNodes)) {
           throw new TypeError(
             'Interweave `onAfterParse` must return an array of strings and React elements.',
@@ -150,7 +137,7 @@ export default class Interweave extends React.Component<InterweaveProps> {
   /**
    * Render the component by parsing the markup.
    */
-  render(): React$Node {
+  render() {
     const {
       disableLineBreaks,
       disableWhitelist,

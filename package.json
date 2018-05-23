@@ -2,7 +2,7 @@
   "name": "interweave-root",
   "private": true,
   "scripts": {
-    "build": "beemo typescript --workspaces=* --priority=interweave",
+    "build": "beemo typescript --workspaces=* --priority=interweave --react",
     "clean": "rimraf ./packages/*/{lib,esm}/ && lerna clean --yes",
     "coverage": "yarn run jest --coverage",
     "docs": "gitbook build --debug --log=debug",
@@ -13,32 +13,42 @@
     "posttest": "yarn run eslint",
     "pretest": "yarn run type",
     "test": "yarn run jest",
-    "test:live":
-      "yarn run build && bundle-lib ./tests/bundle.js ./tests/bundle.min.js && serve ./tests/",
+    "test:live": "yarn run build && bundle-lib ./tests/bundle.js ./tests/bundle.min.js && serve ./tests/",
     "updated": "lerna updated",
     "package": "yarn run clean && yarn install && yarn run build && yarn test",
     "prettier": "beemo prettier",
     "prerelease": "yarn run package",
     "release": "lerna publish",
     "release:force": "npm run release -- --force-publish=*",
-    "type": "beemo typescript --workspaces --noEmit"
+    "type": "beemo typescript --workspaces --noEmit --react"
   },
   "devDependencies": {
-    "@milesj/build-tool-config": "^0.94.0",
+    "@milesj/build-tool-config": "^0.94.1",
     "emojibase-test-utils": "^2.3.0",
     "lerna": "^2.11.0",
     "serve": "^6.5.8"
   },
-  "workspaces": ["packages/*"],
+  "workspaces": [
+    "packages/*"
+  ],
   "beemo": {
     "module": "@milesj/build-tool-config",
-    "drivers": ["babel", "eslint", "jest", "prettier", "typescript"],
+    "drivers": [
+      "babel",
+      "eslint",
+      "jest",
+      "prettier",
+      "typescript"
+    ],
     "eslint": {
       "rules": {
         "no-magic-numbers": "off",
-        "no-param-reassign": "off"
+        "no-param-reassign": "off",
+        "react/no-unused-prop-types": "off"
       }
     }
   },
-  "browserslist": ["ie 10"]
+  "browserslist": [
+    "ie 10"
+  ]
 }

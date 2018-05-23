@@ -38,7 +38,7 @@ type EmojiListProps = {
   rowPadding: number,
   scrollToGroup: string,
   searchQuery: string,
-  skinTonePalette: React$Node,
+  skinTonePalette: React.ReactNode,
 };
 
 type EmojiListState = {
@@ -269,7 +269,7 @@ export default class EmojiVirtualList extends React.PureComponent<EmojiListProps
     );
   };
 
-  render(): React$Node {
+  render(): React.ReactNode {
     const {
       activeEmoji,
       columnCount,

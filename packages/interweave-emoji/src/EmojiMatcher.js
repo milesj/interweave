@@ -47,7 +47,7 @@ export default class EmojiMatcher extends Matcher<EmojiOptions> {
     );
   }
 
-  replaceWith(match: string, props?: Object = {}): React$Node {
+  replaceWith(match: string, props?: Object = {}): React.ReactNode {
     return <Emoji {...props} renderUnicode={this.options.renderUnicode} />;
   }
 
@@ -132,7 +132,7 @@ export default class EmojiMatcher extends Matcher<EmojiOptions> {
   onBeforeParse(content: string, props: Object): string {
     if (props.emojiSource) {
       this.data = EmojiData.getInstance(props.emojiSource.locale);
-    } else if (__DEV__) {
+    } else if (process.env.NODE_ENV !== 'production') {
       throw new Error('Missing emoji source data. Have you loaded using `withEmojiData`?');
     }
 
@@ -142,7 +142,7 @@ export default class EmojiMatcher extends Matcher<EmojiOptions> {
   /**
    * When a single `Emoji` is the only content, enlarge it!
    */
-  onAfterParse(content: React$Node[], props: Object): React$Node[] {
+  onAfterParse(content: React.ReactNode[], props: Object): React.ReactNode[] {
     if (content.length === 0) {
       return content;
     }

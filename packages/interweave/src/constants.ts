@@ -1,15 +1,11 @@
 /**
  * @copyright   2016, Miles Johnson
  * @license     https://opensource.org/licenses/MIT
- * @flow
  */
 
-/* eslint-disable sort-keys */
+/* eslint-disable sort-keys, unicorn/no-fn-reference-in-iterator */
 
-import type { NodeConfig } from './types';
-
-type ConfigMap = { [key: string]: NodeConfig };
-type FilterMap = { [key: string]: number };
+import { NodeConfig, ConfigMap, FilterMap } from './types';
 
 // Parser rules for HTML tags
 export const PARSER_ALLOW: number = 1; // Allow element and children
@@ -43,7 +39,7 @@ export const CONFIG_BLOCK: NodeConfig = {
 
 // Tags not listed here will be marked as pass-through
 // https://developer.mozilla.org/en-US/docs/Web/HTML/Element
-const tagConfigs = {
+const tagConfigs: { [tagName: string]: Partial<NodeConfig> } = {
   a: {
     type: TYPE_INLINE_BLOCK,
     block: true,
@@ -166,7 +162,7 @@ const tagConfigs = {
   },
 };
 
-function createConfigBuilder(config: NodeConfig): string => void {
+function createConfigBuilder(config: NodeConfig): (tagName: string) => void {
   return (tagName: string) => {
     tagConfigs[tagName] = {
       ...config,

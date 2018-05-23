@@ -11,7 +11,7 @@ import { SKIN_TONES } from './constants';
 
 type SkinTonePaletteProps = {
   activeSkinTone: string,
-  icons: { [key: string]: React$Node },
+  icons: { [key: string]: React.ReactNode },
   onSelect: (skinTone: string, e: *) => void,
 };
 
@@ -26,7 +26,7 @@ export default class SkinTonePalette extends React.PureComponent<SkinTonePalette
     onSelect: PropTypes.func.isRequired,
   };
 
-  render(): React$Node {
+  render(): React.ReactNode {
     const { activeSkinTone, icons, onSelect } = this.props;
     const { classNames } = this.context;
 

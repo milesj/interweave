@@ -31,7 +31,7 @@ let loaded: { [locale: string]: boolean } = {};
 let promise: { [locale: string]: Promise<*> } = {};
 
 export function resetLoaded() {
-  if (__DEV__) {
+  if (process.env.NODE_ENV !== 'production') {
     loaded = {};
     promise = {};
   }
@@ -136,7 +136,7 @@ export default function withEmojiData(
     /**
      * Clone the element so that it re-renders itself.
      */
-    render(): React$Node {
+    render(): React.ReactNode {
       const { compact, emojis, locale, version, ...props } = this.props;
 
       return (

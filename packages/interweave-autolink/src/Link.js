@@ -8,7 +8,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 type LinkProps = {
-  children: React$Node,
+  children: React.ReactNode,
   href: string,
   newWindow: boolean,
   onClick: ?() => void,
@@ -27,7 +27,7 @@ export default class Link extends React.PureComponent<LinkProps> {
     onClick: null,
   };
 
-  render(): React$Node {
+  render(): React.ReactNode {
     const { children, href, onClick, newWindow } = this.props;
 
     return (

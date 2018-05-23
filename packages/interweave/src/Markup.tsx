@@ -1,7 +1,6 @@
 /**
  * @copyright   2016, Miles Johnson
  * @license     https://opensource.org/licenses/MIT
- * @flow
  */
 
 import React from 'react';
@@ -9,16 +8,16 @@ import PropTypes from 'prop-types';
 import Element from './Element';
 import Parser from './Parser';
 
-type MarkupProps = {
-  content: string,
-  disableLineBreaks: boolean,
-  disableWhitelist: boolean,
-  emptyContent: ?React$Node,
-  noHtml: boolean,
-  noHtmlExceptMatchers: boolean,
-  parsedContent: ?React$Node,
-  tagName: string,
-};
+export interface MarkupProps {
+  content?: string;
+  disableLineBreaks?: boolean;
+  disableWhitelist?: boolean;
+  emptyContent?: React.ReactNode;
+  noHtml?: boolean;
+  noHtmlExceptMatchers?: boolean;
+  parsedContent?: React.ReactNode;
+  tagName?: string;
+}
 
 export default class Markup extends React.PureComponent<MarkupProps> {
   static propTypes = {
@@ -43,9 +42,9 @@ export default class Markup extends React.PureComponent<MarkupProps> {
     tagName: 'span',
   };
 
-  getContent(): React$Node {
+  getContent(): React.ReactNode {
     const {
-      content,
+      content = '',
       noHtml,
       noHtmlExceptMatchers,
       disableLineBreaks,
@@ -68,11 +67,9 @@ export default class Markup extends React.PureComponent<MarkupProps> {
     return markup.length ? markup : emptyContent;
   }
 
-  render(): React$Node {
-    const { tagName, noHtml, noHtmlExceptMatchers } = this.props;
-    const className = noHtml || noHtmlExceptMatchers ? 'interweave--no-html' : '';
+  render() {
     const content = this.getContent();
-    let tag = tagName;
+    let tag = this.props.tagName!;
 
     if (tag === 'fragment') {
       if (React.Fragment) {
@@ -83,10 +80,6 @@ export default class Markup extends React.PureComponent<MarkupProps> {
       tag = 'div';
     }
 
-    return (
-      <Element tagName={tag} className={className}>
-        {content}
-      </Element>
-    );
+    return <Element tagName={tag}>{content}</Element>;
   }
 }

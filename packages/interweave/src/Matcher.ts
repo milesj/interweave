@@ -1,29 +1,28 @@
 /**
  * @copyright   2016, Miles Johnson
  * @license     https://opensource.org/licenses/MIT
- * @flow
  */
 
 import React from 'react';
+import { MatcherInterface, MatcherFactory, MatchCallback, MatchResponse, Props } from './types';
 
-import type { MatcherInterface, MatcherFactory, MatchCallback, MatchResponse } from './types';
-
-export default class Matcher<T: Object> implements MatcherInterface {
+export default class Matcher<T> implements MatcherInterface {
   options: T;
 
   propName: string;
 
   inverseName: string;
 
-  factory: ?MatcherFactory;
+  factory: MatcherFactory | null;
 
-  constructor(name: string, options: T, factory?: ?MatcherFactory = null) {
-    if (__DEV__) {
+  constructor(name: string, options: T, factory: MatcherFactory | null = null) {
+    if (process.env.NODE_ENV !== 'production') {
       if (!name || name.toLowerCase() === 'html') {
         throw new Error(`The matcher name "${name}" is not allowed.`);
       }
     }
 
+    // @ts-ignore
     this.options = { ...options };
     this.propName = name;
     this.inverseName = `no${name.charAt(0).toUpperCase() + name.slice(1)}`;
@@ -34,7 +33,7 @@ export default class Matcher<T: Object> implements MatcherInterface {
    * Attempts to create a React element using a custom user provided factory,
    * or the default matcher factory.
    */
-  createElement(match: string, props?: Object = {}): React$Node {
+  createElement(match: string, props: Props = {}): React.ReactNode {
     let element = null;
 
     if (typeof this.factory === 'function') {
@@ -43,7 +42,7 @@ export default class Matcher<T: Object> implements MatcherInterface {
       element = this.replaceWith(match, props);
     }
 
-    if (__DEV__) {
+    if (process.env.NODE_ENV !== 'production') {
       if (typeof element !== 'string' && !React.isValidElement(element)) {
         throw new Error(`Invalid React element created from ${this.constructor.name}.`);
       }
@@ -55,8 +54,8 @@ export default class Matcher<T: Object> implements MatcherInterface {
   /**
    * Replace the match with a React element based on the matched token and optional props.
    */
-  replaceWith(match: string, props?: Object = {}): React$Node {
-    if (__DEV__) {
+  replaceWith(match: string, props: Props = {}): React.ReactNode {
+    if (process.env.NODE_ENV !== 'production') {
       throw new Error(`${this.constructor.name} must return a React element.`);
     }
 
@@ -67,7 +66,7 @@ export default class Matcher<T: Object> implements MatcherInterface {
    * Defines the HTML tag name that the resulting React element will be.
    */
   asTag(): string {
-    if (__DEV__) {
+    if (process.env.NODE_ENV !== 'production') {
       throw new Error(`${this.constructor.name} must define the HTML tag name it will render.`);
     }
 
@@ -79,17 +78,19 @@ export default class Matcher<T: Object> implements MatcherInterface {
    * Return `null` if no match found, else return the `match`
    * and any optional props to pass along.
    */
-  match(string: string): ?MatchResponse {
-    if (__DEV__) {
+  match(string: string): MatchResponse | null {
+    if (process.env.NODE_ENV !== 'production') {
       throw new Error(`${this.constructor.name} must define a pattern matcher.`);
     }
+
+    return null;
   }
 
   /**
    * Trigger the actual pattern match and package the matched
    * response through a callback.
    */
-  doMatch(string: string, pattern: string | RegExp, callback: MatchCallback): ?MatchResponse {
+  doMatch(string: string, pattern: string | RegExp, callback: MatchCallback): MatchResponse | null {
     const matches = string.match(pattern instanceof RegExp ? pattern : new RegExp(pattern, 'i'));
 
     if (!matches) {
@@ -105,14 +106,14 @@ export default class Matcher<T: Object> implements MatcherInterface {
   /**
    * Callback triggered before parsing.
    */
-  onBeforeParse(content: string, props: Object): string {
+  onBeforeParse(content: string, props: Props): string {
     return content;
   }
 
   /**
    * Callback triggered after parsing.
    */
-  onAfterParse(content: React$Node[], props: Object): React$Node[] {
+  onAfterParse(content: React.ReactNode[], props: Props): React.ReactNode[] {
     return content;
   }
 }

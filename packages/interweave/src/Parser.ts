@@ -1,13 +1,12 @@
 /**
  * @copyright   2016, Miles Johnson
  * @license     https://opensource.org/licenses/MIT
- * @flow
  */
 
-/* eslint-disable no-cond-assign, no-undef */
+/* eslint-disable no-cond-assign, complexity */
 
 import React from 'react';
-import Element from './Element';
+import Element, { ElementProps } from './Element';
 import {
   FILTER_DENY,
   FILTER_CAST_NUMBER,
@@ -20,24 +19,23 @@ import {
   TYPE_BLOCK,
   CONFIG_BLOCK,
 } from './constants';
-
-import type {
+import {
   Attributes,
   NodeConfig,
   NodeInterface,
   FilterInterface,
   MatcherInterface,
   TransformCallback,
+  MatchResponse,
 } from './types';
 
-type ParserProps = {
-  commonClass: string,
-  disableLineBreaks?: boolean,
-  noHtml?: boolean,
-  noHtmlExceptMatchers?: boolean,
-  transform?: TransformCallback,
-  [key: string]: mixed,
-};
+export interface ParserProps {
+  disableLineBreaks?: boolean;
+  noHtml?: boolean;
+  noHtmlExceptMatchers?: boolean;
+  transform?: TransformCallback;
+  [key: string]: any;
+}
 
 const ELEMENT_NODE: number = 1;
 const TEXT_NODE: number = 3;
@@ -48,7 +46,7 @@ const ARIA_COMPARE_LENGTH: number = 5;
 export default class Parser {
   doc: Document;
 
-  content: React$Node[];
+  content: React.ReactNode[] = [];
 
   props: ParserProps;
 
@@ -60,14 +58,14 @@ export default class Parser {
 
   constructor(
     markup: string,
-    props: Object = {},
+    props: ParserProps = {},
     matchers: MatcherInterface[] = [],
     filters: FilterInterface[] = [],
   ) {
     if (!markup) {
       markup = ''; // eslint-disable-line
     } else if (typeof markup !== 'string') {
-      if (__DEV__) {
+      if (process.env.NODE_ENV !== 'production') {
         throw new TypeError('Interweave parser requires a valid string.');
       }
     }
@@ -83,27 +81,18 @@ export default class Parser {
    * Loop through and apply all registered attribute filters.
    */
   applyAttributeFilters(name: string, value: string): string {
-    return this.filters.reduce((nextValue, filter) => {
-      if (typeof filter.attribute === 'function') {
-        return filter.attribute(name, nextValue);
-      }
-
-      return nextValue;
-    }, value);
+    return this.filters.reduce((nextValue, filter) => filter.attribute(name, nextValue), value);
   }
 
   /**
    * Loop through and apply all registered node filters.
    */
   applyNodeFilters(name: string, node: NodeInterface): NodeInterface {
-    return this.filters.reduce((nextNode, filter) => {
-      // Allow null to be returned
-      if (nextNode && typeof filter.node === 'function') {
-        return filter.node(name, nextNode);
-      }
-
-      return nextNode;
-    }, node);
+    // Allow null to be returned
+    return this.filters.reduce(
+      (nextNode, filter) => (nextNode ? filter.node(name, nextNode) : nextNode),
+      node,
+    );
   }
 
   /**
@@ -111,11 +100,11 @@ export default class Parser {
    * If a match is found, create a React element, and build a new array.
    * This array allows React to interpolate and render accordingly.
    */
-  applyMatchers(string: string, parentConfig: NodeConfig): string | React$Node[] {
-    const elements = [];
+  applyMatchers(string: string, parentConfig: NodeConfig): string | React.ReactNode[] {
+    const elements: React.ReactNode[] = [];
     const { props } = this;
     let matchedString = string;
-    let parts = {};
+    let parts = null;
 
     this.matchers.forEach(matcher => {
       const tagName = matcher.asTag().toLowerCase();
@@ -137,7 +126,7 @@ export default class Parser {
 
       // Continuously trigger the matcher until no matches are found
       while ((parts = matcher.match(matchedString))) {
-        const { match, ...partProps } = parts;
+        const { match, ...partProps } = parts as MatchResponse;
 
         // Replace the matched portion with a placeholder
         matchedString = matchedString.replace(match, `#{{${elements.length}}}#`);
@@ -164,9 +153,8 @@ export default class Parser {
     let lastIndex = 0;
 
     while ((parts = matchedString.match(/#\{\{(\d+)\}\}#/))) {
-      const [, no] = parts;
-      // $FlowIgnore https://github.com/facebook/flow/issues/2450
-      const { index } = parts;
+      const [, no] = parts as RegExpMatchArray;
+      const { index = 0 } = parts as RegExpMatchArray;
 
       // Extract the previous string
       if (lastIndex !== index) {
@@ -274,11 +262,10 @@ export default class Parser {
     const doc = document.implementation.createHTMLDocument('Interweave');
 
     if (INVALID_ROOTS.indexOf(markup.substr(1, ROOT_COMPARE_LENGTH).toUpperCase()) >= 0) {
-      if (__DEV__) {
+      if (process.env.NODE_ENV !== 'production') {
         throw new Error('HTML documents as Interweave content are not supported.');
       }
     } else {
-      // $FlowIgnore Isn't null
       doc.body.innerHTML = this.convertLineBreaks(markup);
     }
 
@@ -289,9 +276,9 @@ export default class Parser {
    * Convert an elements attribute map to an object map.
    * Returns null if no attributes are defined.
    */
-  extractAttributes(node: NodeInterface): ?Attributes {
+  extractAttributes(node: NodeInterface): Attributes | null {
     const { disableWhitelist } = this.props;
-    const attributes = {};
+    const attributes: Attributes = {};
     let count = 0;
 
     if (node.nodeType !== ELEMENT_NODE || !node.attributes) {
@@ -299,10 +286,9 @@ export default class Parser {
     }
 
     Array.from(node.attributes).forEach(attr => {
-      let { name, value } = attr;
-      const filter: number = ATTRIBUTES[name];
-
-      name = name.toLowerCase();
+      const { name, value } = attr;
+      const newName = name.toLowerCase();
+      const filter: number = ATTRIBUTES[newName] || ATTRIBUTES[name];
 
       // Verify the node is safe from attacks
       if (!this.isSafe(node)) {
@@ -311,11 +297,11 @@ export default class Parser {
 
       // Do not allow blacklisted attributes excluding ARIA attributes
       // Do not allow events or XSS injections
-      if (name.slice(0, ARIA_COMPARE_LENGTH) !== 'aria-') {
+      if (newName.slice(0, ARIA_COMPARE_LENGTH) !== 'aria-') {
         if (
           (!disableWhitelist && (!filter || filter === FILTER_DENY)) ||
           // eslint-disable-next-line unicorn/prefer-starts-ends-with
-          name.match(/^on/) ||
+          newName.match(/^on/) ||
           value.replace(/(\s|\0|&#x0(9|A|D);)/, '').match(/(javascript|vbscript|livescript|xss):/i)
         ) {
           return;
@@ -323,22 +309,22 @@ export default class Parser {
       }
 
       // Apply attribute filters
-      value = this.applyAttributeFilters(name, value);
+      let newValue: any = this.applyAttributeFilters(newName, value);
 
       // Cast to boolean
       if (filter === FILTER_CAST_BOOL) {
-        value = value === 'true' || value === name;
+        newValue = newValue === 'true' || newValue === newName;
 
         // Cast to number
       } else if (filter === FILTER_CAST_NUMBER) {
-        value = parseFloat(value);
+        newValue = parseFloat(newValue);
 
         // Cast to string
       } else {
-        value = String(value);
+        newValue = String(newValue);
       }
 
-      attributes[ATTRIBUTES_TO_PROPS[name] || name] = value;
+      attributes[ATTRIBUTES_TO_PROPS[newName] || newName] = newValue;
       count += 1;
     });
 
@@ -368,12 +354,8 @@ export default class Parser {
    * Verify that a node is safe from XSS and injection attacks.
    */
   isSafe(node: NodeInterface): boolean {
-    if (!(node instanceof HTMLElement)) {
-      return true;
-    }
-
     // URLs should only support HTTP and email
-    if ('href' in node) {
+    if (node instanceof HTMLAnchorElement) {
       const href = node.getAttribute('href');
 
       // Fragment protocols start with about:
@@ -382,8 +364,7 @@ export default class Parser {
         return true;
       }
 
-      // $FlowIgnore Protocol only exists for anchors
-      const protocol = (node.protocol || '').toLowerCase();
+      const protocol = node.protocol.toLowerCase();
 
       return (
         protocol === ':' || protocol === 'http:' || protocol === 'https:' || protocol === 'mailto:'
@@ -398,8 +379,7 @@ export default class Parser {
    * while looping over all child nodes and generating an
    * array to interpolate into JSX.
    */
-  parse(): React$Node[] {
-    // $FlowIgnore Body is not null!
+  parse(): React.ReactNode[] {
     return this.parseNode(this.doc.body, {
       ...CONFIG_BLOCK,
       tagName: 'body',
@@ -410,9 +390,9 @@ export default class Parser {
    * Loop over the nodes children and generate a
    * list of text nodes and React elements.
    */
-  parseNode(parentNode: NodeInterface, parentConfig: NodeConfig): React$Node[] {
-    const { commonClass, noHtml, noHtmlExceptMatchers, disableWhitelist, transform } = this.props;
-    let content = [];
+  parseNode(parentNode: NodeInterface, parentConfig: NodeConfig): React.ReactNode[] {
+    const { noHtml, noHtmlExceptMatchers, disableWhitelist, transform } = this.props;
+    let content: React.ReactNode[] = [];
     let mergedText = '';
 
     // eslint-disable-next-line complexity
@@ -445,15 +425,17 @@ export default class Parser {
         if (transform) {
           this.keyIndex += 1;
           const key = this.keyIndex;
+
+          // Must occur after key is set
           children = this.parseNode(nextNode, config);
 
           const transformed = transform(nextNode, children, config);
+
           if (transformed === null) {
             return;
           } else if (typeof transformed !== 'undefined') {
-            // $FlowIgnore
-            const transformedWithKey = React.cloneElement(transformed, { key });
-            content.push(transformedWithKey);
+            content.push(React.cloneElement(transformed as React.ReactElement<any>, { key }));
+
             return;
           }
 
@@ -472,10 +454,8 @@ export default class Parser {
 
           // Build the props as it makes it easier to test
           const attributes = this.extractAttributes(nextNode);
-          const elementProps: Object = {
-            key: this.keyIndex,
+          const elementProps: ElementProps = {
             tagName,
-            commonClass,
           };
 
           if (attributes) {
@@ -487,7 +467,11 @@ export default class Parser {
           }
 
           content.push(
-            <Element {...elementProps}>{children || this.parseNode(nextNode, config)}</Element>,
+            React.createElement(
+              Element,
+              { ...elementProps, key: this.keyIndex },
+              children || this.parseNode(nextNode, config),
+            ),
           );
 
           // Render the children of the current element only.
@@ -504,7 +488,7 @@ export default class Parser {
         const text =
           noHtml && !noHtmlExceptMatchers
             ? node.textContent
-            : this.applyMatchers(node.textContent, parentConfig);
+            : this.applyMatchers(node.textContent || '', parentConfig);
 
         if (Array.isArray(text)) {
           content = content.concat(text);

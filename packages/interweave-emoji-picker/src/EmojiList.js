@@ -41,7 +41,7 @@ type EmojiListProps = {
   onSelectEmoji: (emoji: Emoji, e: *) => void,
   scrollToGroup: string,
   searchQuery: string,
-  skinTonePalette: React$Node,
+  skinTonePalette: React.ReactNode,
 };
 
 type EmojiListState = {
@@ -269,7 +269,7 @@ export default class EmojiList extends React.PureComponent<EmojiListProps, Emoji
     this.loadEmojiImages(this.container);
   }
 
-  render(): React$Node {
+  render(): React.ReactNode {
     const {
       activeEmoji,
       commonMode,

@@ -32,7 +32,7 @@ export default class Hashtag extends React.PureComponent<HashtagProps> {
     preserveHash: false,
   };
 
-  render(): React$Node {
+  render(): React.ReactNode {
     const { children, encodeHashtag, hashtagUrl, preserveHash, ...props } = this.props;
     let hashtag = children;
 

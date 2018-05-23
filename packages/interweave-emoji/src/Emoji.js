@@ -58,7 +58,7 @@ export default class Emoji extends React.PureComponent<EmojiProps> {
     unicode: '',
   };
 
-  render(): React$Node {
+  render(): React.ReactNode {
     const data = EmojiData.getInstance(this.props.emojiSource.locale);
     const {
       emojiLargeSize,
@@ -72,7 +72,7 @@ export default class Emoji extends React.PureComponent<EmojiProps> {
     } = this.props;
     let { hexcode } = this.props;
 
-    if (__DEV__) {
+    if (process.env.NODE_ENV !== 'production') {
       if (!emoticon && !shortcode && !unicode && !hexcode) {
         throw new Error(
           'Emoji component requires a `unicode` character, `emoticon`, `hexcode`, or a `shortcode`.',

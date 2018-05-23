@@ -75,7 +75,7 @@ type PickerProps = {
   emojis: Emoji[],
   emojiSize: number,
   emojiSource: EmojiSource,
-  groupIcons: { [key: string]: React$Node },
+  groupIcons: { [key: string]: React.ReactNode },
   hideEmoticon: boolean,
   hideGroupHeaders: boolean,
   hideShortcodes: boolean,
@@ -90,7 +90,7 @@ type PickerProps = {
   onSelectGroup: (group: string, e: *) => void,
   onSelectSkinTone: (skinTone: string, e: *) => void,
   rowCount: number,
-  skinIcons: { [key: string]: React$Node },
+  skinIcons: { [key: string]: React.ReactNode },
   virtual: boolean,
   whitelist: string[],
 };
@@ -390,7 +390,7 @@ class Picker extends React.Component<PickerProps, PickerState> {
     const map = {};
 
     list.forEach(hexcode => {
-      if (__DEV__) {
+      if (process.env.NODE_ENV !== 'production') {
         if (hexcode.match(SKIN_MODIFIER_PATTERN)) {
           // eslint-disable-next-line no-console
           console.warn(
@@ -676,7 +676,7 @@ class Picker extends React.Component<PickerProps, PickerState> {
     });
   }
 
-  render(): React$Node {
+  render(): React.ReactNode {
     const {
       autoFocus,
       columnCount,

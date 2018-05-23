@@ -12,7 +12,7 @@ import { HASHTAG_PATTERN } from './constants';
 import type { MatchResponse } from 'interweave'; // eslint-disable-line
 
 export default class HashtagMatcher extends Matcher<Object> {
-  replaceWith(match: string, props?: Object = {}): React$Node {
+  replaceWith(match: string, props?: Object = {}): React.ReactNode {
     return <Hashtag {...props}>{match}</Hashtag>;
   }
 
