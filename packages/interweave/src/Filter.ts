@@ -3,7 +3,10 @@
  * @license     https://opensource.org/licenses/MIT
  */
 
-import { NodeInterface, FilterInterface } from './types';
+export interface FilterInterface {
+  attribute(name: string, value: string): string;
+  node(name: string, node: HTMLElement): HTMLElement;
+}
 
 export default class Filter implements FilterInterface {
   /**
@@ -16,7 +19,7 @@ export default class Filter implements FilterInterface {
   /**
    * Filter and clean an HTML node.
    */
-  node(name: string, node: NodeInterface): NodeInterface {
+  node(name: string, node: HTMLElement): HTMLElement {
     return node;
   }
 }

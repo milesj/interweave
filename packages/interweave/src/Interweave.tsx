@@ -8,15 +8,10 @@ import PropTypes from 'prop-types';
 import Element from './Element';
 import Parser from './Parser';
 import Markup, { MarkupProps } from './Markup';
+import { FilterInterface } from './Filter';
+import { MatcherInterface } from './Matcher';
 import { FilterShape, MatcherShape } from './shapes';
-import {
-  Props,
-  FilterInterface,
-  MatcherInterface,
-  AfterParseCallback,
-  BeforeParseCallback,
-  TransformCallback,
-} from './types';
+import { Props, AfterParseCallback, BeforeParseCallback, TransformCallback } from './types';
 
 export interface InterweaveProps extends MarkupProps {
   disableFilters?: boolean;

@@ -7,6 +7,8 @@
 
 import React from 'react';
 import Element, { ElementProps } from './Element';
+import { FilterInterface } from './Filter';
+import { MatcherInterface } from './Matcher';
 import {
   FILTER_DENY,
   FILTER_CAST_NUMBER,
@@ -19,15 +21,7 @@ import {
   TYPE_BLOCK,
   CONFIG_BLOCK,
 } from './constants';
-import {
-  Attributes,
-  NodeConfig,
-  NodeInterface,
-  FilterInterface,
-  MatcherInterface,
-  TransformCallback,
-  MatchResponse,
-} from './types';
+import { Attributes, NodeConfig, TransformCallback, MatchResponse } from './types';
 
 export interface ParserProps {
   disableLineBreaks?: boolean;
@@ -87,7 +81,7 @@ export default class Parser {
   /**
    * Loop through and apply all registered node filters.
    */
-  applyNodeFilters(name: string, node: NodeInterface): NodeInterface {
+  applyNodeFilters(name: string, node: HTMLElement): HTMLElement {
     // Allow null to be returned
     return this.filters.reduce(
       (nextNode, filter) => (nextNode ? filter.node(name, nextNode) : nextNode),
@@ -276,7 +270,7 @@ export default class Parser {
    * Convert an elements attribute map to an object map.
    * Returns null if no attributes are defined.
    */
-  extractAttributes(node: NodeInterface): Attributes | null {
+  extractAttributes(node: HTMLElement): Attributes | null {
     const { disableWhitelist } = this.props;
     const attributes: Attributes = {};
     let count = 0;
@@ -353,7 +347,7 @@ export default class Parser {
   /**
    * Verify that a node is safe from XSS and injection attacks.
    */
-  isSafe(node: NodeInterface): boolean {
+  isSafe(node: HTMLElement): boolean {
     // URLs should only support HTTP and email
     if (node instanceof HTMLAnchorElement) {
       const href = node.getAttribute('href');
@@ -390,7 +384,7 @@ export default class Parser {
    * Loop over the nodes children and generate a
    * list of text nodes and React elements.
    */
-  parseNode(parentNode: NodeInterface, parentConfig: NodeConfig): React.ReactNode[] {
+  parseNode(parentNode: HTMLElement, parentConfig: NodeConfig): React.ReactNode[] {
     const { noHtml, noHtmlExceptMatchers, disableWhitelist, transform } = this.props;
     let content: React.ReactNode[] = [];
     let mergedText = '';
@@ -414,7 +408,7 @@ export default class Parser {
         }
 
         // Apply node filters
-        const nextNode = this.applyNodeFilters(tagName, node);
+        const nextNode = this.applyNodeFilters(tagName, node as HTMLElement);
 
         if (!nextNode) {
           return;

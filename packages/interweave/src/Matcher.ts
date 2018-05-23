@@ -4,7 +4,19 @@
  */
 
 import React from 'react';
-import { MatcherInterface, MatcherFactory, MatchCallback, MatchResponse, Props } from './types';
+import { MatchCallback, MatchResponse, Props } from './types';
+
+export type MatcherFactory = (match: string, props: Props) => React.ReactNode;
+
+export interface MatcherInterface {
+  inverseName: string;
+  propName: string;
+  asTag(): string;
+  createElement(match: string, props?: Props): React.ReactNode;
+  match(value: string): MatchResponse | null;
+  onBeforeParse(content: string, props: Props): string;
+  onAfterParse(content: React.ReactNode[], props: Props): React.ReactNode[];
+}
 
 export default class Matcher<T> implements MatcherInterface {
   options: T;
