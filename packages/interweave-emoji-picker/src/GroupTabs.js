@@ -32,12 +32,7 @@ export default class GroupTabs extends React.PureComponent<GroupTabsProps> {
   };
 
   render(): React$Node {
-    const {
-      activeGroup,
-      commonEmojis,
-      icons,
-      onSelect,
-    } = this.props;
+    const { activeGroup, commonEmojis, icons, onSelect } = this.props;
     const { classNames } = this.context;
     const groups = [...GROUPS];
 
@@ -50,11 +45,7 @@ export default class GroupTabs extends React.PureComponent<GroupTabsProps> {
         <ul className={classNames.groupsList}>
           {groups.map(group => (
             <li key={group}>
-              <Group
-                activeGroup={activeGroup}
-                group={group}
-                onSelect={onSelect}
-              >
+              <Group activeGroup={activeGroup} group={group} onSelect={onSelect}>
                 {icons[group] || GROUP_ICONS[group]}
               </Group>
             </li>

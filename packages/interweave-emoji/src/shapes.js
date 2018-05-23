@@ -29,15 +29,9 @@ export const EmojiShape = PropTypes.shape({
   version: PropTypes.number,
 });
 
-export const EmojiPathShape = PropTypes.oneOfType([
-  PropTypes.string,
-  PropTypes.func,
-]);
+export const EmojiPathShape = PropTypes.oneOfType([PropTypes.string, PropTypes.func]);
 
-export const EmojiSizeShape = PropTypes.oneOfType([
-  PropTypes.string,
-  PropTypes.number,
-]);
+export const EmojiSizeShape = PropTypes.oneOfType([PropTypes.string, PropTypes.number]);
 
 export const EmojiSourceShape = PropTypes.shape({
   compact: PropTypes.bool.isRequired,

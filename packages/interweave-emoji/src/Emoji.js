@@ -9,18 +9,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import EmojiData from './EmojiData';
-import {
-  EmojiPathShape,
-  EmojiSizeShape,
-  EmojiSourceShape,
-} from './shapes';
+import { EmojiPathShape, EmojiSizeShape, EmojiSourceShape } from './shapes';
 
 type EmojiSize = string | number;
 
 type EmojiProps = {
   emojiLargeSize: EmojiSize,
-  emojiPath: string |
-    (hexcode: string, enlarged: boolean, smallSize: EmojiSize, largeSize: EmojiSize) => string,
+  emojiPath:
+    | string
+    | ((hexcode: string, enlarged: boolean, smallSize: EmojiSize, largeSize: EmojiSize) => string),
   emojiSize: EmojiSize,
   emojiSource: {
     compact: boolean,
@@ -98,17 +95,13 @@ export default class Emoji extends React.PureComponent<EmojiProps> {
 
     // Return the invalid value instead of erroring
     if (!hexcode || !data.EMOJIS[hexcode]) {
-      return (
-        <span>{unicode || emoticon || shortcode || hexcode}</span>
-      );
+      return <span>{unicode || emoticon || shortcode || hexcode}</span>;
     }
 
     const emoji = data.EMOJIS[hexcode];
 
     if (renderUnicode) {
-      return (
-        <span>{emoji.unicode}</span>
-      );
+      return <span>{emoji.unicode}</span>;
     }
 
     const className = ['interweave__emoji'];

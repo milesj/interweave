@@ -15,10 +15,21 @@ const VALID_IPS = [
   { ip: 'http://202.118.236.130/?query', host: '202.118.236.130', path: '/', query: '?query' },
   { ip: 'http://62.201.207.9?', host: '62.201.207.9', query: '?' },
   { ip: 'http://219.143.244.170#', host: '219.143.244.170', fragment: '#' },
-  { ip: 'http://66.63.235.97/foo?bar#baz', host: '66.63.235.97', path: '/foo', query: '?bar', fragment: '#baz' },
+  {
+    ip: 'http://66.63.235.97/foo?bar#baz',
+    host: '66.63.235.97',
+    path: '/foo',
+    query: '?bar',
+    fragment: '#baz',
+  },
   { ip: 'http://27.191.194.106/?q=a&&x=b', host: '27.191.194.106', path: '/', query: '?q=a&&x=b' },
   { ip: 'http://218.75.205.44', host: '218.75.205.44' },
-  { ip: 'https://10.48.0.200/some/path.html', scheme: 'https://', host: '10.48.0.200', path: '/some/path.html' },
+  {
+    ip: 'https://10.48.0.200/some/path.html',
+    scheme: 'https://',
+    host: '10.48.0.200',
+    path: '/some/path.html',
+  },
   { ip: 'http://46.130.14.41:1337', host: '46.130.14.41', port: '1337' },
 ];
 
@@ -37,12 +48,12 @@ describe('matchers/IpMatcher', () => {
   const pattern = new RegExp(`^${IP_PATTERN.source}$`, 'i');
 
   describe('does match valid ip:', () => {
-    VALID_IPS.forEach((ipParams) => {
+    VALID_IPS.forEach(ipParams => {
       it(ipParams.ip, () => {
         const { ip, ...params } = ipParams;
         const expected = [
           ip,
-          (params.scheme === null ? undefined : (params.scheme || 'http://')),
+          params.scheme === null ? undefined : params.scheme || 'http://',
           params.auth,
           params.host,
           params.port,
@@ -59,7 +70,7 @@ describe('matchers/IpMatcher', () => {
   });
 
   describe('doesnt match invalid ip:', () => {
-    INVALID_IPS.forEach((ipParams) => {
+    INVALID_IPS.forEach(ipParams => {
       it(ipParams.ip, () => {
         expect(ipParams.ip.match(pattern)).toBe(null);
       });
@@ -86,7 +97,7 @@ describe('matchers/IpMatcher', () => {
       });
     };
 
-    VALID_IPS.forEach((ipParams) => {
+    VALID_IPS.forEach(ipParams => {
       TOKEN_LOCATIONS.forEach((location, i) => {
         it(`for: ${ipParams.ip} - ${location}`, () => {
           parser.keyIndex = -1; // Reset for easier testing

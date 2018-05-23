@@ -19,7 +19,11 @@ describe('components/Url', () => {
 
   it('can pass props to Link', () => {
     const func = () => {};
-    const wrapper = shallow(<Url onClick={func} newWindow>http://domain.com/some/url</Url>);
+    const wrapper = shallow(
+      <Url onClick={func} newWindow>
+        http://domain.com/some/url
+      </Url>,
+    );
 
     expect(wrapper.find('Link').prop('newWindow')).toBe(true);
     expect(wrapper.find('Link').prop('onClick')).toBe(func);

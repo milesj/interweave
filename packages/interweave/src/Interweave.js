@@ -99,7 +99,7 @@ export default class Interweave extends React.Component<InterweaveProps> {
     const afterCallbacks = onAfterParse ? [onAfterParse] : [];
 
     // Inherit callbacks from matchers
-    allMatchers.forEach((matcher) => {
+    allMatchers.forEach(matcher => {
       if (matcher.onBeforeParse) {
         beforeCallbacks.push(matcher.onBeforeParse.bind(matcher));
       }

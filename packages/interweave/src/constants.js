@@ -166,7 +166,7 @@ const tagConfigs = {
   },
 };
 
-function createConfigBuilder(config: NodeConfig): (string) => void {
+function createConfigBuilder(config: NodeConfig): string => void {
   return (tagName: string) => {
     tagConfigs[tagName] = {
       ...config,
@@ -177,22 +177,81 @@ function createConfigBuilder(config: NodeConfig): (string) => void {
 
 // Add inline tags
 [
-  'a', 'abbr', 'b', 'br', 'button', 'cite', 'code', 'del', 'dfn', 'em', 'i', 'img', 'ins', 'kbd',
-  'label', 'mark', 'output', 'picture', 'q', 's', 'samp', 'source', 'span', 'strong', 'sub', 'sup',
-  'time', 'track', 'u', 'var', 'video',
-].forEach(
-  createConfigBuilder(CONFIG_INLINE),
-);
+  'a',
+  'abbr',
+  'b',
+  'br',
+  'button',
+  'cite',
+  'code',
+  'del',
+  'dfn',
+  'em',
+  'i',
+  'img',
+  'ins',
+  'kbd',
+  'label',
+  'mark',
+  'output',
+  'picture',
+  'q',
+  's',
+  'samp',
+  'source',
+  'span',
+  'strong',
+  'sub',
+  'sup',
+  'time',
+  'track',
+  'u',
+  'var',
+  'video',
+].forEach(createConfigBuilder(CONFIG_INLINE));
 
 // Add block tags
 [
-  'address', 'article', 'aside', 'audio', 'blockquote', 'dd', 'details', 'div', 'dl', 'dt',
-  'fieldset', 'figcaption', 'figure', 'footer', 'header', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6',
-  'hr', 'legend', 'li', 'main', 'nav', 'ol', 'p', 'pre', 'section', 'summary', 'table', 'thead',
-  'tbody', 'tfoot', 'tr', 'th', 'td', 'ul',
-].forEach(
-  createConfigBuilder(CONFIG_BLOCK),
-);
+  'address',
+  'article',
+  'aside',
+  'audio',
+  'blockquote',
+  'dd',
+  'details',
+  'div',
+  'dl',
+  'dt',
+  'fieldset',
+  'figcaption',
+  'figure',
+  'footer',
+  'header',
+  'h1',
+  'h2',
+  'h3',
+  'h4',
+  'h5',
+  'h6',
+  'hr',
+  'legend',
+  'li',
+  'main',
+  'nav',
+  'ol',
+  'p',
+  'pre',
+  'section',
+  'summary',
+  'table',
+  'thead',
+  'tbody',
+  'tfoot',
+  'tr',
+  'th',
+  'td',
+  'ul',
+].forEach(createConfigBuilder(CONFIG_BLOCK));
 
 // Disable this map from being modified
 export const TAGS: ConfigMap = Object.freeze(tagConfigs);

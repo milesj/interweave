@@ -13,9 +13,7 @@ import type { MatchResponse } from 'interweave'; // eslint-disable-line
 
 export default class HashtagMatcher extends Matcher<Object> {
   replaceWith(match: string, props?: Object = {}): React$Node {
-    return (
-      <Hashtag {...props}>{match}</Hashtag>
-    );
+    return <Hashtag {...props}>{match}</Hashtag>;
   }
 
   asTag(): string {

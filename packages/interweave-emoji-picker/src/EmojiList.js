@@ -86,11 +86,7 @@ export default class EmojiList extends React.PureComponent<EmojiListProps, Emoji
   constructor({ activeGroup, emojis }: EmojiListProps) {
     super();
 
-    const loadedGroups = [
-      activeGroup,
-      GROUP_COMMONLY_USED,
-      GROUP_SEARCH_RESULTS,
-    ];
+    const loadedGroups = [activeGroup, GROUP_COMMONLY_USED, GROUP_SEARCH_RESULTS];
 
     // When commonly used emojis are rendered,
     // the smileys group is usually within view as well,
@@ -125,12 +121,7 @@ export default class EmojiList extends React.PureComponent<EmojiListProps, Emoji
    * Partition the dataset into multiple arrays based on the group they belong to.
    */
   groupEmojis(): { [group: string]: Emoji[] } {
-    const {
-      commonEmojis,
-      disableGroups,
-      emojis,
-      searchQuery,
-    } = this.props;
+    const { commonEmojis, disableGroups, emojis, searchQuery } = this.props;
     const groups = {};
 
     // Add commonly used group if not searching
@@ -139,7 +130,7 @@ export default class EmojiList extends React.PureComponent<EmojiListProps, Emoji
     }
 
     // Partition emojis into separate groups
-    emojis.forEach((emoji) => {
+    emojis.forEach(emoji => {
       let group = GROUPS[emoji.group];
 
       if (searchQuery) {
@@ -156,7 +147,7 @@ export default class EmojiList extends React.PureComponent<EmojiListProps, Emoji
     });
 
     // Sort each group
-    Object.keys(groups).forEach((group) => {
+    Object.keys(groups).forEach(group => {
       if (group !== GROUP_COMMONLY_USED) {
         groups[group].sort((a, b) => a.order - b.order);
       }
@@ -207,7 +198,7 @@ export default class EmojiList extends React.PureComponent<EmojiListProps, Emoji
     let updateState = false;
     let lastGroup = '';
 
-    Array.from(container.children).some((section) => {
+    Array.from(container.children).some(section => {
       const group = section.getAttribute('data-group');
       let loadImages = false;
 
@@ -219,20 +210,20 @@ export default class EmojiList extends React.PureComponent<EmojiListProps, Emoji
           lastGroup = group;
         }
 
-      // While a group section is partially within view, update the active group
+        // While a group section is partially within view, update the active group
       } else if (
         !searchQuery &&
         // Top is partially in view
-        (section.offsetTop - SCROLL_BUFFER) <= scrollTop &&
+        section.offsetTop - SCROLL_BUFFER <= scrollTop &&
         // Bottom is partially in view
-        ((section.offsetTop + section.offsetHeight) - SCROLL_BUFFER) > scrollTop
+        section.offsetTop + section.offsetHeight - SCROLL_BUFFER > scrollTop
       ) {
         loadImages = true;
         lastGroup = group;
       }
 
       // Before a group section is scrolled into view, lazy load emoji images
-      if (section.offsetTop <= (scrollTop + container.offsetHeight + SCROLL_BUFFER)) {
+      if (section.offsetTop <= scrollTop + container.offsetHeight + SCROLL_BUFFER) {
         loadImages = true;
       }
 
@@ -242,7 +233,7 @@ export default class EmojiList extends React.PureComponent<EmojiListProps, Emoji
         updateState = true;
       }
 
-      return (section.offsetTop > scrollTop);
+      return section.offsetTop > scrollTop;
     });
 
     // Only update during a scroll event and if a different group
@@ -295,25 +286,15 @@ export default class EmojiList extends React.PureComponent<EmojiListProps, Emoji
     const { classNames, messages } = this.context;
     const { loadedGroups } = this.state;
     const groupedEmojis = this.groupEmojis();
-    const noResults = (Object.keys(groupedEmojis).length === 0);
+    const noResults = Object.keys(groupedEmojis).length === 0;
 
     return (
-      <div
-        className={classNames.emojis}
-        ref={this.handleRef}
-        onScroll={this.handleScroll}
-      >
+      <div className={classNames.emojis} ref={this.handleRef} onScroll={this.handleScroll}>
         {noResults ? (
-          <div className={classNames.noResults}>
-            {messages.noResults}
-          </div>
+          <div className={classNames.noResults}>{messages.noResults}</div>
         ) : (
           Object.keys(groupedEmojis).map(group => (
-            <section
-              key={group}
-              className={classNames.emojisSection}
-              data-group={group}
-            >
+            <section key={group} className={classNames.emojisSection} data-group={group}>
               {!hideGroupHeaders && (
                 <GroupListHeader
                   commonMode={commonMode}
@@ -326,7 +307,7 @@ export default class EmojiList extends React.PureComponent<EmojiListProps, Emoji
                 {groupedEmojis[group].map((emoji, index) => (
                   <EmojiButton
                     key={emoji.hexcode}
-                    active={activeEmoji ? (activeEmoji.hexcode === emoji.hexcode) : false}
+                    active={activeEmoji ? activeEmoji.hexcode === emoji.hexcode : false}
                     emoji={emoji}
                     emojiPadding={emojiPadding}
                     emojiPath={emojiPath}

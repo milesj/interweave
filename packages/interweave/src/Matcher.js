@@ -90,7 +90,7 @@ export default class Matcher<T: Object> implements MatcherInterface {
    * response through a callback.
    */
   doMatch(string: string, pattern: string | RegExp, callback: MatchCallback): ?MatchResponse {
-    const matches = string.match((pattern instanceof RegExp) ? pattern : new RegExp(pattern, 'i'));
+    const matches = string.match(pattern instanceof RegExp ? pattern : new RegExp(pattern, 'i'));
 
     if (!matches) {
       return null;

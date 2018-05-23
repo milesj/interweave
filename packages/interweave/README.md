@@ -28,4 +28,5 @@ yarn add interweave react
 
 ## Usage
 
-Please refer to the [official documentation](https://github.com/milesj/interweave) for more information.
+Please refer to the [official documentation](https://github.com/milesj/interweave) for more
+information.

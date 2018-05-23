@@ -67,12 +67,7 @@ export default function withEmojiData(
     }
 
     componentDidUpdate(prevProps: EmojiDataLoaderProps) {
-      const {
-        compact,
-        emojis,
-        locale,
-        version,
-      } = this.props;
+      const { compact, emojis, locale, version } = this.props;
 
       if (
         prevProps.compact !== compact ||
@@ -101,20 +96,20 @@ export default function withEmojiData(
       if (loaded[locale]) {
         this.setEmojis(emojis);
 
-      // Or hook into the promise if we're loading
+        // Or hook into the promise if we're loading
       } else if (promise[locale]) {
         promise[locale]
           .then(() => {
             this.setEmojis(emojis);
           })
-          .catch((error) => {
+          .catch(error => {
             throw error;
           });
 
-      // Otherwise, start loading emoji data from the CDN
+        // Otherwise, start loading emoji data from the CDN
       } else {
         promise[locale] = fetchFromCDN(`${locale}/${compact ? 'compact' : 'data'}.json`, version)
-          .then((response) => {
+          .then(response => {
             loaded[locale] = true;
 
             // Parse the data and make it available through our data layer.
@@ -122,7 +117,7 @@ export default function withEmojiData(
             this.getDataInstance().parseEmojiData(response);
             this.setEmojis(emojis);
           })
-          .catch((error) => {
+          .catch(error => {
             throw error;
           });
       }
@@ -134,7 +129,7 @@ export default function withEmojiData(
      */
     setEmojis(emojis: Emoji[] = []) {
       this.setState({
-        emojis: (emojis.length > 0) ? emojis : this.getDataInstance().getData(),
+        emojis: emojis.length > 0 ? emojis : this.getDataInstance().getData(),
       });
     }
 
@@ -142,13 +137,7 @@ export default function withEmojiData(
      * Clone the element so that it re-renders itself.
      */
     render(): React$Node {
-      const {
-        compact,
-        emojis,
-        locale,
-        version,
-        ...props
-      } = this.props;
+      const { compact, emojis, locale, version, ...props } = this.props;
 
       return (
         <Component

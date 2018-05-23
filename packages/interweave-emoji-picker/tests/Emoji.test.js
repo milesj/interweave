@@ -60,8 +60,9 @@ describe('Emoji', () => {
       active: true,
     });
 
-    expect(wrapper.prop('className'))
-      .toBe('interweave-picker__emoji interweave-picker__emoji--active');
+    expect(wrapper.prop('className')).toBe(
+      'interweave-picker__emoji interweave-picker__emoji--active',
+    );
   });
 
   it('can customize class name', () => {

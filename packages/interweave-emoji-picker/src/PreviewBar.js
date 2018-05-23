@@ -80,11 +80,7 @@ export default class PreviewBar extends React.PureComponent<PreviewBarProps> {
     if (!emoji) {
       return (
         <div className={classNames.preview}>
-          {messages.noPreview && (
-            <div className={classNames.noPreview}>
-              {messages.noPreview}
-            </div>
-          )}
+          {messages.noPreview && <div className={classNames.noPreview}>{messages.noPreview}</div>}
         </div>
       );
     }
@@ -113,16 +109,10 @@ export default class PreviewBar extends React.PureComponent<PreviewBarProps> {
         </div>
 
         <div className={classNames.previewContent}>
-          {title && (
-            <div className={classNames.previewTitle}>
-              {this.formatTitle(title)}
-            </div>
-          )}
+          {title && <div className={classNames.previewTitle}>{this.formatTitle(title)}</div>}
 
-          {(subtitle.length > 0) && (
-            <div className={classNames.previewSubtitle}>
-              {subtitle.join(' ')}
-            </div>
+          {subtitle.length > 0 && (
+            <div className={classNames.previewSubtitle}>{subtitle.join(' ')}</div>
           )}
         </div>
       </div>

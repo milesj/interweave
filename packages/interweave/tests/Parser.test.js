@@ -32,23 +32,22 @@ describe('Parser', () => {
   let element;
 
   beforeEach(() => {
-    instance = new Parser('', {}, [
-      new CodeTagMatcher('foo'),
-      new CodeTagMatcher('bar'),
-      new CodeTagMatcher('baz'),
-    ], [
-      new LinkFilter(),
-    ]);
+    instance = new Parser(
+      '',
+      {},
+      [new CodeTagMatcher('foo'), new CodeTagMatcher('bar'), new CodeTagMatcher('baz')],
+      [new LinkFilter()],
+    );
   });
 
   it('parses when passed an empty value', () => {
-    [null, false, undefined, '', 0].forEach((value) => {
+    [null, false, undefined, '', 0].forEach(value => {
       expect(new Parser(value).parse()).toEqual([]);
     });
   });
 
   it('errors for a non-string value', () => {
-    [123, 456.78, true, [], {}].forEach((value) => {
+    [123, 456.78, true, [], {}].forEach(value => {
       expect(() => new Parser(value)).toThrowError('Interweave parser requires a valid string.');
     });
   });
@@ -74,14 +73,19 @@ describe('Parser', () => {
 
   describe('applyMatchers()', () => {
     const createElement = (value, key) => (
-      <Element tagName="span" customProp="foo" key={key}>{value.toUpperCase()}</Element>
+      <Element tagName="span" customProp="foo" key={key}>
+        {value.toUpperCase()}
+      </Element>
     );
     const createMultiElement = (value, key) => {
       switch (key) {
         default:
-        case 0: return createElement('foo', 0);
-        case 1: return createElement('bar', 1);
-        case 2: return createElement('baz', 2);
+        case 0:
+          return createElement('foo', 0);
+        case 1:
+          return createElement('bar', 1);
+        case 2:
+          return createElement('baz', 2);
       }
     };
 
@@ -134,7 +138,7 @@ describe('Parser', () => {
     });
 
     describe('ignores matcher if the inverse prop is enabled', () => {
-      TOKEN_LOCATIONS.forEach((location) => {
+      TOKEN_LOCATIONS.forEach(location => {
         it(`for: ${location}`, () => {
           instance.props.noFoo = true;
 
@@ -163,8 +167,9 @@ describe('Parser', () => {
     it('injects the markup into the body', () => {
       const doc = instance.createDocument('<div>Foo<section>Bar</section><aside>Baz</aside></div>');
 
-      expect(doc.body.outerHTML)
-        .toBe('<body><div>Foo<section>Bar</section><aside>Baz</aside></div></body>');
+      expect(doc.body.outerHTML).toBe(
+        '<body><div>Foo<section>Bar</section><aside>Baz</aside></div></body>',
+      );
     });
 
     it('errors out for `!DOCTYPE`', () => {
@@ -194,15 +199,21 @@ describe('Parser', () => {
 
   describe('convertLineBreaks()', () => {
     it('it doesnt convert when HTML closing tags exist', () => {
-      expect(instance.convertLineBreaks('<div>It\nwont\r\nconvert.</div>')).toBe('<div>It\nwont\r\nconvert.</div>');
+      expect(instance.convertLineBreaks('<div>It\nwont\r\nconvert.</div>')).toBe(
+        '<div>It\nwont\r\nconvert.</div>',
+      );
     });
 
     it('it doesnt convert when HTML void tags exist', () => {
-      expect(instance.convertLineBreaks('It\n<br/>wont\r\nconvert.')).toBe('It\n<br/>wont\r\nconvert.');
+      expect(instance.convertLineBreaks('It\n<br/>wont\r\nconvert.')).toBe(
+        'It\n<br/>wont\r\nconvert.',
+      );
     });
 
     it('it doesnt convert when HTML void tags with spaces exist', () => {
-      expect(instance.convertLineBreaks('It\n<br  />wont\r\nconvert.')).toBe('It\n<br  />wont\r\nconvert.');
+      expect(instance.convertLineBreaks('It\n<br  />wont\r\nconvert.')).toBe(
+        'It\n<br  />wont\r\nconvert.',
+      );
     });
 
     it('it doesnt convert if `noHtml` is true', () => {
@@ -235,7 +246,7 @@ describe('Parser', () => {
       expect(instance.extractAttributes(document.createComment('Comment'))).toBe(null);
     });
 
-    Object.keys(ATTRIBUTES).forEach((name) => {
+    Object.keys(ATTRIBUTES).forEach(name => {
       const attrName = ATTRIBUTES_TO_PROPS[name] || name;
 
       switch (ATTRIBUTES[name]) {
@@ -430,9 +441,7 @@ describe('Parser', () => {
       element.appendChild(document.createTextNode('Foo'));
       element.appendChild(document.createTextNode('Bar'));
 
-      expect(instance.parseNode(element, parentConfig)).toEqual([
-        'FooBar',
-      ]);
+      expect(instance.parseNode(element, parentConfig)).toEqual(['FooBar']);
     });
 
     Object.keys(TAGS).forEach((tag, i) => {
@@ -442,7 +451,9 @@ describe('Parser', () => {
             element.appendChild(createChild(tag, i));
 
             expect(instance.parseNode(element, parentConfig)).toEqual([
-              <Element key="0" tagName={tag}>{[`${i}`]}</Element>,
+              <Element key="0" tagName={tag}>
+                {[`${i}`]}
+              </Element>,
             ]);
           });
           break;
@@ -473,7 +484,9 @@ describe('Parser', () => {
 
       expect(instance.parseNode(element, parentConfig)).toEqual([
         'Foo',
-        <Element key="0" tagName="div">{['Bar']}</Element>,
+        <Element key="0" tagName="div">
+          {['Bar']}
+        </Element>,
         'Baz',
       ]);
     });
@@ -487,9 +500,13 @@ describe('Parser', () => {
 
       expect(instance.parseNode(element, parentConfig)).toEqual([
         'Foo',
-        <Element key="0" tagName="div">{['Bar']}</Element>,
+        <Element key="0" tagName="div">
+          {['Bar']}
+        </Element>,
         'BazQux',
-        <Element key="1" tagName="div">{['Bar']}</Element>,
+        <Element key="1" tagName="div">
+          {['Bar']}
+        </Element>,
       ]);
     });
 
@@ -558,11 +575,7 @@ describe('Parser', () => {
       element.appendChild(createChild('div', 'Bar'));
       element.appendChild(document.createTextNode('[foo]'));
 
-      expect(instance.parseNode(element, parentConfig)).toEqual([
-        'Foo',
-        'Bar',
-        '[foo]',
-      ]);
+      expect(instance.parseNode(element, parentConfig)).toEqual(['Foo', 'Bar', '[foo]']);
     });
 
     it('doesnt strip matchers HTML if `noHtmlExceptMatchers` prop is set', () => {
@@ -572,11 +585,7 @@ describe('Parser', () => {
       element.appendChild(createChild('div', 'Bar'));
       element.appendChild(document.createTextNode('[foo]'));
 
-      expect(instance.parseNode(element, parentConfig)).not.toEqual([
-        'Foo',
-        'Bar',
-        '[foo]',
-      ]);
+      expect(instance.parseNode(element, parentConfig)).not.toEqual(['Foo', 'Bar', '[foo]']);
     });
 
     it('only renders whitelisted children', () => {
@@ -586,14 +595,18 @@ describe('Parser', () => {
       element.appendChild(createChild('b', 'Qux'));
       element.appendChild(createChild('u', 'Wat'));
 
-      expect(instance.parseNode(element, {
-        ...parentConfig,
-        children: ['b'],
-      })).toEqual([
+      expect(
+        instance.parseNode(element, {
+          ...parentConfig,
+          children: ['b'],
+        }),
+      ).toEqual([
         'Foo',
         'Bar',
         'Baz',
-        <Element key="0" tagName="b">{['Qux']}</Element>,
+        <Element key="0" tagName="b">
+          {['Qux']}
+        </Element>,
         'Wat',
       ]);
     });
@@ -605,16 +618,12 @@ describe('Parser', () => {
       element.appendChild(createChild('li', 'Qux'));
       element.appendChild(createChild('li', 'Wat'));
 
-      expect(instance.parseNode(element, {
-        ...parentConfig,
-        children: ['li'],
-      })).toEqual([
-        'Foo',
-        'Bar',
-        'Baz',
-        'Qux',
-        'Wat',
-      ]);
+      expect(
+        instance.parseNode(element, {
+          ...parentConfig,
+          children: ['li'],
+        }),
+      ).toEqual(['Foo', 'Bar', 'Baz', 'Qux', 'Wat']);
     });
 
     it('doesnt render self children', () => {
@@ -624,15 +633,21 @@ describe('Parser', () => {
       element.appendChild(createChild('span', 'Qux'));
       element.appendChild(createChild('section', 'Wat'));
 
-      expect(instance.parseNode(element, {
-        ...parentConfig,
-        self: false,
-      })).toEqual([
+      expect(
+        instance.parseNode(element, {
+          ...parentConfig,
+          self: false,
+        }),
+      ).toEqual([
         'Foo',
         'Bar',
         'Baz',
-        <Element key="0" tagName="span">{['Qux']}</Element>,
-        <Element key="1" tagName="section">{['Wat']}</Element>,
+        <Element key="0" tagName="span">
+          {['Qux']}
+        </Element>,
+        <Element key="1" tagName="section">
+          {['Wat']}
+        </Element>,
       ]);
     });
 
@@ -643,14 +658,18 @@ describe('Parser', () => {
       element.appendChild(createChild('span', 'Qux'));
       element.appendChild(createChild('section', 'Wat'));
 
-      expect(instance.parseNode(element, {
-        ...parentConfig,
-        block: false,
-      })).toEqual([
+      expect(
+        instance.parseNode(element, {
+          ...parentConfig,
+          block: false,
+        }),
+      ).toEqual([
         'Foo',
         'Bar',
         'Baz',
-        <Element key="0" tagName="span">{['Qux']}</Element>,
+        <Element key="0" tagName="span">
+          {['Qux']}
+        </Element>,
         'Wat',
       ]);
     });
@@ -662,15 +681,21 @@ describe('Parser', () => {
       element.appendChild(createChild('span', 'Qux'));
       element.appendChild(createChild('section', 'Wat'));
 
-      expect(instance.parseNode(element, {
-        ...parentConfig,
-        inline: false,
-      })).toEqual([
+      expect(
+        instance.parseNode(element, {
+          ...parentConfig,
+          inline: false,
+        }),
+      ).toEqual([
         'Foo',
-        <Element key="0" tagName="div">{['Bar']}</Element>,
+        <Element key="0" tagName="div">
+          {['Bar']}
+        </Element>,
         'Baz',
         'Qux',
-        <Element key="1" tagName="section">{['Wat']}</Element>,
+        <Element key="1" tagName="section">
+          {['Wat']}
+        </Element>,
       ]);
     });
 
@@ -679,10 +704,7 @@ describe('Parser', () => {
       element.appendChild(createChild('link', 'Bar'));
       element.appendChild(document.createTextNode('Baz'));
 
-      expect(instance.parseNode(element, parentConfig)).toEqual([
-        'Foo',
-        'Baz',
-      ]);
+      expect(instance.parseNode(element, parentConfig)).toEqual(['Foo', 'Baz']);
     });
 
     it('does render an `a` tag within inline', () => {
@@ -691,12 +713,16 @@ describe('Parser', () => {
       element.appendChild(createChild('a', 'Bar'));
       element.appendChild(document.createTextNode('Baz'));
 
-      expect(instance.parseNode(element, {
-        ...TAGS.span,
-        tagName: 'span',
-      })).toEqual([
+      expect(
+        instance.parseNode(element, {
+          ...TAGS.span,
+          tagName: 'span',
+        }),
+      ).toEqual([
         'Foo',
-        <Element key="0" tagName="a" attributes={{ target: '_blank' }}>{['Bar']}</Element>,
+        <Element key="0" tagName="a" attributes={{ target: '_blank' }}>
+          {['Bar']}
+        </Element>,
         'Baz',
       ]);
     });
@@ -706,11 +732,15 @@ describe('Parser', () => {
       element.appendChild(createChild('a', 'Bar'));
       element.appendChild(document.createTextNode('Baz'));
 
-      expect(instance.parseNode(element, {
-        ...parentConfig,
-      })).toEqual([
+      expect(
+        instance.parseNode(element, {
+          ...parentConfig,
+        }),
+      ).toEqual([
         'Foo',
-        <Element key="0" tagName="a" attributes={{ target: '_blank' }}>{['Bar']}</Element>,
+        <Element key="0" tagName="a" attributes={{ target: '_blank' }}>
+          {['Bar']}
+        </Element>,
         'Baz',
       ]);
     });
@@ -721,12 +751,16 @@ describe('Parser', () => {
       element.appendChild(createChild('span', 'Bar'));
       element.appendChild(document.createTextNode('Baz'));
 
-      expect(instance.parseNode(element, {
-        ...TAGS.a,
-        tagName: 'a',
-      })).toEqual([
+      expect(
+        instance.parseNode(element, {
+          ...TAGS.a,
+          tagName: 'a',
+        }),
+      ).toEqual([
         'Foo',
-        <Element key="0" tagName="span">{['Bar']}</Element>,
+        <Element key="0" tagName="span">
+          {['Bar']}
+        </Element>,
         'Baz',
       ]);
     });
@@ -737,12 +771,16 @@ describe('Parser', () => {
       element.appendChild(createChild('div', 'Bar'));
       element.appendChild(document.createTextNode('Baz'));
 
-      expect(instance.parseNode(element, {
-        ...TAGS.a,
-        tagName: 'a',
-      })).toEqual([
+      expect(
+        instance.parseNode(element, {
+          ...TAGS.a,
+          tagName: 'a',
+        }),
+      ).toEqual([
         'Foo',
-        <Element key="0" tagName="div">{['Bar']}</Element>,
+        <Element key="0" tagName="div">
+          {['Bar']}
+        </Element>,
         'Baz',
       ]);
     });
@@ -755,11 +793,15 @@ describe('Parser', () => {
 
       element.appendChild(acronym);
 
-      expect(instance.parseNode(element, {
-        ...TAGS.span,
-        tagName: 'span',
-      })).toEqual([
-        <Element key="0" tagName="a" attributes={{ target: '_blank' }}>{['Link']}</Element>,
+      expect(
+        instance.parseNode(element, {
+          ...TAGS.span,
+          tagName: 'span',
+        }),
+      ).toEqual([
+        <Element key="0" tagName="a" attributes={{ target: '_blank' }}>
+          {['Link']}
+        </Element>,
       ]);
     });
   });

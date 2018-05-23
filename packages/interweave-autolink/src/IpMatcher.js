@@ -11,11 +11,15 @@ import type { MatchResponse, MatcherFactory } from 'interweave'; // eslint-disab
 
 export default class IpMatcher extends UrlMatcher {
   constructor(name: string, options?: Object = {}, factory?: ?MatcherFactory = null) {
-    super(name, {
-      ...options,
-      // IPs dont have TLDs
-      validateTLD: false,
-    }, factory);
+    super(
+      name,
+      {
+        ...options,
+        // IPs dont have TLDs
+        validateTLD: false,
+      },
+      factory,
+    );
   }
 
   match(string: string): ?MatchResponse {

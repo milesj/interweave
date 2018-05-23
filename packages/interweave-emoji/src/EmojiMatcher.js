@@ -23,7 +23,9 @@ type EmojiOptions = {
 };
 
 // eslint-disable-next-line no-useless-escape
-const EMOTICON_BOUNDARY_REGEX: RegExp = new RegExp(`(^|\\\b|\\\s)(${EMOTICON_REGEX.source})(?=\\\s|\\\b|$)`);
+const EMOTICON_BOUNDARY_REGEX: RegExp = new RegExp(
+  `(^|\\\b|\\\s)(${EMOTICON_REGEX.source})(?=\\\s|\\\b|$)`,
+);
 
 export default class EmojiMatcher extends Matcher<EmojiOptions> {
   data: EmojiData;
@@ -31,20 +33,22 @@ export default class EmojiMatcher extends Matcher<EmojiOptions> {
   options: EmojiOptions;
 
   constructor(name: string, options?: Object = {}, factory?: ?MatcherFactory = null) {
-    super(name, {
-      convertEmoticon: false,
-      convertShortcode: false,
-      convertUnicode: false,
-      enlargeThreshold: 1,
-      renderUnicode: false,
-      ...options,
-    }, factory);
+    super(
+      name,
+      {
+        convertEmoticon: false,
+        convertShortcode: false,
+        convertUnicode: false,
+        enlargeThreshold: 1,
+        renderUnicode: false,
+        ...options,
+      },
+      factory,
+    );
   }
 
   replaceWith(match: string, props?: Object = {}): React$Node {
-    return (
-      <Emoji {...props} renderUnicode={this.options.renderUnicode} />
-    );
+    return <Emoji {...props} renderUnicode={this.options.renderUnicode} />;
   }
 
   asTag(): string {
@@ -70,7 +74,7 @@ export default class EmojiMatcher extends Matcher<EmojiOptions> {
       matchers.push(this.matchUnicode);
     }
 
-    matchers.some((matcher) => {
+    matchers.some(matcher => {
       response = matcher.call(this, string);
 
       return !!response;
@@ -157,7 +161,6 @@ export default class EmojiMatcher extends Matcher<EmojiOptions> {
           valid = false;
           break;
         }
-
       } else if (React.isValidElement(item)) {
         // Only count towards emojis
         // $FlowIgnore Portals are finnicky
@@ -170,7 +173,7 @@ export default class EmojiMatcher extends Matcher<EmojiOptions> {
             break;
           }
 
-        // Abort early for non-emoji components
+          // Abort early for non-emoji components
         } else {
           valid = false;
           break;
@@ -185,7 +188,7 @@ export default class EmojiMatcher extends Matcher<EmojiOptions> {
       return content;
     }
 
-    return content.map((item) => {
+    return content.map(item => {
       if (!item || typeof item === 'string') {
         return item;
       }

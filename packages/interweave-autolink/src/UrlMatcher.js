@@ -20,11 +20,15 @@ export default class UrlMatcher extends Matcher<UrlOptions> {
   options: UrlOptions;
 
   constructor(name: string, options?: Object = {}, factory?: ?MatcherFactory = null) {
-    super(name, {
-      customTLDs: [],
-      validateTLD: true,
-      ...options,
-    }, factory);
+    super(
+      name,
+      {
+        customTLDs: [],
+        validateTLD: true,
+        ...options,
+      },
+      factory,
+    );
   }
 
   replaceWith(match: string, props?: Object = {}): React$Node {
@@ -38,9 +42,7 @@ export default class UrlMatcher extends Matcher<UrlOptions> {
       }
     }
 
-    return (
-      <Url {...props}>{match}</Url>
-    );
+    return <Url {...props}>{match}</Url>;
   }
 
   asTag(): string {

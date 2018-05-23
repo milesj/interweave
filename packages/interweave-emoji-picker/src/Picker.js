@@ -123,10 +123,7 @@ class Picker extends React.Component<PickerProps, PickerState> {
     blacklist: PropTypes.arrayOf(PropTypes.string),
     classNames: PropTypes.objectOf(PropTypes.string),
     columnCount: PropTypes.number,
-    commonMode: PropTypes.oneOf([
-      COMMON_MODE_RECENT,
-      COMMON_MODE_FREQUENT,
-    ]),
+    commonMode: PropTypes.oneOf([COMMON_MODE_RECENT, COMMON_MODE_FREQUENT]),
     defaultGroup: PropTypes.oneOf([
       GROUP_COMMONLY_USED,
       GROUP_SMILEYS_PEOPLE,
@@ -222,13 +219,7 @@ class Picker extends React.Component<PickerProps, PickerState> {
   constructor(props: PickerProps) {
     super(props);
 
-    const {
-      blacklist,
-      defaultGroup,
-      defaultSkinTone,
-      emojis,
-      whitelist,
-    } = props;
+    const { blacklist, defaultGroup, defaultSkinTone, emojis, whitelist } = props;
 
     this.state = {
       activeEmoji: null,
@@ -306,7 +297,7 @@ class Picker extends React.Component<PickerProps, PickerState> {
         });
       }
 
-    // Increase count and sort by usage
+      // Increase count and sort by usage
     } else if (commonMode === COMMON_MODE_FREQUENT) {
       if (currentIndex >= 0) {
         commonEmojis[currentIndex].count += 1;
@@ -376,7 +367,10 @@ class Picker extends React.Component<PickerProps, PickerState> {
     const haystack = lookups.join(' ').toLowerCase();
 
     // Support multi-word and case-insensitive searches
-    return searchQuery.toLowerCase().split(' ').some(needle => haystack.indexOf(needle) >= 0);
+    return searchQuery
+      .toLowerCase()
+      .split(' ')
+      .some(needle => haystack.indexOf(needle) >= 0);
   }
 
   /**
@@ -395,7 +389,7 @@ class Picker extends React.Component<PickerProps, PickerState> {
   generateBlackWhiteMap(list: string[]): BlackWhiteMap {
     const map = {};
 
-    list.forEach((hexcode) => {
+    list.forEach(hexcode => {
       if (__DEV__) {
         if (hexcode.match(SKIN_MODIFIER_PATTERN)) {
           // eslint-disable-next-line no-console
@@ -423,9 +417,7 @@ class Picker extends React.Component<PickerProps, PickerState> {
 
     const data = EmojiData.getInstance(this.props.emojiSource.locale);
 
-    return commonEmojis
-      .map(emoji => data.EMOJIS[emoji.hexcode])
-      .filter(Boolean);
+    return commonEmojis.map(emoji => data.EMOJIS[emoji.hexcode]).filter(Boolean);
   }
 
   /**
@@ -461,7 +453,7 @@ class Picker extends React.Component<PickerProps, PickerState> {
 
     // Previous versions stored the unicode character,
     // while newer ones store a hexcode. We should support both.
-    return common.map((row) => {
+    return common.map(row => {
       if (row.unicode) {
         return {
           count: row.count,
@@ -482,8 +474,8 @@ class Picker extends React.Component<PickerProps, PickerState> {
       return emoji;
     }
 
-    const toneIndex = SKIN_TONES.findIndex(tone => (tone === skinTone));
-    const skinnedEmoji = (emoji.skins || []).find(skin => (skin.tone && skin.tone === toneIndex));
+    const toneIndex = SKIN_TONES.findIndex(tone => tone === skinTone);
+    const skinnedEmoji = (emoji.skins || []).find(skin => skin.tone && skin.tone === toneIndex);
 
     return skinnedEmoji || emoji;
   }
@@ -511,12 +503,7 @@ class Picker extends React.Component<PickerProps, PickerState> {
    */
   handleKeyUp = (e: SyntheticKeyboardEvent<HTMLInputElement>) => {
     const { columnCount } = this.props;
-    const {
-      activeEmoji,
-      activeEmojiIndex,
-      emojis,
-      searchQuery,
-    } = this.state;
+    const { activeEmoji, activeEmojiIndex, emojis, searchQuery } = this.state;
 
     // Keyboard functionality is only available while searching
     if (!searchQuery) {
@@ -529,7 +516,7 @@ class Picker extends React.Component<PickerProps, PickerState> {
 
       this.handleSearch('', e);
 
-    // Select active emoji
+      // Select active emoji
     } else if (e.key === 'Enter') {
       e.preventDefault();
 
@@ -537,7 +524,7 @@ class Picker extends React.Component<PickerProps, PickerState> {
         this.handleSelectEmoji(activeEmoji, e);
       }
 
-    // Cycle search results
+      // Cycle search results
     } else {
       e.preventDefault();
 
@@ -568,7 +555,7 @@ class Picker extends React.Component<PickerProps, PickerState> {
         this.handleEnterEmoji(emojis[nextIndex], e);
       }
     }
-  }
+  };
 
   /**
    * Triggered when the mouse no longer hovers an emoji.
@@ -680,7 +667,7 @@ class Picker extends React.Component<PickerProps, PickerState> {
    */
   setUpdatedEmojis(searchQuery: string, skinTone: string) {
     const emojis = this.generateEmojis(this.props.emojis, searchQuery, skinTone);
-    const hasResults = (searchQuery && emojis.length > 0);
+    const hasResults = searchQuery && emojis.length > 0;
 
     this.setState({
       activeEmoji: hasResults ? emojis[0] : null,
@@ -798,11 +785,7 @@ class Picker extends React.Component<PickerProps, PickerState> {
       classes.push(classNames.pickerVirtual);
     }
 
-    return (
-      <div className={classes.join(' ')}>
-        {displayOrder.map(key => components[key])}
-      </div>
-    );
+    return <div className={classes.join(' ')}>{displayOrder.map(key => components[key])}</div>;
   }
 }
 

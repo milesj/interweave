@@ -11,12 +11,7 @@ import chunk from 'lodash/chunk';
 import { EmojiShape, EmojiPathShape, EmojiSourceShape } from 'interweave-emoji';
 import EmojiButton from './Emoji';
 import GroupListHeader from './GroupListHeader';
-import {
-  GROUPS,
-  GROUP_COMMONLY_USED,
-  GROUP_SEARCH_RESULTS,
-  GROUP_NONE,
-} from './constants';
+import { GROUPS, GROUP_COMMONLY_USED, GROUP_SEARCH_RESULTS, GROUP_NONE } from './constants';
 
 import type { Emoji, EmojiPath, EmojiSource } from 'interweave-emoji'; // eslint-disable-line
 
@@ -100,12 +95,7 @@ export default class EmojiVirtualList extends React.PureComponent<EmojiListProps
   }
 
   componentDidUpdate(prevProps: EmojiListProps) {
-    const {
-      activeEmoji,
-      commonEmojis,
-      emojis,
-      searchQuery,
-    } = this.props;
+    const { activeEmoji, commonEmojis, emojis, searchQuery } = this.props;
 
     // We re-use the same array for emojis unless it has been rebuilt,
     // so this check will work correctly. No lengthy checks needed.
@@ -144,7 +134,7 @@ export default class EmojiVirtualList extends React.PureComponent<EmojiListProps
     }
 
     // Partition emojis into separate groups
-    emojis.forEach((emoji) => {
+    emojis.forEach(emoji => {
       let group = GROUPS[emoji.group];
 
       if (searchQuery) {
@@ -161,7 +151,7 @@ export default class EmojiVirtualList extends React.PureComponent<EmojiListProps
     });
 
     // Sort each group and chunk into rows
-    Object.keys(groups).forEach((group) => {
+    Object.keys(groups).forEach(group => {
       if (groups[group].length === 0) {
         return;
       }
@@ -195,7 +185,7 @@ export default class EmojiVirtualList extends React.PureComponent<EmojiListProps
     const { groupIndices } = this.state;
     let lastGroup = '';
 
-    Object.keys(groupIndices).some((group) => {
+    Object.keys(groupIndices).some(group => {
       const index = groupIndices[group];
 
       // Special case for commonly used and smileys,
@@ -208,7 +198,7 @@ export default class EmojiVirtualList extends React.PureComponent<EmojiListProps
 
       // Next group is about to be shown, but highlight the previous group
       // eslint-disable-next-line no-magic-numbers
-      if (index + (rowCount / 2) >= stopIndex) {
+      if (index + rowCount / 2 >= stopIndex) {
         return true;
       }
 
@@ -229,23 +219,14 @@ export default class EmojiVirtualList extends React.PureComponent<EmojiListProps
   renderNoResults = () => {
     const { classNames, messages } = this.context;
 
-    return (
-      <div className={classNames.noResults}>
-        {messages.noResults}
-      </div>
-    );
+    return <div className={classNames.noResults}>{messages.noResults}</div>;
   };
 
   /**
    * Render the list row. Either a group header or a row of emoji columns.
    */
   renderRow = (params: Object) => {
-    const {
-      key,
-      index,
-      isVisible,
-      style,
-    } = params;
+    const { key, index, isVisible, style } = params;
     const {
       activeEmoji,
       commonMode,
@@ -268,7 +249,7 @@ export default class EmojiVirtualList extends React.PureComponent<EmojiListProps
             {row.map((emoji, i) => (
               <EmojiButton
                 key={emoji.hexcode}
-                active={activeEmoji ? (activeEmoji.hexcode === emoji.hexcode) : false}
+                active={activeEmoji ? activeEmoji.hexcode === emoji.hexcode : false}
                 emoji={emoji}
                 emojiPadding={emojiPadding}
                 emojiPath={emojiPath}
@@ -282,11 +263,7 @@ export default class EmojiVirtualList extends React.PureComponent<EmojiListProps
             ))}
           </div>
         ) : (
-          <GroupListHeader
-            commonMode={commonMode}
-            group={row}
-            skinTonePalette={skinTonePalette}
-          />
+          <GroupListHeader commonMode={commonMode} group={row} skinTonePalette={skinTonePalette} />
         )}
       </div>
     );
@@ -309,9 +286,9 @@ export default class EmojiVirtualList extends React.PureComponent<EmojiListProps
     } = this.props;
     const { classNames } = this.context;
     const { groupIndices, rows } = this.state;
-    const size = emojiSize + (emojiPadding * 2);
-    const rowHeight = size + (rowPadding * 2);
-    const columnWidth = size + (columnPadding * 2);
+    const size = emojiSize + emojiPadding * 2;
+    const rowHeight = size + rowPadding * 2;
+    const columnWidth = size + columnPadding * 2;
 
     // `List` utilizes shallow comparison by extending PureComponent.
     // Because of this, row changes may not be reflected without

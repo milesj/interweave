@@ -54,20 +54,23 @@ describe('<PreviewBar />', () => {
     it('renders an emoji', () => {
       const wrapper = shallow(<PreviewBar {...props} />, { context });
 
-      expect(wrapper.find('Emoji').props()).toEqual(expect.objectContaining({
-        emojiLargeSize: props.emojiLargeSize,
-        emojiPath: props.emojiPath,
-        emojiSource: props.emojiSource,
-        enlargeEmoji: true,
-        hexcode: props.emoji.hexcode,
-      }));
+      expect(wrapper.find('Emoji').props()).toEqual(
+        expect.objectContaining({
+          emojiLargeSize: props.emojiLargeSize,
+          emojiPath: props.emojiPath,
+          emojiSource: props.emojiSource,
+          enlargeEmoji: true,
+          hexcode: props.emoji.hexcode,
+        }),
+      );
     });
 
     it('displays title', () => {
       const wrapper = shallow(<PreviewBar {...props} />, { context });
 
-      expect(wrapper.find('.interweave-picker__preview-title').text())
-        .toBe('Slightly smiling face');
+      expect(wrapper.find('.interweave-picker__preview-title').text()).toBe(
+        'Slightly smiling face',
+      );
     });
 
     it('displays title when no annotation', () => {
@@ -82,8 +85,9 @@ describe('<PreviewBar />', () => {
         { context },
       );
 
-      expect(wrapper.find('.interweave-picker__preview-title').text())
-        .toBe('SLIGHTLY SMILING FACE');
+      expect(wrapper.find('.interweave-picker__preview-title').text()).toBe(
+        'SLIGHTLY SMILING FACE',
+      );
     });
 
     it('doesnt display title if no annotation or name', () => {
@@ -105,8 +109,7 @@ describe('<PreviewBar />', () => {
     it('displays subtitle', () => {
       const wrapper = shallow(<PreviewBar {...props} />, { context });
 
-      expect(wrapper.find('.interweave-picker__preview-subtitle').text())
-        .toBe(':) :pleased:');
+      expect(wrapper.find('.interweave-picker__preview-subtitle').text()).toBe(':) :pleased:');
     });
 
     it('displays subtitle without emoticon', () => {
@@ -121,8 +124,7 @@ describe('<PreviewBar />', () => {
         { context },
       );
 
-      expect(wrapper.find('.interweave-picker__preview-subtitle').text())
-        .toBe(':pleased:');
+      expect(wrapper.find('.interweave-picker__preview-subtitle').text()).toBe(':pleased:');
     });
 
     it('displays subtitle without shortcodes', () => {
@@ -137,22 +139,19 @@ describe('<PreviewBar />', () => {
         { context },
       );
 
-      expect(wrapper.find('.interweave-picker__preview-subtitle').text())
-        .toBe(':)');
+      expect(wrapper.find('.interweave-picker__preview-subtitle').text()).toBe(':)');
     });
 
     it('hides emoticon in subtitle', () => {
       const wrapper = shallow(<PreviewBar {...props} hideEmoticon />, { context });
 
-      expect(wrapper.find('.interweave-picker__preview-subtitle').text())
-        .toBe(':pleased:');
+      expect(wrapper.find('.interweave-picker__preview-subtitle').text()).toBe(':pleased:');
     });
 
     it('hides shortcodes in subtitle', () => {
       const wrapper = shallow(<PreviewBar {...props} hideShortcodes />, { context });
 
-      expect(wrapper.find('.interweave-picker__preview-subtitle').text())
-        .toBe(':)');
+      expect(wrapper.find('.interweave-picker__preview-subtitle').text()).toBe(':)');
     });
 
     it('doesnt display subtitle if no emoticon or shortcodes', () => {

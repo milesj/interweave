@@ -28,8 +28,9 @@ describe('<SkinTone />', () => {
       active: true,
     });
 
-    expect(wrapper.prop('className'))
-      .toBe('interweave-picker__skin-tone interweave-picker__skin-tone--active');
+    expect(wrapper.prop('className')).toBe(
+      'interweave-picker__skin-tone interweave-picker__skin-tone--active',
+    );
   });
 
   it('can customize class name', () => {

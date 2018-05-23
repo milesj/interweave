@@ -14,8 +14,14 @@ describe('components/Link', () => {
 
   it('can set and trigger an onClick', () => {
     let clicked = false;
-    const clicker = () => { clicked = true; };
-    const wrapper = shallow(<Link href="/blog" onClick={clicker}>Foo</Link>);
+    const clicker = () => {
+      clicked = true;
+    };
+    const wrapper = shallow(
+      <Link href="/blog" onClick={clicker}>
+        Foo
+      </Link>,
+    );
 
     expect(wrapper.prop('onClick')).toBe(clicker);
 

@@ -27,7 +27,7 @@ import type {
   NodeInterface,
   FilterInterface,
   MatcherInterface,
-  TransformCallback
+  TransformCallback,
 } from './types';
 
 type ParserProps = {
@@ -111,16 +111,13 @@ export default class Parser {
    * If a match is found, create a React element, and build a new array.
    * This array allows React to interpolate and render accordingly.
    */
-  applyMatchers(
-    string: string,
-    parentConfig: NodeConfig,
-  ): string | React$Node[] {
+  applyMatchers(string: string, parentConfig: NodeConfig): string | React$Node[] {
     const elements = [];
     const { props } = this;
     let matchedString = string;
     let parts = {};
 
-    this.matchers.forEach((matcher) => {
+    this.matchers.forEach(matcher => {
       const tagName = matcher.asTag().toLowerCase();
       const config = this.getTagConfig(tagName);
 
@@ -139,7 +136,7 @@ export default class Parser {
       }
 
       // Continuously trigger the matcher until no matches are found
-      while (parts = matcher.match(matchedString)) {
+      while ((parts = matcher.match(matchedString))) {
         const { match, ...partProps } = parts;
 
         // Replace the matched portion with a placeholder
@@ -148,11 +145,13 @@ export default class Parser {
         // Create an element through the matchers factory
         this.keyIndex += 1;
 
-        elements.push(matcher.createElement(match, {
-          ...props,
-          ...partProps,
-          key: this.keyIndex,
-        }));
+        elements.push(
+          matcher.createElement(match, {
+            ...props,
+            ...partProps,
+            key: this.keyIndex,
+          }),
+        );
       }
     });
 
@@ -164,7 +163,7 @@ export default class Parser {
     const matchedArray = [];
     let lastIndex = 0;
 
-    while (parts = matchedString.match(/#\{\{(\d+)\}\}#/)) {
+    while ((parts = matchedString.match(/#\{\{(\d+)\}\}#/))) {
       const [, no] = parts;
       // $FlowIgnore https://github.com/facebook/flow/issues/2450
       const { index } = parts;
@@ -249,7 +248,7 @@ export default class Parser {
       noHtml ||
       noHtmlExceptMatchers ||
       disableLineBreaks ||
-      markup.match(/<((?:\/[a-z ]+)|(?:[a-z ]+\/))>/ig)
+      markup.match(/<((?:\/[a-z ]+)|(?:[a-z ]+\/))>/gi)
     ) {
       return markup;
     }
@@ -299,7 +298,7 @@ export default class Parser {
       return null;
     }
 
-    Array.from(node.attributes).forEach((attr) => {
+    Array.from(node.attributes).forEach(attr => {
       let { name, value } = attr;
       const filter: number = ATTRIBUTES[name];
 
@@ -328,13 +327,13 @@ export default class Parser {
 
       // Cast to boolean
       if (filter === FILTER_CAST_BOOL) {
-        value = (value === 'true' || value === name);
+        value = value === 'true' || value === name;
 
-      // Cast to number
+        // Cast to number
       } else if (filter === FILTER_CAST_NUMBER) {
         value = parseFloat(value);
 
-      // Cast to string
+        // Cast to string
       } else {
         value = String(value);
       }
@@ -387,10 +386,7 @@ export default class Parser {
       const protocol = (node.protocol || '').toLowerCase();
 
       return (
-        protocol === ':' ||
-        protocol === 'http:' ||
-        protocol === 'https:' ||
-        protocol === 'mailto:'
+        protocol === ':' || protocol === 'http:' || protocol === 'https:' || protocol === 'mailto:'
       );
     }
 
@@ -420,7 +416,7 @@ export default class Parser {
     let mergedText = '';
 
     // eslint-disable-next-line complexity
-    Array.from(parentNode.childNodes).forEach((node) => {
+    Array.from(parentNode.childNodes).forEach(node => {
       // Create React elements from HTML elements
       if (node.nodeType === ELEMENT_NODE) {
         const tagName = node.nodeName.toLowerCase();
@@ -456,7 +452,7 @@ export default class Parser {
             return;
           } else if (typeof transformed !== 'undefined') {
             // $FlowIgnore
-            const transformedWithKey = React.cloneElement(transformed, {key});
+            const transformedWithKey = React.cloneElement(transformed, { key });
             content.push(transformedWithKey);
             return;
           }
@@ -490,26 +486,25 @@ export default class Parser {
             elementProps.selfClose = config.void;
           }
 
-          content.push((
-            <Element {...elementProps}>
-              {children || this.parseNode(nextNode, config)}
-            </Element>
-          ));
+          content.push(
+            <Element {...elementProps}>{children || this.parseNode(nextNode, config)}</Element>,
+          );
 
-        // Render the children of the current element only.
-        // Important: If the current element is not whitelisted,
-        // use the parent element for the next scope.
+          // Render the children of the current element only.
+          // Important: If the current element is not whitelisted,
+          // use the parent element for the next scope.
         } else {
           content = content.concat(
             this.parseNode(nextNode, config.tagName ? config : parentConfig),
           );
         }
 
-      // Apply matchers if a text node
+        // Apply matchers if a text node
       } else if (node.nodeType === TEXT_NODE) {
-        const text = (noHtml && !noHtmlExceptMatchers)
-          ? node.textContent
-          : this.applyMatchers(node.textContent, parentConfig);
+        const text =
+          noHtml && !noHtmlExceptMatchers
+            ? node.textContent
+            : this.applyMatchers(node.textContent, parentConfig);
 
         if (Array.isArray(text)) {
           content = content.concat(text);

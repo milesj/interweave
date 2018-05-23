@@ -8,8 +8,9 @@ describe('Emoji', () => {
   const shortcodes = ':enraged:, :pout:';
 
   it('errors if no emoticon, shortcode or unicode', () => {
-    expect(() => shallow(<Emoji emojiSource={SOURCE_PROP} />))
-      .toThrowError('Emoji component requires a `unicode` character, `emoticon`, `hexcode`, or a `shortcode`.');
+    expect(() => shallow(<Emoji emojiSource={SOURCE_PROP} />)).toThrowError(
+      'Emoji component requires a `unicode` character, `emoticon`, `hexcode`, or a `shortcode`.',
+    );
   });
 
   it('returns value for invalid hexcode', () => {
@@ -74,11 +75,7 @@ describe('Emoji', () => {
 
   it('renders with both', () => {
     const wrapper = shallow(
-      <Emoji
-        emojiSource={SOURCE_PROP}
-        shortcode={shortcode}
-        unicode={unicode}
-      />,
+      <Emoji emojiSource={SOURCE_PROP} shortcode={shortcode} unicode={unicode} />,
     );
 
     expect(wrapper.prop('data-unicode')).toBe(unicode);
@@ -87,70 +84,64 @@ describe('Emoji', () => {
   });
 
   it('renders the unicode character', () => {
-    const wrapper = shallow(
-      <Emoji
-        emojiSource={SOURCE_PROP}
-        unicode={unicode}
-        renderUnicode
-      />,
-    );
+    const wrapper = shallow(<Emoji emojiSource={SOURCE_PROP} unicode={unicode} renderUnicode />);
 
     expect(wrapper.is('span')).toBe(true);
     expect(wrapper.text()).toBe(unicode);
   });
 
   it('can define the path', () => {
-    const wrapper = shallow((
+    const wrapper = shallow(
       <Emoji
         emojiSource={SOURCE_PROP}
         shortcode={shortcode}
         unicode={unicode}
         emojiPath="http://foo.com/path/to/{{hexcode}}.svg"
-      />
-    ));
+      />,
+    );
 
     expect(wrapper.find('img').prop('alt')).toBe(unicode);
     expect(wrapper.find('img').prop('src')).toBe(`http://foo.com/path/to/${hexcode}.svg`);
   });
 
   it('can define the path with a function', () => {
-    const wrapper = shallow((
-      <Emoji
-        emojiSource={SOURCE_PROP}
-        shortcode={shortcode}
-        unicode={unicode}
-        emojiPath={hex => `http://foo.com/path/to/${hex.toLowerCase()}.svg`}
-      />
-    ));
-
-    expect(wrapper.find('img').prop('alt')).toBe(unicode);
-    expect(wrapper.find('img').prop('src')).toBe(`http://foo.com/path/to/${hexcode.toLowerCase()}.svg`);
-  });
-
-  it('path function receives enlarge and size', () => {
-    const wrapper = shallow((
-      <Emoji
-        emojiSource={SOURCE_PROP}
-        shortcode={shortcode}
-        unicode={unicode}
-        emojiPath={(hex, large, size) => (
-          `http://foo.com/path/to/${large ? (size * 2) : size}/${hex.toLowerCase()}.svg`
-        )}
-        emojiSize={2}
-        enlargeEmoji
-      />
-    ));
-
-    expect(wrapper.find('img').prop('src')).toBe(`http://foo.com/path/to/4/${hexcode.toLowerCase()}.svg`);
-  });
-
-  it('adds class names', () => {
     const wrapper = shallow(
       <Emoji
         emojiSource={SOURCE_PROP}
         shortcode={shortcode}
         unicode={unicode}
+        emojiPath={hex => `http://foo.com/path/to/${hex.toLowerCase()}.svg`}
       />,
+    );
+
+    expect(wrapper.find('img').prop('alt')).toBe(unicode);
+    expect(wrapper.find('img').prop('src')).toBe(
+      `http://foo.com/path/to/${hexcode.toLowerCase()}.svg`,
+    );
+  });
+
+  it('path function receives enlarge and size', () => {
+    const wrapper = shallow(
+      <Emoji
+        emojiSource={SOURCE_PROP}
+        shortcode={shortcode}
+        unicode={unicode}
+        emojiPath={(hex, large, size) =>
+          `http://foo.com/path/to/${large ? size * 2 : size}/${hex.toLowerCase()}.svg`
+        }
+        emojiSize={2}
+        enlargeEmoji
+      />,
+    );
+
+    expect(wrapper.find('img').prop('src')).toBe(
+      `http://foo.com/path/to/4/${hexcode.toLowerCase()}.svg`,
+    );
+  });
+
+  it('adds class names', () => {
+    const wrapper = shallow(
+      <Emoji emojiSource={SOURCE_PROP} shortcode={shortcode} unicode={unicode} />,
     );
 
     expect(wrapper.prop('className')).toBe('interweave__emoji');
@@ -164,12 +155,7 @@ describe('Emoji', () => {
 
   it('sets styles when size is defined', () => {
     const wrapper = shallow(
-      <Emoji
-        emojiSource={SOURCE_PROP}
-        emojiSize={1}
-        shortcode={shortcode}
-        unicode={unicode}
-      />,
+      <Emoji emojiSource={SOURCE_PROP} emojiSize={1} shortcode={shortcode} unicode={unicode} />,
     );
 
     expect(wrapper.prop('style')).toEqual({
@@ -181,7 +167,7 @@ describe('Emoji', () => {
   });
 
   it('can customize large size', () => {
-    const wrapper = shallow((
+    const wrapper = shallow(
       <Emoji
         emojiSource={SOURCE_PROP}
         shortcode={shortcode}
@@ -189,8 +175,8 @@ describe('Emoji', () => {
         emojiSize={2}
         emojiLargeSize={5}
         enlargeEmoji
-      />
-    ));
+      />,
+    );
 
     expect(wrapper.prop('style')).toEqual({
       display: 'inline-block',
@@ -201,14 +187,9 @@ describe('Emoji', () => {
   });
 
   it('can use string sizes', () => {
-    const wrapper = shallow((
-      <Emoji
-        emojiSource={SOURCE_PROP}
-        shortcode={shortcode}
-        unicode={unicode}
-        emojiSize="2em"
-      />
-    ));
+    const wrapper = shallow(
+      <Emoji emojiSource={SOURCE_PROP} shortcode={shortcode} unicode={unicode} emojiSize="2em" />,
+    );
 
     expect(wrapper.prop('style')).toEqual({
       display: 'inline-block',

@@ -43,7 +43,12 @@ describe('<SkinTonePalette />', () => {
   it('passes `onSelect` to skin tones', () => {
     const wrapper = shallow(<SkinTonePalette {...props} />, { context });
 
-    expect(wrapper.find(SkinTone).at(0).prop('onSelect')).toBe(props.onSelect);
+    expect(
+      wrapper
+        .find(SkinTone)
+        .at(0)
+        .prop('onSelect'),
+    ).toBe(props.onSelect);
   });
 
   it('sets active skin tone', () => {

@@ -40,21 +40,15 @@ export default class GroupListHeader extends React.PureComponent<GroupListHeader
   render(): React$Node {
     const { commonMode, group, skinTonePalette } = this.props;
     const { classNames, messages } = this.context;
-    const showPalette = skinTonePalette && (
-      group === GROUP_SMILEYS_PEOPLE ||
-      group === GROUP_SEARCH_RESULTS ||
-      group === GROUP_NONE
-    );
+    const showPalette =
+      skinTonePalette &&
+      (group === GROUP_SMILEYS_PEOPLE || group === GROUP_SEARCH_RESULTS || group === GROUP_NONE);
 
     return (
       <header className={classNames.emojisHeader}>
         {showPalette && skinTonePalette}
 
-        {(group === GROUP_COMMONLY_USED) ? (
-          messages[commonMode]
-        ) : (
-          messages[group]
-        )}
+        {group === GROUP_COMMONLY_USED ? messages[commonMode] : messages[group]}
       </header>
     );
   }

@@ -29,138 +29,141 @@ export const VALID_PATH_CHARS: RegExp = /(?:[a-zA-Z\u0400-\u04FF0-9\-_~!$&'()[\]
 
 export const URL_SCHEME: RegExp = /(https?:\/\/)?/;
 
-export const URL_AUTH: RegExp = combinePatterns([
-  /[a-z\u0400-\u04FF0-9\-_~!$&'()*+,;=.:]+/, // Includes colon
-  /@/,
-], {
-  capture: true,
-  match: '?',
-});
+export const URL_AUTH: RegExp = combinePatterns(
+  [
+    /[a-z\u0400-\u04FF0-9\-_~!$&'()*+,;=.:]+/, // Includes colon
+    /@/,
+  ],
+  {
+    capture: true,
+    match: '?',
+  },
+);
 
-export const URL_HOST: RegExp = combinePatterns([
-  /(?:(?:[a-z0-9](?:[-a-z0-9_]*[a-z0-9])?)\.)*/, // Subdomain
-  /(?:(?:[a-z0-9](?:[-a-z0-9]*[a-z0-9])?)\.)/, // Domain
-  /(?:[a-z](?:[-a-z0-9]*[a-z0-9])?)/, // TLD
-], {
-  capture: true,
-});
+export const URL_HOST: RegExp = combinePatterns(
+  [
+    /(?:(?:[a-z0-9](?:[-a-z0-9_]*[a-z0-9])?)\.)*/, // Subdomain
+    /(?:(?:[a-z0-9](?:[-a-z0-9]*[a-z0-9])?)\.)/, // Domain
+    /(?:[a-z](?:[-a-z0-9]*[a-z0-9])?)/, // TLD
+  ],
+  {
+    capture: true,
+  },
+);
 
 export const URL_PORT: RegExp = /(?::([0-9]{1,5}))?/;
 
-export const URL_PATH: RegExp = combinePatterns([
-  /\//,
-  combinePatterns([
-    /[-+a-z0-9!*';:=,.$/%[\]_~@|&]*/,
-    /[-+a-z0-9/]/, // Valid ending chars
-  ], {
-    match: '*',
-    nonCapture: true,
-  }),
-], {
-  capture: true,
-  match: '?',
-});
-
-export const URL_QUERY: RegExp = combinePatterns([
-  /\?/,
-  combinePatterns([
-    VALID_PATH_CHARS,
-    /[a-z0-9_&=]/, // Valid ending chars
-  ], {
+export const URL_PATH: RegExp = combinePatterns(
+  [
+    /\//,
+    combinePatterns(
+      [
+        /[-+a-z0-9!*';:=,.$/%[\]_~@|&]*/,
+        /[-+a-z0-9/]/, // Valid ending chars
+      ],
+      {
+        match: '*',
+        nonCapture: true,
+      },
+    ),
+  ],
+  {
+    capture: true,
     match: '?',
-    nonCapture: true,
-  }),
-], {
-  capture: true,
-  match: '?',
-});
+  },
+);
 
-export const URL_FRAGMENT: RegExp = combinePatterns([
-  /#/,
-  combinePatterns([
-    VALID_PATH_CHARS,
-    /[a-z0-9]/, // Valid ending chars
-  ], {
+export const URL_QUERY: RegExp = combinePatterns(
+  [
+    /\?/,
+    combinePatterns(
+      [
+        VALID_PATH_CHARS,
+        /[a-z0-9_&=]/, // Valid ending chars
+      ],
+      {
+        match: '?',
+        nonCapture: true,
+      },
+    ),
+  ],
+  {
+    capture: true,
     match: '?',
-    nonCapture: true,
-  }),
-], {
-  capture: true,
-  match: '?',
-});
+  },
+);
 
-export const URL_PATTERN: RegExp = combinePatterns([
-  URL_SCHEME,
-  URL_AUTH,
-  URL_HOST,
-  URL_PORT,
-  URL_PATH,
-  URL_QUERY,
-  URL_FRAGMENT,
-], {
-  flags: 'i',
-});
+export const URL_FRAGMENT: RegExp = combinePatterns(
+  [
+    /#/,
+    combinePatterns(
+      [
+        VALID_PATH_CHARS,
+        /[a-z0-9]/, // Valid ending chars
+      ],
+      {
+        match: '?',
+        nonCapture: true,
+      },
+    ),
+  ],
+  {
+    capture: true,
+    match: '?',
+  },
+);
+
+export const URL_PATTERN: RegExp = combinePatterns(
+  [URL_SCHEME, URL_AUTH, URL_HOST, URL_PORT, URL_PATH, URL_QUERY, URL_FRAGMENT],
+  {
+    flags: 'i',
+  },
+);
 
 export const IP_V4_PART: RegExp = /(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)/;
 
-export const IP_V4: RegExp = combinePatterns([
-  IP_V4_PART,
-  IP_V4_PART,
-  IP_V4_PART,
-  IP_V4_PART,
-], {
+export const IP_V4: RegExp = combinePatterns([IP_V4_PART, IP_V4_PART, IP_V4_PART, IP_V4_PART], {
   capture: true,
   join: '\\.',
 });
 
-export const IP_PATTERN: RegExp = combinePatterns([
-  URL_SCHEME,
-  URL_AUTH,
-  IP_V4,
-  URL_PORT,
-  URL_PATH,
-  URL_QUERY,
-  URL_FRAGMENT,
-], {
-  flags: 'i',
-});
+export const IP_PATTERN: RegExp = combinePatterns(
+  [URL_SCHEME, URL_AUTH, IP_V4, URL_PORT, URL_PATH, URL_QUERY, URL_FRAGMENT],
+  {
+    flags: 'i',
+  },
+);
 
-export const HASHTAG_PATTERN: RegExp = combinePatterns([
-  /#/,
-  combinePatterns([
-    VALID_ALNUM_CHARS,
-    /[-a-z0-9_]*/,
-    VALID_ALNUM_CHARS,
-  ], {
-    capture: true,
-  }),
-], {
-  flags: 'i',
-});
+export const HASHTAG_PATTERN: RegExp = combinePatterns(
+  [
+    /#/,
+    combinePatterns([VALID_ALNUM_CHARS, /[-a-z0-9_]*/, VALID_ALNUM_CHARS], {
+      capture: true,
+    }),
+  ],
+  {
+    flags: 'i',
+  },
+);
 
 export const EMAIL_USERNAME_PART: RegExp = /[a-z0-9!#$%&?*+=_{|}~-]+/;
 
-export const EMAIL_USERNAME: RegExp = combinePatterns([
-  VALID_ALNUM_CHARS,
-  EMAIL_USERNAME_PART,
-  VALID_ALNUM_CHARS,
-  combinePatterns([
-    /\./,
+export const EMAIL_USERNAME: RegExp = combinePatterns(
+  [
     VALID_ALNUM_CHARS,
     EMAIL_USERNAME_PART,
     VALID_ALNUM_CHARS,
-  ], {
-    match: '?',
-    nonCapture: true,
-  }),
-], {
-  capture: true,
-});
+    combinePatterns([/\./, VALID_ALNUM_CHARS, EMAIL_USERNAME_PART, VALID_ALNUM_CHARS], {
+      match: '?',
+      nonCapture: true,
+    }),
+  ],
+  {
+    capture: true,
+  },
+);
 
-export const EMAIL_PATTERN: RegExp = combinePatterns([
-  EMAIL_USERNAME,
-  URL_HOST,
-], {
+export const EMAIL_PATTERN: RegExp = combinePatterns([EMAIL_USERNAME, URL_HOST], {
   flags: 'i',
   join: '@',
 });

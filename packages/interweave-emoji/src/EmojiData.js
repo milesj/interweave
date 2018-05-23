@@ -70,7 +70,7 @@ export default class EmojiData {
 
     // Make our lives easier
     if (!emoji.unicode) {
-      emoji.unicode = (emoji.text && emoji.type === TEXT) ? emoji.text : emoji.emoji;
+      emoji.unicode = emoji.text && emoji.type === TEXT ? emoji.text : emoji.emoji;
     }
 
     // Canonicalize the shortcodes for easy reuse
@@ -78,13 +78,13 @@ export default class EmojiData {
     emoji.primary_shortcode = emoji.canonical_shortcodes[0]; // eslint-disable-line
 
     // Support all shortcodes
-    emoji.canonical_shortcodes.forEach((shortcode) => {
+    emoji.canonical_shortcodes.forEach(shortcode => {
       this.SHORTCODE_TO_HEXCODE[shortcode] = hexcode;
     });
 
     // Support all emoticons
     if (emoticon) {
-      generateEmoticonPermutations(emoticon, EMOTICON_OPTIONS[emoticon]).forEach((emo) => {
+      generateEmoticonPermutations(emoticon, EMOTICON_OPTIONS[emoticon]).forEach(emo => {
         this.EMOTICON_TO_HEXCODE[emo] = hexcode;
       });
     }
@@ -110,7 +110,7 @@ export default class EmojiData {
    * Parse and generate emoji datasets.
    */
   parseEmojiData(data: Emoji[]): Emoji[] {
-    data.forEach((emoji) => {
+    data.forEach(emoji => {
       const packagedEmoji = this.packageEmoji(emoji);
 
       this.data.push(packagedEmoji);
@@ -118,7 +118,7 @@ export default class EmojiData {
 
       // Flatten and package skins as well
       if (packagedEmoji.skins) {
-        packagedEmoji.skins.forEach((skin) => {
+        packagedEmoji.skins.forEach(skin => {
           this.flatData.push(this.packageEmoji(skin));
         });
       }

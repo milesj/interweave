@@ -4,27 +4,27 @@ import Element from '../src/Element';
 
 describe('Element', () => {
   it('can set the class name', () => {
-    const wrapper = shallow(<Element className="foo-bar" tagName="div">Foo</Element>);
+    const wrapper = shallow(
+      <Element className="foo-bar" tagName="div">
+        Foo
+      </Element>,
+    );
 
     expect(wrapper.hasClass('foo-bar')).toBe(true);
   });
 
   it('combines common class with prop class', () => {
-    const wrapper = shallow((
-      <Element
-        className="foo-bar"
-        tagName="div"
-        attributes={{ className: 'baz-qux' }}
-      >
+    const wrapper = shallow(
+      <Element className="foo-bar" tagName="div" attributes={{ className: 'baz-qux' }}>
         Foo
-      </Element>
-    ));
+      </Element>,
+    );
 
     expect(wrapper.prop('className')).toBe('interweave foo-bar baz-qux');
   });
 
   it('uses custom common class', () => {
-    const wrapper = shallow((
+    const wrapper = shallow(
       <Element
         commonClass="not-interweave"
         className="foo-bar"
@@ -32,14 +32,14 @@ describe('Element', () => {
         attributes={{ className: 'baz-qux' }}
       >
         Foo
-      </Element>
-    ));
+      </Element>,
+    );
 
     expect(wrapper.prop('className')).toBe('not-interweave foo-bar baz-qux');
   });
 
   it('can skip common class', () => {
-    const wrapper = shallow((
+    const wrapper = shallow(
       <Element
         commonClass={null}
         className="foo-bar"
@@ -47,8 +47,8 @@ describe('Element', () => {
         attributes={{ className: 'baz-qux' }}
       >
         Foo
-      </Element>
-    ));
+      </Element>,
+    );
 
     expect(wrapper.prop('className')).toBe('foo-bar baz-qux');
   });
@@ -88,7 +88,11 @@ describe('Element', () => {
   });
 
   it('renders with attributes', () => {
-    const wrapper = shallow(<Element tagName="div" attributes={{ id: 'foo' }}>Foo</Element>);
+    const wrapper = shallow(
+      <Element tagName="div" attributes={{ id: 'foo' }}>
+        Foo
+      </Element>,
+    );
 
     expect(wrapper.isEmptyRender()).toBe(false);
     expect(wrapper.props()).toEqual({
@@ -99,7 +103,7 @@ describe('Element', () => {
   });
 
   it('renders with attributes of each type', () => {
-    const wrapper = shallow((
+    const wrapper = shallow(
       <Element
         tagName="input"
         attributes={{
@@ -109,8 +113,8 @@ describe('Element', () => {
         }}
       >
         Foo
-      </Element>
-    ));
+      </Element>,
+    );
 
     expect(wrapper.isEmptyRender()).toBe(false);
     expect(wrapper.props()).toEqual({

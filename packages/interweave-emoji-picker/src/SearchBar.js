@@ -77,7 +77,7 @@ export default class SearchBar extends React.PureComponent<SearchBarProps, Searc
   /**
    * A change handler that is debounced for performance.
    */
-  handleChangeDebounced = debounce((e) => {
+  handleChangeDebounced = debounce(e => {
     // Check if were still mounted
     if (this.input) {
       this.props.onChange(e.target.value.trim(), e);

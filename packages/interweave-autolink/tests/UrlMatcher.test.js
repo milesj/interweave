@@ -17,12 +17,32 @@ const VALID_URLS = [
   { url: 'http://example.com/?x=1&y=2', path: '/', query: '?x=1&y=2' },
   { url: 'http://example.com:80/', path: '/', port: '80' },
   { url: 'http://example.com:8080/', path: '/', port: '8080' },
-  { url: 'http://example.com:8080/path?query=value#fragment', port: '8080', path: '/path', query: '?query=value', fragment: '#fragment' },
-  { url: 'http://example.com/path/to/resource?query=x#fragment', path: '/path/to/resource', query: '?query=x', fragment: '#fragment' },
+  {
+    url: 'http://example.com:8080/path?query=value#fragment',
+    port: '8080',
+    path: '/path',
+    query: '?query=value',
+    fragment: '#fragment',
+  },
+  {
+    url: 'http://example.com/path/to/resource?query=x#fragment',
+    path: '/path/to/resource',
+    query: '?query=x',
+    fragment: '#fragment',
+  },
   { url: 'http://example.com/file.txt', path: '/file.txt' },
-  { url: 'https://ftp.is.co.za/rfc/rfc1808.txt', scheme: 'https://', host: 'ftp.is.co.za', path: '/rfc/rfc1808.txt' },
+  {
+    url: 'https://ftp.is.co.za/rfc/rfc1808.txt',
+    scheme: 'https://',
+    host: 'ftp.is.co.za',
+    path: '/rfc/rfc1808.txt',
+  },
   { url: 'http://www.ietf.org/rfc/rfc2396.txt', host: 'www.ietf.org', path: '/rfc/rfc2396.txt' },
-  { url: 'http://www.w3.org/pub/WWW/TheProject.html', host: 'www.w3.org', path: '/pub/WWW/TheProject.html' },
+  {
+    url: 'http://www.w3.org/pub/WWW/TheProject.html',
+    host: 'www.w3.org',
+    path: '/pub/WWW/TheProject.html',
+  },
   { url: 'http://example.com?#', query: '?', fragment: '#' },
   { url: 'http://example.com/~smith/', path: '/~smith/' },
   { url: 'http://example.com/%E8', path: '/%E8' },
@@ -35,13 +55,17 @@ const VALID_URLS = [
   { url: 'http://example.com/x;y/', path: '/x;y/' },
   { url: 'http://example.com/search?q=Q%26A', path: '/search', query: '?q=Q%26A' },
   { url: 'http://example.com/?&x=b', path: '/', query: '?&x=b' },
-  { url: 'http://example.com/?q=\'one;two\'&x=1', path: '/', query: '?q=\'one;two\'&x=1' },
+  { url: "http://example.com/?q='one;two'&x=1", path: '/', query: "?q='one;two'&x=1" },
   { url: 'http://example.com/?&&x=b', path: '/', query: '?&&x=b' },
   { url: 'http://example.com/?q=a&&x=b', path: '/', query: '?q=a&&x=b' },
   { url: 'http://example.com/?q&&x=b', path: '/', query: '?q&&x=b' },
   { url: 'http://example.com/?q=a+b', path: '/', query: '?q=a+b' },
   { url: 'http://example.com/?q=a%2bb', path: '/', query: '?q=a%2bb' },
-  { url: 'http://example.com/?v=%7E&w=%&x=%25&y=%2B&z=C%CC%A7', path: '/', query: '?v=%7E&w=%&x=%25&y=%2B&z=C%CC%A7' },
+  {
+    url: 'http://example.com/?v=%7E&w=%&x=%25&y=%2B&z=C%CC%A7',
+    path: '/',
+    query: '?v=%7E&w=%&x=%25&y=%2B&z=C%CC%A7',
+  },
   { url: 'http://example.com/sound%2bvision', path: '/sound%2bvision' },
   { url: 'http://example.com/?q=', path: '/', query: '?q=' },
   { url: 'http://example.com/?date=2017/01/01', path: '/', query: '?date=2017/01/01' },
@@ -49,21 +73,54 @@ const VALID_URLS = [
   { url: 'http://example.com/?one=1&two=2&three=3', path: '/', query: '?one=1&two=2&three=3' },
   { url: 'http://example.com/?one=1=uno&two=2=dos', path: '/', query: '?one=1=uno&two=2=dos' },
   { url: 'http://example.com/?one[two][three]=four', path: '/', query: '?one[two][three]=four' },
-  { url: 'http://example.com/?one[two][three]=four&one[two][five]=six', path: '/', query: '?one[two][three]=four&one[two][five]=six' },
-  { url: 'http://example.com/?one[two][three][]=four&one[two][three][]=five', path: '/', query: '?one[two][three][]=four&one[two][three][]=five' },
-  { url: 'http://example.com/?one[two][three][0]=four&one[two][three][1]=five', path: '/', query: '?one[two][three][0]=four&one[two][three][1]=five' },
-  { url: 'http://example.com/?one[two][three][1]=four&one[two][three][0]=five', path: '/', query: '?one[two][three][1]=four&one[two][three][0]=five' },
-  { url: 'http://example.com/?one[two][three][2]=four&one[two][three][1]=five', path: '/', query: '?one[two][three][2]=four&one[two][three][1]=five' },
+  {
+    url: 'http://example.com/?one[two][three]=four&one[two][five]=six',
+    path: '/',
+    query: '?one[two][three]=four&one[two][five]=six',
+  },
+  {
+    url: 'http://example.com/?one[two][three][]=four&one[two][three][]=five',
+    path: '/',
+    query: '?one[two][three][]=four&one[two][three][]=five',
+  },
+  {
+    url: 'http://example.com/?one[two][three][0]=four&one[two][three][1]=five',
+    path: '/',
+    query: '?one[two][three][0]=four&one[two][three][1]=five',
+  },
+  {
+    url: 'http://example.com/?one[two][three][1]=four&one[two][three][0]=five',
+    path: '/',
+    query: '?one[two][three][1]=four&one[two][three][0]=five',
+  },
+  {
+    url: 'http://example.com/?one[two][three][2]=four&one[two][three][1]=five',
+    path: '/',
+    query: '?one[two][three][2]=four&one[two][three][1]=five',
+  },
   { url: 'http://example.com/?one.two.three=four', path: '/', query: '?one.two.three=four' },
-  { url: 'http://example.com/?one.two.three=four&one.two.five=six', path: '/', query: '?one.two.three=four&one.two.five=six' },
+  {
+    url: 'http://example.com/?one.two.three=four&one.two.five=six',
+    path: '/',
+    query: '?one.two.three=four&one.two.five=six',
+  },
   { url: 'http://www.xn--8ws00zhy3a.com/', path: '/', host: 'www.xn--8ws00zhy3a.com' },
   { url: 'http://user:@example.com', auth: 'user:@' },
   { url: 'http://:pass@example.com', auth: ':pass@' },
   { url: 'http://:@example.com', auth: ':@' },
-  { url: 'http://user:pass@example.com/path/to/resource?query=x#fragment', auth: 'user:pass@', path: '/path/to/resource', query: '?query=x', fragment: '#fragment' },
+  {
+    url: 'http://user:pass@example.com/path/to/resource?query=x#fragment',
+    auth: 'user:pass@',
+    path: '/path/to/resource',
+    query: '?query=x',
+    fragment: '#fragment',
+  },
   // I feel like these should be invalid
   { url: 'http://:@example.com/', auth: ':@', path: '/' },
-  { url: 'http://example.com/indirect/path/./to/../resource/', path: '/indirect/path/./to/../resource/' },
+  {
+    url: 'http://example.com/indirect/path/./to/../resource/',
+    path: '/indirect/path/./to/../resource/',
+  },
 ];
 
 const INVALID_URLS = [
@@ -105,14 +162,14 @@ describe('matchers/UrlMatcher', () => {
   });
 
   describe('does match valid url:', () => {
-    VALID_URLS.forEach((urlParams) => {
+    VALID_URLS.forEach(urlParams => {
       it(urlParams.url, () => {
         const { url, ...params } = urlParams;
         const expected = [
           url,
-          (params.scheme === null ? undefined : (params.scheme || 'http://')),
+          params.scheme === null ? undefined : params.scheme || 'http://',
           params.auth,
-          (typeof params.host === 'undefined' ? 'example.com' : params.host),
+          typeof params.host === 'undefined' ? 'example.com' : params.host,
           params.port,
           params.path,
           params.query,
@@ -127,7 +184,7 @@ describe('matchers/UrlMatcher', () => {
   });
 
   describe('doesnt match invalid url:', () => {
-    INVALID_URLS.forEach((urlParams) => {
+    INVALID_URLS.forEach(urlParams => {
       it(urlParams.url, () => {
         expect(urlParams.url.match(pattern)).toBe(null);
       });
@@ -154,7 +211,7 @@ describe('matchers/UrlMatcher', () => {
       });
     };
 
-    VALID_URLS.forEach((urlParams) => {
+    VALID_URLS.forEach(urlParams => {
       TOKEN_LOCATIONS.forEach((location, i) => {
         it(`for: ${urlParams.url} - ${location}`, () => {
           parser.keyIndex = -1; // Reset for easier testing
@@ -197,12 +254,14 @@ describe('matchers/UrlMatcher', () => {
     });
 
     it('supports prefixed TLDs', () => {
-      expect(matcher.replaceWith('http://domain.co.uk', {
-        urlParts: {
-          scheme: 'http',
-          host: 'domain.co.uk',
-        },
-      })).not.toBe('http://domain.co.uk');
+      expect(
+        matcher.replaceWith('http://domain.co.uk', {
+          urlParts: {
+            scheme: 'http',
+            host: 'domain.co.uk',
+          },
+        }),
+      ).not.toBe('http://domain.co.uk');
     });
   });
 
@@ -212,7 +271,9 @@ describe('matchers/UrlMatcher', () => {
     });
 
     it('returns object for valid match', () => {
-      expect(matcher.match('http://user:pass@domain.com:8080/some/path?with=query#fragment')).toEqual({
+      expect(
+        matcher.match('http://user:pass@domain.com:8080/some/path?with=query#fragment'),
+      ).toEqual({
         match: 'http://user:pass@domain.com:8080/some/path?with=query#fragment',
         urlParts: {
           scheme: 'http',

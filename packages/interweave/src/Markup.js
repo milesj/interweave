@@ -70,17 +70,13 @@ export default class Markup extends React.PureComponent<MarkupProps> {
 
   render(): React$Node {
     const { tagName, noHtml, noHtmlExceptMatchers } = this.props;
-    const className = (noHtml || noHtmlExceptMatchers) ? 'interweave--no-html' : '';
+    const className = noHtml || noHtmlExceptMatchers ? 'interweave--no-html' : '';
     const content = this.getContent();
     let tag = tagName;
 
     if (tag === 'fragment') {
       if (React.Fragment) {
-        return (
-          <React.Fragment>
-            {content}
-          </React.Fragment>
-        );
+        return <React.Fragment>{content}</React.Fragment>;
       }
 
       // Not supported

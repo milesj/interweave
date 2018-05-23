@@ -12,7 +12,7 @@ type HashtagProps = {
   children: string,
   encodeHashtag: boolean,
   hashtagName: string,
-  hashtagUrl: string | (hashtag: string) => string,
+  hashtagUrl: string | ((hashtag: string) => string),
   preserveHash: boolean,
 };
 
@@ -21,10 +21,7 @@ export default class Hashtag extends React.PureComponent<HashtagProps> {
     children: PropTypes.string.isRequired,
     encodeHashtag: PropTypes.bool,
     hashtagName: PropTypes.string,
-    hashtagUrl: PropTypes.oneOfType([
-      PropTypes.string,
-      PropTypes.func,
-    ]),
+    hashtagUrl: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
     preserveHash: PropTypes.bool,
   };
 
@@ -36,13 +33,7 @@ export default class Hashtag extends React.PureComponent<HashtagProps> {
   };
 
   render(): React$Node {
-    const {
-      children,
-      encodeHashtag,
-      hashtagUrl,
-      preserveHash,
-      ...props
-    } = this.props;
+    const { children, encodeHashtag, hashtagUrl, preserveHash, ...props } = this.props;
     let hashtag = children;
 
     // Prepare the hashtag

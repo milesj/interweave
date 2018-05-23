@@ -13,9 +13,7 @@ import type { MatchResponse } from 'interweave'; // eslint-disable-line
 
 export default class EmailMatcher extends Matcher<Object> {
   replaceWith(match: string, props?: Object = {}): React$Node {
-    return (
-      <Email {...props}>{match}</Email>
-    );
+    return <Email {...props}>{match}</Email>;
   }
 
   asTag(): string {
