@@ -1,25 +1,27 @@
 /**
  * @copyright   2016, Miles Johnson
  * @license     https://opensource.org/licenses/MIT
- * @flow
  */
 
 import React from 'react';
-import { Matcher } from 'interweave';
-import Url from './Url';
+import { Matcher, MatchResponse, MatcherFactory, Props } from 'interweave';
+import Url, { UrlProps } from './Url';
 import { URL_PATTERN, TOP_LEVEL_TLDS } from './constants';
 
-import type { MatchResponse, MatcherFactory } from 'interweave'; // eslint-disable-line
+export interface UrlMatcherOptions {
+  customTLDs: string[];
+  validateTLD: boolean;
+}
 
-type UrlOptions = {
-  customTLDs: string[],
-  validateTLD: boolean,
-};
+export default class UrlMatcher extends Matcher<UrlMatcherOptions> {
+  // @ts-ignore Set in super
+  options: UrlMatcherOptions;
 
-export default class UrlMatcher extends Matcher<UrlOptions> {
-  options: UrlOptions;
-
-  constructor(name: string, options?: Object = {}, factory?: ?MatcherFactory = null) {
+  constructor(
+    name: string,
+    options: Partial<UrlMatcherOptions> = {},
+    factory: MatcherFactory | null = null,
+  ) {
     super(
       name,
       {
@@ -31,7 +33,7 @@ export default class UrlMatcher extends Matcher<UrlOptions> {
     );
   }
 
-  replaceWith(match: string, props?: Object = {}): React.ReactNode {
+  replaceWith(match: string, props: Props = {}) {
     if (this.options.validateTLD) {
       const { host } = props.urlParts;
       const validList = TOP_LEVEL_TLDS.concat(this.options.customTLDs);
@@ -42,21 +44,21 @@ export default class UrlMatcher extends Matcher<UrlOptions> {
       }
     }
 
-    return <Url {...props}>{match}</Url>;
+    return React.createElement(Url, props as UrlProps, match);
   }
 
-  asTag(): string {
+  asTag() {
     return 'a';
   }
 
-  match(string: string): ?MatchResponse {
+  match(string: string) {
     return this.doMatch(string, URL_PATTERN, this.handleMatches);
   }
 
   /**
    * Package the matched response.
    */
-  handleMatches(matches: string[]): { [key: string]: string | Object } {
+  handleMatches(matches: string[]): { [key: string]: string | object } {
     return {
       urlParts: {
         auth: matches[2] ? matches[2].slice(0, -1) : '',

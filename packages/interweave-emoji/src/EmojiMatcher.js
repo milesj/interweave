@@ -142,7 +142,7 @@ export default class EmojiMatcher extends Matcher<EmojiOptions> {
   /**
    * When a single `Emoji` is the only content, enlarge it!
    */
-  onAfterParse(content: React.ReactNode[], props: Object): React.ReactNode[] {
+  onAfterParse(content: React.ReactNode, props: Object): React.ReactNode {
     if (content.length === 0) {
       return content;
     }

@@ -1,20 +1,19 @@
 /**
  * @copyright   2016, Miles Johnson
  * @license     https://opensource.org/licenses/MIT
- * @flow
  */
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import Link from './Link';
+import Link, { LinkProps } from './Link';
 
-type EmailProps = {
-  children: string,
-  emailParts: {
-    host: string,
-    username: string,
-  },
-};
+export interface EmailProps extends LinkProps {
+  children: string;
+  emailParts?: {
+    host?: string;
+    username?: string;
+  };
+}
 
 export default class Email extends React.PureComponent<EmailProps> {
   static propTypes = {
@@ -29,12 +28,11 @@ export default class Email extends React.PureComponent<EmailProps> {
     emailParts: {},
   };
 
-  render(): React.ReactNode {
-    const { children, ...props } = this.props;
-    const href = `mailto:${children}`;
+  render() {
+    const { children, emailParts, ...props } = this.props;
 
     return (
-      <Link {...props} href={href}>
+      <Link {...props} href={`mailto:${children}`}>
         {children}
       </Link>
     );

@@ -61,7 +61,7 @@ export default class Interweave extends React.Component<InterweaveProps> {
   /**
    * Parse the markup and apply hooks.
    */
-  parseMarkup(): React.ReactNode[] | React.ReactNode {
+  parseMarkup(): React.ReactNode | React.ReactNode[] {
     const {
       tagName,
       content,

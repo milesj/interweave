@@ -18,7 +18,7 @@ export interface MatcherInterface {
   onAfterParse(content: React.ReactNode[], props: Props): React.ReactNode[];
 }
 
-export default class Matcher<T> implements MatcherInterface {
+export default class Matcher<T = {}> implements MatcherInterface {
   options: T;
 
   propName: string;

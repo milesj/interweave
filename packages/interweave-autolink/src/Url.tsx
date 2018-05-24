@@ -1,25 +1,24 @@
 /**
  * @copyright   2016, Miles Johnson
  * @license     https://opensource.org/licenses/MIT
- * @flow
  */
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import Link from './Link';
+import Link, { LinkProps } from './Link';
 
-type UrlProps = {
-  children: string,
-  urlParts: {
-    auth: string,
-    fragment: string,
-    host: string,
-    path: string,
-    port: string | number,
-    query: string,
-    scheme: string,
-  },
-};
+export interface UrlProps extends LinkProps {
+  children: string;
+  urlParts?: {
+    auth?: string;
+    fragment?: string;
+    host?: string;
+    path?: string;
+    port?: string | number;
+    query?: string;
+    scheme?: string;
+  };
+}
 
 export default class Url extends React.PureComponent<UrlProps> {
   static propTypes = {
@@ -40,7 +39,7 @@ export default class Url extends React.PureComponent<UrlProps> {
   };
 
   render(): React.ReactNode {
-    const { children, ...props } = this.props;
+    const { children, urlParts, ...props } = this.props;
     let url = children;
 
     if (!url.match(/^https?:\/\//)) {

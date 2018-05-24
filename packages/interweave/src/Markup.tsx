@@ -39,7 +39,7 @@ export default class Markup extends React.PureComponent<MarkupProps> {
     noHtml: false,
     noHtmlExceptMatchers: false,
     parsedContent: null,
-    tagName: 'span',
+    tagName: 'div',
   };
 
   getContent(): React.ReactNode {
@@ -77,9 +77,9 @@ export default class Markup extends React.PureComponent<MarkupProps> {
       }
 
       // Not supported
-      tag = 'div';
+      tag = '';
     }
 
-    return <Element tagName={tag}>{content}</Element>;
+    return <Element tagName={tag || 'div'}>{content}</Element>;
   }
 }

@@ -1,18 +1,17 @@
 /**
  * @copyright   2016, Miles Johnson
  * @license     https://opensource.org/licenses/MIT
- * @flow
  */
 
 import React from 'react';
 import PropTypes from 'prop-types';
 
-type LinkProps = {
-  children: React.ReactNode,
-  href: string,
-  newWindow: boolean,
-  onClick: ?() => void,
-};
+export interface LinkProps {
+  children: React.ReactNode;
+  href: string;
+  newWindow?: boolean;
+  onClick?: () => void | null;
+}
 
 export default class Link extends React.PureComponent<LinkProps> {
   static propTypes = {
@@ -27,14 +26,13 @@ export default class Link extends React.PureComponent<LinkProps> {
     onClick: null,
   };
 
-  render(): React.ReactNode {
+  render() {
     const { children, href, onClick, newWindow } = this.props;
 
     return (
       <a
         href={href}
-        className="interweave__link"
-        target={newWindow ? '_blank' : null}
+        target={newWindow ? '_blank' : undefined}
         onClick={onClick}
         rel="noopener noreferrer"
       >

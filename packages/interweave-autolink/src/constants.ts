@@ -1,10 +1,17 @@
 /**
  * @copyright   2016, Miles Johnson
  * @license     https://opensource.org/licenses/MIT
- * @flow
  */
 
-export function combinePatterns(patterns: RegExp[], options?: Object = {}): RegExp {
+export interface CombinePatternsOptions {
+  capture?: boolean;
+  flags?: string;
+  join?: string;
+  match?: string;
+  nonCapture?: boolean;
+}
+
+export function combinePatterns(patterns: RegExp[], options: CombinePatternsOptions = {}): RegExp {
   let regex = patterns.map(pattern => pattern.source).join(options.join || '');
 
   if (options.capture) {
@@ -51,7 +58,7 @@ export const URL_HOST: RegExp = combinePatterns(
   },
 );
 
-export const URL_PORT: RegExp = /(?::([0-9]{1,5}))?/;
+export const URL_PORT: RegExp = /(?::(\d{1,5}))?/;
 
 export const URL_PATH: RegExp = combinePatterns(
   [
@@ -120,6 +127,7 @@ export const URL_PATTERN: RegExp = combinePatterns(
   },
 );
 
+// eslint-disable-next-line unicorn/regex-shorthand
 export const IP_V4_PART: RegExp = /(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)/;
 
 export const IP_V4: RegExp = combinePatterns([IP_V4_PART, IP_V4_PART, IP_V4_PART, IP_V4_PART], {

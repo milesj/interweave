@@ -1,20 +1,19 @@
 /**
  * @copyright   2016, Miles Johnson
  * @license     https://opensource.org/licenses/MIT
- * @flow
  */
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import Link from './Link';
+import Link, { LinkProps } from './Link';
 
-type HashtagProps = {
-  children: string,
-  encodeHashtag: boolean,
-  hashtagName: string,
-  hashtagUrl: string | ((hashtag: string) => string),
-  preserveHash: boolean,
-};
+export interface HashtagProps extends LinkProps {
+  children: string;
+  encodeHashtag?: boolean;
+  hashtagName?: string;
+  hashtagUrl?: string | ((hashtag: string) => string);
+  preserveHash?: boolean;
+}
 
 export default class Hashtag extends React.PureComponent<HashtagProps> {
   static propTypes = {
@@ -32,9 +31,9 @@ export default class Hashtag extends React.PureComponent<HashtagProps> {
     preserveHash: false,
   };
 
-  render(): React.ReactNode {
+  render() {
     const { children, encodeHashtag, hashtagUrl, preserveHash, ...props } = this.props;
-    let hashtag = children;
+    let hashtag = String(children);
 
     // Prepare the hashtag
     if (!preserveHash && hashtag.charAt(0) === '#') {

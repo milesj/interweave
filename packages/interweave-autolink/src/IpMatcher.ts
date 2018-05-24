@@ -1,16 +1,18 @@
 /**
  * @copyright   2016, Miles Johnson
  * @license     https://opensource.org/licenses/MIT
- * @flow
  */
 
-import UrlMatcher from './UrlMatcher';
+import { MatchResponse, MatcherFactory } from 'interweave';
+import UrlMatcher, { UrlMatcherOptions } from './UrlMatcher';
 import { IP_PATTERN } from './constants';
 
-import type { MatchResponse, MatcherFactory } from 'interweave'; // eslint-disable-line
-
 export default class IpMatcher extends UrlMatcher {
-  constructor(name: string, options?: Object = {}, factory?: ?MatcherFactory = null) {
+  constructor(
+    name: string,
+    options: Partial<UrlMatcherOptions> = {},
+    factory: MatcherFactory | null = null,
+  ) {
     super(
       name,
       {
@@ -22,7 +24,7 @@ export default class IpMatcher extends UrlMatcher {
     );
   }
 
-  match(string: string): ?MatchResponse {
+  match(string: string) {
     return this.doMatch(string, IP_PATTERN, this.handleMatches);
   }
 }
