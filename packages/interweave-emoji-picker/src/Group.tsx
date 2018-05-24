@@ -7,14 +7,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import type { EmojiPath } from 'interweave-emoji'; // eslint-disable-line
-
-type GroupProps = {
-  activeGroup: string,
-  children: React.ReactNode,
-  group: string,
-  onSelect: (group: string, e: SyntheticEvent<*>) => void,
-};
+export interface GroupProps {
+  activeGroup: string;
+  children: React.ReactNode;
+  group: string;
+  onSelect: (group: string, event: React.MouseEvent<HTMLButtonElement>) => void;
+}
 
 export default class Group extends React.PureComponent<GroupProps> {
   static contextTypes = {
@@ -32,13 +30,13 @@ export default class Group extends React.PureComponent<GroupProps> {
   /**
    * Triggered when the button is clicked.
    */
-  handleClick = (e: SyntheticMouseEvent<HTMLButtonElement>) => {
+  handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
 
     this.props.onSelect(this.props.group, e);
   };
 
-  render(): React.ReactNode {
+  render() {
     const { activeGroup, children, group } = this.props;
     const { classNames, messages } = this.context;
     const className = [classNames.group];

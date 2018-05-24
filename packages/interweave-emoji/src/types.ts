@@ -19,3 +19,7 @@ export interface EmojiSource {
 }
 
 export type EmojiSize = string | number;
+
+export type EmojiPath =
+  | string
+  | ((hexcode: string, enlarged: boolean, smallSize: EmojiSize, largeSize: EmojiSize) => string);

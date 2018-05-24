@@ -1,19 +1,18 @@
 /**
  * @copyright   2016, Miles Johnson
  * @license     https://opensource.org/licenses/MIT
- * @flow
  */
 
 import React from 'react';
 import PropTypes from 'prop-types';
 import { SKIN_COLORS } from './constants';
 
-type SkinToneProps = {
-  active: boolean,
-  children: React.ReactNode,
-  onSelect: (skinTone: string, e: *) => void,
-  skinTone: string,
-};
+export interface SkinToneProps {
+  active: boolean;
+  children?: React.ReactNode;
+  onSelect: (skinTone: string, event: React.MouseEvent<HTMLButtonElement>) => void;
+  skinTone: string;
+}
 
 export default class SkinTone extends React.PureComponent<SkinToneProps> {
   static contextTypes = {
@@ -34,13 +33,13 @@ export default class SkinTone extends React.PureComponent<SkinToneProps> {
   /**
    * Triggered when the button is clicked.
    */
-  handleClick = (e: SyntheticMouseEvent<HTMLButtonElement>) => {
+  handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
 
     this.props.onSelect(this.props.skinTone, e);
   };
 
-  render(): React.ReactNode {
+  render() {
     const { active, children, skinTone } = this.props;
     const { classNames } = this.context;
     const className = [classNames.skinTone];

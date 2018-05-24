@@ -1,23 +1,20 @@
 /**
  * @copyright   2016, Miles Johnson
  * @license     https://opensource.org/licenses/MIT
- * @flow
  */
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import { EmojiShape } from 'interweave-emoji';
+import { EmojiShape, CanonicalEmoji } from 'interweave-emoji';
 import Group from './Group';
 import { GROUPS, GROUP_COMMONLY_USED, GROUP_ICONS } from './constants';
 
-import type { Emoji, EmojiPath } from 'interweave-emoji'; // eslint-disable-line
-
-type GroupTabsProps = {
-  activeGroup: string,
-  commonEmojis: Emoji[],
-  icons: { [key: string]: React.ReactNode },
-  onSelect: (group: string, e: SyntheticEvent<*>) => void,
-};
+export interface GroupTabsProps {
+  activeGroup: string;
+  commonEmojis: CanonicalEmoji[];
+  icons: { [key: string]: React.ReactNode };
+  onSelect: (group: string, event: React.MouseEvent<HTMLButtonElement>) => void;
+}
 
 export default class GroupTabs extends React.PureComponent<GroupTabsProps> {
   static contextTypes = {
@@ -31,7 +28,7 @@ export default class GroupTabs extends React.PureComponent<GroupTabsProps> {
     onSelect: PropTypes.func.isRequired,
   };
 
-  render(): React.ReactNode {
+  render() {
     const { activeGroup, commonEmojis, icons, onSelect } = this.props;
     const { classNames } = this.context;
     const groups = [...GROUPS];

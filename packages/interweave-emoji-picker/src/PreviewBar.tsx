@@ -1,28 +1,29 @@
 /**
  * @copyright   2016, Miles Johnson
  * @license     https://opensource.org/licenses/MIT
- * @flow
  */
 
 import React from 'react';
 import PropTypes from 'prop-types';
 import EmojiCharacter, {
+  CanonicalEmoji,
   EmojiShape,
+  EmojiPath,
   EmojiPathShape,
+  EmojiSize,
   EmojiSizeShape,
+  EmojiSource,
   EmojiSourceShape,
 } from 'interweave-emoji';
 
-import type { Emoji, EmojiPath, EmojiSize, EmojiSource } from 'interweave-emoji'; // eslint-disable-line
-
-type PreviewBarProps = {
-  emoji: ?Emoji,
-  emojiLargeSize: EmojiSize,
-  emojiPath: EmojiPath,
-  emojiSource: EmojiSource,
-  hideEmoticon: boolean,
-  hideShortcodes: boolean,
-};
+export interface PreviewBarProps {
+  emoji?: CanonicalEmoji | null;
+  emojiLargeSize: EmojiSize;
+  emojiPath: EmojiPath;
+  emojiSource: EmojiSource;
+  hideEmoticon: boolean;
+  hideShortcodes: boolean;
+}
 
 const TITLE_REGEX: RegExp = /(^|:|\.)\s?[a-z]/g;
 
@@ -66,7 +67,7 @@ export default class PreviewBar extends React.PureComponent<PreviewBarProps> {
     return title.replace(TITLE_REGEX, token => token.toUpperCase());
   }
 
-  render(): React.ReactNode {
+  render() {
     const {
       emoji,
       emojiLargeSize,

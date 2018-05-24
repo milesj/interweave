@@ -1,7 +1,6 @@
 /**
  * @copyright   2016, Miles Johnson
  * @license     https://opensource.org/licenses/MIT
- * @flow
  */
 
 import React from 'react';
@@ -13,13 +12,11 @@ import {
   GROUP_NONE,
 } from './constants';
 
-import type { EmojiPath } from 'interweave-emoji'; // eslint-disable-line
-
-type GroupListHeaderProps = {
-  commonMode: string,
-  group: string,
-  skinTonePalette: React.ReactNode,
-};
+export interface GroupListHeaderProps {
+  commonMode: string;
+  group: string;
+  skinTonePalette?: React.ReactNode;
+}
 
 export default class GroupListHeader extends React.PureComponent<GroupListHeaderProps> {
   static contextTypes = {

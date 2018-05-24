@@ -1,31 +1,35 @@
 /**
  * @copyright   2016, Miles Johnson
  * @license     https://opensource.org/licenses/MIT
- * @flow
  */
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import EmojiCharacter, { EmojiShape, EmojiPathShape, EmojiSourceShape } from 'interweave-emoji';
+import EmojiCharacter, {
+  CanonicalEmoji,
+  EmojiShape,
+  EmojiPath,
+  EmojiPathShape,
+  EmojiSource,
+  EmojiSourceShape,
+} from 'interweave-emoji';
 
-import type { Emoji, EmojiPath, EmojiSource } from 'interweave-emoji'; // eslint-disable-line
+export interface EmojiProps {
+  active: boolean;
+  emoji: CanonicalEmoji;
+  emojiPadding: number;
+  emojiPath: EmojiPath;
+  emojiSize: number;
+  emojiSource: EmojiSource;
+  onEnter: (emoji: CanonicalEmoji, e: any) => void;
+  onLeave: (emoji: CanonicalEmoji, e: any) => void;
+  onSelect: (emoji: CanonicalEmoji, e: any) => void;
+  showImage: boolean;
+}
 
-type EmojiProps = {
-  active: boolean,
-  emoji: Emoji,
-  emojiPadding: number,
-  emojiPath: EmojiPath,
-  emojiSize: number,
-  emojiSource: EmojiSource,
-  onEnter: (emoji: Emoji, e: *) => void,
-  onLeave: (emoji: Emoji, e: *) => void,
-  onSelect: (emoji: Emoji, e: *) => void,
-  showImage: boolean,
-};
-
-type EmojiState = {
-  active: boolean,
-};
+export interface EmojiState {
+  active: boolean;
+}
 
 export default class EmojiButton extends React.PureComponent<EmojiProps, EmojiState> {
   static contextTypes = {
@@ -60,7 +64,7 @@ export default class EmojiButton extends React.PureComponent<EmojiProps, EmojiSt
   /**
    * Triggered when the emoji is clicked.
    */
-  handleClick = (e: SyntheticMouseEvent<HTMLButtonElement>) => {
+  handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
 
     this.props.onSelect(this.props.emoji, e);
@@ -69,7 +73,7 @@ export default class EmojiButton extends React.PureComponent<EmojiProps, EmojiSt
   /**
    * Triggered when the emoji is hovered.
    */
-  handleEnter = (e: SyntheticMouseEvent<HTMLButtonElement>) => {
+  handleEnter = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
 
     this.setState({
@@ -82,7 +86,7 @@ export default class EmojiButton extends React.PureComponent<EmojiProps, EmojiSt
   /**
    * Triggered when the emoji is no longer hovered.
    */
-  handleLeave = (e: SyntheticMouseEvent<HTMLButtonElement>) => {
+  handleLeave = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
 
     this.setState({
@@ -92,7 +96,7 @@ export default class EmojiButton extends React.PureComponent<EmojiProps, EmojiSt
     this.props.onLeave(this.props.emoji, e);
   };
 
-  render(): React.ReactNode {
+  render() {
     const { emoji, emojiPadding, emojiPath, emojiSize, emojiSource, showImage } = this.props;
     const { classNames } = this.context;
     const { active } = this.state;

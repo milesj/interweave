@@ -1,7 +1,6 @@
 /**
  * @copyright   2016, Miles Johnson
  * @license     https://opensource.org/licenses/MIT
- * @flow
  */
 
 /* eslint-disable sort-keys */
@@ -76,7 +75,7 @@ export const KEY_SKIN_TONE: string = 'interweave/emoji/skinTone';
 export const COMMON_MODE_RECENT: string = 'recentlyUsed';
 export const COMMON_MODE_FREQUENT: string = 'frequentlyUsed';
 
-export const CONTEXT_CLASSNAMES: Object = {
+export const CONTEXT_CLASSNAMES: { [key: string]: string } = {
   picker: 'interweave-picker__picker',
   pickerVirtual: 'interweave-picker__picker--virtual',
   emoji: 'interweave-picker__emoji',
@@ -105,7 +104,7 @@ export const CONTEXT_CLASSNAMES: Object = {
   searchInput: 'interweave-picker__search-input',
 };
 
-export const CONTEXT_MESSAGES: Object = {
+export const CONTEXT_MESSAGES: { [key: string]: string } = {
   // Emoji groups
   [COMMON_MODE_FREQUENT]: 'Frequently Used',
   [COMMON_MODE_RECENT]: 'Recently Used',

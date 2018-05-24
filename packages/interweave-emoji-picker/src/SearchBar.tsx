@@ -1,7 +1,6 @@
 /**
  * @copyright   2016, Miles Johnson
  * @license     https://opensource.org/licenses/MIT
- * @flow
  */
 
 import React from 'react';
@@ -9,20 +8,18 @@ import PropTypes from 'prop-types';
 import debounce from 'lodash/debounce';
 import { SEARCH_THROTTLE } from './constants';
 
-type SearchBarProps = {
-  autoFocus: boolean,
-  onChange: (query: string, e: *) => void,
-  onKeyUp: (e: *) => void,
-  searchQuery: string,
-};
+export interface SearchBarProps {
+  autoFocus: boolean;
+  onChange: (query: string, e: any) => void;
+  onKeyUp: (e: any) => void;
+  searchQuery: string;
+}
 
-type SearchBarState = {
-  query: string,
-};
+export interface SearchBarState {
+  query: string;
+}
 
 export default class SearchBar extends React.PureComponent<SearchBarProps, SearchBarState> {
-  input: ?HTMLInputElement;
-
   static contextTypes = {
     classNames: PropTypes.objectOf(PropTypes.string),
     messages: PropTypes.objectOf(PropTypes.node),
@@ -35,6 +32,8 @@ export default class SearchBar extends React.PureComponent<SearchBarProps, Searc
     searchQuery: PropTypes.string.isRequired,
   };
 
+  inputRef = React.createRef<HTMLInputElement>();
+
   state = {
     query: this.props.searchQuery,
   };
@@ -43,8 +42,8 @@ export default class SearchBar extends React.PureComponent<SearchBarProps, Searc
    * Focus the input field if `autoFocus` is true.
    */
   componentDidMount() {
-    if (this.props.autoFocus && this.input) {
-      this.input.focus();
+    if (this.props.autoFocus && this.inputRef.current) {
+      this.inputRef.current.focus();
     }
   }
 
@@ -62,7 +61,7 @@ export default class SearchBar extends React.PureComponent<SearchBarProps, Searc
   /**
    * Triggered when the input field value changes.
    */
-  handleChange = (e: SyntheticInputEvent<HTMLInputElement>) => {
+  handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.persist();
 
     // Update the input field immediately
@@ -79,17 +78,10 @@ export default class SearchBar extends React.PureComponent<SearchBarProps, Searc
    */
   handleChangeDebounced = debounce(e => {
     // Check if were still mounted
-    if (this.input) {
+    if (this.inputRef.current) {
       this.props.onChange(e.target.value.trim(), e);
     }
   }, SEARCH_THROTTLE);
-
-  /**
-   * Set input field as reference.
-   */
-  handleRef = (ref: ?HTMLInputElement) => {
-    this.input = ref;
-  };
 
   render(): React.ReactNode {
     const { classNames, messages } = this.context;
@@ -101,7 +93,7 @@ export default class SearchBar extends React.PureComponent<SearchBarProps, Searc
           aria-label={messages.searchA11y}
           className={classNames.searchInput}
           placeholder={messages.search}
-          ref={this.handleRef}
+          ref={this.inputRef}
           type="text"
           value={this.state.query}
           onChange={this.handleChange}

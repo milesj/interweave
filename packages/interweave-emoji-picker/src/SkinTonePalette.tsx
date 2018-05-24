@@ -1,7 +1,6 @@
 /**
  * @copyright   2016, Miles Johnson
  * @license     https://opensource.org/licenses/MIT
- * @flow
  */
 
 import React from 'react';
@@ -9,11 +8,11 @@ import PropTypes from 'prop-types';
 import SkinTone from './SkinTone';
 import { SKIN_TONES } from './constants';
 
-type SkinTonePaletteProps = {
-  activeSkinTone: string,
-  icons: { [key: string]: React.ReactNode },
-  onSelect: (skinTone: string, e: *) => void,
-};
+export interface SkinTonePaletteProps {
+  activeSkinTone: string;
+  icons: { [key: string]: React.ReactNode };
+  onSelect: (skinTone: string, event: React.MouseEvent<HTMLButtonElement>) => void;
+}
 
 export default class SkinTonePalette extends React.PureComponent<SkinTonePaletteProps> {
   static contextTypes = {
@@ -26,7 +25,7 @@ export default class SkinTonePalette extends React.PureComponent<SkinTonePalette
     onSelect: PropTypes.func.isRequired,
   };
 
-  render(): React.ReactNode {
+  render() {
     const { activeSkinTone, icons, onSelect } = this.props;
     const { classNames } = this.context;
 
