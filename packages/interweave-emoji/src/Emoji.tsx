@@ -1,7 +1,6 @@
 /**
  * @copyright   2016, Miles Johnson
  * @license     https://opensource.org/licenses/MIT
- * @flow
  */
 
 /* eslint-disable complexity, no-param-reassign */
@@ -10,27 +9,22 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import EmojiData from './EmojiData';
 import { EmojiPathShape, EmojiSizeShape, EmojiSourceShape } from './shapes';
+import { EmojiSize, EmojiSource } from './types';
 
-type EmojiSize = string | number;
-
-type EmojiProps = {
-  emojiLargeSize: EmojiSize,
-  emojiPath:
+export interface EmojiProps {
+  emojiLargeSize?: EmojiSize;
+  emojiPath?:
     | string
-    | ((hexcode: string, enlarged: boolean, smallSize: EmojiSize, largeSize: EmojiSize) => string),
-  emojiSize: EmojiSize,
-  emojiSource: {
-    compact: boolean,
-    locale: string,
-    version: string,
-  },
-  emoticon: string,
-  enlargeEmoji: boolean,
-  hexcode: string,
-  renderUnicode: boolean,
-  shortcode: string,
-  unicode: string,
-};
+    | ((hexcode: string, enlarged: boolean, smallSize: EmojiSize, largeSize: EmojiSize) => string);
+  emojiSize?: EmojiSize;
+  emojiSource: EmojiSource;
+  emoticon?: string;
+  enlargeEmoji?: boolean;
+  hexcode?: string;
+  renderUnicode?: boolean;
+  shortcode?: string;
+  unicode?: string;
+}
 
 export default class Emoji extends React.PureComponent<EmojiProps> {
   static propTypes = {
@@ -58,7 +52,7 @@ export default class Emoji extends React.PureComponent<EmojiProps> {
     unicode: '',
   };
 
-  render(): React.ReactNode {
+  render() {
     const data = EmojiData.getInstance(this.props.emojiSource.locale);
     const {
       emojiLargeSize,
@@ -69,7 +63,7 @@ export default class Emoji extends React.PureComponent<EmojiProps> {
       renderUnicode,
       shortcode,
       unicode,
-    } = this.props;
+    } = this.props as Required<EmojiProps>;
     let { hexcode } = this.props;
 
     if (process.env.NODE_ENV !== 'production') {
@@ -104,26 +98,20 @@ export default class Emoji extends React.PureComponent<EmojiProps> {
       return <span>{emoji.unicode}</span>;
     }
 
-    const className = ['interweave__emoji'];
-    const styles: Object = {
+    const styles: { [name: string]: EmojiSize } = {
       display: 'inline-block',
       verticalAlign: 'middle',
     };
 
-    // Only apply styles if a size is defined
-    if (emojiSize) {
+    // Handle large styles
+    if (enlargeEmoji && emojiLargeSize) {
+      styles.width = emojiLargeSize;
+      styles.height = emojiLargeSize;
+
+      // Only apply styles if a size is defined
+    } else if (emojiSize) {
       styles.width = emojiSize;
       styles.height = emojiSize;
-    }
-
-    // Handle large styles
-    if (enlargeEmoji) {
-      className.push('interweave__emoji--large');
-
-      if (emojiLargeSize) {
-        styles.width = emojiLargeSize;
-        styles.height = emojiLargeSize;
-      }
     }
 
     // Determine the path
@@ -144,12 +132,10 @@ export default class Emoji extends React.PureComponent<EmojiProps> {
         alt={emoji.unicode}
         title={emoji.annotation || ''}
         style={styles}
-        className={className.join(' ')}
         aria-label={emoji.annotation || ''}
         data-emoticon={emoji.emoticon || ''}
         data-unicode={emoji.unicode}
         data-hexcode={emoji.hexcode}
-        /* $FlowIgnore */
         data-shortcodes={emoji.canonical_shortcodes.join(', ')}
       />
     );

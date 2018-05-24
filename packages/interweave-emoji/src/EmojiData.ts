@@ -1,7 +1,6 @@
 /**
  * @copyright   2016, Miles Johnson
  * @license     https://opensource.org/licenses/MIT
- * @flow
  */
 
 /* eslint-disable no-param-reassign */
@@ -10,15 +9,15 @@ import {
   fromCodepointToUnicode,
   fromHexcodeToCodepoint,
   generateEmoticonPermutations,
+  Emoji,
 } from 'emojibase';
 import { TEXT, EMOTICON_OPTIONS } from 'emojibase/lib/constants';
+import { CanonicalEmoji } from './types';
 
-import type { Emoji } from 'emojibase';
-
-const instances: { [locale: string]: EmojiData } = {}; // eslint-disable-line
+const instances: { [locale: string]: EmojiData } = {};
 
 export default class EmojiData {
-  EMOJIS: { [hexcode: string]: Emoji } = {};
+  EMOJIS: { [hexcode: string]: CanonicalEmoji } = {};
 
   EMOTICON_TO_HEXCODE: { [emoticon: string]: string } = {};
 
@@ -26,20 +25,20 @@ export default class EmojiData {
 
   UNICODE_TO_HEXCODE: { [unicode: string]: string } = {};
 
-  data: Emoji[] = [];
+  data: CanonicalEmoji[] = [];
 
-  flatData: Emoji[] = [];
+  flatData: CanonicalEmoji[] = [];
 
   locale: string = 'en';
 
-  constructor(locale: string) {
+  constructor(locale: string = 'en') {
     this.locale = locale;
   }
 
   /**
    * Return or create a singleton instance per locale.
    */
-  static getInstance(locale: string): EmojiData {
+  static getInstance(locale: string = 'en'): EmojiData {
     if (!instances[locale]) {
       instances[locale] = new EmojiData(locale);
     }
@@ -50,14 +49,14 @@ export default class EmojiData {
   /**
    * Return dataset as a list.
    */
-  getData(): Emoji[] {
+  getData(): CanonicalEmoji[] {
     return this.data;
   }
 
   /**
    * Return dataset as a flattened list.
    */
-  getFlatData(): Emoji[] {
+  getFlatData(): CanonicalEmoji[] {
     return this.flatData;
   }
 
@@ -65,8 +64,13 @@ export default class EmojiData {
    * Package the emoji object with additional data,
    * while also extracting and partitioning relevant information.
    */
-  packageEmoji(emoji: Object): Emoji {
-    const { emoticon, hexcode, shortcodes } = emoji;
+  packageEmoji(baseEmoji: Emoji): CanonicalEmoji {
+    const { emoticon, hexcode, shortcodes = [] } = baseEmoji;
+    const emoji: CanonicalEmoji = {
+      ...baseEmoji,
+      canonical_shortcodes: [],
+      primary_shortcode: '',
+    };
 
     // Make our lives easier
     if (!emoji.unicode) {
@@ -109,7 +113,7 @@ export default class EmojiData {
   /**
    * Parse and generate emoji datasets.
    */
-  parseEmojiData(data: Emoji[]): Emoji[] {
+  parseEmojiData(data: Emoji[]): CanonicalEmoji[] {
     data.forEach(emoji => {
       const packagedEmoji = this.packageEmoji(emoji);
 

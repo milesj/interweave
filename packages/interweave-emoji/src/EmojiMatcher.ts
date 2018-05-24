@@ -1,38 +1,40 @@
 /**
  * @copyright   2016, Miles Johnson
  * @license     https://opensource.org/licenses/MIT
- * @flow
  */
 
 import React from 'react';
-import { Matcher } from 'interweave';
+import { Matcher, MatcherFactory, MatchResponse, Props } from 'interweave';
 import EMOJI_REGEX from 'emojibase-regex';
 import EMOTICON_REGEX from 'emojibase-regex/emoticon';
 import SHORTCODE_REGEX from 'emojibase-regex/shortcode';
-import Emoji from './Emoji';
+import Emoji, { EmojiProps } from './Emoji';
 import EmojiData from './EmojiData';
 
-import type { MatcherFactory, MatchResponse } from 'interweave'; // eslint-disable-line
+export interface EmojiMatcherOptions {
+  convertEmoticon: boolean;
+  convertShortcode: boolean;
+  convertUnicode: boolean;
+  enlargeThreshold: number;
+  renderUnicode: boolean;
+}
 
-type EmojiOptions = {
-  convertEmoticon: boolean,
-  convertShortcode: boolean,
-  convertUnicode: boolean,
-  enlargeThreshold: number,
-  renderUnicode: boolean,
-};
-
-// eslint-disable-next-line no-useless-escape
 const EMOTICON_BOUNDARY_REGEX: RegExp = new RegExp(
+  // eslint-disable-next-line no-useless-escape
   `(^|\\\b|\\\s)(${EMOTICON_REGEX.source})(?=\\\s|\\\b|$)`,
 );
 
-export default class EmojiMatcher extends Matcher<EmojiOptions> {
-  data: EmojiData;
+export default class EmojiMatcher extends Matcher<EmojiMatcherOptions> {
+  data: EmojiData | null = null;
 
-  options: EmojiOptions;
+  // @ts-ignore Set in super
+  options: EmojiMatcherOptions;
 
-  constructor(name: string, options?: Object = {}, factory?: ?MatcherFactory = null) {
+  constructor(
+    name: string,
+    options: Partial<EmojiMatcherOptions> = {},
+    factory: MatcherFactory | null = null,
+  ) {
     super(
       name,
       {
@@ -47,15 +49,20 @@ export default class EmojiMatcher extends Matcher<EmojiOptions> {
     );
   }
 
-  replaceWith(match: string, props?: Object = {}): React.ReactNode {
-    return <Emoji {...props} renderUnicode={this.options.renderUnicode} />;
+  replaceWith(match: string, props: Props = {}) {
+    const emojiProps = {
+      ...props,
+      renderUnicode: this.options.renderUnicode,
+    } as EmojiProps;
+
+    return React.createElement(Emoji, emojiProps, match);
   }
 
-  asTag(): string {
+  asTag() {
     return 'img';
   }
 
-  match(string: string): ?MatchResponse {
+  match(string: string) {
     const matchers = [];
     let response = null;
 
@@ -83,12 +90,17 @@ export default class EmojiMatcher extends Matcher<EmojiOptions> {
     return response;
   }
 
-  matchEmoticon(string: string): ?MatchResponse {
+  matchEmoticon(string: string): MatchResponse | null {
     const response = this.doMatch(string, EMOTICON_BOUNDARY_REGEX, matches => ({
       emoticon: matches[0].trim(),
     }));
 
-    if (response && response.emoticon && this.data.EMOTICON_TO_HEXCODE[response.emoticon]) {
+    if (
+      response &&
+      response.emoticon &&
+      this.data &&
+      this.data.EMOTICON_TO_HEXCODE[response.emoticon]
+    ) {
       response.hexcode = this.data.EMOTICON_TO_HEXCODE[response.emoticon];
       response.match = response.emoticon; // Remove padding
 
@@ -98,12 +110,17 @@ export default class EmojiMatcher extends Matcher<EmojiOptions> {
     return null;
   }
 
-  matchShortcode(string: string): ?MatchResponse {
+  matchShortcode(string: string): MatchResponse | null {
     const response = this.doMatch(string, SHORTCODE_REGEX, matches => ({
       shortcode: matches[0].toLowerCase(),
     }));
 
-    if (response && response.shortcode && this.data.SHORTCODE_TO_HEXCODE[response.shortcode]) {
+    if (
+      response &&
+      response.shortcode &&
+      this.data &&
+      this.data.SHORTCODE_TO_HEXCODE[response.shortcode]
+    ) {
       response.hexcode = this.data.SHORTCODE_TO_HEXCODE[response.shortcode];
 
       return response;
@@ -112,12 +129,17 @@ export default class EmojiMatcher extends Matcher<EmojiOptions> {
     return null;
   }
 
-  matchUnicode(string: string): ?MatchResponse {
+  matchUnicode(string: string): MatchResponse | null {
     const response = this.doMatch(string, EMOJI_REGEX, matches => ({
       unicode: matches[0],
     }));
 
-    if (response && response.unicode && this.data.UNICODE_TO_HEXCODE[response.unicode]) {
+    if (
+      response &&
+      response.unicode &&
+      this.data &&
+      this.data.UNICODE_TO_HEXCODE[response.unicode]
+    ) {
       response.hexcode = this.data.UNICODE_TO_HEXCODE[response.unicode];
 
       return response;
@@ -129,7 +151,7 @@ export default class EmojiMatcher extends Matcher<EmojiOptions> {
   /**
    * Load emoji data before matching.
    */
-  onBeforeParse(content: string, props: Object): string {
+  onBeforeParse(content: string, props: Props): string {
     if (props.emojiSource) {
       this.data = EmojiData.getInstance(props.emojiSource.locale);
     } else if (process.env.NODE_ENV !== 'production') {
@@ -142,7 +164,7 @@ export default class EmojiMatcher extends Matcher<EmojiOptions> {
   /**
    * When a single `Emoji` is the only content, enlarge it!
    */
-  onAfterParse(content: React.ReactNode, props: Object): React.ReactNode {
+  onAfterParse(content: React.ReactNode[], props: Props): React.ReactNode[] {
     if (content.length === 0) {
       return content;
     }
@@ -163,7 +185,7 @@ export default class EmojiMatcher extends Matcher<EmojiOptions> {
         }
       } else if (React.isValidElement(item)) {
         // Only count towards emojis
-        // $FlowIgnore Portals are finnicky
+        // @ts-ignore
         if (item && item.type === Emoji) {
           count += 1;
           valid = true;
@@ -193,10 +215,10 @@ export default class EmojiMatcher extends Matcher<EmojiOptions> {
         return item;
       }
 
-      // $FlowIgnore Can't type a React element
-      return React.cloneElement(item, {
-        // $FlowIgnore Nor its props
-        ...item.props,
+      const element = item as React.ReactElement<EmojiProps>;
+
+      return React.cloneElement(element, {
+        ...element.props,
         enlargeEmoji: true,
       });
     });

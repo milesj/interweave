@@ -1,34 +1,37 @@
 /**
  * @copyright   2016, Miles Johnson
  * @license     https://opensource.org/licenses/MIT
- * @flow
  */
 
 /* eslint-disable promise/always-return, promise/catch-or-return */
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import { fetchFromCDN } from 'emojibase';
+import { fetchFromCDN, Emoji } from 'emojibase';
 import { SUPPORTED_LOCALES } from 'emojibase/lib/constants';
 import EmojiData from './EmojiData';
 import { EmojiShape } from './shapes';
+import { CanonicalEmoji, EmojiSource } from './types';
 
-import type { Emoji } from 'emojibase'; // eslint-disable-line
+export interface EmojiDataLoaderProps {
+  compact?: boolean;
+  emojis?: Emoji[];
+  locale?: string;
+  version?: string;
+}
 
-type EmojiDataLoaderProps = {
-  compact: boolean,
-  emojis: Emoji[],
-  locale: string,
-  version: string,
-};
+export interface EmojiDataLoaderInjectedProps {
+  emojis: CanonicalEmoji[];
+  emojiSource: EmojiSource;
+}
 
-type EmojiDataLoaderState = {
-  emojis: Emoji[],
-};
+export interface EmojiDataLoaderState {
+  emojis: Emoji[];
+}
 
 // Share between all instances
 let loaded: { [locale: string]: boolean } = {};
-let promise: { [locale: string]: Promise<*> } = {};
+let promise: { [locale: string]: Promise<Emoji[]> } = {};
 
 export function resetLoaded() {
   if (process.env.NODE_ENV !== 'production') {
@@ -37,12 +40,12 @@ export function resetLoaded() {
   }
 }
 
-export default function withEmojiData(
-  Component: React$ComponentType<*>,
-): React$ComponentType<EmojiDataLoaderProps> {
+export default function withEmojiData<T extends {}>(
+  Component: React.ComponentType<T & EmojiDataLoaderInjectedProps>,
+) {
   return class EmojiDataLoader extends React.PureComponent<
-    EmojiDataLoaderProps,
-    EmojiDataLoaderState,
+    T & EmojiDataLoaderProps,
+    EmojiDataLoaderState
   > {
     static propTypes = {
       compact: PropTypes.bool,
@@ -87,10 +90,20 @@ export default function withEmojiData(
     }
 
     /**
+     * Set a list of emojis. If a list of custom emoji data has been passed,
+     * use it instead of the parsed data.
+     */
+    setEmojis(emojis: Emoji[] = []) {
+      this.setState({
+        emojis: emojis.length > 0 ? emojis : this.getDataInstance().getData(),
+      });
+    }
+
+    /**
      * Load and parse emoji data from the CDN or use the provided dataset.
      */
     loadEmojis() {
-      const { compact, emojis, locale, version } = this.props;
+      const { compact, emojis, locale, version } = this.props as Required<EmojiDataLoaderProps>;
 
       // Abort as we've already loaded data
       if (loaded[locale]) {
@@ -116,6 +129,8 @@ export default function withEmojiData(
             // We should do this first so that the custom emojis can hook into it.
             this.getDataInstance().parseEmojiData(response);
             this.setEmojis(emojis);
+
+            return response;
           })
           .catch(error => {
             throw error;
@@ -124,19 +139,10 @@ export default function withEmojiData(
     }
 
     /**
-     * Set a list of emojis. If a list of custom emoji data has been passed,
-     * use it instead of the parsed data.
-     */
-    setEmojis(emojis: Emoji[] = []) {
-      this.setState({
-        emojis: emojis.length > 0 ? emojis : this.getDataInstance().getData(),
-      });
-    }
-
-    /**
      * Clone the element so that it re-renders itself.
      */
-    render(): React.ReactNode {
+    render() {
+      // @ts-ignore
       const { compact, emojis, locale, version, ...props } = this.props;
 
       return (
