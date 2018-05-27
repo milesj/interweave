@@ -34,7 +34,7 @@ export default class GroupListHeader extends React.PureComponent<GroupListHeader
     skinTonePalette: null,
   };
 
-  render(): React.ReactNode {
+  render() {
     const { commonMode, group, skinTonePalette } = this.props;
     const { classNames, messages } = this.context;
     const showPalette =

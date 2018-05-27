@@ -2,18 +2,22 @@
   "name": "interweave-emoji",
   "version": "1.4.0",
   "description": "Emoji support for Interweave.",
-  "keywords": ["interweave", "react", "emoji", "emojibase"],
+  "keywords": [
+    "interweave",
+    "react",
+    "emoji",
+    "emojibase"
+  ],
   "main": "./lib/index.js",
   "types": "./lib/index.d.ts",
   "publishConfig": {
     "access": "public"
   },
-  "repository":
-    "https://github.com/milesj/interweave/tree/master/packages/interweave-emoji",
+  "repository": "https://github.com/milesj/interweave/tree/master/packages/interweave-emoji",
   "license": "MIT",
   "dependencies": {
     "babel-runtime": "^6.26.0",
-    "emojibase-regex": "^1.1.0",
+    "emojibase-regex": "^1.1.1",
     "prop-types": "^15.6.1"
   },
   "peerDependencies": {
@@ -24,6 +28,6 @@
   "devDependencies": {
     "emojibase": "^1.6.0",
     "interweave": "^8.1.0",
-    "react": "^16.3.2"
+    "react": "^16.4.0"
   }
 }

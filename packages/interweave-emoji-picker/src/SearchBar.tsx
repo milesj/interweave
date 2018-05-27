@@ -10,7 +10,7 @@ import { SEARCH_THROTTLE } from './constants';
 
 export interface SearchBarProps {
   autoFocus: boolean;
-  onChange: (query: string, e: any) => void;
+  onChange: (query: string, e: React.ChangeEvent<HTMLInputElement>) => void;
   onKeyUp: (e: any) => void;
   searchQuery: string;
 }
@@ -61,7 +61,7 @@ export default class SearchBar extends React.PureComponent<SearchBarProps, Searc
   /**
    * Triggered when the input field value changes.
    */
-  handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  private handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.persist();
 
     // Update the input field immediately
@@ -76,7 +76,7 @@ export default class SearchBar extends React.PureComponent<SearchBarProps, Searc
   /**
    * A change handler that is debounced for performance.
    */
-  handleChangeDebounced = debounce(e => {
+  private handleChangeDebounced = debounce(e => {
     // Check if were still mounted
     if (this.inputRef.current) {
       this.props.onChange(e.target.value.trim(), e);

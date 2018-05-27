@@ -1,13 +1,12 @@
 /**
  * @copyright   2016, Miles Johnson
  * @license     https://opensource.org/licenses/MIT
- * @flow
  */
 
 import React from 'react';
 import PropTypes from 'prop-types';
 import debounce from 'lodash/debounce';
-import { EmojiShape, EmojiPathShape, EmojiSourceShape } from 'interweave-emoji';
+import { CanonicalEmoji, EmojiShape, EmojiPath, EmojiPathShape, EmojiSource, EmojiSourceShape } from 'interweave-emoji';
 import EmojiButton from './Emoji';
 import GroupListHeader from './GroupListHeader';
 import {
@@ -20,37 +19,33 @@ import {
   SCROLL_DEBOUNCE,
 } from './constants';
 
-import type { Emoji, EmojiPath, EmojiSource } from 'interweave-emoji'; // eslint-disable-line
-
-type EmojiListProps = {
-  activeEmoji: ?Emoji,
+export interface EmojiListProps {
+  activeEmoji?: CanonicalEmoji | null,
   activeGroup: string,
-  commonEmojis: Emoji[],
+  commonEmojis: CanonicalEmoji[],
   commonMode: string,
   disableGroups: boolean,
   emojiPadding: number,
   emojiPath: EmojiPath,
-  emojis: Emoji[],
+  emojis: CanonicalEmoji[],
   emojiSize: number,
   emojiSource: EmojiSource,
   hideGroupHeaders: boolean,
-  onEnterEmoji: (emoji: Emoji, e: *) => void,
-  onLeaveEmoji: (emoji: Emoji, e: *) => void,
+  onEnterEmoji: (emoji: CanonicalEmoji, e: *) => void,
+  onLeaveEmoji: (emoji: CanonicalEmoji, e: *) => void,
   onScroll: (e: *) => void,
   onScrollGroup: (group: string, e: *) => void,
-  onSelectEmoji: (emoji: Emoji, e: *) => void,
+  onSelectEmoji: (emoji: CanonicalEmoji, e: *) => void,
   scrollToGroup: string,
   searchQuery: string,
-  skinTonePalette: React.ReactNode,
+  skinTonePalette?: React.ReactNode,
 };
 
-type EmojiListState = {
+export interface EmojiListState {
   loadedGroups: Set<string>,
 };
 
 export default class EmojiList extends React.PureComponent<EmojiListProps, EmojiListState> {
-  container: ?HTMLDivElement;
-
   static contextTypes = {
     classNames: PropTypes.objectOf(PropTypes.string),
     messages: PropTypes.objectOf(PropTypes.node),
@@ -83,9 +78,12 @@ export default class EmojiList extends React.PureComponent<EmojiListProps, Emoji
     skinTonePalette: null,
   };
 
-  constructor({ activeGroup, emojis }: EmojiListProps) {
-    super();
+  containerRef = React.createRef<HTMLDivElement>();
 
+  constructor(props: EmojiListProps) {
+    super(props);
+
+    const { activeGroup, emojis } = props;
     const loadedGroups = [activeGroup, GROUP_COMMONLY_USED, GROUP_SEARCH_RESULTS];
 
     // When commonly used emojis are rendered,
@@ -120,7 +118,7 @@ export default class EmojiList extends React.PureComponent<EmojiListProps, Emoji
   /**
    * Partition the dataset into multiple arrays based on the group they belong to.
    */
-  groupEmojis(): { [group: string]: Emoji[] } {
+  groupEmojis(): { [group: string]: CanonicalEmoji[] } {
     const { commonEmojis, disableGroups, emojis, searchQuery } = this.props;
     const groups = {};
 
@@ -162,16 +160,9 @@ export default class EmojiList extends React.PureComponent<EmojiListProps, Emoji
   }
 
   /**
-   * Set the container div as the reference.
-   */
-  handleRef = (ref: ?HTMLDivElement) => {
-    this.container = ref;
-  };
-
-  /**
    * Triggered when the container is scrolled.
    */
-  handleScroll = (e: SyntheticWheelEvent<HTMLDivElement>) => {
+  handleScroll = (e: React.MouseEvent<HTMLDivElement>) => {
     e.stopPropagation();
     e.persist();
 
@@ -181,9 +172,8 @@ export default class EmojiList extends React.PureComponent<EmojiListProps, Emoji
   /**
    * A scroll handler that is debounced for performance.
    */
-  handleScrollDebounced = debounce((e: SyntheticWheelEvent<HTMLDivElement>) => {
-    // $FlowIgnore
-    this.loadEmojiImages(e.target, e);
+  private handleScrollDebounced = debounce((e: React.MouseEvent<HTMLDivElement>) => {
+    this.loadEmojiImages(e.currentTarget, e);
     this.props.onScroll(e);
   }, SCROLL_DEBOUNCE);
 
@@ -191,7 +181,7 @@ export default class EmojiList extends React.PureComponent<EmojiListProps, Emoji
    * Loop over each group section within the scrollable container
    * and determine the active group and whether to load emoji images.
    */
-  loadEmojiImages(container: HTMLDivElement, e?: SyntheticWheelEvent<HTMLDivElement>) {
+  loadEmojiImages(container: HTMLDivElement, e?: React.MouseEvent<HTMLDivElement>) {
     const { scrollTop } = container;
     const { searchQuery } = this.props;
     const { loadedGroups } = this.state;
@@ -252,24 +242,25 @@ export default class EmojiList extends React.PureComponent<EmojiListProps, Emoji
    * Scroll a group section to the top of the scrollable container.
    */
   scrollToGroup(group: string) {
-    if (!this.container) {
+    if (!this.containerRef.current) {
       return;
     }
 
-    const element = this.container.querySelector(`section[data-group="${group}"]`);
+    const { current } = this.containerRef;
+    const element = current.querySelector(`section[data-group="${group}"]`);
 
-    if (!element || !this.container) {
+    if (!element || !current) {
       return;
     }
 
     // Scroll to the container
-    this.container.scrollTop = element.offsetTop;
+    current.scrollTop = element.offsetTop;
 
     // Eager load emoji images
-    this.loadEmojiImages(this.container);
+    this.loadEmojiImages(current);
   }
 
-  render(): React.ReactNode {
+  render() {
     const {
       activeEmoji,
       commonMode,
@@ -289,7 +280,7 @@ export default class EmojiList extends React.PureComponent<EmojiListProps, Emoji
     const noResults = Object.keys(groupedEmojis).length === 0;
 
     return (
-      <div className={classNames.emojis} ref={this.handleRef} onScroll={this.handleScroll}>
+      <div className={classNames.emojis} ref={this.containerRef} onScroll={this.handleScroll}>
         {noResults ? (
           <div className={classNames.noResults}>{messages.noResults}</div>
         ) : (

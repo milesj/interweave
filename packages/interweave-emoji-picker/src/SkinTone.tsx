@@ -33,7 +33,7 @@ export default class SkinTone extends React.PureComponent<SkinToneProps> {
   /**
    * Triggered when the button is clicked.
    */
-  handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+  private handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
 
     this.props.onSelect(this.props.skinTone, e);

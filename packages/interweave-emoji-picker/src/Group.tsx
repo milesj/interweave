@@ -30,7 +30,7 @@ export default class Group extends React.PureComponent<GroupProps> {
   /**
    * Triggered when the button is clicked.
    */
-  handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+  private handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
 
     this.props.onSelect(this.props.group, e);
