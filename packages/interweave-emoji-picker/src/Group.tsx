@@ -6,12 +6,13 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Group as GroupType } from './types';
 
 export interface GroupProps {
-  activeGroup: string;
+  activeGroup: GroupType;
   children: React.ReactNode;
-  group: string;
-  onSelect: (group: string, event: React.MouseEvent<HTMLButtonElement>) => void;
+  group: GroupType;
+  onSelect: (group: GroupType, event: React.MouseEvent<HTMLButtonElement>) => void;
 }
 
 export default class Group extends React.PureComponent<GroupProps> {

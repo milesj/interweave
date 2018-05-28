@@ -11,7 +11,7 @@ import { SEARCH_THROTTLE } from './constants';
 export interface SearchBarProps {
   autoFocus: boolean;
   onChange: (query: string, e: React.ChangeEvent<HTMLInputElement>) => void;
-  onKeyUp: (e: any) => void;
+  onKeyUp: (event: React.KeyboardEvent<HTMLInputElement>) => void;
   searchQuery: string;
 }
 

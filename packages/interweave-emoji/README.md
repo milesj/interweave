@@ -8,9 +8,9 @@ up-to-date data.
 
 ## Requirements
 
-* React 15/16+
-* Interweave
-* [Emojibase][emojibase]
+- React 15/16+
+- Interweave
+- [Emojibase][emojibase]
 
 ## Installation
 
@@ -22,15 +22,15 @@ yarn add interweave interweave-emoji emojibase
 
 ## Documentation
 
-* [Matching Emojis](#matching-emojis)
-  * [Props](#props)
-  * [Match Result](#match-result)
-* [Loading Emoji Data](#loading-emoji-data)
-* [Converting Emoticons](#converting-emoticons)
-* [Converting Shortcodes](#converting-shortcodes)
-* [Displaying SVGs or PNGs](#displaying-svgs-or-pngs)
-* [Displaying Unicode Characters](#displaying-unicode-characters)
-* [Automatic Enlargement](#automatic-enlargement)
+- [Matching Emojis](#matching-emojis)
+  - [Props](#props)
+  - [Match Result](#match-result)
+- [Loading Emoji Data](#loading-emoji-data)
+- [Converting Emoticons](#converting-emoticons)
+- [Converting Shortcodes](#converting-shortcodes)
+- [Displaying SVGs or PNGs](#displaying-svgs-or-pngs)
+- [Displaying Unicode Characters](#displaying-unicode-characters)
+- [Automatic Enlargement](#automatic-enlargement)
 
 ### Matching Emojis
 
@@ -49,22 +49,22 @@ import { EmojiMatcher } from 'interweave-emoji';
 The following props are available for `Emoji` components, all of which should be passed to an
 `Interweave` instance.
 
-* `emojiSize` (string | number) - The width and height of emojis. Defaults to `1em`.
-* `emojiLargeSize` (string | number) - The width and height of enlarged emojis. Defaults to `3em`.
-* `emojiPath` (string | func) - A path to the [PNG or SVG file](#displaying-svgs-or-pngs).
-* `enlargeEmoji` (bool) - Whether to enlarge the emoji or not. Automatically triggers via the
+- `emojiSize` (string | number) - The width and height of emojis. Defaults to `1em`.
+- `emojiLargeSize` (string | number) - The width and height of enlarged emojis. Defaults to `3em`.
+- `emojiPath` (string | func) - A path to the [PNG or SVG file](#displaying-svgs-or-pngs).
+- `enlargeEmoji` (bool) - Whether to enlarge the emoji or not. Automatically triggers via the
   matcher but can be forced with this prop. Defaults to `false`.
-* `renderUnicode` (bool) - Render the unicode character instead of an image. Defaults to `false`.
+- `renderUnicode` (bool) - Render the unicode character instead of an image. Defaults to `false`.
 
 #### Match Result
 
 Both unicode literal characters and escape sequences are supported when matching. If a match is
 found, an `Emoji` component will be rendered and passed some of the following props.
 
-* `emoticon` (string) - If applicable, an emoticon for the specific emoji character.
-* `hexcode` (string) - The hexcode for the specific emoji character.
-* `shortcode` (string) - The shortcode for the specific emoji character.
-* `unicode` (string) - The unicode literal character.
+- `emoticon` (string) - If applicable, an emoticon for the specific emoji character.
+- `hexcode` (string) - The hexcode for the specific emoji character.
+- `shortcode` (string) - The shortcode for the specific emoji character.
+- `unicode` (string) - The unicode literal character.
 
 ### Loading Emoji Data
 
@@ -81,11 +81,11 @@ export default withEmojiData(Interweave);
 
 This HOC supports the following optional props.
 
-* `locale` (string) - The localized data to fetch. Defaults to `en`.
+- `locale` (string) - The localized data to fetch. Defaults to `en`.
   [View supported locales](https://github.com/milesj/emojibase#usage).
-* `version` (string) - The `emojibase-data` release version to fetch. Defaults to `latest`.
+- `version` (string) - The `emojibase-data` release version to fetch. Defaults to `latest`.
   [Read more](https://github.com/milesj/emojibase#fetchfromcdn).
-* `compact` (bool) - Whether to load compact or full data. Defaults to `false`.
+- `compact` (bool) - Whether to load compact or full data. Defaults to `false`.
 
 > An `emojis` and `emojiSource` prop will be passed to the underlying component.
 
@@ -158,8 +158,8 @@ the 2nd argument, `emojiSize` as the 3rd argument, and `emojiLargeSize` as the 4
 Both media formats make use of the `img` tag and will require an individual file, as sprites and
 icon fonts are not supported. The following resources can be used for downloading SVG/PNG icons.
 
-* [EmojiOne](http://emojione.com/developers/)
-* [Twemoji](https://github.com/twitter/twemoji)
+- [EmojiOne](http://emojione.com/developers/)
+- [Twemoji](https://github.com/twitter/twemoji)
 
 > Note: SVGs require CORS to work correctly, so files will need to be stored locally, or within a
 > CDN under the same domain. Linking to remote SVGs will not work -- use PNGs instead.

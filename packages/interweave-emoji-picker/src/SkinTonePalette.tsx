@@ -7,11 +7,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import SkinTone from './SkinTone';
 import { SKIN_TONES } from './constants';
+import { SkinTone as SkinToneType } from './types';
 
 export interface SkinTonePaletteProps {
-  activeSkinTone: string;
+  activeSkinTone: SkinToneType;
   icons: { [key: string]: React.ReactNode };
-  onSelect: (skinTone: string, event: React.MouseEvent<HTMLButtonElement>) => void;
+  onSelect: (skinTone: SkinToneType, event: React.MouseEvent<HTMLButtonElement>) => void;
 }
 
 export default class SkinTonePalette extends React.PureComponent<SkinTonePaletteProps> {

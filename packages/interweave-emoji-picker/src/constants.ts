@@ -5,19 +5,21 @@
 
 /* eslint-disable sort-keys */
 
-export const GROUP_SMILEYS_PEOPLE: string = 'smileysPeople';
-export const GROUP_ANIMALS_NATURE: string = 'animalsNature';
-export const GROUP_FOOD_DRINK: string = 'foodDrink';
-export const GROUP_TRAVEL_PLACES: string = 'travelPlaces';
-export const GROUP_ACTIVITIES: string = 'activities';
-export const GROUP_OBJECTS: string = 'objects';
-export const GROUP_SYMBOLS: string = 'symbols';
-export const GROUP_FLAGS: string = 'flags';
-export const GROUP_COMMONLY_USED: string = 'commonlyUsed';
-export const GROUP_SEARCH_RESULTS: string = 'searchResults';
-export const GROUP_NONE: string = 'noGroups';
+import { CommonMode, Group, SkinTone } from './types';
 
-export const GROUPS: string[] = [
+export const GROUP_SMILEYS_PEOPLE: Group = 'smileysPeople';
+export const GROUP_ANIMALS_NATURE: Group = 'animalsNature';
+export const GROUP_FOOD_DRINK: Group = 'foodDrink';
+export const GROUP_TRAVEL_PLACES: Group = 'travelPlaces';
+export const GROUP_ACTIVITIES: Group = 'activities';
+export const GROUP_OBJECTS: Group = 'objects';
+export const GROUP_SYMBOLS: Group = 'symbols';
+export const GROUP_FLAGS: Group = 'flags';
+export const GROUP_COMMONLY_USED: Group = 'commonlyUsed';
+export const GROUP_SEARCH_RESULTS: Group = 'searchResults';
+export const GROUP_NONE: Group = 'noGroups';
+
+export const GROUPS: Group[] = [
   GROUP_SMILEYS_PEOPLE,
   GROUP_ANIMALS_NATURE,
   GROUP_FOOD_DRINK,
@@ -40,14 +42,14 @@ export const GROUP_ICONS: { [key: string]: string } = {
   [GROUP_FLAGS]: '🏴',
 };
 
-export const SKIN_NONE: string = 'none';
-export const SKIN_LIGHT: string = 'light';
-export const SKIN_MEDIUM_LIGHT: string = 'mediumLight';
-export const SKIN_MEDIUM: string = 'medium';
-export const SKIN_MEDIUM_DARK: string = 'mediumDark';
-export const SKIN_DARK: string = 'dark';
+export const SKIN_NONE: SkinTone = 'none';
+export const SKIN_LIGHT: SkinTone = 'light';
+export const SKIN_MEDIUM_LIGHT: SkinTone = 'mediumLight';
+export const SKIN_MEDIUM: SkinTone = 'medium';
+export const SKIN_MEDIUM_DARK: SkinTone = 'mediumDark';
+export const SKIN_DARK: SkinTone = 'dark';
 
-export const SKIN_TONES: string[] = [
+export const SKIN_TONES: SkinTone[] = [
   SKIN_NONE,
   SKIN_LIGHT,
   SKIN_MEDIUM_LIGHT,
@@ -72,8 +74,8 @@ export const SEARCH_THROTTLE: number = 250;
 export const KEY_COMMONLY_USED: string = 'interweave/emoji/commonlyUsed';
 export const KEY_SKIN_TONE: string = 'interweave/emoji/skinTone';
 
-export const COMMON_MODE_RECENT: string = 'recentlyUsed';
-export const COMMON_MODE_FREQUENT: string = 'frequentlyUsed';
+export const COMMON_MODE_RECENT: CommonMode = 'recentlyUsed';
+export const COMMON_MODE_FREQUENT: CommonMode = 'frequentlyUsed';
 
 export const CONTEXT_CLASSNAMES: { [key: string]: string } = {
   picker: 'interweave-picker__picker',

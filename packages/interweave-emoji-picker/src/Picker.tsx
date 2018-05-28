@@ -15,6 +15,7 @@ import {
   EmojiSource,
   EmojiSourceShape,
 } from 'interweave-emoji';
+import Context from './Context';
 import EmojiList from './EmojiList';
 import EmojiVirtualList from './EmojiVirtualList';
 import SkinTonePalette from './SkinTonePalette';
@@ -47,10 +48,12 @@ import {
   CONTEXT_CLASSNAMES,
   CONTEXT_MESSAGES,
 } from './constants';
+import { CommonMode, Group, SkinTone } from './types';
 
 export interface CommonEmoji {
   count: number;
   hexcode: string;
+  unicode?: string; // Deprecated
 }
 
 export interface BlackWhiteMap {
@@ -62,9 +65,9 @@ export interface PickerProps {
   blacklist?: string[];
   classNames?: { [key: string]: string };
   columnCount?: number;
-  commonMode?: 'recentlyUsed' | 'frequentlyUsed';
-  defaultGroup?: string;
-  defaultSkinTone?: string;
+  commonMode?: CommonMode;
+  defaultGroup?: Group;
+  defaultSkinTone?: SkinTone;
   disableCommonlyUsed?: boolean;
   disableGroups?: boolean;
   disablePreview?: boolean;
@@ -86,11 +89,11 @@ export interface PickerProps {
   messages?: { [key: string]: string };
   onHoverEmoji?: (emoji: CanonicalEmoji, event: React.MouseEvent<HTMLButtonElement>) => void;
   onScroll?: (event: React.MouseEvent<HTMLDivElement>) => void;
-  onScrollGroup?: (group: string, event: React.MouseEvent<HTMLDivElement>) => void;
+  onScrollGroup?: (group: Group, event: React.MouseEvent<HTMLDivElement>) => void;
   onSearch?: (query: string, event: React.ChangeEvent<HTMLInputElement>) => void;
   onSelectEmoji?: (emoji: CanonicalEmoji, event: React.MouseEvent<HTMLButtonElement>) => void;
-  onSelectGroup?: (group: string, event: React.MouseEvent<HTMLButtonElement>) => void;
-  onSelectSkinTone?: (skinTone: string, event: React.MouseEvent<HTMLButtonElement>) => void;
+  onSelectGroup?: (group: Group, event: React.MouseEvent<HTMLButtonElement>) => void;
+  onSelectSkinTone?: (skinTone: SkinTone, event: React.MouseEvent<HTMLButtonElement>) => void;
   rowCount?: number;
   skinIcons?: { [key: string]: React.ReactNode };
   virtual?: boolean;
@@ -100,12 +103,16 @@ export interface PickerProps {
 export interface PickerState {
   activeEmoji: CanonicalEmoji | null; // Emoji to display in the preview
   activeEmojiIndex: number; // Index for the highlighted emoji within search results
-  activeGroup: string; // Currently selected group tab
-  activeSkinTone: string; // Currently selected skin ton
+  activeGroup: Group; // Currently selected group tab
+  activeSkinTone: SkinTone; // Currently selected skin ton
   blacklisted: BlackWhiteMap; // Map of blacklisted emoji hexcodes (without skin modifier)
   commonEmojis: CanonicalEmoji[]; // List of emoji hexcodes most commonly used
+  context: {
+    classNames: { [name: string]: string };
+    messages: { [key: string]: string };
+  };
   emojis: CanonicalEmoji[]; // List of all emojis with search filtering applied
-  scrollToGroup: string; // Group to scroll to on render
+  scrollToGroup: '' | Group; // Group to scroll to on render
   searchQuery: string; // Current search query
   whitelisted: BlackWhiteMap; // Map of whitelisted emoji hexcodes (without skin modifier)
 }
@@ -221,9 +228,15 @@ class Picker extends React.Component<PickerProps, PickerState> {
   constructor(props: PickerProps) {
     super(props);
 
-    const { blacklist, defaultGroup, defaultSkinTone, emojis, whitelist } = props as Required<
-      PickerProps
-    >;
+    const {
+      blacklist,
+      classNames,
+      defaultGroup,
+      defaultSkinTone,
+      emojis,
+      messages,
+      whitelist,
+    } = props as Required<PickerProps>;
 
     this.state = {
       activeEmoji: null,
@@ -232,25 +245,20 @@ class Picker extends React.Component<PickerProps, PickerState> {
       activeSkinTone: this.getSkinToneFromStorage() || defaultSkinTone,
       blacklisted: this.generateBlackWhiteMap(blacklist),
       commonEmojis: [],
+      context: {
+        classNames: {
+          ...CONTEXT_CLASSNAMES,
+          ...classNames,
+        },
+        messages: {
+          ...CONTEXT_MESSAGES,
+          ...messages,
+        },
+      },
       emojis,
       scrollToGroup: '',
       searchQuery: '',
       whitelisted: this.generateBlackWhiteMap(whitelist),
-    };
-  }
-
-  getChildContext(): object {
-    const { classNames, messages } = this.props;
-
-    return {
-      classNames: {
-        ...CONTEXT_CLASSNAMES,
-        ...classNames,
-      },
-      messages: {
-        ...CONTEXT_MESSAGES,
-        ...messages,
-      },
     };
   }
 
@@ -385,7 +393,7 @@ class Picker extends React.Component<PickerProps, PickerState> {
   generateEmojis(
     emojis: CanonicalEmoji[],
     searchQuery: string,
-    skinTone: string,
+    skinTone: SkinTone,
   ): CanonicalEmoji[] {
     return emojis
       .filter(emoji => this.filterOrSearch(emoji, searchQuery))
@@ -432,7 +440,7 @@ class Picker extends React.Component<PickerProps, PickerState> {
   /**
    * Return the default group while handling commonly used scenarios.
    */
-  getDefaultGroup(): string {
+  getDefaultGroup(): Group {
     const { defaultGroup, disableGroups } = this.props;
     let group = defaultGroup!;
 
@@ -457,7 +465,7 @@ class Picker extends React.Component<PickerProps, PickerState> {
     }
 
     const rawCommon = localStorage.getItem(KEY_COMMONLY_USED);
-    const common = rawCommon ? JSON.parse(rawCommon) : [];
+    const common: CommonEmoji[] = rawCommon ? JSON.parse(rawCommon) : [];
     const data = EmojiData.getInstance(this.props.emojiSource.locale);
 
     // Previous versions stored the unicode character,
@@ -478,24 +486,28 @@ class Picker extends React.Component<PickerProps, PickerState> {
    * Return an emoji with skin tone if the active skin tone is set,
    * otherwise return the default skin tone (yellow).
    */
-  getSkinnedEmoji(emoji: CanonicalEmoji, skinTone: string): CanonicalEmoji {
+  getSkinnedEmoji(emoji: CanonicalEmoji, skinTone: SkinTone): CanonicalEmoji {
     if (skinTone === SKIN_NONE || !emoji.skins) {
       return emoji;
     }
 
     const toneIndex = SKIN_TONES.findIndex(tone => tone === skinTone);
-    const skinnedEmoji = (emoji.skins || []).find(skin =>
-      Boolean(skin.tone && skin.tone === toneIndex),
-    );
+    const skinnedEmoji = (emoji.skins || []).find(skin => !!skin.tone && skin.tone === toneIndex);
 
-    return skinnedEmoji || emoji;
+    return (skinnedEmoji || emoji) as CanonicalEmoji;
   }
 
   /**
    * Return the user's favorite skin tone from local storage.
    */
-  getSkinToneFromStorage(): string | null {
-    return localStorage.getItem(KEY_SKIN_TONE);
+  getSkinToneFromStorage(): SkinTone | null {
+    const tone = localStorage.getItem(KEY_SKIN_TONE);
+
+    if (tone) {
+      return tone as SkinTone;
+    }
+
+    return null;
   }
 
   /**
@@ -525,6 +537,7 @@ class Picker extends React.Component<PickerProps, PickerState> {
     if (e.key === 'Escape') {
       e.preventDefault();
 
+      // @ts-ignore Allow other event
       this.handleSearch('', e);
 
       // Select active emoji
@@ -532,6 +545,7 @@ class Picker extends React.Component<PickerProps, PickerState> {
       e.preventDefault();
 
       if (activeEmoji) {
+        // @ts-ignore Allow other event
         this.handleSelectEmoji(activeEmoji, e);
       }
 
@@ -563,6 +577,7 @@ class Picker extends React.Component<PickerProps, PickerState> {
           activeEmojiIndex: nextIndex,
         });
 
+        // @ts-ignore Allow other event
         this.handleEnterEmoji(emojis[nextIndex], e);
       }
     }
@@ -580,7 +595,7 @@ class Picker extends React.Component<PickerProps, PickerState> {
   /**
    * Triggered when a group is scrolled into view.
    */
-  handleScrollGroup = (group: string, e: React.MouseEvent<HTMLDivElement>) => {
+  handleScrollGroup = (group: Group, e: React.MouseEvent<HTMLDivElement>) => {
     this.setState({
       activeGroup: group,
       scrollToGroup: '',
@@ -618,7 +633,7 @@ class Picker extends React.Component<PickerProps, PickerState> {
   /**
    * Triggered when a group tab is clicked. We should reset search and scroll position.
    */
-  handleSelectGroup = (group: string, e: React.MouseEvent<HTMLButtonElement>) => {
+  handleSelectGroup = (group: Group, e: React.MouseEvent<HTMLButtonElement>) => {
     // Search is being reset, so rebuild emojis
     if (this.state.searchQuery !== '') {
       this.setUpdatedEmojis('', this.state.activeSkinTone);
@@ -636,7 +651,7 @@ class Picker extends React.Component<PickerProps, PickerState> {
   /**
    * Triggered when a skin tone is clicked.
    */
-  handleSelectSkinTone = (skinTone: string, e: React.MouseEvent<HTMLButtonElement>) => {
+  handleSelectSkinTone = (skinTone: SkinTone, e: React.MouseEvent<HTMLButtonElement>) => {
     this.setUpdatedEmojis(this.state.searchQuery, skinTone);
     this.setSkinTone(skinTone);
 
@@ -665,7 +680,7 @@ class Picker extends React.Component<PickerProps, PickerState> {
   /**
    * Set the users favorite skin tone into local storage.
    */
-  setSkinTone(skinTone: string) {
+  setSkinTone(skinTone: SkinTone) {
     try {
       localStorage.setItem(KEY_SKIN_TONE, skinTone);
     } catch (error) {
@@ -676,7 +691,7 @@ class Picker extends React.Component<PickerProps, PickerState> {
   /**
    * When the skin tone or search query changes, update the emoji list.
    */
-  setUpdatedEmojis(searchQuery: string, skinTone: string) {
+  setUpdatedEmojis(searchQuery: string, skinTone: SkinTone) {
     const emojis = this.generateEmojis(this.props.emojis, searchQuery, skinTone);
     const hasResults = searchQuery && emojis.length > 0;
 
@@ -716,6 +731,7 @@ class Picker extends React.Component<PickerProps, PickerState> {
       activeGroup,
       activeSkinTone,
       commonEmojis,
+      context,
       emojis,
       scrollToGroup,
       searchQuery,
@@ -729,7 +745,7 @@ class Picker extends React.Component<PickerProps, PickerState> {
         onSelect={this.handleSelectSkinTone}
       />
     );
-    const components = {
+    const components: { [name: string]: React.ReactElement<any> | null } = {
       emojis: (
         <List
           key="emojis"
@@ -788,14 +804,17 @@ class Picker extends React.Component<PickerProps, PickerState> {
       ),
       skinTones,
     };
-    const { classNames } = this.getChildContext();
-    const classes = [classNames.picker];
+    const classes = [context.classNames.picker];
 
     if (virtual) {
-      classes.push(classNames.pickerVirtual);
+      classes.push(context.classNames.pickerVirtual);
     }
 
-    return <div className={classes.join(' ')}>{displayOrder.map(key => components[key])}</div>;
+    return (
+      <Context.Provider value={context}>
+        <div className={classes.join(' ')}>{displayOrder.map(key => components[key])}</div>
+      </Context.Provider>
+    );
   }
 }
 

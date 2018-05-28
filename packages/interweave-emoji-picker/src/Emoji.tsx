@@ -21,9 +21,9 @@ export interface EmojiProps {
   emojiPath: EmojiPath;
   emojiSize: number;
   emojiSource: EmojiSource;
-  onEnter: (emoji: CanonicalEmoji, e: any) => void;
-  onLeave: (emoji: CanonicalEmoji, e: any) => void;
-  onSelect: (emoji: CanonicalEmoji, e: any) => void;
+  onEnter: (emoji: CanonicalEmoji, event: React.MouseEvent<HTMLButtonElement>) => void;
+  onLeave: (emoji: CanonicalEmoji, event: React.MouseEvent<HTMLButtonElement>) => void;
+  onSelect: (emoji: CanonicalEmoji, event: React.MouseEvent<HTMLButtonElement>) => void;
   showImage: boolean;
 }
 

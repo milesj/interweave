@@ -12,8 +12,8 @@ an anchor link. This process is achieved with Interweave matchers.
 
 ## Requirements
 
-* React 15/16+
-* Interweave
+- React 15/16+
+- Interweave
 
 ## Installation
 
@@ -25,19 +25,19 @@ yarn add interweave interweave-autolink
 
 ## Documentation
 
-* [URLs](#urls)
-  * [TLD Support](#tld-support)
-  * [Props](#props)
-  * [Match Result](#match-result)
-* [IPs](#ips)
-  * [Props](#props-1)
-  * [Match Result](#match-result-1)
-* [Emails](#emails)
-  * [Props](#props-2)
-  * [Match Result](#match-result-2)
-* [Hashtags](#hashtags)
-  * [Props](#props-3)
-  * [Match Result](#match-result-3)
+- [URLs](#urls)
+  - [TLD Support](#tld-support)
+  - [Props](#props)
+  - [Match Result](#match-result)
+- [IPs](#ips)
+  - [Props](#props-1)
+  - [Match Result](#match-result-1)
+- [Emails](#emails)
+  - [Props](#props-2)
+  - [Match Result](#match-result-2)
+- [Hashtags](#hashtags)
+  - [Props](#props-3)
+  - [Match Result](#match-result-3)
 
 ### URLs
 
@@ -72,22 +72,22 @@ new UrlMatcher('url', { customTLDs: ['life', 'tech', 'ninja'] });
 The following props are available for `Url` components, all of which should be passed to an
 `Interweave` instance.
 
-* `newWindow` (bool) - Open links in a new window. Defaults to `false`.
-* `onClick` (func) - Callback triggered when a link is clicked.
+- `newWindow` (bool) - Open links in a new window. Defaults to `false`.
+- `onClick` (func) - Callback triggered when a link is clicked.
 
 #### Match Result
 
 If a match is found, a `Url` component will be rendered and passed the following props.
 
-* `children` (string) - The entire URL/IP that was matched.
-* `urlParts` (object)
-  * `scheme` (string) - The protocol. Defaults to "http".
-  * `auth` (string) - The username and password authorization, excluding `@`.
-  * `host` (string) - The host, domain, or IP address.
-  * `port` (number) - The port number.
-  * `path` (string) - The path.
-  * `query` (string) - The query string.
-  * `fragment` (string) - The hash fragment, including `#`.
+- `children` (string) - The entire URL/IP that was matched.
+- `urlParts` (object)
+  - `scheme` (string) - The protocol. Defaults to "http".
+  - `auth` (string) - The username and password authorization, excluding `@`.
+  - `host` (string) - The host, domain, or IP address.
+  - `port` (number) - The port number.
+  - `path` (string) - The path.
+  - `query` (string) - The query string.
+  - `fragment` (string) - The hash fragment, including `#`.
 
 ### IPs
 
@@ -108,8 +108,8 @@ import { IpMatcher } from 'interweave-autolink';
 The following props are available for `Ip` components, all of which should be passed to an
 `Interweave` instance.
 
-* `newWindow` (bool) - Open links in a new window. Defaults to `false`.
-* `onClick` (func) - Callback triggered when a link is clicked.
+- `newWindow` (bool) - Open links in a new window. Defaults to `false`.
+- `onClick` (func) - Callback triggered when a link is clicked.
 
 #### Match Result
 
@@ -131,16 +131,16 @@ import { EmailMatcher } from 'interweave-autolink';
 The following props are available for `Email` components, all of which should be passed to an
 `Interweave` instance.
 
-* `onClick` (func) - Callback triggered when a link is clicked.
+- `onClick` (func) - Callback triggered when a link is clicked.
 
 #### Match Result
 
 If a match is found, an `Email` component will be rendered and passed the following props.
 
-* `children` (string) - The entire email address that was matched.
-* `emailParts` (object)
-  * `username` (string) - The username. Found before the `@`.
-  * `host` (string) - The host or domain. Found after the `@`.
+- `children` (string) - The entire email address that was matched.
+- `emailParts` (object)
+  - `username` (string) - The username. Found before the `@`.
+  - `host` (string) - The host or domain. Found after the `@`.
 
 ### Hashtags
 
@@ -160,12 +160,12 @@ import { HashtagMatcher } from 'interweave-autolink';
 The following props are available for `Hashtag` components, all of which should be passed to an
 `Interweave` instance.
 
-* `encodeHashtag` (bool) - Encodes the hashtag using `encodeURIComponent`. Defaults to `false`.
-* `hashtagUrl` (string | func) - The URL to interpolate the matched hashtag with.
-* `newWindow` (bool) - Open links in a new window. Defaults to `false`.
-* `preserveHash` (bool) - Preserve the leading hash (`#`) when interpolating into a URL. Defaults to
+- `encodeHashtag` (bool) - Encodes the hashtag using `encodeURIComponent`. Defaults to `false`.
+- `hashtagUrl` (string | func) - The URL to interpolate the matched hashtag with.
+- `newWindow` (bool) - Open links in a new window. Defaults to `false`.
+- `preserveHash` (bool) - Preserve the leading hash (`#`) when interpolating into a URL. Defaults to
   `false`.
-* `onClick` (func) - Callback triggered when a link is clicked.
+- `onClick` (func) - Callback triggered when a link is clicked.
 
 Hashtags require a URL to link to, which is defined by the `hashtagUrl` prop. The URL must declare
 the following token, `{{hashtag}}`, which will be replaced by the matched hashtag. Or a function can
@@ -189,5 +189,5 @@ be passed, which receives the hashtag as the 1st argument.
 
 If a match is found, a `Hashtag` component will be rendered and passed the following props.
 
-* `children` (string) - The entire hashtag that was matched.
-* `hashtagName` (string) - The hashtag name without `#`.
+- `children` (string) - The entire hashtag that was matched.
+- `hashtagName` (string) - The hashtag name without `#`.

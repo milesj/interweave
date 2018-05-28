@@ -11,10 +11,11 @@ import {
   GROUP_SMILEYS_PEOPLE,
   GROUP_NONE,
 } from './constants';
+import { CommonMode, Group } from './types';
 
 export interface GroupListHeaderProps {
-  commonMode: string;
-  group: string;
+  commonMode: CommonMode;
+  group: Group;
   skinTonePalette?: React.ReactNode;
 }
 

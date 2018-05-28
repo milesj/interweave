@@ -8,12 +8,13 @@ import PropTypes from 'prop-types';
 import { EmojiShape, CanonicalEmoji } from 'interweave-emoji';
 import Group from './Group';
 import { GROUPS, GROUP_COMMONLY_USED, GROUP_ICONS } from './constants';
+import { Group as GroupType } from './types';
 
 export interface GroupTabsProps {
-  activeGroup: string;
+  activeGroup: GroupType;
   commonEmojis: CanonicalEmoji[];
   icons: { [key: string]: React.ReactNode };
-  onSelect: (group: string, event: React.MouseEvent<HTMLButtonElement>) => void;
+  onSelect: (group: GroupType, event: React.MouseEvent<HTMLButtonElement>) => void;
 }
 
 export default class GroupTabs extends React.PureComponent<GroupTabsProps> {
