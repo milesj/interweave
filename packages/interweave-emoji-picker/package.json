@@ -17,6 +17,7 @@
   "repository": "https://github.com/milesj/interweave/tree/master/packages/interweave-emoji-picker",
   "license": "MIT",
   "dependencies": {
+    "@types/react-virtualized": "^9.18.3",
     "babel-runtime": "^6.26.0",
     "lodash": "^4.17.10",
     "prop-types": "^15.6.1",
@@ -28,7 +29,7 @@
     "react": "^16.3.0"
   },
   "devDependencies": {
-    "emojibase": "^1.7.0",
+    "emojibase": "^1.7.1",
     "interweave-emoji": "^1.4.0",
     "react": "^16.4.0"
   }

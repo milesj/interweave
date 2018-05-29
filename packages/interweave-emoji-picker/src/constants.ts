@@ -38,9 +38,9 @@ export {
   SKIN_KEY_DARK,
 };
 
-export const GROUP_KEY_COMMONLY_USED: GroupKey = 'commonly-used';
-export const GROUP_KEY_SEARCH_RESULTS: GroupKey = 'search-results';
-export const GROUP_KEY_NONE: GroupKey = 'none';
+export const GROUP_KEY_COMMONLY_USED = 'commonly-used';
+export const GROUP_KEY_SEARCH_RESULTS = 'search-results';
+export const GROUP_KEY_NONE = 'none';
 
 export const GROUPS: GroupKey[] = [
   GROUP_KEY_SMILEYS_PEOPLE,
@@ -53,7 +53,7 @@ export const GROUPS: GroupKey[] = [
   GROUP_KEY_FLAGS,
 ];
 
-export const GROUP_ICONS: { [key: string]: string } = {
+export const GROUP_ICONS = {
   [GROUP_KEY_COMMONLY_USED]: '🕑',
   [GROUP_KEY_SMILEYS_PEOPLE]: '😃',
   [GROUP_KEY_ANIMALS_NATURE]: '🌿',
@@ -65,7 +65,7 @@ export const GROUP_ICONS: { [key: string]: string } = {
   [GROUP_KEY_FLAGS]: '🏴',
 };
 
-export const SKIN_KEY_NONE: SkinToneKey = 'none';
+export const SKIN_KEY_NONE = 'none';
 
 export const SKIN_TONES: SkinToneKey[] = [
   SKIN_KEY_NONE,
@@ -76,7 +76,7 @@ export const SKIN_TONES: SkinToneKey[] = [
   SKIN_KEY_DARK,
 ];
 
-export const SKIN_COLORS: { [key: string]: string } = {
+export const SKIN_COLORS = {
   [SKIN_KEY_NONE]: '#FFCC22',
   [SKIN_KEY_LIGHT]: '#FADCBC',
   [SKIN_KEY_MEDIUM_LIGHT]: '#E0BB95',
@@ -85,17 +85,17 @@ export const SKIN_COLORS: { [key: string]: string } = {
   [SKIN_KEY_DARK]: '#5A463A',
 };
 
-export const SCROLL_BUFFER: number = 150;
-export const SCROLL_DEBOUNCE: number = 100;
-export const SEARCH_THROTTLE: number = 250;
+export const SCROLL_BUFFER = 150;
+export const SCROLL_DEBOUNCE = 100;
+export const SEARCH_THROTTLE = 250;
 
-export const KEY_COMMONLY_USED: string = 'interweave/emoji/commonlyUsed';
-export const KEY_SKIN_TONE: string = 'interweave/emoji/skinTone';
+export const KEY_COMMONLY_USED = 'interweave/emoji/commonlyUsed';
+export const KEY_SKIN_TONE = 'interweave/emoji/skinTone';
 
-export const COMMON_MODE_RECENT: CommonMode = 'recently-used';
-export const COMMON_MODE_FREQUENT: CommonMode = 'frequently-used';
+export const COMMON_MODE_RECENT = 'recently-used';
+export const COMMON_MODE_FREQUENT = 'frequently-used';
 
-export const CONTEXT_CLASSNAMES: { [key: string]: string } = {
+export const CONTEXT_CLASSNAMES = {
   picker: 'interweave-picker__picker',
   pickerVirtual: 'interweave-picker__picker--virtual',
   emoji: 'interweave-picker__emoji',
@@ -124,7 +124,7 @@ export const CONTEXT_CLASSNAMES: { [key: string]: string } = {
   searchInput: 'interweave-picker__search-input',
 };
 
-export const CONTEXT_MESSAGES: { [key: string]: string } = {
+export const CONTEXT_MESSAGES = {
   // Emoji groups
   [COMMON_MODE_FREQUENT]: 'Frequently Used',
   [COMMON_MODE_RECENT]: 'Recently Used',

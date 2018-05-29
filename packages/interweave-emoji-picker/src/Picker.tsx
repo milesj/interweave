@@ -49,13 +49,7 @@ import {
   CONTEXT_CLASSNAMES,
   CONTEXT_MESSAGES,
 } from './constants';
-import { CommonMode, Context as EmojiContext, DisplayOrder, GroupKey, SkinToneKey } from './types';
-
-export interface CommonEmoji {
-  count: number;
-  hexcode: Hexcode;
-  unicode?: Unicode; // Deprecated
-}
+import { CommonEmoji, CommonMode, Context as EmojiContext, GroupKey, SkinToneKey } from './types';
 
 export interface BlackWhiteMap {
   [hexcode: string]: boolean;
@@ -74,7 +68,7 @@ export interface PickerProps {
   disablePreview?: boolean;
   disableSearch?: boolean;
   disableSkinTones?: boolean;
-  displayOrder?: DisplayOrder[];
+  displayOrder?: string[];
   emojiLargeSize: number;
   emojiPadding?: number;
   emojiPath: Path;

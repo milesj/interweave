@@ -6,48 +6,41 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import debounce from 'lodash/debounce';
-import {
-  CanonicalEmoji,
-  EmojiShape,
-  EmojiPath,
-  EmojiPathShape,
-  EmojiSource,
-  EmojiSourceShape,
-} from 'interweave-emoji';
-import withContext, { ContextShape, EmojiContext } from './Context';
+import { CanonicalEmoji, EmojiShape, Path, PathShape, Source, SourceShape } from 'interweave-emoji';
+import withContext, { ContextProps } from './Context';
 import EmojiButton from './Emoji';
 import GroupListHeader from './GroupListHeader';
 import {
   GROUPS,
-  GROUP_COMMONLY_USED,
-  GROUP_SEARCH_RESULTS,
-  GROUP_SMILEYS_PEOPLE,
-  GROUP_NONE,
+  GROUP_KEY_COMMONLY_USED,
+  GROUP_KEY_SEARCH_RESULTS,
+  GROUP_KEY_SMILEYS_PEOPLE,
+  GROUP_KEY_NONE,
   SCROLL_BUFFER,
   SCROLL_DEBOUNCE,
 } from './constants';
-import { CommonMode, GroupKey, SkinToneKey } from './types';
+import { ContextShape } from './shapes';
+import { CommonMode, Context, GroupKey, GroupEmojiMap, SkinToneKey } from './types';
 
 export interface EmojiListProps {
   activeEmoji?: CanonicalEmoji | null;
   activeGroup: GroupKey;
   commonEmojis: CanonicalEmoji[];
   commonMode: CommonMode;
-  context: EmojiContext;
+  context: Context;
   disableGroups: boolean;
   emojiPadding: number;
-  emojiPath: EmojiPath;
+  emojiPath: Path;
   emojis: CanonicalEmoji[];
   emojiSize: number;
-  emojiSource: EmojiSource;
+  emojiSource: Source;
   hideGroupHeaders: boolean;
-  // TODO events
-  onEnterEmoji: (emoji: CanonicalEmoji, event: any) => void;
-  onLeaveEmoji: (emoji: CanonicalEmoji, event: any) => void;
-  onScroll: (event: any) => void;
-  onScrollGroup: (group: string, event: any) => void;
-  onSelectEmoji: (emoji: CanonicalEmoji, event: any) => void;
-  scrollToGroup: '' | GroupKey;
+  onEnterEmoji: (emoji: CanonicalEmoji, event: React.MouseEvent<HTMLButtonElement>) => void;
+  onLeaveEmoji: (emoji: CanonicalEmoji, event: React.MouseEvent<HTMLButtonElement>) => void;
+  onScroll: (event: React.UIEvent<HTMLDivElement>) => void;
+  onScrollGroup: (group: string, event: React.SyntheticEvent<any>) => void;
+  onSelectEmoji: (emoji: CanonicalEmoji, event: React.MouseEvent<HTMLButtonElement>) => void;
+  scrollToGroup: GroupKey | '';
   searchQuery: string;
   skinTonePalette?: React.ReactNode;
 }
@@ -65,10 +58,10 @@ export class EmojiList extends React.PureComponent<EmojiListProps, EmojiListStat
     context: ContextShape.isRequired,
     disableGroups: PropTypes.bool.isRequired,
     emojiPadding: PropTypes.number.isRequired,
-    emojiPath: EmojiPathShape.isRequired,
+    emojiPath: PathShape.isRequired,
     emojis: PropTypes.arrayOf(EmojiShape).isRequired,
     emojiSize: PropTypes.number.isRequired,
-    emojiSource: EmojiSourceShape.isRequired,
+    emojiSource: SourceShape.isRequired,
     hideGroupHeaders: PropTypes.bool.isRequired,
     onEnterEmoji: PropTypes.func.isRequired,
     onLeaveEmoji: PropTypes.func.isRequired,
@@ -91,13 +84,17 @@ export class EmojiList extends React.PureComponent<EmojiListProps, EmojiListStat
     super(props);
 
     const { activeGroup, emojis } = props;
-    const loadedGroups = [activeGroup, GROUP_COMMONLY_USED, GROUP_SEARCH_RESULTS];
+    const loadedGroups: GroupKey[] = [
+      activeGroup,
+      GROUP_KEY_COMMONLY_USED,
+      GROUP_KEY_SEARCH_RESULTS,
+    ];
 
     // When commonly used emojis are rendered,
     // the smileys group is usually within view as well,
     // so we should preload both of them.
-    if (activeGroup && activeGroup === GROUP_COMMONLY_USED) {
-      loadedGroups.push(GROUP_SMILEYS_PEOPLE);
+    if (activeGroup && activeGroup === GROUP_KEY_COMMONLY_USED) {
+      loadedGroups.push(GROUP_KEY_SMILEYS_PEOPLE);
     }
 
     this.state = {
@@ -113,7 +110,7 @@ export class EmojiList extends React.PureComponent<EmojiListProps, EmojiListStat
 
     // Search query has changed
     if (searchQuery && searchQuery !== prevProps.searchQuery) {
-      this.scrollToGroup(GROUP_SEARCH_RESULTS);
+      this.scrollToGroup(GROUP_KEY_SEARCH_RESULTS);
     }
 
     // Scroll to group when the tab is clicked
@@ -125,40 +122,52 @@ export class EmojiList extends React.PureComponent<EmojiListProps, EmojiListStat
   /**
    * Partition the dataset into multiple arrays based on the group they belong to.
    */
-  groupEmojis(): { [group: string]: CanonicalEmoji[] } {
+  groupEmojis(): GroupEmojiMap {
     const { commonEmojis, disableGroups, emojis, searchQuery } = this.props;
-    const groups = {};
+    const groups: GroupEmojiMap = {};
 
     // Add commonly used group if not searching
     if (!searchQuery && commonEmojis.length > 0) {
-      groups[GROUP_COMMONLY_USED] = commonEmojis;
+      groups[GROUP_KEY_COMMONLY_USED] = {
+        emojis: commonEmojis,
+        group: GROUP_KEY_COMMONLY_USED,
+      };
     }
 
     // Partition emojis into separate groups
     emojis.forEach(emoji => {
-      let group = GROUPS[emoji.group];
+      let group: GroupKey = GROUP_KEY_NONE;
 
       if (searchQuery) {
-        group = GROUP_SEARCH_RESULTS;
+        group = GROUP_KEY_SEARCH_RESULTS;
       } else if (disableGroups) {
-        group = GROUP_NONE;
+        group = GROUP_KEY_NONE;
+      } else if (emoji.group) {
+        group = GROUPS[emoji.group];
       }
 
-      if (groups[group]) {
-        groups[group].push(emoji);
+      if (!group) {
+        return;
+      }
+
+      if (typeof groups[group] === 'undefined') {
+        groups[group] = {
+          emojis: [emoji],
+          group,
+        };
       } else {
-        groups[group] = [emoji];
+        groups[group].emojis.push(emoji);
       }
     });
 
     // Sort each group
     Object.keys(groups).forEach(group => {
-      if (group !== GROUP_COMMONLY_USED) {
-        groups[group].sort((a, b) => a.order - b.order);
+      if (group !== GROUP_KEY_COMMONLY_USED) {
+        groups[group].emojis.sort((a, b) => (a.order || 0) - (b.order || 0));
       }
 
       // Remove the group if no emojis
-      if (groups[group].length === 0) {
+      if (groups[group].emojis.length === 0) {
         delete groups[group];
       }
     });
@@ -169,34 +178,35 @@ export class EmojiList extends React.PureComponent<EmojiListProps, EmojiListStat
   /**
    * Triggered when the container is scrolled.
    */
-  handleScroll = (event: React.MouseEvent<HTMLDivElement>) => {
-    e.stopPropagation();
-    e.persist();
+  handleScroll = (event: React.UIEvent<HTMLDivElement>) => {
+    event.stopPropagation();
+    event.persist();
 
-    this.handleScrollDebounced(e);
+    this.handleScrollDebounced(event);
   };
 
   /**
    * A scroll handler that is debounced for performance.
    */
-  private handleScrollDebounced = debounce((event: React.MouseEvent<HTMLDivElement>) => {
-    this.loadEmojiImages(e.currentTarget, e);
-    this.props.onScroll(e);
+  private handleScrollDebounced = debounce((event: React.UIEvent<HTMLDivElement>) => {
+    this.loadEmojiImages(event.currentTarget, event);
+    this.props.onScroll(event);
   }, SCROLL_DEBOUNCE);
 
   /**
    * Loop over each group section within the scrollable container
    * and determine the active group and whether to load emoji images.
    */
-  loadEmojiImages(container: HTMLDivElement, e?: React.MouseEvent<HTMLDivElement>) {
+  loadEmojiImages(container: HTMLDivElement, event?: React.SyntheticEvent<any>) {
     const { scrollTop } = container;
     const { searchQuery } = this.props;
     const { loadedGroups } = this.state;
     let updateState = false;
     let lastGroup = '';
 
-    Array.from(container.children).some(section => {
-      const group = section.getAttribute('data-group');
+    Array.from(container.children).some(child => {
+      const section = child as HTMLDivElement;
+      const group = (section.getAttribute('data-group') || '') as GroupKey;
       let loadImages = false;
 
       // Special case for commonly used and smileys,
@@ -234,8 +244,8 @@ export class EmojiList extends React.PureComponent<EmojiListProps, EmojiListStat
     });
 
     // Only update during a scroll event and if a different group
-    if (e && lastGroup !== this.props.activeGroup) {
-      this.props.onScrollGroup(lastGroup, e);
+    if (event && lastGroup !== this.props.activeGroup) {
+      this.props.onScrollGroup(lastGroup, event);
     }
 
     if (updateState) {
@@ -254,7 +264,7 @@ export class EmojiList extends React.PureComponent<EmojiListProps, EmojiListStat
     }
 
     const { current } = this.containerRef;
-    const element = current.querySelector(`section[data-group="${group}"]`);
+    const element: HTMLDivElement | null = current.querySelector(`section[data-group="${group}"]`);
 
     if (!element || !current) {
       return;
@@ -271,6 +281,7 @@ export class EmojiList extends React.PureComponent<EmojiListProps, EmojiListStat
     const {
       activeEmoji,
       commonMode,
+      context: { classNames, messages },
       emojiPadding,
       emojiPath,
       emojiSize,
@@ -281,7 +292,6 @@ export class EmojiList extends React.PureComponent<EmojiListProps, EmojiListStat
       onLeaveEmoji,
       onSelectEmoji,
     } = this.props;
-    const { classNames, messages } = this.props.context;
     const { loadedGroups } = this.state;
     const groupedEmojis = this.groupEmojis();
     const noResults = Object.keys(groupedEmojis).length === 0;
@@ -291,7 +301,7 @@ export class EmojiList extends React.PureComponent<EmojiListProps, EmojiListStat
         {noResults ? (
           <div className={classNames.noResults}>{messages.noResults}</div>
         ) : (
-          Object.keys(groupedEmojis).map(group => (
+          Object.values(groupedEmojis).map(({ emojis, group }) => (
             <section key={group} className={classNames.emojisSection} data-group={group}>
               {!hideGroupHeaders && (
                 <GroupListHeader
@@ -302,7 +312,7 @@ export class EmojiList extends React.PureComponent<EmojiListProps, EmojiListStat
               )}
 
               <div className={classNames.emojisBody}>
-                {groupedEmojis[group].map((emoji, index) => (
+                {emojis.map((emoji, index) => (
                   <EmojiButton
                     key={emoji.hexcode}
                     active={activeEmoji ? activeEmoji.hexcode === emoji.hexcode : false}

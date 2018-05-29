@@ -1,57 +1,62 @@
 /**
  * @copyright   2016, Miles Johnson
  * @license     https://opensource.org/licenses/MIT
- * @flow
  */
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import List from 'react-virtualized/dist/commonjs/List';
+import List, { ListRowProps } from 'react-virtualized/dist/commonjs/List';
 import chunk from 'lodash/chunk';
-import { EmojiShape, EmojiPathShape, EmojiSourceShape } from 'interweave-emoji';
+import { CanonicalEmoji, EmojiShape, Path, PathShape, Source, SourceShape } from 'interweave-emoji';
+import withContext, { ContextProps } from './Context';
 import EmojiButton from './Emoji';
 import GroupListHeader from './GroupListHeader';
-import { GROUPS, GROUP_COMMONLY_USED, GROUP_SEARCH_RESULTS, GROUP_NONE } from './constants';
+import {
+  GROUPS,
+  GROUP_KEY_COMMONLY_USED,
+  GROUP_KEY_SEARCH_RESULTS,
+  GROUP_KEY_NONE,
+} from './constants';
+import { ContextShape } from './shapes';
+import { CommonEmoji, CommonMode, GroupKey, GroupEmojiMap, GroupIndexMap } from './types';
 
-import type { Emoji, EmojiPath, EmojiSource } from 'interweave-emoji'; // eslint-disable-line
+export type VirtualRow = string | CanonicalEmoji[];
 
-type EmojiListProps = {
-  activeEmoji: ?Emoji,
-  activeGroup: string,
-  columnCount: number,
-  columnPadding: number,
-  commonEmojis: Emoji[],
-  commonMode: string,
-  disableGroups: boolean,
-  emojiPadding: number,
-  emojiPath: EmojiPath,
-  emojis: Emoji[],
-  emojiSize: number,
-  emojiSource: EmojiSource,
-  hideGroupHeaders: boolean,
-  onEnterEmoji: (emoji: Emoji, event: *) => void,
-  onLeaveEmoji: (emoji: Emoji, event: *) => void,
-  onScroll: (event: *) => void,
-  onScrollGroup: (group: string, event: *) => void,
-  onSelectEmoji: (emoji: Emoji, event: *) => void,
-  rowCount: number,
-  rowPadding: number,
-  scrollToGroup: string,
-  searchQuery: string,
-  skinTonePalette: React.ReactNode,
-};
+export interface EmojiListProps {
+  activeEmoji: CanonicalEmoji | null;
+  activeGroup: GroupKey;
+  columnCount: number;
+  columnPadding: number;
+  commonEmojis: CanonicalEmoji[];
+  commonMode: CommonMode;
+  disableGroups: boolean;
+  emojiPadding: number;
+  emojiPath: Path;
+  emojis: CanonicalEmoji[];
+  emojiSize: number;
+  emojiSource: Source;
+  hideGroupHeaders: boolean;
+  onEnterEmoji: (emoji: CanonicalEmoji, event: any) => void;
+  onLeaveEmoji: (emoji: CanonicalEmoji, event: any) => void;
+  onScroll: (event: any) => void;
+  onScrollGroup: (group: GroupKey, event: any) => void;
+  onSelectEmoji: (emoji: CanonicalEmoji, event: any) => void;
+  rowCount: number;
+  rowPadding: number;
+  scrollToGroup: GroupKey | '';
+  searchQuery: string;
+  skinTonePalette: React.ReactNode;
+}
 
-type EmojiListState = {
-  groupIndices: { [key: string]: number },
-  rows: (string | Emoji[])[],
-};
+export interface EmojiListState {
+  groupIndices: GroupIndexMap;
+  rows: VirtualRow[];
+}
 
-export default class EmojiVirtualList extends React.PureComponent<EmojiListProps, EmojiListState> {
-  static contextTypes = {
-    classNames: PropTypes.objectOf(PropTypes.string),
-    messages: PropTypes.objectOf(PropTypes.node),
-  };
-
+export class EmojiVirtualList extends React.PureComponent<
+  EmojiListProps & ContextProps,
+  EmojiListState
+> {
   static propTypes = {
     activeEmoji: EmojiShape,
     activeGroup: PropTypes.string.isRequired,
@@ -59,12 +64,13 @@ export default class EmojiVirtualList extends React.PureComponent<EmojiListProps
     columnPadding: PropTypes.number,
     commonEmojis: PropTypes.arrayOf(EmojiShape).isRequired,
     commonMode: PropTypes.string.isRequired,
+    context: ContextShape.isRequired,
     disableGroups: PropTypes.bool.isRequired,
     emojiPadding: PropTypes.number.isRequired,
-    emojiPath: EmojiPathShape.isRequired,
+    emojiPath: PathShape.isRequired,
     emojis: PropTypes.arrayOf(EmojiShape).isRequired,
     emojiSize: PropTypes.number.isRequired,
-    emojiSource: EmojiSourceShape.isRequired,
+    emojiSource: SourceShape.isRequired,
     hideGroupHeaders: PropTypes.bool.isRequired,
     onEnterEmoji: PropTypes.func.isRequired,
     onLeaveEmoji: PropTypes.func.isRequired,
@@ -121,43 +127,57 @@ export default class EmojiVirtualList extends React.PureComponent<EmojiListProps
       hideGroupHeaders,
       searchQuery,
     } = this.props;
-    const groups = {};
-    const rows = [];
-    const groupIndices = {
+    const groups: GroupEmojiMap = {};
+    const rows: VirtualRow[] = [];
+    const groupIndices: GroupIndexMap = {
       // Handle empty scroll to's
       '': -1,
     };
 
     // Add commonly used group if not searching
     if (!searchQuery && commonEmojis.length > 0) {
-      groups[GROUP_COMMONLY_USED] = commonEmojis;
+      groups[GROUP_KEY_COMMONLY_USED] = {
+        emojis: commonEmojis,
+        group: GROUP_KEY_COMMONLY_USED,
+      };
     }
 
     // Partition emojis into separate groups
     emojis.forEach(emoji => {
+      if (!emoji.group) {
+        return;
+      }
+
       let group = GROUPS[emoji.group];
 
+      if (!group) {
+        return;
+      }
+
       if (searchQuery) {
-        group = GROUP_SEARCH_RESULTS;
+        group = GROUP_KEY_SEARCH_RESULTS;
       } else if (disableGroups) {
-        group = GROUP_NONE;
+        group = GROUP_KEY_NONE;
       }
 
       if (groups[group]) {
-        groups[group].push(emoji);
+        groups[group].emojis.push(emoji);
       } else {
-        groups[group] = [emoji];
+        groups[group] = {
+          emojis: [emoji],
+          group,
+        };
       }
     });
 
     // Sort each group and chunk into rows
     Object.keys(groups).forEach(group => {
-      if (groups[group].length === 0) {
+      if (groups[group].emojis.length === 0) {
         return;
       }
 
-      if (group !== GROUP_COMMONLY_USED) {
-        groups[group].sort((a, b) => a.order - b.order);
+      if (group !== GROUP_KEY_COMMONLY_USED) {
+        groups[group].emojis.sort((a, b) => (a.order || 0) - (b.order || 0));
       }
 
       groupIndices[group] = rows.length;
@@ -166,7 +186,7 @@ export default class EmojiVirtualList extends React.PureComponent<EmojiListProps
         rows.push(group);
       }
 
-      rows.push(...chunk(groups[group], columnCount));
+      rows.push(...chunk(groups[group].emojis, columnCount));
     });
 
     this.setState({
@@ -179,8 +199,13 @@ export default class EmojiVirtualList extends React.PureComponent<EmojiListProps
    * Loop over each group section within the scrollable container
    * and determine the active group.
    */
-  handleRendered = (event: Object) => {
-    const { startIndex, stopIndex } = e;
+  handleRendered = (event: {
+    overscanStartIndex: number;
+    overscanStopIndex: number;
+    startIndex: number;
+    stopIndex: number;
+  }) => {
+    const { startIndex, stopIndex } = event;
     const { activeGroup, rowCount } = this.props;
     const { groupIndices } = this.state;
     let lastGroup = '';
@@ -225,11 +250,12 @@ export default class EmojiVirtualList extends React.PureComponent<EmojiListProps
   /**
    * Render the list row. Either a group header or a row of emoji columns.
    */
-  renderRow = (params: Object) => {
-    const { key, index, isVisible, style } = params;
+  renderRow = (props: ListRowProps) => {
+    const { key, index, isVisible, style } = props;
     const {
       activeEmoji,
       commonMode,
+      context: { classNames },
       emojiPadding,
       emojiPath,
       emojiSize,
@@ -239,7 +265,6 @@ export default class EmojiVirtualList extends React.PureComponent<EmojiListProps
       onLeaveEmoji,
       onSelectEmoji,
     } = this.props;
-    const { classNames } = this.props.context;
     const row = this.state.rows[index];
 
     return (
@@ -322,3 +347,5 @@ export default class EmojiVirtualList extends React.PureComponent<EmojiListProps
     );
   }
 }
+
+export default withContext(EmojiVirtualList);
