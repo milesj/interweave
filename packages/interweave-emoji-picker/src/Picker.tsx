@@ -8,12 +8,13 @@ import PropTypes from 'prop-types';
 import {
   CanonicalEmoji,
   withEmojiData,
+  EmojiDataLoaderProps,
   EmojiData,
   EmojiShape,
-  EmojiPath,
-  EmojiPathShape,
-  EmojiSource,
-  EmojiSourceShape,
+  Path,
+  PathShape,
+  Source,
+  SourceShape,
 } from 'interweave-emoji';
 import { Hexcode, Unicode } from 'emojibase';
 import { Context } from './Context';
@@ -24,24 +25,24 @@ import GroupTabs from './GroupTabs';
 import PreviewBar from './PreviewBar';
 import SearchBar from './SearchBar';
 import {
-  GROUP_COMMONLY_USED,
-  GROUP_SMILEYS_PEOPLE,
-  GROUP_ANIMALS_NATURE,
-  GROUP_FOOD_DRINK,
-  GROUP_TRAVEL_PLACES,
-  GROUP_ACTIVITIES,
-  GROUP_OBJECTS,
-  GROUP_SYMBOLS,
-  GROUP_FLAGS,
-  GROUP_SEARCH_RESULTS,
-  GROUP_NONE,
+  GROUP_KEY_COMMONLY_USED,
+  GROUP_KEY_SMILEYS_PEOPLE,
+  GROUP_KEY_ANIMALS_NATURE,
+  GROUP_KEY_FOOD_DRINK,
+  GROUP_KEY_TRAVEL_PLACES,
+  GROUP_KEY_ACTIVITIES,
+  GROUP_KEY_OBJECTS,
+  GROUP_KEY_SYMBOLS,
+  GROUP_KEY_FLAGS,
+  GROUP_KEY_SEARCH_RESULTS,
+  GROUP_KEY_NONE,
   SKIN_TONES,
-  SKIN_NONE,
-  SKIN_LIGHT,
-  SKIN_MEDIUM_LIGHT,
-  SKIN_MEDIUM,
-  SKIN_MEDIUM_DARK,
-  SKIN_DARK,
+  SKIN_KEY_NONE,
+  SKIN_KEY_LIGHT,
+  SKIN_KEY_MEDIUM_LIGHT,
+  SKIN_KEY_MEDIUM,
+  SKIN_KEY_MEDIUM_DARK,
+  SKIN_KEY_DARK,
   KEY_COMMONLY_USED,
   KEY_SKIN_TONE,
   COMMON_MODE_RECENT,
@@ -49,7 +50,7 @@ import {
   CONTEXT_CLASSNAMES,
   CONTEXT_MESSAGES,
 } from './constants';
-import { CommonMode, GroupKey, SkinToneKey } from './types';
+import { CommonMode, Context as EmojiContext, DisplayOrder, GroupKey, SkinToneKey } from './types';
 
 export interface CommonEmoji {
   count: number;
@@ -74,13 +75,13 @@ export interface PickerProps {
   disablePreview?: boolean;
   disableSearch?: boolean;
   disableSkinTones?: boolean;
-  displayOrder?: string[];
+  displayOrder?: DisplayOrder[];
   emojiLargeSize: number;
   emojiPadding?: number;
-  emojiPath: EmojiPath;
+  emojiPath: Path;
   emojis: CanonicalEmoji[];
   emojiSize: number;
-  emojiSource: EmojiSource;
+  emojiSource: Source;
   groupIcons?: { [key: string]: React.ReactNode };
   hideEmoticon?: boolean;
   hideGroupHeaders?: boolean;
@@ -110,14 +111,14 @@ export interface PickerState {
   commonEmojis: CanonicalEmoji[]; // List of emoji hexcodes most commonly used
   context: EmojiContext;
   emojis: CanonicalEmoji[]; // List of all emojis with search filtering applied
-  scrollToGroup: '' | GroupKey; // Group to scroll to on render
+  scrollToGroup: GroupKey | ''; // Group to scroll to on render
   searchQuery: string; // Current search query
   whitelisted: BlackWhiteMap; // Map of whitelisted emoji hexcodes (without skin modifier)
 }
 
 const SKIN_MODIFIER_PATTERN: RegExp = /1F3FB|1F3FC|1F3FD|1F3FE|1F3FF/g;
 
-class Picker extends React.Component<PickerProps, PickerState> {
+class Picker extends React.Component<PickerProps & EmojiDataLoaderProps, PickerState> {
   static propTypes = {
     autoFocus: PropTypes.bool,
     blacklist: PropTypes.arrayOf(PropTypes.string),
@@ -125,23 +126,23 @@ class Picker extends React.Component<PickerProps, PickerState> {
     columnCount: PropTypes.number,
     commonMode: PropTypes.oneOf([COMMON_MODE_RECENT, COMMON_MODE_FREQUENT]),
     defaultGroup: PropTypes.oneOf([
-      GROUP_COMMONLY_USED,
-      GROUP_SMILEYS_PEOPLE,
-      GROUP_ANIMALS_NATURE,
-      GROUP_FOOD_DRINK,
-      GROUP_TRAVEL_PLACES,
-      GROUP_ACTIVITIES,
-      GROUP_OBJECTS,
-      GROUP_SYMBOLS,
-      GROUP_FLAGS,
+      GROUP_KEY_COMMONLY_USED,
+      GROUP_KEY_SMILEYS_PEOPLE,
+      GROUP_KEY_ANIMALS_NATURE,
+      GROUP_KEY_FOOD_DRINK,
+      GROUP_KEY_TRAVEL_PLACES,
+      GROUP_KEY_ACTIVITIES,
+      GROUP_KEY_OBJECTS,
+      GROUP_KEY_SYMBOLS,
+      GROUP_KEY_FLAGS,
     ]),
     defaultSkinTone: PropTypes.oneOf([
-      SKIN_NONE,
-      SKIN_LIGHT,
-      SKIN_MEDIUM_LIGHT,
-      SKIN_MEDIUM,
-      SKIN_MEDIUM_DARK,
-      SKIN_DARK,
+      SKIN_KEY_NONE,
+      SKIN_KEY_LIGHT,
+      SKIN_KEY_MEDIUM_LIGHT,
+      SKIN_KEY_MEDIUM,
+      SKIN_KEY_MEDIUM_DARK,
+      SKIN_KEY_DARK,
     ]),
     disableCommonlyUsed: PropTypes.bool,
     disableGroups: PropTypes.bool,
@@ -151,10 +152,10 @@ class Picker extends React.Component<PickerProps, PickerState> {
     displayOrder: PropTypes.arrayOf(PropTypes.string),
     emojiLargeSize: PropTypes.number.isRequired,
     emojiPadding: PropTypes.number,
-    emojiPath: EmojiPathShape.isRequired,
+    emojiPath: PathShape.isRequired,
     emojis: PropTypes.arrayOf(EmojiShape).isRequired,
     emojiSize: PropTypes.number.isRequired,
-    emojiSource: EmojiSourceShape.isRequired,
+    emojiSource: SourceShape.isRequired,
     groupIcons: PropTypes.objectOf(PropTypes.node),
     hideEmoticon: PropTypes.bool,
     hideGroupHeaders: PropTypes.bool,
@@ -187,8 +188,8 @@ class Picker extends React.Component<PickerProps, PickerState> {
     classNames: {},
     columnCount: 10,
     commonMode: COMMON_MODE_RECENT,
-    defaultGroup: GROUP_COMMONLY_USED,
-    defaultSkinTone: SKIN_NONE,
+    defaultGroup: GROUP_KEY_COMMONLY_USED,
+    defaultSkinTone: SKIN_KEY_NONE,
     disableCommonlyUsed: false,
     disableGroups: false,
     disablePreview: false,
@@ -438,15 +439,15 @@ class Picker extends React.Component<PickerProps, PickerState> {
     let group = defaultGroup!;
 
     // Allow commonly used before "none" groups
-    if (group === GROUP_COMMONLY_USED) {
+    if (group === GROUP_KEY_COMMONLY_USED) {
       if (this.state.commonEmojis.length > 0) {
-        return GROUP_COMMONLY_USED;
+        return GROUP_KEY_COMMONLY_USED;
       }
 
-      group = GROUP_SMILEYS_PEOPLE;
+      group = GROUP_KEY_SMILEYS_PEOPLE;
     }
 
-    return disableGroups ? GROUP_NONE : group;
+    return disableGroups ? GROUP_KEY_NONE : group;
   }
 
   /**
@@ -480,7 +481,7 @@ class Picker extends React.Component<PickerProps, PickerState> {
    * otherwise return the default skin tone (yellow).
    */
   getSkinnedEmoji(emoji: CanonicalEmoji, skinTone: SkinToneKey): CanonicalEmoji {
-    if (skinTone === SKIN_NONE || !emoji.skins) {
+    if (skinTone === SKIN_KEY_NONE || !emoji.skins) {
       return emoji;
     }
 
@@ -609,8 +610,8 @@ class Picker extends React.Component<PickerProps, PickerState> {
     this.setUpdatedEmojis(query, this.state.activeSkinTone);
 
     this.setState({
-      activeGroup: query ? GROUP_SEARCH_RESULTS : defaultGroup,
-      scrollToGroup: query ? GROUP_SEARCH_RESULTS : defaultGroup,
+      activeGroup: query ? GROUP_KEY_SEARCH_RESULTS : defaultGroup,
+      scrollToGroup: query ? GROUP_KEY_SEARCH_RESULTS : defaultGroup,
       searchQuery: query,
     });
 
@@ -767,7 +768,7 @@ class Picker extends React.Component<PickerProps, PickerState> {
           rowCount={rowCount}
           scrollToGroup={scrollToGroup}
           searchQuery={searchQuery}
-          skinTonePalette={displayOrder.includes('skinTones') ? null : skinTones}
+          skinTonePalette={displayOrder.includes('skin-tones') ? null : skinTones}
           onEnterEmoji={this.handleEnterEmoji}
           onLeaveEmoji={this.handleLeaveEmoji}
           onScroll={onScroll}
@@ -804,7 +805,7 @@ class Picker extends React.Component<PickerProps, PickerState> {
           onKeyUp={this.handleKeyUp}
         />
       ),
-      skinTones,
+      'skin-tones': skinTones,
     };
     const classes = [context.classNames.picker];
 

@@ -6,18 +6,18 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import withContext, { ContextShape, EmojiContext } from './Context';
+import withContext, { ContextProps } from './Context';
+import { ContextShape } from './shapes';
 import { GroupKey } from './types';
 
 export interface GroupProps {
   activeGroup: GroupKey;
   children: React.ReactNode;
-  context: EmojiContext;
   group: GroupKey;
   onSelect: (group: GroupKey, event: React.MouseEvent<HTMLButtonElement>) => void;
 }
 
-export class Group extends React.PureComponent<GroupProps> {
+export class Group extends React.PureComponent<GroupProps & ContextProps> {
   static propTypes = {
     activeGroup: PropTypes.string.isRequired,
     children: PropTypes.node.isRequired,
@@ -36,8 +36,12 @@ export class Group extends React.PureComponent<GroupProps> {
   };
 
   render() {
-    const { activeGroup, children, group } = this.props;
-    const { classNames, messages } = this.props.context;
+    const {
+      activeGroup,
+      children,
+      context: { classNames, messages },
+      group,
+    } = this.props;
     const className = [classNames.group];
 
     if (group === activeGroup) {

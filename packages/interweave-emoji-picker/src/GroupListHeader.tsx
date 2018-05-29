@@ -5,23 +5,23 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import withContext, { ContextShape, EmojiContext } from './Context';
+import withContext, { ContextProps } from './Context';
 import {
-  GROUP_COMMONLY_USED,
-  GROUP_SEARCH_RESULTS,
-  GROUP_SMILEYS_PEOPLE,
-  GROUP_NONE,
+  GROUP_KEY_COMMONLY_USED,
+  GROUP_KEY_SEARCH_RESULTS,
+  GROUP_KEY_SMILEYS_PEOPLE,
+  GROUP_KEY_NONE,
 } from './constants';
+import { ContextShape } from './shapes';
 import { CommonMode, GroupKey } from './types';
 
 export interface GroupListHeaderProps {
   commonMode: CommonMode;
-  context: EmojiContext;
   group: GroupKey;
   skinTonePalette?: React.ReactNode;
 }
 
-export class GroupListHeader extends React.PureComponent<GroupListHeaderProps> {
+export class GroupListHeader extends React.PureComponent<GroupListHeaderProps & ContextProps> {
   static propTypes = {
     commonMode: PropTypes.string.isRequired,
     context: ContextShape.isRequired,
@@ -34,17 +34,23 @@ export class GroupListHeader extends React.PureComponent<GroupListHeaderProps> {
   };
 
   render() {
-    const { commonMode, group, skinTonePalette } = this.props;
-    const { classNames, messages } = this.props.context;
+    const {
+      commonMode,
+      context: { classNames, messages },
+      group,
+      skinTonePalette,
+    } = this.props;
     const showPalette =
       skinTonePalette &&
-      (group === GROUP_SMILEYS_PEOPLE || group === GROUP_SEARCH_RESULTS || group === GROUP_NONE);
+      (group === GROUP_KEY_SMILEYS_PEOPLE ||
+        group === GROUP_KEY_SEARCH_RESULTS ||
+        group === GROUP_KEY_NONE);
 
     return (
       <header className={classNames.emojisHeader}>
         {showPalette && skinTonePalette}
 
-        {group === GROUP_COMMONLY_USED ? messages[commonMode] : messages[group]}
+        {group === GROUP_KEY_COMMONLY_USED ? messages[commonMode] : messages[group]}
       </header>
     );
   }

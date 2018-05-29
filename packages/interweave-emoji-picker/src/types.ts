@@ -12,6 +12,8 @@ export interface Context {
   messages: { [key: string]: string };
 }
 
+export type DisplayOrder = 'preview' | 'emojis' | 'groups' | 'search' | 'skin-tones';
+
 export type GroupKey = BaseGroupKey | 'commonly-used' | 'search-results' | 'none';
 
 export type SkinToneKey = BaseSkinToneKey | 'none';

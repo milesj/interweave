@@ -6,15 +6,15 @@
 import Emoji, { EmojiProps } from './Emoji';
 import EmojiData from './EmojiData';
 import EmojiMatcher, { EmojiMatcherOptions } from './EmojiMatcher';
-import withEmojiData, { EmojiDataLoaderProps, EmojiDataLoaderInjectedProps } from './withEmojiData';
+import withEmojiData, { EmojiDataLoaderInternalProps, EmojiDataLoaderProps } from './withEmojiData';
 
 export {
   EmojiProps,
   EmojiData,
   EmojiMatcher,
   EmojiMatcherOptions,
+  EmojiDataLoaderInternalProps,
   EmojiDataLoaderProps,
-  EmojiDataLoaderInjectedProps,
   withEmojiData,
 };
 

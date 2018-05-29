@@ -13,14 +13,14 @@ import EmojiData from './EmojiData';
 import { EmojiShape } from './shapes';
 import { CanonicalEmoji, Source } from './types';
 
-export interface EmojiDataLoaderProps {
+export interface EmojiDataLoaderInternalProps {
   compact?: boolean;
   emojis?: Emoji[];
   locale?: string;
   version?: string;
 }
 
-export interface EmojiDataLoaderInjectedProps {
+export interface EmojiDataLoaderProps {
   emojis: CanonicalEmoji[];
   emojiSource: Source;
 }
@@ -41,10 +41,10 @@ export function resetLoaded() {
 }
 
 export default function withEmojiData<T extends {}>(
-  Component: React.ComponentType<T & EmojiDataLoaderInjectedProps>,
+  Component: React.ComponentType<T & EmojiDataLoaderProps>,
 ) {
   return class EmojiDataLoader extends React.PureComponent<
-    T & EmojiDataLoaderProps,
+    T & EmojiDataLoaderInternalProps,
     EmojiDataLoaderState
   > {
     static propTypes = {
@@ -69,7 +69,7 @@ export default function withEmojiData<T extends {}>(
       this.loadEmojis();
     }
 
-    componentDidUpdate(prevProps: EmojiDataLoaderProps) {
+    componentDidUpdate(prevProps: EmojiDataLoaderInternalProps) {
       const { compact, emojis, locale, version } = this.props;
 
       if (
@@ -103,7 +103,9 @@ export default function withEmojiData<T extends {}>(
      * Load and parse emoji data from the CDN or use the provided dataset.
      */
     loadEmojis() {
-      const { compact, emojis, locale, version } = this.props as Required<EmojiDataLoaderProps>;
+      const { compact, emojis, locale, version } = this.props as Required<
+        EmojiDataLoaderInternalProps
+      >;
 
       // Abort as we've already loaded data
       if (loaded[locale]) {

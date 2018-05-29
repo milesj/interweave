@@ -8,21 +8,21 @@ import PropTypes from 'prop-types';
 import EmojiCharacter, {
   CanonicalEmoji,
   EmojiShape,
-  EmojiPath,
-  EmojiPathShape,
-  EmojiSource,
-  EmojiSourceShape,
+  Path,
+  PathShape,
+  Source,
+  SourceShape,
 } from 'interweave-emoji';
-import withContext, { ContextShape, EmojiContext } from './Context';
+import withContext, { ContextProps } from './Context';
+import { ContextShape } from './shapes';
 
 export interface EmojiProps {
   active: boolean;
-  context: EmojiContext;
   emoji: CanonicalEmoji;
   emojiPadding: number;
-  emojiPath: EmojiPath;
+  emojiPath: Path;
   emojiSize: number;
-  emojiSource: EmojiSource;
+  emojiSource: Source;
   onEnter: (emoji: CanonicalEmoji, event: React.MouseEvent<HTMLButtonElement>) => void;
   onLeave: (emoji: CanonicalEmoji, event: React.MouseEvent<HTMLButtonElement>) => void;
   onSelect: (emoji: CanonicalEmoji, event: React.MouseEvent<HTMLButtonElement>) => void;
@@ -33,15 +33,15 @@ export interface EmojiState {
   active: boolean;
 }
 
-export class EmojiButton extends React.PureComponent<EmojiProps, EmojiState> {
+export class Emoji extends React.PureComponent<EmojiProps & ContextProps, EmojiState> {
   static propTypes = {
     active: PropTypes.bool.isRequired,
     context: ContextShape.isRequired,
     emoji: EmojiShape.isRequired,
     emojiPadding: PropTypes.number.isRequired,
-    emojiPath: EmojiPathShape.isRequired,
+    emojiPath: PathShape.isRequired,
     emojiSize: PropTypes.number.isRequired,
-    emojiSource: EmojiSourceShape.isRequired,
+    emojiSource: SourceShape.isRequired,
     onEnter: PropTypes.func.isRequired,
     onLeave: PropTypes.func.isRequired,
     onSelect: PropTypes.func.isRequired,
@@ -96,8 +96,15 @@ export class EmojiButton extends React.PureComponent<EmojiProps, EmojiState> {
   };
 
   render() {
-    const { emoji, emojiPadding, emojiPath, emojiSize, emojiSource, showImage } = this.props;
-    const { classNames } = this.props.context;
+    const {
+      context: { classNames },
+      emoji,
+      emojiPadding,
+      emojiPath,
+      emojiSize,
+      emojiSource,
+      showImage,
+    } = this.props;
     const { active } = this.state;
     const dimension = emojiPadding + emojiPadding + emojiSize;
     const className = [classNames.emoji];
@@ -145,4 +152,4 @@ export class EmojiButton extends React.PureComponent<EmojiProps, EmojiState> {
   }
 }
 
-export default withContext(EmojiButton);
+export default withContext(Emoji);
