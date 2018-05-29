@@ -20,7 +20,11 @@ export interface NodeConfig {
 }
 
 export interface Attributes {
-  [key: string]: string | number | boolean;
+  [attr: string]: string | number | boolean;
+}
+
+export interface Props {
+  [prop: string]: any;
 }
 
 export type AfterParseCallback = (content: React.ReactNode[], props: Props) => React.ReactNode[];
@@ -38,10 +42,6 @@ export type MatchCallback = (matches: string[]) => object;
 export interface MatchResponse {
   match: string;
   [key: string]: string;
-}
-
-export interface Props {
-  [prop: string]: any;
 }
 
 export interface ConfigMap {

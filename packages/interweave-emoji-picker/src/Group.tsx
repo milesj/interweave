@@ -7,14 +7,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import withContext, { ContextShape, EmojiContext } from './Context';
-import { Group as GroupType } from './types';
+import { GroupKey } from './types';
 
 export interface GroupProps {
-  activeGroup: GroupType;
+  activeGroup: GroupKey;
   children: React.ReactNode;
   context: EmojiContext;
-  group: GroupType;
-  onSelect: (group: GroupType, event: React.MouseEvent<HTMLButtonElement>) => void;
+  group: GroupKey;
+  onSelect: (group: GroupKey, event: React.MouseEvent<HTMLButtonElement>) => void;
 }
 
 export class Group extends React.PureComponent<GroupProps> {

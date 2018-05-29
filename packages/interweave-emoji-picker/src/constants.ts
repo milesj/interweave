@@ -5,66 +5,84 @@
 
 /* eslint-disable sort-keys */
 
-import { CommonMode, Group, SkinTone } from './types';
+import {
+  GROUP_KEY_SMILEYS_PEOPLE,
+  GROUP_KEY_ANIMALS_NATURE,
+  GROUP_KEY_FOOD_DRINK,
+  GROUP_KEY_TRAVEL_PLACES,
+  GROUP_KEY_ACTIVITIES,
+  GROUP_KEY_OBJECTS,
+  GROUP_KEY_SYMBOLS,
+  GROUP_KEY_FLAGS,
+  SKIN_KEY_LIGHT,
+  SKIN_KEY_MEDIUM_LIGHT,
+  SKIN_KEY_MEDIUM,
+  SKIN_KEY_MEDIUM_DARK,
+  SKIN_KEY_DARK,
+} from 'emojibase';
+import { CommonMode, GroupKey, SkinToneKey } from './types';
 
-export const GROUP_SMILEYS_PEOPLE: Group = 'smileysPeople';
-export const GROUP_ANIMALS_NATURE: Group = 'animalsNature';
-export const GROUP_FOOD_DRINK: Group = 'foodDrink';
-export const GROUP_TRAVEL_PLACES: Group = 'travelPlaces';
-export const GROUP_ACTIVITIES: Group = 'activities';
-export const GROUP_OBJECTS: Group = 'objects';
-export const GROUP_SYMBOLS: Group = 'symbols';
-export const GROUP_FLAGS: Group = 'flags';
-export const GROUP_COMMONLY_USED: Group = 'commonlyUsed';
-export const GROUP_SEARCH_RESULTS: Group = 'searchResults';
-export const GROUP_NONE: Group = 'noGroups';
+export {
+  GROUP_KEY_SMILEYS_PEOPLE,
+  GROUP_KEY_ANIMALS_NATURE,
+  GROUP_KEY_FOOD_DRINK,
+  GROUP_KEY_TRAVEL_PLACES,
+  GROUP_KEY_ACTIVITIES,
+  GROUP_KEY_OBJECTS,
+  GROUP_KEY_SYMBOLS,
+  GROUP_KEY_FLAGS,
+  SKIN_KEY_LIGHT,
+  SKIN_KEY_MEDIUM_LIGHT,
+  SKIN_KEY_MEDIUM,
+  SKIN_KEY_MEDIUM_DARK,
+  SKIN_KEY_DARK,
+};
 
-export const GROUPS: Group[] = [
-  GROUP_SMILEYS_PEOPLE,
-  GROUP_ANIMALS_NATURE,
-  GROUP_FOOD_DRINK,
-  GROUP_TRAVEL_PLACES,
-  GROUP_ACTIVITIES,
-  GROUP_OBJECTS,
-  GROUP_SYMBOLS,
-  GROUP_FLAGS,
+export const GROUP_KEY_COMMONLY_USED: GroupKey = 'commonly-used';
+export const GROUP_KEY_SEARCH_RESULTS: GroupKey = 'search-results';
+export const GROUP_KEY_NONE: GroupKey = 'none';
+
+export const GROUPS: GroupKey[] = [
+  GROUP_KEY_SMILEYS_PEOPLE,
+  GROUP_KEY_ANIMALS_NATURE,
+  GROUP_KEY_FOOD_DRINK,
+  GROUP_KEY_TRAVEL_PLACES,
+  GROUP_KEY_ACTIVITIES,
+  GROUP_KEY_OBJECTS,
+  GROUP_KEY_SYMBOLS,
+  GROUP_KEY_FLAGS,
 ];
 
 export const GROUP_ICONS: { [key: string]: string } = {
-  [GROUP_COMMONLY_USED]: '🕑',
-  [GROUP_SMILEYS_PEOPLE]: '😃',
-  [GROUP_ANIMALS_NATURE]: '🌿',
-  [GROUP_FOOD_DRINK]: '🍎',
-  [GROUP_TRAVEL_PLACES]: '🗺️',
-  [GROUP_ACTIVITIES]: '⚽️',
-  [GROUP_OBJECTS]: '📘',
-  [GROUP_SYMBOLS]: '⛔️',
-  [GROUP_FLAGS]: '🏴',
+  [GROUP_KEY_COMMONLY_USED]: '🕑',
+  [GROUP_KEY_SMILEYS_PEOPLE]: '😃',
+  [GROUP_KEY_ANIMALS_NATURE]: '🌿',
+  [GROUP_KEY_FOOD_DRINK]: '🍎',
+  [GROUP_KEY_TRAVEL_PLACES]: '🗺️',
+  [GROUP_KEY_ACTIVITIES]: '⚽️',
+  [GROUP_KEY_OBJECTS]: '📘',
+  [GROUP_KEY_SYMBOLS]: '⛔️',
+  [GROUP_KEY_FLAGS]: '🏴',
 };
 
-export const SKIN_NONE: SkinTone = 'none';
-export const SKIN_LIGHT: SkinTone = 'light';
-export const SKIN_MEDIUM_LIGHT: SkinTone = 'mediumLight';
-export const SKIN_MEDIUM: SkinTone = 'medium';
-export const SKIN_MEDIUM_DARK: SkinTone = 'mediumDark';
-export const SKIN_DARK: SkinTone = 'dark';
+export const SKIN_KEY_NONE: SkinToneKey = 'none';
 
-export const SKIN_TONES: SkinTone[] = [
-  SKIN_NONE,
-  SKIN_LIGHT,
-  SKIN_MEDIUM_LIGHT,
-  SKIN_MEDIUM,
-  SKIN_MEDIUM_DARK,
-  SKIN_DARK,
+export const SKIN_TONES: SkinToneKey[] = [
+  SKIN_KEY_NONE,
+  SKIN_KEY_LIGHT,
+  SKIN_KEY_MEDIUM_LIGHT,
+  SKIN_KEY_MEDIUM,
+  SKIN_KEY_MEDIUM_DARK,
+  SKIN_KEY_DARK,
 ];
 
 export const SKIN_COLORS: { [key: string]: string } = {
-  [SKIN_NONE]: '#FFCC22',
-  [SKIN_LIGHT]: '#FADCBC',
-  [SKIN_MEDIUM_LIGHT]: '#E0BB95',
-  [SKIN_MEDIUM]: '#BF8F68',
-  [SKIN_MEDIUM_DARK]: '#9B643D',
-  [SKIN_DARK]: '#5A463A',
+  [SKIN_KEY_NONE]: '#FFCC22',
+  [SKIN_KEY_LIGHT]: '#FADCBC',
+  [SKIN_KEY_MEDIUM_LIGHT]: '#E0BB95',
+  [SKIN_KEY_MEDIUM]: '#BF8F68',
+  [SKIN_KEY_MEDIUM_DARK]: '#9B643D',
+  [SKIN_KEY_DARK]: '#5A463A',
 };
 
 export const SCROLL_BUFFER: number = 150;
@@ -74,8 +92,8 @@ export const SEARCH_THROTTLE: number = 250;
 export const KEY_COMMONLY_USED: string = 'interweave/emoji/commonlyUsed';
 export const KEY_SKIN_TONE: string = 'interweave/emoji/skinTone';
 
-export const COMMON_MODE_RECENT: CommonMode = 'recentlyUsed';
-export const COMMON_MODE_FREQUENT: CommonMode = 'frequentlyUsed';
+export const COMMON_MODE_RECENT: CommonMode = 'recently-used';
+export const COMMON_MODE_FREQUENT: CommonMode = 'frequently-used';
 
 export const CONTEXT_CLASSNAMES: { [key: string]: string } = {
   picker: 'interweave-picker__picker',
@@ -110,16 +128,16 @@ export const CONTEXT_MESSAGES: { [key: string]: string } = {
   // Emoji groups
   [COMMON_MODE_FREQUENT]: 'Frequently Used',
   [COMMON_MODE_RECENT]: 'Recently Used',
-  [GROUP_SMILEYS_PEOPLE]: 'Smileys & People',
-  [GROUP_ANIMALS_NATURE]: 'Animals & Nature',
-  [GROUP_FOOD_DRINK]: 'Food & Drink',
-  [GROUP_TRAVEL_PLACES]: 'Travel & Places',
-  [GROUP_ACTIVITIES]: 'Activities',
-  [GROUP_OBJECTS]: 'Objects',
-  [GROUP_SYMBOLS]: 'Symbols',
-  [GROUP_FLAGS]: 'Flags',
-  [GROUP_SEARCH_RESULTS]: 'Search Results',
-  [GROUP_NONE]: 'All Emojis',
+  [GROUP_KEY_SMILEYS_PEOPLE]: 'Smileys & People',
+  [GROUP_KEY_ANIMALS_NATURE]: 'Animals & Nature',
+  [GROUP_KEY_FOOD_DRINK]: 'Food & Drink',
+  [GROUP_KEY_TRAVEL_PLACES]: 'Travel & Places',
+  [GROUP_KEY_ACTIVITIES]: 'Activities',
+  [GROUP_KEY_OBJECTS]: 'Objects',
+  [GROUP_KEY_SYMBOLS]: 'Symbols',
+  [GROUP_KEY_FLAGS]: 'Flags',
+  [GROUP_KEY_SEARCH_RESULTS]: 'Search Results',
+  [GROUP_KEY_NONE]: 'All Emojis',
   // Miscellaneous
   search: 'Search',
   searchA11y: 'Search for emojis by keyword',

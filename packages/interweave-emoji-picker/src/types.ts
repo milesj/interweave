@@ -3,19 +3,15 @@
  * @license     https://opensource.org/licenses/MIT
  */
 
-export type CommonMode = 'recentlyUsed' | 'frequentlyUsed';
+import { GroupKey as BaseGroupKey, SkinToneKey as BaseSkinToneKey } from 'emojibase';
 
-export type Group =
-  | 'smileysPeople'
-  | 'animalsNature'
-  | 'foodDrink'
-  | 'travelPlaces'
-  | 'activities'
-  | 'objects'
-  | 'symbols'
-  | 'flags'
-  | 'commonlyUsed'
-  | 'searchResults'
-  | 'noGroups';
+export type CommonMode = 'recently-used' | 'frequently-used';
 
-export type SkinTone = 'none' | 'light' | 'mediumLight' | 'medium' | 'mediumDark' | 'dark';
+export interface Context {
+  classNames: { [name: string]: string };
+  messages: { [key: string]: string };
+}
+
+export type GroupKey = BaseGroupKey | 'commonly-used' | 'search-results' | 'none';
+
+export type SkinToneKey = BaseSkinToneKey | 'none';

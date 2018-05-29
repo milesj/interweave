@@ -8,34 +8,34 @@ import PropTypes from 'prop-types';
 import EmojiCharacter, {
   CanonicalEmoji,
   EmojiShape,
-  EmojiPath,
-  EmojiPathShape,
-  EmojiSize,
-  EmojiSizeShape,
-  EmojiSource,
-  EmojiSourceShape,
+  Path,
+  PathShape,
+  Size,
+  SizeShape,
+  Source,
+  SourceShape,
 } from 'interweave-emoji';
-import withContext, { ContextShape, EmojiContext } from './Context';
+import withContext, { ContextProps } from './Context';
+import { ContextShape } from './shapes';
 
 export interface PreviewBarProps {
-  context: EmojiContext;
   emoji?: CanonicalEmoji | null;
-  emojiLargeSize: EmojiSize;
-  emojiPath: EmojiPath;
-  emojiSource: EmojiSource;
+  emojiLargeSize: Size;
+  emojiPath: Path;
+  emojiSource: Source;
   hideEmoticon: boolean;
   hideShortcodes: boolean;
 }
 
 const TITLE_REGEX: RegExp = /(^|:|\.)\s?[a-z]/g;
 
-export class PreviewBar extends React.PureComponent<PreviewBarProps> {
+export class PreviewBar extends React.PureComponent<PreviewBarProps & ContextProps> {
   static propTypes = {
     context: ContextShape.isRequired,
     emoji: EmojiShape,
-    emojiLargeSize: EmojiSizeShape.isRequired,
-    emojiPath: EmojiPathShape.isRequired,
-    emojiSource: EmojiSourceShape.isRequired,
+    emojiLargeSize: SizeShape.isRequired,
+    emojiPath: PathShape.isRequired,
+    emojiSource: SourceShape.isRequired,
     hideEmoticon: PropTypes.bool.isRequired,
     hideShortcodes: PropTypes.bool.isRequired,
   };
@@ -67,6 +67,7 @@ export class PreviewBar extends React.PureComponent<PreviewBarProps> {
 
   render() {
     const {
+      context: { classNames, messages },
       emoji,
       emojiLargeSize,
       emojiPath,
@@ -74,7 +75,6 @@ export class PreviewBar extends React.PureComponent<PreviewBarProps> {
       hideEmoticon,
       hideShortcodes,
     } = this.props;
-    const { classNames, messages } = this.props.context;
 
     if (!emoji) {
       return (

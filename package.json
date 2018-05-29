@@ -26,7 +26,7 @@
     "@milesj/build-tool-config": "^0.98.0",
     "emojibase-test-utils": "^2.3.1",
     "lerna": "^2.11.0",
-    "serve": "^7.0.0"
+    "serve": "^7.0.1"
   },
   "workspaces": [
     "packages/*"
@@ -44,6 +44,7 @@
       "rules": {
         "no-magic-numbers": "off",
         "no-param-reassign": "off",
+        "import/no-named-as-default": "off",
         "react/no-unused-prop-types": "off",
         "react/sort-comp": "off",
         "typescript/member-ordering": "off"

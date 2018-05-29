@@ -4,7 +4,7 @@
  */
 
 import PropTypes from 'prop-types';
-import { SUPPORTED_LOCALES } from 'emojibase/lib/constants';
+import { SUPPORTED_LOCALES } from 'emojibase';
 
 export const EmojiShape = PropTypes.shape({
   annotation: PropTypes.string,
@@ -28,11 +28,11 @@ export const EmojiShape = PropTypes.shape({
   version: PropTypes.number,
 });
 
-export const EmojiPathShape = PropTypes.oneOfType([PropTypes.string, PropTypes.func]);
+export const PathShape = PropTypes.oneOfType([PropTypes.string, PropTypes.func]);
 
-export const EmojiSizeShape = PropTypes.oneOfType([PropTypes.string, PropTypes.number]);
+export const SizeShape = PropTypes.oneOfType([PropTypes.string, PropTypes.number]);
 
-export const EmojiSourceShape = PropTypes.shape({
+export const SourceShape = PropTypes.shape({
   compact: PropTypes.bool.isRequired,
   locale: PropTypes.oneOf(SUPPORTED_LOCALES).isRequired,
   version: PropTypes.string.isRequired,

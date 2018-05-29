@@ -26,11 +26,11 @@ import {
   SCROLL_BUFFER,
   SCROLL_DEBOUNCE,
 } from './constants';
-import { CommonMode, Group, SkinTone } from './types';
+import { CommonMode, GroupKey, SkinToneKey } from './types';
 
 export interface EmojiListProps {
   activeEmoji?: CanonicalEmoji | null;
-  activeGroup: Group;
+  activeGroup: GroupKey;
   commonEmojis: CanonicalEmoji[];
   commonMode: CommonMode;
   context: EmojiContext;
@@ -41,18 +41,19 @@ export interface EmojiListProps {
   emojiSize: number;
   emojiSource: EmojiSource;
   hideGroupHeaders: boolean;
+  // TODO events
   onEnterEmoji: (emoji: CanonicalEmoji, event: any) => void;
   onLeaveEmoji: (emoji: CanonicalEmoji, event: any) => void;
   onScroll: (event: any) => void;
   onScrollGroup: (group: string, event: any) => void;
   onSelectEmoji: (emoji: CanonicalEmoji, event: any) => void;
-  scrollToGroup: '' | Group;
+  scrollToGroup: '' | GroupKey;
   searchQuery: string;
   skinTonePalette?: React.ReactNode;
 }
 
 export interface EmojiListState {
-  loadedGroups: Set<Group>;
+  loadedGroups: Set<GroupKey>;
 }
 
 export class EmojiList extends React.PureComponent<EmojiListProps, EmojiListState> {

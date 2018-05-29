@@ -15,6 +15,7 @@ import {
   EmojiSource,
   EmojiSourceShape,
 } from 'interweave-emoji';
+import { Hexcode, Unicode } from 'emojibase';
 import { Context } from './Context';
 import EmojiList from './EmojiList';
 import EmojiVirtualList from './EmojiVirtualList';
@@ -48,12 +49,12 @@ import {
   CONTEXT_CLASSNAMES,
   CONTEXT_MESSAGES,
 } from './constants';
-import { CommonMode, Group, SkinTone, EmojiContext } from './types';
+import { CommonMode, GroupKey, SkinToneKey } from './types';
 
 export interface CommonEmoji {
   count: number;
-  hexcode: string;
-  unicode?: string; // Deprecated
+  hexcode: Hexcode;
+  unicode?: Unicode; // Deprecated
 }
 
 export interface BlackWhiteMap {
@@ -62,12 +63,12 @@ export interface BlackWhiteMap {
 
 export interface PickerProps {
   autoFocus?: boolean;
-  blacklist?: string[];
+  blacklist?: Hexcode[];
   classNames?: { [key: string]: string };
   columnCount?: number;
   commonMode?: CommonMode;
-  defaultGroup?: Group;
-  defaultSkinTone?: SkinTone;
+  defaultGroup?: GroupKey;
+  defaultSkinTone?: SkinToneKey;
   disableCommonlyUsed?: boolean;
   disableGroups?: boolean;
   disablePreview?: boolean;
@@ -89,27 +90,27 @@ export interface PickerProps {
   messages?: { [key: string]: string };
   onHoverEmoji?: (emoji: CanonicalEmoji, event: React.MouseEvent<HTMLButtonElement>) => void;
   onScroll?: (event: React.MouseEvent<HTMLDivElement>) => void;
-  onScrollGroup?: (group: Group, event: React.MouseEvent<HTMLDivElement>) => void;
+  onScrollGroup?: (group: GroupKey, event: React.MouseEvent<HTMLDivElement>) => void;
   onSearch?: (query: string, event: React.ChangeEvent<HTMLInputElement>) => void;
   onSelectEmoji?: (emoji: CanonicalEmoji, event: React.MouseEvent<HTMLButtonElement>) => void;
-  onSelectGroup?: (group: Group, event: React.MouseEvent<HTMLButtonElement>) => void;
-  onSelectSkinTone?: (skinTone: SkinTone, event: React.MouseEvent<HTMLButtonElement>) => void;
+  onSelectGroup?: (group: GroupKey, event: React.MouseEvent<HTMLButtonElement>) => void;
+  onSelectSkinTone?: (skinTone: SkinToneKey, event: React.MouseEvent<HTMLButtonElement>) => void;
   rowCount?: number;
   skinIcons?: { [key: string]: React.ReactNode };
   virtual?: boolean;
-  whitelist?: string[];
+  whitelist?: Hexcode[];
 }
 
 export interface PickerState {
   activeEmoji: CanonicalEmoji | null; // Emoji to display in the preview
   activeEmojiIndex: number; // Index for the highlighted emoji within search results
-  activeGroup: Group; // Currently selected group tab
-  activeSkinTone: SkinTone; // Currently selected skin ton
+  activeGroup: GroupKey; // Currently selected group tab
+  activeSkinTone: SkinToneKey; // Currently selected skin ton
   blacklisted: BlackWhiteMap; // Map of blacklisted emoji hexcodes (without skin modifier)
   commonEmojis: CanonicalEmoji[]; // List of emoji hexcodes most commonly used
   context: EmojiContext;
   emojis: CanonicalEmoji[]; // List of all emojis with search filtering applied
-  scrollToGroup: '' | Group; // Group to scroll to on render
+  scrollToGroup: '' | GroupKey; // Group to scroll to on render
   searchQuery: string; // Current search query
   whitelisted: BlackWhiteMap; // Map of whitelisted emoji hexcodes (without skin modifier)
 }
@@ -117,11 +118,6 @@ export interface PickerState {
 const SKIN_MODIFIER_PATTERN: RegExp = /1F3FB|1F3FC|1F3FD|1F3FE|1F3FF/g;
 
 class Picker extends React.Component<PickerProps, PickerState> {
-  static childContextTypes = {
-    classNames: PropTypes.objectOf(PropTypes.string),
-    messages: PropTypes.objectOf(PropTypes.node),
-  };
-
   static propTypes = {
     autoFocus: PropTypes.bool,
     blacklist: PropTypes.arrayOf(PropTypes.string),
@@ -390,7 +386,7 @@ class Picker extends React.Component<PickerProps, PickerState> {
   generateEmojis(
     emojis: CanonicalEmoji[],
     searchQuery: string,
-    skinTone: SkinTone,
+    skinTone: SkinToneKey,
   ): CanonicalEmoji[] {
     return emojis
       .filter(emoji => this.filterOrSearch(emoji, searchQuery))
@@ -437,7 +433,7 @@ class Picker extends React.Component<PickerProps, PickerState> {
   /**
    * Return the default group while handling commonly used scenarios.
    */
-  getDefaultGroup(): Group {
+  getDefaultGroup(): GroupKey {
     const { defaultGroup, disableGroups } = this.props;
     let group = defaultGroup!;
 
@@ -483,7 +479,7 @@ class Picker extends React.Component<PickerProps, PickerState> {
    * Return an emoji with skin tone if the active skin tone is set,
    * otherwise return the default skin tone (yellow).
    */
-  getSkinnedEmoji(emoji: CanonicalEmoji, skinTone: SkinTone): CanonicalEmoji {
+  getSkinnedEmoji(emoji: CanonicalEmoji, skinTone: SkinToneKey): CanonicalEmoji {
     if (skinTone === SKIN_NONE || !emoji.skins) {
       return emoji;
     }
@@ -497,11 +493,11 @@ class Picker extends React.Component<PickerProps, PickerState> {
   /**
    * Return the user's favorite skin tone from local storage.
    */
-  getSkinToneFromStorage(): SkinTone | null {
+  getSkinToneFromStorage(): SkinToneKey | null {
     const tone = localStorage.getItem(KEY_SKIN_TONE);
 
     if (tone) {
-      return tone as SkinTone;
+      return tone as SkinToneKey;
     }
 
     return null;
@@ -510,7 +506,10 @@ class Picker extends React.Component<PickerProps, PickerState> {
   /**
    * Triggered when the mouse hovers an emoji.
    */
-  handleEnterEmoji = (emoji: CanonicalEmoji, event: React.MouseEvent<HTMLButtonElement>) => {
+  private handleEnterEmoji = (
+    emoji: CanonicalEmoji,
+    event: React.MouseEvent<HTMLButtonElement>,
+  ) => {
     this.setState({
       activeEmoji: emoji,
     });
@@ -521,7 +520,7 @@ class Picker extends React.Component<PickerProps, PickerState> {
   /**
    * Triggered when keyboard changes occur.
    */
-  handleKeyUp = (event: React.KeyboardEvent<HTMLInputElement>) => {
+  private handleKeyUp = (event: React.KeyboardEvent<HTMLInputElement>) => {
     const { columnCount = 10 } = this.props;
     const { activeEmoji, activeEmojiIndex, emojis, searchQuery } = this.state;
 
@@ -583,7 +582,7 @@ class Picker extends React.Component<PickerProps, PickerState> {
   /**
    * Triggered when the mouse no longer hovers an emoji.
    */
-  handleLeaveEmoji = () => {
+  private handleLeaveEmoji = () => {
     this.setState({
       activeEmoji: null,
     });
@@ -592,7 +591,7 @@ class Picker extends React.Component<PickerProps, PickerState> {
   /**
    * Triggered when a group is scrolled into view.
    */
-  handleScrollGroup = (group: Group, event: React.MouseEvent<HTMLDivElement>) => {
+  private handleScrollGroup = (group: GroupKey, event: React.MouseEvent<HTMLDivElement>) => {
     this.setState({
       activeGroup: group,
       scrollToGroup: '',
@@ -604,7 +603,7 @@ class Picker extends React.Component<PickerProps, PickerState> {
   /**
    * Triggered when the search input field value changes.
    */
-  handleSearch = (query: string, event: React.ChangeEvent<HTMLInputElement>) => {
+  private handleSearch = (query: string, event: React.ChangeEvent<HTMLInputElement>) => {
     const defaultGroup = this.getDefaultGroup();
 
     this.setUpdatedEmojis(query, this.state.activeSkinTone);
@@ -621,7 +620,10 @@ class Picker extends React.Component<PickerProps, PickerState> {
   /**
    * Triggered when an emoji is clicked.
    */
-  handleSelectEmoji = (emoji: CanonicalEmoji, event: React.MouseEvent<HTMLButtonElement>) => {
+  private handleSelectEmoji = (
+    emoji: CanonicalEmoji,
+    event: React.MouseEvent<HTMLButtonElement>,
+  ) => {
     this.addCommonEmoji(emoji);
 
     this.props.onSelectEmoji!(emoji, event);
@@ -630,7 +632,7 @@ class Picker extends React.Component<PickerProps, PickerState> {
   /**
    * Triggered when a group tab is clicked. We should reset search and scroll position.
    */
-  handleSelectGroup = (group: Group, event: React.MouseEvent<HTMLButtonElement>) => {
+  private handleSelectGroup = (group: GroupKey, event: React.MouseEvent<HTMLButtonElement>) => {
     // Search is being reset, so rebuild emojis
     if (this.state.searchQuery !== '') {
       this.setUpdatedEmojis('', this.state.activeSkinTone);
@@ -648,7 +650,10 @@ class Picker extends React.Component<PickerProps, PickerState> {
   /**
    * Triggered when a skin tone is clicked.
    */
-  handleSelectSkinTone = (skinTone: SkinTone, event: React.MouseEvent<HTMLButtonElement>) => {
+  private handleSelectSkinTone = (
+    skinTone: SkinToneKey,
+    event: React.MouseEvent<HTMLButtonElement>,
+  ) => {
     this.setUpdatedEmojis(this.state.searchQuery, skinTone);
     this.setSkinTone(skinTone);
 
@@ -677,7 +682,7 @@ class Picker extends React.Component<PickerProps, PickerState> {
   /**
    * Set the users favorite skin tone into local storage.
    */
-  setSkinTone(skinTone: SkinTone) {
+  setSkinTone(skinTone: SkinToneKey) {
     try {
       localStorage.setItem(KEY_SKIN_TONE, skinTone);
     } catch (error) {
@@ -688,7 +693,7 @@ class Picker extends React.Component<PickerProps, PickerState> {
   /**
    * When the skin tone or search query changes, update the emoji list.
    */
-  setUpdatedEmojis(searchQuery: string, skinTone: SkinTone) {
+  setUpdatedEmojis(searchQuery: string, skinTone: SkinToneKey) {
     const emojis = this.generateEmojis(this.props.emojis, searchQuery, skinTone);
     const hasResults = searchQuery && emojis.length > 0;
 

@@ -9,14 +9,14 @@ import { EmojiShape, CanonicalEmoji } from 'interweave-emoji';
 import withContext, { ContextShape, EmojiContext } from './Context';
 import Group from './Group';
 import { GROUPS, GROUP_COMMONLY_USED, GROUP_ICONS } from './constants';
-import { Group as GroupType } from './types';
+import { GroupKey } from './types';
 
 export interface GroupTabsProps {
-  activeGroup: GroupType;
+  activeGroup: GroupKey;
   commonEmojis: CanonicalEmoji[];
   context: EmojiContext;
   icons: { [key: string]: React.ReactNode };
-  onSelect: (group: GroupType, event: React.MouseEvent<HTMLButtonElement>) => void;
+  onSelect: (group: GroupKey, event: React.MouseEvent<HTMLButtonElement>) => void;
 }
 
 export class GroupTabs extends React.PureComponent<GroupTabsProps> {

@@ -38,7 +38,7 @@ export default class Url extends React.PureComponent<UrlProps> {
     urlParts: {},
   };
 
-  render(): React.ReactNode {
+  render() {
     const { children, urlParts, ...props } = this.props;
     let url = children;
 

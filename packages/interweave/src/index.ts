@@ -7,7 +7,6 @@ import Interweave, { InterweaveProps } from './Interweave';
 import Markup, { MarkupProps } from './Markup';
 import Filter, { FilterInterface } from './Filter';
 import Matcher, { MatcherInterface, MatcherFactory } from './Matcher';
-import { FilterShape, MatcherShape } from './shapes';
 
 export {
   InterweaveProps,
@@ -15,12 +14,12 @@ export {
   MarkupProps,
   Filter,
   FilterInterface,
-  FilterShape,
   Matcher,
   MatcherInterface,
-  MatcherShape,
   MatcherFactory,
 };
+
+export * from './shapes';
 
 export * from './types';
 

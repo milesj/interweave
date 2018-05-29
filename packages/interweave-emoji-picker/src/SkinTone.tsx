@@ -5,19 +5,19 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import withContext, { ContextShape, EmojiContext } from './Context';
+import withContext, { ContextProps } from './Context';
 import { SKIN_COLORS } from './constants';
-import { SkinTone as SkinToneType } from './types';
+import { ContextShape } from './shapes';
+import { SkinToneKey } from './types';
 
 export interface SkinToneProps {
   active: boolean;
-  context: EmojiContext;
   children?: React.ReactNode;
-  onSelect: (skinTone: SkinToneType, event: React.MouseEvent<HTMLButtonElement>) => void;
-  skinTone: SkinToneType;
+  onSelect: (skinTone: SkinToneKey, event: React.MouseEvent<HTMLButtonElement>) => void;
+  skinTone: SkinToneKey;
 }
 
-export class SkinTone extends React.PureComponent<SkinToneProps> {
+export class SkinTone extends React.PureComponent<SkinToneProps & ContextProps> {
   static propTypes = {
     active: PropTypes.bool.isRequired,
     children: PropTypes.node,
@@ -40,8 +40,12 @@ export class SkinTone extends React.PureComponent<SkinToneProps> {
   };
 
   render() {
-    const { active, children, skinTone } = this.props;
-    const { classNames } = this.props.context;
+    const {
+      active,
+      children,
+      context: { classNames },
+      skinTone,
+    } = this.props;
     const className = [classNames.skinTone];
     const color = SKIN_COLORS[skinTone];
 

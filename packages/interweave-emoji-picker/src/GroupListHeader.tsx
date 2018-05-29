@@ -12,12 +12,12 @@ import {
   GROUP_SMILEYS_PEOPLE,
   GROUP_NONE,
 } from './constants';
-import { CommonMode, Group } from './types';
+import { CommonMode, GroupKey } from './types';
 
 export interface GroupListHeaderProps {
   commonMode: CommonMode;
   context: EmojiContext;
-  group: Group;
+  group: GroupKey;
   skinTonePalette?: React.ReactNode;
 }
 

@@ -69,17 +69,12 @@ export default class Markup extends React.PureComponent<MarkupProps> {
 
   render() {
     const content = this.getContent();
-    let tag = this.props.tagName!;
+    const tag = this.props.tagName;
 
-    if (tag === 'fragment') {
-      if (React.Fragment) {
-        return <React.Fragment>{content}</React.Fragment>;
-      }
-
-      // Not supported
-      tag = '';
-    }
-
-    return <Element tagName={tag || 'div'}>{content}</Element>;
+    return tag === 'fragment' ? (
+      <React.Fragment>{content}</React.Fragment>
+    ) : (
+      <Element tagName={tag || 'div'}>{content}</Element>
+    );
   }
 }

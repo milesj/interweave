@@ -269,7 +269,7 @@ export default class EmojiVirtualList extends React.PureComponent<EmojiListProps
     );
   };
 
-  render(): React.ReactNode {
+  render() {
     const {
       activeEmoji,
       columnCount,

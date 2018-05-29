@@ -7,31 +7,30 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Emoticon, Hexcode, Shortcode, Unicode } from 'emojibase';
 import EmojiData from './EmojiData';
-import { EmojiPathShape, EmojiSizeShape, EmojiSourceShape } from './shapes';
-import { EmojiSize, EmojiSource } from './types';
+import { PathShape, SizeShape, SourceShape } from './shapes';
+import { Path, Size, Source } from './types';
 
 export interface EmojiProps {
-  emojiLargeSize?: EmojiSize;
-  emojiPath?:
-    | string
-    | ((hexcode: string, enlarged: boolean, smallSize: EmojiSize, largeSize: EmojiSize) => string);
-  emojiSize?: EmojiSize;
-  emojiSource: EmojiSource;
-  emoticon?: string;
+  emojiLargeSize?: Size;
+  emojiPath?: Path;
+  emojiSize?: Size;
+  emojiSource: Source;
+  emoticon?: Emoticon;
   enlargeEmoji?: boolean;
-  hexcode?: string;
+  hexcode?: Hexcode;
   renderUnicode?: boolean;
-  shortcode?: string;
-  unicode?: string;
+  shortcode?: Shortcode;
+  unicode?: Unicode;
 }
 
 export default class Emoji extends React.PureComponent<EmojiProps> {
   static propTypes = {
-    emojiLargeSize: EmojiSizeShape,
-    emojiPath: EmojiPathShape,
-    emojiSize: EmojiSizeShape,
-    emojiSource: EmojiSourceShape.isRequired,
+    emojiLargeSize: SizeShape,
+    emojiPath: PathShape,
+    emojiSize: SizeShape,
+    emojiSource: SourceShape.isRequired,
     emoticon: PropTypes.string,
     enlargeEmoji: PropTypes.bool,
     hexcode: PropTypes.string,
@@ -98,7 +97,7 @@ export default class Emoji extends React.PureComponent<EmojiProps> {
       return <span>{emoji.unicode}</span>;
     }
 
-    const styles: { [name: string]: EmojiSize } = {
+    const styles: { [name: string]: string | Size } = {
       display: 'inline-block',
       verticalAlign: 'middle',
     };

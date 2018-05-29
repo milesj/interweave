@@ -23,6 +23,12 @@ import {
 } from './constants';
 import { Attributes, NodeConfig, TransformCallback, MatchResponse } from './types';
 
+const ELEMENT_NODE: number = 1;
+const TEXT_NODE: number = 3;
+const INVALID_ROOTS: string[] = ['!DOC', 'HTML', 'HEAD', 'BODY'];
+const ROOT_COMPARE_LENGTH: number = 4;
+const ARIA_COMPARE_LENGTH: number = 5;
+
 export interface ParserProps {
   disableLineBreaks?: boolean;
   noHtml?: boolean;
@@ -30,12 +36,6 @@ export interface ParserProps {
   transform?: TransformCallback;
   [key: string]: any;
 }
-
-const ELEMENT_NODE: number = 1;
-const TEXT_NODE: number = 3;
-const INVALID_ROOTS: string[] = ['!DOC', 'HTML', 'HEAD', 'BODY'];
-const ROOT_COMPARE_LENGTH: number = 4;
-const ARIA_COMPARE_LENGTH: number = 5;
 
 export default class Parser {
   doc: Document;

@@ -10,6 +10,7 @@ import {
   fromHexcodeToCodepoint,
   generateEmoticonPermutations,
   Emoji,
+  Hexcode,
 } from 'emojibase';
 import { TEXT, EMOTICON_OPTIONS } from 'emojibase/lib/constants';
 import { CanonicalEmoji } from './types';
@@ -19,11 +20,11 @@ const instances: { [locale: string]: EmojiData } = {};
 export default class EmojiData {
   EMOJIS: { [hexcode: string]: CanonicalEmoji } = {};
 
-  EMOTICON_TO_HEXCODE: { [emoticon: string]: string } = {};
+  EMOTICON_TO_HEXCODE: { [emoticon: string]: Hexcode } = {};
 
-  SHORTCODE_TO_HEXCODE: { [shortcode: string]: string } = {};
+  SHORTCODE_TO_HEXCODE: { [shortcode: string]: Hexcode } = {};
 
-  UNICODE_TO_HEXCODE: { [unicode: string]: string } = {};
+  UNICODE_TO_HEXCODE: { [unicode: string]: Hexcode } = {};
 
   data: CanonicalEmoji[] = [];
 
@@ -70,6 +71,7 @@ export default class EmojiData {
       ...baseEmoji,
       canonical_shortcodes: [],
       primary_shortcode: '',
+      skins: baseEmoji.skins as CanonicalEmoji[],
     };
 
     // Make our lives easier

@@ -11,7 +11,7 @@ import { fetchFromCDN, Emoji } from 'emojibase';
 import { SUPPORTED_LOCALES } from 'emojibase/lib/constants';
 import EmojiData from './EmojiData';
 import { EmojiShape } from './shapes';
-import { CanonicalEmoji, EmojiSource } from './types';
+import { CanonicalEmoji, Source } from './types';
 
 export interface EmojiDataLoaderProps {
   compact?: boolean;
@@ -22,7 +22,7 @@ export interface EmojiDataLoaderProps {
 
 export interface EmojiDataLoaderInjectedProps {
   emojis: CanonicalEmoji[];
-  emojiSource: EmojiSource;
+  emojiSource: Source;
 }
 
 export interface EmojiDataLoaderState {

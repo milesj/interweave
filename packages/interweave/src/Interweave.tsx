@@ -23,7 +23,7 @@ export interface InterweaveProps extends MarkupProps {
   transform?: TransformCallback | null;
 }
 
-export default class Interweave extends React.Component<InterweaveProps> {
+export default class Interweave extends React.PureComponent<InterweaveProps> {
   static propTypes = {
     content: PropTypes.string,
     disableFilters: PropTypes.bool,

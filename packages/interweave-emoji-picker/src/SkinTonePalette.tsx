@@ -6,18 +6,18 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import SkinTone from './SkinTone';
-import withContext, { ContextShape, EmojiContext } from './Context';
+import withContext, { ContextProps } from './Context';
 import { SKIN_TONES } from './constants';
-import { SkinTone as SkinToneType } from './types';
+import { ContextShape } from './shapes';
+import { Context, SkinToneKey } from './types';
 
 export interface SkinTonePaletteProps {
-  activeSkinTone: SkinToneType;
-  context: EmojiContext;
+  activeSkinTone: SkinToneKey;
   icons: { [key: string]: React.ReactNode };
-  onSelect: (skinTone: SkinToneType, event: React.MouseEvent<HTMLButtonElement>) => void;
+  onSelect: (skinTone: SkinToneKey, event: React.MouseEvent<HTMLButtonElement>) => void;
 }
 
-export class SkinTonePalette extends React.PureComponent<SkinTonePaletteProps> {
+export class SkinTonePalette extends React.PureComponent<SkinTonePaletteProps & ContextProps> {
   static propTypes = {
     activeSkinTone: PropTypes.string.isRequired,
     context: ContextShape.isRequired,
@@ -26,8 +26,12 @@ export class SkinTonePalette extends React.PureComponent<SkinTonePaletteProps> {
   };
 
   render() {
-    const { activeSkinTone, icons, onSelect } = this.props;
-    const { classNames } = this.props.context;
+    const {
+      activeSkinTone,
+      context: { classNames },
+      icons,
+      onSelect,
+    } = this.props;
 
     return (
       <div className={classNames.skinTones}>

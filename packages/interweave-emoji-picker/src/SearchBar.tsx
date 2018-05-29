@@ -6,12 +6,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import debounce from 'lodash/debounce';
-import withContext, { ContextShape, EmojiContext } from './Context';
+import withContext, { ContextProps } from './Context';
 import { SEARCH_THROTTLE } from './constants';
+import { ContextShape } from './shapes';
 
 export interface SearchBarProps {
   autoFocus: boolean;
-  context: EmojiContext;
   onChange: (query: string, event: React.ChangeEvent<HTMLInputElement>) => void;
   onKeyUp: (event: React.KeyboardEvent<HTMLInputElement>) => void;
   searchQuery: string;
@@ -21,7 +21,7 @@ export interface SearchBarState {
   query: string;
 }
 
-export class SearchBar extends React.PureComponent<SearchBarProps, SearchBarState> {
+export class SearchBar extends React.PureComponent<SearchBarProps & ContextProps, SearchBarState> {
   static propTypes = {
     autoFocus: PropTypes.bool.isRequired,
     context: ContextShape.isRequired,
@@ -60,24 +60,24 @@ export class SearchBar extends React.PureComponent<SearchBarProps, SearchBarStat
    * Triggered when the input field value changes.
    */
   private handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    e.persist();
+    event.persist();
 
     // Update the input field immediately
     this.setState({
-      query: e.target.value,
+      query: event.currentTarget.value,
     });
 
     // But defer filtering in the picker
-    this.handleChangeDebounced(e);
+    this.handleChangeDebounced(event);
   };
 
   /**
    * A change handler that is debounced for performance.
    */
-  private handleChangeDebounced = debounce(e => {
+  private handleChangeDebounced = debounce(event => {
     // Check if were still mounted
     if (this.inputRef.current) {
-      this.props.onChange(e.target.value.trim(), e);
+      this.props.onChange(event.currentTarget.value.trim(), event);
     }
   }, SEARCH_THROTTLE);
 

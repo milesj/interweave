@@ -21,12 +21,12 @@
     "prop-types": "^15.6.1"
   },
   "peerDependencies": {
-    "emojibase": "^1.4.0",
+    "emojibase": "^1.7.0",
     "interweave": "^8.0.2",
     "react": "^16.3.0"
   },
   "devDependencies": {
-    "emojibase": "^1.6.0",
+    "emojibase": "^1.7.0",
     "interweave": "^8.1.0",
     "react": "^16.4.0"
   }

@@ -13,12 +13,13 @@ export {
   EmojiData,
   EmojiMatcher,
   EmojiMatcherOptions,
-  withEmojiData,
   EmojiDataLoaderProps,
   EmojiDataLoaderInjectedProps,
+  withEmojiData,
 };
 
 export * from './shapes';
+
 export * from './types';
 
 export default Emoji;
