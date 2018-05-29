@@ -6,7 +6,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import debounce from 'lodash/debounce';
-import { CanonicalEmoji, EmojiShape, EmojiPath, EmojiPathShape, EmojiSource, EmojiSourceShape } from 'interweave-emoji';
+import {
+  CanonicalEmoji,
+  EmojiShape,
+  EmojiPath,
+  EmojiPathShape,
+  EmojiSource,
+  EmojiSourceShape,
+} from 'interweave-emoji';
+import withContext, { ContextShape, EmojiContext } from './Context';
 import EmojiButton from './Emoji';
 import GroupListHeader from './GroupListHeader';
 import {
@@ -18,44 +26,42 @@ import {
   SCROLL_BUFFER,
   SCROLL_DEBOUNCE,
 } from './constants';
+import { CommonMode, Group, SkinTone } from './types';
 
 export interface EmojiListProps {
-  activeEmoji?: CanonicalEmoji | null,
-  activeGroup: string,
-  commonEmojis: CanonicalEmoji[],
-  commonMode: string,
-  disableGroups: boolean,
-  emojiPadding: number,
-  emojiPath: EmojiPath,
-  emojis: CanonicalEmoji[],
-  emojiSize: number,
-  emojiSource: EmojiSource,
-  hideGroupHeaders: boolean,
-  onEnterEmoji: (emoji: CanonicalEmoji, e: *) => void,
-  onLeaveEmoji: (emoji: CanonicalEmoji, e: *) => void,
-  onScroll: (e: *) => void,
-  onScrollGroup: (group: string, e: *) => void,
-  onSelectEmoji: (emoji: CanonicalEmoji, e: *) => void,
-  scrollToGroup: string,
-  searchQuery: string,
-  skinTonePalette?: React.ReactNode,
-};
+  activeEmoji?: CanonicalEmoji | null;
+  activeGroup: Group;
+  commonEmojis: CanonicalEmoji[];
+  commonMode: CommonMode;
+  context: EmojiContext;
+  disableGroups: boolean;
+  emojiPadding: number;
+  emojiPath: EmojiPath;
+  emojis: CanonicalEmoji[];
+  emojiSize: number;
+  emojiSource: EmojiSource;
+  hideGroupHeaders: boolean;
+  onEnterEmoji: (emoji: CanonicalEmoji, event: any) => void;
+  onLeaveEmoji: (emoji: CanonicalEmoji, event: any) => void;
+  onScroll: (event: any) => void;
+  onScrollGroup: (group: string, event: any) => void;
+  onSelectEmoji: (emoji: CanonicalEmoji, event: any) => void;
+  scrollToGroup: '' | Group;
+  searchQuery: string;
+  skinTonePalette?: React.ReactNode;
+}
 
 export interface EmojiListState {
-  loadedGroups: Set<string>,
-};
+  loadedGroups: Set<Group>;
+}
 
-export default class EmojiList extends React.PureComponent<EmojiListProps, EmojiListState> {
-  static contextTypes = {
-    classNames: PropTypes.objectOf(PropTypes.string),
-    messages: PropTypes.objectOf(PropTypes.node),
-  };
-
+export class EmojiList extends React.PureComponent<EmojiListProps, EmojiListState> {
   static propTypes = {
     activeEmoji: EmojiShape,
     activeGroup: PropTypes.string.isRequired,
     commonEmojis: PropTypes.arrayOf(EmojiShape).isRequired,
     commonMode: PropTypes.string.isRequired,
+    context: ContextShape.isRequired,
     disableGroups: PropTypes.bool.isRequired,
     emojiPadding: PropTypes.number.isRequired,
     emojiPath: EmojiPathShape.isRequired,
@@ -162,7 +168,7 @@ export default class EmojiList extends React.PureComponent<EmojiListProps, Emoji
   /**
    * Triggered when the container is scrolled.
    */
-  handleScroll = (e: React.MouseEvent<HTMLDivElement>) => {
+  handleScroll = (event: React.MouseEvent<HTMLDivElement>) => {
     e.stopPropagation();
     e.persist();
 
@@ -172,7 +178,7 @@ export default class EmojiList extends React.PureComponent<EmojiListProps, Emoji
   /**
    * A scroll handler that is debounced for performance.
    */
-  private handleScrollDebounced = debounce((e: React.MouseEvent<HTMLDivElement>) => {
+  private handleScrollDebounced = debounce((event: React.MouseEvent<HTMLDivElement>) => {
     this.loadEmojiImages(e.currentTarget, e);
     this.props.onScroll(e);
   }, SCROLL_DEBOUNCE);
@@ -274,7 +280,7 @@ export default class EmojiList extends React.PureComponent<EmojiListProps, Emoji
       onLeaveEmoji,
       onSelectEmoji,
     } = this.props;
-    const { classNames, messages } = this.context;
+    const { classNames, messages } = this.props.context;
     const { loadedGroups } = this.state;
     const groupedEmojis = this.groupEmojis();
     const noResults = Object.keys(groupedEmojis).length === 0;
@@ -318,3 +324,5 @@ export default class EmojiList extends React.PureComponent<EmojiListProps, Emoji
     );
   }
 }
+
+export default withContext(EmojiList);

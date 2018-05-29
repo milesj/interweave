@@ -6,24 +6,22 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
+import withContext, { ContextShape, EmojiContext } from './Context';
 import { Group as GroupType } from './types';
 
 export interface GroupProps {
   activeGroup: GroupType;
   children: React.ReactNode;
+  context: EmojiContext;
   group: GroupType;
   onSelect: (group: GroupType, event: React.MouseEvent<HTMLButtonElement>) => void;
 }
 
-export default class Group extends React.PureComponent<GroupProps> {
-  static contextTypes = {
-    classNames: PropTypes.objectOf(PropTypes.string),
-    messages: PropTypes.objectOf(PropTypes.node),
-  };
-
+export class Group extends React.PureComponent<GroupProps> {
   static propTypes = {
     activeGroup: PropTypes.string.isRequired,
     children: PropTypes.node.isRequired,
+    context: ContextShape.isRequired,
     group: PropTypes.string.isRequired,
     onSelect: PropTypes.func.isRequired,
   };
@@ -31,15 +29,15 @@ export default class Group extends React.PureComponent<GroupProps> {
   /**
    * Triggered when the button is clicked.
    */
-  private handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.stopPropagation();
+  private handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.stopPropagation();
 
-    this.props.onSelect(this.props.group, e);
+    this.props.onSelect(this.props.group, event);
   };
 
   render() {
     const { activeGroup, children, group } = this.props;
-    const { classNames, messages } = this.context;
+    const { classNames, messages } = this.props.context;
     const className = [classNames.group];
 
     if (group === activeGroup) {
@@ -58,3 +56,5 @@ export default class Group extends React.PureComponent<GroupProps> {
     );
   }
 }
+
+export default withContext(Group);

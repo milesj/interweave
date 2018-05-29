@@ -29,11 +29,11 @@ type EmojiListProps = {
   emojiSize: number,
   emojiSource: EmojiSource,
   hideGroupHeaders: boolean,
-  onEnterEmoji: (emoji: Emoji, e: *) => void,
-  onLeaveEmoji: (emoji: Emoji, e: *) => void,
-  onScroll: (e: *) => void,
-  onScrollGroup: (group: string, e: *) => void,
-  onSelectEmoji: (emoji: Emoji, e: *) => void,
+  onEnterEmoji: (emoji: Emoji, event: *) => void,
+  onLeaveEmoji: (emoji: Emoji, event: *) => void,
+  onScroll: (event: *) => void,
+  onScrollGroup: (group: string, event: *) => void,
+  onSelectEmoji: (emoji: Emoji, event: *) => void,
   rowCount: number,
   rowPadding: number,
   scrollToGroup: string,
@@ -179,7 +179,7 @@ export default class EmojiVirtualList extends React.PureComponent<EmojiListProps
    * Loop over each group section within the scrollable container
    * and determine the active group.
    */
-  handleRendered = (e: Object) => {
+  handleRendered = (event: Object) => {
     const { startIndex, stopIndex } = e;
     const { activeGroup, rowCount } = this.props;
     const { groupIndices } = this.state;
@@ -217,7 +217,7 @@ export default class EmojiVirtualList extends React.PureComponent<EmojiListProps
    * Render a no results view.
    */
   renderNoResults = () => {
-    const { classNames, messages } = this.context;
+    const { classNames, messages } = this.props.context;
 
     return <div className={classNames.noResults}>{messages.noResults}</div>;
   };
@@ -239,7 +239,7 @@ export default class EmojiVirtualList extends React.PureComponent<EmojiListProps
       onLeaveEmoji,
       onSelectEmoji,
     } = this.props;
-    const { classNames } = this.context;
+    const { classNames } = this.props.context;
     const row = this.state.rows[index];
 
     return (
@@ -284,7 +284,7 @@ export default class EmojiVirtualList extends React.PureComponent<EmojiListProps
       searchQuery,
       onScroll,
     } = this.props;
-    const { classNames } = this.context;
+    const { classNames } = this.props.context;
     const { groupIndices, rows } = this.state;
     const size = emojiSize + emojiPadding * 2;
     const rowHeight = size + rowPadding * 2;

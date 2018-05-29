@@ -13,9 +13,11 @@ import EmojiCharacter, {
   EmojiSource,
   EmojiSourceShape,
 } from 'interweave-emoji';
+import withContext, { ContextShape, EmojiContext } from './Context';
 
 export interface EmojiProps {
   active: boolean;
+  context: EmojiContext;
   emoji: CanonicalEmoji;
   emojiPadding: number;
   emojiPath: EmojiPath;
@@ -31,13 +33,10 @@ export interface EmojiState {
   active: boolean;
 }
 
-export default class EmojiButton extends React.PureComponent<EmojiProps, EmojiState> {
-  static contextTypes = {
-    classNames: PropTypes.objectOf(PropTypes.string),
-  };
-
+export class EmojiButton extends React.PureComponent<EmojiProps, EmojiState> {
   static propTypes = {
     active: PropTypes.bool.isRequired,
+    context: ContextShape.isRequired,
     emoji: EmojiShape.isRequired,
     emojiPadding: PropTypes.number.isRequired,
     emojiPath: EmojiPathShape.isRequired,
@@ -64,41 +63,41 @@ export default class EmojiButton extends React.PureComponent<EmojiProps, EmojiSt
   /**
    * Triggered when the emoji is clicked.
    */
-  private handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.stopPropagation();
+  private handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.stopPropagation();
 
-    this.props.onSelect(this.props.emoji, e);
+    this.props.onSelect(this.props.emoji, event);
   };
 
   /**
    * Triggered when the emoji is hovered.
    */
-  private handleEnter = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.stopPropagation();
+  private handleEnter = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.stopPropagation();
 
     this.setState({
       active: true,
     });
 
-    this.props.onEnter(this.props.emoji, e);
+    this.props.onEnter(this.props.emoji, event);
   };
 
   /**
    * Triggered when the emoji is no longer hovered.
    */
-  private handleLeave = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.stopPropagation();
+  private handleLeave = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.stopPropagation();
 
     this.setState({
       active: false,
     });
 
-    this.props.onLeave(this.props.emoji, e);
+    this.props.onLeave(this.props.emoji, event);
   };
 
   render() {
     const { emoji, emojiPadding, emojiPath, emojiSize, emojiSource, showImage } = this.props;
-    const { classNames } = this.context;
+    const { classNames } = this.props.context;
     const { active } = this.state;
     const dimension = emojiPadding + emojiPadding + emojiSize;
     const className = [classNames.emoji];
@@ -145,3 +144,5 @@ export default class EmojiButton extends React.PureComponent<EmojiProps, EmojiSt
     );
   }
 }
+
+export default withContext(EmojiButton);

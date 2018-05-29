@@ -6,11 +6,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import debounce from 'lodash/debounce';
+import withContext, { ContextShape, EmojiContext } from './Context';
 import { SEARCH_THROTTLE } from './constants';
 
 export interface SearchBarProps {
   autoFocus: boolean;
-  onChange: (query: string, e: React.ChangeEvent<HTMLInputElement>) => void;
+  context: EmojiContext;
+  onChange: (query: string, event: React.ChangeEvent<HTMLInputElement>) => void;
   onKeyUp: (event: React.KeyboardEvent<HTMLInputElement>) => void;
   searchQuery: string;
 }
@@ -19,14 +21,10 @@ export interface SearchBarState {
   query: string;
 }
 
-export default class SearchBar extends React.PureComponent<SearchBarProps, SearchBarState> {
-  static contextTypes = {
-    classNames: PropTypes.objectOf(PropTypes.string),
-    messages: PropTypes.objectOf(PropTypes.node),
-  };
-
+export class SearchBar extends React.PureComponent<SearchBarProps, SearchBarState> {
   static propTypes = {
     autoFocus: PropTypes.bool.isRequired,
+    context: ContextShape.isRequired,
     onChange: PropTypes.func.isRequired,
     onKeyUp: PropTypes.func.isRequired,
     searchQuery: PropTypes.string.isRequired,
@@ -61,7 +59,7 @@ export default class SearchBar extends React.PureComponent<SearchBarProps, Searc
   /**
    * Triggered when the input field value changes.
    */
-  private handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  private handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     e.persist();
 
     // Update the input field immediately
@@ -83,8 +81,8 @@ export default class SearchBar extends React.PureComponent<SearchBarProps, Searc
     }
   }, SEARCH_THROTTLE);
 
-  render(): React.ReactNode {
-    const { classNames, messages } = this.context;
+  render() {
+    const { classNames, messages } = this.props.context;
     const { onKeyUp } = this.props;
 
     return (
@@ -103,3 +101,5 @@ export default class SearchBar extends React.PureComponent<SearchBarProps, Searc
     );
   }
 }
+
+export default withContext(SearchBar);

@@ -6,6 +6,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { EmojiShape, CanonicalEmoji } from 'interweave-emoji';
+import withContext, { ContextShape, EmojiContext } from './Context';
 import Group from './Group';
 import { GROUPS, GROUP_COMMONLY_USED, GROUP_ICONS } from './constants';
 import { Group as GroupType } from './types';
@@ -13,25 +14,23 @@ import { Group as GroupType } from './types';
 export interface GroupTabsProps {
   activeGroup: GroupType;
   commonEmojis: CanonicalEmoji[];
+  context: EmojiContext;
   icons: { [key: string]: React.ReactNode };
   onSelect: (group: GroupType, event: React.MouseEvent<HTMLButtonElement>) => void;
 }
 
-export default class GroupTabs extends React.PureComponent<GroupTabsProps> {
-  static contextTypes = {
-    classNames: PropTypes.objectOf(PropTypes.string),
-  };
-
+export class GroupTabs extends React.PureComponent<GroupTabsProps> {
   static propTypes = {
     activeGroup: PropTypes.string.isRequired,
     commonEmojis: PropTypes.arrayOf(EmojiShape).isRequired,
+    context: ContextShape.isRequired,
     icons: PropTypes.objectOf(PropTypes.node).isRequired,
     onSelect: PropTypes.func.isRequired,
   };
 
   render() {
     const { activeGroup, commonEmojis, icons, onSelect } = this.props;
-    const { classNames } = this.context;
+    const { classNames } = this.props.context;
     const groups = [...GROUPS];
 
     if (commonEmojis.length > 0) {
@@ -53,3 +52,5 @@ export default class GroupTabs extends React.PureComponent<GroupTabsProps> {
     );
   }
 }
+
+export default withContext(GroupTabs);

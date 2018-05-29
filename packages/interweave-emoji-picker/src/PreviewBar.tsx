@@ -15,8 +15,10 @@ import EmojiCharacter, {
   EmojiSource,
   EmojiSourceShape,
 } from 'interweave-emoji';
+import withContext, { ContextShape, EmojiContext } from './Context';
 
 export interface PreviewBarProps {
+  context: EmojiContext;
   emoji?: CanonicalEmoji | null;
   emojiLargeSize: EmojiSize;
   emojiPath: EmojiPath;
@@ -27,13 +29,9 @@ export interface PreviewBarProps {
 
 const TITLE_REGEX: RegExp = /(^|:|\.)\s?[a-z]/g;
 
-export default class PreviewBar extends React.PureComponent<PreviewBarProps> {
-  static contextTypes = {
-    classNames: PropTypes.objectOf(PropTypes.string),
-    messages: PropTypes.objectOf(PropTypes.node),
-  };
-
+export class PreviewBar extends React.PureComponent<PreviewBarProps> {
   static propTypes = {
+    context: ContextShape.isRequired,
     emoji: EmojiShape,
     emojiLargeSize: EmojiSizeShape.isRequired,
     emojiPath: EmojiPathShape.isRequired,
@@ -76,7 +74,7 @@ export default class PreviewBar extends React.PureComponent<PreviewBarProps> {
       hideEmoticon,
       hideShortcodes,
     } = this.props;
-    const { classNames, messages } = this.context;
+    const { classNames, messages } = this.props.context;
 
     if (!emoji) {
       return (
@@ -120,3 +118,5 @@ export default class PreviewBar extends React.PureComponent<PreviewBarProps> {
     );
   }
 }
+
+export default withContext(PreviewBar);

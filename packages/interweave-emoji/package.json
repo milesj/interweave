@@ -23,7 +23,7 @@
   "peerDependencies": {
     "emojibase": "^1.4.0",
     "interweave": "^8.0.2",
-    "react": "^15.3.0 || ^16.0.0"
+    "react": "^16.3.0"
   },
   "devDependencies": {
     "emojibase": "^1.6.0",

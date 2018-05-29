@@ -5,6 +5,7 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
+import withContext, { ContextShape, EmojiContext } from './Context';
 import {
   GROUP_COMMONLY_USED,
   GROUP_SEARCH_RESULTS,
@@ -15,18 +16,15 @@ import { CommonMode, Group } from './types';
 
 export interface GroupListHeaderProps {
   commonMode: CommonMode;
+  context: EmojiContext;
   group: Group;
   skinTonePalette?: React.ReactNode;
 }
 
-export default class GroupListHeader extends React.PureComponent<GroupListHeaderProps> {
-  static contextTypes = {
-    classNames: PropTypes.objectOf(PropTypes.string),
-    messages: PropTypes.objectOf(PropTypes.node),
-  };
-
+export class GroupListHeader extends React.PureComponent<GroupListHeaderProps> {
   static propTypes = {
     commonMode: PropTypes.string.isRequired,
+    context: ContextShape.isRequired,
     group: PropTypes.string.isRequired,
     skinTonePalette: PropTypes.node,
   };
@@ -37,7 +35,7 @@ export default class GroupListHeader extends React.PureComponent<GroupListHeader
 
   render() {
     const { commonMode, group, skinTonePalette } = this.props;
-    const { classNames, messages } = this.context;
+    const { classNames, messages } = this.props.context;
     const showPalette =
       skinTonePalette &&
       (group === GROUP_SMILEYS_PEOPLE || group === GROUP_SEARCH_RESULTS || group === GROUP_NONE);
@@ -51,3 +49,5 @@ export default class GroupListHeader extends React.PureComponent<GroupListHeader
     );
   }
 }
+
+export default withContext(GroupListHeader);
