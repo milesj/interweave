@@ -4,17 +4,17 @@
  */
 
 import Emoji, { EmojiProps } from './Emoji';
-import EmojiData from './EmojiData';
+import EmojiDataManager from './EmojiDataManager';
 import EmojiMatcher, { EmojiMatcherOptions } from './EmojiMatcher';
-import withEmojiData, { EmojiDataLoaderInternalProps, EmojiDataLoaderProps } from './withEmojiData';
+import withEmojiData, { EmojiDataInternalProps, EmojiDataProps } from './withEmojiData';
 
 export {
   EmojiProps,
-  EmojiData,
   EmojiMatcher,
   EmojiMatcherOptions,
-  EmojiDataLoaderInternalProps,
-  EmojiDataLoaderProps,
+  EmojiDataManager,
+  EmojiDataInternalProps,
+  EmojiDataProps,
   withEmojiData,
 };
 

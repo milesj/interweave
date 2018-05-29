@@ -24,7 +24,9 @@ export interface ContextProps {
 export default function withContext<T extends {}>(
   Component: React.ComponentType<T & ContextProps>,
 ) {
-  return (props: T) => (
-    <Context.Consumer>{context => <Component {...props} context={context} />}</Context.Consumer>
-  );
+  return function EmojiPickerContext(props: T) {
+    return (
+      <Context.Consumer>{context => <Component {...props} context={context} />}</Context.Consumer>
+    );
+  };
 }

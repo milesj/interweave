@@ -8,7 +8,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Emoticon, Hexcode, Shortcode, Unicode } from 'emojibase';
-import EmojiData from './EmojiData';
+import EmojiDataManager from './EmojiDataManager';
 import { PathShape, SizeShape, SourceShape } from './shapes';
 import { Path, Size, Source } from './types';
 
@@ -52,7 +52,7 @@ export default class Emoji extends React.PureComponent<EmojiProps> {
   };
 
   render() {
-    const data = EmojiData.getInstance(this.props.emojiSource.locale);
+    const data = EmojiDataManager.getInstance(this.props.emojiSource.locale);
     const {
       emojiLargeSize,
       emojiPath,

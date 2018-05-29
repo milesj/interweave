@@ -11,13 +11,14 @@ import {
   generateEmoticonPermutations,
   Emoji,
   Hexcode,
+  TEXT,
+  EMOTICON_OPTIONS,
 } from 'emojibase';
-import { TEXT, EMOTICON_OPTIONS } from 'emojibase/lib/constants';
 import { CanonicalEmoji } from './types';
 
-const instances: { [locale: string]: EmojiData } = {};
+const instances: { [locale: string]: EmojiDataManager } = {};
 
-export default class EmojiData {
+export default class EmojiDataManager {
   EMOJIS: { [hexcode: string]: CanonicalEmoji } = {};
 
   EMOTICON_TO_HEXCODE: { [emoticon: string]: Hexcode } = {};
@@ -39,9 +40,9 @@ export default class EmojiData {
   /**
    * Return or create a singleton instance per locale.
    */
-  static getInstance(locale: string = 'en'): EmojiData {
+  static getInstance(locale: string = 'en'): EmojiDataManager {
     if (!instances[locale]) {
-      instances[locale] = new EmojiData(locale);
+      instances[locale] = new EmojiDataManager(locale);
     }
 
     return instances[locale];

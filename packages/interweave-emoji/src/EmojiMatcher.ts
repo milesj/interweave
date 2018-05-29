@@ -9,7 +9,7 @@ import EMOJI_REGEX from 'emojibase-regex';
 import EMOTICON_REGEX from 'emojibase-regex/emoticon';
 import SHORTCODE_REGEX from 'emojibase-regex/shortcode';
 import Emoji, { EmojiProps } from './Emoji';
-import EmojiData from './EmojiData';
+import EmojiDataManager from './EmojiDataManager';
 
 export interface EmojiMatcherOptions {
   convertEmoticon: boolean;
@@ -25,7 +25,7 @@ const EMOTICON_BOUNDARY_REGEX: RegExp = new RegExp(
 );
 
 export default class EmojiMatcher extends Matcher<EmojiMatcherOptions> {
-  data: EmojiData | null = null;
+  data: EmojiDataManager | null = null;
 
   // @ts-ignore Set in super
   options: EmojiMatcherOptions;
@@ -153,7 +153,7 @@ export default class EmojiMatcher extends Matcher<EmojiMatcherOptions> {
    */
   onBeforeParse(content: string, props: Props): string {
     if (props.emojiSource) {
-      this.data = EmojiData.getInstance(props.emojiSource.locale);
+      this.data = EmojiDataManager.getInstance(props.emojiSource.locale);
     } else if (process.env.NODE_ENV !== 'production') {
       throw new Error('Missing emoji source data. Have you loaded using `withEmojiData`?');
     }

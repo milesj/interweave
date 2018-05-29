@@ -8,8 +8,7 @@ import PropTypes from 'prop-types';
 import {
   CanonicalEmoji,
   withEmojiData,
-  EmojiDataLoaderProps,
-  EmojiData,
+  EmojiDataProps,
   EmojiShape,
   Path,
   PathShape,
@@ -79,9 +78,7 @@ export interface PickerProps {
   emojiLargeSize: number;
   emojiPadding?: number;
   emojiPath: Path;
-  emojis: CanonicalEmoji[];
   emojiSize: number;
-  emojiSource: Source;
   groupIcons?: { [key: string]: React.ReactNode };
   hideEmoticon?: boolean;
   hideGroupHeaders?: boolean;
@@ -116,9 +113,11 @@ export interface PickerState {
   whitelisted: BlackWhiteMap; // Map of whitelisted emoji hexcodes (without skin modifier)
 }
 
+export type PickerUnifiedProps = PickerProps & EmojiDataProps;
+
 const SKIN_MODIFIER_PATTERN: RegExp = /1F3FB|1F3FC|1F3FD|1F3FE|1F3FF/g;
 
-class Picker extends React.Component<PickerProps & EmojiDataLoaderProps, PickerState> {
+class Picker extends React.Component<PickerUnifiedProps, PickerState> {
   static propTypes = {
     autoFocus: PropTypes.bool,
     blacklist: PropTypes.arrayOf(PropTypes.string),
@@ -150,6 +149,7 @@ class Picker extends React.Component<PickerProps & EmojiDataLoaderProps, PickerS
     disableSearch: PropTypes.bool,
     disableSkinTones: PropTypes.bool,
     displayOrder: PropTypes.arrayOf(PropTypes.string),
+    emojiData: PropTypes.object.isRequired,
     emojiLargeSize: PropTypes.number.isRequired,
     emojiPadding: PropTypes.number,
     emojiPath: PathShape.isRequired,
@@ -219,7 +219,7 @@ class Picker extends React.Component<PickerProps & EmojiDataLoaderProps, PickerS
 
   mounted: boolean = false;
 
-  constructor(props: PickerProps) {
+  constructor(props: PickerUnifiedProps) {
     super(props);
 
     const {
@@ -230,7 +230,7 @@ class Picker extends React.Component<PickerProps & EmojiDataLoaderProps, PickerS
       emojis,
       messages,
       whitelist,
-    } = props as Required<PickerProps>;
+    } = props as Required<PickerUnifiedProps>;
 
     this.state = {
       activeEmoji: null,
@@ -263,7 +263,7 @@ class Picker extends React.Component<PickerProps & EmojiDataLoaderProps, PickerS
     }
   }
 
-  componentDidUpdate(prevProps: PickerProps) {
+  componentDidUpdate(prevProps: PickerUnifiedProps) {
     // Emoji data has loaded via the `withEmojiData` HOC
     if (this.props.emojis.length !== 0 && prevProps.emojis.length === 0) {
       this.setInitialEmojis();
@@ -332,7 +332,7 @@ class Picker extends React.Component<PickerProps & EmojiDataLoaderProps, PickerS
    */
   // eslint-disable-next-line complexity
   filterOrSearch(emoji: CanonicalEmoji, searchQuery: string): boolean {
-    const { blacklist, maxEmojiVersion, whitelist } = this.props as Required<PickerProps>;
+    const { blacklist, maxEmojiVersion, whitelist } = this.props as Required<PickerUnifiedProps>;
     const { blacklisted, whitelisted } = this.state;
 
     // Remove blacklisted emojis and non-whitelisted emojis
@@ -426,7 +426,7 @@ class Picker extends React.Component<PickerProps & EmojiDataLoaderProps, PickerS
       return [];
     }
 
-    const data = EmojiData.getInstance(this.props.emojiSource.locale);
+    const data = this.props.emojiData;
 
     return commonEmojis.map(emoji => data.EMOJIS[emoji.hexcode]).filter(Boolean);
   }
@@ -460,7 +460,7 @@ class Picker extends React.Component<PickerProps & EmojiDataLoaderProps, PickerS
 
     const rawCommon = localStorage.getItem(KEY_COMMONLY_USED);
     const common: CommonEmoji[] = rawCommon ? JSON.parse(rawCommon) : [];
-    const data = EmojiData.getInstance(this.props.emojiSource.locale);
+    const data = this.props.emojiData;
 
     // Previous versions stored the unicode character,
     // while newer ones store a hexcode. We should support both.
@@ -728,7 +728,7 @@ class Picker extends React.Component<PickerProps & EmojiDataLoaderProps, PickerS
       skinIcons,
       virtual,
       onScroll,
-    } = this.props as Required<PickerProps>;
+    } = this.props as Required<PickerUnifiedProps>;
     const {
       activeEmoji,
       activeGroup,
