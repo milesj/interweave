@@ -33,7 +33,7 @@ describe('components/Link', () => {
   it('can set target blank via newWindow', () => {
     const wrapper = shallow(<Link href="/forums">Foo</Link>);
 
-    expect(wrapper.prop('target')).toBe(null);
+    expect(wrapper.prop('target')).toBeNull();
 
     wrapper.setProps({ newWindow: true });
 

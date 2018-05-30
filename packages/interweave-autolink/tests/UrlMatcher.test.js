@@ -186,7 +186,7 @@ describe('matchers/UrlMatcher', () => {
   describe('doesnt match invalid url:', () => {
     INVALID_URLS.forEach(urlParams => {
       it(urlParams.url, () => {
-        expect(urlParams.url.match(pattern)).toBe(null);
+        expect(urlParams.url.match(pattern)).toBeNull();
       });
     });
   });
@@ -267,7 +267,7 @@ describe('matchers/UrlMatcher', () => {
 
   describe('match()', () => {
     it('returns null for invalid match', () => {
-      expect(matcher.match('notaurl')).toBe(null);
+      expect(matcher.match('notaurl')).toBeNull();
     });
 
     it('returns object for valid match', () => {

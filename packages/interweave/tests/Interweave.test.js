@@ -1,4 +1,4 @@
-/* eslint-disable comma-dangle, react/prop-types */
+/* eslint-disable react/prop-types */
 
 import React from 'react';
 import ReactDOMServer from 'react-dom/server';
@@ -127,13 +127,13 @@ describe('Interweave', () => {
   it('allows empty `content` to be passed', () => {
     const wrapper = shallow(<Interweave content={null} />);
 
-    expect(wrapper.prop('parsedContent')).toBe(null);
+    expect(wrapper.prop('parsedContent')).toBeNull();
   });
 
   it('allows empty `content` to be passed when using callbacks', () => {
     const wrapper = shallow(<Interweave content={null} onBeforeParse={value => value} />);
 
-    expect(wrapper.prop('parsedContent')).toBe(null);
+    expect(wrapper.prop('parsedContent')).toBeNull();
   });
 
   describe('parseMarkup()', () => {
@@ -403,9 +403,7 @@ describe('Interweave', () => {
 
   describe('transform prop', () => {
     it('skips the element', () => {
-      const transform = node => {
-        return node.nodeName === 'IMG' ? null : undefined;
-      };
+      const transform = node => (node.nodeName === 'IMG' ? null : undefined);
       const wrapper = shallow(<Interweave content={'Foo <img/> Bar'} transform={transform} />);
 
       expect(wrapper.prop('parsedContent')).toEqual(['Foo ', ' Bar']);

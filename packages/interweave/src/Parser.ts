@@ -57,7 +57,7 @@ export default class Parser {
     filters: FilterInterface[] = [],
   ) {
     if (!markup) {
-      markup = ''; // eslint-disable-line
+      markup = '';
     } else if (typeof markup !== 'string') {
       if (process.env.NODE_ENV !== 'production') {
         throw new TypeError('Interweave parser requires a valid string.');
@@ -389,7 +389,6 @@ export default class Parser {
     let content: React.ReactNode[] = [];
     let mergedText = '';
 
-    // eslint-disable-next-line complexity
     Array.from(parentNode.childNodes).forEach(node => {
       // Create React elements from HTML elements
       if (node.nodeType === ELEMENT_NODE) {

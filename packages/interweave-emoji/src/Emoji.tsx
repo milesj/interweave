@@ -3,7 +3,7 @@
  * @license     https://opensource.org/licenses/MIT
  */
 
-/* eslint-disable complexity, no-param-reassign */
+/* eslint-disable complexity */
 
 import React from 'react';
 import PropTypes from 'prop-types';

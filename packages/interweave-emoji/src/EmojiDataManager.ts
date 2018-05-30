@@ -3,8 +3,6 @@
  * @license     https://opensource.org/licenses/MIT
  */
 
-/* eslint-disable no-param-reassign */
-
 import {
   fromCodepointToUnicode,
   fromHexcodeToCodepoint,

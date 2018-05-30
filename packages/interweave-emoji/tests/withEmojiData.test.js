@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import EmojiData from '../src/EmojiData';
+import EmojiData from '../src/EmojiDataManager';
 import withEmojiData, { resetLoaded } from '../src/withEmojiData';
 
 describe('withEmojiData', () => {

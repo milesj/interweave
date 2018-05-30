@@ -87,7 +87,7 @@ describe('Matcher', () => {
     });
 
     it('does not match', () => {
-      expect(matcher.match('[bar]')).toBe(null);
+      expect(matcher.match('[bar]')).toBeNull();
     });
   });
 });

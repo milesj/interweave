@@ -5,7 +5,7 @@ import SHORTCODE_REGEX from 'emojibase-regex/shortcode';
 import Parser from '../../interweave/src/Parser';
 import Emoji from '../src/Emoji';
 import EmojiMatcher from '../src/EmojiMatcher';
-import EmojiData from '../src/EmojiData';
+import EmojiData from '../src/EmojiDataManager';
 import {
   SOURCE_PROP,
   VALID_EMOJIS,
@@ -80,19 +80,19 @@ describe('EmojiMatcher', () => {
   describe('doesnt match invalid emoji', () => {
     INVALID_UNICODE.forEach(unicode => {
       it(`unicode: ${unicode}`, () => {
-        expect(unicode.match(pattern)).toBe(null);
+        expect(unicode.match(pattern)).toBeNull();
       });
     });
 
     INVALID_SHORTCODE.forEach(shortcode => {
       it(`shortcode: ${shortcode}`, () => {
-        expect(shortcode.match(shortPattern)).toBe(null);
+        expect(shortcode.match(shortPattern)).toBeNull();
       });
     });
 
     INVALID_EMOTICON.forEach(emoticon => {
       it(`emoticon: ${emoticon}`, () => {
-        expect(emoticon.match(emoPattern)).toBe(null);
+        expect(emoticon.match(emoPattern)).toBeNull();
       });
     });
   });
@@ -100,7 +100,7 @@ describe('EmojiMatcher', () => {
   describe('doesnt match unicode when `convertUnicode` is false', () => {
     VALID_UNICODE.forEach(unicode => {
       it(`unicode: ${unicode}`, () => {
-        expect(noConvertMatcher.match(unicode)).toBe(null);
+        expect(noConvertMatcher.match(unicode)).toBeNull();
       });
     });
   });
@@ -108,7 +108,7 @@ describe('EmojiMatcher', () => {
   describe('doesnt match shortcode when `convertShortcode` is false', () => {
     VALID_SHORTCODE.forEach(shortcode => {
       it(`shortcode: ${shortcode}`, () => {
-        expect(noConvertMatcher.match(shortcode)).toBe(null);
+        expect(noConvertMatcher.match(shortcode)).toBeNull();
       });
     });
   });
@@ -116,7 +116,7 @@ describe('EmojiMatcher', () => {
   describe('doesnt match emoticon when `convertEmoticon` is false', () => {
     VALID_EMOTICON.forEach(emoticon => {
       it(`emoticon: ${emoticon}`, () => {
-        expect(noConvertMatcher.match(emoticon)).toBe(null);
+        expect(noConvertMatcher.match(emoticon)).toBeNull();
       });
     });
   });
@@ -177,7 +177,7 @@ describe('EmojiMatcher', () => {
 
   describe('match()', () => {
     it('returns null for invalid unicode match', () => {
-      expect(matcher.match(INVALID_UNICODE[0])).toBe(null);
+      expect(matcher.match(INVALID_UNICODE[0])).toBeNull();
     });
 
     it('returns object for valid unicode match', () => {
@@ -189,7 +189,7 @@ describe('EmojiMatcher', () => {
     });
 
     it('returns null for invalid shortcode match', () => {
-      expect(matcher.match(':invalid')).toBe(null);
+      expect(matcher.match(':invalid')).toBeNull();
     });
 
     it('returns object for valid shortcode match', () => {
@@ -201,7 +201,7 @@ describe('EmojiMatcher', () => {
     });
 
     it('returns null for invalid emoticon match', () => {
-      expect(matcher.match('?)')).toBe(null);
+      expect(matcher.match('?)')).toBeNull();
     });
 
     it('returns object for valid emoticon match', () => {

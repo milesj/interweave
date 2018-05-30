@@ -41,7 +41,7 @@ describe('matchers/HashtagMatcher', () => {
   describe('doesnt match invalid hashtag:', () => {
     INVALID_HASHTAGS.forEach(hashtag => {
       it(hashtag, () => {
-        expect(hashtag.match(pattern)).toBe(null);
+        expect(hashtag.match(pattern)).toBeNull();
       });
     });
   });
@@ -74,7 +74,7 @@ describe('matchers/HashtagMatcher', () => {
 
   describe('match()', () => {
     it('returns null for invalid match', () => {
-      expect(matcher.match('invalidtag')).toBe(null);
+      expect(matcher.match('invalidtag')).toBeNull();
     });
 
     it('returns object for valid match', () => {

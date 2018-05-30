@@ -33,7 +33,7 @@ describe('Markup', () => {
   it('allows empty `content` to be passed', () => {
     const wrapper = shallow(<Markup content={null} />);
 
-    expect(wrapper.prop('children')).toBe(null);
+    expect(wrapper.prop('children')).toBeNull();
   });
 
   it('will render the `emptyContent` if no content exists', () => {

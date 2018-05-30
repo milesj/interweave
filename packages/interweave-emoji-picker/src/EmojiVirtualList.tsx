@@ -218,7 +218,6 @@ export class EmojiVirtualList extends React.PureComponent<
       }
 
       // Next group is about to be shown, but highlight the previous group
-      // eslint-disable-next-line no-magic-numbers
       if (index + rowCount / 2 >= stopIndex) {
         return true;
       }

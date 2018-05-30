@@ -63,7 +63,7 @@ describe('Parser', () => {
     it('applies filters to the node', () => {
       const a = document.createElement('a');
 
-      expect(a.getAttribute('target')).toBe(null);
+      expect(a.getAttribute('target')).toBeNull();
 
       instance.applyNodeFilters('a', a);
 
@@ -243,7 +243,7 @@ describe('Parser', () => {
     });
 
     it('returns null for invalid node', () => {
-      expect(instance.extractAttributes(document.createComment('Comment'))).toBe(null);
+      expect(instance.extractAttributes(document.createComment('Comment'))).toBeNull();
     });
 
     Object.keys(ATTRIBUTES).forEach(name => {
@@ -316,21 +316,22 @@ describe('Parser', () => {
     it('denies data attributes', () => {
       element.setAttribute('data-foo', 'bar');
 
-      expect(instance.extractAttributes(element)).toBe(null);
+      expect(instance.extractAttributes(element)).toBeNull();
     });
 
     it('denies attributes that are not whitelisted', () => {
       element.setAttribute('readonly', 'true');
 
-      expect(instance.extractAttributes(element)).toBe(null);
+      expect(instance.extractAttributes(element)).toBeNull();
     });
 
     it('denies attributes that start with on', () => {
       element.setAttribute('onload', 'hackServers();');
       element.setAttribute('onclick', 'doSomething();');
+      // eslint-disable-next-line unicorn/prefer-add-event-listener
       element.onmouseenter = function noop() {};
 
-      expect(instance.extractAttributes(element)).toBe(null);
+      expect(instance.extractAttributes(element)).toBeNull();
     });
 
     // https://www.owasp.org/index.php/XSS_Filter_Evasion_Cheat_Sheet
@@ -339,33 +340,33 @@ describe('Parser', () => {
       element = document.createElement('a');
 
       element.setAttribute('href', 'javascript:alert();');
-      expect(instance.extractAttributes(element)).toBe(null);
+      expect(instance.extractAttributes(element)).toBeNull();
 
       element.setAttribute('href', 'jav\ras\ncript\t:alert();');
-      expect(instance.extractAttributes(element)).toBe(null);
+      expect(instance.extractAttributes(element)).toBeNull();
 
       element.setAttribute('href', 'jav&#x09;ascript:alert();');
-      expect(instance.extractAttributes(element)).toBe(null);
+      expect(instance.extractAttributes(element)).toBeNull();
 
       element.setAttribute('href', 'jav&#x0A;ascript:alert();');
-      expect(instance.extractAttributes(element)).toBe(null);
+      expect(instance.extractAttributes(element)).toBeNull();
 
       element.setAttribute('href', 'jav&#x0D;ascript:alert();');
-      expect(instance.extractAttributes(element)).toBe(null);
+      expect(instance.extractAttributes(element)).toBeNull();
 
       element.setAttribute('href', 'java\0script:alert();');
-      expect(instance.extractAttributes(element)).toBe(null);
+      expect(instance.extractAttributes(element)).toBeNull();
 
       element = document.createElement('img');
 
       element.setAttribute('src', 'javaScript:void(0);');
-      expect(instance.extractAttributes(element)).toBe(null);
+      expect(instance.extractAttributes(element)).toBeNull();
 
       element.setAttribute('src', ' &#14;  javascript:void(0);');
-      expect(instance.extractAttributes(element)).toBe(null);
+      expect(instance.extractAttributes(element)).toBeNull();
 
       element.setAttribute('src', 'xss:confirm();');
-      expect(instance.extractAttributes(element)).toBe(null);
+      expect(instance.extractAttributes(element)).toBeNull();
       /* eslint-enable no-script-url */
     });
 

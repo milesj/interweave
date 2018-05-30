@@ -1,4 +1,4 @@
-/* eslint-disable no-console, no-magic-numbers, sort-keys */
+/* eslint-disable no-console, spaced-comment */
 
 import React from 'react';
 import ReactDOM from 'react-dom';

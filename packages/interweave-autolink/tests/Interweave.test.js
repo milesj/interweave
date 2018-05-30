@@ -67,7 +67,7 @@ Curabitur lectus odio, tempus quis velit vitae, cursus sagittis nulla. Maecenas 
         {...EXTRA_PROPS}
         urlParts={{ ...urlParts, scheme: 'https', host: '127.0.0.1', path: '/foo' }}
       >
-        https://127.0.0.1/foo
+        {'https://127.0.0.1/foo'}
       </Url>,
       ' Nulla malesuada lacinia libero non mollis. Curabitur id lacus id dolor vestibulum ornare quis a nisi (',
       <Url
@@ -75,7 +75,7 @@ Curabitur lectus odio, tempus quis velit vitae, cursus sagittis nulla. Maecenas 
         {...EXTRA_PROPS}
         urlParts={{ ...urlParts, host: 'domain.com', path: '/some/path', query: '?with=query' }}
       >
-        http://domain.com/some/path?with=query
+        {'http://domain.com/some/path?with=query'}
       </Url>,
       '). Pellentesque ac finibus mauris. Sed eu luctus diam. Quisque porta lectus in turpis imperdiet dapibus.',
       <Element key="7" tagName="br" selfClose>
@@ -156,7 +156,7 @@ Curabitur lectus odio, tempus quis velit vitae, cursus sagittis nulla. Maecenas 
             {...EXTRA_PROPS}
             urlParts={{ ...urlParts, scheme: 'https', host: '127.0.0.1', path: '/foo' }}
           >
-            https://127.0.0.1/foo
+            {'https://127.0.0.1/foo'}
           </Url>,
           ' Nulla malesuada lacinia libero non mollis. Curabitur id lacus id dolor vestibulum ornare quis a nisi (',
           <Url
@@ -164,7 +164,7 @@ Curabitur lectus odio, tempus quis velit vitae, cursus sagittis nulla. Maecenas 
             {...EXTRA_PROPS}
             urlParts={{ ...urlParts, host: 'domain.com', path: '/some/path', query: '?with=query' }}
           >
-            http://domain.com/some/path?with=query
+            {'http://domain.com/some/path?with=query'}
           </Url>,
           '). Pellentesque ac finibus mauris. Sed eu luctus diam. Quisque porta lectus in turpis imperdiet dapibus.',
         ]}
@@ -212,7 +212,7 @@ Curabitur lectus odio, tempus quis velit vitae, cursus sagittis nulla. Maecenas 
         {...EXTRA_PROPS}
         urlParts={{ ...urlParts, scheme: 'https', host: '127.0.0.1', path: '/foo' }}
       >
-        https://127.0.0.1/foo
+        {'https://127.0.0.1/foo'}
       </Url>,
       '\n- ',
       <Element key="1" tagName="a" attributes={{ href: 'www.domain.com' }}>
@@ -224,7 +224,7 @@ Curabitur lectus odio, tempus quis velit vitae, cursus sagittis nulla. Maecenas 
         {...EXTRA_PROPS}
         urlParts={{ ...urlParts, host: 'domain.com', path: '/some/path', query: '?with=query' }}
       >
-        http://domain.com/some/path?with=query
+        {'http://domain.com/some/path?with=query'}
       </Url>,
       ')\n- ',
       <Element key="3" tagName="a" attributes={{ href: 'http://domain.com' }}>

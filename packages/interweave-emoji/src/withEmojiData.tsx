@@ -3,7 +3,7 @@
  * @license     https://opensource.org/licenses/MIT
  */
 
-/* eslint-disable promise/always-return, promise/catch-or-return */
+/* eslint-disable promise/always-return */
 
 import React from 'react';
 import PropTypes from 'prop-types';

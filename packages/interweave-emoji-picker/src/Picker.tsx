@@ -143,6 +143,7 @@ class Picker extends React.Component<PickerUnifiedProps, PickerState> {
     disableSearch: PropTypes.bool,
     disableSkinTones: PropTypes.bool,
     displayOrder: PropTypes.arrayOf(PropTypes.string),
+    // eslint-disable-next-line react/forbid-prop-types
     emojiData: PropTypes.object.isRequired,
     emojiLargeSize: PropTypes.number.isRequired,
     emojiPadding: PropTypes.number,

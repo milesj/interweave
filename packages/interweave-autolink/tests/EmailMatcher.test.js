@@ -77,7 +77,7 @@ describe('matchers/EmailMatcher', () => {
   describe('doesnt match invalid email:', () => {
     INVALID_EMAILS.forEach(email => {
       it(email, () => {
-        expect(email.match(pattern)).toBe(null);
+        expect(email.match(pattern)).toBeNull();
       });
     });
   });
@@ -116,7 +116,7 @@ describe('matchers/EmailMatcher', () => {
 
   describe('match()', () => {
     it('returns null for invalid match', () => {
-      expect(matcher.match('notanemail')).toBe(null);
+      expect(matcher.match('notanemail')).toBeNull();
     });
 
     it('returns object for valid match', () => {

@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import EmojiData from '../../interweave-emoji/src/EmojiData';
+import EmojiData from '../../interweave-emoji/src/EmojiDataManager';
 import PreviewBar from '../src/PreviewBar';
 import { SOURCE_PROP } from '../../../tests/mocks';
 import { PICKER_CONTEXT } from './mocks';
@@ -196,7 +196,7 @@ describe('<PreviewBar />', () => {
     });
 
     it('renders no preview message', () => {
-      const none = <b>No preview</b>; // eslint-disable-line
+      const none = <b>No preview</b>;
       const wrapper = shallow(<PreviewBar {...props} emoji={null} />, {
         context: {
           ...context,

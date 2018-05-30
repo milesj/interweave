@@ -72,7 +72,7 @@ describe('matchers/IpMatcher', () => {
   describe('doesnt match invalid ip:', () => {
     INVALID_IPS.forEach(ipParams => {
       it(ipParams.ip, () => {
-        expect(ipParams.ip.match(pattern)).toBe(null);
+        expect(ipParams.ip.match(pattern)).toBeNull();
       });
     });
   });
@@ -117,7 +117,7 @@ describe('matchers/IpMatcher', () => {
 
   describe('match()', () => {
     it('returns null for invalid match', () => {
-      expect(matcher.match('notanip')).toBe(null);
+      expect(matcher.match('notanip')).toBeNull();
     });
 
     it('returns object for valid match', () => {

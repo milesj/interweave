@@ -4,7 +4,7 @@ import Url from '../src/Url';
 
 describe('components/Url', () => {
   it('passes the child as an href', () => {
-    const wrapper = shallow(<Url>http://domain.com/some/url</Url>);
+    const wrapper = shallow(<Url>{'http://domain.com/some/url'}</Url>);
 
     expect(wrapper.prop('children')).toBe('http://domain.com/some/url');
     expect(wrapper.prop('href')).toBe('http://domain.com/some/url');
@@ -21,7 +21,7 @@ describe('components/Url', () => {
     const func = () => {};
     const wrapper = shallow(
       <Url onClick={func} newWindow>
-        http://domain.com/some/url
+        {'http://domain.com/some/url'}
       </Url>,
     );
 
