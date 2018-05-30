@@ -26,13 +26,15 @@ export interface Context {
 
 export type GroupKey = BaseGroupKey | 'commonly-used' | 'search-results' | 'none';
 
-export type GroupEmojiMap = {
-  [K in GroupKey]?: {
+export interface GroupEmojiMap {
+  [group: string]: {
     emojis: CanonicalEmoji[];
-    group: K;
-  }
-};
+    group: GroupKey;
+  };
+}
 
-export type GroupIndexMap = { [K in GroupKey]?: number };
+export interface GroupIndexMap {
+  [group: string]: number;
+}
 
 export type SkinToneKey = BaseSkinToneKey | 'none';

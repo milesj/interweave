@@ -144,20 +144,16 @@ export class EmojiVirtualList extends React.PureComponent<
 
     // Partition emojis into separate groups
     emojis.forEach(emoji => {
-      if (!emoji.group) {
-        return;
-      }
-
-      let group = GROUPS[emoji.group];
-
-      if (!group) {
-        return;
-      }
+      let group: GroupKey = GROUP_KEY_NONE;
 
       if (searchQuery) {
         group = GROUP_KEY_SEARCH_RESULTS;
-      } else if (disableGroups) {
-        group = GROUP_KEY_NONE;
+      } else if (!disableGroups && emoji.group) {
+        group = GROUPS[emoji.group];
+      }
+
+      if (!group) {
+        return;
       }
 
       if (groups[group]) {

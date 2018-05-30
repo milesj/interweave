@@ -140,9 +140,7 @@ export class EmojiList extends React.PureComponent<EmojiListProps, EmojiListStat
 
       if (searchQuery) {
         group = GROUP_KEY_SEARCH_RESULTS;
-      } else if (disableGroups) {
-        group = GROUP_KEY_NONE;
-      } else if (emoji.group) {
+      } else if (!disableGroups && emoji.group) {
         group = GROUPS[emoji.group];
       }
 
@@ -150,13 +148,13 @@ export class EmojiList extends React.PureComponent<EmojiListProps, EmojiListStat
         return;
       }
 
-      if (typeof groups[group] === 'undefined') {
+      if (groups[group]) {
+        groups[group].emojis.push(emoji);
+      } else {
         groups[group] = {
           emojis: [emoji],
           group,
         };
-      } else {
-        groups[group].emojis.push(emoji);
       }
     });
 
