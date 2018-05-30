@@ -27,9 +27,6 @@ const EMOTICON_BOUNDARY_REGEX: RegExp = new RegExp(
 export default class EmojiMatcher extends Matcher<EmojiMatcherOptions> {
   data: EmojiDataManager | null = null;
 
-  // @ts-ignore Set in super
-  options: EmojiMatcherOptions;
-
   constructor(
     name: string,
     options: Partial<EmojiMatcherOptions> = {},

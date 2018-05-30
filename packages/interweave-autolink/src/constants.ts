@@ -11,7 +11,7 @@ export interface CombinePatternsOptions {
   nonCapture?: boolean;
 }
 
-export function combinePatterns(patterns: RegExp[], options: CombinePatternsOptions = {}): RegExp {
+export function combinePatterns(patterns: RegExp[], options: CombinePatternsOptions = {}) {
   let regex = patterns.map(pattern => pattern.source).join(options.join || '');
 
   if (options.capture) {
@@ -31,12 +31,12 @@ export function combinePatterns(patterns: RegExp[], options: CombinePatternsOpti
 // https://blog.codinghorror.com/the-problem-with-urls/
 // http://www.regular-expressions.info/email.html
 
-export const VALID_ALNUM_CHARS: RegExp = /[a-z0-9]/;
-export const VALID_PATH_CHARS: RegExp = /(?:[a-zA-Z\u0400-\u04FF0-9\-_~!$&'()[\]\\/*+,;=.%]*)/;
+export const VALID_ALNUM_CHARS = /[a-z0-9]/;
+export const VALID_PATH_CHARS = /(?:[a-zA-Z\u0400-\u04FF0-9\-_~!$&'()[\]\\/*+,;=.%]*)/;
 
-export const URL_SCHEME: RegExp = /(https?:\/\/)?/;
+export const URL_SCHEME = /(https?:\/\/)?/;
 
-export const URL_AUTH: RegExp = combinePatterns(
+export const URL_AUTH = combinePatterns(
   [
     /[a-z\u0400-\u04FF0-9\-_~!$&'()*+,;=.:]+/, // Includes colon
     /@/,
@@ -47,7 +47,7 @@ export const URL_AUTH: RegExp = combinePatterns(
   },
 );
 
-export const URL_HOST: RegExp = combinePatterns(
+export const URL_HOST = combinePatterns(
   [
     /(?:(?:[a-z0-9](?:[-a-z0-9_]*[a-z0-9])?)\.)*/, // Subdomain
     /(?:(?:[a-z0-9](?:[-a-z0-9]*[a-z0-9])?)\.)/, // Domain
@@ -58,9 +58,9 @@ export const URL_HOST: RegExp = combinePatterns(
   },
 );
 
-export const URL_PORT: RegExp = /(?::(\d{1,5}))?/;
+export const URL_PORT = /(?::(\d{1,5}))?/;
 
-export const URL_PATH: RegExp = combinePatterns(
+export const URL_PATH = combinePatterns(
   [
     /\//,
     combinePatterns(
@@ -80,7 +80,7 @@ export const URL_PATH: RegExp = combinePatterns(
   },
 );
 
-export const URL_QUERY: RegExp = combinePatterns(
+export const URL_QUERY = combinePatterns(
   [
     /\?/,
     combinePatterns(
@@ -100,7 +100,7 @@ export const URL_QUERY: RegExp = combinePatterns(
   },
 );
 
-export const URL_FRAGMENT: RegExp = combinePatterns(
+export const URL_FRAGMENT = combinePatterns(
   [
     /#/,
     combinePatterns(
@@ -120,7 +120,7 @@ export const URL_FRAGMENT: RegExp = combinePatterns(
   },
 );
 
-export const URL_PATTERN: RegExp = combinePatterns(
+export const URL_PATTERN = combinePatterns(
   [URL_SCHEME, URL_AUTH, URL_HOST, URL_PORT, URL_PATH, URL_QUERY, URL_FRAGMENT],
   {
     flags: 'i',
@@ -128,21 +128,21 @@ export const URL_PATTERN: RegExp = combinePatterns(
 );
 
 // eslint-disable-next-line unicorn/regex-shorthand
-export const IP_V4_PART: RegExp = /(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)/;
+export const IP_V4_PART = /(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)/;
 
-export const IP_V4: RegExp = combinePatterns([IP_V4_PART, IP_V4_PART, IP_V4_PART, IP_V4_PART], {
+export const IP_V4 = combinePatterns([IP_V4_PART, IP_V4_PART, IP_V4_PART, IP_V4_PART], {
   capture: true,
   join: '\\.',
 });
 
-export const IP_PATTERN: RegExp = combinePatterns(
+export const IP_PATTERN = combinePatterns(
   [URL_SCHEME, URL_AUTH, IP_V4, URL_PORT, URL_PATH, URL_QUERY, URL_FRAGMENT],
   {
     flags: 'i',
   },
 );
 
-export const HASHTAG_PATTERN: RegExp = combinePatterns(
+export const HASHTAG_PATTERN = combinePatterns(
   [
     /#/,
     combinePatterns([VALID_ALNUM_CHARS, /[-a-z0-9_]*/, VALID_ALNUM_CHARS], {
@@ -154,9 +154,9 @@ export const HASHTAG_PATTERN: RegExp = combinePatterns(
   },
 );
 
-export const EMAIL_USERNAME_PART: RegExp = /[a-z0-9!#$%&?*+=_{|}~-]+/;
+export const EMAIL_USERNAME_PART = /[a-z0-9!#$%&?*+=_{|}~-]+/;
 
-export const EMAIL_USERNAME: RegExp = combinePatterns(
+export const EMAIL_USERNAME = combinePatterns(
   [
     VALID_ALNUM_CHARS,
     EMAIL_USERNAME_PART,
@@ -171,7 +171,7 @@ export const EMAIL_USERNAME: RegExp = combinePatterns(
   },
 );
 
-export const EMAIL_PATTERN: RegExp = combinePatterns([EMAIL_USERNAME, URL_HOST], {
+export const EMAIL_PATTERN = combinePatterns([EMAIL_USERNAME, URL_HOST], {
   flags: 'i',
   join: '@',
 });
@@ -179,7 +179,7 @@ export const EMAIL_PATTERN: RegExp = combinePatterns([EMAIL_USERNAME, URL_HOST],
 // Properly and efficiently detecting URLs + all TLDs is nigh impossible,
 // instead we will only support the most common top-level TLDs.
 // https://en.wikipedia.org/wiki/List_of_Internet_top-level_domains
-export const TOP_LEVEL_TLDS: string[] = [
+export const TOP_LEVEL_TLDS = [
   // Original
   'com',
   'org',

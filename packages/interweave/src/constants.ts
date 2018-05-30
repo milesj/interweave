@@ -8,12 +8,12 @@
 import { NodeConfig, ConfigMap, FilterMap } from './types';
 
 // Parser rules for HTML tags
-export const PARSER_ALLOW: number = 1; // Allow element and children
-export const PARSER_DENY: number = 2; // Do not render this element or its children
+export const PARSER_ALLOW = 1; // Allow element and children
+export const PARSER_DENY = 2; // Do not render this element or its children
 
-export const TYPE_INLINE: string = 'inline';
-export const TYPE_BLOCK: string = 'block';
-export const TYPE_INLINE_BLOCK: string = 'inline-block'; // Special case
+export const TYPE_INLINE = 'inline';
+export const TYPE_BLOCK = 'block';
+export const TYPE_INLINE_BLOCK = 'inline-block'; // Special case
 
 export const CONFIG_INLINE: NodeConfig = {
   rule: PARSER_ALLOW,
@@ -269,10 +269,10 @@ export const TAGS_BLACKLIST: { [tagName: string]: boolean } = {
 };
 
 // Filters apply to HTML attributes
-export const FILTER_ALLOW: number = 1;
-export const FILTER_DENY: number = 2;
-export const FILTER_CAST_NUMBER: number = 3;
-export const FILTER_CAST_BOOL: number = 4;
+export const FILTER_ALLOW = 1;
+export const FILTER_DENY = 2;
+export const FILTER_CAST_NUMBER = 3;
+export const FILTER_CAST_BOOL = 4;
 
 // Attributes not listed here will be denied
 // https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes

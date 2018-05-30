@@ -14,9 +14,6 @@ export interface UrlMatcherOptions {
 }
 
 export default class UrlMatcher extends Matcher<UrlMatcherOptions> {
-  // @ts-ignore Set in super
-  options: UrlMatcherOptions;
-
   constructor(
     name: string,
     options: Partial<UrlMatcherOptions> = {},
