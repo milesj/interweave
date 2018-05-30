@@ -220,34 +220,6 @@ describe('Interweave', () => {
         ' Baz',
       ]);
     });
-
-    it('renders with a custom common class', () => {
-      const wrapper = shallow(
-        <Interweave commonClass="not-interweave" content={'Foo <b>Bar</b> Baz'} />,
-      ).shallow();
-
-      expect(wrapper.prop('children')).toEqual([
-        'Foo ',
-        <Element commonClass="not-interweave" tagName="b" key="0">
-          {['Bar']}
-        </Element>,
-        ' Baz',
-      ]);
-    });
-
-    it('renders without a common class', () => {
-      const wrapper = shallow(
-        <Interweave commonClass={null} content={'Foo <b>Bar</b> Baz'} />,
-      ).shallow();
-
-      expect(wrapper.prop('children')).toEqual([
-        'Foo ',
-        <Element commonClass={null} tagName="b" key="0">
-          {['Bar']}
-        </Element>,
-        ' Baz',
-      ]);
-    });
   });
 
   describe('parsing and rendering', () => {
@@ -367,9 +339,7 @@ describe('Interweave', () => {
         <Interweave content="This is <b>bold</b>." />,
       );
 
-      expect(actual).toBe(
-        '<span class="interweave">This is <b class="interweave">bold</b>.</span>',
-      );
+      expect(actual).toBe('<span>This is <b>bold</b>.</span>');
     });
 
     it('strips HTML', () => {
@@ -377,7 +347,7 @@ describe('Interweave', () => {
         <Interweave content="This is <b>bold</b>." noHtml />,
       );
 
-      expect(actual).toBe('<span class="interweave interweave--no-html">This is bold.</span>');
+      expect(actual).toBe('<span>This is bold.</span>');
     });
 
     it('supports filters', () => {
@@ -385,9 +355,7 @@ describe('Interweave', () => {
         <Interweave filters={[new LinkFilter()]} content={'Foo <a href="foo.com">Bar</a> Baz'} />,
       );
 
-      expect(actual).toBe(
-        '<span class="interweave">Foo <a href="bar.net" target="_blank" class="interweave">Bar</a> Baz</span>',
-      );
+      expect(actual).toBe('<span>Foo <a href="bar.net" target="_blank">Bar</a> Baz</span>');
     });
 
     it('supports matchers', () => {
@@ -395,9 +363,7 @@ describe('Interweave', () => {
         <Interweave matchers={[new CodeTagMatcher('b', '1')]} content="Foo [b] Bar Baz" />,
       );
 
-      expect(actual).toBe(
-        '<span class="interweave">Foo <span class="interweave">B</span> Bar Baz</span>',
-      );
+      expect(actual).toBe('<span>Foo <span>B</span> Bar Baz</span>');
     });
   });
 

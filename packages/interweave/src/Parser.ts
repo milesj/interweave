@@ -84,7 +84,8 @@ export default class Parser {
   applyNodeFilters(name: string, node: HTMLElement): HTMLElement {
     // Allow null to be returned
     return this.filters.reduce(
-      (nextNode, filter) => (nextNode ? filter.node(name, nextNode) : nextNode),
+      (nextNode, filter) =>
+        nextNode && typeof filter.node === 'function' ? filter.node(name, nextNode) : nextNode,
       node,
     );
   }

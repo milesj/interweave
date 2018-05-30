@@ -8,7 +8,6 @@ describe('components/Link', () => {
 
     expect(wrapper.is('a')).toBe(true);
     expect(wrapper.prop('href')).toBe('/home');
-    expect(wrapper.prop('className')).toBe('interweave__link');
     expect(wrapper.prop('children')).toBe('Foo');
   });
 
@@ -33,7 +32,7 @@ describe('components/Link', () => {
   it('can set target blank via newWindow', () => {
     const wrapper = shallow(<Link href="/forums">Foo</Link>);
 
-    expect(wrapper.prop('target')).toBeNull();
+    expect(wrapper.prop('target')).toBeUndefined();
 
     wrapper.setProps({ newWindow: true });
 
