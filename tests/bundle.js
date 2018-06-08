@@ -136,7 +136,7 @@ function App() {
 
           <EmojiPicker
             {...emojiPickerProps}
-            commonMode="recentlyUsed"
+            commonMode="recently-used"
             displayOrder={['groups', 'search', 'emojis', 'preview']}
             emojiPadding={6}
             groupIcons={slackGroupIcons}
@@ -150,8 +150,8 @@ function App() {
 
           <EmojiPicker
             {...emojiPickerProps}
-            commonMode="frequentlyUsed"
-            defaultGroup="travelPlaces"
+            commonMode="frequently-used"
+            defaultGroup="travel-places"
             defaultSkinTone="medium"
             displayOrder={['groups', 'search', 'emojis', 'preview']}
             emojiPadding={6}
@@ -170,7 +170,7 @@ function App() {
           <EmojiPicker
             {...emojiPickerProps}
             columnCount={7}
-            commonMode="recentlyUsed"
+            commonMode="recently-used"
             disablePreview
             displayOrder={['groups', 'search', 'emojis', 'skinTones']}
             emojiPadding={3.5}
@@ -187,7 +187,7 @@ function App() {
           <EmojiPicker
             {...emojiPickerProps}
             columnCount={8}
-            commonMode="frequentlyUsed"
+            commonMode="frequently-used"
             defaultGroup="flags"
             defaultSkinTone="dark"
             disablePreview

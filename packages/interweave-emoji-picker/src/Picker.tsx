@@ -81,8 +81,8 @@ export interface PickerProps {
   maxEmojiVersion?: number;
   messages?: { [key: string]: string };
   onHoverEmoji?: (emoji: CanonicalEmoji, event: React.MouseEvent<HTMLButtonElement>) => void;
-  onScroll?: (event: React.MouseEvent<HTMLDivElement>) => void;
-  onScrollGroup?: (group: GroupKey, event: React.MouseEvent<HTMLDivElement>) => void;
+  onScroll?: () => void;
+  onScrollGroup?: (group: GroupKey) => void;
   onSearch?: (query: string, event: React.ChangeEvent<HTMLInputElement>) => void;
   onSelectEmoji?: (emoji: CanonicalEmoji, event: React.MouseEvent<HTMLButtonElement>) => void;
   onSelectGroup?: (group: GroupKey, event: React.MouseEvent<HTMLButtonElement>) => void;
@@ -111,7 +111,7 @@ export type PickerUnifiedProps = PickerProps & EmojiDataProps;
 
 const SKIN_MODIFIER_PATTERN: RegExp = /1F3FB|1F3FC|1F3FD|1F3FE|1F3FF/g;
 
-class Picker extends React.Component<PickerUnifiedProps, PickerState> {
+export class Picker extends React.Component<PickerUnifiedProps, PickerState> {
   static propTypes = {
     autoFocus: PropTypes.bool,
     blacklist: PropTypes.arrayOf(PropTypes.string),
@@ -182,9 +182,9 @@ class Picker extends React.Component<PickerUnifiedProps, PickerState> {
     blacklist: [],
     classNames: {},
     columnCount: 10,
-    commonMode: COMMON_MODE_RECENT,
-    defaultGroup: GROUP_KEY_COMMONLY_USED,
-    defaultSkinTone: SKIN_KEY_NONE,
+    commonMode: COMMON_MODE_RECENT as CommonMode,
+    defaultGroup: GROUP_KEY_COMMONLY_USED as GroupKey,
+    defaultSkinTone: SKIN_KEY_NONE as SkinToneKey,
     disableCommonlyUsed: false,
     disableGroups: false,
     disablePreview: false,
@@ -211,8 +211,6 @@ class Picker extends React.Component<PickerUnifiedProps, PickerState> {
     virtual: false,
     whitelist: [],
   };
-
-  mounted: boolean = false;
 
   constructor(props: PickerUnifiedProps) {
     super(props);
@@ -587,13 +585,13 @@ class Picker extends React.Component<PickerUnifiedProps, PickerState> {
   /**
    * Triggered when a group is scrolled into view.
    */
-  private handleScrollGroup = (group: GroupKey, event: React.MouseEvent<HTMLDivElement>) => {
+  private handleScrollGroup = (group: GroupKey) => {
     this.setState({
       activeGroup: group,
       scrollToGroup: '',
     });
 
-    this.props.onScrollGroup!(group, event);
+    this.props.onScrollGroup!(group);
   };
 
   /**

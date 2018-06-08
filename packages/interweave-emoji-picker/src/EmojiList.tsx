@@ -27,7 +27,6 @@ export interface EmojiListProps {
   activeGroup: GroupKey;
   commonEmojis: CanonicalEmoji[];
   commonMode: CommonMode;
-  context: Context;
   disableGroups: boolean;
   emojiPadding: number;
   emojiPath: Path;
@@ -37,8 +36,8 @@ export interface EmojiListProps {
   hideGroupHeaders: boolean;
   onEnterEmoji: (emoji: CanonicalEmoji, event: React.MouseEvent<HTMLButtonElement>) => void;
   onLeaveEmoji: (emoji: CanonicalEmoji, event: React.MouseEvent<HTMLButtonElement>) => void;
-  onScroll: (event: React.UIEvent<HTMLDivElement>) => void;
-  onScrollGroup: (group: string, event: React.SyntheticEvent<any>) => void;
+  onScroll: () => void;
+  onScrollGroup: (group: GroupKey) => void;
   onSelectEmoji: (emoji: CanonicalEmoji, event: React.MouseEvent<HTMLButtonElement>) => void;
   scrollToGroup: GroupKey | '';
   searchQuery: string;
@@ -49,7 +48,9 @@ export interface EmojiListState {
   loadedGroups: Set<GroupKey>;
 }
 
-export class EmojiList extends React.PureComponent<EmojiListProps, EmojiListState> {
+export type EmojiListUnifiedProps = EmojiListProps & ContextProps;
+
+export class EmojiList extends React.PureComponent<EmojiListUnifiedProps, EmojiListState> {
   static propTypes = {
     activeEmoji: EmojiShape,
     activeGroup: PropTypes.string.isRequired,
@@ -80,7 +81,7 @@ export class EmojiList extends React.PureComponent<EmojiListProps, EmojiListStat
 
   containerRef = React.createRef<HTMLDivElement>();
 
-  constructor(props: EmojiListProps) {
+  constructor(props: EmojiListUnifiedProps) {
     super(props);
 
     const { activeGroup, emojis } = props;
@@ -105,7 +106,7 @@ export class EmojiList extends React.PureComponent<EmojiListProps, EmojiListStat
   /**
    * Update scroll position after the list has rendered.
    */
-  componentDidUpdate(prevProps: EmojiListProps) {
+  componentDidUpdate(prevProps: EmojiListUnifiedProps) {
     const { searchQuery, scrollToGroup } = this.props;
 
     // Search query has changed
@@ -188,7 +189,7 @@ export class EmojiList extends React.PureComponent<EmojiListProps, EmojiListStat
    */
   private handleScrollDebounced = debounce((event: React.UIEvent<HTMLDivElement>) => {
     this.loadEmojiImages(event.currentTarget, event);
-    this.props.onScroll(event);
+    this.props.onScroll();
   }, SCROLL_DEBOUNCE);
 
   /**
@@ -243,7 +244,7 @@ export class EmojiList extends React.PureComponent<EmojiListProps, EmojiListStat
 
     // Only update during a scroll event and if a different group
     if (event && lastGroup !== this.props.activeGroup) {
-      this.props.onScrollGroup(lastGroup, event);
+      this.props.onScrollGroup(lastGroup as GroupKey);
     }
 
     if (updateState) {

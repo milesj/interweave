@@ -5,11 +5,12 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import List, { ListRowProps } from 'react-virtualized/dist/commonjs/List';
+import { List, ListRowProps, ScrollParams } from 'react-virtualized';
 import chunk from 'lodash/chunk';
 import { CanonicalEmoji, EmojiShape, Path, PathShape, Source, SourceShape } from 'interweave-emoji';
 import withContext, { ContextProps } from './Context';
 import EmojiButton from './Emoji';
+import { EmojiListProps } from './EmojiList';
 import GroupListHeader from './GroupListHeader';
 import {
   GROUPS,
@@ -22,40 +23,24 @@ import { CommonEmoji, CommonMode, GroupKey, GroupEmojiMap, GroupIndexMap } from 
 
 export type VirtualRow = string | CanonicalEmoji[];
 
-export interface EmojiListProps {
-  activeEmoji: CanonicalEmoji | null;
-  activeGroup: GroupKey;
+export interface EmojiVirtualListProps extends EmojiListProps {
   columnCount: number;
-  columnPadding: number;
-  commonEmojis: CanonicalEmoji[];
-  commonMode: CommonMode;
-  disableGroups: boolean;
-  emojiPadding: number;
-  emojiPath: Path;
-  emojis: CanonicalEmoji[];
-  emojiSize: number;
-  emojiSource: Source;
-  hideGroupHeaders: boolean;
-  onEnterEmoji: (emoji: CanonicalEmoji, event: any) => void;
-  onLeaveEmoji: (emoji: CanonicalEmoji, event: any) => void;
-  onScroll: (event: any) => void;
-  onScrollGroup: (group: GroupKey, event: any) => void;
-  onSelectEmoji: (emoji: CanonicalEmoji, event: any) => void;
+  columnPadding?: number;
   rowCount: number;
-  rowPadding: number;
-  scrollToGroup: GroupKey | '';
-  searchQuery: string;
-  skinTonePalette: React.ReactNode;
+  rowPadding?: number;
+  onScroll: () => void;
 }
 
-export interface EmojiListState {
+export interface EmojiVirtualListState {
   groupIndices: GroupIndexMap;
   rows: VirtualRow[];
 }
 
+export type EmojiVirtualListUnifiedProps = EmojiVirtualListProps & ContextProps;
+
 export class EmojiVirtualList extends React.PureComponent<
-  EmojiListProps & ContextProps,
-  EmojiListState
+  EmojiVirtualListUnifiedProps,
+  EmojiVirtualListState
 > {
   static propTypes = {
     activeEmoji: EmojiShape,
@@ -91,16 +76,21 @@ export class EmojiVirtualList extends React.PureComponent<
     skinTonePalette: null,
   };
 
-  state = {
-    groupIndices: {},
-    rows: [],
-  };
+  constructor(props: EmojiVirtualListUnifiedProps) {
+    super(props);
+
+    // This doesn't type properly when a property
+    this.state = {
+      groupIndices: {},
+      rows: [],
+    };
+  }
 
   componentDidMount() {
     this.groupEmojisIntoRows();
   }
 
-  componentDidUpdate(prevProps: EmojiListProps) {
+  componentDidUpdate(prevProps: EmojiVirtualListUnifiedProps) {
     const { activeEmoji, commonEmojis, emojis, searchQuery } = this.props;
 
     // We re-use the same array for emojis unless it has been rebuilt,
@@ -229,7 +219,7 @@ export class EmojiVirtualList extends React.PureComponent<
 
     // Only update if a different group
     if (lastGroup && lastGroup !== activeGroup) {
-      this.props.onScrollGroup(lastGroup, e);
+      this.props.onScrollGroup(lastGroup as GroupKey);
     }
   };
 
@@ -283,7 +273,11 @@ export class EmojiVirtualList extends React.PureComponent<
             ))}
           </div>
         ) : (
-          <GroupListHeader commonMode={commonMode} group={row} skinTonePalette={skinTonePalette} />
+          <GroupListHeader
+            commonMode={commonMode}
+            group={row as GroupKey}
+            skinTonePalette={skinTonePalette}
+          />
         )}
       </div>
     );
@@ -293,13 +287,13 @@ export class EmojiVirtualList extends React.PureComponent<
     const {
       activeEmoji,
       columnCount,
-      columnPadding,
+      columnPadding = 0,
       commonEmojis,
       emojiPadding,
       emojis,
       emojiSize,
       rowCount,
-      rowPadding,
+      rowPadding = 0,
       scrollToGroup,
       searchQuery,
       onScroll,
@@ -332,7 +326,7 @@ export class EmojiVirtualList extends React.PureComponent<
           rowHeight={rowHeight}
           rowRenderer={this.renderRow}
           scrollToAlignment="start"
-          scrollToIndex={groupIndices[scrollToGroup]}
+          scrollToIndex={groupIndices[scrollToGroup] || -1}
           width={columnWidth * columnCount}
           onRowsRendered={this.handleRendered}
           onScroll={onScroll}

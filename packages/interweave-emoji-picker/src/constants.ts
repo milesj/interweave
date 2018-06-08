@@ -20,7 +20,7 @@ import {
   SKIN_KEY_MEDIUM_DARK,
   SKIN_KEY_DARK,
 } from 'emojibase';
-import { CommonMode, GroupKey, SkinToneKey } from './types';
+import { GroupKey, SkinToneKey } from './types';
 
 export {
   GROUP_KEY_SMILEYS_PEOPLE,
@@ -53,7 +53,7 @@ export const GROUPS: GroupKey[] = [
   GROUP_KEY_FLAGS,
 ];
 
-export const GROUP_ICONS = {
+export const GROUP_ICONS: { [group: string]: string } = {
   [GROUP_KEY_COMMONLY_USED]: '🕑',
   [GROUP_KEY_SMILEYS_PEOPLE]: '😃',
   [GROUP_KEY_ANIMALS_NATURE]: '🌿',
