@@ -15,7 +15,7 @@
     "test": "yarn run jest",
     "test:live": "yarn run build && bundle-lib ./tests/bundle.js ./tests/bundle.min.js && serve ./tests/",
     "updated": "lerna updated",
-    "package": "yarn run clean && yarn install && yarn run build && yarn test",
+    "package": "yarn run clean && yarn install && yarn test && yarn run build",
     "prettier": "beemo prettier",
     "prerelease": "yarn run package",
     "release": "lerna publish",

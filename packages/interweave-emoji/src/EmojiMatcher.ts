@@ -52,7 +52,7 @@ export default class EmojiMatcher extends Matcher<EmojiMatcherOptions> {
       renderUnicode: this.options.renderUnicode,
     } as EmojiProps;
 
-    return React.createElement(Emoji, emojiProps, match);
+    return React.createElement(Emoji, emojiProps);
   }
 
   asTag() {

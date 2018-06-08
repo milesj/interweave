@@ -139,20 +139,6 @@ describe('Emoji', () => {
     );
   });
 
-  it('adds class names', () => {
-    const wrapper = shallow(
-      <Emoji emojiSource={SOURCE_PROP} shortcode={shortcode} unicode={unicode} />,
-    );
-
-    expect(wrapper.prop('className')).toBe('interweave__emoji');
-
-    wrapper.setProps({
-      enlargeEmoji: true,
-    });
-
-    expect(wrapper.prop('className')).toBe('interweave__emoji interweave__emoji--large');
-  });
-
   it('sets styles when size is defined', () => {
     const wrapper = shallow(
       <Emoji emojiSource={SOURCE_PROP} emojiSize={1} shortcode={shortcode} unicode={unicode} />,
