@@ -1,4 +1,4 @@
-import Parser from '../../interweave/src/Parser';
+import Parser from '../../core/src/Parser';
 import EmailMatcher from '../src/EmailMatcher';
 import { EMAIL_PATTERN } from '../src/constants';
 import { TOKEN_LOCATIONS, createExpectedToken, parentConfig } from '../../../tests/mocks';

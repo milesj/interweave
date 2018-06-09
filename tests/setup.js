@@ -1,5 +1,5 @@
 import { loadEmojiData } from 'emojibase-test-utils';
-import EmojiDataManager from '../packages/interweave-emoji/src/EmojiDataManager';
+import EmojiDataManager from '../packages/emoji/src/EmojiDataManager';
 
 const emojis = loadEmojiData();
 

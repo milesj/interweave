@@ -92,9 +92,9 @@ The `Markup` component only supports the `content`, `emptyContent`, `tagName`, `
 - [Filters](#filters)
   - [Creating A Filter](#creating-a-filter)
 - Extensions
-  - [Autolinking](./packages/interweave-autolink)
-  - [Emojis](./packages/interweave-emoji)
-  - [Emoji Picker](./packages/interweave-emoji-picker)
+  - [Autolinking](./packages/autolink)
+  - [Emojis](./packages/emoji)
+  - [Emoji Picker](./packages/emoji-picker)
 - [HTML Parsing](#html-parsing)
   - [Tag Whitelist](#tag-whitelist)
   - [Attribute Whitelist](#attribute-whitelist)

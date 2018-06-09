@@ -14,10 +14,9 @@ import {
   EmojiShape,
   Path,
   PathShape,
-  Source,
   SourceShape,
 } from 'interweave-emoji';
-import { Hexcode, Unicode } from 'emojibase';
+import { Hexcode } from 'emojibase';
 import { Context } from './Context';
 import EmojiList from './EmojiList';
 import EmojiVirtualList from './EmojiVirtualList';

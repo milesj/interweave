@@ -20,7 +20,7 @@ import {
   SCROLL_DEBOUNCE,
 } from './constants';
 import { ContextShape } from './shapes';
-import { CommonMode, Context, GroupKey, GroupEmojiMap, SkinToneKey } from './types';
+import { CommonMode, GroupKey, GroupEmojiMap } from './types';
 
 export interface EmojiListProps {
   activeEmoji?: CanonicalEmoji | null;

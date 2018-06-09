@@ -5,9 +5,9 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import { List, ListRowProps, ScrollParams } from 'react-virtualized';
+import { List, ListRowProps } from 'react-virtualized';
 import chunk from 'lodash/chunk';
-import { CanonicalEmoji, EmojiShape, Path, PathShape, Source, SourceShape } from 'interweave-emoji';
+import { CanonicalEmoji, EmojiShape, PathShape, SourceShape } from 'interweave-emoji';
 import withContext, { ContextProps } from './Context';
 import EmojiButton from './Emoji';
 import { EmojiListProps } from './EmojiList';
@@ -19,7 +19,7 @@ import {
   GROUP_KEY_NONE,
 } from './constants';
 import { ContextShape } from './shapes';
-import { CommonEmoji, CommonMode, GroupKey, GroupEmojiMap, GroupIndexMap } from './types';
+import { GroupKey, GroupEmojiMap, GroupIndexMap } from './types';
 
 export type VirtualRow = string | CanonicalEmoji[];
 

@@ -2,7 +2,7 @@
   "name": "interweave-root",
   "private": true,
   "scripts": {
-    "build": "beemo typescript --workspaces=* --priority=interweave --react",
+    "build": "beemo typescript --workspaces=* --priority=core,emoji --react",
     "clean": "rimraf ./packages/*/{lib,esm}/ && lerna clean --yes",
     "coverage": "yarn run jest --coverage",
     "docs": "gitbook build --debug --log=debug",

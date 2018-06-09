@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import EmojiData from '../../interweave-emoji/src/EmojiDataManager';
+import EmojiData from '../../emoji/src/EmojiDataManager';
 import { Emoji } from '../src/Emoji';
 import { SOURCE_PROP } from '../../../tests/mocks';
 import { PICKER_CONTEXT } from './mocks';

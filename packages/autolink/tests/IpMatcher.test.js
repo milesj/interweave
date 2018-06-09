@@ -1,4 +1,4 @@
-import Parser from '../../interweave/src/Parser';
+import Parser from '../../core/src/Parser';
 import IpMatcher from '../src/IpMatcher';
 import { IP_PATTERN } from '../src/constants';
 import { TOKEN_LOCATIONS, createExpectedToken, parentConfig } from '../../../tests/mocks';

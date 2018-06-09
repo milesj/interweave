@@ -2,7 +2,7 @@ import React from 'react';
 import EMOJI_REGEX from 'emojibase-regex';
 import EMOTICON_REGEX from 'emojibase-regex/emoticon';
 import SHORTCODE_REGEX from 'emojibase-regex/shortcode';
-import Parser from '../../interweave/src/Parser';
+import Parser from '../../core/src/Parser';
 import Emoji from '../src/Emoji';
 import EmojiMatcher from '../src/EmojiMatcher';
 import EmojiData from '../src/EmojiDataManager';

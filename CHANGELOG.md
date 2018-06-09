@@ -1,6 +1,6 @@
 # Changelog
 
-* [interweave](./packages/interweave/CHANGELOG.md)
-* [interweave-autolink](./packages/interweave-autolink/CHANGELOG.md)
-* [interweave-emoji](./packages/interweave-emoji/CHANGELOG.md)
-* [interweave-emoji-picker](./packages/interweave-emoji-picker/CHANGELOG.md)
+- [interweave](./packages/core/CHANGELOG.md)
+- [interweave-autolink](./packages/autolink/CHANGELOG.md)
+- [interweave-emoji](./packages/emoji/CHANGELOG.md)
+- [interweave-emoji-picker](./packages/emoji-picker/CHANGELOG.md)

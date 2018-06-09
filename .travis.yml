@@ -6,7 +6,6 @@ before_script:
   - curl -o- -L https://yarnpkg.com/install.sh | bash
   - export PATH=$HOME/.yarn/bin:$PATH
   - yarn install --frozen-lockfile
-  - lerna bootstrap
   - yarn run build
 script: yarn test
 notifications:

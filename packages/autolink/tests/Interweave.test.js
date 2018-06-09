@@ -1,8 +1,8 @@
 import React from 'react';
 import ReactDOMServer from 'react-dom/server';
 import { shallow } from 'enzyme';
-import Interweave from '../../interweave/src/Interweave';
-import Element from '../../interweave/src/Element';
+import Interweave from '../../core/src/Interweave';
+import Element from '../../core/src/Element';
 import Email from '../src/Email';
 import Hashtag from '../src/Hashtag';
 import Url from '../src/Url';

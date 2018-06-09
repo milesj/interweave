@@ -51,7 +51,7 @@ To utilize the emoji picker, import and render the `EmojiPicker` component. The 
 place, so any positioning or display toggling should be done manually.
 
 ```javascript
-import EmojiPicker from 'interweave-emoji-picker';
+import EmojiPicker from 'emoji-picker';
 
 <EmojiPicker />;
 ```
@@ -247,16 +247,12 @@ Localization is important, and thus, all messages within the picker can be trans
 > Messages are treated as React nodes and may contain elements / components.
 
 [classes]:
-  https://github.com/milesj/interweave/blob/master/packages/interweave-emoji-picker/src/constants.js#L79
-[groups]:
-  https://github.com/milesj/interweave/blob/master/packages/interweave-emoji-picker/src/constants.js#L9
-[icons]:
-  https://github.com/milesj/interweave/blob/master/packages/interweave-emoji-picker/src/constants.js#L32
+  https://github.com/milesj/interweave/blob/master/packages/emoji-picker/src/constants.js#L79
+[groups]: https://github.com/milesj/interweave/blob/master/packages/emoji-picker/src/constants.js#L9
+[icons]: https://github.com/milesj/interweave/blob/master/packages/emoji-picker/src/constants.js#L32
 [messages]:
-  https://github.com/milesj/interweave/blob/master/packages/interweave-emoji-picker/src/constants.js#L108
-[modes]:
-  https://github.com/milesj/interweave/blob/master/packages/interweave-emoji-picker/src/constants.js#L76
-[skins]:
-  https://github.com/milesj/interweave/blob/master/packages/interweave-emoji-picker/src/constants.js#L44
+  https://github.com/milesj/interweave/blob/master/packages/emoji-picker/src/constants.js#L108
+[modes]: https://github.com/milesj/interweave/blob/master/packages/emoji-picker/src/constants.js#L76
+[skins]: https://github.com/milesj/interweave/blob/master/packages/emoji-picker/src/constants.js#L44
 [emojibase]: https://github.com/milesj/emojibase
 [react-virtualized]: https://github.com/bvaughn/react-virtualized

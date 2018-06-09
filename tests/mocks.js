@@ -1,8 +1,8 @@
 import React from 'react';
-import Filter from '../packages/interweave/src/Filter';
-import Matcher from '../packages/interweave/src/Matcher';
-import Element from '../packages/interweave/src/Element';
-import { TYPE_BLOCK, PARSER_ALLOW } from '../packages/interweave/src/constants';
+import Filter from '../packages/core/src/Filter';
+import Matcher from '../packages/core/src/Matcher';
+import Element from '../packages/core/src/Element';
+import { TYPE_BLOCK, PARSER_ALLOW } from '../packages/core/src/constants';
 
 export const TOKEN_LOCATIONS = [
   'no tokens',
