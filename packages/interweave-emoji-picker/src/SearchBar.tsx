@@ -75,6 +75,7 @@ export class SearchBar extends React.PureComponent<SearchBarProps & ContextProps
    * A change handler that is debounced for performance.
    */
   private handleChangeDebounced = debounce(event => {
+    // console.log(this.inputRef.current, event.target.value, event.currentTarget.value);
     // Check if were still mounted
     if (this.inputRef.current) {
       this.props.onChange(event.currentTarget.value.trim(), event);
