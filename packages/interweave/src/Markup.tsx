@@ -1,5 +1,5 @@
 /**
- * @copyright   2016, Miles Johnson
+ * @copyright   2016-2018, Miles Johnson
  * @license     https://opensource.org/licenses/MIT
  */
 
@@ -57,7 +57,7 @@ export default class Markup extends React.PureComponent<MarkupProps> {
       return parsedContent;
     }
 
-    const markup = new Parser(content, {
+    const markup = new Parser(content || '', {
       disableLineBreaks,
       disableWhitelist,
       noHtml,

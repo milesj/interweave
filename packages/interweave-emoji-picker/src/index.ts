@@ -1,9 +1,9 @@
 /**
- * @copyright   2016, Miles Johnson
+ * @copyright   2016-2018, Miles Johnson
  * @license     https://opensource.org/licenses/MIT
  */
 
-import withEmojiPickerContext, { Context, ContextProps } from './Context';
+import withEmojiPickerContext, { ContextProps } from './Context';
 import Picker, { PickerProps } from './Picker';
 
 export { withEmojiPickerContext, ContextProps, PickerProps };

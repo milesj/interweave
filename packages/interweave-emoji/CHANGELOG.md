@@ -7,7 +7,6 @@
 - Renamed `EmojiData` to `EmojiDataManager`.
 - Removed "Emoji" prefix from `EmojiPathShape`, `EmojiSizeShape`, and `EmojiSourceShape`.
 - Removed class names from generated elements.
-- Removed event argument from `onScroll` props.
 
 #### 🚀 New
 
