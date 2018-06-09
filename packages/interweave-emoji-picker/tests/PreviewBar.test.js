@@ -1,14 +1,13 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import EmojiData from '../../interweave-emoji/src/EmojiData';
-import PreviewBar from '../src/PreviewBar';
+import EmojiData from '../../interweave-emoji/src/EmojiDataManager';
+import { PreviewBar } from '../src/PreviewBar';
 import { SOURCE_PROP } from '../../../tests/mocks';
 import { PICKER_CONTEXT } from './mocks';
 
 describe('<PreviewBar />', () => {
-  const context = PICKER_CONTEXT;
-
   const props = {
+    context: PICKER_CONTEXT,
     emoji: null,
     emojiLargeSize: '3em',
     emojiPath: '{{hexcode}}',
@@ -22,26 +21,29 @@ describe('<PreviewBar />', () => {
   });
 
   it('renders a preview', () => {
-    const wrapper = shallow(<PreviewBar {...props} />, { context });
+    const wrapper = shallow(<PreviewBar {...props} />);
 
     expect(wrapper).toMatchSnapshot();
   });
 
   describe('with emoji', () => {
     it('can customize class name', () => {
-      const wrapper = shallow(<PreviewBar {...props} />, {
-        context: {
-          ...context,
-          classNames: {
-            ...context.classNames,
-            preview: 'test-preview',
-            previewEmoji: 'test-preview-emoji',
-            previewContent: 'test-preview-content',
-            previewTitle: 'test-preview-title',
-            previewSubtitle: 'test-preview-subtitle',
-          },
-        },
-      });
+      const wrapper = shallow(
+        <PreviewBar
+          {...props}
+          context={{
+            ...props.context,
+            classNames: {
+              ...props.context.classNames,
+              preview: 'test-preview',
+              previewEmoji: 'test-preview-emoji',
+              previewContent: 'test-preview-content',
+              previewTitle: 'test-preview-title',
+              previewSubtitle: 'test-preview-subtitle',
+            },
+          }}
+        />,
+      );
       const divs = wrapper.find('div');
 
       expect(divs.at(0).prop('className')).toBe('test-preview');
@@ -52,22 +54,25 @@ describe('<PreviewBar />', () => {
     });
 
     it('renders an emoji', () => {
-      const wrapper = shallow(<PreviewBar {...props} />, { context });
+      const wrapper = shallow(<PreviewBar {...props} />);
 
-      expect(wrapper.find('Emoji').props()).toEqual(expect.objectContaining({
-        emojiLargeSize: props.emojiLargeSize,
-        emojiPath: props.emojiPath,
-        emojiSource: props.emojiSource,
-        enlargeEmoji: true,
-        hexcode: props.emoji.hexcode,
-      }));
+      expect(wrapper.find('Emoji').props()).toEqual(
+        expect.objectContaining({
+          emojiLargeSize: props.emojiLargeSize,
+          emojiPath: props.emojiPath,
+          emojiSource: props.emojiSource,
+          enlargeEmoji: true,
+          hexcode: props.emoji.hexcode,
+        }),
+      );
     });
 
     it('displays title', () => {
-      const wrapper = shallow(<PreviewBar {...props} />, { context });
+      const wrapper = shallow(<PreviewBar {...props} />);
 
-      expect(wrapper.find('.interweave-picker__preview-title').text())
-        .toBe('Slightly smiling face');
+      expect(wrapper.find('.interweave-picker__preview-title').text()).toBe(
+        'Slightly smiling face',
+      );
     });
 
     it('displays title when no annotation', () => {
@@ -79,11 +84,11 @@ describe('<PreviewBar />', () => {
             annotation: '',
           }}
         />,
-        { context },
       );
 
-      expect(wrapper.find('.interweave-picker__preview-title').text())
-        .toBe('SLIGHTLY SMILING FACE');
+      expect(wrapper.find('.interweave-picker__preview-title').text()).toBe(
+        'SLIGHTLY SMILING FACE',
+      );
     });
 
     it('doesnt display title if no annotation or name', () => {
@@ -96,17 +101,15 @@ describe('<PreviewBar />', () => {
             name: '',
           }}
         />,
-        { context },
       );
 
       expect(wrapper.find('.interweave-picker__preview-title')).toHaveLength(0);
     });
 
     it('displays subtitle', () => {
-      const wrapper = shallow(<PreviewBar {...props} />, { context });
+      const wrapper = shallow(<PreviewBar {...props} />);
 
-      expect(wrapper.find('.interweave-picker__preview-subtitle').text())
-        .toBe(':) :pleased:');
+      expect(wrapper.find('.interweave-picker__preview-subtitle').text()).toBe(':) :pleased:');
     });
 
     it('displays subtitle without emoticon', () => {
@@ -118,11 +121,9 @@ describe('<PreviewBar />', () => {
             emoticon: '',
           }}
         />,
-        { context },
       );
 
-      expect(wrapper.find('.interweave-picker__preview-subtitle').text())
-        .toBe(':pleased:');
+      expect(wrapper.find('.interweave-picker__preview-subtitle').text()).toBe(':pleased:');
     });
 
     it('displays subtitle without shortcodes', () => {
@@ -134,25 +135,21 @@ describe('<PreviewBar />', () => {
             canonical_shortcodes: [],
           }}
         />,
-        { context },
       );
 
-      expect(wrapper.find('.interweave-picker__preview-subtitle').text())
-        .toBe(':)');
+      expect(wrapper.find('.interweave-picker__preview-subtitle').text()).toBe(':)');
     });
 
     it('hides emoticon in subtitle', () => {
-      const wrapper = shallow(<PreviewBar {...props} hideEmoticon />, { context });
+      const wrapper = shallow(<PreviewBar {...props} hideEmoticon />);
 
-      expect(wrapper.find('.interweave-picker__preview-subtitle').text())
-        .toBe(':pleased:');
+      expect(wrapper.find('.interweave-picker__preview-subtitle').text()).toBe(':pleased:');
     });
 
     it('hides shortcodes in subtitle', () => {
-      const wrapper = shallow(<PreviewBar {...props} hideShortcodes />, { context });
+      const wrapper = shallow(<PreviewBar {...props} hideShortcodes />);
 
-      expect(wrapper.find('.interweave-picker__preview-subtitle').text())
-        .toBe(':)');
+      expect(wrapper.find('.interweave-picker__preview-subtitle').text()).toBe(':)');
     });
 
     it('doesnt display subtitle if no emoticon or shortcodes', () => {
@@ -165,14 +162,13 @@ describe('<PreviewBar />', () => {
             emoticon: '',
           }}
         />,
-        { context },
       );
 
       expect(wrapper.find('.interweave-picker__preview-subtitle')).toHaveLength(0);
     });
 
     it('doesnt display subtitle if all are hidden', () => {
-      const wrapper = shallow(<PreviewBar {...props} hideEmoticon hideShortcodes />, { context });
+      const wrapper = shallow(<PreviewBar {...props} hideEmoticon hideShortcodes />);
 
       expect(wrapper.find('.interweave-picker__preview-subtitle')).toHaveLength(0);
     });
@@ -180,16 +176,20 @@ describe('<PreviewBar />', () => {
 
   describe('no emoji', () => {
     it('can customize class name', () => {
-      const wrapper = shallow(<PreviewBar {...props} emoji={null} />, {
-        context: {
-          ...context,
-          classNames: {
-            ...context.classNames,
-            preview: 'test-preview',
-            noPreview: 'test-preview-none',
-          },
-        },
-      });
+      const wrapper = shallow(
+        <PreviewBar
+          {...props}
+          emoji={null}
+          context={{
+            ...props.context,
+            classNames: {
+              ...props.context.classNames,
+              preview: 'test-preview',
+              noPreview: 'test-preview-none',
+            },
+          }}
+        />,
+      );
       const divs = wrapper.find('div');
 
       expect(divs.at(0).prop('className')).toBe('test-preview');
@@ -197,31 +197,39 @@ describe('<PreviewBar />', () => {
     });
 
     it('renders no preview message', () => {
-      const none = <b>No preview</b>; // eslint-disable-line
-      const wrapper = shallow(<PreviewBar {...props} emoji={null} />, {
-        context: {
-          ...context,
-          messages: {
-            ...context.messages,
-            noPreview: none,
-          },
-        },
-      });
+      const none = <b>No preview</b>;
+      const wrapper = shallow(
+        <PreviewBar
+          {...props}
+          emoji={null}
+          context={{
+            ...props.context,
+            messages: {
+              ...props.context.messages,
+              noPreview: none,
+            },
+          }}
+        />,
+      );
 
       expect(wrapper.find('div')).toHaveLength(2);
       expect(wrapper.contains(none)).toBe(true);
     });
 
     it('renders nothing if no preview message', () => {
-      const wrapper = shallow(<PreviewBar {...props} emoji={null} />, {
-        context: {
-          ...context,
-          messages: {
-            ...context.messages,
-            noPreview: '',
-          },
-        },
-      });
+      const wrapper = shallow(
+        <PreviewBar
+          {...props}
+          emoji={null}
+          context={{
+            ...props.context,
+            messages: {
+              ...props.context.messages,
+              noPreview: '',
+            },
+          }}
+        />,
+      );
 
       expect(wrapper.find('div')).toHaveLength(1);
     });

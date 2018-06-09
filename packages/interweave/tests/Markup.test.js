@@ -6,54 +6,22 @@ import { MOCK_MARKUP } from '../../../tests/mocks';
 
 describe('Markup', () => {
   it('can change `tagName`', () => {
-    const wrapper = shallow((
-      <Markup
-        tagName="p"
-        content="Foo Bar"
-      />
-    ));
+    const wrapper = shallow(<Markup tagName="p" content="Foo Bar" />);
 
     expect(wrapper.is(Element)).toBe(true);
     expect(wrapper.prop('tagName')).toBe('p');
   });
 
   it('can use a fragment', () => {
-    const wrapper = shallow((
-      <Markup
-        tagName="fragment"
-        content="Foo Bar"
-      />
-    ));
+    const wrapper = shallow(<Markup tagName="fragment" content="Foo Bar" />);
 
     expect(wrapper.is(Element)).toBe(false);
-  });
-
-  it('sets the `noHtml` class name', () => {
-    const wrapper = shallow((
-      <Markup
-        noHtml
-        content="Foo Bar"
-      />
-    ));
-
-    expect(wrapper.prop('className')).toBe('interweave--no-html');
-  });
-
-  it('sets the `noHtmlExceptMatchers` class name', () => {
-    const wrapper = shallow((
-      <Markup
-        noHtmlExceptMatchers
-        content="Foo Bar"
-      />
-    ));
-
-    expect(wrapper.prop('className')).toBe('interweave--no-html');
   });
 
   it('allows empty `content` to be passed', () => {
     const wrapper = shallow(<Markup content={null} />);
 
-    expect(wrapper.prop('children')).toBe(null);
+    expect(wrapper.prop('children')).toBeNull();
   });
 
   it('will render the `emptyContent` if no content exists', () => {
@@ -98,7 +66,9 @@ describe('Markup', () => {
 
     expect(wrapper.prop('children')).toEqual([
       'Foo',
-      <Element key="0" tagName="br" selfClose>{[]}</Element>,
+      <Element key="0" tagName="br" selfClose>
+        {[]}
+      </Element>,
       'Bar',
     ]);
   });
@@ -106,9 +76,7 @@ describe('Markup', () => {
   it('doesnt convert line breaks', () => {
     const wrapper = shallow(<Markup content={'Foo\nBar'} disableLineBreaks />);
 
-    expect(wrapper.prop('children')).toEqual([
-      'Foo\nBar',
-    ]);
+    expect(wrapper.prop('children')).toEqual(['Foo\nBar']);
   });
 
   it('doesnt convert line breaks if it contains HTML', () => {
@@ -116,7 +84,9 @@ describe('Markup', () => {
 
     expect(wrapper.prop('children')).toEqual([
       'Foo\n',
-      <Element key="0" tagName="br" selfClose>{[]}</Element>,
+      <Element key="0" tagName="br" selfClose>
+        {[]}
+      </Element>,
       'Bar',
     ]);
   });

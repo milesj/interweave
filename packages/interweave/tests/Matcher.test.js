@@ -7,8 +7,9 @@ describe('Matcher', () => {
   const matcher = new CodeTagMatcher('foo', '1');
 
   it('errors for html name', () => {
-    expect(() => { new Matcher('html').match(); })
-      .toThrowError('The matcher name "html" is not allowed.');
+    expect(() => {
+      new Matcher('html').match();
+    }).toThrowError('The matcher name "html" is not allowed.');
   });
 
   it('sets names', () => {
@@ -20,9 +21,11 @@ describe('Matcher', () => {
 
   describe('createElement()', () => {
     it('returns a React element from factory', () => {
-      expect(matcher.replaceWith('[foo]', { children: 'foo' })).toEqual((
-        <Element tagName="span" key="1">FOO</Element>
-      ));
+      expect(matcher.replaceWith('[foo]', { children: 'foo' })).toEqual(
+        <Element tagName="span" key="1">
+          FOO
+        </Element>,
+      );
     });
 
     it('returns a React element from custom factory', () => {
@@ -30,43 +33,49 @@ describe('Matcher', () => {
         <Element tagName={p.tagName}>{match}</Element>
       ));
 
-      expect(customMatcher.createElement('Bar', { tagName: 'div' })).toEqual((
-        <Element tagName="div">Bar</Element>
-      ));
+      expect(customMatcher.createElement('Bar', { tagName: 'div' })).toEqual(
+        <Element tagName="div">Bar</Element>,
+      );
     });
 
     it('errors if not a React element', () => {
       const customMatcher = new Matcher('foo', {}, () => 123);
 
-      expect(() => { customMatcher.createElement(); })
-        .toThrowError('Invalid React element created from Matcher.');
+      expect(() => {
+        customMatcher.createElement();
+      }).toThrowError('Invalid React element created from Matcher.');
     });
   });
 
   describe('replaceWith()', () => {
     it('errors if factory not defined', () => {
-      expect(() => { new Matcher('foo').replaceWith(); })
-        .toThrowError('Matcher must return a React element.');
+      expect(() => {
+        new Matcher('foo').replaceWith();
+      }).toThrowError('Matcher must return a React element.');
     });
 
     it('returns a React element', () => {
-      expect(matcher.replaceWith('[foo]', { children: 'foo' })).toEqual((
-        <Element tagName="span" key="1">FOO</Element>
-      ));
+      expect(matcher.replaceWith('[foo]', { children: 'foo' })).toEqual(
+        <Element tagName="span" key="1">
+          FOO
+        </Element>,
+      );
     });
   });
 
   describe('asTag()', () => {
     it('errors if not defined', () => {
-      expect(() => { new Matcher('foo').asTag(); })
-        .toThrowError('Matcher must define the HTML tag name it will render.');
+      expect(() => {
+        new Matcher('foo').asTag();
+      }).toThrowError('Matcher must define the HTML tag name it will render.');
     });
   });
 
   describe('match()', () => {
     it('errors if match not defined', () => {
-      expect(() => { new Matcher('foo').match(); })
-        .toThrowError('Matcher must define a pattern matcher.');
+      expect(() => {
+        new Matcher('foo').match();
+      }).toThrowError('Matcher must define a pattern matcher.');
     });
 
     it('does match', () => {
@@ -78,7 +87,7 @@ describe('Matcher', () => {
     });
 
     it('does not match', () => {
-      expect(matcher.match('[bar]')).toBe(null);
+      expect(matcher.match('[bar]')).toBeNull();
     });
   });
 });

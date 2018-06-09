@@ -1,15 +1,14 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import EmojiData from '../../interweave-emoji/src/EmojiData';
-import Emoji from '../src/Emoji';
+import EmojiData from '../../interweave-emoji/src/EmojiDataManager';
+import { Emoji } from '../src/Emoji';
 import { SOURCE_PROP } from '../../../tests/mocks';
 import { PICKER_CONTEXT } from './mocks';
 
 describe('Emoji', () => {
-  const context = PICKER_CONTEXT;
-
   const props = {
     active: false,
+    context: PICKER_CONTEXT,
     emoji: {},
     emojiPadding: 5,
     emojiPath: '{{hexcode}}',
@@ -31,7 +30,7 @@ describe('Emoji', () => {
   });
 
   it('renders an emoji', () => {
-    const wrapper = shallow(<Emoji {...props} />, { context });
+    const wrapper = shallow(<Emoji {...props} />);
     const char = wrapper.find('Emoji');
 
     expect(wrapper).toMatchSnapshot();
@@ -40,7 +39,7 @@ describe('Emoji', () => {
   });
 
   it('renders a placeholder if images are hidden', () => {
-    const wrapper = shallow(<Emoji {...props} showImage={false} />, { context });
+    const wrapper = shallow(<Emoji {...props} showImage={false} />);
 
     expect(wrapper.find('Emoji')).toHaveLength(0);
     expect(wrapper.find('div').prop('style')).toEqual({
@@ -52,7 +51,7 @@ describe('Emoji', () => {
   });
 
   it('updates the active state', () => {
-    const wrapper = shallow(<Emoji {...props} />, { context });
+    const wrapper = shallow(<Emoji {...props} />);
 
     expect(wrapper.prop('className')).toBe('interweave-picker__emoji');
 
@@ -60,27 +59,32 @@ describe('Emoji', () => {
       active: true,
     });
 
-    expect(wrapper.prop('className'))
-      .toBe('interweave-picker__emoji interweave-picker__emoji--active');
+    expect(wrapper.prop('className')).toBe(
+      'interweave-picker__emoji interweave-picker__emoji--active',
+    );
   });
 
   it('can customize class name', () => {
-    const wrapper = shallow(<Emoji {...props} active />, {
-      context: {
-        ...context,
-        classNames: {
-          ...context.classNames,
-          emoji: 'test-emoji',
-          emojiActive: 'test-emoji--active',
-        },
-      },
-    });
+    const wrapper = shallow(
+      <Emoji
+        {...props}
+        context={{
+          ...props.context,
+          classNames: {
+            ...props.context.classNames,
+            emoji: 'test-emoji',
+            emojiActive: 'test-emoji--active',
+          },
+        }}
+        active
+      />,
+    );
 
     expect(wrapper.prop('className')).toBe('test-emoji test-emoji--active');
   });
 
   it('sets correct sizes', () => {
-    const wrapper = shallow(<Emoji {...props} />, { context });
+    const wrapper = shallow(<Emoji {...props} />);
 
     expect(wrapper.prop('style')).toEqual({
       width: 32,
@@ -91,7 +95,7 @@ describe('Emoji', () => {
 
   it('triggers `onSelect` when clicking', () => {
     const spy = jest.fn();
-    const wrapper = shallow(<Emoji {...props} onSelect={spy} />, { context });
+    const wrapper = shallow(<Emoji {...props} onSelect={spy} />);
 
     wrapper.simulate('click', event);
 
@@ -100,7 +104,7 @@ describe('Emoji', () => {
 
   it('triggers `onEnter` when entering node', () => {
     const spy = jest.fn();
-    const wrapper = shallow(<Emoji {...props} onEnter={spy} />, { context });
+    const wrapper = shallow(<Emoji {...props} onEnter={spy} />);
 
     wrapper.simulate('mouseenter', event);
 
@@ -110,7 +114,7 @@ describe('Emoji', () => {
 
   it('triggers `onLeave` when leaving node', () => {
     const spy = jest.fn();
-    const wrapper = shallow(<Emoji {...props} onLeave={spy} />, { context });
+    const wrapper = shallow(<Emoji {...props} onLeave={spy} />);
 
     wrapper.simulate('mouseleave', event);
 

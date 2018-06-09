@@ -1,4 +1,4 @@
-/* eslint-disable no-console, no-magic-numbers, sort-keys */
+/* eslint-disable no-console, spaced-comment */
 
 import React from 'react';
 import ReactDOM from 'react-dom';
@@ -29,9 +29,10 @@ Me.<br /><br />
 Help!`;
 
 // http://getemoji.com/
-const emojiPath = (hex, large) => (
-  `https://cdn.jsdelivr.net/emojione/assets/3.1/png/${large ? 64 : 32}/${stripHexcode(hex).toLowerCase()}.png`
-);
+const emojiPath = (hex, large) =>
+  `https://cdn.jsdelivr.net/emojione/assets/3.1/png/${large ? 64 : 32}/${stripHexcode(
+    hex,
+  ).toLowerCase()}.png`;
 
 const Emoji = withEmojiData(BaseEmoji);
 
@@ -51,19 +52,29 @@ const emojiPickerProps = {
   emojiPadding: 5,
   emojiPath,
   emojiSize: 22,
-  onHoverEmoji(emoji, e) { console.info('hover emoji', emoji, e); },
-  onScrollGroup(group, e) { console.info('scroll group', group, e); },
-  onSearch(query, e) { console.info('search', query, e); },
-  onSelectEmoji(emoji, e) { console.info('select emoji', emoji, e); },
-  onSelectGroup(group, e) { console.info('select group', group, e); },
-  onSelectSkinTone(skinTone, e) { console.info('select skin', skinTone, e); },
+  onHoverEmoji(emoji, e) {
+    console.info('hover emoji', emoji, e);
+  },
+  onScrollGroup(group, e) {
+    console.info('scroll group', group, e);
+  },
+  onSearch(query, e) {
+    console.info('search', query, e);
+  },
+  onSelectEmoji(emoji, e) {
+    console.info('select emoji', emoji, e);
+  },
+  onSelectGroup(group, e) {
+    console.info('select group', group, e);
+  },
+  onSelectSkinTone(skinTone, e) {
+    console.info('select skin', skinTone, e);
+  },
 };
 
 const emojiUnicodeProps = {
   ...emojiProps,
-  matchers: [
-    new EmojiMatcher('emoji', { convertUnicode: true }),
-  ],
+  matchers: [new EmojiMatcher('emoji', { convertUnicode: true })],
 };
 
 const slackGroupIcons = {
@@ -117,19 +128,15 @@ const Interweave = withEmojiData(BaseInterweave);
 function App() {
   return (
     <div className="interweave__examples">
-      <h1>
-        Picker
-      </h1>
+      <h1>Picker</h1>
 
       <div className="demo-grid">
         <div className="slack">
-          <h3>
-            Slack
-          </h3>
+          <h3>Slack</h3>
 
           <EmojiPicker
             {...emojiPickerProps}
-            commonMode="recentlyUsed"
+            commonMode="recently-used"
             displayOrder={['groups', 'search', 'emojis', 'preview']}
             emojiPadding={6}
             groupIcons={slackGroupIcons}
@@ -139,14 +146,12 @@ function App() {
         </div>
 
         <div className="slack">
-          <h4>
-            Slack (virtual)
-          </h4>
+          <h4>Slack (virtual)</h4>
 
           <EmojiPicker
             {...emojiPickerProps}
-            commonMode="frequentlyUsed"
-            defaultGroup="travelPlaces"
+            commonMode="frequently-used"
+            defaultGroup="travel-places"
             defaultSkinTone="medium"
             displayOrder={['groups', 'search', 'emojis', 'preview']}
             emojiPadding={6}
@@ -160,14 +165,12 @@ function App() {
 
       <div className="demo-grid">
         <div className="twitter">
-          <h4>
-            Twitter
-          </h4>
+          <h4>Twitter</h4>
 
           <EmojiPicker
             {...emojiPickerProps}
             columnCount={7}
-            commonMode="recentlyUsed"
+            commonMode="recently-used"
             disablePreview
             displayOrder={['groups', 'search', 'emojis', 'skinTones']}
             emojiPadding={3.5}
@@ -178,16 +181,13 @@ function App() {
           />
         </div>
 
-
         <div className="twitter">
-          <h4>
-            Twitter (virtual)
-          </h4>
+          <h4>Twitter (virtual)</h4>
 
           <EmojiPicker
             {...emojiPickerProps}
             columnCount={8}
-            commonMode="frequentlyUsed"
+            commonMode="frequently-used"
             defaultGroup="flags"
             defaultSkinTone="dark"
             disablePreview
@@ -206,28 +206,15 @@ function App() {
         </div>
       </div>
 
-      <h1>
-        Copy
-      </h1>
+      <h1>Copy</h1>
 
-      <Interweave
-        tagName="div"
-        content="This has &apos; entities &quot; in it &dot;."
-      />
+      <Interweave tagName="div" content="This has &apos; entities &quot; in it &dot;." />
 
-      <Interweave
-        tagName="div"
-        content={contentWithNewLines}
-      />
+      <Interweave tagName="div" content={contentWithNewLines} />
 
-      <Interweave
-        tagName="div"
-        content={contentWithBrs}
-      />
+      <Interweave tagName="div" content={contentWithBrs} />
 
-      <h1>
-        Hashtags
-      </h1>
+      <h1>Hashtags</h1>
 
       <Interweave
         tagName="div"
@@ -243,15 +230,9 @@ function App() {
         encodeHashtag
       />
 
-      <Interweave
-        tagName="div"
-        matchers={[new HashtagMatcher('hashtag')]}
-        content="#lonely"
-      />
+      <Interweave tagName="div" matchers={[new HashtagMatcher('hashtag')]} content="#lonely" />
 
-      <h1>
-        URLs, IPs
-      </h1>
+      <h1>URLs, IPs</h1>
 
       <Interweave
         tagName="div"
@@ -273,9 +254,7 @@ function App() {
         content="http://milesj.me?foo=bar"
       />
 
-      <h1>
-        Emails
-      </h1>
+      <h1>Emails</h1>
 
       <Interweave
         tagName="div"
@@ -283,26 +262,13 @@ function App() {
         content="This is a string that contains an email: email@domain.com."
       />
 
-      <Interweave
-        tagName="div"
-        matchers={[new EmailMatcher('email')]}
-        content="email@domain.com"
-      />
+      <Interweave tagName="div" matchers={[new EmailMatcher('email')]} content="email@domain.com" />
 
-      <h1>
-        Emoticons
-      </h1>
+      <h1>Emoticons</h1>
 
-      <Interweave
-        tagName="div"
-        content="No matchers: :) :-D :[ <3 =/ \m/"
-      />
+      <Interweave tagName="div" content="No matchers: :) :-D :[ <3 =/ \m/" />
 
-      <Interweave
-        {...emojiProps}
-        tagName="div"
-        content="To PNGs: :) :-D :[ <3 =/ \m/"
-      />
+      <Interweave {...emojiProps} tagName="div" content="To PNGs: :) :-D :[ <3 =/ \m/" />
 
       <Interweave
         {...emojiProps}
@@ -311,32 +277,15 @@ function App() {
         content="To unicode literals: :) :-D :[ <3 =/ \m/"
       />
 
-      <Interweave
-        {...emojiProps}
-        tagName="span"
-        content=":{>"
-      />
+      <Interweave {...emojiProps} tagName="span" content=":{>" />
 
-      <Interweave
-        {...emojiProps}
-        tagName="span"
-        content="0)"
-      />
+      <Interweave {...emojiProps} tagName="span" content="0)" />
 
-      <Interweave
-        {...emojiProps}
-        tagName="span"
-        content="8#"
-      />
+      <Interweave {...emojiProps} tagName="span" content="8#" />
 
-      <h1>
-        Shortcodes
-      </h1>
+      <h1>Shortcodes</h1>
 
-      <Interweave
-        tagName="div"
-        content="No matchers: :cat_face: :dog_face: :man: :family_mwgb:"
-      />
+      <Interweave tagName="div" content="No matchers: :cat_face: :dog_face: :man: :family_mwgb:" />
 
       <Interweave
         {...emojiProps}
@@ -351,54 +300,41 @@ function App() {
         content="To unicode literals: :cat_face: :dog_face: :man: :family_mwgb:"
       />
 
-      <Interweave
-        {...emojiProps}
-        tagName="div"
-        content=":cat_face:"
-      />
+      <Interweave {...emojiProps} tagName="div" content=":cat_face:" />
 
-      <h1>
-        Unicode Escapes
-      </h1>
+      <h1>Unicode Escapes</h1>
 
       <Interweave
         tagName="div"
-        content={'No matchers: \uD83D\uDC31 \uD83D\uDC36 \uD83D\uDC68 \uD83D\uDC68\u200D\uD83D\uDC69\u200D\uD83D\uDC67\u200D\uD83D\uDC66'}
+        content={
+          'No matchers: \uD83D\uDC31 \uD83D\uDC36 \uD83D\uDC68 \uD83D\uDC68\u200D\uD83D\uDC69\u200D\uD83D\uDC67\u200D\uD83D\uDC66'
+        }
       />
 
       <Interweave
         {...emojiProps}
         tagName="div"
-        content={'To PNGs: \uD83D\uDC31 \uD83D\uDC36 \uD83D\uDC68 \uD83D\uDC68\u200D\uD83D\uDC69\u200D\uD83D\uDC67\u200D\uD83D\uDC66'}
+        content={
+          'To PNGs: \uD83D\uDC31 \uD83D\uDC36 \uD83D\uDC68 \uD83D\uDC68\u200D\uD83D\uDC69\u200D\uD83D\uDC67\u200D\uD83D\uDC66'
+        }
       />
 
       <Interweave
         {...emojiProps}
         tagName="div"
         matchers={[new EmojiMatcher('emoji', { convertUnicode: true, renderUnicode: true })]}
-        content={'To unicode literals: \uD83D\uDC31 \uD83D\uDC36 \uD83D\uDC68 \uD83D\uDC68\u200D\uD83D\uDC69\u200D\uD83D\uDC67\u200D\uD83D\uDC66'}
+        content={
+          'To unicode literals: \uD83D\uDC31 \uD83D\uDC36 \uD83D\uDC68 \uD83D\uDC68\u200D\uD83D\uDC69\u200D\uD83D\uDC67\u200D\uD83D\uDC66'
+        }
       />
 
-      <Interweave
-        {...emojiProps}
-        tagName="div"
-        content={'\uD83D\uDC31'}
-      />
+      <Interweave {...emojiProps} tagName="div" content={'\uD83D\uDC31'} />
 
-      <h1>
-        Unicode Literals
-      </h1>
+      <h1>Unicode Literals</h1>
 
-      <Interweave
-        tagName="div"
-        content="No matchers: 🐱 🐶 👨 👨‍👩‍👧‍👦"
-      />
+      <Interweave tagName="div" content="No matchers: 🐱 🐶 👨 👨‍👩‍👧‍👦" />
 
-      <Interweave
-        {...emojiProps}
-        tagName="div"
-        content="To PNGs: 🐱 🐶 👨 👨‍👩‍👧‍👦"
-      />
+      <Interweave {...emojiProps} tagName="div" content="To PNGs: 🐱 🐶 👨 👨‍👩‍👧‍👦" />
 
       <Interweave
         {...emojiProps}
@@ -407,20 +343,16 @@ function App() {
         content="To unicode literals: 🐱 🐶 👨 👨‍👩‍👧‍👦"
       />
 
-      <Interweave
-        {...emojiProps}
-        tagName="div"
-        content="🐱"
-      />
+      <Interweave {...emojiProps} tagName="div" content="🐱" />
 
-      <h1>
-        Emojis
-      </h1>
+      <h1>Emojis</h1>
 
       <Interweave
         {...emojiProps}
         tagName="div"
-        content={'This will convert 🐱 \uD83D\uDC36 :man: :3 all 3 emoji types to PNGs and increase the size.'}
+        content={
+          'This will convert 🐱 \uD83D\uDC36 :man: :3 all 3 emoji types to PNGs and increase the size.'
+        }
         emojiLargeSize="2em"
         enlargeEmoji
       />

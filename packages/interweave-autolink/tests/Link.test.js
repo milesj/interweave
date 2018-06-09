@@ -8,14 +8,19 @@ describe('components/Link', () => {
 
     expect(wrapper.is('a')).toBe(true);
     expect(wrapper.prop('href')).toBe('/home');
-    expect(wrapper.prop('className')).toBe('interweave__link');
     expect(wrapper.prop('children')).toBe('Foo');
   });
 
   it('can set and trigger an onClick', () => {
     let clicked = false;
-    const clicker = () => { clicked = true; };
-    const wrapper = shallow(<Link href="/blog" onClick={clicker}>Foo</Link>);
+    const clicker = () => {
+      clicked = true;
+    };
+    const wrapper = shallow(
+      <Link href="/blog" onClick={clicker}>
+        Foo
+      </Link>,
+    );
 
     expect(wrapper.prop('onClick')).toBe(clicker);
 
@@ -27,7 +32,7 @@ describe('components/Link', () => {
   it('can set target blank via newWindow', () => {
     const wrapper = shallow(<Link href="/forums">Foo</Link>);
 
-    expect(wrapper.prop('target')).toBe(null);
+    expect(wrapper.prop('target')).toBeUndefined();
 
     wrapper.setProps({ newWindow: true });
 

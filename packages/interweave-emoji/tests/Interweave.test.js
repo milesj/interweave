@@ -7,16 +7,14 @@ import { EXTRA_PROPS, SOURCE_PROP } from '../../../tests/mocks';
 
 describe('Interweave (with emoji)', () => {
   it('renders emoji shortcode as unicode', () => {
-    const wrapper = shallow((
+    const wrapper = shallow(
       <Interweave
         tagName="div"
-        matchers={[
-          new EmojiMatcher('emoji', { convertShortcode: true, renderUnicode: true }),
-        ]}
+        matchers={[new EmojiMatcher('emoji', { convertShortcode: true, renderUnicode: true })]}
         content="This has :cat: and :dog: shortcodes."
         emojiSource={SOURCE_PROP}
-      />
-    )).shallow();
+      />,
+    ).shallow();
 
     expect(wrapper.prop('children')).toEqual([
       'This has ',
@@ -42,16 +40,14 @@ describe('Interweave (with emoji)', () => {
   });
 
   it('renders emoji unicode (literals) as unicode', () => {
-    const wrapper = shallow((
+    const wrapper = shallow(
       <Interweave
         tagName="div"
-        matchers={[
-          new EmojiMatcher('emoji', { convertUnicode: true, renderUnicode: true }),
-        ]}
+        matchers={[new EmojiMatcher('emoji', { convertUnicode: true, renderUnicode: true })]}
         content="This has 🐈️ and 🐕️ shortcodes."
         emojiSource={SOURCE_PROP}
-      />
-    )).shallow();
+      />,
+    ).shallow();
 
     expect(wrapper.prop('children')).toEqual([
       'This has ',
@@ -77,16 +73,14 @@ describe('Interweave (with emoji)', () => {
   });
 
   it('renders emoji unicode (escapes) as unicode', () => {
-    const wrapper = shallow((
+    const wrapper = shallow(
       <Interweave
         tagName="div"
-        matchers={[
-          new EmojiMatcher('emoji', { convertUnicode: true, renderUnicode: true }),
-        ]}
+        matchers={[new EmojiMatcher('emoji', { convertUnicode: true, renderUnicode: true })]}
         content={'This has \uD83D\uDC31 and \uD83D\uDC36 shortcodes.'}
         emojiSource={SOURCE_PROP}
-      />
-    )).shallow();
+      />,
+    ).shallow();
 
     expect(wrapper.prop('children')).toEqual([
       'This has ',
@@ -112,16 +106,14 @@ describe('Interweave (with emoji)', () => {
   });
 
   it('renders a single emoji enlarged', () => {
-    const wrapper = shallow((
+    const wrapper = shallow(
       <Interweave
         tagName="div"
-        matchers={[
-          new EmojiMatcher('emoji', { convertUnicode: true, convertShortcode: true }),
-        ]}
+        matchers={[new EmojiMatcher('emoji', { convertUnicode: true, convertShortcode: true })]}
         content=":cat:"
         emojiSource={SOURCE_PROP}
-      />
-    )).shallow();
+      />,
+    ).shallow();
 
     expect(wrapper.prop('children')).toEqual([
       <Emoji

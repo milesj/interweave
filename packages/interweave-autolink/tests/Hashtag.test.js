@@ -12,11 +12,7 @@ describe('components/Hashtag', () => {
 
   it('can define the URL with a function', () => {
     const wrapper = shallow(
-      <Hashtag
-        hashtagUrl={tag => `http://foo.com/${tag.toUpperCase()}`}
-      >
-        #interweave
-      </Hashtag>,
+      <Hashtag hashtagUrl={tag => `http://foo.com/${tag.toUpperCase()}`}>#interweave</Hashtag>,
     );
 
     expect(wrapper.prop('children')).toBe('#interweave');
@@ -24,7 +20,11 @@ describe('components/Hashtag', () => {
   });
 
   it('can encode the hashtag', () => {
-    const wrapper = shallow(<Hashtag encodeHashtag preserveHash>#interweave</Hashtag>);
+    const wrapper = shallow(
+      <Hashtag encodeHashtag preserveHash>
+        #interweave
+      </Hashtag>,
+    );
 
     expect(wrapper.prop('children')).toBe('#interweave');
     expect(wrapper.prop('href')).toBe('%23interweave');
@@ -32,7 +32,11 @@ describe('components/Hashtag', () => {
 
   it('can pass props to Link', () => {
     const func = () => {};
-    const wrapper = shallow(<Hashtag onClick={func} newWindow>#interweave</Hashtag>);
+    const wrapper = shallow(
+      <Hashtag onClick={func} newWindow>
+        #interweave
+      </Hashtag>,
+    );
 
     expect(wrapper.find('Link').prop('newWindow')).toBe(true);
     expect(wrapper.find('Link').prop('onClick')).toBe(func);

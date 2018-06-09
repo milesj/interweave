@@ -1,20 +1,31 @@
 # Logs
 logs/
 *.log
-npm-debug.log*
 
 # Cache
 .eslintcache
 .idea
 .npm
+.vscode
 .yarnclean
 
 # Directories
+_book/
 coverage/
 esm/
 lib/
 node_modules/
 
 # Custom
-tests/bundle.min.js
+*.min.js
 *.map
+
+# Configs
+.babelrc
+.eslintignore
+.eslintrc.js
+.prettierignore
+jest.config.js
+prettier.config.js
+tsconfig.json
+webpack.config.js

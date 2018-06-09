@@ -1,5 +1,3 @@
-/* eslint-disable sort-keys */
-
 import React from 'react';
 import Filter from '../packages/interweave/src/Filter';
 import Matcher from '../packages/interweave/src/Matcher';
@@ -33,7 +31,6 @@ export const SOURCE_PROP = {
 };
 
 export const EXTRA_PROPS = {
-  commonClass: 'interweave',
   disableWhitelist: false,
   disableLineBreaks: false,
   noHtml: false,
@@ -62,7 +59,7 @@ export function createExpectedToken(value, factory, index, join = false) {
   let count = -1;
   const tokens = TOKEN_LOCATIONS[index]
     .split(/(\{token\})/)
-    .map((row) => {
+    .map(row => {
       if (row === '{token}') {
         count += 1;
 
@@ -170,7 +167,6 @@ export class LinkFilter extends Filter {
   node(name, node) {
     if (name === 'a') {
       node.setAttribute('target', '_blank');
-
     } else if (name === 'link') {
       return null;
     }

@@ -3,56 +3,6 @@ import { shallow } from 'enzyme';
 import Element from '../src/Element';
 
 describe('Element', () => {
-  it('can set the class name', () => {
-    const wrapper = shallow(<Element className="foo-bar" tagName="div">Foo</Element>);
-
-    expect(wrapper.hasClass('foo-bar')).toBe(true);
-  });
-
-  it('combines common class with prop class', () => {
-    const wrapper = shallow((
-      <Element
-        className="foo-bar"
-        tagName="div"
-        attributes={{ className: 'baz-qux' }}
-      >
-        Foo
-      </Element>
-    ));
-
-    expect(wrapper.prop('className')).toBe('interweave foo-bar baz-qux');
-  });
-
-  it('uses custom common class', () => {
-    const wrapper = shallow((
-      <Element
-        commonClass="not-interweave"
-        className="foo-bar"
-        tagName="div"
-        attributes={{ className: 'baz-qux' }}
-      >
-        Foo
-      </Element>
-    ));
-
-    expect(wrapper.prop('className')).toBe('not-interweave foo-bar baz-qux');
-  });
-
-  it('can skip common class', () => {
-    const wrapper = shallow((
-      <Element
-        commonClass={null}
-        className="foo-bar"
-        tagName="div"
-        attributes={{ className: 'baz-qux' }}
-      >
-        Foo
-      </Element>
-    ));
-
-    expect(wrapper.prop('className')).toBe('foo-bar baz-qux');
-  });
-
   it('renders with a custom HTML tag', () => {
     let wrapper = shallow(<Element tagName="div">Foo</Element>);
 
@@ -73,7 +23,6 @@ describe('Element', () => {
     expect(wrapper.is('div')).toBe(true);
     expect(wrapper.props()).toEqual({
       children: null,
-      className: 'interweave',
     });
   });
 
@@ -83,23 +32,25 @@ describe('Element', () => {
     expect(wrapper.isEmptyRender()).toBe(false);
     expect(wrapper.props()).toEqual({
       children: 'Foo',
-      className: 'interweave',
     });
   });
 
   it('renders with attributes', () => {
-    const wrapper = shallow(<Element tagName="div" attributes={{ id: 'foo' }}>Foo</Element>);
+    const wrapper = shallow(
+      <Element tagName="div" attributes={{ id: 'foo' }}>
+        Foo
+      </Element>,
+    );
 
     expect(wrapper.isEmptyRender()).toBe(false);
     expect(wrapper.props()).toEqual({
       children: 'Foo',
       id: 'foo',
-      className: 'interweave',
     });
   });
 
   it('renders with attributes of each type', () => {
-    const wrapper = shallow((
+    const wrapper = shallow(
       <Element
         tagName="input"
         attributes={{
@@ -109,22 +60,15 @@ describe('Element', () => {
         }}
       >
         Foo
-      </Element>
-    ));
+      </Element>,
+    );
 
     expect(wrapper.isEmptyRender()).toBe(false);
     expect(wrapper.props()).toEqual({
       children: 'Foo',
       id: 'foo',
-      className: 'interweave',
       disabled: true,
       maxLength: 15,
     });
-  });
-
-  it('applies class names to image when self closing', () => {
-    const wrapper = shallow(<Element className="foo-bar" tagName="img" selfClose />);
-
-    expect(wrapper.prop('className')).toBe('interweave foo-bar');
   });
 });

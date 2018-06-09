@@ -10,25 +10,27 @@
     "picker"
   ],
   "main": "./lib/index.js",
-  "scripts": {
-    "build": "build-lib --react"
+  "types": "./lib/index.d.ts",
+  "publishConfig": {
+    "access": "public"
   },
   "repository": "https://github.com/milesj/interweave/tree/master/packages/interweave-emoji-picker",
   "license": "MIT",
   "dependencies": {
+    "@types/react-virtualized": "^9.18.3",
     "babel-runtime": "^6.26.0",
-    "lodash": "^4.17.5",
+    "lodash": "^4.17.10",
     "prop-types": "^15.6.1",
-    "react-virtualized": "^9.18.5"
+    "react-virtualized": "^9.19.1"
   },
   "peerDependencies": {
+    "emojibase": "^1.7.0",
     "interweave-emoji": "^1.3.1",
-    "react": "^15.3.0 || ^16.0.0"
+    "react": "^16.3.0"
   },
   "devDependencies": {
-    "@milesj/build-tool-config": "^0.50.0",
-    "emojibase": "^1.5.0",
+    "emojibase": "^1.7.1",
     "interweave-emoji": "^1.4.0",
-    "react": "^16.3.2"
+    "react": "^16.4.0"
   }
 }

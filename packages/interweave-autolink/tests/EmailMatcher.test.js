@@ -62,14 +62,10 @@ describe('matchers/EmailMatcher', () => {
   const pattern = new RegExp(`^${EMAIL_PATTERN.source}$`, 'i');
 
   describe('does match valid email:', () => {
-    VALID_EMAILS.forEach((email) => {
+    VALID_EMAILS.forEach(email => {
       it(email, () => {
         const parts = email.split('@');
-        const expected = [
-          email,
-          parts[0],
-          parts[1],
-        ];
+        const expected = [email, parts[0], parts[1]];
         expected.index = 0;
         expected.input = email;
 
@@ -79,9 +75,9 @@ describe('matchers/EmailMatcher', () => {
   });
 
   describe('doesnt match invalid email:', () => {
-    INVALID_EMAILS.forEach((email) => {
+    INVALID_EMAILS.forEach(email => {
       it(email, () => {
-        expect(email.match(pattern)).toBe(null);
+        expect(email.match(pattern)).toBeNull();
       });
     });
   });
@@ -100,7 +96,7 @@ describe('matchers/EmailMatcher', () => {
       });
     };
 
-    VALID_EMAILS.forEach((email) => {
+    VALID_EMAILS.forEach(email => {
       TOKEN_LOCATIONS.forEach((location, i) => {
         it(`for: ${email} - ${location}`, () => {
           parser.keyIndex = -1; // Reset for easier testing
@@ -120,7 +116,7 @@ describe('matchers/EmailMatcher', () => {
 
   describe('match()', () => {
     it('returns null for invalid match', () => {
-      expect(matcher.match('notanemail')).toBe(null);
+      expect(matcher.match('notanemail')).toBeNull();
     });
 
     it('returns object for valid match', () => {

@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import EmojiData from '../src/EmojiData';
+import EmojiData from '../src/EmojiDataManager';
 import withEmojiData, { resetLoaded } from '../src/withEmojiData';
 
 describe('withEmojiData', () => {
@@ -14,27 +14,24 @@ describe('withEmojiData', () => {
     {
       name: 'GRINNING FACE',
       hexcode: '1F600',
-      shortcodes: [
-        'gleeful',
-      ],
+      shortcodes: ['gleeful'],
       emoji: '😀',
       type: 1,
       order: 1,
       group: 0,
       subgroup: 0,
       annotation: 'grinning face',
-      tags: [
-        'face',
-        'grin',
-      ],
+      tags: ['face', 'grin'],
     },
   ];
 
   beforeEach(() => {
-    global.fetch = jest.fn(() => Promise.resolve({
-      ok: true,
-      json: () => mockEmojis,
-    }));
+    global.fetch = jest.fn(() =>
+      Promise.resolve({
+        ok: true,
+        json: () => mockEmojis,
+      }),
+    );
 
     global.sessionStorage = {
       getItem() {},

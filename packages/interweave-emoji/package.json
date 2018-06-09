@@ -9,25 +9,25 @@
     "emojibase"
   ],
   "main": "./lib/index.js",
-  "scripts": {
-    "build": "build-lib --react"
+  "types": "./lib/index.d.ts",
+  "publishConfig": {
+    "access": "public"
   },
   "repository": "https://github.com/milesj/interweave/tree/master/packages/interweave-emoji",
   "license": "MIT",
   "dependencies": {
     "babel-runtime": "^6.26.0",
-    "emojibase-regex": "^1.0.9",
+    "emojibase-regex": "^1.1.1",
     "prop-types": "^15.6.1"
   },
   "peerDependencies": {
-    "emojibase": "^1.4.0",
+    "emojibase": "^1.7.0",
     "interweave": "^8.0.2",
-    "react": "^15.3.0 || ^16.0.0"
+    "react": "^16.3.0"
   },
   "devDependencies": {
-    "@milesj/build-tool-config": "^0.50.0",
-    "emojibase": "^1.5.0",
+    "emojibase": "^1.7.1",
     "interweave": "^8.1.0",
-    "react": "^16.3.2"
+    "react": "^16.4.0"
   }
 }
