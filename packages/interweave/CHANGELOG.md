@@ -4,9 +4,9 @@
 
 - Updated minimum `react` requirement to 16.3.
 - Updated `Interweave` to extend `React.PureComponent`.
-- Updated `Interweave` and `Markup` default `tagName` to `div` (from `span`).
+- Updated `Interweave` and `Markup` prop to default `tagName` to `div` (from `span`).
 - Removed `className` and `commonClass` props.
-  - If you require custom class names, use a `Filter` and append to the node's `classList`.
+  - If you require custom class names, use a `Filter` and append to the node manually.
 
 #### 🐞 Fixed
 

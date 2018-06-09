@@ -126,6 +126,7 @@ export class CodeTagMatcher extends Matcher {
     const { children } = props;
 
     if (this.key) {
+      // eslint-disable-next-line
       props.key = this.key;
     }
 

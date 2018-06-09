@@ -47,12 +47,7 @@
     ],
     "eslint": {
       "rules": {
-        "no-magic-numbers": "off",
-        "no-param-reassign": "off",
-        "import/no-named-as-default": "off",
-        "react/no-unused-prop-types": "off",
-        "react/sort-comp": "off",
-        "typescript/member-ordering": "off"
+        "import/no-named-as-default": "off"
       }
     }
   },

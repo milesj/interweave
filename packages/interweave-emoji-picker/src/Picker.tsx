@@ -3,6 +3,8 @@
  * @license     https://opensource.org/licenses/MIT
  */
 
+/* eslint-disable no-magic-numbers */
+
 import React from 'react';
 import PropTypes from 'prop-types';
 import {

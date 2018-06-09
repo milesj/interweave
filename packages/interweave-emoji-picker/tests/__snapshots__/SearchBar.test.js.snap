@@ -78,7 +78,7 @@ ShallowWrapper {
         onChange={[Function]}
         onKeyUp={[Function]}
         placeholder="Search"
-        type="text"
+        type="search"
         value=""
       />,
       "className": "interweave-picker__search",
@@ -94,7 +94,7 @@ ShallowWrapper {
         "onChange": [Function],
         "onKeyUp": [Function],
         "placeholder": "Search",
-        "type": "text",
+        "type": "search",
         "value": "",
       },
       "ref": Object {
@@ -117,7 +117,7 @@ ShallowWrapper {
           onChange={[Function]}
           onKeyUp={[Function]}
           placeholder="Search"
-          type="text"
+          type="search"
           value=""
         />,
         "className": "interweave-picker__search",
@@ -133,7 +133,7 @@ ShallowWrapper {
           "onChange": [Function],
           "onKeyUp": [Function],
           "placeholder": "Search",
-          "type": "text",
+          "type": "search",
           "value": "",
         },
         "ref": Object {

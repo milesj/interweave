@@ -56,10 +56,8 @@ export default class Parser {
     matchers: MatcherInterface[] = [],
     filters: FilterInterface[] = [],
   ) {
-    if (!markup) {
-      markup = '';
-    } else if (typeof markup !== 'string') {
-      if (process.env.NODE_ENV !== 'production') {
+    if (process.env.NODE_ENV !== 'production') {
+      if (markup && typeof markup !== 'string') {
         throw new TypeError('Interweave parser requires a valid string.');
       }
     }
@@ -68,7 +66,7 @@ export default class Parser {
     this.matchers = matchers;
     this.filters = filters;
     this.keyIndex = -1;
-    this.doc = this.createDocument(markup);
+    this.doc = this.createDocument(markup || '');
   }
 
   /**

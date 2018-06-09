@@ -9,6 +9,10 @@
 - Renamed `GROUP_*` constants to `GROUP_KEY_*`.
 - Renamed `SKIN_*` constants to `SKIN_KEY_*`.
 
+#### 🚀 New
+
+- Added new `withEmojiPickerContext` context consuming HOC.
+
 #### 🛠 Internal
 
 - Converted from Flow to TypeScript.

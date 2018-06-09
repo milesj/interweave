@@ -3,9 +3,10 @@
  * @license     https://opensource.org/licenses/MIT
  */
 
+/* eslint-disable react/no-unused-prop-types */
+
 import React from 'react';
 import PropTypes from 'prop-types';
-import Element from './Element';
 import Parser from './Parser';
 import Markup, { MarkupProps } from './Markup';
 import { FilterInterface } from './Filter';
