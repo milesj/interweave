@@ -93,7 +93,7 @@ export class SearchBar extends React.PureComponent<SearchBarProps & ContextProps
           className={classNames.searchInput}
           placeholder={messages.search}
           ref={this.inputRef}
-          type="text"
+          type="search"
           value={this.state.query}
           onChange={this.handleChange}
           onKeyUp={onKeyUp}
