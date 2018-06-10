@@ -18,6 +18,8 @@ import EmojiCharacter, {
 import withContext, { ContextProps } from './Context';
 import { ContextShape } from './shapes';
 
+const TITLE_REGEX: RegExp = /(^|:|\.)\s?[a-z]/g;
+
 export interface PreviewBarProps {
   emoji?: CanonicalEmoji | null;
   emojiLargeSize: Size;
@@ -26,8 +28,6 @@ export interface PreviewBarProps {
   hideEmoticon: boolean;
   hideShortcodes: boolean;
 }
-
-const TITLE_REGEX: RegExp = /(^|:|\.)\s?[a-z]/g;
 
 export class PreviewBar extends React.PureComponent<PreviewBarProps & ContextProps> {
   static propTypes = {

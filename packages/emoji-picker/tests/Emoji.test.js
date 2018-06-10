@@ -50,8 +50,7 @@ describe('Emoji', () => {
     });
   });
 
-  // TODO
-  it.skip('updates the active state', () => {
+  it('updates the active state', () => {
     const wrapper = shallow(<Emoji {...props} />);
 
     expect(wrapper.prop('className')).toBe('interweave-picker__emoji');
@@ -110,7 +109,6 @@ describe('Emoji', () => {
     wrapper.simulate('mouseenter', event);
 
     expect(spy).toBeCalledWith(props.emoji, event);
-    expect(wrapper.state('active')).toBe(true);
   });
 
   it('triggers `onLeave` when leaving node', () => {
@@ -120,6 +118,5 @@ describe('Emoji', () => {
     wrapper.simulate('mouseleave', event);
 
     expect(spy).toBeCalledWith(props.emoji, event);
-    expect(wrapper.state('active')).toBe(false);
   });
 });

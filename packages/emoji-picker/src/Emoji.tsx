@@ -29,12 +29,7 @@ export interface EmojiProps {
   showImage: boolean;
 }
 
-export interface EmojiState {
-  active: boolean;
-  parentActive: boolean;
-}
-
-export class Emoji extends React.PureComponent<EmojiProps & ContextProps, EmojiState> {
+export class Emoji extends React.PureComponent<EmojiProps & ContextProps> {
   static propTypes = {
     active: PropTypes.bool.isRequired,
     context: ContextShape.isRequired,
@@ -48,23 +43,6 @@ export class Emoji extends React.PureComponent<EmojiProps & ContextProps, EmojiS
     onSelect: PropTypes.func.isRequired,
     showImage: PropTypes.bool.isRequired,
   };
-
-  state = {
-    active: this.props.active,
-    // eslint-disable-next-line react/no-unused-state
-    parentActive: this.props.active,
-  };
-
-  static getDerivedStateFromProps(props: EmojiProps, state: EmojiState) {
-    if (props.active !== state.parentActive) {
-      return {
-        active: props.active,
-        parentActive: props.active,
-      };
-    }
-
-    return null;
-  }
 
   /**
    * Triggered when the emoji is clicked.
@@ -81,10 +59,6 @@ export class Emoji extends React.PureComponent<EmojiProps & ContextProps, EmojiS
   private handleEnter = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.stopPropagation();
 
-    this.setState({
-      active: true,
-    });
-
     this.props.onEnter(this.props.emoji, event);
   };
 
@@ -94,15 +68,12 @@ export class Emoji extends React.PureComponent<EmojiProps & ContextProps, EmojiS
   private handleLeave = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.stopPropagation();
 
-    this.setState({
-      active: false,
-    });
-
     this.props.onLeave(this.props.emoji, event);
   };
 
   render() {
     const {
+      active,
       context: { classNames },
       emoji,
       emojiPadding,
@@ -111,7 +82,6 @@ export class Emoji extends React.PureComponent<EmojiProps & ContextProps, EmojiS
       emojiSource,
       showImage,
     } = this.props;
-    const { active } = this.state;
     const dimension = emojiPadding + emojiPadding + emojiSize;
     const className = [classNames.emoji];
 

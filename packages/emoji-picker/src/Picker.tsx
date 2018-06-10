@@ -751,7 +751,7 @@ export class Picker extends React.Component<PickerUnifiedProps, PickerState> {
     const List = virtual ? EmojiVirtualList : EmojiList;
     const skinTones = disableSkinTones ? null : (
       <SkinTonePalette
-        key="skins"
+        key="skin-tones"
         activeSkinTone={activeSkinTone}
         icons={skinIcons}
         onSelect={this.handleSelectSkinTone}
