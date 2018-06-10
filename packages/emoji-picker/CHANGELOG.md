@@ -13,6 +13,7 @@
 #### 🚀 New
 
 - Added new `withEmojiPickerContext` context consuming HOC.
+- Added titles/messages for skin tones within the palette.
 
 #### 🛠 Internal
 

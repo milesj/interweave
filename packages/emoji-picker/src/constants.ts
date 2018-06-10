@@ -138,6 +138,13 @@ export const CONTEXT_MESSAGES = {
   flags: 'Flags',
   searchResults: 'Search Results',
   none: 'All Emojis',
+  // Skin tones
+  skinNone: 'No skin tone',
+  skinLight: 'Light skin tone',
+  skinMediumLight: 'Medium-light skin tone',
+  skinMedium: 'Medium skin tone',
+  skinMediumDark: 'Medium-dark skin tone',
+  skinDark: 'Dark skin tone',
   // Miscellaneous
   search: 'Search',
   searchA11y: 'Search for emojis by keyword',

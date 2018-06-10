@@ -5,6 +5,7 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
+import camelCase from 'lodash/camelCase';
 import withContext, { ContextProps } from './Context';
 import { SKIN_COLORS } from './constants';
 import { ContextShape } from './shapes';
@@ -43,11 +44,12 @@ export class SkinTone extends React.PureComponent<SkinToneProps & ContextProps> 
     const {
       active,
       children,
-      context: { classNames },
+      context: { classNames, messages },
       skinTone,
     } = this.props;
     const className = [classNames.skinTone];
     const color = SKIN_COLORS[skinTone];
+    const key = camelCase(skinTone);
 
     if (active) {
       className.push(classNames.skinToneActive);
@@ -57,6 +59,7 @@ export class SkinTone extends React.PureComponent<SkinToneProps & ContextProps> 
       <button
         className={className.join(' ')}
         style={{ backgroundColor: color, borderColor: color, color }}
+        title={messages[`skin${key.charAt(0).toUpperCase()}${key.slice(1)}`]}
         type="button"
         onClick={this.handleClick}
       >
