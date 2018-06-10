@@ -7,6 +7,7 @@
 - Renamed `EmojiData` to `EmojiDataManager`.
 - Removed "Emoji" prefix from `EmojiPathShape`, `EmojiSizeShape`, and `EmojiSourceShape`.
 - Removed class names from generated elements.
+- The `withEmojiData` HOC will return `null` until emoji data has loaded.
 
 #### 🚀 New
 

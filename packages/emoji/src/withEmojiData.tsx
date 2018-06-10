@@ -156,6 +156,10 @@ export default function withEmojiData<T extends {}>(
       // @ts-ignore
       const { compact, emojis, locale, version, ...props } = this.props;
 
+      if (this.state.emojis.length === 0) {
+        return null;
+      }
+
       return (
         <Component
           {...props}

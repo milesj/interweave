@@ -45,6 +45,7 @@ export interface EmojiListProps {
 }
 
 export interface EmojiListState {
+  groupedEmojis: GroupEmojiMap;
   loadedGroups: Set<GroupKey>;
 }
 
@@ -99,6 +100,7 @@ export class EmojiList extends React.PureComponent<EmojiListUnifiedProps, EmojiL
     }
 
     this.state = {
+      groupedEmojis: this.groupEmojis(),
       loadedGroups: new Set(loadedGroups),
     };
   }
@@ -109,7 +111,7 @@ export class EmojiList extends React.PureComponent<EmojiListUnifiedProps, EmojiL
   componentDidMount() {
     setTimeout(() => {
       if (this.containerRef.current) {
-        this.loadEmojiImages(this.containerRef.current);
+        this.scrollToGroup(this.props.activeGroup);
       }
     }, 0);
   }
@@ -118,16 +120,29 @@ export class EmojiList extends React.PureComponent<EmojiListUnifiedProps, EmojiL
    * Update scroll position after the list has rendered.
    */
   componentDidUpdate(prevProps: EmojiListUnifiedProps) {
-    const { searching, scrollToGroup } = this.props;
+    const { activeGroup, emojis, searching, scrollToGroup } = this.props;
 
     // Search query has changed
-    if (searching && searching !== prevProps.searching) {
-      this.scrollToGroup(GROUP_KEY_SEARCH_RESULTS);
+    if (searching !== prevProps.searching) {
+      if (searching) {
+        this.scrollToGroup(GROUP_KEY_SEARCH_RESULTS);
+      } else {
+        this.scrollToGroup(activeGroup);
+      }
     }
 
     // Scroll to group when the tab is clicked
     if (scrollToGroup && scrollToGroup !== prevProps.scrollToGroup) {
       this.scrollToGroup(scrollToGroup);
+    }
+
+    // Skin tone has changed or being search
+    if (emojis && prevProps.emojis !== emojis) {
+      // TODO
+      // eslint-disable-next-line
+      this.setState({
+        groupedEmojis: this.groupEmojis(),
+      });
     }
   }
 
@@ -302,8 +317,7 @@ export class EmojiList extends React.PureComponent<EmojiListUnifiedProps, EmojiL
       onLeaveEmoji,
       onSelectEmoji,
     } = this.props;
-    const { loadedGroups } = this.state;
-    const groupedEmojis = this.groupEmojis();
+    const { groupedEmojis, loadedGroups } = this.state;
     const noResults = Object.keys(groupedEmojis).length === 0;
 
     return (

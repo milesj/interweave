@@ -123,7 +123,6 @@ const japaneseMessages = {
   search: 'サーチ',
 };
 
-// @ts-ignore
 const Interweave = withEmojiData(BaseInterweave);
 
 function App() {

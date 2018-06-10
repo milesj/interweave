@@ -119,7 +119,7 @@ export type PickerUnifiedProps = PickerProps & EmojiDataProps;
 
 const SKIN_MODIFIER_PATTERN: RegExp = /1F3FB|1F3FC|1F3FD|1F3FE|1F3FF/g;
 
-export class Picker extends React.Component<PickerUnifiedProps, PickerState> {
+export class Picker extends React.PureComponent<PickerUnifiedProps, PickerState> {
   static propTypes = {
     autoFocus: PropTypes.bool,
     blacklist: PropTypes.arrayOf(PropTypes.string),
@@ -226,20 +226,22 @@ export class Picker extends React.Component<PickerUnifiedProps, PickerState> {
     const {
       blacklist,
       classNames,
-      defaultGroup,
       defaultSkinTone,
       emojis,
       messages,
       whitelist,
     } = props as Required<PickerUnifiedProps>;
+    const commonEmojis = this.generateCommonEmojis(this.getCommonEmojisFromStorage());
+    const activeGroup = this.getDefaultGroup(commonEmojis.length > 0);
+    const activeSkinTone = this.getSkinToneFromStorage() || defaultSkinTone;
 
     this.state = {
       activeEmoji: null,
       activeEmojiIndex: -1,
-      activeGroup: defaultGroup,
-      activeSkinTone: this.getSkinToneFromStorage() || defaultSkinTone,
+      activeGroup,
+      activeSkinTone,
       blacklisted: this.generateBlackWhiteMap(blacklist),
-      commonEmojis: [],
+      commonEmojis,
       context: {
         classNames: {
           ...CONTEXT_CLASSNAMES,
@@ -250,25 +252,15 @@ export class Picker extends React.Component<PickerUnifiedProps, PickerState> {
           ...messages,
         },
       },
-      emojis,
-      scrollToGroup: '',
+      emojis: [],
+      scrollToGroup: activeGroup,
       searchQuery: '',
       whitelisted: this.generateBlackWhiteMap(whitelist),
     };
-  }
 
-  componentDidMount() {
-    // Emoji data has already been loaded
-    if (this.props.emojis.length !== 0) {
-      this.setInitialEmojis();
-    }
-  }
-
-  componentDidUpdate(prevProps: PickerUnifiedProps) {
-    // Emoji data has loaded via the `withEmojiData` HOC
-    if (this.props.emojis.length !== 0 && prevProps.emojis.length === 0) {
-      this.setInitialEmojis();
-    }
+    // Generating emojis requires state fields to be defined
+    // @ts-ignore
+    this.state.emojis = this.generateEmojis(emojis, '', activeSkinTone);
   }
 
   /**
@@ -435,13 +427,13 @@ export class Picker extends React.Component<PickerUnifiedProps, PickerState> {
   /**
    * Return the default group while handling commonly used scenarios.
    */
-  getDefaultGroup(): GroupKey {
+  getDefaultGroup(hasCommon: boolean = false): GroupKey {
     const { defaultGroup, disableGroups } = this.props;
     let group = defaultGroup!;
 
     // Allow commonly used before "none" groups
     if (group === GROUP_KEY_COMMONLY_USED) {
-      if (this.state.commonEmojis.length > 0) {
+      if (hasCommon || this.state.commonEmojis.length > 0) {
         return GROUP_KEY_COMMONLY_USED;
       }
 
@@ -673,21 +665,6 @@ export class Picker extends React.Component<PickerUnifiedProps, PickerState> {
 
     this.props.onSelectSkinTone!(skinTone, event);
   };
-
-  /**
-   * Set the initial emoji state once emoji data has loaded.
-   */
-  setInitialEmojis() {
-    const defaultGroup = this.getDefaultGroup();
-    const { emojis } = this.props;
-
-    this.setState(prevState => ({
-      activeGroup: defaultGroup,
-      commonEmojis: this.generateCommonEmojis(this.getCommonEmojisFromStorage()),
-      emojis: this.generateEmojis(emojis, '', prevState.activeSkinTone),
-      scrollToGroup: defaultGroup,
-    }));
-  }
 
   /**
    * Set the users favorite skin tone into local storage.
