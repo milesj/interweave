@@ -87,7 +87,7 @@ export const SKIN_COLORS = {
 
 export const SCROLL_BUFFER = 150;
 export const SCROLL_DEBOUNCE = 100;
-export const SEARCH_THROTTLE = 250;
+export const SEARCH_THROTTLE = 300;
 
 export const KEY_COMMONLY_USED = 'interweave/emoji/commonlyUsed';
 export const KEY_SKIN_TONE = 'interweave/emoji/skinTone';

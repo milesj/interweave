@@ -40,7 +40,7 @@ export interface EmojiListProps {
   onScrollGroup: (group: GroupKey) => void;
   onSelectEmoji: (emoji: CanonicalEmoji, event: React.MouseEvent<HTMLButtonElement>) => void;
   scrollToGroup: GroupKey | '';
-  searchQuery: string;
+  searching: boolean;
   skinTonePalette?: React.ReactNode;
 }
 
@@ -70,7 +70,7 @@ export class EmojiList extends React.PureComponent<EmojiListUnifiedProps, EmojiL
     onScrollGroup: PropTypes.func.isRequired,
     onSelectEmoji: PropTypes.func.isRequired,
     scrollToGroup: PropTypes.string.isRequired,
-    searchQuery: PropTypes.string.isRequired,
+    searching: PropTypes.bool.isRequired,
     skinTonePalette: PropTypes.node,
   };
 
@@ -118,10 +118,10 @@ export class EmojiList extends React.PureComponent<EmojiListUnifiedProps, EmojiL
    * Update scroll position after the list has rendered.
    */
   componentDidUpdate(prevProps: EmojiListUnifiedProps) {
-    const { searchQuery, scrollToGroup } = this.props;
+    const { searching, scrollToGroup } = this.props;
 
     // Search query has changed
-    if (searchQuery && searchQuery !== prevProps.searchQuery) {
+    if (searching && searching !== prevProps.searching) {
       this.scrollToGroup(GROUP_KEY_SEARCH_RESULTS);
     }
 
@@ -135,11 +135,11 @@ export class EmojiList extends React.PureComponent<EmojiListUnifiedProps, EmojiL
    * Partition the dataset into multiple arrays based on the group they belong to.
    */
   groupEmojis(): GroupEmojiMap {
-    const { commonEmojis, disableGroups, emojis, searchQuery } = this.props;
+    const { commonEmojis, disableGroups, emojis, searching } = this.props;
     const groups: GroupEmojiMap = {};
 
     // Add commonly used group if not searching
-    if (!searchQuery && commonEmojis.length > 0) {
+    if (!searching && commonEmojis.length > 0) {
       groups[GROUP_KEY_COMMONLY_USED] = {
         emojis: commonEmojis,
         group: GROUP_KEY_COMMONLY_USED,
@@ -150,7 +150,7 @@ export class EmojiList extends React.PureComponent<EmojiListUnifiedProps, EmojiL
     emojis.forEach(emoji => {
       let group: GroupKey = GROUP_KEY_NONE;
 
-      if (searchQuery) {
+      if (searching) {
         group = GROUP_KEY_SEARCH_RESULTS;
       } else if (!disableGroups && typeof emoji.group !== 'undefined') {
         group = GROUPS[emoji.group];
@@ -209,7 +209,7 @@ export class EmojiList extends React.PureComponent<EmojiListUnifiedProps, EmojiL
    */
   loadEmojiImages(container: HTMLDivElement, event?: React.SyntheticEvent<any>) {
     const { scrollTop } = container;
-    const { searchQuery } = this.props;
+    const { searching } = this.props;
     const { loadedGroups } = this.state;
     let updateState = false;
     let lastGroup = '';
@@ -229,7 +229,7 @@ export class EmojiList extends React.PureComponent<EmojiListUnifiedProps, EmojiL
 
         // While a group section is partially within view, update the active group
       } else if (
-        !searchQuery &&
+        !searching &&
         // Top is partially in view
         section.offsetTop - SCROLL_BUFFER <= scrollTop &&
         // Bottom is partially in view

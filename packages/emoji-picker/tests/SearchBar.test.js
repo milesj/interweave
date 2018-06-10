@@ -48,20 +48,6 @@ describe('<SearchBar />', () => {
     expect(spy).toHaveBeenCalled();
   });
 
-  it('resets query if prop changes', () => {
-    const wrapper = shallow(<SearchBar {...props} searchQuery="foo" />);
-
-    expect(wrapper.state('query')).toBe('foo');
-    expect(wrapper.find('input').prop('value')).toBe('foo');
-
-    wrapper.setProps({
-      searchQuery: '',
-    });
-
-    expect(wrapper.state('query')).toBe('');
-    expect(wrapper.find('input').prop('value')).toBe('');
-  });
-
   it('can customize class name', () => {
     const wrapper = shallow(
       <SearchBar
@@ -121,21 +107,6 @@ describe('<SearchBar />', () => {
     });
 
     expect(spy).toHaveBeenCalledWith('foo', expect.objectContaining({}));
-  });
-
-  it('sets changed value to state', () => {
-    const wrapper = shallow(<SearchBar {...props} />);
-
-    expect(wrapper.state('query')).toBe('');
-
-    wrapper.find('input').simulate('change', {
-      persist() {},
-      target: {
-        value: 'bar',
-      },
-    });
-
-    expect(wrapper.state('query')).toBe('bar');
   });
 
   it('trims changed value', () => {

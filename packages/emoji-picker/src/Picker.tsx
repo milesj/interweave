@@ -7,6 +7,7 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
+import debounce from 'lodash/debounce';
 import {
   CanonicalEmoji,
   withEmojiData,
@@ -49,6 +50,7 @@ import {
   COMMON_MODE_FREQUENT,
   CONTEXT_CLASSNAMES,
   CONTEXT_MESSAGES,
+  SEARCH_THROTTLE,
 } from './constants';
 import { CommonEmoji, CommonMode, Context as EmojiContext, GroupKey, SkinToneKey } from './types';
 
@@ -604,18 +606,26 @@ export class Picker extends React.Component<PickerUnifiedProps, PickerState> {
    * Triggered when the search input field value changes.
    */
   private handleSearch = (query: string, event: React.ChangeEvent<HTMLInputElement>) => {
-    const defaultGroup = this.getDefaultGroup();
-
-    this.setUpdatedEmojis(query, this.state.activeSkinTone);
-
     this.setState({
-      activeGroup: query ? GROUP_KEY_SEARCH_RESULTS : defaultGroup,
-      scrollToGroup: query ? GROUP_KEY_SEARCH_RESULTS : defaultGroup,
       searchQuery: query,
     });
 
+    this.handleSearchDebounced();
+
     this.props.onSearch!(query, event);
   };
+
+  private handleSearchDebounced = debounce(() => {
+    const { searchQuery } = this.state;
+    const defaultGroup = this.getDefaultGroup();
+
+    this.setUpdatedEmojis(searchQuery, this.state.activeSkinTone);
+
+    this.setState({
+      activeGroup: searchQuery ? GROUP_KEY_SEARCH_RESULTS : defaultGroup,
+      scrollToGroup: searchQuery ? GROUP_KEY_SEARCH_RESULTS : defaultGroup,
+    });
+  }, SEARCH_THROTTLE);
 
   /**
    * Triggered when an emoji is clicked.
@@ -766,7 +776,7 @@ export class Picker extends React.Component<PickerUnifiedProps, PickerState> {
           hideGroupHeaders={hideGroupHeaders}
           rowCount={rowCount}
           scrollToGroup={scrollToGroup}
-          searchQuery={searchQuery}
+          searching={searchQuery !== ''}
           skinTonePalette={displayOrder.includes('skin-tones') ? null : skinTones}
           onEnterEmoji={this.handleEnterEmoji}
           onLeaveEmoji={this.handleLeaveEmoji}

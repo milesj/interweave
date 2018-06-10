@@ -2,7 +2,7 @@
   "name": "interweave-root",
   "private": true,
   "scripts": {
-    "build": "beemo typescript --workspaces=* --priority=core,emoji --react",
+    "build": "beemo typescript --workspaces=* --priority=core --react",
     "clean": "rimraf ./packages/*/{lib,esm}/ && lerna clean --yes",
     "coverage": "yarn run jest --coverage",
     "docs": "gitbook build --debug --log=debug",
@@ -14,13 +14,11 @@
     "pretest": "yarn run type",
     "test": "yarn run jest",
     "test:live": "yarn run jest && webpack && serve ./tests/",
-    "updated": "lerna updated",
     "package": "yarn run clean && yarn install && yarn test && yarn run build",
     "prettier": "beemo prettier",
     "prerelease": "yarn run package",
     "release": "lerna publish",
-    "release:force": "npm run release -- --force-publish=*",
-    "type": "beemo typescript --workspaces --noEmit --react"
+    "type": "beemo typescript --workspaces=* --noEmit --react"
   },
   "devDependencies": {
     "@milesj/build-tool-config": "^0.102.1",
@@ -54,7 +52,8 @@
     ],
     "eslint": {
       "rules": {
-        "import/no-named-as-default": "off"
+        "import/no-named-as-default": "off",
+        "react/jsx-no-literals": "off"
       }
     }
   },

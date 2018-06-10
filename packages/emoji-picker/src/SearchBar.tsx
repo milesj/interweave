@@ -5,9 +5,7 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import debounce from 'lodash/debounce';
 import withContext, { ContextProps } from './Context';
-import { SEARCH_THROTTLE } from './constants';
 import { ContextShape } from './shapes';
 
 export interface SearchBarProps {
@@ -17,11 +15,7 @@ export interface SearchBarProps {
   searchQuery: string;
 }
 
-export interface SearchBarState {
-  query: string;
-}
-
-export class SearchBar extends React.PureComponent<SearchBarProps & ContextProps, SearchBarState> {
+export class SearchBar extends React.PureComponent<SearchBarProps & ContextProps> {
   static propTypes = {
     autoFocus: PropTypes.bool.isRequired,
     context: ContextShape.isRequired,
@@ -31,10 +25,6 @@ export class SearchBar extends React.PureComponent<SearchBarProps & ContextProps
   };
 
   inputRef = React.createRef<HTMLInputElement>();
-
-  state = {
-    query: this.props.searchQuery,
-  };
 
   /**
    * Focus the input field if `autoFocus` is true.
@@ -46,40 +36,14 @@ export class SearchBar extends React.PureComponent<SearchBarProps & ContextProps
   }
 
   /**
-   * When the parent `Picker` search query is reset, also reset the input field.
-   */
-  componentDidUpdate(prevProps: SearchBarProps) {
-    if (this.props.searchQuery === '' && prevProps.searchQuery) {
-      this.setState({
-        query: '',
-      });
-    }
-  }
-
-  /**
    * Triggered when the input field value changes.
    */
   private handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    event.persist();
-
-    // Update the input field immediately
-    this.setState({
-      query: event.target.value,
-    });
-
-    // But defer filtering in the picker
-    this.handleChangeDebounced(event);
-  };
-
-  /**
-   * A change handler that is debounced for performance.
-   */
-  private handleChangeDebounced = debounce(event => {
     // Check if were still mounted
     if (this.inputRef.current) {
       this.props.onChange(event.target.value.trim(), event);
     }
-  }, SEARCH_THROTTLE);
+  };
 
   render() {
     const { classNames, messages } = this.props.context;
@@ -93,7 +57,7 @@ export class SearchBar extends React.PureComponent<SearchBarProps & ContextProps
           placeholder={messages.search}
           ref={this.inputRef}
           type="search"
-          value={this.state.query}
+          value={this.props.searchQuery}
           onChange={this.handleChange}
           onKeyUp={onKeyUp}
         />

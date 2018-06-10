@@ -65,7 +65,7 @@ export class EmojiVirtualList extends React.PureComponent<
     rowCount: PropTypes.number.isRequired,
     rowPadding: PropTypes.number,
     scrollToGroup: PropTypes.string.isRequired,
-    searchQuery: PropTypes.string.isRequired,
+    searching: PropTypes.bool.isRequired,
     skinTonePalette: PropTypes.node,
   };
 
@@ -91,7 +91,7 @@ export class EmojiVirtualList extends React.PureComponent<
   }
 
   componentDidUpdate(prevProps: EmojiVirtualListUnifiedProps) {
-    const { activeEmoji, commonEmojis, emojis, searchQuery } = this.props;
+    const { activeEmoji, commonEmojis, emojis, searching } = this.props;
 
     // We re-use the same array for emojis unless it has been rebuilt,
     // so this check will work correctly. No lengthy checks needed.
@@ -99,7 +99,7 @@ export class EmojiVirtualList extends React.PureComponent<
       activeEmoji !== prevProps.activeEmoji ||
       commonEmojis !== prevProps.commonEmojis ||
       emojis !== prevProps.emojis ||
-      searchQuery !== prevProps.searchQuery
+      searching !== prevProps.searching
     ) {
       this.groupEmojisIntoRows();
     }
@@ -115,7 +115,7 @@ export class EmojiVirtualList extends React.PureComponent<
       disableGroups,
       emojis,
       hideGroupHeaders,
-      searchQuery,
+      searching,
     } = this.props;
     const groups: GroupEmojiMap = {};
     const rows: VirtualRow[] = [];
@@ -125,7 +125,7 @@ export class EmojiVirtualList extends React.PureComponent<
     };
 
     // Add commonly used group if not searching
-    if (!searchQuery && commonEmojis.length > 0) {
+    if (!searching && commonEmojis.length > 0) {
       groups[GROUP_KEY_COMMONLY_USED] = {
         emojis: commonEmojis,
         group: GROUP_KEY_COMMONLY_USED,
@@ -136,7 +136,7 @@ export class EmojiVirtualList extends React.PureComponent<
     emojis.forEach(emoji => {
       let group: GroupKey = GROUP_KEY_NONE;
 
-      if (searchQuery) {
+      if (searching) {
         group = GROUP_KEY_SEARCH_RESULTS;
       } else if (!disableGroups && typeof emoji.group !== 'undefined') {
         group = GROUPS[emoji.group];
@@ -295,7 +295,7 @@ export class EmojiVirtualList extends React.PureComponent<
       rowCount,
       rowPadding = 0,
       scrollToGroup,
-      searchQuery,
+      searching,
       onScroll,
     } = this.props;
     const { classNames } = this.props.context;
@@ -312,7 +312,7 @@ export class EmojiVirtualList extends React.PureComponent<
       activeEmoji,
       commonEmojis,
       emojis,
-      searchQuery,
+      searching,
     };
 
     return (

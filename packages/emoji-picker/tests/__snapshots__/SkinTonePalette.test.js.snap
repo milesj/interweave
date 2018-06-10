@@ -1,341 +1,44 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`<SkinTonePalette /> renders a palette 1`] = `
-ShallowWrapper {
-  "length": 1,
-  Symbol(enzyme.__root__): [Circular],
-  Symbol(enzyme.__unrendered__): <SkinTonePalette
-    activeSkinTone="none"
-    context={
-      Object {
-        "classNames": Object {
-          "emoji": "interweave-picker__emoji",
-          "emojiActive": "interweave-picker__emoji--active",
-          "emojis": "interweave-picker__emojis",
-          "emojisBody": "interweave-picker__emojis-body",
-          "emojisContainer": "interweave-picker__emojis-container",
-          "emojisHeader": "interweave-picker__emojis-header",
-          "emojisRow": "interweave-picker__emojis-row",
-          "emojisSection": "interweave-picker__emojis-section",
-          "group": "interweave-picker__group",
-          "groupActive": "interweave-picker__group--active",
-          "groups": "interweave-picker__groups",
-          "groupsList": "interweave-picker__groups-list",
-          "noPreview": "interweave-picker__no-preview",
-          "noResults": "interweave-picker__no-results",
-          "picker": "interweave-picker__picker",
-          "pickerVirtual": "interweave-picker__picker--virtual",
-          "preview": "interweave-picker__preview",
-          "previewContent": "interweave-picker__preview-content",
-          "previewEmoji": "interweave-picker__preview-emoji",
-          "previewSubtitle": "interweave-picker__preview-subtitle",
-          "previewTitle": "interweave-picker__preview-title",
-          "search": "interweave-picker__search",
-          "searchInput": "interweave-picker__search-input",
-          "skinTone": "interweave-picker__skin-tone",
-          "skinToneActive": "interweave-picker__skin-tone--active",
-          "skinTones": "interweave-picker__skin-tones",
-        },
-        "messages": Object {
-          "activities": "Activities",
-          "animalsNature": "Animals & Nature",
-          "flags": "Flags",
-          "foodDrink": "Food & Drink",
-          "frequentlyUsed": "Frequently Used",
-          "noPreview": "No emoji to display",
-          "noResults": "No results",
-          "none": "All Emojis",
-          "objects": "Objects",
-          "recentlyUsed": "Recently Used",
-          "search": "Search",
-          "searchA11y": "Search for emojis by keyword",
-          "searchResults": "Search Results",
-          "skinDark": "Dark skin tone",
-          "skinLight": "Light skin tone",
-          "skinMedium": "Medium skin tone",
-          "skinMediumDark": "Medium-dark skin tone",
-          "skinMediumLight": "Medium-light skin tone",
-          "skinNone": "No skin tone",
-          "smileysPeople": "Smileys & People",
-          "symbols": "Symbols",
-          "travelPlaces": "Travel & Places",
-        },
-      }
-    }
-    icons={Object {}}
+<div
+  className="interweave-picker__skin-tones"
+>
+  <EmojiPickerContext
+    active={true}
+    key="none"
     onSelect={[Function]}
-  />,
-  Symbol(enzyme.__renderer__): Object {
-    "batchedUpdates": [Function],
-    "getNode": [Function],
-    "render": [Function],
-    "simulateEvent": [Function],
-    "unmount": [Function],
-  },
-  Symbol(enzyme.__node__): Object {
-    "instance": null,
-    "key": undefined,
-    "nodeType": "host",
-    "props": Object {
-      "children": Array [
-        <EmojiPickerContext
-          active={true}
-          onSelect={[Function]}
-          skinTone="none"
-        />,
-        <EmojiPickerContext
-          active={false}
-          onSelect={[Function]}
-          skinTone="light"
-        />,
-        <EmojiPickerContext
-          active={false}
-          onSelect={[Function]}
-          skinTone="medium-light"
-        />,
-        <EmojiPickerContext
-          active={false}
-          onSelect={[Function]}
-          skinTone="medium"
-        />,
-        <EmojiPickerContext
-          active={false}
-          onSelect={[Function]}
-          skinTone="medium-dark"
-        />,
-        <EmojiPickerContext
-          active={false}
-          onSelect={[Function]}
-          skinTone="dark"
-        />,
-      ],
-      "className": "interweave-picker__skin-tones",
-    },
-    "ref": null,
-    "rendered": Array [
-      Object {
-        "instance": null,
-        "key": "none",
-        "nodeType": "function",
-        "props": Object {
-          "active": true,
-          "children": null,
-          "onSelect": [Function],
-          "skinTone": "none",
-        },
-        "ref": null,
-        "rendered": null,
-        "type": [Function],
-      },
-      Object {
-        "instance": null,
-        "key": "light",
-        "nodeType": "function",
-        "props": Object {
-          "active": false,
-          "children": null,
-          "onSelect": [Function],
-          "skinTone": "light",
-        },
-        "ref": null,
-        "rendered": null,
-        "type": [Function],
-      },
-      Object {
-        "instance": null,
-        "key": "medium-light",
-        "nodeType": "function",
-        "props": Object {
-          "active": false,
-          "children": null,
-          "onSelect": [Function],
-          "skinTone": "medium-light",
-        },
-        "ref": null,
-        "rendered": null,
-        "type": [Function],
-      },
-      Object {
-        "instance": null,
-        "key": "medium",
-        "nodeType": "function",
-        "props": Object {
-          "active": false,
-          "children": null,
-          "onSelect": [Function],
-          "skinTone": "medium",
-        },
-        "ref": null,
-        "rendered": null,
-        "type": [Function],
-      },
-      Object {
-        "instance": null,
-        "key": "medium-dark",
-        "nodeType": "function",
-        "props": Object {
-          "active": false,
-          "children": null,
-          "onSelect": [Function],
-          "skinTone": "medium-dark",
-        },
-        "ref": null,
-        "rendered": null,
-        "type": [Function],
-      },
-      Object {
-        "instance": null,
-        "key": "dark",
-        "nodeType": "function",
-        "props": Object {
-          "active": false,
-          "children": null,
-          "onSelect": [Function],
-          "skinTone": "dark",
-        },
-        "ref": null,
-        "rendered": null,
-        "type": [Function],
-      },
-    ],
-    "type": "div",
-  },
-  Symbol(enzyme.__nodes__): Array [
-    Object {
-      "instance": null,
-      "key": undefined,
-      "nodeType": "host",
-      "props": Object {
-        "children": Array [
-          <EmojiPickerContext
-            active={true}
-            onSelect={[Function]}
-            skinTone="none"
-          />,
-          <EmojiPickerContext
-            active={false}
-            onSelect={[Function]}
-            skinTone="light"
-          />,
-          <EmojiPickerContext
-            active={false}
-            onSelect={[Function]}
-            skinTone="medium-light"
-          />,
-          <EmojiPickerContext
-            active={false}
-            onSelect={[Function]}
-            skinTone="medium"
-          />,
-          <EmojiPickerContext
-            active={false}
-            onSelect={[Function]}
-            skinTone="medium-dark"
-          />,
-          <EmojiPickerContext
-            active={false}
-            onSelect={[Function]}
-            skinTone="dark"
-          />,
-        ],
-        "className": "interweave-picker__skin-tones",
-      },
-      "ref": null,
-      "rendered": Array [
-        Object {
-          "instance": null,
-          "key": "none",
-          "nodeType": "function",
-          "props": Object {
-            "active": true,
-            "children": null,
-            "onSelect": [Function],
-            "skinTone": "none",
-          },
-          "ref": null,
-          "rendered": null,
-          "type": [Function],
-        },
-        Object {
-          "instance": null,
-          "key": "light",
-          "nodeType": "function",
-          "props": Object {
-            "active": false,
-            "children": null,
-            "onSelect": [Function],
-            "skinTone": "light",
-          },
-          "ref": null,
-          "rendered": null,
-          "type": [Function],
-        },
-        Object {
-          "instance": null,
-          "key": "medium-light",
-          "nodeType": "function",
-          "props": Object {
-            "active": false,
-            "children": null,
-            "onSelect": [Function],
-            "skinTone": "medium-light",
-          },
-          "ref": null,
-          "rendered": null,
-          "type": [Function],
-        },
-        Object {
-          "instance": null,
-          "key": "medium",
-          "nodeType": "function",
-          "props": Object {
-            "active": false,
-            "children": null,
-            "onSelect": [Function],
-            "skinTone": "medium",
-          },
-          "ref": null,
-          "rendered": null,
-          "type": [Function],
-        },
-        Object {
-          "instance": null,
-          "key": "medium-dark",
-          "nodeType": "function",
-          "props": Object {
-            "active": false,
-            "children": null,
-            "onSelect": [Function],
-            "skinTone": "medium-dark",
-          },
-          "ref": null,
-          "rendered": null,
-          "type": [Function],
-        },
-        Object {
-          "instance": null,
-          "key": "dark",
-          "nodeType": "function",
-          "props": Object {
-            "active": false,
-            "children": null,
-            "onSelect": [Function],
-            "skinTone": "dark",
-          },
-          "ref": null,
-          "rendered": null,
-          "type": [Function],
-        },
-      ],
-      "type": "div",
-    },
-  ],
-  Symbol(enzyme.__options__): Object {
-    "adapter": ReactSixteenAdapter {
-      "options": Object {
-        "enableComponentDidUpdateOnSetState": true,
-      },
-    },
-  },
-}
+    skinTone="none"
+  />
+  <EmojiPickerContext
+    active={false}
+    key="light"
+    onSelect={[Function]}
+    skinTone="light"
+  />
+  <EmojiPickerContext
+    active={false}
+    key="medium-light"
+    onSelect={[Function]}
+    skinTone="medium-light"
+  />
+  <EmojiPickerContext
+    active={false}
+    key="medium"
+    onSelect={[Function]}
+    skinTone="medium"
+  />
+  <EmojiPickerContext
+    active={false}
+    key="medium-dark"
+    onSelect={[Function]}
+    skinTone="medium-dark"
+  />
+  <EmojiPickerContext
+    active={false}
+    key="dark"
+    onSelect={[Function]}
+    skinTone="dark"
+  />
+</div>
 `;

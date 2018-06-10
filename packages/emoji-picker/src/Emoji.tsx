@@ -31,6 +31,7 @@ export interface EmojiProps {
 
 export interface EmojiState {
   active: boolean;
+  parentActive: boolean;
 }
 
 export class Emoji extends React.PureComponent<EmojiProps & ContextProps, EmojiState> {
@@ -50,14 +51,19 @@ export class Emoji extends React.PureComponent<EmojiProps & ContextProps, EmojiS
 
   state = {
     active: this.props.active,
+    // eslint-disable-next-line react/no-unused-state
+    parentActive: this.props.active,
   };
 
-  componentDidUpdate(prevProps: EmojiProps) {
-    if (this.props.active !== prevProps.active) {
-      this.setState({
-        active: this.props.active,
-      });
+  static getDerivedStateFromProps(props: EmojiProps, state: EmojiState) {
+    if (props.active !== state.parentActive) {
+      return {
+        active: props.active,
+        parentActive: props.active,
+      };
     }
+
+    return null;
   }
 
   /**
