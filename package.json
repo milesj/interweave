@@ -13,7 +13,7 @@
     "posttest": "yarn run eslint",
     "pretest": "yarn run type",
     "test": "yarn run jest",
-    "test:live": "yarn run build && bundle-lib ./tests/bundle.js ./tests/bundle.min.js && serve ./tests/",
+    "test:live": "yarn run jest && webpack && serve ./tests/",
     "updated": "lerna updated",
     "package": "yarn run clean && yarn install && yarn test && yarn run build",
     "prettier": "beemo prettier",
@@ -24,10 +24,16 @@
   },
   "devDependencies": {
     "@milesj/build-tool-config": "^0.100.1",
+    "@types/react": "^16.3.17",
+    "@types/react-dom": "^16.0.6",
+    "babel-loader": "^7.1.4",
     "emojibase": "^1.7.1",
     "emojibase-test-utils": "^2.3.1",
     "lerna": "^2.11.0",
-    "serve": "^8.1.2"
+    "serve": "^8.1.2",
+    "ts-loader": "^4.4.1",
+    "webpack": "^4.12.0",
+    "webpack-cli": "^3.0.3"
   },
   "workspaces": [
     "packages/*"

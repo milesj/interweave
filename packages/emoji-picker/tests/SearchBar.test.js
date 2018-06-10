@@ -113,11 +113,11 @@ describe('<SearchBar />', () => {
     const spy = jest.fn();
     const wrapper = mount(<SearchBar {...props} onChange={spy} />);
 
-    wrapper.find('input').getDOMNode().value = 'foo';
-
     wrapper.find('input').simulate('change', {
       persist() {},
-      currentTarget: {},
+      target: {
+        value: 'foo',
+      },
     });
 
     expect(spy).toHaveBeenCalledWith('foo', expect.objectContaining({}));
@@ -130,7 +130,7 @@ describe('<SearchBar />', () => {
 
     wrapper.find('input').simulate('change', {
       persist() {},
-      currentTarget: {
+      target: {
         value: 'bar',
       },
     });
@@ -142,11 +142,11 @@ describe('<SearchBar />', () => {
     const spy = jest.fn();
     const wrapper = mount(<SearchBar {...props} onChange={spy} />);
 
-    wrapper.find('input').getDOMNode().value = ' baz ';
-
     wrapper.find('input').simulate('change', {
       persist() {},
-      currentTarget: {},
+      target: {
+        value: ' baz ',
+      },
     });
 
     expect(spy).toHaveBeenCalledWith('baz', expect.objectContaining({}));

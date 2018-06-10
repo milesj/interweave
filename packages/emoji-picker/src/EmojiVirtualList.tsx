@@ -138,7 +138,7 @@ export class EmojiVirtualList extends React.PureComponent<
 
       if (searchQuery) {
         group = GROUP_KEY_SEARCH_RESULTS;
-      } else if (!disableGroups && emoji.group) {
+      } else if (!disableGroups && typeof emoji.group !== 'undefined') {
         group = GROUPS[emoji.group];
       }
 

@@ -5,6 +5,7 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
+import camelCase from 'lodash/camelCase';
 import withContext, { ContextProps } from './Context';
 import {
   GROUP_KEY_COMMONLY_USED,
@@ -50,7 +51,9 @@ export class GroupListHeader extends React.PureComponent<GroupListHeaderProps & 
       <header className={classNames.emojisHeader}>
         {showPalette && skinTonePalette}
 
-        {group === GROUP_KEY_COMMONLY_USED ? messages[commonMode] : messages[group]}
+        {group === GROUP_KEY_COMMONLY_USED
+          ? messages[camelCase(commonMode)]
+          : messages[camelCase(group)]}
       </header>
     );
   }

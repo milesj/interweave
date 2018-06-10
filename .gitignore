@@ -28,4 +28,3 @@ node_modules/
 jest.config.js
 prettier.config.js
 tsconfig.json
-webpack.config.js

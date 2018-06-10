@@ -5,13 +5,16 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
+import camelCase from 'lodash/camelCase';
 import withContext, { ContextProps } from './Context';
+import { GROUP_KEY_COMMONLY_USED } from './constants';
 import { ContextShape } from './shapes';
-import { GroupKey } from './types';
+import { CommonMode, GroupKey } from './types';
 
 export interface GroupProps {
   activeGroup: GroupKey;
   children: React.ReactNode;
+  commonMode: CommonMode;
   group: GroupKey;
   onSelect: (group: GroupKey, event: React.MouseEvent<HTMLButtonElement>) => void;
 }
@@ -20,6 +23,7 @@ export class Group extends React.PureComponent<GroupProps & ContextProps> {
   static propTypes = {
     activeGroup: PropTypes.string.isRequired,
     children: PropTypes.node.isRequired,
+    commonMode: PropTypes.string.isRequired,
     context: ContextShape.isRequired,
     group: PropTypes.string.isRequired,
     onSelect: PropTypes.func.isRequired,
@@ -38,9 +42,11 @@ export class Group extends React.PureComponent<GroupProps & ContextProps> {
     const {
       activeGroup,
       children,
+      commonMode,
       context: { classNames, messages },
       group,
     } = this.props;
+    const key = camelCase(group === GROUP_KEY_COMMONLY_USED ? commonMode : group);
     const className = [classNames.group];
 
     if (group === activeGroup) {
@@ -49,8 +55,8 @@ export class Group extends React.PureComponent<GroupProps & ContextProps> {
 
     return (
       <button
-        aria-label={messages[group]}
         className={className.join(' ')}
+        title={messages[key]}
         type="button"
         onClick={this.handleClick}
       >

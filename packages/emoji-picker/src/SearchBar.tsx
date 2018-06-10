@@ -64,7 +64,7 @@ export class SearchBar extends React.PureComponent<SearchBarProps & ContextProps
 
     // Update the input field immediately
     this.setState({
-      query: event.currentTarget.value,
+      query: event.target.value,
     });
 
     // But defer filtering in the picker
@@ -75,10 +75,9 @@ export class SearchBar extends React.PureComponent<SearchBarProps & ContextProps
    * A change handler that is debounced for performance.
    */
   private handleChangeDebounced = debounce(event => {
-    // console.log(this.inputRef.current, event.target.value, event.currentTarget.value);
     // Check if were still mounted
     if (this.inputRef.current) {
-      this.props.onChange(event.currentTarget.value.trim(), event);
+      this.props.onChange(event.target.value.trim(), event);
     }
   }, SEARCH_THROTTLE);
 

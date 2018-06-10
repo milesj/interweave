@@ -18,7 +18,7 @@ export interface MatcherInterface {
   onAfterParse(content: React.ReactNode[], props: Props): React.ReactNode[];
 }
 
-export default class Matcher<T = {}> implements MatcherInterface {
+export default class Matcher<T extends {} = {}> implements MatcherInterface {
   options: T;
 
   propName: string;
@@ -27,7 +27,7 @@ export default class Matcher<T = {}> implements MatcherInterface {
 
   factory: MatcherFactory | null;
 
-  constructor(name: string, options: T, factory: MatcherFactory | null = null) {
+  constructor(name: string, options: Partial<T> = {}, factory: MatcherFactory | null = null) {
     if (process.env.NODE_ENV !== 'production') {
       if (!name || name.toLowerCase() === 'html') {
         throw new Error(`The matcher name "${name}" is not allowed.`);

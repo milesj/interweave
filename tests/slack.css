@@ -3,12 +3,12 @@
 }
 
 .slack .interweave-picker__picker {
-  border: 1px solid #D2D2D2;
+  border: 1px solid #d2d2d2;
   border-radius: 6px;
   background: #fff;
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.12);
   color: #2c2d30;
-  font-family: "Helvetica Neue", Helvetica, "Segoe UI", Tahoma, Arial, sans-serif;
+  font-family: 'Helvetica Neue', Helvetica, 'Segoe UI', Tahoma, Arial, sans-serif;
   font-size: 0.95rem;
   line-height: 1rem;
   width: 360px;
@@ -16,9 +16,9 @@
 }
 
 .slack .interweave-picker__groups {
-  background: #F9F9F9;
+  background: #f9f9f9;
   padding: 4px 8px 0 8px;
-  border-bottom: 1px solid #D2D2D2;
+  border-bottom: 1px solid #d2d2d2;
   border-top-left-radius: 6px;
   border-top-right-radius: 6px;
 }
@@ -83,7 +83,7 @@
 
 .slack .interweave-picker__emojis-body::after {
   display: block;
-  content: "";
+  content: '';
   clear: both;
 }
 
@@ -118,17 +118,17 @@
   font-weight: 700;
   line-height: 1.5rem;
   position: sticky;
-  color: #2C2D30;
+  color: #2c2d30;
   top: 0;
   z-index: 2;
   background: #fff;
 }
 
 .slack .interweave-picker__preview {
-  border-top: 1px solid #D2D2D2;
+  border-top: 1px solid #d2d2d2;
   border-bottom-left-radius: 6px;
   border-bottom-right-radius: 6px;
-  background: #F9F9F9;
+  background: #f9f9f9;
   padding: 14px;
   height: 76px;
   display: flex;
@@ -195,8 +195,4 @@
 
 .slack .interweave-picker__picker--virtual .interweave-picker__emojis-body {
   padding: 0;
-}
-
-.slack .interweave-picker__picker--virtual .interweave-picker__skin-tones {
-  margin-right: 25px;
 }

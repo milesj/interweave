@@ -55,8 +55,8 @@ const emojiPickerProps = {
   onHoverEmoji(emoji, e) {
     console.info('hover emoji', emoji, e);
   },
-  onScrollGroup(group, e) {
-    console.info('scroll group', group, e);
+  onScrollGroup(group) {
+    console.info('scroll group', group);
   },
   onSearch(query, e) {
     console.info('search', query, e);
@@ -123,6 +123,7 @@ const japaneseMessages = {
   search: 'サーチ',
 };
 
+// @ts-ignore
 const Interweave = withEmojiData(BaseInterweave);
 
 function App() {
@@ -172,7 +173,7 @@ function App() {
             columnCount={7}
             commonMode="recently-used"
             disablePreview
-            displayOrder={['groups', 'search', 'emojis', 'skinTones']}
+            displayOrder={['groups', 'search', 'emojis', 'skin-tones']}
             emojiPadding={3.5}
             emojiSize={17.5}
             groupIcons={twitterGroupIcons}
@@ -191,7 +192,7 @@ function App() {
             defaultGroup="flags"
             defaultSkinTone="dark"
             disablePreview
-            displayOrder={['groups', 'search', 'emojis', 'skinTones']}
+            displayOrder={['groups', 'search', 'emojis', 'skin-tones']}
             emojiPadding={3.5}
             emojiSize={17.5}
             groupIcons={twitterGroupIcons}

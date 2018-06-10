@@ -115,7 +115,6 @@ export class Emoji extends React.PureComponent<EmojiProps & ContextProps, EmojiS
 
     return (
       <button
-        aria-label={emoji.annotation}
         key={emoji.hexcode}
         className={className.join(' ')}
         style={{
@@ -123,6 +122,7 @@ export class Emoji extends React.PureComponent<EmojiProps & ContextProps, EmojiS
           padding: emojiPadding,
           width: dimension,
         }}
+        title={emoji.annotation}
         type="button"
         onClick={this.handleClick}
         onMouseEnter={this.handleEnter}

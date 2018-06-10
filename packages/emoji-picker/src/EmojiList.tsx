@@ -104,6 +104,17 @@ export class EmojiList extends React.PureComponent<EmojiListUnifiedProps, EmojiL
   }
 
   /**
+   * Load emojis after the ref has been set.
+   */
+  componentDidMount() {
+    setTimeout(() => {
+      if (this.containerRef.current) {
+        this.loadEmojiImages(this.containerRef.current);
+      }
+    }, 0);
+  }
+
+  /**
    * Update scroll position after the list has rendered.
    */
   componentDidUpdate(prevProps: EmojiListUnifiedProps) {
@@ -141,7 +152,7 @@ export class EmojiList extends React.PureComponent<EmojiListUnifiedProps, EmojiL
 
       if (searchQuery) {
         group = GROUP_KEY_SEARCH_RESULTS;
-      } else if (!disableGroups && emoji.group) {
+      } else if (!disableGroups && typeof emoji.group !== 'undefined') {
         group = GROUPS[emoji.group];
       }
 
@@ -188,7 +199,7 @@ export class EmojiList extends React.PureComponent<EmojiListUnifiedProps, EmojiL
    * A scroll handler that is debounced for performance.
    */
   private handleScrollDebounced = debounce((event: React.UIEvent<HTMLDivElement>) => {
-    this.loadEmojiImages(event.currentTarget, event);
+    this.loadEmojiImages(event.target as HTMLDivElement, event);
     this.props.onScroll();
   }, SCROLL_DEBOUNCE);
 

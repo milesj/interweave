@@ -90,7 +90,12 @@ export interface PickerProps {
   onSelectSkinTone?: (skinTone: SkinToneKey, event: React.MouseEvent<HTMLButtonElement>) => void;
   rowCount?: number;
   skinIcons?: { [key: string]: React.ReactNode };
-  virtual?: boolean;
+  virtual?:
+    | boolean
+    | {
+        columnPadding?: number;
+        rowPadding?: number;
+      };
   whitelist?: Hexcode[];
 }
 
@@ -775,6 +780,7 @@ export class Picker extends React.Component<PickerUnifiedProps, PickerState> {
           key="groups"
           activeGroup={activeGroup}
           commonEmojis={commonEmojis}
+          commonMode={commonMode}
           icons={groupIcons}
           onSelect={this.handleSelectGroup}
         />
