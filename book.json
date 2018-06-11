@@ -1,0 +1,11 @@
+{
+  "root": "./docs",
+  "title": "Interweave",
+  "description": "React library to safely render HTML, filter attributes, autowrap text, autolink, and much more.",
+  "plugins": ["github"],
+  "pluginsConfig": {
+    "github": {
+      "url": "https://github.com/milesj/interweave"
+    }
+  }
+}
