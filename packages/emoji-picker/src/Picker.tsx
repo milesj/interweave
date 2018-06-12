@@ -62,6 +62,7 @@ export interface PickerProps {
   autoFocus?: boolean;
   blacklist?: Hexcode[];
   classNames?: { [key: string]: string };
+  clearIcon?: React.ReactNode;
   columnCount?: number;
   commonMode?: CommonMode;
   defaultGroup?: GroupKey;
@@ -124,6 +125,7 @@ export class Picker extends React.PureComponent<PickerUnifiedProps, PickerState>
     autoFocus: PropTypes.bool,
     blacklist: PropTypes.arrayOf(PropTypes.string),
     classNames: PropTypes.objectOf(PropTypes.string),
+    clearIcon: PropTypes.node,
     columnCount: PropTypes.number,
     commonMode: PropTypes.oneOf([COMMON_MODE_RECENT, COMMON_MODE_FREQUENT]),
     defaultGroup: PropTypes.oneOf([
@@ -189,6 +191,7 @@ export class Picker extends React.PureComponent<PickerUnifiedProps, PickerState>
     autoFocus: false,
     blacklist: [],
     classNames: {},
+    clearIcon: null,
     columnCount: 10,
     commonMode: COMMON_MODE_RECENT as CommonMode,
     defaultGroup: GROUP_KEY_COMMONLY_USED as GroupKey,
@@ -226,22 +229,21 @@ export class Picker extends React.PureComponent<PickerUnifiedProps, PickerState>
     const {
       blacklist,
       classNames,
+      defaultGroup,
       defaultSkinTone,
       emojis,
       messages,
       whitelist,
     } = props as Required<PickerUnifiedProps>;
-    const commonEmojis = this.generateCommonEmojis(this.getCommonEmojisFromStorage());
-    const activeGroup = this.getDefaultGroup(commonEmojis.length > 0);
     const activeSkinTone = this.getSkinToneFromStorage() || defaultSkinTone;
 
     this.state = {
       activeEmoji: null,
       activeEmojiIndex: -1,
-      activeGroup,
+      activeGroup: defaultGroup,
       activeSkinTone,
       blacklisted: this.generateBlackWhiteMap(blacklist),
-      commonEmojis,
+      commonEmojis: this.generateCommonEmojis(this.getCommonEmojisFromStorage()),
       context: {
         classNames: {
           ...CONTEXT_CLASSNAMES,
@@ -253,7 +255,7 @@ export class Picker extends React.PureComponent<PickerUnifiedProps, PickerState>
         },
       },
       emojis: [],
-      scrollToGroup: activeGroup,
+      scrollToGroup: defaultGroup,
       searchQuery: '',
       whitelisted: this.generateBlackWhiteMap(whitelist),
     };
@@ -427,13 +429,13 @@ export class Picker extends React.PureComponent<PickerUnifiedProps, PickerState>
   /**
    * Return the default group while handling commonly used scenarios.
    */
-  getDefaultGroup(hasCommon: boolean = false): GroupKey {
+  getDefaultGroup(): GroupKey {
     const { defaultGroup, disableGroups } = this.props;
     let group = defaultGroup!;
 
     // Allow commonly used before "none" groups
     if (group === GROUP_KEY_COMMONLY_USED) {
-      if (hasCommon || this.state.commonEmojis.length > 0) {
+      if (this.state.commonEmojis && this.state.commonEmojis.length > 0) {
         return GROUP_KEY_COMMONLY_USED;
       }
 
@@ -496,6 +498,17 @@ export class Picker extends React.PureComponent<PickerUnifiedProps, PickerState>
 
     return null;
   }
+
+  /**
+   * Triggered when common emoji cache is cleared.
+   */
+  private handleClearCommonEmoji = () => {
+    localStorage.removeItem(KEY_COMMONLY_USED);
+
+    this.setState({
+      commonEmojis: [],
+    });
+  };
 
   /**
    * Triggered when the mouse hovers an emoji.
@@ -694,6 +707,7 @@ export class Picker extends React.PureComponent<PickerUnifiedProps, PickerState>
   render() {
     const {
       autoFocus,
+      clearIcon,
       columnCount,
       commonMode,
       disableGroups,
@@ -741,6 +755,7 @@ export class Picker extends React.PureComponent<PickerUnifiedProps, PickerState>
           {...(typeof virtual === 'object' ? virtual : {})}
           activeEmoji={activeEmoji}
           activeGroup={activeGroup}
+          clearIcon={clearIcon}
           columnCount={columnCount}
           commonEmojis={commonEmojis}
           commonMode={commonMode}
@@ -755,6 +770,7 @@ export class Picker extends React.PureComponent<PickerUnifiedProps, PickerState>
           scrollToGroup={scrollToGroup}
           searching={searchQuery !== ''}
           skinTonePalette={displayOrder.includes('skin-tones') ? null : skinTones}
+          onClear={this.handleClearCommonEmoji}
           onEnterEmoji={this.handleEnterEmoji}
           onLeaveEmoji={this.handleLeaveEmoji}
           onScroll={onScroll}

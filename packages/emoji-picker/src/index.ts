@@ -3,10 +3,9 @@
  * @license     https://opensource.org/licenses/MIT
  */
 
-import withEmojiPickerContext, { ContextProps } from './Context';
 import Picker, { PickerProps } from './Picker';
 
-export { withEmojiPickerContext, ContextProps, PickerProps };
+export { PickerProps };
 
 export * from './shapes';
 

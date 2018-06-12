@@ -110,6 +110,8 @@ const skinIcons = {
   dark: <i className="fas fa-hand-paper" />,
 };
 
+const clearIcon = <i className="fas fa-times" />;
+
 const japaneseMessages = {
   frequentlyUsed: '頻繁に使用される',
   smileysPeople: 'スマイリーと人々',
@@ -136,6 +138,7 @@ function App() {
 
           <EmojiPicker
             {...emojiPickerProps}
+            clearIcon={clearIcon}
             commonMode="recently-used"
             displayOrder={['groups', 'search', 'emojis', 'preview']}
             emojiPadding={6}
@@ -150,6 +153,7 @@ function App() {
 
           <EmojiPicker
             {...emojiPickerProps}
+            clearIcon={clearIcon}
             commonMode="frequently-used"
             defaultGroup="travel-places"
             defaultSkinTone="medium"

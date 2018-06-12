@@ -1,7 +1,5 @@
 # Interweave
 
-[![Build Status](https://travis-ci.org/milesj/interweave.svg?branch=master)](https://travis-ci.org/milesj/interweave)
-
 Interweave is a robust React library that can...
 
 - Safely render HTML without using `dangerouslySetInnerHTML`.

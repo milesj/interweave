@@ -12,7 +12,7 @@
 
 #### 🚀 New
 
-- Added new `withEmojiPickerContext` context consuming HOC.
+- Added the ability to clear commonly used emoji. Can be customized with the `clearIcon` prop.
 - Added titles/messages for skin tones within the palette.
 
 #### 🛠 Internal

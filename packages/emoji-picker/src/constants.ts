@@ -122,6 +122,7 @@ export const CONTEXT_CLASSNAMES = {
   previewSubtitle: 'interweave-picker__preview-subtitle',
   search: 'interweave-picker__search',
   searchInput: 'interweave-picker__search-input',
+  clear: 'interweave-picker__clear',
 };
 
 export const CONTEXT_MESSAGES = {
@@ -150,4 +151,5 @@ export const CONTEXT_MESSAGES = {
   searchA11y: 'Search for emojis by keyword',
   noPreview: '',
   noResults: 'No results',
+  clearUsed: 'Clear used',
 };

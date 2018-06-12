@@ -25,6 +25,7 @@ import { CommonMode, GroupKey, GroupEmojiMap } from './types';
 export interface EmojiListProps {
   activeEmoji?: CanonicalEmoji | null;
   activeGroup: GroupKey;
+  clearIcon?: React.ReactNode;
   commonEmojis: CanonicalEmoji[];
   commonMode: CommonMode;
   disableGroups: boolean;
@@ -34,6 +35,7 @@ export interface EmojiListProps {
   emojiSize: number;
   emojiSource: Source;
   hideGroupHeaders: boolean;
+  onClear: () => void;
   onEnterEmoji: (emoji: CanonicalEmoji, event: React.MouseEvent<HTMLButtonElement>) => void;
   onLeaveEmoji: (emoji: CanonicalEmoji, event: React.MouseEvent<HTMLButtonElement>) => void;
   onScroll: () => void;
@@ -55,6 +57,7 @@ export class EmojiList extends React.PureComponent<EmojiListUnifiedProps, EmojiL
   static propTypes = {
     activeEmoji: EmojiShape,
     activeGroup: PropTypes.string.isRequired,
+    clearIcon: PropTypes.node,
     commonEmojis: PropTypes.arrayOf(EmojiShape).isRequired,
     commonMode: PropTypes.string.isRequired,
     context: ContextShape.isRequired,
@@ -65,6 +68,7 @@ export class EmojiList extends React.PureComponent<EmojiListUnifiedProps, EmojiL
     emojiSize: PropTypes.number.isRequired,
     emojiSource: SourceShape.isRequired,
     hideGroupHeaders: PropTypes.bool.isRequired,
+    onClear: PropTypes.func.isRequired,
     onEnterEmoji: PropTypes.func.isRequired,
     onLeaveEmoji: PropTypes.func.isRequired,
     onScroll: PropTypes.func.isRequired,
@@ -77,6 +81,7 @@ export class EmojiList extends React.PureComponent<EmojiListUnifiedProps, EmojiL
 
   static defaultProps = {
     activeEmoji: null,
+    clearIcon: null,
     skinTonePalette: null,
   };
 
@@ -120,7 +125,7 @@ export class EmojiList extends React.PureComponent<EmojiListUnifiedProps, EmojiL
    * Update scroll position after the list has rendered.
    */
   componentDidUpdate(prevProps: EmojiListUnifiedProps) {
-    const { activeGroup, emojis, searching, scrollToGroup } = this.props;
+    const { activeGroup, commonEmojis, emojis, searching, scrollToGroup } = this.props;
 
     // Search query has changed
     if (searching !== prevProps.searching) {
@@ -137,7 +142,10 @@ export class EmojiList extends React.PureComponent<EmojiListUnifiedProps, EmojiL
     }
 
     // Skin tone has changed or being search
-    if (emojis && prevProps.emojis !== emojis) {
+    if (
+      (emojis && prevProps.emojis !== emojis) ||
+      (commonEmojis && prevProps.commonEmojis !== commonEmojis)
+    ) {
       // TODO
       // eslint-disable-next-line
       this.setState({
@@ -305,6 +313,7 @@ export class EmojiList extends React.PureComponent<EmojiListUnifiedProps, EmojiL
   render() {
     const {
       activeEmoji,
+      clearIcon,
       commonMode,
       context: { classNames, messages },
       emojiPadding,
@@ -313,6 +322,7 @@ export class EmojiList extends React.PureComponent<EmojiListUnifiedProps, EmojiL
       emojiSource,
       hideGroupHeaders,
       skinTonePalette,
+      onClear,
       onEnterEmoji,
       onLeaveEmoji,
       onSelectEmoji,
@@ -329,8 +339,10 @@ export class EmojiList extends React.PureComponent<EmojiListUnifiedProps, EmojiL
             <section key={group} className={classNames.emojisSection} data-group={group}>
               {!hideGroupHeaders && (
                 <GroupListHeader
+                  clearIcon={clearIcon}
                   commonMode={commonMode}
                   group={group}
+                  onClear={onClear}
                   skinTonePalette={skinTonePalette}
                 />
               )}

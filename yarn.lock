@@ -485,13 +485,13 @@ ajv-keywords@^3.1.0:
   version "3.2.0"
   resolved "https://registry.npmjs.org/ajv-keywords/-/ajv-keywords-3.2.0.tgz#e86b819c602cf8821ad637413698f1dec021847a"
 
-ajv@6.5.0, ajv@^6.1.0:
-  version "6.5.0"
-  resolved "https://registry.npmjs.org/ajv/-/ajv-6.5.0.tgz#4c8affdf80887d8f132c9c52ab8a2dc4d0b7b24c"
+ajv@6.5.1:
+  version "6.5.1"
+  resolved "https://registry.npmjs.org/ajv/-/ajv-6.5.1.tgz#88ebc1263c7133937d108b80c5572e64e1d9322d"
   dependencies:
     fast-deep-equal "^2.0.1"
     fast-json-stable-stringify "^2.0.0"
-    json-schema-traverse "^0.3.0"
+    json-schema-traverse "^0.4.1"
     uri-js "^4.2.1"
 
 ajv@^4.9.1:
@@ -518,6 +518,15 @@ ajv@^5.3.0:
     fast-deep-equal "^1.0.0"
     fast-json-stable-stringify "^2.0.0"
     json-schema-traverse "^0.3.0"
+
+ajv@^6.1.0:
+  version "6.5.0"
+  resolved "https://registry.npmjs.org/ajv/-/ajv-6.5.0.tgz#4c8affdf80887d8f132c9c52ab8a2dc4d0b7b24c"
+  dependencies:
+    fast-deep-equal "^2.0.1"
+    fast-json-stable-stringify "^2.0.0"
+    json-schema-traverse "^0.3.0"
+    uri-js "^4.2.1"
 
 align-text@^0.1.1, align-text@^0.1.3:
   version "0.1.4"
@@ -5620,6 +5629,10 @@ json-schema-traverse@^0.3.0:
   version "0.3.1"
   resolved "https://registry.yarnpkg.com/json-schema-traverse/-/json-schema-traverse-0.3.1.tgz#349a6d44c53a51de89b40805c5d5e59b417d3340"
 
+json-schema-traverse@^0.4.1:
+  version "0.4.1"
+  resolved "https://registry.npmjs.org/json-schema-traverse/-/json-schema-traverse-0.4.1.tgz#69f6a87d9513ab8bb8fe63bdb0979c448e684660"
+
 json-schema@0.2.3:
   version "0.2.3"
   resolved "https://registry.yarnpkg.com/json-schema/-/json-schema-0.2.3.tgz#b480c892e59a2f05954ce727bd3f2a4e882f9e13"
@@ -8369,9 +8382,9 @@ serialize-javascript@^1.4.0:
   version "1.4.0"
   resolved "https://registry.npmjs.org/serialize-javascript/-/serialize-javascript-1.4.0.tgz#7c958514db6ac2443a8abc062dc9f7886a7f6005"
 
-serve-handler@3.1.0:
-  version "3.1.0"
-  resolved "https://registry.npmjs.org/serve-handler/-/serve-handler-3.1.0.tgz#00e0712a600ef695e263c40f6d7b3aab9ba1352a"
+serve-handler@3.1.2:
+  version "3.1.2"
+  resolved "https://registry.npmjs.org/serve-handler/-/serve-handler-3.1.2.tgz#99b1490c64229f2e21a806d591f208ed65653da7"
   dependencies:
     bytes "3.0.0"
     content-disposition "0.5.2"
@@ -8382,15 +8395,15 @@ serve-handler@3.1.0:
     path-is-inside "1.0.2"
     path-to-regexp "2.2.1"
 
-serve@^8.1.2:
-  version "8.1.2"
-  resolved "https://registry.npmjs.org/serve/-/serve-8.1.2.tgz#a8574d36869d7e8480473a0d4be40c4a7dd92f6c"
+serve@^8.1.4:
+  version "8.1.4"
+  resolved "https://registry.npmjs.org/serve/-/serve-8.1.4.tgz#a9fb34d85599084c18d9e0d2cccbba6a99a9a208"
   dependencies:
     "@zeit/schemas" "1.2.0"
-    ajv "6.5.0"
+    ajv "6.5.1"
     arg "2.0.0"
     chalk "2.4.1"
-    serve-handler "3.1.0"
+    serve-handler "3.1.2"
     update-check "1.5.2"
 
 set-blocking@^2.0.0, set-blocking@~2.0.0:

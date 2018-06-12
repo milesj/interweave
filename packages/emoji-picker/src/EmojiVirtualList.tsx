@@ -45,6 +45,7 @@ export class EmojiVirtualList extends React.PureComponent<
   static propTypes = {
     activeEmoji: EmojiShape,
     activeGroup: PropTypes.string.isRequired,
+    clearIcon: PropTypes.node,
     columnCount: PropTypes.number.isRequired,
     columnPadding: PropTypes.number,
     commonEmojis: PropTypes.arrayOf(EmojiShape).isRequired,
@@ -57,6 +58,7 @@ export class EmojiVirtualList extends React.PureComponent<
     emojiSize: PropTypes.number.isRequired,
     emojiSource: SourceShape.isRequired,
     hideGroupHeaders: PropTypes.bool.isRequired,
+    onClear: PropTypes.func.isRequired,
     onEnterEmoji: PropTypes.func.isRequired,
     onLeaveEmoji: PropTypes.func.isRequired,
     onScroll: PropTypes.func.isRequired,
@@ -71,6 +73,7 @@ export class EmojiVirtualList extends React.PureComponent<
 
   static defaultProps = {
     activeEmoji: null,
+    clearIcon: null,
     columnPadding: 0,
     rowPadding: 0,
     skinTonePalette: null,
@@ -80,14 +83,7 @@ export class EmojiVirtualList extends React.PureComponent<
     super(props);
 
     // This doesn't type properly when a property
-    this.state = {
-      groupIndices: {},
-      rows: [],
-    };
-  }
-
-  componentDidMount() {
-    this.groupEmojisIntoRows();
+    this.state = this.groupEmojisIntoRows();
   }
 
   componentDidUpdate(prevProps: EmojiVirtualListUnifiedProps) {
@@ -101,14 +97,16 @@ export class EmojiVirtualList extends React.PureComponent<
       emojis !== prevProps.emojis ||
       searching !== prevProps.searching
     ) {
-      this.groupEmojisIntoRows();
+      // TODO
+      // eslint-disable-next-line
+      this.setState(this.groupEmojisIntoRows());
     }
   }
 
   /**
    * Partition the dataset into multiple rows based on the group they belong to.
    */
-  groupEmojisIntoRows() {
+  groupEmojisIntoRows(): EmojiVirtualListState {
     const {
       columnCount,
       commonEmojis,
@@ -175,10 +173,10 @@ export class EmojiVirtualList extends React.PureComponent<
       rows.push(...chunk(groups[group].emojis, columnCount));
     });
 
-    this.setState({
+    return {
       groupIndices,
       rows,
-    });
+    };
   }
 
   /**
@@ -239,6 +237,7 @@ export class EmojiVirtualList extends React.PureComponent<
     const { key, index, isVisible, style } = props;
     const {
       activeEmoji,
+      clearIcon,
       commonMode,
       context: { classNames },
       emojiPadding,
@@ -246,6 +245,7 @@ export class EmojiVirtualList extends React.PureComponent<
       emojiSize,
       emojiSource,
       skinTonePalette,
+      onClear,
       onEnterEmoji,
       onLeaveEmoji,
       onSelectEmoji,
@@ -274,8 +274,10 @@ export class EmojiVirtualList extends React.PureComponent<
           </div>
         ) : (
           <GroupListHeader
+            clearIcon={clearIcon}
             commonMode={commonMode}
             group={row as GroupKey}
+            onClear={onClear}
             skinTonePalette={skinTonePalette}
           />
         )}

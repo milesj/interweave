@@ -17,30 +17,43 @@ import { ContextShape } from './shapes';
 import { CommonMode, GroupKey } from './types';
 
 export interface GroupListHeaderProps {
+  clearIcon?: React.ReactNode;
   commonMode: CommonMode;
   group: GroupKey;
+  onClear: () => void;
   skinTonePalette?: React.ReactNode;
 }
 
 export class GroupListHeader extends React.PureComponent<GroupListHeaderProps & ContextProps> {
   static propTypes = {
+    clearIcon: PropTypes.node,
     commonMode: PropTypes.string.isRequired,
     context: ContextShape.isRequired,
     group: PropTypes.string.isRequired,
+    onClear: PropTypes.func.isRequired,
     skinTonePalette: PropTypes.node,
   };
 
   static defaultProps = {
+    clearIcon: null,
     skinTonePalette: null,
+  };
+
+  private handleClear = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+
+    this.props.onClear();
   };
 
   render() {
     const {
+      clearIcon,
       commonMode,
       context: { classNames, messages },
       group,
       skinTonePalette,
     } = this.props;
+    const showClear = clearIcon && group === GROUP_KEY_COMMONLY_USED;
     const showPalette =
       skinTonePalette &&
       (group === GROUP_KEY_SMILEYS_PEOPLE ||
@@ -50,6 +63,17 @@ export class GroupListHeader extends React.PureComponent<GroupListHeaderProps & 
     return (
       <header className={classNames.emojisHeader}>
         {showPalette && skinTonePalette}
+
+        {showClear && (
+          <button
+            type="button"
+            title={messages.clearUsed}
+            className={classNames.clear}
+            onClick={this.handleClear}
+          >
+            {clearIcon}
+          </button>
+        )}
 
         {group === GROUP_KEY_COMMONLY_USED
           ? messages[camelCase(commonMode)]

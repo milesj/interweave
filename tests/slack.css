@@ -156,11 +156,13 @@
   font-size: 0.8rem;
 }
 
+.slack .interweave-picker__clear,
 .slack .interweave-picker__skin-tones {
   float: right;
   text-align: center;
 }
 
+.slack .interweave-picker__clear,
 .slack .interweave-picker__skin-tone {
   background: transparent !important;
   border: 0 !important;
@@ -174,6 +176,15 @@
 .slack .interweave-picker__skin-tone--active,
 .slack .interweave-picker__skin-tone:hover {
   opacity: 1;
+}
+
+.slack .interweave-picker__clear {
+  color: #a0a0a2;
+  opacity: 1;
+}
+
+.slack .interweave-picker__clear:hover {
+  color: #717274;
 }
 
 .slack .interweave-picker__no-preview {
