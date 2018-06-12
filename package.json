@@ -14,7 +14,7 @@
     "pretest": "yarn run type",
     "test": "yarn run jest",
     "test:live": "yarn run jest && webpack && serve ./tests/",
-    "package": "yarn run clean && yarn install && yarn test && yarn run build",
+    "package": "yarn test && yarn run build",
     "prettier": "beemo prettier",
     "prerelease": "yarn run package",
     "release": "lerna publish",
