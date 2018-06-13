@@ -276,21 +276,22 @@ export class Picker extends React.PureComponent<PickerUnifiedProps, PickerState>
     const {
       blacklist,
       classNames,
-      defaultGroup,
       defaultSkinTone,
       emojis,
       messages,
       whitelist,
     } = props as Required<PickerUnifiedProps>;
+    const commonEmojis = this.generateCommonEmojis(this.getCommonEmojisFromStorage());
+    const activeGroup = this.getActiveGroup(commonEmojis.length > 0);
     const activeSkinTone = this.getSkinToneFromStorage() || defaultSkinTone;
 
     this.state = {
       activeEmoji: null,
       activeEmojiIndex: -1,
-      activeGroup: defaultGroup,
+      activeGroup,
       activeSkinTone,
       blacklisted: this.generateBlackWhiteMap(blacklist),
-      commonEmojis: this.generateCommonEmojis(this.getCommonEmojisFromStorage()),
+      commonEmojis,
       context: {
         classNames: {
           ...CONTEXT_CLASSNAMES,
@@ -302,7 +303,7 @@ export class Picker extends React.PureComponent<PickerUnifiedProps, PickerState>
         },
       },
       emojis: [],
-      scrollToGroup: defaultGroup,
+      scrollToGroup: activeGroup,
       searchQuery: '',
       whitelisted: this.generateBlackWhiteMap(whitelist),
     };
@@ -476,14 +477,14 @@ export class Picker extends React.PureComponent<PickerUnifiedProps, PickerState>
   /**
    * Return the default group while handling commonly used scenarios.
    */
-  getDefaultGroup(): GroupKey {
+  getActiveGroup(hasCommon: boolean): GroupKey {
     const { defaultGroup, disableGroups } = this.props;
     let group = defaultGroup!;
 
     // Allow commonly used before "none" groups
     if (group === GROUP_KEY_COMMONLY_USED) {
-      if (this.state.commonEmojis && this.state.commonEmojis.length > 0) {
-        return GROUP_KEY_COMMONLY_USED;
+      if (hasCommon) {
+        return group;
       }
 
       group = GROUP_KEY_SMILEYS_PEOPLE;
@@ -540,10 +541,12 @@ export class Picker extends React.PureComponent<PickerUnifiedProps, PickerState>
   private handleClearCommonEmoji = () => {
     localStorage.removeItem(KEY_COMMONLY_USED);
 
+    const activeGroup = this.getActiveGroup(false);
+
     this.setState({
-      activeGroup: GROUP_KEY_SMILEYS_PEOPLE,
+      activeGroup,
       commonEmojis: [],
-      scrollToGroup: '',
+      scrollToGroup: activeGroup,
     });
   };
 
@@ -658,8 +661,8 @@ export class Picker extends React.PureComponent<PickerUnifiedProps, PickerState>
   };
 
   private handleSearchDebounced = debounce(() => {
-    const { searchQuery } = this.state;
-    const defaultGroup = this.getDefaultGroup();
+    const { commonEmojis, searchQuery } = this.state;
+    const defaultGroup = this.getActiveGroup(commonEmojis.length > 0);
 
     this.setUpdatedEmojis(searchQuery, this.state.activeSkinTone);
 
