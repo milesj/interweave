@@ -59,61 +59,108 @@ export interface BlackWhiteMap {
 }
 
 export interface PickerProps {
+  /** Focus the search bar on mount. */
   autoFocus?: boolean;
+  /** List of hexcodes to hide. */
   blacklist?: Hexcode[];
+  /** Custom CSS class names. */
   classNames?: { [key: string]: string };
+  /** Icon to display within the clear commonly used button. Omit the icon to hide the button. */
   clearIcon?: React.ReactNode;
+  /** Number of emojis to display horizontally. */
   columnCount?: number;
+  /** Type of commonly used mode. */
   commonMode?: CommonMode;
+  /** Group to select by default. */
   defaultGroup?: GroupKey;
+  /** Skin tone to select by default (if not found in local storage). */
   defaultSkinTone?: SkinToneKey;
+  /** Disable commonly used functionality. */
   disableCommonlyUsed?: boolean;
+  /** Disable and hide group tabs. */
   disableGroups?: boolean;
+  /** Disable and hide preview. */
   disablePreview?: boolean;
+  /** Disable and hide search bar. */
   disableSearch?: boolean;
+  /** Disable and hide skin tone palette bar. */
   disableSkinTones?: boolean;
+  /** Order to render components in. */
   displayOrder?: string[];
+  /** Size of the emoji within the preview bar. */
   emojiLargeSize: number;
+  /** Padding around each emoji. */
   emojiPadding?: number;
+  /** Path to an SVG/PNG. Accepts a string or a callback that is passed the hexcode. */
   emojiPath: Path;
+  /** Size of emoji within the list. */
   emojiSize: number;
+  /** Custom icons for each group tab. */
   groupIcons?: { [key: string]: React.ReactNode };
+  /** Hide emoticons within the preview. */
   hideEmoticon?: boolean;
+  /** Hide group headers within the list. */
   hideGroupHeaders?: boolean;
+  /** Hide shortcodes within the preview. */
   hideShortcodes?: boolean;
+  /** Max number of commonly used to store. */
   maxCommonlyUsed?: number;
+  /** Max official emoji release version to support. */
   maxEmojiVersion?: number;
+  /** Custom translation messages. */
   messages?: { [key: string]: string };
+  /** Callback fired when hovering an emoji. */
   onHoverEmoji?: (emoji: CanonicalEmoji, event: React.MouseEvent<HTMLButtonElement>) => void;
+  /** Callback fired when scrolling the emoji list. */
   onScroll?: () => void;
+  /** Callback fired when a new group is scrolled into view. */
   onScrollGroup?: (group: GroupKey) => void;
+  /** Callback fired when typing in the search field. */
   onSearch?: (query: string, event: React.ChangeEvent<HTMLInputElement>) => void;
+  /** Callback fired when clicking on an emoji. */
   onSelectEmoji?: (emoji: CanonicalEmoji, event: React.MouseEvent<HTMLButtonElement>) => void;
+  /** Callback fired when clicking a group tab. */
   onSelectGroup?: (group: GroupKey, event: React.MouseEvent<HTMLButtonElement>) => void;
+  /** Callback fired when clicking a skin tone. */
   onSelectSkinTone?: (skinTone: SkinToneKey, event: React.MouseEvent<HTMLButtonElement>) => void;
+  /** Number of emoji rows to display vertically. */
   rowCount?: number;
+  /** Custom icons for each skin tone. */
   skinIcons?: { [key: string]: React.ReactNode };
+  /** Enable react-virtualized and or customize it's options. */
   virtual?:
     | boolean
     | {
         columnPadding?: number;
         rowPadding?: number;
       };
+  /** List of hexcodes to only show. */
   whitelist?: Hexcode[];
 }
 
 export interface PickerState {
-  activeEmoji: CanonicalEmoji | null; // Emoji to display in the preview
-  activeEmojiIndex: number; // Index for the highlighted emoji within search results
-  activeGroup: GroupKey; // Currently selected group tab
-  activeSkinTone: SkinToneKey; // Currently selected skin ton
-  blacklisted: BlackWhiteMap; // Map of blacklisted emoji hexcodes (without skin modifier)
-  commonEmojis: CanonicalEmoji[]; // List of emoji hexcodes most commonly used
+  /** Emoji to display in the preview. */
+  activeEmoji: CanonicalEmoji | null;
+  /** Index for the highlighted emoji within search results. */
+  activeEmojiIndex: number;
+  /** Currently selected group tab. */
+  activeGroup: GroupKey;
+  /** Currently selected skin tone. */
+  activeSkinTone: SkinToneKey;
+  /** Map of blacklisted emoji hexcodes (without skin modifier). */
+  blacklisted: BlackWhiteMap;
+  /** List of emoji hexcodes most commonly used. */
+  commonEmojis: CanonicalEmoji[];
+  /** React context. */
   context: EmojiContext;
-  emojis: CanonicalEmoji[]; // List of all emojis with search filtering applied
-  scrollToGroup: GroupKey | ''; // Group to scroll to on render
-  searchQuery: string; // Current search query
-  whitelisted: BlackWhiteMap; // Map of whitelisted emoji hexcodes (without skin modifier)
+  /** List of all emojis with search filtering applied. */
+  emojis: CanonicalEmoji[];
+  /** Group to scroll to on render. */
+  scrollToGroup: GroupKey | '';
+  /** Current search query. */
+  searchQuery: string;
+  /** Map of whitelisted emoji hexcodes (without skin modifier). */
+  whitelisted: BlackWhiteMap;
 }
 
 export type PickerUnifiedProps = PickerProps & EmojiDataProps;
@@ -455,20 +502,8 @@ export class Picker extends React.PureComponent<PickerUnifiedProps, PickerState>
 
     const rawCommon = localStorage.getItem(KEY_COMMONLY_USED);
     const common: CommonEmoji[] = rawCommon ? JSON.parse(rawCommon) : [];
-    const data = this.props.emojiData;
 
-    // Previous versions stored the unicode character,
-    // while newer ones store a hexcode. We should support both.
-    return common.map(row => {
-      if (row.unicode) {
-        return {
-          count: row.count,
-          hexcode: data.UNICODE_TO_HEXCODE[row.unicode],
-        };
-      }
-
-      return row;
-    });
+    return common;
   }
 
   /**

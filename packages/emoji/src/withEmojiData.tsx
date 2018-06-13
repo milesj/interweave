@@ -13,16 +13,23 @@ import EmojiDataManager from './EmojiDataManager';
 import { EmojiShape } from './shapes';
 import { CanonicalEmoji, Source } from './types';
 
-export interface EmojiDataInternalProps {
+export interface EmojiDataWrapperProps {
+  /** Load compact dataset instead of full dataset. */
   compact?: boolean;
+  /** List of emojis to manually use. */
   emojis?: Emoji[];
+  /** Locale to load emoji annotations in. */
   locale?: string;
+  /** Emojibase version to load. */
   version?: string;
 }
 
 export interface EmojiDataProps {
+  /** List of loaded emojis provided by `withEmojiData`. */
   emojis: CanonicalEmoji[];
+  /** Data manager and loader instance provided by `withEmojiData`. */
   emojiData: EmojiDataManager;
+  /** Datasource metadata provided by `withEmojiData`. */
   emojiSource: Source;
 }
 
@@ -45,7 +52,7 @@ export function resetLoaded() {
 export default function withEmojiData<T extends {}>(
   Component: React.ComponentType<T & EmojiDataProps>,
 ) {
-  return class EmojiData extends React.PureComponent<T & EmojiDataInternalProps, EmojiDataState> {
+  return class EmojiData extends React.PureComponent<T & EmojiDataWrapperProps, EmojiDataState> {
     static propTypes = {
       compact: PropTypes.bool,
       emojis: PropTypes.arrayOf(EmojiShape),
@@ -73,7 +80,7 @@ export default function withEmojiData<T extends {}>(
       this.loadEmojis();
     }
 
-    componentDidUpdate(prevProps: EmojiDataInternalProps) {
+    componentDidUpdate(prevProps: EmojiDataWrapperProps) {
       const { compact, emojis, locale, version } = this.props;
 
       if (
@@ -98,7 +105,7 @@ export default function withEmojiData<T extends {}>(
      * use it instead of the parsed data.
      */
     setEmojis(emojis: Emoji[] = []) {
-      const { compact, locale, version } = this.props as Required<EmojiDataInternalProps>;
+      const { compact, locale, version } = this.props as Required<EmojiDataWrapperProps>;
 
       this.setState({
         emojis: emojis.length > 0 ? emojis : this.getDataInstance().getData(),
@@ -114,7 +121,7 @@ export default function withEmojiData<T extends {}>(
      * Load and parse emoji data from the CDN or use the provided dataset.
      */
     loadEmojis() {
-      const { compact, emojis, locale, version } = this.props as Required<EmojiDataInternalProps>;
+      const { compact, emojis, locale, version } = this.props as Required<EmojiDataWrapperProps>;
 
       // Abort as we've already loaded data
       if (loaded[locale]) {

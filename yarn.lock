@@ -68,9 +68,9 @@
   dependencies:
     rimraf "^2.6.2"
 
-"@milesj/build-tool-config@^0.102.1":
-  version "0.102.1"
-  resolved "https://registry.npmjs.org/@milesj/build-tool-config/-/build-tool-config-0.102.1.tgz#1ad4e372b9e0d70b9b4db4c5524422a83f91c4a0"
+"@milesj/build-tool-config@^0.102.2":
+  version "0.102.2"
+  resolved "https://registry.npmjs.org/@milesj/build-tool-config/-/build-tool-config-0.102.2.tgz#4169b421fc8096d22c6d6e600ecb9de2889ee953"
   dependencies:
     "@beemo/cli" "^0.18.0"
     "@beemo/core" "^0.18.0"
@@ -80,7 +80,7 @@
     "@beemo/driver-prettier" "^0.18.0"
     "@beemo/driver-typescript" "^0.7.0"
     "@types/enzyme" "^3.1.10"
-    "@types/jest" "^23.0.0"
+    "@types/jest" "^23.0.2"
     babel-cli "^6.26.0"
     babel-core "^6.26.3"
     babel-jest "^23.0.1"
@@ -181,9 +181,9 @@
   version "4.0.0"
   resolved "https://registry.npmjs.org/@types/is-glob/-/is-glob-4.0.0.tgz#fb8a2bff539025d4dcd6d5efe7689e03341b876d"
 
-"@types/jest@^23.0.0":
-  version "23.0.0"
-  resolved "https://registry.npmjs.org/@types/jest/-/jest-23.0.0.tgz#760cac74f00bb9c3075587716d2b3b4435663bc0"
+"@types/jest@^23.0.2":
+  version "23.0.2"
+  resolved "https://registry.npmjs.org/@types/jest/-/jest-23.0.2.tgz#f03f9e6dd2206cc2a2e8fd033161b0b7cf905db6"
 
 "@types/json5@^0.0.29":
   version "0.0.29"
@@ -8382,9 +8382,9 @@ serialize-javascript@^1.4.0:
   version "1.4.0"
   resolved "https://registry.npmjs.org/serialize-javascript/-/serialize-javascript-1.4.0.tgz#7c958514db6ac2443a8abc062dc9f7886a7f6005"
 
-serve-handler@3.1.2:
-  version "3.1.2"
-  resolved "https://registry.npmjs.org/serve-handler/-/serve-handler-3.1.2.tgz#99b1490c64229f2e21a806d591f208ed65653da7"
+serve-handler@3.2.0:
+  version "3.2.0"
+  resolved "https://registry.npmjs.org/serve-handler/-/serve-handler-3.2.0.tgz#c94015abf09471ece634c32d221f4b0f36500f0b"
   dependencies:
     bytes "3.0.0"
     content-disposition "0.5.2"
@@ -8395,15 +8395,15 @@ serve-handler@3.1.2:
     path-is-inside "1.0.2"
     path-to-regexp "2.2.1"
 
-serve@^8.1.4:
-  version "8.1.4"
-  resolved "https://registry.npmjs.org/serve/-/serve-8.1.4.tgz#a9fb34d85599084c18d9e0d2cccbba6a99a9a208"
+serve@^8.2.0:
+  version "8.2.0"
+  resolved "https://registry.npmjs.org/serve/-/serve-8.2.0.tgz#508a47bdaa40b8f4d2648470f3e0f83713cf6ab1"
   dependencies:
     "@zeit/schemas" "1.2.0"
     ajv "6.5.1"
     arg "2.0.0"
     chalk "2.4.1"
-    serve-handler "3.1.2"
+    serve-handler "3.2.0"
     update-check "1.5.2"
 
 set-blocking@^2.0.0, set-blocking@~2.0.0:
@@ -9544,9 +9544,9 @@ webidl-conversions@^4.0.1, webidl-conversions@^4.0.2:
   version "4.0.2"
   resolved "https://registry.npmjs.org/webidl-conversions/-/webidl-conversions-4.0.2.tgz#a855980b1f0b6b359ba1d5d9fb39ae941faa63ad"
 
-webpack-cli@^3.0.3:
-  version "3.0.3"
-  resolved "https://registry.npmjs.org/webpack-cli/-/webpack-cli-3.0.3.tgz#1a8c6e09dee1fd45305f3b3828cf081903cee0f2"
+webpack-cli@^3.0.4:
+  version "3.0.4"
+  resolved "https://registry.npmjs.org/webpack-cli/-/webpack-cli-3.0.4.tgz#55d6ad2cdd608de8c0f757dde5bc4bf5bd2dec68"
   dependencies:
     chalk "^2.4.1"
     cross-spawn "^6.0.5"

@@ -13,15 +13,25 @@ import { PathShape, SizeShape, SourceShape } from './shapes';
 import { Path, Size, Source } from './types';
 
 export interface EmojiProps {
+  /** Size of the emoji when it's enlarged. */
   emojiLargeSize?: Size;
+  /** Path to an SVG/PNG. Accepts a string or a callback that is passed the hexcode. */
   emojiPath?: Path;
+  /** Size of the emoji. Defaults to 1em. */
   emojiSize?: Size;
+  /** Datasource metadata. */
   emojiSource: Source;
+  /** Emoticon to reference emoji from. */
   emoticon?: Emoticon;
+  /** Enlarge emoji increasing it's size. */
   enlargeEmoji?: boolean;
+  /** Hexcode to reference emoji from. */
   hexcode?: Hexcode;
+  /** Render literal unicode character instead of an SVG/PNG. */
   renderUnicode?: boolean;
+  /** Shortcode to reference emoji from. */
   shortcode?: Shortcode;
+  /** Unicode character to reference emoji from. */
   unicode?: Unicode;
 }
 

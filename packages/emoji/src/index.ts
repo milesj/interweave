@@ -6,14 +6,14 @@
 import Emoji, { EmojiProps } from './Emoji';
 import EmojiDataManager from './EmojiDataManager';
 import EmojiMatcher, { EmojiMatcherOptions } from './EmojiMatcher';
-import withEmojiData, { EmojiDataInternalProps, EmojiDataProps } from './withEmojiData';
+import withEmojiData, { EmojiDataWrapperProps, EmojiDataProps } from './withEmojiData';
 
 export {
   EmojiProps,
   EmojiMatcher,
   EmojiMatcherOptions,
   EmojiDataManager,
-  EmojiDataInternalProps,
+  EmojiDataWrapperProps,
   EmojiDataProps,
   withEmojiData,
 };

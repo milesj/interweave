@@ -15,12 +15,19 @@ import { FilterShape, MatcherShape } from './shapes';
 import { Props, AfterParseCallback, BeforeParseCallback, TransformCallback } from './types';
 
 export interface InterweaveProps extends MarkupProps {
+  /** Disable all filters from running. */
   disableFilters?: boolean;
+  /** Disable all matches from running. */
   disableMatchers?: boolean;
+  /** List of filters to apply to the content. */
   filters?: FilterInterface[];
+  /** List of matchers to apply to the content. */
   matchers?: MatcherInterface[];
+  /** Callback fired after parsing ends. Must return an array of React nodes. */
   onAfterParse?: AfterParseCallback | null;
+  /** Callback fired beore parsing begins. Must return a string. */
   onBeforeParse?: BeforeParseCallback | null;
+  /** Transformer ran on each HTML element. Return a new element, null to remove current element, or undefined to do nothing. */
   transform?: TransformCallback | null;
 }
 

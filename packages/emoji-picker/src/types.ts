@@ -3,18 +3,12 @@
  * @license     https://opensource.org/licenses/MIT
  */
 
-import {
-  Hexcode,
-  Unicode,
-  GroupKey as BaseGroupKey,
-  SkinToneKey as BaseSkinToneKey,
-} from 'emojibase';
+import { Hexcode, GroupKey as BaseGroupKey, SkinToneKey as BaseSkinToneKey } from 'emojibase';
 import { CanonicalEmoji } from 'interweave-emoji';
 
 export interface CommonEmoji {
   count: number;
   hexcode: Hexcode;
-  unicode?: Unicode; // Deprecated
 }
 
 export type CommonMode = 'recently-used' | 'frequently-used';
