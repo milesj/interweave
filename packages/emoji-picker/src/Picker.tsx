@@ -541,7 +541,9 @@ export class Picker extends React.PureComponent<PickerUnifiedProps, PickerState>
     localStorage.removeItem(KEY_COMMONLY_USED);
 
     this.setState({
+      activeGroup: GROUP_KEY_SMILEYS_PEOPLE,
       commonEmojis: [],
+      scrollToGroup: '',
     });
   };
 
