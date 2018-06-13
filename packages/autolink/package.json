@@ -1,6 +1,6 @@
 {
   "name": "interweave-autolink",
-  "version": "2.0.0-0",
+  "version": "2.0.0-1",
   "description": "URL, IP, email, and hashtag autolinking support for Interweave.",
   "keywords": [
     "interweave",
@@ -29,7 +29,7 @@
     "react": "^16.3.0"
   },
   "devDependencies": {
-    "interweave": "^9.0.0-0",
+    "interweave": "^9.0.0-1",
     "react": "^16.4.0"
   }
 }
