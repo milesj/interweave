@@ -15,6 +15,8 @@ import { FilterShape, MatcherShape } from './shapes';
 import { Props, AfterParseCallback, BeforeParseCallback, TransformCallback } from './types';
 
 export interface InterweaveProps extends MarkupProps {
+  /** Support all the props used by matchers. */
+  [prop: string]: any;
   /** Disable all filters from running. */
   disableFilters?: boolean;
   /** Disable all matches from running. */
