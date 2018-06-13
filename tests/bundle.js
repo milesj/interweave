@@ -151,7 +151,7 @@ function App() {
         <div className="slack">
           <h4>Slack (virtual)</h4>
 
-          <EmojiPicker
+          {/* <EmojiPicker
             {...emojiPickerProps}
             clearIcon={clearIcon}
             commonMode="frequently-used"
@@ -163,7 +163,7 @@ function App() {
             messages={{ noPreview: 'Emoji Deluxe™' }}
             skinIcons={skinIcons}
             virtual
-          />
+          /> */}
         </div>
       </div>
 
@@ -188,7 +188,7 @@ function App() {
         <div className="twitter">
           <h4>Twitter (virtual)</h4>
 
-          <EmojiPicker
+          {/* <EmojiPicker
             {...emojiPickerProps}
             columnCount={8}
             commonMode="frequently-used"
@@ -206,7 +206,7 @@ function App() {
               columnPadding: 1.5,
               rowPadding: 1.5,
             }}
-          />
+          /> */}
         </div>
       </div>
 

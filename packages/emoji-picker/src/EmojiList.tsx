@@ -26,14 +26,12 @@ export interface EmojiListProps {
   activeEmoji?: CanonicalEmoji | null;
   activeGroup: GroupKey;
   clearIcon?: React.ReactNode;
-  commonEmojis: CanonicalEmoji[];
   commonMode: CommonMode;
-  disableGroups: boolean;
   emojiPadding: number;
   emojiPath: Path;
-  emojis: CanonicalEmoji[];
   emojiSize: number;
   emojiSource: Source;
+  groupedEmojis: GroupEmojiMap;
   hideGroupHeaders: boolean;
   onClear: () => void;
   onEnterEmoji: (emoji: CanonicalEmoji, event: React.MouseEvent<HTMLButtonElement>) => void;
@@ -47,7 +45,6 @@ export interface EmojiListProps {
 }
 
 export interface EmojiListState {
-  groupedEmojis: GroupEmojiMap;
   loadedGroups: Set<GroupKey>;
 }
 
@@ -58,15 +55,18 @@ export class EmojiList extends React.PureComponent<EmojiListUnifiedProps, EmojiL
     activeEmoji: EmojiShape,
     activeGroup: PropTypes.string.isRequired,
     clearIcon: PropTypes.node,
-    commonEmojis: PropTypes.arrayOf(EmojiShape).isRequired,
     commonMode: PropTypes.string.isRequired,
     context: ContextShape.isRequired,
-    disableGroups: PropTypes.bool.isRequired,
     emojiPadding: PropTypes.number.isRequired,
     emojiPath: PathShape.isRequired,
-    emojis: PropTypes.arrayOf(EmojiShape).isRequired,
     emojiSize: PropTypes.number.isRequired,
     emojiSource: SourceShape.isRequired,
+    groupedEmojis: PropTypes.objectOf(
+      PropTypes.shape({
+        emojis: PropTypes.arrayOf(EmojiShape).isRequired,
+        group: PropTypes.string.isRequired,
+      }),
+    ).isRequired,
     hideGroupHeaders: PropTypes.bool.isRequired,
     onClear: PropTypes.func.isRequired,
     onEnterEmoji: PropTypes.func.isRequired,
@@ -90,7 +90,7 @@ export class EmojiList extends React.PureComponent<EmojiListUnifiedProps, EmojiL
   constructor(props: EmojiListUnifiedProps) {
     super(props);
 
-    const { activeGroup, emojis } = props;
+    const { activeGroup } = props;
     const loadedGroups: GroupKey[] = [
       activeGroup,
       GROUP_KEY_COMMONLY_USED,
@@ -106,7 +106,6 @@ export class EmojiList extends React.PureComponent<EmojiListUnifiedProps, EmojiL
     }
 
     this.state = {
-      groupedEmojis: this.groupEmojis(),
       loadedGroups: new Set(loadedGroups),
     };
   }
@@ -126,7 +125,7 @@ export class EmojiList extends React.PureComponent<EmojiListUnifiedProps, EmojiL
    * Update scroll position after the list has rendered.
    */
   componentDidUpdate(prevProps: EmojiListUnifiedProps) {
-    const { activeGroup, commonEmojis, emojis, searching, scrollToGroup } = this.props;
+    const { activeGroup, searching, scrollToGroup } = this.props;
 
     // Search query has changed
     if (searching !== prevProps.searching) {
@@ -141,72 +140,6 @@ export class EmojiList extends React.PureComponent<EmojiListUnifiedProps, EmojiL
     if (scrollToGroup && scrollToGroup !== prevProps.scrollToGroup) {
       this.scrollToGroup(scrollToGroup);
     }
-
-    // Skin tone has changed or being search
-    if (
-      (emojis && prevProps.emojis !== emojis) ||
-      (commonEmojis && prevProps.commonEmojis !== commonEmojis)
-    ) {
-      // TODO
-      // eslint-disable-next-line
-      this.setState({
-        groupedEmojis: this.groupEmojis(),
-      });
-    }
-  }
-
-  /**
-   * Partition the dataset into multiple arrays based on the group they belong to.
-   */
-  groupEmojis(): GroupEmojiMap {
-    const { commonEmojis, disableGroups, emojis, searching } = this.props;
-    const groups: GroupEmojiMap = {};
-
-    // Add commonly used group if not searching
-    if (!searching && commonEmojis.length > 0) {
-      groups[GROUP_KEY_COMMONLY_USED] = {
-        emojis: commonEmojis,
-        group: GROUP_KEY_COMMONLY_USED,
-      };
-    }
-
-    // Partition emojis into separate groups
-    emojis.forEach(emoji => {
-      let group: GroupKey = GROUP_KEY_NONE;
-
-      if (searching) {
-        group = GROUP_KEY_SEARCH_RESULTS;
-      } else if (!disableGroups && typeof emoji.group !== 'undefined') {
-        group = GROUPS[emoji.group];
-      }
-
-      if (!group) {
-        return;
-      }
-
-      if (groups[group]) {
-        groups[group].emojis.push(emoji);
-      } else {
-        groups[group] = {
-          emojis: [emoji],
-          group,
-        };
-      }
-    });
-
-    // Sort each group
-    Object.keys(groups).forEach(group => {
-      if (group !== GROUP_KEY_COMMONLY_USED) {
-        groups[group].emojis.sort((a, b) => (a.order || 0) - (b.order || 0));
-      }
-
-      // Remove the group if no emojis
-      if (groups[group].emojis.length === 0) {
-        delete groups[group];
-      }
-    });
-
-    return groups;
   }
 
   /**
@@ -222,7 +155,7 @@ export class EmojiList extends React.PureComponent<EmojiListUnifiedProps, EmojiL
   /**
    * A scroll handler that is debounced for performance.
    */
-  private handleScrollDebounced = debounce((event: React.UIEvent<HTMLDivElement>) => {
+  private handleScrollDebounced = debounce(event => {
     this.loadEmojiImages(event.target as HTMLDivElement, event);
     this.props.onScroll();
   }, SCROLL_DEBOUNCE);
@@ -321,6 +254,7 @@ export class EmojiList extends React.PureComponent<EmojiListUnifiedProps, EmojiL
       emojiPath,
       emojiSize,
       emojiSource,
+      groupedEmojis,
       hideGroupHeaders,
       skinTonePalette,
       onClear,
@@ -328,7 +262,7 @@ export class EmojiList extends React.PureComponent<EmojiListUnifiedProps, EmojiL
       onLeaveEmoji,
       onSelectEmoji,
     } = this.props;
-    const { groupedEmojis, loadedGroups } = this.state;
+    const { loadedGroups } = this.state;
     const noResults = Object.keys(groupedEmojis).length === 0;
 
     return (

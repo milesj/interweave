@@ -51,7 +51,6 @@ export class EmojiVirtualList extends React.PureComponent<
     commonEmojis: PropTypes.arrayOf(EmojiShape).isRequired,
     commonMode: PropTypes.string.isRequired,
     context: ContextShape.isRequired,
-    disableGroups: PropTypes.bool.isRequired,
     emojiPadding: PropTypes.number.isRequired,
     emojiPath: PathShape.isRequired,
     emojis: PropTypes.arrayOf(EmojiShape).isRequired,
@@ -86,22 +85,22 @@ export class EmojiVirtualList extends React.PureComponent<
     this.state = this.groupEmojisIntoRows();
   }
 
-  componentDidUpdate(prevProps: EmojiVirtualListUnifiedProps) {
-    const { activeEmoji, commonEmojis, emojis, searching } = this.props;
+  // componentDidUpdate(prevProps: EmojiVirtualListUnifiedProps) {
+  //   const { activeEmoji, commonEmojis, emojis, searching } = this.props;
 
-    // We re-use the same array for emojis unless it has been rebuilt,
-    // so this check will work correctly. No lengthy checks needed.
-    if (
-      activeEmoji !== prevProps.activeEmoji ||
-      commonEmojis !== prevProps.commonEmojis ||
-      emojis !== prevProps.emojis ||
-      searching !== prevProps.searching
-    ) {
-      // TODO
-      // eslint-disable-next-line
-      this.setState(this.groupEmojisIntoRows());
-    }
-  }
+  //   // We re-use the same array for emojis unless it has been rebuilt,
+  //   // so this check will work correctly. No lengthy checks needed.
+  //   if (
+  //     activeEmoji !== prevProps.activeEmoji ||
+  //     commonEmojis !== prevProps.commonEmojis ||
+  //     emojis !== prevProps.emojis ||
+  //     searching !== prevProps.searching
+  //   ) {
+  //     // TODO
+  //     // eslint-disable-next-line
+  //     this.setState(this.groupEmojisIntoRows());
+  //   }
+  // }
 
   /**
    * Partition the dataset into multiple rows based on the group they belong to.
@@ -109,9 +108,9 @@ export class EmojiVirtualList extends React.PureComponent<
   groupEmojisIntoRows(): EmojiVirtualListState {
     const {
       columnCount,
-      commonEmojis,
-      disableGroups,
-      emojis,
+      // commonEmojis,
+      // disableGroups,
+      // emojis,
       hideGroupHeaders,
       searching,
     } = this.props;
@@ -122,48 +121,8 @@ export class EmojiVirtualList extends React.PureComponent<
       '': -1,
     };
 
-    // Add commonly used group if not searching
-    if (!searching && commonEmojis.length > 0) {
-      groups[GROUP_KEY_COMMONLY_USED] = {
-        emojis: commonEmojis,
-        group: GROUP_KEY_COMMONLY_USED,
-      };
-    }
-
-    // Partition emojis into separate groups
-    emojis.forEach(emoji => {
-      let group: GroupKey = GROUP_KEY_NONE;
-
-      if (searching) {
-        group = GROUP_KEY_SEARCH_RESULTS;
-      } else if (!disableGroups && typeof emoji.group !== 'undefined') {
-        group = GROUPS[emoji.group];
-      }
-
-      if (!group) {
-        return;
-      }
-
-      if (groups[group]) {
-        groups[group].emojis.push(emoji);
-      } else {
-        groups[group] = {
-          emojis: [emoji],
-          group,
-        };
-      }
-    });
-
     // Sort each group and chunk into rows
     Object.keys(groups).forEach(group => {
-      if (groups[group].emojis.length === 0) {
-        return;
-      }
-
-      if (group !== GROUP_KEY_COMMONLY_USED) {
-        groups[group].emojis.sort((a, b) => (a.order || 0) - (b.order || 0));
-      }
-
       groupIndices[group] = rows.length;
 
       if (!hideGroupHeaders) {
@@ -290,10 +249,9 @@ export class EmojiVirtualList extends React.PureComponent<
       activeEmoji,
       columnCount,
       columnPadding = 0,
-      commonEmojis,
       emojiPadding,
-      emojis,
       emojiSize,
+      groupedEmojis,
       rowCount,
       rowPadding = 0,
       scrollToGroup,
@@ -312,8 +270,8 @@ export class EmojiVirtualList extends React.PureComponent<
     // we can pass our own props to trigger the re-render.
     const renderProps = {
       activeEmoji,
-      commonEmojis,
-      emojis,
+      // commonEmojis,
+      groupedEmojis,
       searching,
     };
 
