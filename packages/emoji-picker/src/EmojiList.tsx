@@ -95,6 +95,7 @@ export class EmojiList extends React.PureComponent<EmojiListUnifiedProps, EmojiL
       activeGroup,
       GROUP_KEY_COMMONLY_USED,
       GROUP_KEY_SEARCH_RESULTS,
+      GROUP_KEY_NONE,
     ];
 
     // When commonly used emojis are rendered,
