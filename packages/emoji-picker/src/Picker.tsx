@@ -56,6 +56,7 @@ import {
   CommonEmoji,
   CommonMode,
   Context as EmojiContext,
+  DisplayOrder,
   GroupKey,
   SkinToneKey,
   GroupEmojiMap,
@@ -93,7 +94,7 @@ export interface PickerProps {
   /** Disable and hide skin tone palette bar. */
   disableSkinTones?: boolean;
   /** Order to render components in. */
-  displayOrder?: string[];
+  displayOrder?: (DisplayOrder)[];
   /** Size of the emoji within the preview bar. */
   emojiLargeSize: number;
   /** Padding around each emoji. */
@@ -252,7 +253,7 @@ export class Picker extends React.PureComponent<PickerUnifiedProps, PickerState>
     disablePreview: false,
     disableSearch: false,
     disableSkinTones: false,
-    displayOrder: ['preview', 'emojis', 'groups', 'search'],
+    displayOrder: ['preview', 'emojis', 'groups', 'search'] as DisplayOrder[],
     emojiPadding: 0,
     groupIcons: {},
     hideEmoticon: false,
@@ -367,17 +368,16 @@ export class Picker extends React.PureComponent<PickerUnifiedProps, PickerState>
       // Do nothing
     }
 
-    this.setState(prevState => ({
+    this.setUpdatedState({
       commonEmojis: this.generateCommonEmojis(commonEmojis),
-      groupedEmojis: this.groupEmojis(prevState.emojis),
-    }));
+    });
   }
 
   /**
    * Filter the dataset with the search query against a set of emoji properties.
    */
   // eslint-disable-next-line complexity
-  filterOrSearch(emoji: CanonicalEmoji, searchQuery: string): boolean {
+  filterOrSearch(emoji: CanonicalEmoji, searchQuery: string = ''): boolean {
     const { blacklist, maxEmojiVersion, whitelist } = this.props as Required<PickerUnifiedProps>;
     const { blacklisted, whitelisted } = this.state;
 
@@ -430,7 +430,7 @@ export class Picker extends React.PureComponent<PickerUnifiedProps, PickerState>
    * Return the list of emojis filtered with the search query if applicable,
    * and with skin tone applied if set.
    */
-  generateEmojis(searchQuery: string, skinTone: SkinToneKey): CanonicalEmoji[] {
+  generateEmojis(skinTone: SkinToneKey, searchQuery: string): CanonicalEmoji[] {
     return this.props.emojis
       .filter(emoji => this.filterOrSearch(emoji, searchQuery))
       .map(emoji => this.getSkinnedEmoji(emoji, skinTone));
@@ -500,10 +500,9 @@ export class Picker extends React.PureComponent<PickerUnifiedProps, PickerState>
       return [];
     }
 
-    const rawCommon = localStorage.getItem(KEY_COMMONLY_USED);
-    const common: CommonEmoji[] = rawCommon ? JSON.parse(rawCommon) : [];
+    const common = localStorage.getItem(KEY_COMMONLY_USED);
 
-    return common;
+    return common ? JSON.parse(common) : [];
   }
 
   /**
@@ -537,9 +536,12 @@ export class Picker extends React.PureComponent<PickerUnifiedProps, PickerState>
   /**
    * Partition the dataset into multiple arrays based on the group they belong to.
    */
-  groupEmojis(emojis: CanonicalEmoji[]): GroupEmojiMap {
+  groupEmojis(
+    emojis: CanonicalEmoji[],
+    commonEmojis: CanonicalEmoji[],
+    searchQuery: string,
+  ): GroupEmojiMap {
     const { disableGroups } = this.props;
-    const { commonEmojis, searchQuery } = this.state;
     const groups: GroupEmojiMap = {};
 
     // Add commonly used group if not searching
@@ -593,15 +595,11 @@ export class Picker extends React.PureComponent<PickerUnifiedProps, PickerState>
    * Triggered when common emoji cache is cleared.
    */
   private handleClearCommonEmoji = () => {
-    localStorage.removeItem(KEY_COMMONLY_USED);
-
-    const activeGroup = this.getActiveGroup(false);
-
-    this.setState({
-      activeGroup,
+    this.setUpdatedState({
       commonEmojis: [],
-      scrollToGroup: activeGroup,
     });
+
+    localStorage.removeItem(KEY_COMMONLY_USED);
   };
 
   /**
@@ -611,7 +609,7 @@ export class Picker extends React.PureComponent<PickerUnifiedProps, PickerState>
     emoji: CanonicalEmoji,
     event: React.MouseEvent<HTMLButtonElement>,
   ) => {
-    this.setState({
+    this.setUpdatedState({
       activeEmoji: emoji,
     });
 
@@ -670,7 +668,7 @@ export class Picker extends React.PureComponent<PickerUnifiedProps, PickerState>
       }
 
       if (nextIndex >= 0 && nextIndex < emojis.length) {
-        this.setState({
+        this.setUpdatedState({
           activeEmojiIndex: nextIndex,
         });
 
@@ -684,7 +682,7 @@ export class Picker extends React.PureComponent<PickerUnifiedProps, PickerState>
    * Triggered when the mouse no longer hovers an emoji.
    */
   private handleLeaveEmoji = () => {
-    this.setState({
+    this.setUpdatedState({
       activeEmoji: null,
     });
   };
@@ -693,7 +691,7 @@ export class Picker extends React.PureComponent<PickerUnifiedProps, PickerState>
    * Triggered when a group is scrolled into view.
    */
   private handleScrollGroup = (group: GroupKey) => {
-    this.setState({
+    this.setUpdatedState({
       activeGroup: group,
       scrollToGroup: '',
     });
@@ -705,24 +703,19 @@ export class Picker extends React.PureComponent<PickerUnifiedProps, PickerState>
    * Triggered when the search input field value changes.
    */
   private handleSearch = (query: string, event: React.ChangeEvent<HTMLInputElement>) => {
+    // Bypass custom logic and set immediately
     this.setState({
       searchQuery: query,
     });
 
-    this.handleSearchDebounced();
+    this.handleSearchDebounced(query);
 
     this.props.onSearch!(query, event);
   };
 
-  private handleSearchDebounced = debounce(() => {
-    const { commonEmojis, searchQuery } = this.state;
-    const activeGroup = this.getActiveGroup(commonEmojis.length > 0);
-
-    this.setUpdatedEmojis(searchQuery, this.state.activeSkinTone);
-
-    this.setState({
-      activeGroup: searchQuery ? GROUP_KEY_SEARCH_RESULTS : activeGroup,
-      scrollToGroup: searchQuery ? GROUP_KEY_SEARCH_RESULTS : activeGroup,
+  private handleSearchDebounced = debounce(query => {
+    this.setUpdatedState({
+      searchQuery: query,
     });
   }, SEARCH_THROTTLE);
 
@@ -742,15 +735,9 @@ export class Picker extends React.PureComponent<PickerUnifiedProps, PickerState>
    * Triggered when a group tab is clicked. We should reset search and scroll position.
    */
   private handleSelectGroup = (group: GroupKey, event: React.MouseEvent<HTMLButtonElement>) => {
-    // Search is being reset, so rebuild emojis
-    if (this.state.searchQuery !== '') {
-      this.setUpdatedEmojis('', this.state.activeSkinTone);
-    }
-
-    this.setState({
+    this.setUpdatedState({
       activeGroup: group,
       scrollToGroup: group,
-      searchQuery: '',
     });
 
     this.props.onSelectGroup!(group, event);
@@ -763,39 +750,74 @@ export class Picker extends React.PureComponent<PickerUnifiedProps, PickerState>
     skinTone: SkinToneKey,
     event: React.MouseEvent<HTMLButtonElement>,
   ) => {
-    this.setUpdatedEmojis(this.state.searchQuery, skinTone);
-    this.setSkinTone(skinTone);
-
-    this.setState({
+    this.setUpdatedState({
       activeSkinTone: skinTone,
     });
 
-    this.props.onSelectSkinTone!(skinTone, event);
-  };
-
-  /**
-   * Set the users favorite skin tone into local storage.
-   */
-  setSkinTone(skinTone: SkinToneKey) {
     try {
       localStorage.setItem(KEY_SKIN_TONE, skinTone);
     } catch (error) {
       // Do nothing
     }
-  }
+
+    this.props.onSelectSkinTone!(skinTone, event);
+  };
 
   /**
-   * When the skin tone or search query changes, update the emoji list.
+   * Catch all method to easily update the state. Will automatically handle updates
+   * and branching based on values being set.
    */
-  setUpdatedEmojis(searchQuery: string, skinTone: SkinToneKey) {
-    const emojis = this.generateEmojis(searchQuery, skinTone);
-    const hasResults = searchQuery && emojis.length > 0;
+  setUpdatedState(nextState: Partial<PickerState>) {
+    // eslint-disable-next-line complexity
+    this.setState(prevState => {
+      const state = { ...prevState, ...nextState };
+      const activeGroup = this.getActiveGroup(state.commonEmojis.length > 0);
+      let rebuildEmojis = false;
 
-    this.setState({
-      activeEmoji: hasResults ? emojis[0] : null,
-      activeEmojiIndex: hasResults ? 0 : -1,
-      emojis,
-      groupedEmojis: this.groupEmojis(emojis),
+      // Common emojis have changed
+      if ('commonEmojis' in nextState) {
+        rebuildEmojis = true;
+
+        // Reset the active group
+        if (state.commonEmojis.length === 0) {
+          state.activeGroup = activeGroup;
+        }
+      }
+
+      // Active group has changed
+      if ('activeGroup' in nextState) {
+        // Reset search query
+        if (state.searchQuery) {
+          state.searchQuery = '';
+          rebuildEmojis = true;
+        }
+      }
+
+      // Active skin tone has changed
+      if ('activeSkinTone' in nextState) {
+        rebuildEmojis = true;
+      }
+
+      // Search query has changed
+      if ('searchQuery' in nextState) {
+        rebuildEmojis = true;
+
+        state.activeGroup = state.searchQuery ? GROUP_KEY_SEARCH_RESULTS : activeGroup;
+        state.scrollToGroup = state.searchQuery ? GROUP_KEY_SEARCH_RESULTS : activeGroup;
+      }
+
+      // Rebuild the emoji datasets
+      if (rebuildEmojis) {
+        state.emojis = this.generateEmojis(state.activeSkinTone, state.searchQuery);
+        state.groupedEmojis = this.groupEmojis(state.emojis, state.commonEmojis, state.searchQuery);
+
+        const hasResults = state.searchQuery && state.emojis.length > 0;
+
+        state.activeEmoji = hasResults ? state.emojis[0] : null;
+        state.activeEmojiIndex = hasResults ? 0 : -1;
+      }
+
+      return state;
     });
   }
 

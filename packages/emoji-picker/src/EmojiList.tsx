@@ -99,8 +99,7 @@ export class EmojiList extends React.PureComponent<EmojiListUnifiedProps, EmojiL
 
     const rows: VirtualRow[] = [];
     const indices: GroupIndexMap = {
-      // Handle empty scroll to's
-      '': -1,
+      '': -1, // Handle empty scroll to's
     };
 
     Object.keys(groupedEmojis).forEach(group => {
