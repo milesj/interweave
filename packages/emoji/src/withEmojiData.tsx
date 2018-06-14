@@ -14,22 +14,22 @@ import { EmojiShape } from './shapes';
 import { CanonicalEmoji, Source } from './types';
 
 export interface EmojiDataWrapperProps {
-  /** Load compact dataset instead of full dataset. */
+  /** Load compact emoji dataset instead of full dataset. Provided by `withEmojiData`. */
   compact?: boolean;
-  /** List of emojis to manually use. */
+  /** List of emojis to manually use. Provided by `withEmojiData`. */
   emojis?: Emoji[];
-  /** Locale to load emoji annotations in. */
+  /** Locale to load emoji annotations in. Provided by `withEmojiData`. */
   locale?: string;
-  /** Emojibase version to load. */
+  /** Emojibase dataset version to load. Provided by `withEmojiData`. */
   version?: string;
 }
 
 export interface EmojiDataProps {
-  /** List of loaded emojis provided by `withEmojiData`. */
+  /** List of loaded emojis. Provided by `withEmojiData`. */
   emojis: CanonicalEmoji[];
-  /** Data manager and loader instance provided by `withEmojiData`. */
+  /** Emoji data manager and loader instance. Provided by `withEmojiData`. */
   emojiData: EmojiDataManager;
-  /** Datasource metadata provided by `withEmojiData`. */
+  /** Emoji datasource metadata. Provided by `withEmojiData`. */
   emojiSource: Source;
 }
 

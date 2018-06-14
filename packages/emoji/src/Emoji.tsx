@@ -19,7 +19,7 @@ export interface EmojiProps {
   emojiPath?: Path;
   /** Size of the emoji. Defaults to 1em. */
   emojiSize?: Size;
-  /** Datasource metadata. */
+  /** Emoji datasource metadata. */
   emojiSource: Source;
   /** Emoticon to reference emoji from. */
   emoticon?: Emoticon;

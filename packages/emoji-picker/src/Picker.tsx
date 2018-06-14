@@ -68,9 +68,9 @@ export interface BlackWhiteMap {
 export interface PickerProps {
   /** Focus the search bar on mount. */
   autoFocus?: boolean;
-  /** List of hexcodes to hide. */
+  /** List of emoji hexcodes to hide. */
   blacklist?: Hexcode[];
-  /** Custom CSS class names. */
+  /** Mapping of custom CSS class names. */
   classNames?: { [key: string]: string };
   /** Icon to display within the clear commonly used button. Omit the icon to hide the button. */
   clearIcon?: React.ReactNode;
@@ -86,7 +86,7 @@ export interface PickerProps {
   disableCommonlyUsed?: boolean;
   /** Disable and hide group tabs. */
   disableGroups?: boolean;
-  /** Disable and hide preview. */
+  /** Disable and hide preview bar. */
   disablePreview?: boolean;
   /** Disable and hide search bar. */
   disableSearch?: boolean;
@@ -100,21 +100,21 @@ export interface PickerProps {
   emojiPadding?: number;
   /** Path to an SVG/PNG. Accepts a string or a callback that is passed the hexcode. */
   emojiPath: Path;
-  /** Size of emoji within the list. */
+  /** Pixel size of emoji within the list. */
   emojiSize: number;
-  /** Custom icons for each group tab. */
+  /** Mapping of custom icons for each group tab. */
   groupIcons?: { [key: string]: React.ReactNode };
-  /** Hide emoticons within the preview. */
+  /** Hide emoticons within the preview bar. */
   hideEmoticon?: boolean;
   /** Hide group headers within the list. */
   hideGroupHeaders?: boolean;
-  /** Hide shortcodes within the preview. */
+  /** Hide shortcodes within the preview bar. */
   hideShortcodes?: boolean;
   /** Max number of commonly used to store. */
   maxCommonlyUsed?: number;
   /** Max official emoji release version to support. */
   maxEmojiVersion?: number;
-  /** Custom translation messages. */
+  /** Mapping of custom translation messages. */
   messages?: { [key: string]: string };
   /** Callback fired when hovering an emoji. */
   onHoverEmoji?: (emoji: CanonicalEmoji, event: React.MouseEvent<HTMLButtonElement>) => void;
@@ -132,14 +132,14 @@ export interface PickerProps {
   onSelectSkinTone?: (skinTone: SkinToneKey, event: React.MouseEvent<HTMLButtonElement>) => void;
   /** Number of emoji rows to display vertically. */
   rowCount?: number;
-  /** Custom icons for each skin tone. */
+  /** Mapping of custom icons for each skin tone. */
   skinIcons?: { [key: string]: React.ReactNode };
-  /** Customize react-virtualized list component. */
+  /** Custom props to pass to react-virtualized list component. */
   virtual?: {
     columnPadding?: number;
     rowPadding?: number;
   };
-  /** List of hexcodes to only show. */
+  /** List of emoji hexcodes to only show. */
   whitelist?: Hexcode[];
 }
 
