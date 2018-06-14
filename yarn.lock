@@ -68,9 +68,9 @@
   dependencies:
     rimraf "^2.6.2"
 
-"@milesj/build-tool-config@^0.102.2":
-  version "0.102.2"
-  resolved "https://registry.npmjs.org/@milesj/build-tool-config/-/build-tool-config-0.102.2.tgz#4169b421fc8096d22c6d6e600ecb9de2889ee953"
+"@milesj/build-tool-config@^0.102.3":
+  version "0.102.3"
+  resolved "https://registry.npmjs.org/@milesj/build-tool-config/-/build-tool-config-0.102.3.tgz#8f8b254f3e04c614fb6b1f54d6f7d8aeaea56df9"
   dependencies:
     "@beemo/cli" "^0.18.0"
     "@beemo/core" "^0.18.0"
@@ -80,7 +80,7 @@
     "@beemo/driver-prettier" "^0.18.0"
     "@beemo/driver-typescript" "^0.7.0"
     "@types/enzyme" "^3.1.10"
-    "@types/jest" "^23.0.2"
+    "@types/jest" "^23.1.0"
     babel-cli "^6.26.0"
     babel-core "^6.26.3"
     babel-jest "^23.0.1"
@@ -114,12 +114,12 @@
     jest-runner-eslint "^0.6.0"
     np "^3.0.4"
     prettier "^1.13.5"
-    react "^16.4.0"
-    react-dom "^16.4.0"
-    react-test-renderer "^16.4.0"
+    react "^16.4.1"
+    react-dom "^16.4.1"
+    react-test-renderer "^16.4.1"
     rimraf "^2.6.2"
     ts-jest "^22.4.6"
-    typescript "^2.9.1"
+    typescript "^2.9.2"
     typescript-eslint-parser "^16.0.0"
 
 "@samverschueren/stream-to-observable@^0.3.0":
@@ -181,9 +181,9 @@
   version "4.0.0"
   resolved "https://registry.npmjs.org/@types/is-glob/-/is-glob-4.0.0.tgz#fb8a2bff539025d4dcd6d5efe7689e03341b876d"
 
-"@types/jest@^23.0.2":
-  version "23.0.2"
-  resolved "https://registry.npmjs.org/@types/jest/-/jest-23.0.2.tgz#f03f9e6dd2206cc2a2e8fd033161b0b7cf905db6"
+"@types/jest@^23.1.0":
+  version "23.1.0"
+  resolved "https://registry.npmjs.org/@types/jest/-/jest-23.1.0.tgz#8054dd838ba23dc331794d26456b86c7e50bf0f6"
 
 "@types/json5@^0.0.29":
   version "0.0.29"
@@ -7683,18 +7683,18 @@ rc@^1.0.1, rc@^1.1.6, rc@^1.1.7:
     minimist "^1.2.0"
     strip-json-comments "~2.0.1"
 
-react-dom@^16.4.0:
-  version "16.4.0"
-  resolved "https://registry.npmjs.org/react-dom/-/react-dom-16.4.0.tgz#099f067dd5827ce36a29eaf9a6cdc7cbf6216b1e"
+react-dom@^16.4.1:
+  version "16.4.1"
+  resolved "https://registry.npmjs.org/react-dom/-/react-dom-16.4.1.tgz#7f8b0223b3a5fbe205116c56deb85de32685dad6"
   dependencies:
     fbjs "^0.8.16"
     loose-envify "^1.1.0"
     object-assign "^4.1.1"
     prop-types "^15.6.0"
 
-react-is@^16.4.0:
-  version "16.4.0"
-  resolved "https://registry.npmjs.org/react-is/-/react-is-16.4.0.tgz#cc9fdc855ac34d2e7d9d2eb7059bbc240d35ffcf"
+react-is@^16.4.1:
+  version "16.4.1"
+  resolved "https://registry.npmjs.org/react-is/-/react-is-16.4.1.tgz#d624c4650d2c65dbd52c72622bbf389435d9776e"
 
 react-lifecycles-compat@^3.0.4:
   version "3.0.4"
@@ -7716,14 +7716,14 @@ react-test-renderer@^16.0.0-0:
     fbjs "^0.8.16"
     object-assign "^4.1.1"
 
-react-test-renderer@^16.4.0:
-  version "16.4.0"
-  resolved "https://registry.npmjs.org/react-test-renderer/-/react-test-renderer-16.4.0.tgz#0dbe0e24263e94e1830c7afb1f403707fad313a3"
+react-test-renderer@^16.4.1:
+  version "16.4.1"
+  resolved "https://registry.npmjs.org/react-test-renderer/-/react-test-renderer-16.4.1.tgz#f2fb30c2c7b517db6e5b10ed20bb6b0a7ccd8d70"
   dependencies:
     fbjs "^0.8.16"
     object-assign "^4.1.1"
     prop-types "^15.6.0"
-    react-is "^16.4.0"
+    react-is "^16.4.1"
 
 react-virtualized@^9.19.1:
   version "9.19.1"
@@ -7736,9 +7736,9 @@ react-virtualized@^9.19.1:
     prop-types "^15.6.0"
     react-lifecycles-compat "^3.0.4"
 
-react@^16.4.0:
-  version "16.4.0"
-  resolved "https://registry.npmjs.org/react/-/react-16.4.0.tgz#402c2db83335336fba1962c08b98c6272617d585"
+react@^16.4.1:
+  version "16.4.1"
+  resolved "https://registry.npmjs.org/react/-/react-16.4.1.tgz#de51ba5764b5dbcd1f9079037b862bd26b82fe32"
   dependencies:
     fbjs "^0.8.16"
     loose-envify "^1.1.0"
@@ -9245,9 +9245,9 @@ typescript-eslint-parser@^16.0.0:
     lodash.unescape "4.0.1"
     semver "5.5.0"
 
-typescript@^2.9.1:
-  version "2.9.1"
-  resolved "https://registry.npmjs.org/typescript/-/typescript-2.9.1.tgz#fdb19d2c67a15d11995fd15640e373e09ab09961"
+typescript@^2.9.2:
+  version "2.9.2"
+  resolved "https://registry.npmjs.org/typescript/-/typescript-2.9.2.tgz#1cbf61d05d6b96269244eb6a3bce4bd914e0f00c"
 
 ua-parser-js@^0.7.9:
   version "0.7.14"
@@ -9544,9 +9544,9 @@ webidl-conversions@^4.0.1, webidl-conversions@^4.0.2:
   version "4.0.2"
   resolved "https://registry.npmjs.org/webidl-conversions/-/webidl-conversions-4.0.2.tgz#a855980b1f0b6b359ba1d5d9fb39ae941faa63ad"
 
-webpack-cli@^3.0.4:
-  version "3.0.4"
-  resolved "https://registry.npmjs.org/webpack-cli/-/webpack-cli-3.0.4.tgz#55d6ad2cdd608de8c0f757dde5bc4bf5bd2dec68"
+webpack-cli@^3.0.6:
+  version "3.0.6"
+  resolved "https://registry.npmjs.org/webpack-cli/-/webpack-cli-3.0.6.tgz#5d414e66c6576d4050c1e6b7ab3ecf9969106525"
   dependencies:
     chalk "^2.4.1"
     cross-spawn "^6.0.5"

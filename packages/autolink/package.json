@@ -30,6 +30,6 @@
   },
   "devDependencies": {
     "interweave": "^9.0.0-1",
-    "react": "^16.4.0"
+    "react": "^16.4.1"
   }
 }

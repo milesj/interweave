@@ -31,6 +31,6 @@
   "devDependencies": {
     "emojibase": "^1.7.1",
     "interweave-emoji": "^2.0.0-1",
-    "react": "^16.4.0"
+    "react": "^16.4.1"
   }
 }
