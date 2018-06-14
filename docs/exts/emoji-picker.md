@@ -84,8 +84,7 @@ import EmojiPicker from 'emoji-picker';
 - `onSelectSkinTone` (function) - Callback triggered when a skin tone tab is clicked.
 - `rowCount` (number) - Number of rows in the visible list. Defaults to `8`.
 - `skinIcons` (object) - Mapping of custom skin tone icons.
-- `virtual` (bool) - Use [react-virtualized][react-virtualized] when rendering the list. Defaults to
-  `false`.
+- `virtual` (object) - Custom props to pass to [react-virtualized][react-virtualized].
 - `whitelist` (string[]) - List of hexcodes to only display.
 
 ## Blacklist / Whitelist
@@ -145,11 +144,10 @@ appearance. Every aspect of the picker can be changed, whether it be the order o
 or showing elements, the number of emojis to render, and more. I'll try to keep this rather short.
 
 To change the number of visible emojis rendered in the list, define the `columnCount` and `rowCount`
-props. Furthermore, to render the emoji using [react-virtualized][react-virtualized], pass a
-`virtual` prop.
+props.
 
 ```javascript
-<EmojiPicker columnCount={15} rowCount={5} virtual />
+<EmojiPicker columnCount={15} rowCount={5} />
 ```
 
 To change the default selected group tab or skin tone palette, define the `defaultGroup` and

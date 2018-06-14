@@ -97,7 +97,6 @@ export const COMMON_MODE_FREQUENT = 'frequently-used';
 
 export const CONTEXT_CLASSNAMES = {
   picker: 'interweave-picker__picker',
-  pickerVirtual: 'interweave-picker__picker--virtual',
   emoji: 'interweave-picker__emoji',
   emojiActive: 'interweave-picker__emoji--active',
   emojis: 'interweave-picker__emojis',

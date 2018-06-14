@@ -20,7 +20,6 @@ import {
 import { Hexcode } from 'emojibase';
 import { Context } from './Context';
 import EmojiList from './EmojiList';
-import EmojiVirtualList from './EmojiVirtualList';
 import SkinTonePalette from './SkinTonePalette';
 import GroupTabs from './GroupTabs';
 import PreviewBar from './PreviewBar';
@@ -135,13 +134,11 @@ export interface PickerProps {
   rowCount?: number;
   /** Custom icons for each skin tone. */
   skinIcons?: { [key: string]: React.ReactNode };
-  /** Enable react-virtualized and or customize it's options. */
-  virtual?:
-    | boolean
-    | {
-        columnPadding?: number;
-        rowPadding?: number;
-      };
+  /** Customize react-virtualized list component. */
+  virtual?: {
+    columnPadding?: number;
+    rowPadding?: number;
+  };
   /** List of hexcodes to only show. */
   whitelist?: Hexcode[];
 }
@@ -234,13 +231,10 @@ export class Picker extends React.PureComponent<PickerUnifiedProps, PickerState>
     onSelectSkinTone: PropTypes.func,
     rowCount: PropTypes.number,
     skinIcons: PropTypes.objectOf(PropTypes.node),
-    virtual: PropTypes.oneOfType([
-      PropTypes.bool,
-      PropTypes.shape({
-        columnPadding: PropTypes.number,
-        rowPadding: PropTypes.number,
-      }),
-    ]),
+    virtual: PropTypes.shape({
+      columnPadding: PropTypes.number,
+      rowPadding: PropTypes.number,
+    }),
     whitelist: PropTypes.arrayOf(PropTypes.string),
   };
 
@@ -276,7 +270,7 @@ export class Picker extends React.PureComponent<PickerUnifiedProps, PickerState>
     onSelectSkinTone() {},
     rowCount: 8,
     skinIcons: {},
-    virtual: false,
+    virtual: {},
     whitelist: [],
   };
 
@@ -841,7 +835,6 @@ export class Picker extends React.PureComponent<PickerUnifiedProps, PickerState>
       scrollToGroup,
       searchQuery,
     } = this.state;
-    const List = virtual ? EmojiVirtualList : EmojiList;
     const skinTones = disableSkinTones ? null : (
       <SkinTonePalette
         key="skin-tones"
@@ -852,9 +845,9 @@ export class Picker extends React.PureComponent<PickerUnifiedProps, PickerState>
     );
     const components: { [name: string]: React.ReactElement<any> | null } = {
       emojis: (
-        <List
+        <EmojiList
           key="emojis"
-          {...(typeof virtual === 'object' ? virtual : {})}
+          {...virtual}
           activeEmoji={activeEmoji}
           activeGroup={activeGroup}
           clearIcon={clearIcon}
@@ -868,7 +861,6 @@ export class Picker extends React.PureComponent<PickerUnifiedProps, PickerState>
           hideGroupHeaders={hideGroupHeaders}
           rowCount={rowCount}
           scrollToGroup={scrollToGroup}
-          searching={searchQuery !== ''}
           skinTonePalette={displayOrder.includes('skin-tones') ? null : skinTones}
           onClear={this.handleClearCommonEmoji}
           onEnterEmoji={this.handleEnterEmoji}
@@ -910,15 +902,10 @@ export class Picker extends React.PureComponent<PickerUnifiedProps, PickerState>
       ),
       'skin-tones': skinTones,
     };
-    const classes = [context.classNames.picker];
-
-    if (virtual) {
-      classes.push(context.classNames.pickerVirtual);
-    }
 
     return (
       <Context.Provider value={context}>
-        <div className={classes.join(' ')}>{displayOrder.map(key => components[key])}</div>
+        <div className={context.classNames.picker}>{displayOrder.map(key => components[key])}</div>
       </Context.Provider>
     );
   }

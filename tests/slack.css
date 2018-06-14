@@ -72,13 +72,13 @@
 .slack .interweave-picker__emojis {
   overflow-y: auto;
   overflow-x: hidden;
-  height: 270px;
+  height: auto;
   position: relative;
   padding: 0 8px;
 }
 
 .slack .interweave-picker__emojis-body {
-  padding-bottom: 8px;
+  padding: 0;
 }
 
 .slack .interweave-picker__emojis-body::after {
@@ -196,14 +196,4 @@
 
 .slack .interweave-picker__no-results {
   position: static;
-}
-
-/* Virtual list */
-
-.slack .interweave-picker__picker--virtual .interweave-picker__emojis {
-  height: auto;
-}
-
-.slack .interweave-picker__picker--virtual .interweave-picker__emojis-body {
-  padding: 0;
 }
