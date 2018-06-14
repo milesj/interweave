@@ -348,7 +348,7 @@ export default class Parser {
    */
   isSafe(node: HTMLElement): boolean {
     // URLs should only support HTTP and email
-    if (node instanceof HTMLAnchorElement) {
+    if (typeof HTMLAnchorElement !== 'undefined' && node instanceof HTMLAnchorElement) {
       const href = node.getAttribute('href');
 
       // Fragment protocols start with about:
