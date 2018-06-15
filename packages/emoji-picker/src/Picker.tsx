@@ -94,7 +94,7 @@ export interface PickerProps {
   /** Disable and hide skin tone palette bar. */
   disableSkinTones?: boolean;
   /** Order to render components in. */
-  displayOrder?: (DisplayOrder)[];
+  displayOrder?: DisplayOrder[];
   /** Size of the emoji within the preview bar. */
   emojiLargeSize: number;
   /** Padding around each emoji. */
@@ -153,8 +153,6 @@ export interface PickerState {
   activeGroup: GroupKey;
   /** Currently selected skin tone. */
   activeSkinTone: SkinToneKey;
-  /** Map of blacklisted emoji hexcodes (without skin modifier). */
-  blacklisted: BlackWhiteMap;
   /** List of emoji hexcodes most commonly used. */
   commonEmojis: CanonicalEmoji[];
   /** React context. */
@@ -167,8 +165,6 @@ export interface PickerState {
   scrollToGroup: GroupKey | '';
   /** Current search query. */
   searchQuery: string;
-  /** Map of whitelisted emoji hexcodes (without skin modifier). */
-  whitelisted: BlackWhiteMap;
 }
 
 export type PickerUnifiedProps = PickerProps & EmojiDataProps;
@@ -275,22 +271,32 @@ export class Picker extends React.PureComponent<PickerUnifiedProps, PickerState>
     whitelist: [],
   };
 
+  blacklist: BlackWhiteMap;
+
+  whitelist: BlackWhiteMap;
+
   constructor(props: PickerUnifiedProps) {
     super(props);
 
     const { blacklist, classNames, defaultSkinTone, messages, whitelist } = props as Required<
       PickerUnifiedProps
     >;
+
+    this.blacklist = this.generateBlackWhiteMap(blacklist);
+    this.whitelist = this.generateBlackWhiteMap(whitelist);
+
+    const searchQuery = '';
     const commonEmojis = this.generateCommonEmojis(this.getCommonEmojisFromStorage());
     const activeGroup = this.getActiveGroup(commonEmojis.length > 0);
     const activeSkinTone = this.getSkinToneFromStorage() || defaultSkinTone;
+    const emojis = this.generateEmojis(activeSkinTone, searchQuery);
+    const groupedEmojis = this.groupEmojis(emojis, commonEmojis, searchQuery);
 
     this.state = {
       activeEmoji: null,
       activeEmojiIndex: -1,
       activeGroup,
       activeSkinTone,
-      blacklisted: this.generateBlackWhiteMap(blacklist),
       commonEmojis,
       context: {
         classNames: {
@@ -302,18 +308,11 @@ export class Picker extends React.PureComponent<PickerUnifiedProps, PickerState>
           ...messages,
         },
       },
-      emojis: [],
-      groupedEmojis: {},
+      emojis,
+      groupedEmojis,
       scrollToGroup: activeGroup,
-      searchQuery: '',
-      whitelisted: this.generateBlackWhiteMap(whitelist),
+      searchQuery,
     };
-
-    // Generating emojis requires state fields to be defined
-    // @ts-ignore
-    this.state.emojis = this.generateEmojis('', activeSkinTone);
-    // @ts-ignore
-    this.state.groupedEmojis = this.groupEmojis(this.state.emojis);
   }
 
   /**
@@ -377,14 +376,13 @@ export class Picker extends React.PureComponent<PickerUnifiedProps, PickerState>
    * Filter the dataset with the search query against a set of emoji properties.
    */
   // eslint-disable-next-line complexity
-  filterOrSearch(emoji: CanonicalEmoji, searchQuery: string = ''): boolean {
+  filterOrSearch(emoji: CanonicalEmoji, searchQuery: string): boolean {
     const { blacklist, maxEmojiVersion, whitelist } = this.props as Required<PickerUnifiedProps>;
-    const { blacklisted, whitelisted } = this.state;
 
     // Remove blacklisted emojis and non-whitelisted emojis
     if (
-      (blacklist.length > 0 && blacklisted[emoji.hexcode]) ||
-      (whitelist.length > 0 && !whitelisted[emoji.hexcode])
+      (blacklist.length > 0 && this.blacklist[emoji.hexcode]) ||
+      (whitelist.length > 0 && !this.whitelist[emoji.hexcode])
     ) {
       return false;
     }

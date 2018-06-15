@@ -62,6 +62,12 @@ export class GroupListHeader extends React.PureComponent<GroupListHeaderProps & 
 
     return (
       <header className={classNames.emojisHeader}>
+        <span>
+          {group === GROUP_KEY_COMMONLY_USED
+            ? messages[camelCase(commonMode)]
+            : messages[camelCase(group)]}
+        </span>
+
         {showPalette && skinTonePalette}
 
         {showClear && (
@@ -74,10 +80,6 @@ export class GroupListHeader extends React.PureComponent<GroupListHeaderProps & 
             {clearIcon}
           </button>
         )}
-
-        {group === GROUP_KEY_COMMONLY_USED
-          ? messages[camelCase(commonMode)]
-          : messages[camelCase(group)]}
       </header>
     );
   }

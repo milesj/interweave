@@ -90,23 +90,24 @@
 }
 
 .twitter .interweave-picker__emojis-body {
-  padding: 0;
+  padding: 0 12px;
 }
 
 .twitter .interweave-picker__no-results,
 .twitter .interweave-picker__emojis-header {
   padding: 6px 18px;
   color: #657786;
-  position: sticky;
-  top: 0;
-  z-index: 2;
   background: #fff;
   border-bottom: 1px solid #e6ecf0;
   font-weight: bold;
 }
 
-.twitter .interweave-picker__emoji-header {
+.twitter .interweave-picker__emojis-header {
   padding: 3.25px 0;
+}
+
+.twitter .interweave-picker__emojis-row {
+  padding: 0 16px;
 }
 
 .twitter .interweave-picker__emoji {
@@ -156,8 +157,4 @@
   position: absolute;
   top: 0;
   left: 2px;
-}
-
-.interweave-picker__picker--virtual .interweave-picker__emojis-container {
-  margin: 8px auto;
 }

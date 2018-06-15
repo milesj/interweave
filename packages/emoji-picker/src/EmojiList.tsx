@@ -89,6 +89,13 @@ export class EmojiList extends React.PureComponent<EmojiListUnifiedProps, EmojiL
     skinTonePalette: null,
   };
 
+  state = {
+    // eslint-disable-next-line react/no-unused-state
+    emojis: {} as GroupEmojiMap,
+    indices: {} as GroupIndexMap,
+    rows: [] as VirtualRow[],
+  };
+
   static getDerivedStateFromProps(
     { columnCount, groupedEmojis, hideGroupHeaders }: EmojiListProps,
     state: EmojiListState,
@@ -256,7 +263,7 @@ export class EmojiList extends React.PureComponent<EmojiListUnifiedProps, EmojiL
     return (
       <div className={classNames.emojis}>
         <List
-          className={classNames.emojisContainer}
+          className={classNames.emojisList}
           height={rowHeight * rowCount}
           noRowsRenderer={this.renderNoResults}
           overscanRowCount={rowCount}
