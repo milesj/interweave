@@ -3,7 +3,6 @@
   "private": true,
   "scripts": {
     "build": "beemo typescript --workspaces=* --priority=core --react",
-    "clean": "rimraf ./packages/*/{lib,esm}/ && lerna clean --yes",
     "coverage": "yarn run jest --coverage",
     "docs": "gitbook build --debug --log=debug",
     "docs:serve": "gitbook serve",
@@ -14,9 +13,8 @@
     "pretest": "yarn run type",
     "test": "yarn run jest",
     "test:live": "yarn run jest && webpack && serve ./tests/",
-    "package": "yarn test && yarn run build",
     "prettier": "beemo prettier",
-    "prerelease": "yarn run package",
+    "prerelease": "yarn test && yarn run build",
     "release": "lerna publish",
     "type": "beemo typescript --workspaces=* --noEmit --react"
   },
