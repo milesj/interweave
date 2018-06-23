@@ -20,7 +20,7 @@
     "@types/react-virtualized": "^9.18.3",
     "babel-runtime": "^6.26.0",
     "lodash": "^4.17.10",
-    "prop-types": "^15.6.1",
+    "prop-types": "^15.6.2",
     "react-virtualized": "^9.19.1"
   },
   "peerDependencies": {
@@ -29,7 +29,7 @@
     "react": "^16.3.0"
   },
   "devDependencies": {
-    "emojibase": "^1.7.1",
+    "emojibase": "^2.0.0-1",
     "interweave-emoji": "^2.0.0-1",
     "react": "^16.4.1"
   }

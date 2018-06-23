@@ -271,7 +271,7 @@ export class EmojiList extends React.PureComponent<EmojiListUnifiedProps, EmojiL
           rowHeight={rowHeight}
           rowRenderer={this.renderRow}
           scrollToAlignment="start"
-          scrollToIndex={indices[scrollToGroup] || -1}
+          scrollToIndex={indices[scrollToGroup]}
           width={columnWidth * columnCount}
           onRowsRendered={this.handleRendered}
           onScroll={onScroll}

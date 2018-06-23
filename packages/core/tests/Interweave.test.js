@@ -5,7 +5,6 @@ import ReactDOMServer from 'react-dom/server';
 import { shallow } from 'enzyme';
 import Interweave from '../src/Interweave';
 import Element from '../src/Element';
-import Markup from '../src/Markup';
 import {
   EXTRA_PROPS,
   MOCK_INVALID_MARKUP,

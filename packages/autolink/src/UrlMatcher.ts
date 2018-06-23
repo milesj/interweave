@@ -4,7 +4,7 @@
  */
 
 import React from 'react';
-import { Matcher, MatchResponse, MatcherFactory, Props } from 'interweave';
+import { Matcher, MatcherFactory, Props } from 'interweave';
 import Url, { UrlProps } from './Url';
 import { URL_PATTERN, TOP_LEVEL_TLDS } from './constants';
 

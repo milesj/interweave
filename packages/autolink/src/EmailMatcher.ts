@@ -4,7 +4,7 @@
  */
 
 import React from 'react';
-import { Matcher, MatchResponse, Props } from 'interweave';
+import { Matcher, Props } from 'interweave';
 import Email, { EmailProps } from './Email';
 import { EMAIL_PATTERN } from './constants';
 

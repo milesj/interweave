@@ -4,7 +4,6 @@
  */
 
 import React from 'react';
-import PropTypes from 'prop-types';
 import { ContextShape } from './shapes';
 import { Context as EmojiContext } from './types';
 

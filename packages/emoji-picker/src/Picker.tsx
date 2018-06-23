@@ -850,7 +850,6 @@ export class Picker extends React.PureComponent<PickerUnifiedProps, PickerState>
       activeSkinTone,
       commonEmojis,
       context,
-      emojis,
       groupedEmojis,
       scrollToGroup,
       searchQuery,

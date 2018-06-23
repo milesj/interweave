@@ -4,7 +4,7 @@
  */
 
 import React from 'react';
-import { Matcher, MatchResponse, Props } from 'interweave';
+import { Matcher, Props } from 'interweave';
 import Hashtag, { HashtagProps } from './Hashtag';
 import { HASHTAG_PATTERN } from './constants';
 
