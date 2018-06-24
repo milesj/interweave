@@ -18,7 +18,7 @@ export interface MatcherInterface {
   onAfterParse(content: React.ReactNode[], props: Props): React.ReactNode[];
 }
 
-export default class Matcher<T extends {} = {}> implements MatcherInterface {
+export default abstract class Matcher<T extends {} = {}> implements MatcherInterface {
   options: T;
 
   propName: string;
@@ -66,37 +66,18 @@ export default class Matcher<T extends {} = {}> implements MatcherInterface {
   /**
    * Replace the match with a React element based on the matched token and optional props.
    */
-  replaceWith(match: string, props: Props = {}): React.ReactNode {
-    if (process.env.NODE_ENV !== 'production') {
-      throw new Error(`${this.constructor.name} must return a React element.`);
-    }
-
-    return match;
-  }
+  abstract replaceWith(match: string, props: Props): React.ReactNode;
 
   /**
    * Defines the HTML tag name that the resulting React element will be.
    */
-  asTag(): string {
-    if (process.env.NODE_ENV !== 'production') {
-      throw new Error(`${this.constructor.name} must define the HTML tag name it will render.`);
-    }
-
-    return '';
-  }
+  abstract asTag(): string;
 
   /**
-   * Attempt to match against the defined string.
-   * Return `null` if no match found, else return the `match`
-   * and any optional props to pass along.
+   * Attempt to match against the defined string. Return `null` if no match found,
+   * else return the `match` and any optional props to pass along.
    */
-  match(string: string): MatchResponse | null {
-    if (process.env.NODE_ENV !== 'production') {
-      throw new Error(`${this.constructor.name} must define a pattern matcher.`);
-    }
-
-    return null;
-  }
+  abstract match(string: string): MatchResponse | null;
 
   /**
    * Trigger the actual pattern match and package the matched

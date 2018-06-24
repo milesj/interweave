@@ -48,12 +48,6 @@ describe('Matcher', () => {
   });
 
   describe('replaceWith()', () => {
-    it('errors if factory not defined', () => {
-      expect(() => {
-        new Matcher('foo').replaceWith();
-      }).toThrowError('Matcher must return a React element.');
-    });
-
     it('returns a React element', () => {
       expect(matcher.replaceWith('[foo]', { children: 'foo' })).toEqual(
         <Element tagName="span" key="1">
@@ -63,21 +57,7 @@ describe('Matcher', () => {
     });
   });
 
-  describe('asTag()', () => {
-    it('errors if not defined', () => {
-      expect(() => {
-        new Matcher('foo').asTag();
-      }).toThrowError('Matcher must define the HTML tag name it will render.');
-    });
-  });
-
   describe('match()', () => {
-    it('errors if match not defined', () => {
-      expect(() => {
-        new Matcher('foo').match();
-      }).toThrowError('Matcher must define a pattern matcher.');
-    });
-
     it('does match', () => {
       expect(matcher.match('[foo]')).toEqual({
         match: '[foo]',
@@ -88,6 +68,19 @@ describe('Matcher', () => {
 
     it('does not match', () => {
       expect(matcher.match('[bar]')).toBeNull();
+    });
+  });
+
+  describe('doMatch()', () => {
+    it('returns a match object', () => {
+      expect(matcher.doMatch('foo', /foo/, () => ({ pass: true }))).toEqual({
+        match: 'foo',
+        pass: true,
+      });
+    });
+
+    it('returns null if no match', () => {
+      expect(matcher.doMatch('bar', /foo/, () => ({ pass: true }))).toBeNull();
     });
   });
 });

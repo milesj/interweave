@@ -40,7 +40,7 @@ export interface WithEmojiDataState {
 
 // Share between all instances
 let loaded: { [locale: string]: boolean } = {};
-let promise: { [locale: string]: Promise<Emoji[]> } = {};
+let promise: { [locale: string]: Promise<any> } = {};
 
 export function resetLoaded() {
   if (process.env.NODE_ENV !== 'production') {
@@ -123,45 +123,48 @@ export default function withEmojiData<Props extends {} = {}>(
     /**
      * Load and parse emoji data from the CDN or use the provided dataset.
      */
-    loadEmojis() {
+    loadEmojis(): Promise<void> {
       const { compact, emojis, locale, version } = this.props as Required<
         WithEmojiDataWrapperProps
       >;
+      const set = compact ? 'compact' : 'data';
+      const key = `${locale}:${version}${set}`;
 
       // Abort as we've already loaded data
-      if (loaded[locale]) {
+      if (loaded[key]) {
         this.setEmojis(emojis);
 
-        // Or hook into the promise if we're loading
-      } else if (promise[locale]) {
-        promise[locale]
+        return Promise.resolve();
+      }
+
+      // Or hook into the promise if we're loading
+      if (promise[key]) {
+        return promise[key]
           .then(() => {
             this.setEmojis(emojis);
           })
           .catch(error => {
             throw error;
           });
-
-        // Otherwise, start loading emoji data from the CDN
-      } else {
-        promise[locale] = fetchFromCDN<Emoji>(
-          `${locale}/${compact ? 'compact' : 'data'}.json`,
-          version,
-        )
-          .then(response => {
-            loaded[locale] = true;
-
-            // Parse the data and make it available through our data layer.
-            // We should do this first so that the custom emojis can hook into it.
-            this.getDataInstance().parseEmojiData(response);
-            this.setEmojis(emojis);
-
-            return response;
-          })
-          .catch(error => {
-            throw error;
-          });
       }
+
+      // Otherwise, start loading emoji data from the CDN
+      const request = fetchFromCDN<Emoji>(`${locale}/${set}.json`, version)
+        .then(response => {
+          loaded[key] = true;
+
+          // Parse the data and make it available through our data layer.
+          // We should do this first so that the custom emojis can hook into it.
+          this.getDataInstance().parseEmojiData(response);
+          this.setEmojis(emojis);
+        })
+        .catch(error => {
+          throw error;
+        });
+
+      promise[key] = request;
+
+      return request;
     }
 
     /**

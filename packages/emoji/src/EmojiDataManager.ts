@@ -65,12 +65,12 @@ export default class EmojiDataManager {
    * while also extracting and partitioning relevant information.
    */
   packageEmoji(baseEmoji: Emoji): CanonicalEmoji {
-    const { emoticon, hexcode, shortcodes = [] } = baseEmoji;
+    const { emoticon, hexcode, shortcodes } = baseEmoji;
     const emoji: CanonicalEmoji = {
       ...baseEmoji,
       canonical_shortcodes: [],
       primary_shortcode: '',
-      skins: baseEmoji.skins as CanonicalEmoji[],
+      skins: (baseEmoji.skins || []) as CanonicalEmoji[],
       unicode: '',
     };
 

@@ -30,7 +30,7 @@ export default class UrlMatcher extends Matcher<UrlMatcherOptions> {
     );
   }
 
-  replaceWith(match: string, props: Props = {}) {
+  replaceWith(match: string, props: Props) {
     if (this.options.validateTLD) {
       const { host } = props.urlParts;
       const validList = TOP_LEVEL_TLDS.concat(this.options.customTLDs);

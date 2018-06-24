@@ -81,6 +81,6 @@ describe('<SkinTone />', () => {
 
     wrapper.simulate('click', event);
 
-    expect(spy).toBeCalledWith(SKIN_KEY_DARK, event);
+    expect(spy).toHaveBeenCalledWith(SKIN_KEY_DARK, event);
   });
 });
