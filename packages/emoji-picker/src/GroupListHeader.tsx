@@ -6,7 +6,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import camelCase from 'lodash/camelCase';
-import withContext, { ContextProps } from './Context';
+import withContext, { WithContextProps } from './Context';
 import {
   GROUP_KEY_COMMONLY_USED,
   GROUP_KEY_SEARCH_RESULTS,
@@ -24,7 +24,7 @@ export interface GroupListHeaderProps {
   skinTonePalette?: React.ReactNode;
 }
 
-export class GroupListHeader extends React.PureComponent<GroupListHeaderProps & ContextProps> {
+export class GroupListHeader extends React.PureComponent<GroupListHeaderProps & WithContextProps> {
   static propTypes = {
     clearIcon: PropTypes.node,
     commonMode: PropTypes.string.isRequired,

@@ -5,12 +5,13 @@
 
 /* eslint-disable camelcase */
 
-import { Emoji, Hexcode, Shortcode } from 'emojibase';
+import { Emoji, Hexcode, Shortcode, Unicode } from 'emojibase';
 
 export interface CanonicalEmoji extends Emoji {
   canonical_shortcodes: Shortcode[];
   primary_shortcode: Shortcode;
   skins?: CanonicalEmoji[];
+  unicode: Unicode;
 }
 
 export type Path =

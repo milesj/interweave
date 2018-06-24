@@ -8,10 +8,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import debounce from 'lodash/debounce';
-import {
+import withEmojiData, {
+  WithEmojiDataProps,
   CanonicalEmoji,
-  withEmojiData,
-  EmojiDataProps,
   EmojiShape,
   Path,
   PathShape,
@@ -167,7 +166,7 @@ export interface PickerState {
   searchQuery: string;
 }
 
-export type PickerUnifiedProps = PickerProps & EmojiDataProps;
+export type PickerUnifiedProps = PickerProps & WithEmojiDataProps;
 
 const SKIN_MODIFIER_PATTERN: RegExp = /1F3FB|1F3FC|1F3FD|1F3FE|1F3FF/g;
 

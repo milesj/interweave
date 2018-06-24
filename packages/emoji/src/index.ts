@@ -6,20 +6,20 @@
 import Emoji, { EmojiProps } from './Emoji';
 import EmojiDataManager from './EmojiDataManager';
 import EmojiMatcher, { EmojiMatcherOptions } from './EmojiMatcher';
-import withEmojiData, { EmojiDataWrapperProps, EmojiDataProps } from './withEmojiData';
+import withEmojiData, { WithEmojiDataWrapperProps, WithEmojiDataProps } from './withEmojiData';
 
 export {
+  Emoji,
   EmojiProps,
   EmojiMatcher,
   EmojiMatcherOptions,
   EmojiDataManager,
-  EmojiDataWrapperProps,
-  EmojiDataProps,
-  withEmojiData,
+  WithEmojiDataWrapperProps,
+  WithEmojiDataProps,
 };
 
 export * from './shapes';
 
 export * from './types';
 
-export default Emoji;
+export default withEmojiData;

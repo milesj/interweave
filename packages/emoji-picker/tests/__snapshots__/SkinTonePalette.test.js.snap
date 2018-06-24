@@ -4,37 +4,37 @@ exports[`<SkinTonePalette /> renders a palette 1`] = `
 <div
   className="interweave-picker__skin-tones"
 >
-  <EmojiPickerContext
+  <WithContextWrapper
     active={true}
     key="none"
     onSelect={[Function]}
     skinTone="none"
   />
-  <EmojiPickerContext
+  <WithContextWrapper
     active={false}
     key="light"
     onSelect={[Function]}
     skinTone="light"
   />
-  <EmojiPickerContext
+  <WithContextWrapper
     active={false}
     key="medium-light"
     onSelect={[Function]}
     skinTone="medium-light"
   />
-  <EmojiPickerContext
+  <WithContextWrapper
     active={false}
     key="medium"
     onSelect={[Function]}
     skinTone="medium"
   />
-  <EmojiPickerContext
+  <WithContextWrapper
     active={false}
     key="medium-dark"
     onSelect={[Function]}
     skinTone="medium-dark"
   />
-  <EmojiPickerContext
+  <WithContextWrapper
     active={false}
     key="dark"
     onSelect={[Function]}

@@ -6,7 +6,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import camelCase from 'lodash/camelCase';
-import withContext, { ContextProps } from './Context';
+import withContext, { WithContextProps } from './Context';
 import { GROUP_KEY_COMMONLY_USED } from './constants';
 import { ContextShape } from './shapes';
 import { CommonMode, GroupKey } from './types';
@@ -19,7 +19,7 @@ export interface GroupProps {
   onSelect: (group: GroupKey, event: React.MouseEvent<HTMLButtonElement>) => void;
 }
 
-export class Group extends React.PureComponent<GroupProps & ContextProps> {
+export class Group extends React.PureComponent<GroupProps & WithContextProps> {
   static propTypes = {
     activeGroup: PropTypes.string.isRequired,
     children: PropTypes.node.isRequired,

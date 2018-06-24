@@ -7,7 +7,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import camelCase from 'lodash/camelCase';
 import SkinTone from './SkinTone';
-import withContext, { ContextProps } from './Context';
+import withContext, { WithContextProps } from './Context';
 import { SKIN_TONES } from './constants';
 import { ContextShape } from './shapes';
 import { SkinToneKey } from './types';
@@ -18,7 +18,7 @@ export interface SkinTonePaletteProps {
   onSelect: (skinTone: SkinToneKey, event: React.MouseEvent<HTMLButtonElement>) => void;
 }
 
-export class SkinTonePalette extends React.PureComponent<SkinTonePaletteProps & ContextProps> {
+export class SkinTonePalette extends React.PureComponent<SkinTonePaletteProps & WithContextProps> {
   static propTypes = {
     activeSkinTone: PropTypes.string.isRequired,
     context: ContextShape.isRequired,

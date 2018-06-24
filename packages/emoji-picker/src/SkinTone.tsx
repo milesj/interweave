@@ -6,7 +6,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import camelCase from 'lodash/camelCase';
-import withContext, { ContextProps } from './Context';
+import withContext, { WithContextProps } from './Context';
 import { SKIN_COLORS } from './constants';
 import { ContextShape } from './shapes';
 import { SkinToneKey } from './types';
@@ -18,7 +18,7 @@ export interface SkinToneProps {
   skinTone: SkinToneKey;
 }
 
-export class SkinTone extends React.PureComponent<SkinToneProps & ContextProps> {
+export class SkinTone extends React.PureComponent<SkinToneProps & WithContextProps> {
   static propTypes = {
     active: PropTypes.bool.isRequired,
     children: PropTypes.node,

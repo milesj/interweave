@@ -71,6 +71,7 @@ export default class EmojiDataManager {
       canonical_shortcodes: [],
       primary_shortcode: '',
       skins: baseEmoji.skins as CanonicalEmoji[],
+      unicode: '',
     };
 
     // Make our lives easier
@@ -80,7 +81,9 @@ export default class EmojiDataManager {
 
     // Canonicalize the shortcodes for easy reuse
     emoji.canonical_shortcodes = shortcodes.map(code => `:${code}:`);
-    emoji.primary_shortcode = emoji.canonical_shortcodes[0]; // eslint-disable-line
+
+    // eslint-disable-next-line prefer-destructuring
+    emoji.primary_shortcode = emoji.canonical_shortcodes[0];
 
     // Support all shortcodes
     emoji.canonical_shortcodes.forEach(shortcode => {

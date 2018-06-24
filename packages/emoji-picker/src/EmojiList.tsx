@@ -8,7 +8,7 @@ import PropTypes from 'prop-types';
 import { List, ListRowProps } from 'react-virtualized';
 import chunk from 'lodash/chunk';
 import { CanonicalEmoji, EmojiShape, Path, PathShape, Source, SourceShape } from 'interweave-emoji';
-import withContext, { ContextProps } from './Context';
+import withContext, { WithContextProps } from './Context';
 import EmojiButton from './Emoji';
 import GroupListHeader from './GroupListHeader';
 import { ContextShape } from './shapes';
@@ -47,7 +47,7 @@ export interface EmojiListState {
   rows: VirtualRow[];
 }
 
-export type EmojiListUnifiedProps = EmojiListProps & ContextProps;
+export type EmojiListUnifiedProps = EmojiListProps & WithContextProps;
 
 export class EmojiList extends React.PureComponent<EmojiListUnifiedProps, EmojiListState> {
   static propTypes = {
