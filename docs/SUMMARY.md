@@ -17,3 +17,4 @@
   - [Disabling HTML](./parser.md#disabling-html)
 - [Global Configuration](./global.md)
 - [Server-side Rendering](./ssr.md)
+- [Changelog](https://github.com/milesj/interweave/blob/master/CHANGELOG.md)

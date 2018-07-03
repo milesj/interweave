@@ -2,11 +2,8 @@
   "name": "interweave-root",
   "private": true,
   "scripts": {
-    "build": "beemo typescript --workspaces=* --priority=core --react",
+    "build": "beemo typescript --workspaces=* --priority --react",
     "coverage": "yarn run jest --coverage",
-    "docs": "gitbook build --debug --log=debug",
-    "docs:serve": "gitbook serve",
-    "docs:install": "gitbook install",
     "eslint": "beemo eslint",
     "jest": "beemo jest --react",
     "posttest": "yarn run eslint",
