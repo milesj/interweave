@@ -19,11 +19,11 @@
   "dependencies": {
     "@types/lodash": "^4.14.110",
     "@types/prop-types": "^15.5.3",
-    "@types/react": "^16.4.1",
+    "@types/react": "^16.4.6",
     "@types/react-virtualized": "^9.18.3",
     "lodash": "^4.17.10",
     "prop-types": "^15.6.2",
-    "react-virtualized": "^9.19.1"
+    "react-virtualized": "^9.20.0"
   },
   "peerDependencies": {
     "emojibase": "^2.0.0",
