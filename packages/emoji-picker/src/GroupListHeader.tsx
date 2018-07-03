@@ -6,7 +6,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import camelCase from 'lodash/camelCase';
-import withContext, { WithContextProps } from './Context';
+import withContext, { WithContextProps } from './withContext';
 import {
   GROUP_KEY_COMMONLY_USED,
   GROUP_KEY_SEARCH_RESULTS,

@@ -8,7 +8,7 @@ import PropTypes from 'prop-types';
 import { List, ListRowProps } from 'react-virtualized';
 import chunk from 'lodash/chunk';
 import { CanonicalEmoji, EmojiShape, Path, PathShape, Source, SourceShape } from 'interweave-emoji';
-import withContext, { WithContextProps } from './Context';
+import withContext, { WithContextProps } from './withContext';
 import EmojiButton from './Emoji';
 import GroupListHeader from './GroupListHeader';
 import { ContextShape } from './shapes';

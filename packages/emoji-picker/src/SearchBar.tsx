@@ -5,7 +5,7 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import withContext, { WithContextProps } from './Context';
+import withContext, { WithContextProps } from './withContext';
 import { ContextShape } from './shapes';
 
 export interface SearchBarProps {

@@ -50,7 +50,7 @@ should wrap a component that composes `Interweave`.
 
 ```javascript
 import Interweave from 'interweave';
-import { withEmojiData } from 'interweave-emoji';
+import withEmojiData from 'interweave-emoji';
 
 export default withEmojiData(Interweave);
 ```

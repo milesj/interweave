@@ -17,7 +17,7 @@ import withEmojiData, {
   SourceShape,
 } from 'interweave-emoji';
 import { Hexcode } from 'emojibase';
-import { Context } from './Context';
+import { Context } from './withContext';
 import EmojiList from './EmojiList';
 import SkinTonePalette from './SkinTonePalette';
 import GroupTabs from './GroupTabs';

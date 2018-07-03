@@ -14,7 +14,7 @@
   "publishConfig": {
     "access": "public"
   },
-  "repository": "https://github.com/milesj/interweave/tree/master/packages/interweave-emoji-picker",
+  "repository": "https://github.com/milesj/interweave/tree/master/packages/emoji-picker",
   "license": "MIT",
   "dependencies": {
     "@types/lodash": "^4.14.110",

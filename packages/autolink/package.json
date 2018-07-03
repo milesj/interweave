@@ -16,7 +16,7 @@
   "publishConfig": {
     "access": "public"
   },
-  "repository": "https://github.com/milesj/interweave/tree/master/packages/interweave-autolink",
+  "repository": "https://github.com/milesj/interweave/tree/master/packages/autolink",
   "license": "MIT",
   "dependencies": {
     "@types/prop-types": "^15.5.3",

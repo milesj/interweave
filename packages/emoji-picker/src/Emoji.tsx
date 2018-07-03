@@ -14,7 +14,7 @@ import {
   Source,
   SourceShape,
 } from 'interweave-emoji';
-import withContext, { WithContextProps } from './Context';
+import withContext, { WithContextProps } from './withContext';
 import { ContextShape } from './shapes';
 
 export interface EmojiProps {

@@ -18,6 +18,12 @@ describe('<SkinTone />', () => {
     expect(wrapper).toMatchSnapshot();
   });
 
+  it('sets group title', () => {
+    const wrapper = shallow(<SkinTone {...props} />);
+
+    expect(wrapper.prop('title')).toBe('Smileys & People');
+  });
+
   it('updates the active state', () => {
     const wrapper = shallow(<SkinTone {...props} />);
 

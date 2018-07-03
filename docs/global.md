@@ -15,7 +15,7 @@ import PropTypes from 'prop-types';
 import { stripHexcode } from 'emojibase';
 import BaseInterweave, { FilterShape, MatcherShape } from 'interweave';
 import { IpMatcher, UrlMatcher, EmailMatcher, HashtagMatcher } from 'interweave-autolink';
-import { EmojiMatcher, withEmojiData } from 'interweave-emoji';
+import withEmojiData, { EmojiMatcher } from 'interweave-emoji';
 
 const globalFilters = [new CustomFilter()];
 

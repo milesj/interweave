@@ -6,7 +6,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import camelCase from 'lodash/camelCase';
-import withContext, { WithContextProps } from './Context';
+import withContext, { WithContextProps } from './withContext';
 import { SKIN_COLORS } from './constants';
 import { ContextShape } from './shapes';
 import { SkinToneKey } from './types';

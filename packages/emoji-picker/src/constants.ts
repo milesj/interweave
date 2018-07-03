@@ -111,6 +111,7 @@ export const CONTEXT_CLASSNAMES = {
   skinTone: 'interweave-picker__skin-tone',
   skinToneActive: 'interweave-picker__skin-tone--active',
   skinTones: 'interweave-picker__skin-tones',
+  skinTonesList: 'interweave-picker__skin-tones-list',
   noPreview: 'interweave-picker__no-preview',
   noResults: 'interweave-picker__no-results',
   preview: 'interweave-picker__preview',

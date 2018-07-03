@@ -9,6 +9,7 @@
 - Renamed `GROUP_*` constants to `GROUP_KEY_*`.
 - Renamed `SKIN_*` constants to `SKIN_KEY_*`.
 - Removed event argument from `onScroll` and `onScrollGroup` props.
+- Reworked the HTML for the skin tone palette.
 
 #### 🚀 New
 

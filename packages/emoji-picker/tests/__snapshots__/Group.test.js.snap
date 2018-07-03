@@ -1,0 +1,12 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Group renders a group 1`] = `
+<button
+  className="interweave-picker__group"
+  onClick={[Function]}
+  title="Smileys & People"
+  type="button"
+>
+  😃
+</button>
+`;

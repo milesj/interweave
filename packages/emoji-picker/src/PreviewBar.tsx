@@ -16,7 +16,7 @@ import {
   Source,
   SourceShape,
 } from 'interweave-emoji';
-import withContext, { WithContextProps } from './Context';
+import withContext, { WithContextProps } from './withContext';
 import { ContextShape } from './shapes';
 
 const TITLE_REGEX: RegExp = /(^|:|\.)\s?[a-z]/g;
