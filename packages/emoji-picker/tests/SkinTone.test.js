@@ -21,7 +21,7 @@ describe('<SkinTone />', () => {
   it('sets group title', () => {
     const wrapper = shallow(<SkinTone {...props} />);
 
-    expect(wrapper.prop('title')).toBe('Smileys & People');
+    expect(wrapper.prop('title')).toBe('Dark skin tone');
   });
 
   it('updates the active state', () => {

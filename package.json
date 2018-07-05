@@ -11,7 +11,7 @@
     "test": "yarn run jest",
     "test:live": "yarn run jest && webpack && serve ./tests/",
     "prettier": "beemo prettier",
-    "prerelease": "yarn run build && yarn test",
+    "prerelease": "yarn test && yarn run build",
     "release": "lerna publish",
     "type": "beemo typescript --workspaces=* --noEmit --react"
   },

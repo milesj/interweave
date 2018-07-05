@@ -55,9 +55,19 @@ describe('<SkinTonePalette />', () => {
 
   it('sets active skin tone', () => {
     const wrapper = shallow(<SkinTonePalette {...props} activeSkinTone={SKIN_KEY_DARK} />);
-    const tones = wrapper.find(SkinTone);
+    const tones = wrapper.find('li');
 
-    expect(tones.filterWhere(node => node.key() === SKIN_KEY_NONE).prop('active')).toBe(false);
-    expect(tones.filterWhere(node => node.key() === SKIN_KEY_DARK).prop('active')).toBe(true);
+    expect(
+      tones
+        .filterWhere(node => node.key() === SKIN_KEY_NONE)
+        .find(SkinTone)
+        .prop('active'),
+    ).toBe(false);
+    expect(
+      tones
+        .filterWhere(node => node.key() === SKIN_KEY_DARK)
+        .find(SkinTone)
+        .prop('active'),
+    ).toBe(true);
   });
 });

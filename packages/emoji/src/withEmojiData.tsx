@@ -128,7 +128,7 @@ export default function withEmojiData<Props extends {} = {}>(
         WithEmojiDataWrapperProps
       >;
       const set = compact ? 'compact' : 'data';
-      const key = `${locale}:${version}${set}`;
+      const key = `${locale}:${version}:${set}`;
 
       // Abort as we've already loaded data
       if (loaded[key]) {

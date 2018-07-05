@@ -4,7 +4,6 @@ import { Group } from '../src/Group';
 import {
   COMMON_MODE_FREQUENT,
   GROUP_KEY_SMILEYS_PEOPLE,
-  GROUP_KEY_NONE,
   GROUP_ICONS,
   GROUP_KEY_COMMONLY_USED,
 } from '../src/constants';
@@ -12,7 +11,7 @@ import { PICKER_CONTEXT } from './mocks';
 
 describe('Group', () => {
   const props = {
-    activeGroup: GROUP_KEY_NONE,
+    active: false,
     children: GROUP_ICONS[GROUP_KEY_SMILEYS_PEOPLE],
     context: PICKER_CONTEXT,
     commonMode: COMMON_MODE_FREQUENT,
