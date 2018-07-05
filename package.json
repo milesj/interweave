@@ -19,15 +19,15 @@
     "@milesj/build-tool-config": "^0.109.0",
     "@types/react": "^16.4.6",
     "@types/react-dom": "^16.0.6",
-    "babel-loader": "^7.1.4",
+    "babel-loader": "^7.1.5",
     "emojibase": "^2.0.0",
     "emojibase-test-utils": "^3.0.0",
     "lerna": "^2.11.0",
     "react": "^16.4.1",
-    "serve": "^9.1.1",
+    "serve": "^9.1.2",
     "ts-loader": "^4.4.2",
     "typescript": "2.9.2",
-    "webpack": "^4.14.0",
+    "webpack": "^4.15.1",
     "webpack-cli": "^3.0.8"
   },
   "workspaces": [
