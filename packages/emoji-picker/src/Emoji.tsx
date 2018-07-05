@@ -30,7 +30,7 @@ export interface EmojiProps {
   showImage: boolean;
 }
 
-export class Emoji extends React.PureComponent<EmojiProps & WithContextProps> {
+export class Emoji extends React.Component<EmojiProps & WithContextProps> {
   static propTypes = {
     active: PropTypes.bool.isRequired,
     context: ContextShape.isRequired,

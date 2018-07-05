@@ -4,7 +4,7 @@
  */
 
 import React from 'react';
-import { Matcher, MatcherFactory, Props } from 'interweave';
+import { Matcher, MatcherFactory, MatchResponse, Props } from 'interweave';
 import Url, { UrlProps } from './Url';
 import { URL_PATTERN, TOP_LEVEL_TLDS } from './constants';
 
@@ -48,7 +48,7 @@ export default class UrlMatcher extends Matcher<UrlMatcherOptions> {
     return 'a';
   }
 
-  match(string: string) {
+  match(string: string): MatchResponse | null {
     return this.doMatch(string, URL_PATTERN, this.handleMatches);
   }
 

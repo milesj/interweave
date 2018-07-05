@@ -166,7 +166,7 @@ function App() {
             messages={japaneseMessages}
             rowCount={10}
             virtual={{
-              columnPadding: 3,
+              columnPadding: 4.2,
               rowPadding: 1.5,
             }}
           />

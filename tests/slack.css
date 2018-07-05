@@ -23,7 +23,8 @@
   border-top-right-radius: 6px;
 }
 
-.slack .interweave-picker__groups-list {
+.slack .interweave-picker__groups-list,
+.slack .interweave-picker__skin-tones-list {
   display: flex;
   margin: 0;
   padding: 0;

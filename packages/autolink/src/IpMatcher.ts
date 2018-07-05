@@ -3,7 +3,7 @@
  * @license     https://opensource.org/licenses/MIT
  */
 
-import { MatcherFactory } from 'interweave';
+import { MatcherFactory, MatchResponse } from 'interweave';
 import UrlMatcher, { UrlMatcherOptions } from './UrlMatcher';
 import { IP_PATTERN } from './constants';
 
@@ -24,7 +24,7 @@ export default class IpMatcher extends UrlMatcher {
     );
   }
 
-  match(string: string) {
+  match(string: string): MatchResponse | null {
     return this.doMatch(string, IP_PATTERN, this.handleMatches);
   }
 }

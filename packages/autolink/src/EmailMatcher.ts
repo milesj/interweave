@@ -4,7 +4,7 @@
  */
 
 import React from 'react';
-import { Matcher, Props } from 'interweave';
+import { Matcher, MatchResponse, Props } from 'interweave';
 import Email, { EmailProps } from './Email';
 import { EMAIL_PATTERN } from './constants';
 
@@ -17,7 +17,7 @@ export default class EmailMatcher extends Matcher {
     return 'a';
   }
 
-  match(string: string) {
+  match(string: string): MatchResponse | null {
     return this.doMatch(string, EMAIL_PATTERN, matches => ({
       emailParts: {
         host: matches[2],

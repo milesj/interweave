@@ -4,7 +4,7 @@
  */
 
 import React from 'react';
-import { Matcher, Props } from 'interweave';
+import { Matcher, MatchResponse, Props } from 'interweave';
 import Hashtag, { HashtagProps } from './Hashtag';
 import { HASHTAG_PATTERN } from './constants';
 
@@ -17,7 +17,7 @@ export default class HashtagMatcher extends Matcher {
     return 'a';
   }
 
-  match(string: string) {
+  match(string: string): MatchResponse | null {
     return this.doMatch(string, HASHTAG_PATTERN, matches => ({
       hashtagName: matches[1],
     }));
