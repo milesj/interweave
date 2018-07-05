@@ -45,8 +45,6 @@ describe('Emoji', () => {
     expect(wrapper.find('div').prop('style')).toEqual({
       width: 22,
       height: 22,
-      overflow: 'hidden',
-      visibility: 'hidden',
     });
   });
 

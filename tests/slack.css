@@ -201,3 +201,24 @@
 .slack .interweave-picker__no-results {
   position: static;
 }
+
+.slack .interweave-picker__emoji--loading {
+  overflow: hidden;
+  border-radius: 50%;
+  background-color: #eee;
+  animation-name: shimmer;
+  animation-duration: 1s;
+  animation-iteration-count: infinite;
+}
+
+@keyframes shimmer {
+  0% {
+    background-color: #eee;
+  }
+  50% {
+    background-color: #fff;
+  }
+  100 {
+    background-color: #eee;
+  }
+}

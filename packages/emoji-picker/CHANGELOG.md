@@ -15,6 +15,7 @@
 
 - Added the ability to clear commonly used emoji. Can be customized with the `clearIcon` prop.
 - Added titles/messages for skin tones within the palette.
+- Added an `emojiLoading` class name. Can be used to style a loading state for each emoji.
 
 #### 🛠 Internal
 

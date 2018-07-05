@@ -114,10 +114,9 @@ export class Emoji extends React.Component<EmojiProps & WithContextProps> {
           />
         ) : (
           <div
+            className={classNames.emojiLoading}
             style={{
               height: emojiSize,
-              overflow: 'hidden',
-              visibility: 'hidden',
               width: emojiSize,
             }}
           >
