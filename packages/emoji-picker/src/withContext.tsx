@@ -4,7 +4,6 @@
  */
 
 import React from 'react';
-import PropTypes from 'prop-types';
 import { ContextShape } from './shapes';
 import { Context as EmojiContext } from './types';
 
@@ -17,14 +16,14 @@ Context.Provider.propTypes = {
   value: ContextShape.isRequired,
 };
 
-export interface ContextProps {
+export interface WithContextProps {
   context: EmojiContext;
 }
 
-export default function withContext<T extends {}>(
-  Component: React.ComponentType<T & ContextProps>,
+export default function withContext<Props extends {}>(
+  Component: React.ComponentType<Props & WithContextProps>,
 ) {
-  return function EmojiPickerContext(props: T) {
+  return function WithContextWrapper(props: Props) {
     return (
       <Context.Consumer>{context => <Component {...props} context={context} />}</Context.Consumer>
     );

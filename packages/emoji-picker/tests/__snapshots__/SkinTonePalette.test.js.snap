@@ -1,44 +1,66 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`<SkinTonePalette /> renders a palette 1`] = `
-<div
+<nav
   className="interweave-picker__skin-tones"
 >
-  <EmojiPickerContext
-    active={true}
-    key="none"
-    onSelect={[Function]}
-    skinTone="none"
-  />
-  <EmojiPickerContext
-    active={false}
-    key="light"
-    onSelect={[Function]}
-    skinTone="light"
-  />
-  <EmojiPickerContext
-    active={false}
-    key="medium-light"
-    onSelect={[Function]}
-    skinTone="medium-light"
-  />
-  <EmojiPickerContext
-    active={false}
-    key="medium"
-    onSelect={[Function]}
-    skinTone="medium"
-  />
-  <EmojiPickerContext
-    active={false}
-    key="medium-dark"
-    onSelect={[Function]}
-    skinTone="medium-dark"
-  />
-  <EmojiPickerContext
-    active={false}
-    key="dark"
-    onSelect={[Function]}
-    skinTone="dark"
-  />
-</div>
+  <ul
+    className="interweave-picker__skin-tones-list"
+  >
+    <li
+      key="none"
+    >
+      <WithContextWrapper
+        active={true}
+        onSelect={[Function]}
+        skinTone="none"
+      />
+    </li>
+    <li
+      key="light"
+    >
+      <WithContextWrapper
+        active={false}
+        onSelect={[Function]}
+        skinTone="light"
+      />
+    </li>
+    <li
+      key="medium-light"
+    >
+      <WithContextWrapper
+        active={false}
+        onSelect={[Function]}
+        skinTone="medium-light"
+      />
+    </li>
+    <li
+      key="medium"
+    >
+      <WithContextWrapper
+        active={false}
+        onSelect={[Function]}
+        skinTone="medium"
+      />
+    </li>
+    <li
+      key="medium-dark"
+    >
+      <WithContextWrapper
+        active={false}
+        onSelect={[Function]}
+        skinTone="medium-dark"
+      />
+    </li>
+    <li
+      key="dark"
+    >
+      <WithContextWrapper
+        active={false}
+        onSelect={[Function]}
+        skinTone="dark"
+      />
+    </li>
+  </ul>
+</nav>
 `;

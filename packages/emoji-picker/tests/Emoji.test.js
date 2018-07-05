@@ -99,7 +99,7 @@ describe('Emoji', () => {
 
     wrapper.simulate('click', event);
 
-    expect(spy).toBeCalledWith(props.emoji, event);
+    expect(spy).toHaveBeenCalledWith(props.emoji, event);
   });
 
   it('triggers `onEnter` when entering node', () => {
@@ -108,7 +108,7 @@ describe('Emoji', () => {
 
     wrapper.simulate('mouseenter', event);
 
-    expect(spy).toBeCalledWith(props.emoji, event);
+    expect(spy).toHaveBeenCalledWith(props.emoji, event);
   });
 
   it('triggers `onLeave` when leaving node', () => {
@@ -117,6 +117,6 @@ describe('Emoji', () => {
 
     wrapper.simulate('mouseleave', event);
 
-    expect(spy).toBeCalledWith(props.emoji, event);
+    expect(spy).toHaveBeenCalledWith(props.emoji, event);
   });
 });

@@ -13,34 +13,34 @@ import EmojiDataManager from './EmojiDataManager';
 import { EmojiShape } from './shapes';
 import { CanonicalEmoji, Source } from './types';
 
-export interface EmojiDataWrapperProps {
-  /** Load compact dataset instead of full dataset. */
+export interface WithEmojiDataWrapperProps {
+  /** Load compact emoji dataset instead of full dataset. Provided by `withEmojiData`. */
   compact?: boolean;
-  /** List of emojis to manually use. */
+  /** List of emojis to manually use. Provided by `withEmojiData`. */
   emojis?: Emoji[];
-  /** Locale to load emoji annotations in. */
+  /** Locale to load emoji annotations in. Provided by `withEmojiData`. */
   locale?: string;
-  /** Emojibase version to load. */
+  /** Emojibase dataset version to load. Provided by `withEmojiData`. */
   version?: string;
 }
 
-export interface EmojiDataProps {
-  /** List of loaded emojis provided by `withEmojiData`. */
+export interface WithEmojiDataProps {
+  /** List of loaded emojis. Provided by `withEmojiData`. */
   emojis: CanonicalEmoji[];
-  /** Data manager and loader instance provided by `withEmojiData`. */
+  /** Emoji data manager and loader instance. Provided by `withEmojiData`. */
   emojiData: EmojiDataManager;
-  /** Datasource metadata provided by `withEmojiData`. */
+  /** Emoji datasource metadata. Provided by `withEmojiData`. */
   emojiSource: Source;
 }
 
-export interface EmojiDataState {
+export interface WithEmojiDataState {
   emojis: Emoji[];
   source: Source;
 }
 
 // Share between all instances
 let loaded: { [locale: string]: boolean } = {};
-let promise: { [locale: string]: Promise<Emoji[]> } = {};
+let promise: { [locale: string]: Promise<any> } = {};
 
 export function resetLoaded() {
   if (process.env.NODE_ENV !== 'production') {
@@ -49,10 +49,13 @@ export function resetLoaded() {
   }
 }
 
-export default function withEmojiData<T extends {}>(
-  Component: React.ComponentType<T & EmojiDataProps>,
+export default function withEmojiData<Props extends {} = {}>(
+  Component: React.ComponentType<Props & WithEmojiDataProps>,
 ) {
-  return class EmojiData extends React.PureComponent<T & EmojiDataWrapperProps, EmojiDataState> {
+  return class WithEmojiData extends React.PureComponent<
+    Props & WithEmojiDataWrapperProps,
+    WithEmojiDataState
+  > {
     static propTypes = {
       compact: PropTypes.bool,
       emojis: PropTypes.arrayOf(EmojiShape),
@@ -80,7 +83,7 @@ export default function withEmojiData<T extends {}>(
       this.loadEmojis();
     }
 
-    componentDidUpdate(prevProps: EmojiDataWrapperProps) {
+    componentDidUpdate(prevProps: WithEmojiDataWrapperProps) {
       const { compact, emojis, locale, version } = this.props;
 
       if (
@@ -105,7 +108,7 @@ export default function withEmojiData<T extends {}>(
      * use it instead of the parsed data.
      */
     setEmojis(emojis: Emoji[] = []) {
-      const { compact, locale, version } = this.props as Required<EmojiDataWrapperProps>;
+      const { compact, locale, version } = this.props as Required<WithEmojiDataWrapperProps>;
 
       this.setState({
         emojis: emojis.length > 0 ? emojis : this.getDataInstance().getData(),
@@ -120,40 +123,48 @@ export default function withEmojiData<T extends {}>(
     /**
      * Load and parse emoji data from the CDN or use the provided dataset.
      */
-    loadEmojis() {
-      const { compact, emojis, locale, version } = this.props as Required<EmojiDataWrapperProps>;
+    loadEmojis(): Promise<void> {
+      const { compact, emojis, locale, version } = this.props as Required<
+        WithEmojiDataWrapperProps
+      >;
+      const set = compact ? 'compact' : 'data';
+      const key = `${locale}:${version}:${set}`;
 
       // Abort as we've already loaded data
-      if (loaded[locale]) {
+      if (loaded[key]) {
         this.setEmojis(emojis);
 
-        // Or hook into the promise if we're loading
-      } else if (promise[locale]) {
-        promise[locale]
+        return Promise.resolve();
+      }
+
+      // Or hook into the promise if we're loading
+      if (promise[key]) {
+        return promise[key]
           .then(() => {
             this.setEmojis(emojis);
           })
           .catch(error => {
             throw error;
           });
-
-        // Otherwise, start loading emoji data from the CDN
-      } else {
-        promise[locale] = fetchFromCDN(`${locale}/${compact ? 'compact' : 'data'}.json`, version)
-          .then(response => {
-            loaded[locale] = true;
-
-            // Parse the data and make it available through our data layer.
-            // We should do this first so that the custom emojis can hook into it.
-            this.getDataInstance().parseEmojiData(response);
-            this.setEmojis(emojis);
-
-            return response;
-          })
-          .catch(error => {
-            throw error;
-          });
       }
+
+      // Otherwise, start loading emoji data from the CDN
+      const request = fetchFromCDN<Emoji>(`${locale}/${set}.json`, version)
+        .then(response => {
+          loaded[key] = true;
+
+          // Parse the data and make it available through our data layer.
+          // We should do this first so that the custom emojis can hook into it.
+          this.getDataInstance().parseEmojiData(response);
+          this.setEmojis(emojis);
+        })
+        .catch(error => {
+          throw error;
+        });
+
+      promise[key] = request;
+
+      return request;
     }
 
     /**

@@ -5,35 +5,29 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import debounce from 'lodash/debounce';
+import { List, ListRowProps } from 'react-virtualized';
+import chunk from 'lodash/chunk';
 import { CanonicalEmoji, EmojiShape, Path, PathShape, Source, SourceShape } from 'interweave-emoji';
-import withContext, { ContextProps } from './Context';
+import withContext, { WithContextProps } from './withContext';
 import EmojiButton from './Emoji';
 import GroupListHeader from './GroupListHeader';
-import {
-  GROUPS,
-  GROUP_KEY_COMMONLY_USED,
-  GROUP_KEY_SEARCH_RESULTS,
-  GROUP_KEY_SMILEYS_PEOPLE,
-  GROUP_KEY_NONE,
-  SCROLL_BUFFER,
-  SCROLL_DEBOUNCE,
-} from './constants';
 import { ContextShape } from './shapes';
-import { CommonMode, GroupKey, GroupEmojiMap } from './types';
+import { CommonMode, GroupKey, GroupEmojiMap, GroupIndexMap } from './types';
+
+export type VirtualRow = string | CanonicalEmoji[];
 
 export interface EmojiListProps {
   activeEmoji?: CanonicalEmoji | null;
   activeGroup: GroupKey;
   clearIcon?: React.ReactNode;
-  commonEmojis: CanonicalEmoji[];
+  columnCount: number;
+  columnPadding?: number;
   commonMode: CommonMode;
-  disableGroups: boolean;
   emojiPadding: number;
   emojiPath: Path;
-  emojis: CanonicalEmoji[];
   emojiSize: number;
   emojiSource: Source;
+  groupedEmojis: GroupEmojiMap;
   hideGroupHeaders: boolean;
   onClear: () => void;
   onEnterEmoji: (emoji: CanonicalEmoji, event: React.MouseEvent<HTMLButtonElement>) => void;
@@ -41,32 +35,39 @@ export interface EmojiListProps {
   onScroll: () => void;
   onScrollGroup: (group: GroupKey) => void;
   onSelectEmoji: (emoji: CanonicalEmoji, event: React.MouseEvent<HTMLButtonElement>) => void;
+  rowCount: number;
+  rowPadding?: number;
   scrollToGroup: GroupKey | '';
-  searching: boolean;
   skinTonePalette?: React.ReactNode;
 }
 
 export interface EmojiListState {
-  groupedEmojis: GroupEmojiMap;
-  loadedGroups: Set<GroupKey>;
+  emojis: GroupEmojiMap;
+  indices: GroupIndexMap;
+  rows: VirtualRow[];
 }
 
-export type EmojiListUnifiedProps = EmojiListProps & ContextProps;
+export type EmojiListUnifiedProps = EmojiListProps & WithContextProps;
 
 export class EmojiList extends React.PureComponent<EmojiListUnifiedProps, EmojiListState> {
   static propTypes = {
     activeEmoji: EmojiShape,
     activeGroup: PropTypes.string.isRequired,
     clearIcon: PropTypes.node,
-    commonEmojis: PropTypes.arrayOf(EmojiShape).isRequired,
+    columnCount: PropTypes.number.isRequired,
+    columnPadding: PropTypes.number,
     commonMode: PropTypes.string.isRequired,
     context: ContextShape.isRequired,
-    disableGroups: PropTypes.bool.isRequired,
     emojiPadding: PropTypes.number.isRequired,
     emojiPath: PathShape.isRequired,
-    emojis: PropTypes.arrayOf(EmojiShape).isRequired,
     emojiSize: PropTypes.number.isRequired,
     emojiSource: SourceShape.isRequired,
+    groupedEmojis: PropTypes.objectOf(
+      PropTypes.shape({
+        emojis: PropTypes.arrayOf(EmojiShape).isRequired,
+        group: PropTypes.string.isRequired,
+      }),
+    ).isRequired,
     hideGroupHeaders: PropTypes.bool.isRequired,
     onClear: PropTypes.func.isRequired,
     onEnterEmoji: PropTypes.func.isRequired,
@@ -74,300 +75,208 @@ export class EmojiList extends React.PureComponent<EmojiListUnifiedProps, EmojiL
     onScroll: PropTypes.func.isRequired,
     onScrollGroup: PropTypes.func.isRequired,
     onSelectEmoji: PropTypes.func.isRequired,
+    rowCount: PropTypes.number.isRequired,
+    rowPadding: PropTypes.number,
     scrollToGroup: PropTypes.string.isRequired,
-    searching: PropTypes.bool.isRequired,
     skinTonePalette: PropTypes.node,
   };
 
   static defaultProps = {
     activeEmoji: null,
     clearIcon: null,
+    columnPadding: 0,
+    rowPadding: 0,
     skinTonePalette: null,
   };
 
-  containerRef = React.createRef<HTMLDivElement>();
+  state = {
+    // eslint-disable-next-line react/no-unused-state
+    emojis: {} as GroupEmojiMap,
+    indices: {} as GroupIndexMap,
+    rows: [] as VirtualRow[],
+  };
 
-  constructor(props: EmojiListUnifiedProps) {
-    super(props);
-
-    const { activeGroup, emojis } = props;
-    const loadedGroups: GroupKey[] = [
-      activeGroup,
-      GROUP_KEY_COMMONLY_USED,
-      GROUP_KEY_SEARCH_RESULTS,
-      GROUP_KEY_NONE,
-    ];
-
-    // When commonly used emojis are rendered,
-    // the smileys group is usually within view as well,
-    // so we should preload both of them.
-    if (activeGroup && activeGroup === GROUP_KEY_COMMONLY_USED) {
-      loadedGroups.push(GROUP_KEY_SMILEYS_PEOPLE);
+  static getDerivedStateFromProps(
+    { columnCount, groupedEmojis, hideGroupHeaders }: EmojiListProps,
+    state: EmojiListState,
+  ) {
+    if (groupedEmojis === state.emojis) {
+      return null;
     }
 
-    this.state = {
-      groupedEmojis: this.groupEmojis(),
-      loadedGroups: new Set(loadedGroups),
+    const rows: VirtualRow[] = [];
+    const indices: GroupIndexMap = {
+      '': -1, // Handle empty scroll to's
+    };
+
+    Object.keys(groupedEmojis).forEach(group => {
+      indices[group] = rows.length;
+
+      if (!hideGroupHeaders) {
+        rows.push(group);
+      }
+
+      rows.push(...chunk(groupedEmojis[group].emojis, columnCount));
+    });
+
+    return {
+      emojis: groupedEmojis,
+      indices,
+      rows,
     };
   }
 
   /**
-   * Load emojis after the ref has been set.
-   */
-  componentDidMount() {
-    setTimeout(() => {
-      if (this.containerRef.current) {
-        this.scrollToGroup(this.props.activeGroup);
-      }
-    }, 0);
-  }
-
-  /**
-   * Update scroll position after the list has rendered.
-   */
-  componentDidUpdate(prevProps: EmojiListUnifiedProps) {
-    const { activeGroup, commonEmojis, emojis, searching, scrollToGroup } = this.props;
-
-    // Search query has changed
-    if (searching !== prevProps.searching) {
-      if (searching) {
-        this.scrollToGroup(GROUP_KEY_SEARCH_RESULTS);
-      } else {
-        this.scrollToGroup(activeGroup);
-      }
-    }
-
-    // Scroll to group when the tab is clicked
-    if (scrollToGroup && scrollToGroup !== prevProps.scrollToGroup) {
-      this.scrollToGroup(scrollToGroup);
-    }
-
-    // Skin tone has changed or being search
-    if (
-      (emojis && prevProps.emojis !== emojis) ||
-      (commonEmojis && prevProps.commonEmojis !== commonEmojis)
-    ) {
-      // TODO
-      // eslint-disable-next-line
-      this.setState({
-        groupedEmojis: this.groupEmojis(),
-      });
-    }
-  }
-
-  /**
-   * Partition the dataset into multiple arrays based on the group they belong to.
-   */
-  groupEmojis(): GroupEmojiMap {
-    const { commonEmojis, disableGroups, emojis, searching } = this.props;
-    const groups: GroupEmojiMap = {};
-
-    // Add commonly used group if not searching
-    if (!searching && commonEmojis.length > 0) {
-      groups[GROUP_KEY_COMMONLY_USED] = {
-        emojis: commonEmojis,
-        group: GROUP_KEY_COMMONLY_USED,
-      };
-    }
-
-    // Partition emojis into separate groups
-    emojis.forEach(emoji => {
-      let group: GroupKey = GROUP_KEY_NONE;
-
-      if (searching) {
-        group = GROUP_KEY_SEARCH_RESULTS;
-      } else if (!disableGroups && typeof emoji.group !== 'undefined') {
-        group = GROUPS[emoji.group];
-      }
-
-      if (!group) {
-        return;
-      }
-
-      if (groups[group]) {
-        groups[group].emojis.push(emoji);
-      } else {
-        groups[group] = {
-          emojis: [emoji],
-          group,
-        };
-      }
-    });
-
-    // Sort each group
-    Object.keys(groups).forEach(group => {
-      if (group !== GROUP_KEY_COMMONLY_USED) {
-        groups[group].emojis.sort((a, b) => (a.order || 0) - (b.order || 0));
-      }
-
-      // Remove the group if no emojis
-      if (groups[group].emojis.length === 0) {
-        delete groups[group];
-      }
-    });
-
-    return groups;
-  }
-
-  /**
-   * Triggered when the container is scrolled.
-   */
-  handleScroll = (event: React.UIEvent<HTMLDivElement>) => {
-    event.stopPropagation();
-    event.persist();
-
-    this.handleScrollDebounced(event);
-  };
-
-  /**
-   * A scroll handler that is debounced for performance.
-   */
-  private handleScrollDebounced = debounce((event: React.UIEvent<HTMLDivElement>) => {
-    this.loadEmojiImages(event.target as HTMLDivElement, event);
-    this.props.onScroll();
-  }, SCROLL_DEBOUNCE);
-
-  /**
    * Loop over each group section within the scrollable container
-   * and determine the active group and whether to load emoji images.
+   * and determine the active group.
    */
-  loadEmojiImages(container: HTMLDivElement, event?: React.SyntheticEvent<any>) {
-    const { scrollTop } = container;
-    const { searching } = this.props;
-    const { loadedGroups } = this.state;
-    let updateState = false;
+  handleRendered = (event: {
+    overscanStartIndex: number;
+    overscanStopIndex: number;
+    startIndex: number;
+    stopIndex: number;
+  }) => {
+    const { startIndex, stopIndex } = event;
+    const { activeGroup, rowCount } = this.props;
+    const { indices } = this.state;
     let lastGroup = '';
 
-    Array.from(container.children).some(child => {
-      const section = child as HTMLDivElement;
-      const group = (section.getAttribute('data-group') || '') as GroupKey;
-      let loadImages = false;
+    Object.keys(indices).some(group => {
+      const index = indices[group];
 
       // Special case for commonly used and smileys,
       // as they usually both render in the same view
-      if (scrollTop === 0) {
-        if (section.offsetTop === 0) {
-          loadImages = true;
-          lastGroup = group;
-        }
-
-        // While a group section is partially within view, update the active group
-      } else if (
-        !searching &&
-        // Top is partially in view
-        section.offsetTop - SCROLL_BUFFER <= scrollTop &&
-        // Bottom is partially in view
-        section.offsetTop + section.offsetHeight - SCROLL_BUFFER > scrollTop
-      ) {
-        loadImages = true;
+      if (index === 0 && startIndex === 0) {
         lastGroup = group;
+
+        return true;
       }
 
-      // Before a group section is scrolled into view, lazy load emoji images
-      if (section.offsetTop <= scrollTop + container.offsetHeight + SCROLL_BUFFER) {
-        loadImages = true;
+      // Next group is about to be shown, but highlight the previous group
+      if (index + rowCount / 2 >= stopIndex) {
+        return true;
       }
 
-      // Only update if not loaded
-      if (loadImages && group && !loadedGroups.has(group)) {
-        loadedGroups.add(group);
-        updateState = true;
-      }
+      lastGroup = group;
 
-      return section.offsetTop > scrollTop;
+      return false;
     });
 
-    // Only update during a scroll event and if a different group
-    if (event && lastGroup !== this.props.activeGroup) {
+    // Only update if a different group
+    if (lastGroup && lastGroup !== activeGroup) {
       this.props.onScrollGroup(lastGroup as GroupKey);
     }
-
-    if (updateState) {
-      this.setState({
-        loadedGroups: new Set(loadedGroups),
-      });
-    }
-  }
+  };
 
   /**
-   * Scroll a group section to the top of the scrollable container.
+   * Render a no results view.
    */
-  scrollToGroup(group: string) {
-    if (!this.containerRef.current) {
-      return;
-    }
+  renderNoResults = () => {
+    const { classNames, messages } = this.props.context;
 
-    const { current } = this.containerRef;
-    const element: HTMLDivElement | null = current.querySelector(`section[data-group="${group}"]`);
+    return <div className={classNames.noResults}>{messages.noResults}</div>;
+  };
 
-    if (!element || !current) {
-      return;
-    }
-
-    // Scroll to the container
-    current.scrollTop = element.offsetTop;
-
-    // Eager load emoji images
-    this.loadEmojiImages(current);
-  }
-
-  render() {
+  /**
+   * Render the list row. Either a group header or a row of emoji columns.
+   */
+  renderRow = (props: ListRowProps) => {
+    const { key, index, isVisible, style } = props;
     const {
       activeEmoji,
       clearIcon,
       commonMode,
-      context: { classNames, messages },
+      context: { classNames },
       emojiPadding,
       emojiPath,
       emojiSize,
       emojiSource,
-      hideGroupHeaders,
       skinTonePalette,
       onClear,
       onEnterEmoji,
       onLeaveEmoji,
       onSelectEmoji,
     } = this.props;
-    const { groupedEmojis, loadedGroups } = this.state;
-    const noResults = Object.keys(groupedEmojis).length === 0;
+    const row = this.state.rows[index];
 
     return (
-      <div className={classNames.emojis} ref={this.containerRef} onScroll={this.handleScroll}>
-        {noResults ? (
-          <div className={classNames.noResults}>{messages.noResults}</div>
+      <div key={key} style={style} className={classNames.emojisRow}>
+        {Array.isArray(row) ? (
+          <div className={classNames.emojisBody}>
+            {row.map((emoji, i) => (
+              <EmojiButton
+                key={emoji.hexcode}
+                active={activeEmoji ? activeEmoji.hexcode === emoji.hexcode : false}
+                emoji={emoji}
+                emojiPadding={emojiPadding}
+                emojiPath={emojiPath}
+                emojiSize={emojiSize}
+                emojiSource={emojiSource}
+                showImage={isVisible}
+                onEnter={onEnterEmoji}
+                onLeave={onLeaveEmoji}
+                onSelect={onSelectEmoji}
+              />
+            ))}
+          </div>
         ) : (
-          Object.values(groupedEmojis).map(({ emojis, group }) => (
-            <section key={group} className={classNames.emojisSection} data-group={group}>
-              {!hideGroupHeaders && (
-                <GroupListHeader
-                  clearIcon={clearIcon}
-                  commonMode={commonMode}
-                  group={group}
-                  onClear={onClear}
-                  skinTonePalette={skinTonePalette}
-                />
-              )}
-
-              <div className={classNames.emojisBody}>
-                {emojis.map((emoji, index) => (
-                  <EmojiButton
-                    key={emoji.hexcode}
-                    active={activeEmoji ? activeEmoji.hexcode === emoji.hexcode : false}
-                    emoji={emoji}
-                    emojiPadding={emojiPadding}
-                    emojiPath={emojiPath}
-                    emojiSize={emojiSize}
-                    emojiSource={emojiSource}
-                    showImage={loadedGroups.has(group)}
-                    onEnter={onEnterEmoji}
-                    onLeave={onLeaveEmoji}
-                    onSelect={onSelectEmoji}
-                  />
-                ))}
-              </div>
-            </section>
-          ))
+          <GroupListHeader
+            clearIcon={clearIcon}
+            commonMode={commonMode}
+            group={row as GroupKey}
+            onClear={onClear}
+            skinTonePalette={skinTonePalette}
+          />
         )}
+      </div>
+    );
+  };
+
+  render() {
+    const {
+      activeEmoji,
+      columnCount,
+      columnPadding = 0,
+      emojiPadding,
+      emojiSize,
+      groupedEmojis,
+      rowCount,
+      rowPadding = 0,
+      scrollToGroup,
+      onScroll,
+    } = this.props;
+    const { classNames } = this.props.context;
+    const { indices, rows } = this.state;
+    const size = emojiSize + emojiPadding * 2;
+    const rowHeight = size + rowPadding * 2;
+    const columnWidth = size + columnPadding * 2;
+
+    // `List` utilizes shallow comparison by extending PureComponent.
+    // Because of this, row changes may not be reflected without
+    // re-rendering the entire list. To circumvent this,
+    // we can pass our own props to trigger the re-render.
+    const renderProps = {
+      activeEmoji,
+      groupedEmojis,
+    };
+
+    return (
+      <div className={classNames.emojis}>
+        <List
+          className={classNames.emojisList}
+          height={rowHeight * rowCount}
+          noRowsRenderer={this.renderNoResults}
+          overscanRowCount={rowCount}
+          rowCount={rows.length}
+          rowHeight={rowHeight}
+          rowRenderer={this.renderRow}
+          scrollToAlignment="start"
+          scrollToIndex={indices[scrollToGroup]}
+          width={columnWidth * columnCount}
+          onRowsRendered={this.handleRendered}
+          onScroll={onScroll}
+          {...renderProps}
+        />
       </div>
     );
   }

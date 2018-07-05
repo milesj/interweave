@@ -1,18 +1,35 @@
+# Logs
+logs/
 *.log
+
+# Cache
+.eslintcache
+.idea
+.npm
+.vscode
+.yarnclean
+
+# Directories
 _book/
 coverage/
+docs/
 src/
 tests/
+node_modules/
+
+# Custom
+*.min.js
+*.map
+
+# Configs
 .babelrc
-.eslintcache
 .eslintignore
 .eslintrc.js
-.gitignore
-.npmignore
+.flowconfig
 .prettierignore
 .travis.yml
-.yarnclean
+book.json
 jest.config.js
-lerna.json
 prettier.config.js
 tsconfig.json
+webpack.config.js

@@ -6,7 +6,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import camelCase from 'lodash/camelCase';
-import withContext, { ContextProps } from './Context';
+import withContext, { WithContextProps } from './withContext';
 import {
   GROUP_KEY_COMMONLY_USED,
   GROUP_KEY_SEARCH_RESULTS,
@@ -24,7 +24,7 @@ export interface GroupListHeaderProps {
   skinTonePalette?: React.ReactNode;
 }
 
-export class GroupListHeader extends React.PureComponent<GroupListHeaderProps & ContextProps> {
+export class GroupListHeader extends React.PureComponent<GroupListHeaderProps & WithContextProps> {
   static propTypes = {
     clearIcon: PropTypes.node,
     commonMode: PropTypes.string.isRequired,
@@ -62,6 +62,12 @@ export class GroupListHeader extends React.PureComponent<GroupListHeaderProps & 
 
     return (
       <header className={classNames.emojisHeader}>
+        <span>
+          {group === GROUP_KEY_COMMONLY_USED
+            ? messages[camelCase(commonMode)]
+            : messages[camelCase(group)]}
+        </span>
+
         {showPalette && skinTonePalette}
 
         {showClear && (
@@ -74,10 +80,6 @@ export class GroupListHeader extends React.PureComponent<GroupListHeaderProps & 
             {clearIcon}
           </button>
         )}
-
-        {group === GROUP_KEY_COMMONLY_USED
-          ? messages[camelCase(commonMode)]
-          : messages[camelCase(group)]}
       </header>
     );
   }

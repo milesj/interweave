@@ -5,7 +5,8 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import EmojiCharacter, {
+import {
+  Emoji as EmojiCharacter,
   CanonicalEmoji,
   EmojiShape,
   Path,
@@ -15,7 +16,7 @@ import EmojiCharacter, {
   Source,
   SourceShape,
 } from 'interweave-emoji';
-import withContext, { ContextProps } from './Context';
+import withContext, { WithContextProps } from './withContext';
 import { ContextShape } from './shapes';
 
 const TITLE_REGEX: RegExp = /(^|:|\.)\s?[a-z]/g;
@@ -29,7 +30,7 @@ export interface PreviewBarProps {
   hideShortcodes: boolean;
 }
 
-export class PreviewBar extends React.PureComponent<PreviewBarProps & ContextProps> {
+export class PreviewBar extends React.PureComponent<PreviewBarProps & WithContextProps> {
   static propTypes = {
     context: ContextShape.isRequired,
     emoji: EmojiShape,

@@ -8,7 +8,7 @@
   background: #fff;
   border-radius: 4px;
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.25);
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
   font-size: 14px;
   line-height: 20px;
 }
@@ -16,7 +16,7 @@
 .twitter .interweave-picker__emojis-body::after,
 .twitter .interweave-picker__picker::after {
   display: block;
-  content: "";
+  content: '';
   clear: both;
 }
 
@@ -58,7 +58,7 @@
   width: 230px;
   padding: 8px;
   background-color: #f5f8fa;
-  background-image: linear-gradient(#fff,#f5f8fa);
+  background-image: linear-gradient(#fff, #f5f8fa);
   background-repeat: repeat-x;
   border-bottom: 1px solid #e6ecf0;
   border-radius: 4px 4px 0 0;
@@ -68,9 +68,9 @@
   padding: 4px 24px 4px 8px;
   width: 100%;
   background-color: #fff;
-  border: 1px solid #BDD5E5;
+  border: 1px solid #bdd5e5;
   border-radius: 3px;
-  box-shadow: 0 0 0 1px #BDD5E5;
+  box-shadow: 0 0 0 1px #bdd5e5;
   font-size: 14px;
   line-height: 20px;
   outline: none;
@@ -83,26 +83,31 @@
 .twitter .interweave-picker__emojis {
   float: left;
   width: 230px;
-  height: 272px;
+  height: auto;
   overflow-y: auto;
   overflow-x: hidden;
   position: relative;
 }
 
 .twitter .interweave-picker__emojis-body {
-  padding: 8px 12px;
+  padding: 0 12px;
 }
 
 .twitter .interweave-picker__no-results,
 .twitter .interweave-picker__emojis-header {
   padding: 6px 18px;
   color: #657786;
-  position: sticky;
-  top: 0;
-  z-index: 2;
   background: #fff;
   border-bottom: 1px solid #e6ecf0;
   font-weight: bold;
+}
+
+.twitter .interweave-picker__emojis-header {
+  padding: 3.25px 0;
+}
+
+.twitter .interweave-picker__emojis-row {
+  padding: 0 16px;
 }
 
 .twitter .interweave-picker__emoji {
@@ -145,29 +150,11 @@
 }
 
 .twitter .interweave-picker__skin-tone--active::after {
-  content: "✓";
+  content: '✓';
   color: #fff !important;
-  text-shadow: .5px 1.5px 0 rgba(0, 0, 0, 0.25);
+  text-shadow: 0.5px 1.5px 0 rgba(0, 0, 0, 0.25);
   display: block;
   position: absolute;
   top: 0;
   left: 2px;
-}
-
-/* Virtual list */
-
-.twitter .interweave-picker__picker--virtual .interweave-picker__emojis {
-  height: auto;
-}
-
-.twitter .interweave-picker__picker--virtual .interweave-picker__emojis-container {
-  margin: 8px auto;
-}
-
-.twitter .interweave-picker__picker--virtual .interweave-picker__emojis-body {
-  padding: 0;
-}
-
-.twitter .interweave-picker__picker--virtual .interweave-picker__emojis-header {
-  padding: 3.25px 0;
 }

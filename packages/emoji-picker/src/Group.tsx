@@ -6,22 +6,22 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import camelCase from 'lodash/camelCase';
-import withContext, { ContextProps } from './Context';
+import withContext, { WithContextProps } from './withContext';
 import { GROUP_KEY_COMMONLY_USED } from './constants';
 import { ContextShape } from './shapes';
 import { CommonMode, GroupKey } from './types';
 
 export interface GroupProps {
-  activeGroup: GroupKey;
+  active: boolean;
   children: React.ReactNode;
   commonMode: CommonMode;
   group: GroupKey;
   onSelect: (group: GroupKey, event: React.MouseEvent<HTMLButtonElement>) => void;
 }
 
-export class Group extends React.PureComponent<GroupProps & ContextProps> {
+export class Group extends React.PureComponent<GroupProps & WithContextProps> {
   static propTypes = {
-    activeGroup: PropTypes.string.isRequired,
+    active: PropTypes.bool.isRequired,
     children: PropTypes.node.isRequired,
     commonMode: PropTypes.string.isRequired,
     context: ContextShape.isRequired,
@@ -40,7 +40,7 @@ export class Group extends React.PureComponent<GroupProps & ContextProps> {
 
   render() {
     const {
-      activeGroup,
+      active,
       children,
       commonMode,
       context: { classNames, messages },
@@ -49,7 +49,7 @@ export class Group extends React.PureComponent<GroupProps & ContextProps> {
     const key = camelCase(group === GROUP_KEY_COMMONLY_USED ? commonMode : group);
     const className = [classNames.group];
 
-    if (group === activeGroup) {
+    if (active) {
       className.push(classNames.groupActive);
     }
 

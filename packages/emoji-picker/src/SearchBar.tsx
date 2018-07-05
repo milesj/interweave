@@ -5,7 +5,7 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import withContext, { ContextProps } from './Context';
+import withContext, { WithContextProps } from './withContext';
 import { ContextShape } from './shapes';
 
 export interface SearchBarProps {
@@ -15,7 +15,7 @@ export interface SearchBarProps {
   searchQuery: string;
 }
 
-export class SearchBar extends React.PureComponent<SearchBarProps & ContextProps> {
+export class SearchBar extends React.PureComponent<SearchBarProps & WithContextProps> {
   static propTypes = {
     autoFocus: PropTypes.bool.isRequired,
     context: ContextShape.isRequired,

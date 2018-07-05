@@ -3,7 +3,7 @@
  * @license     https://opensource.org/licenses/MIT
  */
 
-import { MatchResponse, MatcherFactory } from 'interweave';
+import { MatcherFactory } from 'interweave';
 import UrlMatcher, { UrlMatcherOptions } from './UrlMatcher';
 import { IP_PATTERN } from './constants';
 

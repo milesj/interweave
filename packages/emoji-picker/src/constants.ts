@@ -97,12 +97,10 @@ export const COMMON_MODE_FREQUENT = 'frequently-used';
 
 export const CONTEXT_CLASSNAMES = {
   picker: 'interweave-picker__picker',
-  pickerVirtual: 'interweave-picker__picker--virtual',
   emoji: 'interweave-picker__emoji',
   emojiActive: 'interweave-picker__emoji--active',
   emojis: 'interweave-picker__emojis',
-  emojisSection: 'interweave-picker__emojis-section',
-  emojisContainer: 'interweave-picker__emojis-container',
+  emojisList: 'interweave-picker__emojis-list',
   emojisRow: 'interweave-picker__emojis-row',
   emojisHeader: 'interweave-picker__emojis-header',
   emojisBody: 'interweave-picker__emojis-body',
@@ -113,6 +111,7 @@ export const CONTEXT_CLASSNAMES = {
   skinTone: 'interweave-picker__skin-tone',
   skinToneActive: 'interweave-picker__skin-tone--active',
   skinTones: 'interweave-picker__skin-tones',
+  skinTonesList: 'interweave-picker__skin-tones-list',
   noPreview: 'interweave-picker__no-preview',
   noResults: 'interweave-picker__no-results',
   preview: 'interweave-picker__preview',

@@ -18,6 +18,12 @@ describe('<SkinTone />', () => {
     expect(wrapper).toMatchSnapshot();
   });
 
+  it('sets group title', () => {
+    const wrapper = shallow(<SkinTone {...props} />);
+
+    expect(wrapper.prop('title')).toBe('Dark skin tone');
+  });
+
   it('updates the active state', () => {
     const wrapper = shallow(<SkinTone {...props} />);
 
@@ -81,6 +87,6 @@ describe('<SkinTone />', () => {
 
     wrapper.simulate('click', event);
 
-    expect(spy).toBeCalledWith(SKIN_KEY_DARK, event);
+    expect(spy).toHaveBeenCalledWith(SKIN_KEY_DARK, event);
   });
 });

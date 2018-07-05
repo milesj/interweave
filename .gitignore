@@ -26,7 +26,9 @@ tests/packages/
 .babelrc
 .eslintignore
 .eslintrc.js
+.flowconfig
 .prettierignore
 jest.config.js
 prettier.config.js
 tsconfig.json
+webpack.config.js

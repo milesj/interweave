@@ -4,12 +4,12 @@
  */
 
 import React from 'react';
-import { Matcher, MatchResponse, Props } from 'interweave';
+import { Matcher, Props } from 'interweave';
 import Hashtag, { HashtagProps } from './Hashtag';
 import { HASHTAG_PATTERN } from './constants';
 
 export default class HashtagMatcher extends Matcher {
-  replaceWith(match: string, props: Props = {}) {
+  replaceWith(match: string, props: Props) {
     return React.createElement(Hashtag, props as HashtagProps, match);
   }
 

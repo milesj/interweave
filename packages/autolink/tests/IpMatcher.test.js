@@ -44,8 +44,12 @@ const INVALID_IPS = [
 ];
 
 describe('matchers/IpMatcher', () => {
-  const matcher = new IpMatcher('ip');
+  let matcher = new IpMatcher('ip');
   const pattern = new RegExp(`^${IP_PATTERN.source}$`, 'i');
+
+  beforeEach(() => {
+    matcher = new IpMatcher('ip', { validateTLD: true }, null);
+  });
 
   describe('does match valid ip:', () => {
     VALID_IPS.forEach(ipParams => {

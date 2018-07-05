@@ -13,21 +13,22 @@
   "publishConfig": {
     "access": "public"
   },
-  "repository": "https://github.com/milesj/interweave/tree/master/packages/interweave-emoji",
+  "repository": "https://github.com/milesj/interweave/tree/master/packages/emoji",
   "license": "MIT",
   "dependencies": {
-    "babel-runtime": "^6.26.0",
-    "emojibase-regex": "^1.1.1",
-    "prop-types": "^15.6.1"
+    "@types/prop-types": "^15.5.3",
+    "@types/react": "^16.4.6",
+    "emojibase-regex": "^2.0.0",
+    "prop-types": "^15.6.2"
   },
   "peerDependencies": {
-    "emojibase": "^1.7.0",
-    "interweave": "^8.0.2",
+    "emojibase": "^2.0.0",
+    "interweave": "^9.0.0",
     "react": "^16.3.0"
   },
   "devDependencies": {
-    "emojibase": "^1.7.1",
+    "emojibase": "^2.0.0",
     "interweave": "^9.0.0-1",
-    "react": "^16.4.0"
+    "react": "^16.4.1"
   }
 }

@@ -46,6 +46,20 @@ describe('withEmojiData', () => {
     return <span>Foo</span>;
   });
 
+  it('renders null if no emojis', () => {
+    const wrapper = shallow(
+      <Component locale="ja" version="1.2.3">
+        <div>Foo</div>
+      </Component>,
+    );
+
+    wrapper.setState({
+      emojis: [],
+    });
+
+    expect(wrapper.isEmptyRender()).toBe(true);
+  });
+
   it('fetches data on mount', () => {
     const wrapper = shallow(
       <Component locale="ja" version="1.2.3">
@@ -53,7 +67,7 @@ describe('withEmojiData', () => {
       </Component>,
     );
 
-    expect(global.fetch).toBeCalledWith(
+    expect(global.fetch).toHaveBeenCalledWith(
       'https://cdn.jsdelivr.net/npm/emojibase-data@1.2.3/ja/data.json',
       fetchOptions,
     );
@@ -63,6 +77,38 @@ describe('withEmojiData', () => {
     });
   });
 
+  it('re-fetches data if a prop changes', () => {
+    const wrapper = shallow(
+      <Component locale="ja" version="1.2.3">
+        <div>Foo</div>
+      </Component>,
+    );
+
+    expect(global.fetch).toHaveBeenCalledWith(
+      'https://cdn.jsdelivr.net/npm/emojibase-data@1.2.3/ja/data.json',
+      fetchOptions,
+    );
+
+    wrapper.setProps({
+      locale: 'de',
+      version: '2.0.0',
+    });
+
+    expect(global.fetch).toHaveBeenCalledWith(
+      'https://cdn.jsdelivr.net/npm/emojibase-data@2.0.0/de/data.json',
+      fetchOptions,
+    );
+
+    wrapper.setProps({
+      compact: true,
+    });
+
+    expect(global.fetch).toHaveBeenCalledWith(
+      'https://cdn.jsdelivr.net/npm/emojibase-data@2.0.0/de/compact.json',
+      fetchOptions,
+    );
+  });
+
   it('fetches when emojis are passed manually', () => {
     const wrapper = shallow(
       <Component emojis={mockEmojis}>
@@ -70,7 +116,7 @@ describe('withEmojiData', () => {
       </Component>,
     );
 
-    expect(global.fetch).toBeCalledWith(
+    expect(global.fetch).toHaveBeenCalledWith(
       'https://cdn.jsdelivr.net/npm/emojibase-data@latest/en/data.json',
       fetchOptions,
     );
@@ -115,7 +161,7 @@ describe('withEmojiData', () => {
       </Component>,
     );
 
-    expect(global.fetch).toBeCalledWith(
+    expect(global.fetch).toHaveBeenCalledWith(
       'https://cdn.jsdelivr.net/npm/emojibase-data@latest/en/compact.json',
       fetchOptions,
     );
@@ -128,7 +174,7 @@ describe('withEmojiData', () => {
       </Component>,
     );
 
-    expect(global.fetch).toBeCalledWith(
+    expect(global.fetch).toHaveBeenCalledWith(
       'https://cdn.jsdelivr.net/npm/emojibase-data@latest/ja/data.json',
       fetchOptions,
     );
@@ -139,9 +185,51 @@ describe('withEmojiData', () => {
       </Component>,
     );
 
-    expect(global.fetch).toBeCalledWith(
+    expect(global.fetch).toHaveBeenCalledWith(
       'https://cdn.jsdelivr.net/npm/emojibase-data@latest/it/data.json',
       fetchOptions,
     );
+  });
+
+  it('uses locale cache if it exists', () => {
+    shallow(
+      <Component locale="ja">
+        <div>Foo</div>
+      </Component>,
+    );
+
+    shallow(
+      <Component locale="ja">
+        <div>Foo</div>
+      </Component>,
+    );
+
+    shallow(
+      <Component locale="ja">
+        <div>Foo</div>
+      </Component>,
+    );
+
+    expect(global.fetch).toHaveBeenCalledTimes(1);
+  });
+
+  it('re-throws errors', async () => {
+    const wrapper = shallow(
+      <Component locale="ja">
+        <div>Foo</div>
+      </Component>,
+    );
+
+    global.fetch = () => Promise.reject(new Error('Oops'));
+
+    wrapper.setProps({
+      locale: 'es',
+    });
+
+    try {
+      await wrapper.instance().loadEmojis();
+    } catch (error) {
+      expect(error).toEqual(new Error('Oops'));
+    }
   });
 });

@@ -19,7 +19,7 @@ export interface EmojiProps {
   emojiPath?: Path;
   /** Size of the emoji. Defaults to 1em. */
   emojiSize?: Size;
-  /** Datasource metadata. */
+  /** Emoji datasource metadata. */
   emojiSource: Source;
   /** Emoticon to reference emoji from. */
   emoticon?: Emoticon;
@@ -139,10 +139,10 @@ export default class Emoji extends React.PureComponent<EmojiProps> {
       <img
         src={path}
         alt={emoji.unicode}
-        title={emoji.annotation || ''}
+        title={emoji.annotation}
         style={styles}
-        aria-label={emoji.annotation || ''}
-        data-emoticon={emoji.emoticon || ''}
+        aria-label={emoji.annotation}
+        data-emoticon={emoji.emoticon}
         data-unicode={emoji.unicode}
         data-hexcode={emoji.hexcode}
         data-shortcodes={emoji.canonical_shortcodes.join(', ')}

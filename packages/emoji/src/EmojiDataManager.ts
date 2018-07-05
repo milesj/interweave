@@ -65,12 +65,13 @@ export default class EmojiDataManager {
    * while also extracting and partitioning relevant information.
    */
   packageEmoji(baseEmoji: Emoji): CanonicalEmoji {
-    const { emoticon, hexcode, shortcodes = [] } = baseEmoji;
+    const { emoticon, hexcode, shortcodes } = baseEmoji;
     const emoji: CanonicalEmoji = {
       ...baseEmoji,
       canonical_shortcodes: [],
       primary_shortcode: '',
-      skins: baseEmoji.skins as CanonicalEmoji[],
+      skins: (baseEmoji.skins || []) as CanonicalEmoji[],
+      unicode: '',
     };
 
     // Make our lives easier
@@ -80,7 +81,9 @@ export default class EmojiDataManager {
 
     // Canonicalize the shortcodes for easy reuse
     emoji.canonical_shortcodes = shortcodes.map(code => `:${code}:`);
-    emoji.primary_shortcode = emoji.canonical_shortcodes[0]; // eslint-disable-line
+
+    // eslint-disable-next-line prefer-destructuring
+    emoji.primary_shortcode = emoji.canonical_shortcodes[0];
 
     // Support all shortcodes
     emoji.canonical_shortcodes.forEach(shortcode => {

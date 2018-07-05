@@ -4,12 +4,12 @@
  */
 
 import React from 'react';
-import { Matcher, MatchResponse, Props } from 'interweave';
+import { Matcher, Props } from 'interweave';
 import Email, { EmailProps } from './Email';
 import { EMAIL_PATTERN } from './constants';
 
 export default class EmailMatcher extends Matcher {
-  replaceWith(match: string, props: Props = {}) {
+  replaceWith(match: string, props: Props) {
     return React.createElement(Email, props as EmailProps, match);
   }
 

@@ -148,49 +148,12 @@ function App() {
           />
         </div>
 
-        <div className="slack">
-          <h4>Slack (virtual)</h4>
-
-          <EmojiPicker
-            {...emojiPickerProps}
-            clearIcon={clearIcon}
-            commonMode="frequently-used"
-            defaultGroup="travel-places"
-            defaultSkinTone="medium"
-            displayOrder={['groups', 'search', 'emojis', 'preview']}
-            emojiPadding={6}
-            groupIcons={slackGroupIcons}
-            messages={{ noPreview: 'Emoji Deluxe™' }}
-            skinIcons={skinIcons}
-            virtual
-          />
-        </div>
-      </div>
-
-      <div className="demo-grid">
         <div className="twitter">
           <h4>Twitter</h4>
 
           <EmojiPicker
             {...emojiPickerProps}
             columnCount={7}
-            commonMode="recently-used"
-            disablePreview
-            displayOrder={['groups', 'search', 'emojis', 'skin-tones']}
-            emojiPadding={3.5}
-            emojiSize={17.5}
-            groupIcons={twitterGroupIcons}
-            locale="ja"
-            messages={japaneseMessages}
-          />
-        </div>
-
-        <div className="twitter">
-          <h4>Twitter (virtual)</h4>
-
-          <EmojiPicker
-            {...emojiPickerProps}
-            columnCount={8}
             commonMode="frequently-used"
             defaultGroup="flags"
             defaultSkinTone="dark"
@@ -201,9 +164,9 @@ function App() {
             groupIcons={twitterGroupIcons}
             locale="ja"
             messages={japaneseMessages}
-            rowCount={9}
+            rowCount={10}
             virtual={{
-              columnPadding: 1.5,
+              columnPadding: 3,
               rowPadding: 1.5,
             }}
           />

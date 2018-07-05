@@ -7,7 +7,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import camelCase from 'lodash/camelCase';
 import { EmojiShape, CanonicalEmoji } from 'interweave-emoji';
-import withContext, { ContextProps } from './Context';
+import withContext, { WithContextProps } from './withContext';
 import Group from './Group';
 import { GROUPS, GROUP_KEY_COMMONLY_USED, GROUP_ICONS } from './constants';
 import { ContextShape } from './shapes';
@@ -21,7 +21,7 @@ export interface GroupTabsProps {
   onSelect: (group: GroupKey, event: React.MouseEvent<HTMLButtonElement>) => void;
 }
 
-export class GroupTabs extends React.PureComponent<GroupTabsProps & ContextProps> {
+export class GroupTabs extends React.PureComponent<GroupTabsProps & WithContextProps> {
   static propTypes = {
     activeGroup: PropTypes.string.isRequired,
     commonEmojis: PropTypes.arrayOf(EmojiShape).isRequired,
@@ -52,7 +52,7 @@ export class GroupTabs extends React.PureComponent<GroupTabsProps & ContextProps
           {groups.map(group => (
             <li key={group}>
               <Group
-                activeGroup={activeGroup}
+                active={group === activeGroup}
                 commonMode={commonMode}
                 group={group}
                 onSelect={onSelect}

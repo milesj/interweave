@@ -30,18 +30,17 @@
   "publishConfig": {
     "access": "public"
   },
-  "repository": "https://github.com/milesj/interweave/tree/master/packages/interweave",
+  "repository": "https://github.com/milesj/interweave/tree/master/packages/core",
   "license": "MIT",
   "dependencies": {
     "@types/prop-types": "^15.5.3",
-    "@types/react": "^16.3.17",
-    "babel-runtime": "^6.26.0",
-    "prop-types": "^15.6.1"
+    "@types/react": "^16.4.6",
+    "prop-types": "^15.6.2"
   },
   "peerDependencies": {
     "react": "^16.3.0"
   },
   "devDependencies": {
-    "react": "^16.4.0"
+    "react": "^16.4.1"
   }
 }

@@ -5,7 +5,8 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import EmojiCharacter, {
+import {
+  Emoji as EmojiCharacter,
   CanonicalEmoji,
   EmojiShape,
   Path,
@@ -13,7 +14,7 @@ import EmojiCharacter, {
   Source,
   SourceShape,
 } from 'interweave-emoji';
-import withContext, { ContextProps } from './Context';
+import withContext, { WithContextProps } from './withContext';
 import { ContextShape } from './shapes';
 
 export interface EmojiProps {
@@ -29,7 +30,7 @@ export interface EmojiProps {
   showImage: boolean;
 }
 
-export class Emoji extends React.PureComponent<EmojiProps & ContextProps> {
+export class Emoji extends React.PureComponent<EmojiProps & WithContextProps> {
   static propTypes = {
     active: PropTypes.bool.isRequired,
     context: ContextShape.isRequired,

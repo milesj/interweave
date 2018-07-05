@@ -46,7 +46,7 @@ export default class EmojiMatcher extends Matcher<EmojiMatcherOptions> {
     );
   }
 
-  replaceWith(match: string, props: Props = {}) {
+  replaceWith(match: string, props: Props) {
     const emojiProps = {
       ...props,
       renderUnicode: this.options.renderUnicode,

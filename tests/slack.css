@@ -72,19 +72,30 @@
 .slack .interweave-picker__emojis {
   overflow-y: auto;
   overflow-x: hidden;
-  height: 270px;
+  height: auto;
   position: relative;
   padding: 0 8px;
 }
 
 .slack .interweave-picker__emojis-body {
-  padding-bottom: 8px;
+  padding: 0;
 }
 
 .slack .interweave-picker__emojis-body::after {
   display: block;
   content: '';
   clear: both;
+}
+
+.slack .interweave-picker__emojis-header,
+.slack .interweave-picker__emojis-body {
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+}
+
+.slack .interweave-picker__emojis-header {
+  justify-content: space-between;
 }
 
 .slack .interweave-picker__emoji {
@@ -113,15 +124,13 @@
 
 .slack .interweave-picker__no-results,
 .slack .interweave-picker__emojis-header {
-  padding: 2px 6px;
+  padding: 5px 6px;
   font-size: 1rem;
   font-weight: 700;
   line-height: 1.5rem;
-  position: sticky;
   color: #2c2d30;
-  top: 0;
-  z-index: 2;
   background: #fff;
+  width: 100%;
 }
 
 .slack .interweave-picker__preview {
@@ -154,12 +163,6 @@
 
 .slack .interweave-picker__preview-subtitle {
   font-size: 0.8rem;
-}
-
-.slack .interweave-picker__clear,
-.slack .interweave-picker__skin-tones {
-  float: right;
-  text-align: center;
 }
 
 .slack .interweave-picker__clear,
@@ -196,14 +199,4 @@
 
 .slack .interweave-picker__no-results {
   position: static;
-}
-
-/* Virtual list */
-
-.slack .interweave-picker__picker--virtual .interweave-picker__emojis {
-  height: auto;
-}
-
-.slack .interweave-picker__picker--virtual .interweave-picker__emojis-body {
-  padding: 0;
 }

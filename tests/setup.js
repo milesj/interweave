@@ -12,3 +12,6 @@ global.fetch = () =>
     json: () => emojis,
     ok: true,
   });
+
+// Provide helper to all packages
+global.loadEmojiData = loadEmojiData;
