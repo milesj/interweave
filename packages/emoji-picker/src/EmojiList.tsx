@@ -11,6 +11,7 @@ import { CanonicalEmoji, EmojiShape, Path, PathShape, Source, SourceShape } from
 import withContext, { WithContextProps } from './withContext';
 import EmojiButton from './Emoji';
 import GroupListHeader from './GroupListHeader';
+import { GROUP_KEY_NONE } from './constants';
 import { ContextShape } from './shapes';
 import { CommonMode, GroupKey, GroupEmojiMap, GroupIndexMap } from './types';
 
@@ -39,6 +40,7 @@ export interface EmojiListProps {
   rowPadding?: number;
   scrollToGroup: GroupKey | '';
   skinTonePalette?: React.ReactNode;
+  stickyGroupHeader?: boolean;
 }
 
 export interface EmojiListState {
@@ -79,6 +81,7 @@ export class EmojiList extends React.PureComponent<EmojiListUnifiedProps, EmojiL
     rowPadding: PropTypes.number,
     scrollToGroup: PropTypes.string.isRequired,
     skinTonePalette: PropTypes.node,
+    stickyGroupHeader: PropTypes.bool.isRequired,
   };
 
   static defaultProps = {
@@ -136,24 +139,27 @@ export class EmojiList extends React.PureComponent<EmojiListUnifiedProps, EmojiL
     startIndex: number;
     stopIndex: number;
   }) => {
-    const { startIndex, stopIndex } = event;
-    const { activeGroup, rowCount } = this.props;
+    const { startIndex } = event;
+    const { activeGroup, rowCount, stickyGroupHeader } = this.props;
     const { indices } = this.state;
     let lastGroup = '';
 
     Object.keys(indices).some(group => {
       const index = indices[group];
 
-      // Special case for commonly used and smileys,
-      // as they usually both render in the same view
+      // Special case for commonly used and smileys, as they usually both render in the same view
       if (index === 0 && startIndex === 0) {
         lastGroup = group;
 
         return true;
       }
 
-      // Next group is about to be shown, but highlight the previous group
-      if (index + rowCount / 2 >= stopIndex) {
+      // When we have to sticky headers, we need to change the header on the index right
+      // before the next header, otherwise the change will happen too late
+      if (stickyGroupHeader && index >= startIndex + 1) {
+        return true;
+        // Otherwise, we should update the active group when half way through the list
+      } else if (!stickyGroupHeader && index >= startIndex + rowCount / 2) {
         return true;
       }
 
@@ -166,6 +172,24 @@ export class EmojiList extends React.PureComponent<EmojiListUnifiedProps, EmojiL
     if (lastGroup && lastGroup !== activeGroup) {
       this.props.onScrollGroup(lastGroup as GroupKey);
     }
+  };
+
+  /**
+   * Render a group header.
+   */
+  renderGroupHeader = (group: GroupKey, sticky: boolean = false) => {
+    const { clearIcon, commonMode, onClear, skinTonePalette } = this.props;
+
+    return (
+      <GroupListHeader
+        clearIcon={clearIcon}
+        commonMode={commonMode}
+        group={group}
+        onClear={onClear}
+        skinTonePalette={skinTonePalette}
+        sticky={sticky}
+      />
+    );
   };
 
   /**
@@ -184,15 +208,11 @@ export class EmojiList extends React.PureComponent<EmojiListUnifiedProps, EmojiL
     const { key, index, isVisible, style } = props;
     const {
       activeEmoji,
-      clearIcon,
-      commonMode,
       context: { classNames },
       emojiPadding,
       emojiPath,
       emojiSize,
       emojiSource,
-      skinTonePalette,
-      onClear,
       onEnterEmoji,
       onLeaveEmoji,
       onSelectEmoji,
@@ -203,7 +223,7 @@ export class EmojiList extends React.PureComponent<EmojiListUnifiedProps, EmojiL
       <div key={key} style={style} className={classNames.emojisRow}>
         {Array.isArray(row) ? (
           <div className={classNames.emojisBody}>
-            {row.map((emoji, i) => (
+            {row.map(emoji => (
               <EmojiButton
                 key={emoji.hexcode}
                 active={activeEmoji ? activeEmoji.hexcode === emoji.hexcode : false}
@@ -220,13 +240,7 @@ export class EmojiList extends React.PureComponent<EmojiListUnifiedProps, EmojiL
             ))}
           </div>
         ) : (
-          <GroupListHeader
-            clearIcon={clearIcon}
-            commonMode={commonMode}
-            group={row as GroupKey}
-            onClear={onClear}
-            skinTonePalette={skinTonePalette}
-          />
+          this.renderGroupHeader(row as GroupKey)
         )}
       </div>
     );
@@ -235,6 +249,7 @@ export class EmojiList extends React.PureComponent<EmojiListUnifiedProps, EmojiL
   render() {
     const {
       activeEmoji,
+      activeGroup,
       columnCount,
       columnPadding = 0,
       emojiPadding,
@@ -243,6 +258,7 @@ export class EmojiList extends React.PureComponent<EmojiListUnifiedProps, EmojiL
       rowCount,
       rowPadding = 0,
       scrollToGroup,
+      stickyGroupHeader,
       onScroll,
     } = this.props;
     const { classNames } = this.props.context;
@@ -277,6 +293,10 @@ export class EmojiList extends React.PureComponent<EmojiListUnifiedProps, EmojiL
           onScroll={onScroll}
           {...renderProps}
         />
+
+        {stickyGroupHeader &&
+          activeGroup !== GROUP_KEY_NONE &&
+          this.renderGroupHeader(activeGroup, true)}
       </div>
     );
   }

@@ -134,6 +134,8 @@ export interface PickerProps {
   rowCount?: number;
   /** Mapping of custom icons for each skin tone. */
   skinIcons?: { [key: string]: React.ReactNode };
+  /** Sticky the active group header to the top of the emoji list. */
+  stickyGroupHeader?: boolean;
   /** Custom props to pass to react-virtualized list component. */
   virtual?: {
     columnPadding?: number;
@@ -227,6 +229,7 @@ export class Picker extends React.PureComponent<PickerUnifiedProps, PickerState>
     onSelectSkinTone: PropTypes.func,
     rowCount: PropTypes.number,
     skinIcons: PropTypes.objectOf(PropTypes.node),
+    stickyGroupHeader: PropTypes.bool,
     virtual: PropTypes.shape({
       columnPadding: PropTypes.number,
       rowPadding: PropTypes.number,
@@ -266,6 +269,7 @@ export class Picker extends React.PureComponent<PickerUnifiedProps, PickerState>
     onSelectSkinTone() {},
     rowCount: 8,
     skinIcons: {},
+    stickyGroupHeader: false,
     virtual: {},
     whitelist: [],
   };
@@ -840,6 +844,7 @@ export class Picker extends React.PureComponent<PickerUnifiedProps, PickerState>
       hideShortcodes,
       rowCount,
       skinIcons,
+      stickyGroupHeader,
       virtual,
       onScroll,
     } = this.props as Required<PickerUnifiedProps>;
@@ -880,6 +885,7 @@ export class Picker extends React.PureComponent<PickerUnifiedProps, PickerState>
           rowCount={rowCount}
           scrollToGroup={scrollToGroup}
           skinTonePalette={displayOrder.includes('skin-tones') ? null : skinTones}
+          stickyGroupHeader={stickyGroupHeader}
           onClear={this.handleClearCommonEmoji}
           onEnterEmoji={this.handleEnterEmoji}
           onLeaveEmoji={this.handleLeaveEmoji}

@@ -99,6 +99,14 @@
   justify-content: space-between;
 }
 
+.slack .interweave-picker__emojis-header--sticky {
+  position: absolute;
+  top: 0;
+  left: 8px;
+  right: 8px;
+  width: auto !important;
+}
+
 .slack .interweave-picker__emoji {
   background: transparent;
   border: 0;

@@ -104,6 +104,7 @@ export const CONTEXT_CLASSNAMES = {
   emojisList: 'interweave-picker__emojis-list',
   emojisRow: 'interweave-picker__emojis-row',
   emojisHeader: 'interweave-picker__emojis-header',
+  emojisHeaderSticky: 'interweave-picker__emojis-header--sticky',
   emojisBody: 'interweave-picker__emojis-body',
   group: 'interweave-picker__group',
   groupActive: 'interweave-picker__group--active',

@@ -53,7 +53,7 @@ const emojiPickerProps = {
   emojiPath,
   emojiSize: 22,
   onHoverEmoji(emoji, e) {
-    console.info('hover emoji', emoji, e);
+    // console.info('hover emoji', emoji, e);
   },
   onScrollGroup(group) {
     console.info('scroll group', group);
@@ -145,6 +145,7 @@ function App() {
             groupIcons={slackGroupIcons}
             messages={{ noPreview: 'Emoji Deluxe™' }}
             skinIcons={skinIcons}
+            stickyGroupHeader
           />
         </div>
 
