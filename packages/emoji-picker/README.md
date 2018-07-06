@@ -20,7 +20,7 @@ A React based emoji picker powered by [Interweave](https://github.com/milesj/int
 
 ## Requirements
 
-- [Emojibase](https://github.com/milesj/emojibase)
+- [Emojibase][emojibase]
 
 ## Installation
 
@@ -33,3 +33,5 @@ npm install interweave interweave-emoji interweave-emoji-picker emojibase --save
 ## Documentation
 
 [https://milesj.gitbook.io/interweave](https://milesj.gitbook.io/interweave)
+
+[emojibase]: https://github.com/milesj/emojibase
