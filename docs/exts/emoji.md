@@ -52,7 +52,7 @@ should wrap a component that composes `Interweave`.
 import Interweave from 'interweave';
 import withEmojiData from 'interweave-emoji';
 
-export default withEmojiData(Interweave);
+export default withEmojiData({ compact: false })(Interweave);
 ```
 
 This HOC supports the following optional props.
@@ -61,7 +61,11 @@ This HOC supports the following optional props.
   [View supported locales](https://github.com/milesj/emojibase#usage).
 - `version` (string) - The `emojibase-data` release version to fetch. Defaults to `latest`.
   [Read more](https://github.com/milesj/emojibase#fetchfromcdn).
-- `compact` (bool) - Whether to load compact or full data. Defaults to `false`.
+
+And the following options to pass as the 1st argument to `withEmojiData`.
+
+- `compact` (bool) - Whether to load the compact or full dataset. Defaults to `false`.
+- `emojis` (Emoji[]) - Custom list of emoji to use instead of fetching from the CDN.
 
 > An `emojis` and `emojiSource` prop will be passed to the underlying component.
 

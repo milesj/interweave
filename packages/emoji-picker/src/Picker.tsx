@@ -10,6 +10,9 @@ import PropTypes from 'prop-types';
 import debounce from 'lodash/debounce';
 import withEmojiData, {
   WithEmojiDataProps,
+  // Required for TS declaration
+  // eslint-disable-next-line no-unused-vars
+  WithEmojiDataWrapperProps,
   CanonicalEmoji,
   EmojiShape,
   Path,
@@ -935,4 +938,4 @@ export class Picker extends React.PureComponent<PickerUnifiedProps, PickerState>
   }
 }
 
-export default withEmojiData(Picker);
+export default withEmojiData()(Picker);

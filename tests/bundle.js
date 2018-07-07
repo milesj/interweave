@@ -34,7 +34,7 @@ const emojiPath = (hex, large) =>
     hex,
   ).toLowerCase()}.png`;
 
-const Emoji = withEmojiData(BaseEmoji);
+const Emoji = withEmojiData()(BaseEmoji);
 
 const emojiProps = {
   emojiPath,
@@ -125,7 +125,7 @@ const japaneseMessages = {
   search: 'サーチ',
 };
 
-const Interweave = withEmojiData(BaseInterweave);
+const Interweave = withEmojiData()(BaseInterweave);
 
 function App() {
   return (

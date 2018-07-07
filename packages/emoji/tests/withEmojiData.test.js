@@ -41,10 +41,7 @@ describe('withEmojiData', () => {
     resetLoaded();
   });
 
-  // eslint-disable-next-line
-  const Component = withEmojiData(function BaseComponent() {
-    return <span>Foo</span>;
-  });
+  const Component = withEmojiData()(() => <span>Foo</span>);
 
   it('renders null if no emojis', () => {
     const wrapper = shallow(
@@ -98,25 +95,17 @@ describe('withEmojiData', () => {
       'https://cdn.jsdelivr.net/npm/emojibase-data@2.0.0/de/data.json',
       fetchOptions,
     );
-
-    wrapper.setProps({
-      compact: true,
-    });
-
-    expect(global.fetch).toHaveBeenCalledWith(
-      'https://cdn.jsdelivr.net/npm/emojibase-data@2.0.0/de/compact.json',
-      fetchOptions,
-    );
   });
 
-  it('fetches when emojis are passed manually', () => {
+  it('doesnt fetch when emojis are passed manually', () => {
+    const PreloadComponent = withEmojiData({ emojis: mockEmojis })(() => <span>Foo</span>);
     const wrapper = shallow(
-      <Component emojis={mockEmojis}>
+      <PreloadComponent emojis={mockEmojis}>
         <div>Foo</div>
-      </Component>,
+      </PreloadComponent>,
     );
 
-    expect(global.fetch).toHaveBeenCalledWith(
+    expect(global.fetch).not.toHaveBeenCalledWith(
       'https://cdn.jsdelivr.net/npm/emojibase-data@latest/en/data.json',
       fetchOptions,
     );
@@ -155,10 +144,12 @@ describe('withEmojiData', () => {
   });
 
   it('supports compact datasets', () => {
+    const CompactComponent = withEmojiData({ compact: true })(() => <span>Foo</span>);
+
     shallow(
-      <Component compact>
+      <CompactComponent>
         <div>Foo</div>
-      </Component>,
+      </CompactComponent>,
     );
 
     expect(global.fetch).toHaveBeenCalledWith(

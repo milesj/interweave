@@ -6,7 +6,11 @@
 import Emoji, { EmojiProps } from './Emoji';
 import EmojiDataManager from './EmojiDataManager';
 import EmojiMatcher, { EmojiMatcherOptions } from './EmojiMatcher';
-import withEmojiData, { WithEmojiDataWrapperProps, WithEmojiDataProps } from './withEmojiData';
+import withEmojiData, {
+  WithEmojiDataWrapperProps,
+  WithEmojiDataProps,
+  WithEmojiDataOptions,
+} from './withEmojiData';
 
 export {
   Emoji,
@@ -16,6 +20,7 @@ export {
   EmojiDataManager,
   WithEmojiDataWrapperProps,
   WithEmojiDataProps,
+  WithEmojiDataOptions,
 };
 
 export * from './shapes';

@@ -72,5 +72,5 @@ Interweave.defaultProps = {
   instagram: false,
 };
 
-export default withEmojiData(Interweave);
+export default withEmojiData()(Interweave);
 ```
