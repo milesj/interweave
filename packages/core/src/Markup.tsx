@@ -10,7 +10,7 @@ import Parser from './Parser';
 
 export interface MarkupProps {
   /** String content with HTML to safely render. */
-  content?: string;
+  content?: string | null;
   /** Disable the conversion of new lines to `<br />` elements. */
   disableLineBreaks?: boolean;
   /** Disable the HTML element whitelist. */
