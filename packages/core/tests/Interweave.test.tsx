@@ -90,7 +90,7 @@ describe('Interweave', () => {
             inverseName: 'noB',
             propName: 'b',
             asTag: () => 'span',
-            createElement: (match, props) => (
+            createElement: (match: string, props: any) => (
               <Element key="0" tagName="span" {...props}>
                 {props.children.toUpperCase()}
               </Element>
@@ -138,12 +138,14 @@ describe('Interweave', () => {
   describe('parseMarkup()', () => {
     it('errors if onBeforeParse doesnt return a string', () => {
       expect(() => {
+        // @ts-ignore
         shallow(<Interweave onBeforeParse={() => 123} content="Foo" />);
       }).toThrow('Interweave `onBeforeParse` must return a valid HTML string.');
     });
 
     it('errors if onAfterParse doesnt return an array', () => {
       expect(() => {
+        // @ts-ignore
         shallow(<Interweave onAfterParse={() => 123} content="Foo" />);
       }).toThrow('Interweave `onAfterParse` must return an array of strings and React elements.');
     });
@@ -368,14 +370,14 @@ describe('Interweave', () => {
 
   describe('transform prop', () => {
     it('skips the element', () => {
-      const transform = node => (node.nodeName === 'IMG' ? null : undefined);
+      const transform = (node: HTMLElement) => (node.nodeName === 'IMG' ? null : undefined);
       const wrapper = shallow(<Interweave content={'Foo <img/> Bar'} transform={transform} />);
 
       expect(wrapper.prop('parsedContent')).toEqual(['Foo ', ' Bar']);
     });
     it('replaces the element', () => {
-      const Dummy = props => <div />;
-      const transform = node => (node.nodeName === 'IMG' ? <Dummy /> : undefined);
+      const Dummy = () => <div />;
+      const transform = (node: HTMLElement) => (node.nodeName === 'IMG' ? <Dummy /> : undefined);
       const wrapper = shallow(<Interweave content={'Foo <img/> Bar'} transform={transform} />);
 
       expect(wrapper.prop('parsedContent')).toEqual(['Foo ', <Dummy key="0" />, ' Bar']);

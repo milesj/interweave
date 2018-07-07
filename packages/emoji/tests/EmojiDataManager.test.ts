@@ -1,7 +1,8 @@
+import { Presentation } from 'emojibase';
 import EmojiDataManager from '../src/EmojiDataManager';
 
 describe('EmojiDataManager', () => {
-  let manager;
+  let manager: EmojiDataManager;
 
   beforeEach(() => {
     manager = new EmojiDataManager('ja');
@@ -19,6 +20,7 @@ describe('EmojiDataManager', () => {
       expect(manager.getData()).toHaveLength(0);
       expect(manager.getFlatData()).toHaveLength(0);
 
+      // @ts-ignore
       manager.parseEmojiData(loadEmojiData());
 
       expect(manager.getData()).toHaveLength(1640);
@@ -32,6 +34,14 @@ describe('EmojiDataManager', () => {
       hexcode: '1F408',
       emoji: '🐈',
       shortcodes: ['cat'],
+      group: 0,
+      subgroup: 0,
+      name: 'CAT',
+      order: 0,
+      tags: ['cat'],
+      text: '',
+      type: 1 as Presentation,
+      version: 1,
     };
 
     it('creates a new emoji', () => {

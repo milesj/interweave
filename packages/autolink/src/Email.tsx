@@ -7,7 +7,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Link, { LinkProps } from './Link';
 
-export interface EmailProps extends LinkProps {
+export interface EmailProps extends Partial<LinkProps> {
   children: string;
   emailParts?: {
     host?: string;

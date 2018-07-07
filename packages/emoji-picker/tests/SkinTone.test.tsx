@@ -1,11 +1,12 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import { SKIN_COLORS, SKIN_KEY_NONE, SKIN_KEY_DARK } from '../src/constants';
-import { SkinTone } from '../src/SkinTone';
+import { SkinTone, SkinToneProps } from '../src/SkinTone';
+import { WithContextProps } from '../src/withContext';
 import { PICKER_CONTEXT } from './mocks';
 
 describe('<SkinTone />', () => {
-  const props = {
+  const props: SkinToneProps & WithContextProps = {
     active: false,
     context: PICKER_CONTEXT,
     onSelect() {},

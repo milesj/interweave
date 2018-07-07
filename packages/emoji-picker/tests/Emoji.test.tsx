@@ -1,15 +1,16 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import EmojiData from '../../emoji/src/EmojiDataManager';
-import { Emoji } from '../src/Emoji';
+import { Emoji, EmojiProps } from '../src/Emoji';
+import { WithContextProps } from '../src/withContext';
 import { SOURCE_PROP } from '../../../tests/mocks';
-import { PICKER_CONTEXT } from './mocks';
+import { PICKER_CONTEXT, CAT_EMOJI } from './mocks';
 
 describe('Emoji', () => {
-  const props = {
+  const props: EmojiProps & WithContextProps = {
     active: false,
     context: PICKER_CONTEXT,
-    emoji: {},
+    emoji: CAT_EMOJI,
     emojiPadding: 5,
     emojiPath: '{{hexcode}}',
     emojiSize: 22,

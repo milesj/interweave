@@ -1,14 +1,15 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import EmojiData from '../../emoji/src/EmojiDataManager';
-import { PreviewBar } from '../src/PreviewBar';
+import { PreviewBar, PreviewBarProps } from '../src/PreviewBar';
+import { WithContextProps } from '../src/withContext';
 import { SOURCE_PROP } from '../../../tests/mocks';
-import { PICKER_CONTEXT } from './mocks';
+import { PICKER_CONTEXT, CAT_EMOJI } from './mocks';
 
 describe('<PreviewBar />', () => {
-  const props = {
+  const props: PreviewBarProps & WithContextProps = {
     context: PICKER_CONTEXT,
-    emoji: null,
+    emoji: CAT_EMOJI,
     emojiLargeSize: '3em',
     emojiPath: '{{hexcode}}',
     emojiSource: SOURCE_PROP,
@@ -62,7 +63,7 @@ describe('<PreviewBar />', () => {
           emojiPath: props.emojiPath,
           emojiSource: props.emojiSource,
           enlargeEmoji: true,
-          hexcode: props.emoji.hexcode,
+          hexcode: props.emoji!.hexcode,
         }),
       );
     });
@@ -80,7 +81,7 @@ describe('<PreviewBar />', () => {
         <PreviewBar
           {...props}
           emoji={{
-            ...props.emoji,
+            ...props.emoji!,
             annotation: '',
           }}
         />,
@@ -96,7 +97,7 @@ describe('<PreviewBar />', () => {
         <PreviewBar
           {...props}
           emoji={{
-            ...props.emoji,
+            ...props.emoji!,
             annotation: '',
             name: '',
           }}
@@ -117,7 +118,7 @@ describe('<PreviewBar />', () => {
         <PreviewBar
           {...props}
           emoji={{
-            ...props.emoji,
+            ...props.emoji!,
             emoticon: '',
           }}
         />,
@@ -131,7 +132,7 @@ describe('<PreviewBar />', () => {
         <PreviewBar
           {...props}
           emoji={{
-            ...props.emoji,
+            ...props.emoji!,
             canonical_shortcodes: [],
           }}
         />,
@@ -157,7 +158,7 @@ describe('<PreviewBar />', () => {
         <PreviewBar
           {...props}
           emoji={{
-            ...props.emoji,
+            ...props.emoji!,
             canonical_shortcodes: [],
             emoticon: '',
           }}

@@ -3,7 +3,18 @@ import IpMatcher from '../src/IpMatcher';
 import { IP_PATTERN } from '../src/constants';
 import { TOKEN_LOCATIONS, createExpectedToken, parentConfig } from '../../../tests/mocks';
 
-const VALID_IPS = [
+interface IPParams {
+  ip: string;
+  scheme?: string | null;
+  auth?: string;
+  host?: string;
+  path?: string;
+  port?: string;
+  query?: string;
+  fragment?: string;
+}
+
+const VALID_IPS: IPParams[] = [
   { ip: '0.0.0.0', scheme: null, host: '0.0.0.0' },
   { ip: '118.99.81.204', scheme: null, host: '118.99.81.204' },
   { ip: '118.99.81.204/', scheme: null, host: '118.99.81.204', path: '/' },
@@ -55,7 +66,8 @@ describe('matchers/IpMatcher', () => {
     VALID_IPS.forEach(ipParams => {
       it(ipParams.ip, () => {
         const { ip, ...params } = ipParams;
-        const expected = [
+        // @ts-ignore
+        const expected: RegExpMatchArray = [
           ip,
           params.scheme === null ? undefined : params.scheme || 'http://',
           params.auth,
@@ -83,7 +95,7 @@ describe('matchers/IpMatcher', () => {
 
   describe('matches all ips in a string', () => {
     const parser = new Parser('', {}, [matcher]);
-    const createIp = (ipParams, key) => {
+    const createIp = (ipParams: IPParams, key: number) => {
       const { ip, ...params } = ipParams;
 
       return matcher.replaceWith(ip, {

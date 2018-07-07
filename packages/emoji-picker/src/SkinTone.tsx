@@ -59,7 +59,7 @@ export class SkinTone extends React.PureComponent<SkinToneProps & WithContextPro
       <button
         className={className.join(' ')}
         style={{ backgroundColor: color, borderColor: color, color }}
-        title={messages[`skin${key.charAt(0).toUpperCase()}${key.slice(1)}`]}
+        title={String(messages[`skin${key.charAt(0).toUpperCase()}${key.slice(1)}`])}
         type="button"
         onClick={this.handleClick}
       >

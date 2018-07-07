@@ -127,7 +127,7 @@ describe('Emoji', () => {
         shortcode={shortcode}
         unicode={unicode}
         emojiPath={(hex, large, size) =>
-          `http://foo.com/path/to/${large ? size * 2 : size}/${hex.toLowerCase()}.svg`
+          `http://foo.com/path/to/${large ? Number(size) * 2 : size}/${hex.toLowerCase()}.svg`
         }
         emojiSize={2}
         enlargeEmoji

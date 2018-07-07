@@ -73,13 +73,17 @@ export default class Parser {
    * Loop through and apply all registered attribute filters.
    */
   applyAttributeFilters(name: string, value: string): string {
-    return this.filters.reduce((nextValue, filter) => filter.attribute(name, nextValue), value);
+    return this.filters.reduce(
+      (nextValue, filter) =>
+        typeof filter.attribute === 'function' ? filter.attribute(name, nextValue) : nextValue,
+      value,
+    );
   }
 
   /**
    * Loop through and apply all registered node filters.
    */
-  applyNodeFilters(name: string, node: HTMLElement): HTMLElement {
+  applyNodeFilters(name: string, node: HTMLElement | null): HTMLElement | null {
     // Allow null to be returned
     return this.filters.reduce(
       (nextNode, filter) =>

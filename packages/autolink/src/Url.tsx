@@ -7,7 +7,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Link, { LinkProps } from './Link';
 
-export interface UrlProps extends LinkProps {
+export interface UrlProps extends Partial<LinkProps> {
   children: string;
   urlParts?: {
     auth?: string;

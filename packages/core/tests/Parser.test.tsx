@@ -20,16 +20,16 @@ import {
   MOCK_MARKUP,
 } from '../../../tests/mocks';
 
-function createChild(tag, text) {
+function createChild(tag: string, text: string | number): HTMLElement {
   const child = document.createElement(tag);
-  child.appendChild(document.createTextNode(text));
+  child.appendChild(document.createTextNode(String(text)));
 
   return child;
 }
 
 describe('Parser', () => {
-  let instance;
-  let element;
+  let instance: Parser;
+  let element: HTMLElement;
 
   beforeEach(() => {
     instance = new Parser(
@@ -42,12 +42,14 @@ describe('Parser', () => {
 
   it('parses when passed an empty value', () => {
     [null, false, undefined, '', 0].forEach(value => {
+      // @ts-ignore
       expect(new Parser(value).parse()).toEqual([]);
     });
   });
 
   it('errors for a non-string value', () => {
     [123, 456.78, true, [], {}].forEach(value => {
+      // @ts-ignore
       expect(() => new Parser(value)).toThrowError('Interweave parser requires a valid string.');
     });
   });
@@ -72,12 +74,15 @@ describe('Parser', () => {
   });
 
   describe('applyMatchers()', () => {
-    const createElement = (value, key) => (
-      <Element tagName="span" customProp="foo" key={key}>
-        {value.toUpperCase()}
-      </Element>
-    );
-    const createMultiElement = (value, key) => {
+    function createElement(value: string, key: number) {
+      return (
+        <Element tagName="span" customProp="foo" key={key}>
+          {value.toUpperCase()}
+        </Element>
+      );
+    }
+
+    function createMultiElement(value: string, key: number) {
       switch (key) {
         default:
         case 0:
@@ -87,7 +92,7 @@ describe('Parser', () => {
         case 2:
           return createElement('baz', 2);
       }
-    };
+    }
 
     describe('handles matchers correctly', () => {
       TOKEN_LOCATIONS.forEach((location, i) => {
@@ -243,6 +248,7 @@ describe('Parser', () => {
     });
 
     it('returns null for invalid node', () => {
+      // @ts-ignore
       expect(instance.extractAttributes(document.createComment('Comment'))).toBeNull();
     });
 
@@ -262,13 +268,13 @@ describe('Parser', () => {
 
         case FILTER_CAST_BOOL:
           it(`allows the "${name}" attribute and casts to a boolean`, () => {
-            element.setAttribute(name, true);
+            element.setAttribute(name, 'true');
 
             expect(instance.extractAttributes(element)).toEqual({
               [attrName]: true,
             });
 
-            element.setAttribute(name, false);
+            element.setAttribute(name, 'false');
 
             expect(instance.extractAttributes(element)).toEqual({
               [attrName]: false,
@@ -373,7 +379,7 @@ describe('Parser', () => {
     it('camel cases specific attribute names to React attribute names', () => {
       element.setAttribute('datetime', '2016-01-01');
       element.setAttribute('colspan', '3');
-      element.setAttribute('rowspan', 6);
+      element.setAttribute('rowspan', '6');
       element.setAttribute('class', 'foo-bar');
       element.setAttribute('alt', 'Foo');
       element.setAttribute('disabled', 'disabled');

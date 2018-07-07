@@ -1,12 +1,13 @@
 import React from 'react';
 import { shallow, mount } from 'enzyme';
-import { SearchBar } from '../src/SearchBar';
+import { SearchBar, SearchBarProps } from '../src/SearchBar';
 import { PICKER_CONTEXT } from './mocks';
+import { WithContextProps } from '../src/withContext';
 
 jest.mock('lodash/debounce', () => jest.fn(fn => fn));
 
 describe('<SearchBar />', () => {
-  const props = {
+  const props: SearchBarProps & WithContextProps = {
     autoFocus: false,
     context: PICKER_CONTEXT,
     onChange() {},
@@ -29,13 +30,12 @@ describe('<SearchBar />', () => {
   });
 
   it('focuses on mount if `autoFocus` is true', () => {
-    const wrapper = mount(<SearchBar {...props} />, {
-      disableLifecycleMethods: true,
-    });
+    const wrapper = mount(<SearchBar {...props} />);
 
+    // @ts-ignore
     const spy = jest.spyOn(wrapper.instance().inputRef.current, 'focus');
 
-    wrapper.instance().componentDidMount();
+    wrapper.instance().componentDidMount!();
 
     expect(spy).not.toHaveBeenCalled();
 
@@ -43,7 +43,7 @@ describe('<SearchBar />', () => {
       autoFocus: true,
     });
 
-    wrapper.instance().componentDidMount();
+    wrapper.instance().componentDidMount!();
 
     expect(spy).toHaveBeenCalled();
   });

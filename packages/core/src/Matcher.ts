@@ -14,8 +14,8 @@ export interface MatcherInterface {
   asTag(): string;
   createElement(match: string, props?: Props): React.ReactNode;
   match(value: string): MatchResponse | null;
-  onBeforeParse(content: string, props: Props): string;
-  onAfterParse(content: React.ReactNode[], props: Props): React.ReactNode[];
+  onBeforeParse?(content: string, props: Props): string;
+  onAfterParse?(content: React.ReactNode[], props: Props): React.ReactNode[];
 }
 
 export default abstract class Matcher<T extends {} = {}> implements MatcherInterface {

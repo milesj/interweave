@@ -29,11 +29,12 @@ Me.<br /><br />
 Help!`;
 
 // http://getemoji.com/
-const emojiPath = (hex, large) =>
+const emojiPath = (hexcode: string, large: boolean) =>
   `https://cdn.jsdelivr.net/emojione/assets/3.1/png/${large ? 64 : 32}/${stripHexcode(
-    hex,
+    hexcode,
   ).toLowerCase()}.png`;
 
+  // @ts-ignore
 const Emoji = withEmojiData()(BaseEmoji);
 
 const emojiProps = {
@@ -52,23 +53,23 @@ const emojiPickerProps = {
   emojiPadding: 5,
   emojiPath,
   emojiSize: 22,
-  onHoverEmoji(emoji, e) {
-    // console.info('hover emoji', emoji, e);
+  onHoverEmoji(...args: any[]) {
+    // console.info('hover emoji', ...args);
   },
-  onScrollGroup(group) {
-    console.info('scroll group', group);
+  onScrollGroup(...args: any[]) {
+    console.info('scroll group', ...args);
   },
-  onSearch(query, e) {
-    console.info('search', query, e);
+  onSearch(...args: any[]) {
+    console.info('search', ...args);
   },
-  onSelectEmoji(emoji, e) {
-    console.info('select emoji', emoji, e);
+  onSelectEmoji(...args: any[]) {
+    console.info('select emoji', ...args);
   },
-  onSelectGroup(group, e) {
-    console.info('select group', group, e);
+  onSelectGroup(...args: any[]) {
+    console.info('select group', ...args);
   },
-  onSelectSkinTone(skinTone, e) {
-    console.info('select skin', skinTone, e);
+  onSelectSkinTone(...args: any[]) {
+    console.info('select skin', ...args);
   },
 };
 
@@ -125,6 +126,7 @@ const japaneseMessages = {
   search: 'サーチ',
 };
 
+// @ts-ignore
 const Interweave = withEmojiData()(BaseInterweave);
 
 function App() {

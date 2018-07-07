@@ -1,7 +1,18 @@
 import React from 'react';
 import { shallow } from 'enzyme';
+import { Emoji } from 'emojibase';
 import EmojiData from '../src/EmojiDataManager';
 import withEmojiData, { resetLoaded } from '../src/withEmojiData';
+
+declare global {
+  namespace NodeJS {
+    interface Global {
+      fetch: any;
+      sessionStorage: any;
+      localStorage: any;
+    }
+  }
+}
 
 describe('withEmojiData', () => {
   const fetchOptions = {
@@ -10,7 +21,7 @@ describe('withEmojiData', () => {
     redirect: 'error',
   };
 
-  const mockEmojis = [
+  const mockEmojis: Emoji[] = [
     {
       name: 'GRINNING FACE',
       hexcode: '1F600',
@@ -22,6 +33,8 @@ describe('withEmojiData', () => {
       subgroup: 0,
       annotation: 'grinning face',
       tags: ['face', 'grin'],
+      text: '',
+      version: 1,
     },
   ];
 
@@ -99,8 +112,9 @@ describe('withEmojiData', () => {
 
   it('doesnt fetch when emojis are passed manually', () => {
     const PreloadComponent = withEmojiData({ emojis: mockEmojis })(() => <span>Foo</span>);
+
     const wrapper = shallow(
-      <PreloadComponent emojis={mockEmojis}>
+      <PreloadComponent>
         <div>Foo</div>
       </PreloadComponent>,
     );
@@ -132,12 +146,14 @@ describe('withEmojiData', () => {
   });
 
   it('doesnt mutate `EmojiData` when emojis are passed manually', () => {
+    const PreloadComponent = withEmojiData({ emojis: mockEmojis })(() => <span>Foo</span>);
+
     EmojiData.getInstance('en').EMOJIS = {};
 
     shallow(
-      <Component locale="en" emojis={mockEmojis}>
+      <PreloadComponent locale="en">
         <div>Foo</div>
-      </Component>,
+      </PreloadComponent>,
     );
 
     expect(EmojiData.getInstance('en').EMOJIS).toEqual({});
@@ -218,6 +234,7 @@ describe('withEmojiData', () => {
     });
 
     try {
+      // @ts-ignore
       await wrapper.instance().loadEmojis();
     } catch (error) {
       expect(error).toEqual(new Error('Oops'));

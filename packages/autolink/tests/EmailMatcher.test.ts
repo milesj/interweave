@@ -65,7 +65,7 @@ describe('matchers/EmailMatcher', () => {
     VALID_EMAILS.forEach(email => {
       it(email, () => {
         const parts = email.split('@');
-        const expected = [email, parts[0], parts[1]];
+        const expected: RegExpMatchArray = [email, parts[0], parts[1]];
         expected.index = 0;
         expected.input = email;
 
@@ -84,7 +84,7 @@ describe('matchers/EmailMatcher', () => {
 
   describe('matches all emails in a string', () => {
     const parser = new Parser('', {}, [matcher]);
-    const createEmail = (email, key) => {
+    const createEmail = (email: string, key: number) => {
       const parts = email.split('@');
 
       return matcher.replaceWith(email, {

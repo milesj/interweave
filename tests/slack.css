@@ -75,7 +75,8 @@
   overflow-x: hidden;
   height: auto;
   position: relative;
-  padding: 0 8px;
+  padding: 8px;
+  padding-top: 0;
 }
 
 .slack .interweave-picker__emojis-body {

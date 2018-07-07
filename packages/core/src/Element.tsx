@@ -8,6 +8,7 @@ import PropTypes from 'prop-types';
 import { Attributes } from './types';
 
 export interface ElementProps {
+  [prop: string]: any;
   attributes?: Attributes;
   children?: React.ReactNode;
   selfClose?: boolean;

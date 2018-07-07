@@ -51,7 +51,12 @@ export const VALID_EMOJIS = [
   ['1F3C0', '🏀', ':basketball:'],
 ];
 
-export function createExpectedToken(value, factory, index, join = false) {
+export function createExpectedToken(
+  value: any,
+  factory: (value: any, count: number) => React.ReactNode,
+  index: number,
+  join: boolean = false,
+): React.ReactNode | string {
   if (index === 0) {
     return TOKEN_LOCATIONS[0];
   }
@@ -100,7 +105,7 @@ export const parentConfig = {
   children: [],
 };
 
-export function matchCodeTag(string, tag) {
+export function matchCodeTag(string: string, tag: string): any {
   const matches = string.match(new RegExp(`\\[${tag}\\]`));
 
   if (!matches) {
@@ -115,14 +120,18 @@ export function matchCodeTag(string, tag) {
 }
 
 export class CodeTagMatcher extends Matcher {
-  constructor(tag, key = null) {
+  tag: string;
+
+  key: string;
+
+  constructor(tag: string, key: string = '') {
     super(tag);
 
     this.tag = tag;
     this.key = key;
   }
 
-  replaceWith(match, props = {}) {
+  replaceWith(match: string, props: any = {}) {
     const { children } = props;
 
     if (this.key) {
@@ -141,22 +150,27 @@ export class CodeTagMatcher extends Matcher {
     return 'span';
   }
 
-  match(string) {
+  match(string: string) {
     return matchCodeTag(string, this.tag);
   }
 }
 
 export class MockMatcher extends Matcher {
-  /* istanbul ignore next */
-  constructor(key) {
-    super(key);
+  replaceWith(match: string, props: any) {
+    return <div {...props}>{match}</div>;
+  }
 
-    this.key = key;
+  asTag() {
+    return 'div';
+  }
+
+  match() {
+    return null;
   }
 }
 
 export class LinkFilter extends Filter {
-  attribute(name, value) {
+  attribute(name: string, value: string): string {
     if (name === 'href') {
       return value.replace('foo.com', 'bar.net');
     }
@@ -164,7 +178,7 @@ export class LinkFilter extends Filter {
     return value;
   }
 
-  node(name, node) {
+  node(name: string, node: HTMLElement): HTMLElement | null {
     if (name === 'a') {
       node.setAttribute('target', '_blank');
     } else if (name === 'link') {

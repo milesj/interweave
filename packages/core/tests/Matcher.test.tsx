@@ -1,19 +1,16 @@
 import React from 'react';
-import Matcher from '../src/Matcher';
 import Element from '../src/Element';
-import { CodeTagMatcher } from '../../../tests/mocks';
+import { CodeTagMatcher, MockMatcher } from '../../../tests/mocks';
 
 describe('Matcher', () => {
   const matcher = new CodeTagMatcher('foo', '1');
 
   it('errors for html name', () => {
-    expect(() => {
-      new Matcher('html').match();
-    }).toThrowError('The matcher name "html" is not allowed.');
+    expect(() => new MockMatcher('html')).toThrowError('The matcher name "html" is not allowed.');
   });
 
   it('sets names', () => {
-    const nameMatcher = new Matcher('barBaz');
+    const nameMatcher = new MockMatcher('barBaz');
 
     expect(nameMatcher.propName).toBe('barBaz');
     expect(nameMatcher.inverseName).toBe('noBarBaz');
@@ -29,7 +26,7 @@ describe('Matcher', () => {
     });
 
     it('returns a React element from custom factory', () => {
-      const customMatcher = new Matcher('foo', {}, (match, p) => (
+      const customMatcher = new MockMatcher('foo', {}, (match, p) => (
         <Element tagName={p.tagName}>{match}</Element>
       ));
 
@@ -39,10 +36,10 @@ describe('Matcher', () => {
     });
 
     it('errors if not a React element', () => {
-      const customMatcher = new Matcher('foo', {}, () => 123);
+      const customMatcher = new MockMatcher('foo', {}, () => 123);
 
       expect(() => {
-        customMatcher.createElement();
+        customMatcher.createElement('');
       }).toThrowError('Invalid React element created from Matcher.');
     });
   });

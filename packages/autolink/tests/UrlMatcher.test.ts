@@ -3,8 +3,19 @@ import UrlMatcher from '../src/UrlMatcher';
 import { URL_PATTERN } from '../src/constants';
 import { TOKEN_LOCATIONS, createExpectedToken, parentConfig } from '../../../tests/mocks';
 
+interface URLParams {
+  url: string;
+  scheme?: string | null;
+  auth?: string;
+  host?: string;
+  path?: string;
+  port?: string;
+  query?: string;
+  fragment?: string;
+}
+
 // Borrowed from: https://github.com/Sporkmonger/Addressable/blob/master/spec/addressable/uri_spec.rb
-const VALID_URLS = [
+const VALID_URLS: URLParams[] = [
   { url: 'example.com', scheme: null, host: 'example.com' },
   { url: 'www.example.com', scheme: null, host: 'www.example.com' },
   { url: 'http://under_score.example.com/', host: 'under_score.example.com', path: '/' },
@@ -165,7 +176,8 @@ describe('matchers/UrlMatcher', () => {
     VALID_URLS.forEach(urlParams => {
       it(urlParams.url, () => {
         const { url, ...params } = urlParams;
-        const expected = [
+        // @ts-ignore
+        const expected: RegExpMatchArray = [
           url,
           params.scheme === null ? undefined : params.scheme || 'http://',
           params.auth,
@@ -193,7 +205,7 @@ describe('matchers/UrlMatcher', () => {
 
   describe('matches all urls in a string', () => {
     const parser = new Parser('', {}, [matcher]);
-    const createUrl = (urlParams, key) => {
+    const createUrl = (urlParams: URLParams, key: number) => {
       const { url, ...params } = urlParams;
 
       return matcher.replaceWith(url, {

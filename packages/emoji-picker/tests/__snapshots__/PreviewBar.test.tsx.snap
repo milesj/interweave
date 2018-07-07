@@ -1,0 +1,13 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<PreviewBar /> renders a preview 1`] = `
+<div
+  className="interweave-picker__preview"
+>
+  <div
+    className="interweave-picker__no-preview"
+  >
+    No emoji to display
+  </div>
+</div>
+`;

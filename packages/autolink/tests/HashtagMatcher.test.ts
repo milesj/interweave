@@ -29,7 +29,7 @@ describe('matchers/HashtagMatcher', () => {
   describe('does match valid hashtag:', () => {
     VALID_HASHTAGS.forEach(hashtag => {
       it(hashtag, () => {
-        const expected = [hashtag, hashtag.slice(1)];
+        const expected: RegExpMatchArray = [hashtag, hashtag.slice(1)];
         expected.index = 0;
         expected.input = hashtag;
 
@@ -48,7 +48,7 @@ describe('matchers/HashtagMatcher', () => {
 
   describe('matches all hashtags in a string', () => {
     const parser = new Parser('', {}, [matcher]);
-    const createHashtag = (hashtag, key) =>
+    const createHashtag = (hashtag: string, key: number) =>
       matcher.replaceWith(hashtag, {
         hashtagName: hashtag.slice(1),
         key,

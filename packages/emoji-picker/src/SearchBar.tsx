@@ -52,9 +52,9 @@ export class SearchBar extends React.PureComponent<SearchBarProps & WithContextP
     return (
       <div className={classNames.search}>
         <input
-          aria-label={messages.searchA11y}
+          aria-label={String(messages.searchA11y)}
           className={classNames.searchInput}
-          placeholder={messages.search}
+          placeholder={String(messages.search)}
           ref={this.inputRef}
           type="search"
           value={this.props.searchQuery}

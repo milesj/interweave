@@ -82,7 +82,7 @@ export class GroupListHeader extends React.PureComponent<GroupListHeaderProps & 
         {showClear && (
           <button
             type="button"
-            title={messages.clearUsed}
+            title={String(messages.clearUsed)}
             className={classNames.clear}
             onClick={this.handleClear}
           >

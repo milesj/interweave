@@ -1,6 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import { Group } from '../src/Group';
+import { Group, GroupProps } from '../src/Group';
+import { WithContextProps } from '../src/withContext';
 import {
   COMMON_MODE_FREQUENT,
   GROUP_KEY_SMILEYS_PEOPLE,
@@ -10,7 +11,7 @@ import {
 import { PICKER_CONTEXT } from './mocks';
 
 describe('Group', () => {
-  const props = {
+  const props: GroupProps & WithContextProps = {
     active: false,
     children: GROUP_ICONS[GROUP_KEY_SMILEYS_PEOPLE],
     context: PICKER_CONTEXT,

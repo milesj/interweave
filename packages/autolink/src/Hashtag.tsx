@@ -7,7 +7,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Link, { LinkProps } from './Link';
 
-export interface HashtagProps extends LinkProps {
+export interface HashtagProps extends Partial<LinkProps> {
   children: string;
   encodeHashtag?: boolean;
   hashtagName?: string;
