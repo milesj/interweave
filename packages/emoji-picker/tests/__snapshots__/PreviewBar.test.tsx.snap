@@ -5,9 +5,40 @@ exports[`<PreviewBar /> renders a preview 1`] = `
   className="interweave-picker__preview"
 >
   <div
-    className="interweave-picker__no-preview"
+    className="interweave-picker__preview-emoji"
   >
-    No emoji to display
+    <Emoji
+      emojiLargeSize="3em"
+      emojiPath="{{hexcode}}"
+      emojiSize="1em"
+      emojiSource={
+        Object {
+          "compact": false,
+          "locale": "en",
+          "version": "latest",
+        }
+      }
+      emoticon=""
+      enlargeEmoji={true}
+      hexcode="1F642"
+      renderUnicode={false}
+      shortcode=""
+      unicode=""
+    />
+  </div>
+  <div
+    className="interweave-picker__preview-content"
+  >
+    <div
+      className="interweave-picker__preview-title"
+    >
+      Slightly smiling face
+    </div>
+    <div
+      className="interweave-picker__preview-subtitle"
+    >
+      :) :pleased:
+    </div>
   </div>
 </div>
 `;

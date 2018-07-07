@@ -74,9 +74,9 @@
   dependencies:
     rimraf "^2.6.2"
 
-"@milesj/build-tool-config@^0.110.2":
-  version "0.110.2"
-  resolved "https://registry.npmjs.org/@milesj/build-tool-config/-/build-tool-config-0.110.2.tgz#a38e6a5760033124af7c21d217f4ef2c9b2fc056"
+"@milesj/build-tool-config@^0.111.0":
+  version "0.111.0"
+  resolved "https://registry.npmjs.org/@milesj/build-tool-config/-/build-tool-config-0.111.0.tgz#abdaffc42e50daff4dc85cfc9cd25395e22f7fb1"
   dependencies:
     "@beemo/cli" "^0.19.0"
     "@beemo/core" "^0.19.2"

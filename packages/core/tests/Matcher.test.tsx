@@ -40,7 +40,7 @@ describe('Matcher', () => {
 
       expect(() => {
         customMatcher.createElement('');
-      }).toThrowError('Invalid React element created from Matcher.');
+      }).toThrowError('Invalid React element created from MockMatcher.');
     });
   });
 

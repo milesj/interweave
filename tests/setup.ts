@@ -7,6 +7,7 @@ const emojis = loadEmojiData();
 EmojiDataManager.getInstance('en').parseEmojiData(emojis);
 
 // Mock our fetch and return our bootstrapped data
+// @ts-ignore
 global.fetch = () =>
   Promise.resolve({
     json: () => emojis,
@@ -14,4 +15,5 @@ global.fetch = () =>
   });
 
 // Provide helper to all packages
+// @ts-ignore
 global.loadEmojiData = loadEmojiData;
