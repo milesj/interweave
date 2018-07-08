@@ -38,12 +38,7 @@
     "drivers": [
       "babel",
       "eslint",
-      {
-        "driver": "jest",
-        "dependencies": [
-          "typescript"
-        ]
-      },
+      "jest",
       "prettier",
       "typescript"
     ],

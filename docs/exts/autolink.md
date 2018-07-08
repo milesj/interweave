@@ -7,6 +7,14 @@ an anchor link. This process is achieved with Interweave matchers.
 > as we need to take into account word boundaries, punctuation, and more. Instead, the patterns will
 > do their best to match against the majority of common use cases.
 
+## Installation
+
+```
+yarn add interweave interweave-autolink
+// Or
+npm install interweave interweave-autolink --save
+```
+
 ## URLs
 
 The `UrlMatcher` will match most variations of a URL and its segments. This includes the protocol,

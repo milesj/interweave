@@ -8,6 +8,14 @@ up-to-date data.
 
 - [Emojibase][emojibase]
 
+## Installation
+
+```
+yarn add interweave interweave-emoji emojibase
+// Or
+npm install interweave interweave-emoji emojibase --save
+```
+
 ## Matching Emojis
 
 The `EmojiMatcher` makes use of complex regex patterns provided by Emojibase to find and replace

@@ -24,9 +24,9 @@ Interweave is a robust React library that can...
 Interweave requires React as a peer dependency.
 
 ```
-npm install interweave react --save
-// Or
 yarn add interweave react
+// Or
+npm install interweave react --save
 ```
 
 ## Documentation
