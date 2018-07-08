@@ -25,7 +25,9 @@ export default function withContext<Props extends {} = {}>(
 ): React.ComponentType<Props> {
   return function WithContextWrapper(props: Props) {
     return (
-      <Context.Consumer>{context => <Component {...props} context={context} />}</Context.Consumer>
+      <Context.Consumer>
+        {/* istanbul ignore next */ context => <Component {...props} context={context} />}
+      </Context.Consumer>
     );
   };
 }

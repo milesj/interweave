@@ -3,7 +3,6 @@
  * @license     https://opensource.org/licenses/MIT
  */
 
-import React from 'react';
 import { Hexcode, GroupKey as BaseGroupKey, SkinToneKey as BaseSkinToneKey } from 'emojibase';
 import { CanonicalEmoji } from 'interweave-emoji';
 
@@ -16,7 +15,7 @@ export type CommonMode = 'recently-used' | 'frequently-used';
 
 export interface Context {
   classNames: { [name: string]: string };
-  messages: { [key: string]: React.ReactNode };
+  messages: { [key: string]: string };
 }
 
 export type DisplayOrder = 'preview' | 'emojis' | 'groups' | 'search' | 'skin-tones';

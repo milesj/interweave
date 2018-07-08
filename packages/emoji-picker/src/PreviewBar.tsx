@@ -28,6 +28,7 @@ export interface PreviewBarProps {
   emojiSource: Source;
   hideEmoticon: boolean;
   hideShortcodes: boolean;
+  noPreview?: React.ReactNode;
 }
 
 export class PreviewBar extends React.PureComponent<PreviewBarProps & WithContextProps> {
@@ -39,30 +40,18 @@ export class PreviewBar extends React.PureComponent<PreviewBarProps & WithContex
     emojiSource: SourceShape.isRequired,
     hideEmoticon: PropTypes.bool.isRequired,
     hideShortcodes: PropTypes.bool.isRequired,
+    noPreview: PropTypes.node,
   };
 
   static defaultProps = {
     emoji: null,
+    noPreview: null,
   };
 
   /**
    * Format the title using sentence case.
    */
   formatTitle(title: string): string {
-    const { emoji } = this.props;
-
-    if (!emoji) {
-      return '';
-    }
-
-    const { annotation, primary_shortcode: shortcode = '' } = emoji;
-
-    // Flag and country names are cased correctly
-    if (annotation && shortcode.indexOf('flag_') >= 0) {
-      return annotation;
-    }
-
-    // Uppercase certain characters
     return title.replace(TITLE_REGEX, token => token.toUpperCase());
   }
 
@@ -75,12 +64,15 @@ export class PreviewBar extends React.PureComponent<PreviewBarProps & WithContex
       emojiSource,
       hideEmoticon,
       hideShortcodes,
+      noPreview,
     } = this.props;
 
     if (!emoji) {
+      const preview = noPreview || messages.noPreview;
+
       return (
         <div className={classNames.preview}>
-          {messages.noPreview && <div className={classNames.noPreview}>{messages.noPreview}</div>}
+          {preview && <div className={classNames.noPreview}>{preview}</div>}
         </div>
       );
     }

@@ -6,6 +6,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import camelCase from 'lodash/camelCase';
+import upperFirst from 'lodash/upperFirst';
 import withContext, { WithContextProps } from './withContext';
 import { SKIN_COLORS } from './constants';
 import { ContextShape } from './shapes';
@@ -59,7 +60,7 @@ export class SkinTone extends React.PureComponent<SkinToneProps & WithContextPro
       <button
         className={className.join(' ')}
         style={{ backgroundColor: color, borderColor: color, color }}
-        title={String(messages[`skin${key.charAt(0).toUpperCase()}${key.slice(1)}`])}
+        title={messages[`skin${upperFirst(key)}`]}
         type="button"
         onClick={this.handleClick}
       >

@@ -30,6 +30,7 @@ export interface EmojiListProps {
   emojiSource: Source;
   groupedEmojis: GroupEmojiMap;
   hideGroupHeaders: boolean;
+  noResults?: React.ReactNode;
   onClear: () => void;
   onEnterEmoji: (emoji: CanonicalEmoji, event: React.MouseEvent<HTMLButtonElement>) => void;
   onLeaveEmoji: (emoji: CanonicalEmoji, event: React.MouseEvent<HTMLButtonElement>) => void;
@@ -71,6 +72,7 @@ export class EmojiList extends React.PureComponent<EmojiListUnifiedProps, EmojiL
       }),
     ).isRequired,
     hideGroupHeaders: PropTypes.bool.isRequired,
+    noResults: PropTypes.node,
     onClear: PropTypes.func.isRequired,
     onEnterEmoji: PropTypes.func.isRequired,
     onLeaveEmoji: PropTypes.func.isRequired,
@@ -88,6 +90,7 @@ export class EmojiList extends React.PureComponent<EmojiListUnifiedProps, EmojiL
     activeEmoji: null,
     clearIcon: null,
     columnPadding: 0,
+    noResults: null,
     rowPadding: 0,
     skinTonePalette: null,
   };
@@ -198,7 +201,7 @@ export class EmojiList extends React.PureComponent<EmojiListUnifiedProps, EmojiL
   renderNoResults = () => {
     const { classNames, messages } = this.props.context;
 
-    return <div className={classNames.noResults}>{messages.noResults}</div>;
+    return <div className={classNames.noResults}>{this.props.noResults || messages.noResults}</div>;
   };
 
   /**

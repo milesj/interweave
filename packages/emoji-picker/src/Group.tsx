@@ -56,7 +56,7 @@ export class Group extends React.PureComponent<GroupProps & WithContextProps> {
     return (
       <button
         className={className.join(' ')}
-        title={String(messages[key])}
+        title={messages[key]}
         type="button"
         onClick={this.handleClick}
       >

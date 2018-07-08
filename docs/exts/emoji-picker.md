@@ -42,50 +42,14 @@ To utilize the emoji picker, import and render the `EmojiPicker` component. The 
 place, so any positioning or display toggling should be done manually.
 
 ```javascript
-import EmojiPicker from 'emoji-picker';
+import EmojiPicker from 'interweave-emoji-picker';
 
 <EmojiPicker />;
 ```
 
-### Props
-
-- `autoFocus` (bool) - Focus the search field on mount. Defaults to `false`.
-- `blacklist` (string[]) - List of hexcodes to exclude.
-- `classNames` (object) - Mapping of custom CSS class names.
-- `columnCount` (number) - Number of columns in the list. Defaults to `10`.
-- `commonMode` (enum) - Type of commonly used mode. Defaults to recently used.
-  [View available modes](https://github.com/milesj/interweave/blob/master/packages/emoji-picker/src/constants.ts#L95).
-- `defaultGroup` (enum) - Group tab selected by default. Defaults to common mode.
-  [View available groups](https://github.com/milesj/interweave/blob/master/packages/emoji-picker/src/constants.ts#L45).
-- `defaultSkinTone` (enum) - Skin tone selected by default. Defaults to none (yellow).
-  [View available skin tones](https://github.com/milesj/interweave/blob/master/packages/emoji-picker/src/constants.js#L70).
-- `disableCommonlyUsed` (bool) - Disable the commonly used feature. Defaults to `false`.
-- `disableGroups` (bool) - Disable emoji group tabs and sections. Defaults to `false`.
-- `disablePreview` (bool) - Disable and hide the emoji preview on hover. Defaults to `false`.
-- `disableSearch` (bool) - Disable and hide the search bar. Defaults to `false`.
-- `disableSkinTones` (bool) - Disable and hide the skin tone selector. Defaults to `false`.
-- `displayOrder` (string[]) - Order in which UI components are rendered.
-- `emojiLargeSize` (number) - Size of the preview emoji.
-- `emojiPadding` (number) - Padding around the emoji icon. Defaults to `0`.
-- `emojiPath` (string | function) - Handler to determine the emoji SVG/PNG path.
-- `emojiSize` (string | number) - Size of the emoji within the grid.
-- `groupIcons` (object) - Mapping of custom group icons.
-- `hideEmoticon` (bool) - Hide emoticons in the preview bar. Defaults to `false`.
-- `hideGroupHeaders` (bool) - Hide group headers within list sections. Defaults to `false`.
-- `hideShortcodes` (bool) - Hide shortcodes in the preview bar. Defaults to `false`.
-- `maxCommonlyUsed` (number) - Max number of commonly used emojis. Defaults to `30`.
-- `maxEmojiVersion` (number) - Max official emoji version (yearly). Defaults to the latest spec.
-- `messages` (object) - Mapping of custom localization messages.
-- `onHoverEmoji` (function) - Callback triggered when hovering an emoji.
-- `onScrollGroup` (function) - Callback triggered when a group is scrolled into view.
-- `onSearch` (function) - Callback triggered when typing in the search bar.
-- `onSelectEmoji` (function) - Callback triggered when an emoji is clicked.
-- `onSelectGroup` (function) - Callback triggered when a group tab is clicked.
-- `onSelectSkinTone` (function) - Callback triggered when a skin tone tab is clicked.
-- `rowCount` (number) - Number of rows in the visible list. Defaults to `8`.
-- `skinIcons` (object) - Mapping of custom skin tone icons.
-- `virtual` (object) - Custom props to pass to [react-virtualized][react-virtualized].
-- `whitelist` (string[]) - List of hexcodes to only display.
+> View
+> [TypeScript interface](https://github.com/milesj/interweave/blob/master/packages/emoji-picker/src/Picker.tsx#L71)
+> for available list of props.
 
 ## Blacklist / Whitelist
 
@@ -238,8 +202,6 @@ Localization is important, and thus, all messages within the picker can be trans
   }}
 />
 ```
-
-> Messages are treated as React nodes and may contain elements / components.
 
 [emojibase]: https://github.com/milesj/emojibase
 [react-virtualized]: https://github.com/bvaughn/react-virtualized

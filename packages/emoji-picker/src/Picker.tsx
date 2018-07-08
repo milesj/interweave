@@ -119,6 +119,10 @@ export interface PickerProps {
   maxEmojiVersion?: number;
   /** Mapping of custom translation messages. */
   messages?: { [key: string]: string };
+  /** Content to render by default in the preview bar. */
+  noPreview?: React.ReactNode;
+  /** Content to render when there are no search results. */
+  noResults?: React.ReactNode;
   /** Callback fired when hovering an emoji. */
   onHoverEmoji?: (emoji: CanonicalEmoji, event: React.MouseEvent<HTMLButtonElement>) => void;
   /** Callback fired when scrolling the emoji list. */
@@ -223,6 +227,8 @@ export class Picker extends React.PureComponent<PickerUnifiedProps, PickerState>
     maxCommonlyUsed: PropTypes.number,
     maxEmojiVersion: PropTypes.number,
     messages: PropTypes.objectOf(PropTypes.node),
+    noPreview: PropTypes.node,
+    noResults: PropTypes.node,
     onHoverEmoji: PropTypes.func,
     onScroll: PropTypes.func,
     onScrollGroup: PropTypes.func,
@@ -263,6 +269,8 @@ export class Picker extends React.PureComponent<PickerUnifiedProps, PickerState>
     maxCommonlyUsed: 30,
     maxEmojiVersion: 5,
     messages: {},
+    noPreview: null,
+    noResults: null,
     onHoverEmoji() {},
     onScroll() {},
     onScrollGroup() {},
@@ -845,6 +853,8 @@ export class Picker extends React.PureComponent<PickerUnifiedProps, PickerState>
       hideEmoticon,
       hideGroupHeaders,
       hideShortcodes,
+      noPreview,
+      noResults,
       rowCount,
       skinIcons,
       stickyGroupHeader,
@@ -885,6 +895,7 @@ export class Picker extends React.PureComponent<PickerUnifiedProps, PickerState>
           emojiSource={emojiSource}
           groupedEmojis={groupedEmojis}
           hideGroupHeaders={hideGroupHeaders}
+          noResults={noResults}
           rowCount={rowCount}
           scrollToGroup={scrollToGroup}
           skinTonePalette={displayOrder.includes('skin-tones') ? null : skinTones}
@@ -916,6 +927,7 @@ export class Picker extends React.PureComponent<PickerUnifiedProps, PickerState>
           emojiSource={emojiSource}
           hideEmoticon={hideEmoticon}
           hideShortcodes={hideShortcodes}
+          noPreview={noPreview}
         />
       ),
       search: disableSearch ? null : (

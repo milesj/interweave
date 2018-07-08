@@ -198,7 +198,7 @@ describe('<PreviewBar />', () => {
     });
 
     it('renders no preview message', () => {
-      const none = <b>No preview</b>;
+      const none = 'No preview';
       const wrapper = shallow(
         <PreviewBar
           {...props}
@@ -217,7 +217,15 @@ describe('<PreviewBar />', () => {
       expect(wrapper.contains(none)).toBe(true);
     });
 
-    it('renders nothing if no preview message', () => {
+    it('renders no preview element', () => {
+      const none = <b>No preview</b>;
+      const wrapper = shallow(<PreviewBar {...props} emoji={null} noPreview={none} />);
+
+      expect(wrapper.find('div')).toHaveLength(2);
+      expect(wrapper.contains(none)).toBe(true);
+    });
+
+    it('renders nothing if no preview message or preview element', () => {
       const wrapper = shallow(
         <PreviewBar
           {...props}
@@ -229,6 +237,7 @@ describe('<PreviewBar />', () => {
               noPreview: '',
             },
           }}
+          noPreview={null}
         />,
       );
 
