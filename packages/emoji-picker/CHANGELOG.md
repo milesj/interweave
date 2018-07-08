@@ -3,13 +3,13 @@
 #### 💥 Breaking
 
 - Updated minimum `react` requirement to 16.3.
-- Updated minimum `emojibase` requirement to 1.7.
+- Updated minimum `emojibase` requirement to 2.0.
 - Updated `commonMode`, `defaultGroup`, `defaultSkinTone`, and `displayOrder` to use kebab case
   instead of camel case.
 - Renamed `GROUP_*` constants to `GROUP_KEY_*`.
 - Renamed `SKIN_*` constants to `SKIN_KEY_*`.
-- Removed event argument from `onScroll` and `onScrollGroup` props.
-- Reworked the HTML for the skin tone palette.
+- Removed event argument from `onScroll` and `onScrollGroup` callback props.
+- Restructured the HTML for the skin tone palette.
 
 #### 🚀 New
 

@@ -3,13 +3,13 @@
 #### 💥 Breaking
 
 - Updated minimum `react` requirement to 16.3.
-- Updated minimum `emojibase` requirement to 1.7.
+- Updated minimum `emojibase` requirement to 2.0.
 - Renamed `EmojiData` to `EmojiDataManager`.
 - Removed "Emoji" prefix from `EmojiPathShape`, `EmojiSizeShape`, and `EmojiSourceShape`.
 - Removed class names from generated elements.
 - Reworked `withEmojiData` HOC:
   - Now the default export of the module.
-  - HOC component will return `null` until emoji data has loaded.
+  - HOC component will render `null` until emoji data has loaded.
   - HOC factory now returns a function in which the wrapped component should be passed to.
   - The `compact` and `emojis` props are now options passed to the HOC factory.
 
