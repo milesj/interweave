@@ -10,7 +10,7 @@ import chunk from 'lodash/chunk';
 import { CanonicalEmoji, EmojiShape, Path, PathShape, Source, SourceShape } from 'interweave-emoji';
 import withContext, { WithContextProps } from './withContext';
 import EmojiButton from './Emoji';
-import GroupListHeader from './GroupListHeader';
+import EmojiListHeader from './EmojiListHeader';
 import { GROUP_KEY_NONE } from './constants';
 import { ContextShape } from './shapes';
 import { CommonMode, GroupKey, GroupEmojiMap, GroupIndexMap } from './types';
@@ -184,7 +184,7 @@ export class EmojiList extends React.PureComponent<EmojiListUnifiedProps, EmojiL
     const { clearIcon, commonMode, onClear, skinTonePalette } = this.props;
 
     return (
-      <GroupListHeader
+      <EmojiListHeader
         clearIcon={clearIcon}
         commonMode={commonMode}
         group={group}

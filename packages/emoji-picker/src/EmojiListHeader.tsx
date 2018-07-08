@@ -16,7 +16,7 @@ import {
 import { ContextShape } from './shapes';
 import { CommonMode, GroupKey } from './types';
 
-export interface GroupListHeaderProps {
+export interface EmojiListHeaderProps {
   clearIcon?: React.ReactNode;
   commonMode: CommonMode;
   group: GroupKey;
@@ -25,7 +25,7 @@ export interface GroupListHeaderProps {
   sticky?: boolean;
 }
 
-export class GroupListHeader extends React.PureComponent<GroupListHeaderProps & WithContextProps> {
+export class EmojiListHeader extends React.PureComponent<EmojiListHeaderProps & WithContextProps> {
   static propTypes = {
     clearIcon: PropTypes.node,
     commonMode: PropTypes.string.isRequired,
@@ -94,4 +94,4 @@ export class GroupListHeader extends React.PureComponent<GroupListHeaderProps & 
   }
 }
 
-export default withContext(GroupListHeader);
+export default withContext(EmojiListHeader);
