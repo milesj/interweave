@@ -1,7 +1,7 @@
 const path = require('path');
 
 module.exports = {
-  entry: path.resolve(__dirname, './tests/bundle.js'),
+  entry: path.resolve(__dirname, './tests/bundle.tsx'),
   mode: 'development',
   module: {
     rules: [
