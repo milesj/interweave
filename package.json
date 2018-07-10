@@ -8,7 +8,7 @@
     "jest": "beemo jest --react",
     "posttest": "yarn run eslint",
     "pretest": "yarn run type",
-    "test": "yarn run jest",
+    "test": "DEBUG=* yarn run jest",
     "test:live": "yarn run jest && webpack && serve ./tests/",
     "prettier": "beemo prettier",
     "prerelease": "yarn test && yarn run build",
