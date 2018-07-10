@@ -72,9 +72,9 @@ element entirely.
 For example, to replace `blockquote` elements with a custom element:
 
 ```javascript
-function transform(node) {
-  if (node.tagName === 'BLOCKQUOTE') {
-    return <CustomElement {...node.attributes} />;
+function transform(node, children) {
+  if (node.tagName === 'a') {
+    return <Link href={node.getAttribute('href')}>{children}</Link>;
   }
 }
 

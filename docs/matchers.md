@@ -118,14 +118,11 @@ class CustomMatcher extends Matcher {
 
 When a match is found, a React element is rendered (from a React component) from either the
 matcher's `replaceWith` method, or from a factory. What's a factory you ask? Simply put, it's a
-function passed to the constructor of a matcher, allowing the rendered element to be customized for
-built-in or third-party matchers.
-
-To define a factory, pass a function to the 3rd argument of a matcher constructor. The factory
-function receives the same arguments as `replaceWith`.
+component reference passed to the constructor of a matcher, allowing the rendered element to be
+customized for built-in or third-party matchers.
 
 ```javascript
-new CustomMatcher('foo', {}, (match, props) => <span {...props}>{match}</span>);
+new CustomMatcher('foo', {}, SomeComponent);
 ```
 
 > Elements returned from `replaceWith` or the factory must return an HTML element with the same tag

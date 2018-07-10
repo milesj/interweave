@@ -1,13 +1,7 @@
 # Global Configuration
 
-In an older version of `Interweave`, there was this concept of global configuration, in which
-filters, matchers, and even nested props can be defined. This configuration would then be passed to
-all instances of `Interweave` or `Markup`. Since it was using globals, this approach had its fair
-share of problems.
-
-In newer versions, we suggest composing around `Interweave` using a custom component in your
-application. This provides more options for customization, like the choice between Twitter and
-Instagram hashtags, or PNG or SVG emojis.
+We suggest composing around `Interweave` using a custom component. This provides more options for
+customization, like the choice between Twitter and Instagram hashtags, or PNG or SVG emojis.
 
 ```javascript
 import React from 'react';
@@ -20,9 +14,9 @@ import withEmojiData, { EmojiMatcher } from 'interweave-emoji';
 const globalFilters = [new CustomFilter()];
 
 const globalMatchers = [
+  new EmailMatcher('email'),
   new IpMatcher('ip'),
   new UrlMatcher('url'),
-  new EmailMatcher('email'),
   new HashtagMatcher('hashtag'),
   new EmojiMatcher('emoji', {
     convertEmoticon: true,

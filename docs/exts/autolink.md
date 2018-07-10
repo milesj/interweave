@@ -102,6 +102,8 @@ import { EmailMatcher } from 'interweave-autolink';
 <Interweave matchers={[new EmailMatcher('email')]} />;
 ```
 
+> Email matcher must be registered before URL and IP matchers.
+
 ### Props
 
 The following props are available for `Email` components, all of which should be passed to an
