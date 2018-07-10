@@ -6,7 +6,7 @@ describe('components/Email', () => {
   it('can pass props to Link', () => {
     const func = () => {};
     const wrapper = shallow(
-      <Email onClick={func} newWindow>
+      <Email emailParts={{ host: '', username: '' }} onClick={func} newWindow>
         user@domain.com
       </Email>,
     );

@@ -39,7 +39,7 @@ describe('Matcher', () => {
       const customMatcher = new MockMatcher('foo', {}, () => 123);
 
       expect(() => {
-        customMatcher.createElement('');
+        customMatcher.createElement('', {});
       }).toThrowError('Invalid React element created from MockMatcher.');
     });
   });

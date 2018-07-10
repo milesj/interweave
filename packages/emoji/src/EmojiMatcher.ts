@@ -4,7 +4,7 @@
  */
 
 import React from 'react';
-import { Matcher, MatcherFactory, MatchResponse, Props } from 'interweave';
+import { Matcher, MatcherFactory, MatchResponse } from 'interweave';
 import EMOJI_REGEX from 'emojibase-regex';
 import EMOTICON_REGEX from 'emojibase-regex/emoticon';
 import SHORTCODE_REGEX from 'emojibase-regex/shortcode';
@@ -24,13 +24,13 @@ const EMOTICON_BOUNDARY_REGEX: RegExp = new RegExp(
   `(^|\\\b|\\\s)(${EMOTICON_REGEX.source})(?=\\\s|\\\b|$)`,
 );
 
-export default class EmojiMatcher extends Matcher<EmojiMatcherOptions> {
+export default class EmojiMatcher extends Matcher<EmojiProps, EmojiMatcherOptions> {
   data: EmojiDataManager | null = null;
 
   constructor(
     name: string,
     options: Partial<EmojiMatcherOptions> = {},
-    factory: MatcherFactory | null = null,
+    factory: MatcherFactory<EmojiProps> | null = null,
   ) {
     super(
       name,
@@ -46,13 +46,11 @@ export default class EmojiMatcher extends Matcher<EmojiMatcherOptions> {
     );
   }
 
-  replaceWith(match: string, props: Props) {
-    const emojiProps = {
+  replaceWith(match: string, props: EmojiProps) {
+    return React.createElement(Emoji, {
       ...props,
       renderUnicode: this.options.renderUnicode,
-    } as EmojiProps;
-
-    return React.createElement(Emoji, emojiProps);
+    });
   }
 
   asTag() {
@@ -148,7 +146,7 @@ export default class EmojiMatcher extends Matcher<EmojiMatcherOptions> {
   /**
    * Load emoji data before matching.
    */
-  onBeforeParse(content: string, props: Props): string {
+  onBeforeParse(content: string, props: EmojiProps): string {
     if (props.emojiSource) {
       this.data = EmojiDataManager.getInstance(props.emojiSource.locale);
     } else if (process.env.NODE_ENV !== 'production') {
@@ -161,7 +159,7 @@ export default class EmojiMatcher extends Matcher<EmojiMatcherOptions> {
   /**
    * When a single `Emoji` is the only content, enlarge it!
    */
-  onAfterParse(content: React.ReactNode[], props: Props): React.ReactNode[] {
+  onAfterParse(content: React.ReactNode[], props: EmojiProps): React.ReactNode[] {
     if (content.length === 0) {
       return content;
     }

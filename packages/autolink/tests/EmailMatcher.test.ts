@@ -88,6 +88,7 @@ describe('matchers/EmailMatcher', () => {
       const parts = email.split('@');
 
       return matcher.replaceWith(email, {
+        children: email,
         emailParts: {
           username: parts[0],
           host: parts[1],

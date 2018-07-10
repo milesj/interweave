@@ -27,6 +27,8 @@ export interface EmojiProps {
   enlargeEmoji?: boolean;
   /** Hexcode to reference emoji from. */
   hexcode?: Hexcode;
+  /** @ignore Key provided by the parser. */
+  key?: string | number;
   /** Render literal unicode character instead of an SVG/PNG. */
   renderUnicode?: boolean;
   /** Shortcode to reference emoji from. */

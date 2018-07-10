@@ -9,6 +9,7 @@ import PropTypes from 'prop-types';
 export interface LinkProps {
   children: React.ReactNode;
   href: string;
+  key?: string | number;
   newWindow?: boolean;
   onClick?: () => void | null;
 }

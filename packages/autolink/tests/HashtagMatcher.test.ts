@@ -50,6 +50,7 @@ describe('matchers/HashtagMatcher', () => {
     const parser = new Parser('', {}, [matcher]);
     const createHashtag = (hashtag: string, key: number) =>
       matcher.replaceWith(hashtag, {
+        children: hashtag,
         hashtagName: hashtag.slice(1),
         key,
       });

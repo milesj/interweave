@@ -21,13 +21,9 @@ export interface Attributes {
   [attr: string]: string | number | boolean;
 }
 
-export interface Props {
-  [prop: string]: any;
-}
+export type AfterParseCallback<T> = (content: React.ReactNode[], props: T) => React.ReactNode[];
 
-export type AfterParseCallback = (content: React.ReactNode[], props: Props) => React.ReactNode[];
-
-export type BeforeParseCallback = (content: string, props: Props) => string;
+export type BeforeParseCallback<T> = (content: string, props: T) => string;
 
 export type TransformCallback = (
   node: HTMLElement,

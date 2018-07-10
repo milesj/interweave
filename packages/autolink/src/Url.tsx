@@ -9,14 +9,14 @@ import Link, { LinkProps } from './Link';
 
 export interface UrlProps extends Partial<LinkProps> {
   children: string;
-  urlParts?: {
-    auth?: string;
-    fragment?: string;
-    host?: string;
-    path?: string;
-    port?: string | number;
-    query?: string;
-    scheme?: string;
+  urlParts: {
+    auth: string;
+    fragment: string;
+    host: string;
+    path: string;
+    port: string | number;
+    query: string;
+    scheme: string;
   };
 }
 
@@ -31,11 +31,7 @@ export default class Url extends React.PureComponent<UrlProps> {
       port: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
       query: PropTypes.string,
       scheme: PropTypes.string,
-    }),
-  };
-
-  static defaultProps = {
-    urlParts: {},
+    }).isRequired,
   };
 
   render() {

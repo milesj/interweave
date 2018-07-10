@@ -191,6 +191,10 @@
   version "4.14.110"
   resolved "https://registry.npmjs.org/@types/lodash/-/lodash-4.14.110.tgz#fb07498f84152947f30ea09d89207ca07123461e"
 
+"@types/lodash@^4.14.111":
+  version "4.14.111"
+  resolved "https://registry.npmjs.org/@types/lodash/-/lodash-4.14.111.tgz#d926250baa9526c0ffe85914dd10363068e7893a"
+
 "@types/micromatch@^3.1.0":
   version "3.1.0"
   resolved "https://registry.npmjs.org/@types/micromatch/-/micromatch-3.1.0.tgz#514c8a3d24b2680a9b838eeb80e6d7d724545433"

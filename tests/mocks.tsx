@@ -119,7 +119,7 @@ export function matchCodeTag(string: string, tag: string): any {
   };
 }
 
-export class CodeTagMatcher extends Matcher {
+export class CodeTagMatcher extends Matcher<any> {
   tag: string;
 
   key: string;
@@ -155,7 +155,7 @@ export class CodeTagMatcher extends Matcher {
   }
 }
 
-export class MockMatcher extends Matcher {
+export class MockMatcher extends Matcher<any> {
   replaceWith(match: string, props: any) {
     return <div {...props}>{match}</div>;
   }

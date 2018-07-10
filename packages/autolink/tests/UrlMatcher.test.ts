@@ -209,6 +209,7 @@ describe('matchers/UrlMatcher', () => {
       const { url, ...params } = urlParams;
 
       return matcher.replaceWith(url, {
+        children: url,
         urlParts: {
           host: 'example.com',
           path: '',
@@ -243,9 +244,15 @@ describe('matchers/UrlMatcher', () => {
 
   describe('replaceWith()', () => {
     const props = {
+      children: '',
       urlParts: {
+        auth: '',
         scheme: 'http',
+        fragment: '',
         host: 'domain.foo',
+        path: '',
+        port: '',
+        query: '',
       },
     };
 
@@ -268,7 +275,9 @@ describe('matchers/UrlMatcher', () => {
     it('supports prefixed TLDs', () => {
       expect(
         matcher.replaceWith('http://domain.co.uk', {
+          children: 'http://domain.co.uk',
           urlParts: {
+            ...props.urlParts,
             scheme: 'http',
             host: 'domain.co.uk',
           },

@@ -7,12 +7,12 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import Parser from './Parser';
+import Parser, { ParserProps } from './Parser';
 import Markup, { MarkupProps } from './Markup';
 import { FilterInterface } from './Filter';
 import { MatcherInterface } from './Matcher';
 import { FilterShape, MatcherShape } from './shapes';
-import { Props, AfterParseCallback, BeforeParseCallback, TransformCallback } from './types';
+import { AfterParseCallback, BeforeParseCallback, TransformCallback } from './types';
 
 export interface InterweaveProps extends MarkupProps {
   /** Support all the props used by matchers. */
@@ -24,11 +24,11 @@ export interface InterweaveProps extends MarkupProps {
   /** List of filters to apply to the content. */
   filters?: FilterInterface[];
   /** List of matchers to apply to the content. */
-  matchers?: MatcherInterface[];
+  matchers?: MatcherInterface<any>[];
   /** Callback fired after parsing ends. Must return an array of React nodes. */
-  onAfterParse?: AfterParseCallback | null;
+  onAfterParse?: AfterParseCallback<InterweaveProps> | null;
   /** Callback fired beore parsing begins. Must return a string. */
-  onBeforeParse?: BeforeParseCallback | null;
+  onBeforeParse?: BeforeParseCallback<InterweaveProps> | null;
   /** Transformer ran on each HTML element. Return a new element, null to remove current element, or undefined to do nothing. */
   transform?: TransformCallback | null;
 }
@@ -115,7 +115,7 @@ export default class Interweave extends React.PureComponent<InterweaveProps> {
     }, content || '');
 
     // Parse the markup
-    const parser = new Parser(markup, props as Props, allMatchers, allFilters);
+    const parser = new Parser(markup, props as ParserProps, allMatchers, allFilters);
 
     // Trigger after callbacks
     const nodes = afterCallbacks.reduce((parserNodes, callback) => {

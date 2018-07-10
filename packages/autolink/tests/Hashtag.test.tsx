@@ -4,7 +4,11 @@ import Hashtag from '../src/Hashtag';
 
 describe('components/Hashtag', () => {
   it('can define the URL', () => {
-    const wrapper = shallow(<Hashtag hashtagUrl="http://foo.com/{{hashtag}}">#interweave</Hashtag>);
+    const wrapper = shallow(
+      <Hashtag hashtagName="interweave" hashtagUrl="http://foo.com/{{hashtag}}">
+        #interweave
+      </Hashtag>,
+    );
 
     expect(wrapper.prop('children')).toBe('#interweave');
     expect(wrapper.prop('href')).toBe('http://foo.com/interweave');
@@ -12,7 +16,9 @@ describe('components/Hashtag', () => {
 
   it('can define the URL with a function', () => {
     const wrapper = shallow(
-      <Hashtag hashtagUrl={tag => `http://foo.com/${tag.toUpperCase()}`}>#interweave</Hashtag>,
+      <Hashtag hashtagName="interweave" hashtagUrl={tag => `http://foo.com/${tag.toUpperCase()}`}>
+        #interweave
+      </Hashtag>,
     );
 
     expect(wrapper.prop('children')).toBe('#interweave');
@@ -21,7 +27,7 @@ describe('components/Hashtag', () => {
 
   it('can encode the hashtag', () => {
     const wrapper = shallow(
-      <Hashtag encodeHashtag preserveHash>
+      <Hashtag hashtagName="interweave" encodeHashtag preserveHash>
         #interweave
       </Hashtag>,
     );
@@ -33,7 +39,7 @@ describe('components/Hashtag', () => {
   it('can pass props to Link', () => {
     const func = () => {};
     const wrapper = shallow(
-      <Hashtag onClick={func} newWindow>
+      <Hashtag hashtagName="interweave" onClick={func} newWindow>
         #interweave
       </Hashtag>,
     );

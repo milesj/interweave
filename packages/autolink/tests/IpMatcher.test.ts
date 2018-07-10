@@ -99,6 +99,7 @@ describe('matchers/IpMatcher', () => {
       const { ip, ...params } = ipParams;
 
       return matcher.replaceWith(ip, {
+        children: ip,
         urlParts: {
           host: '',
           path: '',

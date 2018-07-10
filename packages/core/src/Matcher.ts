@@ -4,30 +4,35 @@
  */
 
 import React from 'react';
-import { MatchCallback, MatchResponse, Props } from './types';
+import { MatchCallback, MatchResponse } from './types';
 
-export type MatcherFactory = (match: string, props: Props) => React.ReactNode;
+export type MatcherFactory<T> = (match: string, props: T) => React.ReactNode;
 
-export interface MatcherInterface {
+export interface MatcherInterface<T> {
   inverseName: string;
   propName: string;
   asTag(): string;
-  createElement(match: string, props?: Props): React.ReactNode;
+  createElement(match: string, props: T): React.ReactNode;
   match(value: string): MatchResponse | null;
-  onBeforeParse?(content: string, props: Props): string;
-  onAfterParse?(content: React.ReactNode[], props: Props): React.ReactNode[];
+  onBeforeParse?(content: string, props: T): string;
+  onAfterParse?(content: React.ReactNode[], props: T): React.ReactNode[];
 }
 
-export default abstract class Matcher<T extends {} = {}> implements MatcherInterface {
-  options: T;
+export default abstract class Matcher<Props extends {}, Options extends {} = {}>
+  implements MatcherInterface<Props> {
+  options: Options;
 
   propName: string;
 
   inverseName: string;
 
-  factory: MatcherFactory | null;
+  factory: MatcherFactory<Props> | null;
 
-  constructor(name: string, options: Partial<T> = {}, factory: MatcherFactory | null = null) {
+  constructor(
+    name: string,
+    options: Partial<Options> = {},
+    factory: MatcherFactory<Props> | null = null,
+  ) {
     if (process.env.NODE_ENV !== 'production') {
       if (!name || name.toLowerCase() === 'html') {
         throw new Error(`The matcher name "${name}" is not allowed.`);
@@ -45,7 +50,7 @@ export default abstract class Matcher<T extends {} = {}> implements MatcherInter
    * Attempts to create a React element using a custom user provided factory,
    * or the default matcher factory.
    */
-  createElement(match: string, props: Props = {}): React.ReactNode {
+  createElement(match: string, props: Props): React.ReactNode {
     let element = null;
 
     if (typeof this.factory === 'function') {

@@ -10,7 +10,7 @@ import Link, { LinkProps } from './Link';
 export interface HashtagProps extends Partial<LinkProps> {
   children: string;
   encodeHashtag?: boolean;
-  hashtagName?: string;
+  hashtagName: string;
   hashtagUrl?: string | ((hashtag: string) => string);
   preserveHash?: boolean;
 }
@@ -19,14 +19,13 @@ export default class Hashtag extends React.PureComponent<HashtagProps> {
   static propTypes = {
     children: PropTypes.string.isRequired,
     encodeHashtag: PropTypes.bool,
-    hashtagName: PropTypes.string,
+    hashtagName: PropTypes.string.isRequired,
     hashtagUrl: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
     preserveHash: PropTypes.bool,
   };
 
   static defaultProps = {
     encodeHashtag: false,
-    hashtagName: '',
     hashtagUrl: '{{hashtag}}',
     preserveHash: false,
   };

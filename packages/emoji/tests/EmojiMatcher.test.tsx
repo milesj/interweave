@@ -220,6 +220,7 @@ describe('EmojiMatcher', () => {
   describe('onBeforeParse()', () => {
     it('errors when no emojiSource', () => {
       expect(() => {
+        // @ts-ignore
         matcher.onBeforeParse('', {});
       }).toThrowError('Missing emoji source data. Have you loaded using `withEmojiData`?');
     });
@@ -233,12 +234,18 @@ describe('EmojiMatcher', () => {
 
   describe('onAfterParse', () => {
     it('returns when an empty array', () => {
-      expect(matcher.onAfterParse([], {})).toEqual([]);
+      expect(
+        matcher.onAfterParse([], {
+          emojiSource: SOURCE_PROP,
+        }),
+      ).toEqual([]);
     });
 
     it('enlarges a single <Emoji/>', () => {
       expect(
-        matcher.onAfterParse([<Emoji key={0} shortcode=":cat:" emojiSource={SOURCE_PROP} />], {}),
+        matcher.onAfterParse([<Emoji key={0} shortcode=":cat:" emojiSource={SOURCE_PROP} />], {
+          emojiSource: SOURCE_PROP,
+        }),
       ).toEqual([<Emoji key={0} shortcode=":cat:" emojiSource={SOURCE_PROP} enlargeEmoji />]);
     });
 
@@ -252,7 +259,9 @@ describe('EmojiMatcher', () => {
             <Emoji key={1} shortcode=":dog:" emojiSource={SOURCE_PROP} />,
             <Emoji key={2} shortcode=":man:" emojiSource={SOURCE_PROP} />,
           ],
-          {},
+          {
+            emojiSource: SOURCE_PROP,
+          },
         ),
       ).toEqual([
         <Emoji key={0} shortcode=":cat:" emojiSource={SOURCE_PROP} enlargeEmoji />,
@@ -270,7 +279,9 @@ describe('EmojiMatcher', () => {
             <Emoji key={0} shortcode=":cat:" emojiSource={SOURCE_PROP} />,
             <Emoji key={1} shortcode=":man:" emojiSource={SOURCE_PROP} />,
           ],
-          {},
+          {
+            emojiSource: SOURCE_PROP,
+          },
         ),
       ).toEqual([
         <Emoji key={0} shortcode=":cat:" emojiSource={SOURCE_PROP} enlargeEmoji />,
@@ -278,7 +289,9 @@ describe('EmojiMatcher', () => {
       ]);
 
       expect(
-        matcher.onAfterParse([<Emoji key={0} shortcode=":cat:" emojiSource={SOURCE_PROP} />], {}),
+        matcher.onAfterParse([<Emoji key={0} shortcode=":cat:" emojiSource={SOURCE_PROP} />], {
+          emojiSource: SOURCE_PROP,
+        }),
       ).toEqual([<Emoji key={0} shortcode=":cat:" emojiSource={SOURCE_PROP} enlargeEmoji />]);
     });
 
@@ -294,7 +307,9 @@ describe('EmojiMatcher', () => {
             '\n',
             <Emoji key={2} shortcode=":man:" emojiSource={SOURCE_PROP} />,
           ],
-          {},
+          {
+            emojiSource: SOURCE_PROP,
+          },
         ),
       ).toEqual([
         <Emoji key={0} shortcode=":cat:" emojiSource={SOURCE_PROP} enlargeEmoji />,
@@ -315,7 +330,11 @@ describe('EmojiMatcher', () => {
         <Emoji key={3} shortcode=":woman:" emojiSource={SOURCE_PROP} />,
       ];
 
-      expect(matcher.onAfterParse(nodes, {})).toEqual(nodes);
+      expect(
+        matcher.onAfterParse(nodes, {
+          emojiSource: SOURCE_PROP,
+        }),
+      ).toEqual(nodes);
     });
 
     it('doesnt enlarge when strings are found', () => {
@@ -327,7 +346,11 @@ describe('EmojiMatcher', () => {
         <Emoji key={2} shortcode=":man:" emojiSource={SOURCE_PROP} />,
       ];
 
-      expect(matcher.onAfterParse(nodes, {})).toEqual(nodes);
+      expect(
+        matcher.onAfterParse(nodes, {
+          emojiSource: SOURCE_PROP,
+        }),
+      ).toEqual(nodes);
     });
 
     it('doesnt enlarge when non-<Emoji/> are found', () => {
@@ -339,19 +362,31 @@ describe('EmojiMatcher', () => {
         <Emoji key={2} shortcode=":man:" emojiSource={SOURCE_PROP} />,
       ];
 
-      expect(matcher.onAfterParse(nodes, {})).toEqual(nodes);
+      expect(
+        matcher.onAfterParse(nodes, {
+          emojiSource: SOURCE_PROP,
+        }),
+      ).toEqual(nodes);
     });
 
     it('ignores non-<Emoji/>', () => {
       const nodes = [<div key="foo">Foo</div>];
 
-      expect(matcher.onAfterParse(nodes, {})).toEqual(nodes);
+      expect(
+        matcher.onAfterParse(nodes, {
+          emojiSource: SOURCE_PROP,
+        }),
+      ).toEqual(nodes);
     });
 
     it('ignores content longer than 1', () => {
       const nodes = [<div key="foo">Foo</div>, 'Bar'];
 
-      expect(matcher.onAfterParse(nodes, {})).toEqual(nodes);
+      expect(
+        matcher.onAfterParse(nodes, {
+          emojiSource: SOURCE_PROP,
+        }),
+      ).toEqual(nodes);
     });
   });
 });

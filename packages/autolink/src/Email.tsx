@@ -9,9 +9,9 @@ import Link, { LinkProps } from './Link';
 
 export interface EmailProps extends Partial<LinkProps> {
   children: string;
-  emailParts?: {
-    host?: string;
-    username?: string;
+  emailParts: {
+    host: string;
+    username: string;
   };
 }
 
@@ -21,11 +21,7 @@ export default class Email extends React.PureComponent<EmailProps> {
     emailParts: PropTypes.shape({
       host: PropTypes.string,
       username: PropTypes.string,
-    }),
-  };
-
-  static defaultProps = {
-    emailParts: {},
+    }).isRequired,
   };
 
   render() {

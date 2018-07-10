@@ -30,11 +30,11 @@ const ROOT_COMPARE_LENGTH: number = 4;
 const ARIA_COMPARE_LENGTH: number = 5;
 
 export interface ParserProps {
+  [key: string]: any;
   disableLineBreaks?: boolean;
   noHtml?: boolean;
   noHtmlExceptMatchers?: boolean;
   transform?: TransformCallback;
-  [key: string]: any;
 }
 
 export default class Parser {
@@ -44,7 +44,7 @@ export default class Parser {
 
   props: ParserProps;
 
-  matchers: MatcherInterface[];
+  matchers: MatcherInterface<any>[];
 
   filters: FilterInterface[];
 
@@ -53,7 +53,7 @@ export default class Parser {
   constructor(
     markup: string,
     props: ParserProps = {},
-    matchers: MatcherInterface[] = [],
+    matchers: MatcherInterface<any>[] = [],
     filters: FilterInterface[] = [],
   ) {
     if (process.env.NODE_ENV !== 'production') {

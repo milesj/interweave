@@ -4,7 +4,7 @@
  */
 
 import React from 'react';
-import { Matcher, MatcherFactory, MatchResponse, Props } from 'interweave';
+import { Matcher, MatcherFactory, MatchResponse } from 'interweave';
 import Url, { UrlProps } from './Url';
 import { URL_PATTERN, TOP_LEVEL_TLDS } from './constants';
 
@@ -13,11 +13,11 @@ export interface UrlMatcherOptions {
   validateTLD: boolean;
 }
 
-export default class UrlMatcher extends Matcher<UrlMatcherOptions> {
+export default class UrlMatcher extends Matcher<UrlProps, UrlMatcherOptions> {
   constructor(
     name: string,
     options: Partial<UrlMatcherOptions> = {},
-    factory: MatcherFactory | null = null,
+    factory: MatcherFactory<UrlProps> | null = null,
   ) {
     super(
       name,
@@ -30,7 +30,7 @@ export default class UrlMatcher extends Matcher<UrlMatcherOptions> {
     );
   }
 
-  replaceWith(match: string, props: Props) {
+  replaceWith(match: string, props: UrlProps) {
     if (this.options.validateTLD) {
       const { host } = props.urlParts;
       const validList = TOP_LEVEL_TLDS.concat(this.options.customTLDs);
@@ -41,7 +41,7 @@ export default class UrlMatcher extends Matcher<UrlMatcherOptions> {
       }
     }
 
-    return React.createElement(Url, props as UrlProps, match);
+    return React.createElement(Url, props, match);
   }
 
   asTag() {

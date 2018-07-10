@@ -4,6 +4,7 @@
  */
 
 import { MatcherFactory, MatchResponse } from 'interweave';
+import { UrlProps } from './Url';
 import UrlMatcher, { UrlMatcherOptions } from './UrlMatcher';
 import { IP_PATTERN } from './constants';
 
@@ -11,7 +12,7 @@ export default class IpMatcher extends UrlMatcher {
   constructor(
     name: string,
     options: Partial<UrlMatcherOptions> = {},
-    factory: MatcherFactory | null = null,
+    factory: MatcherFactory<UrlProps> | null = null,
   ) {
     super(
       name,
