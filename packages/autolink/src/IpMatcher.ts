@@ -3,7 +3,8 @@
  * @license     https://opensource.org/licenses/MIT
  */
 
-import { MatcherFactory, MatchResponse } from 'interweave';
+import React from 'react';
+import { MatchResponse } from 'interweave';
 import { UrlProps } from './Url';
 import UrlMatcher, { UrlMatcherOptions } from './UrlMatcher';
 import { IP_PATTERN } from './constants';
@@ -12,7 +13,7 @@ export default class IpMatcher extends UrlMatcher {
   constructor(
     name: string,
     options: Partial<UrlMatcherOptions> = {},
-    factory: MatcherFactory<UrlProps> | null = null,
+    factory: React.ComponentType<UrlProps> | null = null,
   ) {
     super(
       name,

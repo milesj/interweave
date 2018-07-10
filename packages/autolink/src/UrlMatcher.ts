@@ -4,7 +4,7 @@
  */
 
 import React from 'react';
-import { Matcher, MatcherFactory, MatchResponse } from 'interweave';
+import { Matcher, MatchResponse } from 'interweave';
 import Url, { UrlProps } from './Url';
 import { URL_PATTERN, TOP_LEVEL_TLDS } from './constants';
 
@@ -17,7 +17,7 @@ export default class UrlMatcher extends Matcher<UrlProps, UrlMatcherOptions> {
   constructor(
     name: string,
     options: Partial<UrlMatcherOptions> = {},
-    factory: MatcherFactory<UrlProps> | null = null,
+    factory: React.ComponentType<UrlProps> | null = null,
   ) {
     super(
       name,

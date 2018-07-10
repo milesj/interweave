@@ -4,7 +4,7 @@
  */
 
 import React from 'react';
-import { Matcher, MatcherFactory, MatchResponse } from 'interweave';
+import { Matcher, MatchResponse } from 'interweave';
 import EMOJI_REGEX from 'emojibase-regex';
 import EMOTICON_REGEX from 'emojibase-regex/emoticon';
 import SHORTCODE_REGEX from 'emojibase-regex/shortcode';
@@ -30,7 +30,7 @@ export default class EmojiMatcher extends Matcher<EmojiProps, EmojiMatcherOption
   constructor(
     name: string,
     options: Partial<EmojiMatcherOptions> = {},
-    factory: MatcherFactory<EmojiProps> | null = null,
+    factory: React.ComponentType<EmojiProps> | null = null,
   ) {
     super(
       name,

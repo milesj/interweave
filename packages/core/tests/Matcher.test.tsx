@@ -25,18 +25,23 @@ describe('Matcher', () => {
       );
     });
 
-    it('returns a React element from custom factory', () => {
-      const customMatcher = new MockMatcher('foo', {}, (match, p) => (
-        <Element tagName={p.tagName}>{match}</Element>
-      ));
+    it('can use a React component as a custom factory', () => {
+      function CustomFactoryComponent(props: any) {
+        return <Element tagName={props.tagName}>{props.children}</Element>;
+      }
+
+      const customMatcher = new MockMatcher('foo', {}, CustomFactoryComponent);
 
       expect(customMatcher.createElement('Bar', { tagName: 'div' })).toEqual(
-        <Element tagName="div">Bar</Element>,
+        <CustomFactoryComponent tagName="div">Bar</CustomFactoryComponent>,
       );
     });
 
     it('errors if not a React element', () => {
-      const customMatcher = new MockMatcher('foo', {}, () => 123);
+      const customMatcher = new MockMatcher('foo', {});
+
+      // @ts-ignore
+      customMatcher.replaceWith = () => 123;
 
       expect(() => {
         customMatcher.createElement('', {});

@@ -6,8 +6,6 @@
 import React from 'react';
 import { MatchCallback, MatchResponse } from './types';
 
-export type MatcherFactory<T> = (match: string, props: T) => React.ReactNode;
-
 export interface MatcherInterface<T> {
   inverseName: string;
   propName: string;
@@ -26,12 +24,12 @@ export default abstract class Matcher<Props extends {}, Options extends {} = {}>
 
   inverseName: string;
 
-  factory: MatcherFactory<Props> | null;
+  factory: React.ComponentType<Props> | null;
 
   constructor(
     name: string,
     options: Partial<Options> = {},
-    factory: MatcherFactory<Props> | null = null,
+    factory: React.ComponentType<Props> | null = null,
   ) {
     if (process.env.NODE_ENV !== 'production') {
       if (!name || name.toLowerCase() === 'html') {
@@ -53,8 +51,8 @@ export default abstract class Matcher<Props extends {}, Options extends {} = {}>
   createElement(match: string, props: Props): React.ReactNode {
     let element = null;
 
-    if (typeof this.factory === 'function') {
-      element = this.factory(match, props);
+    if (this.factory) {
+      element = React.createElement(this.factory, props, match);
     } else {
       element = this.replaceWith(match, props);
     }

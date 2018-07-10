@@ -7,6 +7,7 @@
 - Updated `Interweave` and `Markup` prop to default `tagName` to `div` (from `span`).
 - Removed `className` and `commonClass` props.
   - If you require custom class names, use a `Filter` and append to the node manually.
+- Refactored `Matcher` factories to use a React component reference, instead of a factory function.
 
 #### 🐞 Fixed
 
