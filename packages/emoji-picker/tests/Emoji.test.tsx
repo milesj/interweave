@@ -15,7 +15,6 @@ describe('Emoji', () => {
     emojiPath: '{{hexcode}}',
     emojiSize: 22,
     emojiSource: SOURCE_PROP,
-    showImage: true,
     onEnter() {},
     onLeave() {},
     onSelect() {},
@@ -37,16 +36,6 @@ describe('Emoji', () => {
     expect(wrapper).toMatchSnapshot();
     expect(char).toHaveLength(1);
     expect(char.prop('hexcode')).toBe(props.emoji.hexcode);
-  });
-
-  it('renders a placeholder if images are hidden', () => {
-    const wrapper = shallow(<Emoji {...props} showImage={false} />);
-
-    expect(wrapper.find('Emoji')).toHaveLength(0);
-    expect(wrapper.find('div').prop('style')).toEqual({
-      width: 22,
-      height: 22,
-    });
   });
 
   it('updates the active state', () => {

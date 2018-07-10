@@ -27,7 +27,6 @@ export interface EmojiProps {
   onEnter: (emoji: CanonicalEmoji, event: React.MouseEvent<HTMLButtonElement>) => void;
   onLeave: (emoji: CanonicalEmoji, event: React.MouseEvent<HTMLButtonElement>) => void;
   onSelect: (emoji: CanonicalEmoji, event: React.MouseEvent<HTMLButtonElement>) => void;
-  showImage: boolean;
 }
 
 export class Emoji extends React.Component<EmojiProps & WithContextProps> {
@@ -42,7 +41,6 @@ export class Emoji extends React.Component<EmojiProps & WithContextProps> {
     onEnter: PropTypes.func.isRequired,
     onLeave: PropTypes.func.isRequired,
     onSelect: PropTypes.func.isRequired,
-    showImage: PropTypes.bool.isRequired,
   };
 
   /**
@@ -81,7 +79,6 @@ export class Emoji extends React.Component<EmojiProps & WithContextProps> {
       emojiPath,
       emojiSize,
       emojiSource,
-      showImage,
     } = this.props;
     const dimension = emojiPadding + emojiPadding + emojiSize;
     const className = [classNames.emoji];
@@ -105,24 +102,12 @@ export class Emoji extends React.Component<EmojiProps & WithContextProps> {
         onMouseEnter={this.handleEnter}
         onMouseLeave={this.handleLeave}
       >
-        {showImage ? (
-          <EmojiCharacter
-            emojiPath={emojiPath}
-            emojiSize={emojiSize}
-            emojiSource={emojiSource}
-            hexcode={emoji.hexcode}
-          />
-        ) : (
-          <div
-            className={classNames.emojiLoading}
-            style={{
-              height: emojiSize,
-              width: emojiSize,
-            }}
-          >
-            &nbsp;
-          </div>
-        )}
+        <EmojiCharacter
+          emojiPath={emojiPath}
+          emojiSize={emojiSize}
+          emojiSource={emojiSource}
+          hexcode={emoji.hexcode}
+        />
       </button>
     );
   }

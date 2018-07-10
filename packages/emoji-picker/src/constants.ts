@@ -99,7 +99,6 @@ export const CONTEXT_CLASSNAMES = {
   picker: 'interweave-picker__picker',
   emoji: 'interweave-picker__emoji',
   emojiActive: 'interweave-picker__emoji--active',
-  emojiLoading: 'interweave-picker__emoji--loading',
   emojis: 'interweave-picker__emojis',
   emojisList: 'interweave-picker__emojis-list',
   emojisRow: 'interweave-picker__emojis-row',

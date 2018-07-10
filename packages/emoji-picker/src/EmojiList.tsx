@@ -208,7 +208,7 @@ export class EmojiList extends React.PureComponent<EmojiListUnifiedProps, EmojiL
    * Render the list row. Either a group header or a row of emoji columns.
    */
   renderRow = (props: ListRowProps) => {
-    const { key, index, isVisible, style } = props;
+    const { key, index, style } = props;
     const {
       activeEmoji,
       context: { classNames },
@@ -235,7 +235,6 @@ export class EmojiList extends React.PureComponent<EmojiListUnifiedProps, EmojiL
                 emojiPath={emojiPath}
                 emojiSize={emojiSize}
                 emojiSource={emojiSource}
-                showImage={isVisible}
                 onEnter={onEnterEmoji}
                 onLeave={onLeaveEmoji}
                 onSelect={onSelectEmoji}
@@ -285,7 +284,7 @@ export class EmojiList extends React.PureComponent<EmojiListUnifiedProps, EmojiL
           className={classNames.emojisList}
           height={rowHeight * rowCount}
           noRowsRenderer={this.renderNoResults}
-          overscanRowCount={rowCount}
+          overscanRowCount={rowCount / 2}
           rowCount={rows.length}
           rowHeight={rowHeight}
           rowRenderer={this.renderRow}

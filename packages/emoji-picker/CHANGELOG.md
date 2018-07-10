@@ -18,7 +18,6 @@
 - Added a `noPreview` prop that renders content when there is no preview.
 - Added a `noResults` prop that renders content when there is no search results.
 - Added a `stickyGroupHeader` prop to enable sticky group headers.
-- Added an `emojiLoading` class name. Can be used to style a loading state for each emoji.
 - Added an `emojisHeaderSticky` class name. Can be used to style stickied group headers.
 
 #### 🛠 Internal
