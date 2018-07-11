@@ -8,7 +8,7 @@
     "jest": "beemo jest --react",
     "posttest": "yarn run eslint",
     "pretest": "yarn run type",
-    "test": "DEBUG=* yarn run jest",
+    "test": "yarn run jest",
     "test:live": "yarn run jest && webpack && serve ./tests/",
     "prettier": "beemo prettier",
     "prerelease": "yarn test && yarn run build",
@@ -16,7 +16,7 @@
     "type": "beemo typescript --workspaces=* --noEmit --react"
   },
   "devDependencies": {
-    "@milesj/build-tool-config": "^0.111.0",
+    "@milesj/build-tool-config": "^0.112.0",
     "@types/react": "^16.4.6",
     "@types/react-dom": "^16.0.6",
     "babel-loader": "^7.1.5",
