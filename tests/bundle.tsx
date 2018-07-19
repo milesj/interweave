@@ -249,8 +249,6 @@ function App() {
 
       <Interweave {...emojiProps} tagName="span" content=":{>" />
 
-      <Interweave {...emojiProps} tagName="span" content="0)" />
-
       <Interweave {...emojiProps} tagName="span" content="8#" />
 
       <h1>Shortcodes</h1>
