@@ -5,6 +5,8 @@
 
 import React from 'react';
 
+export type Node = null | string | React.ReactElement<any>;
+
 export interface NodeConfig {
   block?: boolean;
   children?: string[];
@@ -21,13 +23,13 @@ export interface Attributes {
   [attr: string]: string | number | boolean;
 }
 
-export type AfterParseCallback<T> = (content: React.ReactNode[], props: T) => React.ReactNode[];
+export type AfterParseCallback<T> = (content: Node[], props: T) => Node[];
 
 export type BeforeParseCallback<T> = (content: string, props: T) => string;
 
 export type TransformCallback = (
   node: HTMLElement,
-  children: React.ReactNode[],
+  children: Node[],
   config: NodeConfig,
 ) => React.ReactNode;
 

@@ -4,16 +4,16 @@
  */
 
 import React from 'react';
-import { MatchCallback, MatchResponse } from './types';
+import { MatchCallback, MatchResponse, Node } from './types';
 
 export interface MatcherInterface<T> {
   inverseName: string;
   propName: string;
   asTag(): string;
-  createElement(match: string, props: T): React.ReactNode;
+  createElement(match: string, props: T): Node;
   match(value: string): MatchResponse | null;
   onBeforeParse?(content: string, props: T): string;
-  onAfterParse?(content: React.ReactNode[], props: T): React.ReactNode[];
+  onAfterParse?(content: Node[], props: T): Node[];
 }
 
 export default abstract class Matcher<Props extends {}, Options extends {} = {}>
@@ -48,8 +48,8 @@ export default abstract class Matcher<Props extends {}, Options extends {} = {}>
    * Attempts to create a React element using a custom user provided factory,
    * or the default matcher factory.
    */
-  createElement(match: string, props: Props): React.ReactNode {
-    let element = null;
+  createElement(match: string, props: Props): Node {
+    let element: any = null;
 
     if (this.factory) {
       element = React.createElement(this.factory, props, match);
@@ -69,7 +69,7 @@ export default abstract class Matcher<Props extends {}, Options extends {} = {}>
   /**
    * Replace the match with a React element based on the matched token and optional props.
    */
-  abstract replaceWith(match: string, props: Props): React.ReactNode;
+  abstract replaceWith(match: string, props: Props): Node;
 
   /**
    * Defines the HTML tag name that the resulting React element will be.
@@ -109,7 +109,7 @@ export default abstract class Matcher<Props extends {}, Options extends {} = {}>
   /**
    * Callback triggered after parsing.
    */
-  onAfterParse(content: React.ReactNode[], props: Props): React.ReactNode[] {
+  onAfterParse(content: Node[], props: Props): Node[] {
     return content;
   }
 }

@@ -3,6 +3,7 @@ import Filter from '../packages/core/src/Filter';
 import Matcher from '../packages/core/src/Matcher';
 import Element from '../packages/core/src/Element';
 import { TYPE_BLOCK, PARSER_ALLOW } from '../packages/core/src/constants';
+import { Node } from '../packages/core/src/types';
 
 export const TOKEN_LOCATIONS = [
   'no tokens',
@@ -131,7 +132,7 @@ export class CodeTagMatcher extends Matcher<any> {
     this.key = key;
   }
 
-  replaceWith(match: string, props: any = {}) {
+  replaceWith(match: string, props: any = {}): Node {
     const { children } = props;
 
     if (this.key) {
@@ -156,7 +157,7 @@ export class CodeTagMatcher extends Matcher<any> {
 }
 
 export class MockMatcher extends Matcher<any> {
-  replaceWith(match: string, props: any) {
+  replaceWith(match: string, props: any): Node {
     return <div {...props}>{match}</div>;
   }
 

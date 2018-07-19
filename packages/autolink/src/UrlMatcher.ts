@@ -4,7 +4,7 @@
  */
 
 import React from 'react';
-import { Matcher, MatchResponse } from 'interweave';
+import { Matcher, MatchResponse, Node } from 'interweave';
 import Url, { UrlProps } from './Url';
 import { URL_PATTERN, TOP_LEVEL_TLDS } from './constants';
 
@@ -30,7 +30,7 @@ export default class UrlMatcher extends Matcher<UrlProps, UrlMatcherOptions> {
     );
   }
 
-  replaceWith(match: string, props: UrlProps) {
+  replaceWith(match: string, props: UrlProps): Node {
     if (this.options.validateTLD) {
       const { host } = props.urlParts;
       const validList = TOP_LEVEL_TLDS.concat(this.options.customTLDs);

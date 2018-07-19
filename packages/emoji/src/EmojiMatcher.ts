@@ -4,7 +4,7 @@
  */
 
 import React from 'react';
-import { Matcher, MatchResponse } from 'interweave';
+import { Matcher, MatchResponse, Node } from 'interweave';
 import EMOJI_REGEX from 'emojibase-regex';
 import EMOTICON_REGEX from 'emojibase-regex/emoticon';
 import SHORTCODE_REGEX from 'emojibase-regex/shortcode';
@@ -46,7 +46,7 @@ export default class EmojiMatcher extends Matcher<EmojiProps, EmojiMatcherOption
     );
   }
 
-  replaceWith(match: string, props: EmojiProps) {
+  replaceWith(match: string, props: EmojiProps): Node {
     return React.createElement(Emoji, {
       ...props,
       renderUnicode: this.options.renderUnicode,
@@ -159,7 +159,7 @@ export default class EmojiMatcher extends Matcher<EmojiProps, EmojiMatcherOption
   /**
    * When a single `Emoji` is the only content, enlarge it!
    */
-  onAfterParse(content: React.ReactNode[], props: EmojiProps): React.ReactNode[] {
+  onAfterParse(content: Node[], props: EmojiProps): Node[] {
     if (content.length === 0) {
       return content;
     }

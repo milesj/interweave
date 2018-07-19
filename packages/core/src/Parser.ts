@@ -21,7 +21,7 @@ import {
   TYPE_BLOCK,
   CONFIG_BLOCK,
 } from './constants';
-import { Attributes, NodeConfig, TransformCallback, MatchResponse } from './types';
+import { Attributes, Node, NodeConfig, TransformCallback, MatchResponse } from './types';
 
 const ELEMENT_NODE: number = 1;
 const TEXT_NODE: number = 3;
@@ -40,7 +40,7 @@ export interface ParserProps {
 export default class Parser {
   doc: Document;
 
-  content: React.ReactNode[] = [];
+  content: Node[] = [];
 
   props: ParserProps;
 
@@ -97,8 +97,8 @@ export default class Parser {
    * If a match is found, create a React element, and build a new array.
    * This array allows React to interpolate and render accordingly.
    */
-  applyMatchers(string: string, parentConfig: NodeConfig): string | React.ReactNode[] {
-    const elements: React.ReactNode[] = [];
+  applyMatchers(string: string, parentConfig: NodeConfig): string | Node[] {
+    const elements: any = [];
     const { props } = this;
     let matchedString = string;
     let parts = null;
@@ -131,13 +131,15 @@ export default class Parser {
         // Create an element through the matchers factory
         this.keyIndex += 1;
 
-        elements.push(
-          matcher.createElement(match, {
-            ...props,
-            ...partProps,
-            key: this.keyIndex,
-          }),
-        );
+        const element = matcher.createElement(match, {
+          ...props,
+          ...partProps,
+          key: this.keyIndex,
+        });
+
+        if (element) {
+          elements.push(element);
+        }
       }
     });
 
@@ -376,7 +378,7 @@ export default class Parser {
    * while looping over all child nodes and generating an
    * array to interpolate into JSX.
    */
-  parse(): React.ReactNode[] {
+  parse(): Node[] {
     return this.parseNode(this.doc.body, {
       ...CONFIG_BLOCK,
       tagName: 'body',
@@ -387,9 +389,9 @@ export default class Parser {
    * Loop over the nodes children and generate a
    * list of text nodes and React elements.
    */
-  parseNode(parentNode: HTMLElement, parentConfig: NodeConfig): React.ReactNode[] {
+  parseNode(parentNode: HTMLElement, parentConfig: NodeConfig): Node[] {
     const { noHtml, noHtmlExceptMatchers, disableWhitelist, transform } = this.props;
-    let content: React.ReactNode[] = [];
+    let content: Node[] = [];
     let mergedText = '';
 
     Array.from(parentNode.childNodes).forEach(node => {

@@ -1,3 +1,13 @@
+# 9.1.0 - 07/18/10
+
+#### 🚀 New
+
+TypeScript
+
+- Added a new `Node` type to resolve React node issues.
+  - Only accepts `null`, `string`, and `React.ReactElement`.
+  - Replaced all `React.ReactNode[]` types with `Node[]`.
+
 # 9.0.0 - 07/10/18
 
 #### 💥 Breaking
