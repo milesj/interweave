@@ -1,3 +1,11 @@
+# 2.0.1 - 07/18/10
+
+#### 🐞 Fixed
+
+TypeScript
+
+- Updated to the new `Node` type to resolve React node issues.
+
 # 2.0.0 - 07/10/18
 
 #### 💥 Breaking
