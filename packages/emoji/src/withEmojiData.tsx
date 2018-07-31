@@ -179,6 +179,6 @@ export default function withEmojiData(
       }
     }
 
-    return hoistNonReactStatics<any, WithEmojiDataProps>(WithEmojiData, Component);
+    return hoistNonReactStatics<any, any>(WithEmojiData, Component);
   };
 }

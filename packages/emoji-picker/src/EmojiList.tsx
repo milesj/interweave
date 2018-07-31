@@ -21,6 +21,7 @@ export interface EmojiListProps {
   activeEmoji?: CanonicalEmoji | null;
   activeGroup: GroupKey;
   clearIcon?: React.ReactNode;
+  // children?: React.ReactNode;
   columnCount: number;
   columnPadding?: number;
   commonMode: CommonMode;
@@ -50,9 +51,10 @@ export interface EmojiListState {
   rows: VirtualRow[];
 }
 
-export type EmojiListUnifiedProps = EmojiListProps & WithContextProps;
-
-export class EmojiList extends React.PureComponent<EmojiListUnifiedProps, EmojiListState> {
+export class EmojiList extends React.PureComponent<
+  EmojiListProps & WithContextProps,
+  EmojiListState
+> {
   static propTypes = {
     activeEmoji: EmojiShape,
     activeGroup: PropTypes.string.isRequired,
@@ -95,11 +97,11 @@ export class EmojiList extends React.PureComponent<EmojiListUnifiedProps, EmojiL
     skinTonePalette: null,
   };
 
-  state = {
+  state: EmojiListState = {
     // eslint-disable-next-line react/no-unused-state
-    emojis: {} as GroupEmojiMap,
-    indices: {} as GroupIndexMap,
-    rows: [] as VirtualRow[],
+    emojis: {},
+    indices: {},
+    rows: [],
   };
 
   static getDerivedStateFromProps(
@@ -304,4 +306,5 @@ export class EmojiList extends React.PureComponent<EmojiListUnifiedProps, EmojiL
   }
 }
 
+// @ts-ignore Not sure why this is failing...
 export default withContext(EmojiList);
