@@ -3,6 +3,7 @@
  * @license     https://opensource.org/licenses/MIT
  */
 
+import React from 'react';
 import PropTypes from 'prop-types';
 
 export const FilterShape = PropTypes.shape({

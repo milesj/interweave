@@ -28,9 +28,9 @@
     "react": "^16.3.0"
   },
   "devDependencies": {
-    "@types/hoist-non-react-statics": "^3.0.0",
+    "@types/hoist-non-react-statics": "^3.0.1",
     "emojibase": "^2.0.0",
     "interweave": "^9.1.0",
-    "react": "^16.4.1"
+    "react": "^16.4.2"
   }
 }
