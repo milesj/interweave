@@ -1,4 +1,10 @@
-# 9.1.0 - 07/18/10
+# 9.2.0 - 08/02/18
+
+#### 🚀 New
+
+- Added `srcset` and `sizes` to the attribute whitelist.
+
+# 9.1.0 - 07/18/18
 
 #### 🚀 New
 
