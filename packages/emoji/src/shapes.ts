@@ -3,6 +3,7 @@
  * @license     https://opensource.org/licenses/MIT
  */
 
+import React from 'react';
 import PropTypes from 'prop-types';
 import { SUPPORTED_LOCALES } from 'emojibase';
 
