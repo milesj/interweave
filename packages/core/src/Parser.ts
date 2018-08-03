@@ -400,11 +400,6 @@ export default class Parser {
         const tagName = node.nodeName.toLowerCase();
         const config = this.getTagConfig(tagName);
 
-        // Never allow these tags
-        if (TAGS_BLACKLIST[tagName]) {
-          return;
-        }
-
         // Persist any previous text
         if (mergedText) {
           content.push(mergedText);
@@ -420,6 +415,7 @@ export default class Parser {
 
         // Apply transformation if available
         let children;
+
         if (transform) {
           this.keyIndex += 1;
           const key = this.keyIndex;
@@ -437,8 +433,13 @@ export default class Parser {
             return;
           }
 
-          // Reset keyIndex back, as we're not using the transformation.
+          // Reset as we're not using the transformation
           this.keyIndex = key - 1;
+        }
+
+        // Never allow these tags (except via a transformer)
+        if (TAGS_BLACKLIST[tagName]) {
+          return;
         }
 
         // Only render when the following criteria is met:

@@ -3,6 +3,8 @@
 #### 🚀 New
 
 - Added `srcset` and `sizes` to the attribute whitelist.
+- Updated `transform` to support blacklisted tags as a means to intercept. This allows tags like
+  `iframe` and `canvas` to be used when handled manually.
 
 # 9.1.0 - 07/18/18
 

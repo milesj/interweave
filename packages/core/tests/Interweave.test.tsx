@@ -297,7 +297,8 @@ describe('Interweave', () => {
           {[
             '\n  ',
             'Outdated font.',
-            '\n  \n  ',
+            '\n  ',
+            '\n  ',
             <Element key="1" tagName="p">
               {['More text ', 'with outdated stuff', '.']}
             </Element>,
@@ -317,7 +318,8 @@ describe('Interweave', () => {
             <Element key="1" attributes={{ color: 'red' }} tagName="font">
               {['Outdated font.']}
             </Element>,
-            '\n  \n  ',
+            '\n  ',
+            '\n  ',
             <Element key="2" attributes={{ align: 'center' }} tagName="p">
               {[
                 'More text ',
@@ -375,10 +377,21 @@ describe('Interweave', () => {
 
       expect(wrapper.prop('parsedContent')).toEqual(['Foo ', ' Bar']);
     });
+
     it('replaces the element', () => {
       const Dummy = () => <div />;
       const transform = (node: HTMLElement) => (node.nodeName === 'IMG' ? <Dummy /> : undefined);
       const wrapper = shallow(<Interweave content={'Foo <img/> Bar'} transform={transform} />);
+
+      expect(wrapper.prop('parsedContent')).toEqual(['Foo ', <Dummy key="0" />, ' Bar']);
+    });
+
+    it('allows blacklisted', () => {
+      const Dummy = () => <iframe title="foo" />;
+      const transform = (node: HTMLElement) => (node.nodeName === 'IFRAME' ? <Dummy /> : undefined);
+      const wrapper = shallow(
+        <Interweave content={'Foo <iframe></iframe> Bar'} transform={transform} />,
+      );
 
       expect(wrapper.prop('parsedContent')).toEqual(['Foo ', <Dummy key="0" />, ' Bar']);
     });
