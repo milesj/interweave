@@ -1,4 +1,11 @@
-# 2.0.1 - 07/18/10
+# 2.0.2 - 08/07/18
+
+#### 🐞 Fixed
+
+- Moved TLD validation logic to the matching process, instead of the rendering process. Fixes an
+  issue where the TLD validation wasn't occuring when a custom factory was used.
+
+# 2.0.1 - 07/18/18
 
 #### 🐞 Fixed
 

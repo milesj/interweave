@@ -1,3 +1,9 @@
+# 9.2.1 - 08/07/18
+
+#### 🐞 Fixed
+
+- Added `srcSet` to the React attribute to prop mapping.
+
 # 9.2.0 - 08/02/18
 
 #### 🚀 New
