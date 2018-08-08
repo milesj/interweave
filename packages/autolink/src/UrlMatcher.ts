@@ -31,16 +31,6 @@ export default class UrlMatcher extends Matcher<UrlProps, UrlMatcherOptions> {
   }
 
   replaceWith(match: string, props: UrlProps): Node {
-    if (this.options.validateTLD) {
-      const { host } = props.urlParts;
-      const validList = TOP_LEVEL_TLDS.concat(this.options.customTLDs);
-      const tld = host.slice(host.lastIndexOf('.') + 1).toLowerCase();
-
-      if (validList.indexOf(tld) === -1) {
-        return match;
-      }
-    }
-
     return React.createElement(Url, props, match);
   }
 
@@ -49,7 +39,19 @@ export default class UrlMatcher extends Matcher<UrlProps, UrlMatcherOptions> {
   }
 
   match(string: string): MatchResponse | null {
-    return this.doMatch(string, URL_PATTERN, this.handleMatches);
+    const response = this.doMatch(string, URL_PATTERN, this.handleMatches);
+
+    if (response && this.options.validateTLD) {
+      const { host } = response.urlParts as any;
+      const validList = TOP_LEVEL_TLDS.concat(this.options.customTLDs);
+      const tld = host.slice(host.lastIndexOf('.') + 1).toLowerCase();
+
+      if (validList.indexOf(tld) === -1) {
+        return null;
+      }
+    }
+
+    return response;
   }
 
   /**

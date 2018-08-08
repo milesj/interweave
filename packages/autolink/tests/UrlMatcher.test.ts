@@ -256,10 +256,6 @@ describe('matchers/UrlMatcher', () => {
       },
     };
 
-    it('returns the URL as a string for an unsupported TLD', () => {
-      expect(matcher.replaceWith('http://domain.foo', props)).toBe('http://domain.foo');
-    });
-
     it('can disable validation for an unsupported TLD', () => {
       matcher.options.validateTLD = false;
 
@@ -289,6 +285,12 @@ describe('matchers/UrlMatcher', () => {
   describe('match()', () => {
     it('returns null for invalid match', () => {
       expect(matcher.match('notaurl')).toBeNull();
+    });
+
+    it('returns null for unsupported TLD', () => {
+      expect(matcher.match('http://domain.foo')).toBeNull();
+      expect(matcher.match('customer.first_name')).toBeNull();
+      expect(matcher.match('user.alias')).toBeNull();
     });
 
     it('returns object for valid match', () => {
