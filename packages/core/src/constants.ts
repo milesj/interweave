@@ -316,4 +316,5 @@ export const ATTRIBUTES_TO_PROPS: { [key: string]: string } = Object.freeze({
   colspan: 'colSpan',
   datetime: 'dateTime',
   rowspan: 'rowSpan',
+  srcset: 'srcSet',
 });
