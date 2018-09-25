@@ -16,24 +16,24 @@
     "type": "beemo typescript --workspaces=* --noEmit --react"
   },
   "devDependencies": {
-    "@milesj/build-tool-config": "^0.115.2",
-    "@types/react": "^16.4.10",
+    "@milesj/build-tools": "^0.1.2",
+    "@types/react": "^16.4.14",
     "@types/react-dom": "^16.0.7",
-    "babel-loader": "^7.1.5",
+    "babel-loader": "^8.0.2",
     "emojibase": "^2.0.0",
     "emojibase-test-utils": "^3.0.0",
-    "lerna": "^3.0.4",
-    "react": "^16.4.2",
-    "serve": "^9.4.2",
-    "ts-loader": "^4.4.2",
-    "webpack": "^4.16.5",
-    "webpack-cli": "^3.1.0"
+    "lerna": "^3.4.0",
+    "react": "^16.5.2",
+    "serve": "^10.0.2",
+    "ts-loader": "^5.2.0",
+    "webpack": "^4.19.1",
+    "webpack-cli": "^3.1.1"
   },
   "workspaces": [
     "packages/*"
   ],
   "beemo": {
-    "module": "@milesj/build-tool-config",
+    "module": "@milesj/build-tools",
     "drivers": [
       "babel",
       "eslint",
