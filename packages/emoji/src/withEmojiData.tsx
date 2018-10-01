@@ -139,15 +139,9 @@ export default function withEmojiData(
 
         // Or hook into the promise if we're loading
         if (promise[key]) {
-          return promise[key]
-            .then(() => {
-              this.setEmojis();
-            })
-            .catch(error => {
-              if (throwErrors) {
-                throw error;
-              }
-            });
+          return promise[key].then(() => {
+            this.setEmojis();
+          });
         }
 
         // Otherwise, start loading emoji data from the CDN
@@ -159,6 +153,8 @@ export default function withEmojiData(
             this.setEmojis();
           })
           .catch(error => {
+            loaded[key] = true;
+
             if (throwErrors) {
               throw error;
             }
