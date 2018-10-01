@@ -1,3 +1,9 @@
+# 2.1.0
+
+#### 🚀 New
+
+- Added `alwaysRender` and `throwErrors` options to `withEmojiData`.
+
 # 2.0.1 - 07/18/18
 
 #### 🐞 Fixed

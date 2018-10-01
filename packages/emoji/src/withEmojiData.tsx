@@ -13,10 +13,14 @@ import EmojiDataManager from './EmojiDataManager';
 import { CanonicalEmoji, Source } from './types';
 
 export interface WithEmojiDataOptions {
+  /** Always render the underlying component, even when the dataset is empty, or a fetch failed. Provided by `withEmojiData`. */
+  alwaysRender?: boolean;
   /** Load compact emoji dataset instead of full dataset. Provided by `withEmojiData`. */
   compact?: boolean;
   /** List of emojis to manually use to avoid fetch. Provided by `withEmojiData`. */
   emojis?: Emoji[];
+  /** Throw errors that occurred during a fetch. Defaults to `true`. Provided by `withEmojiData`. */
+  throwErrors?: boolean;
 }
 
 export interface WithEmojiDataWrapperProps {
@@ -56,7 +60,7 @@ export default function withEmojiData(
 ): <Props extends {} = {}>(
   Component: React.ComponentType<Props & WithEmojiDataProps>,
 ) => React.ComponentType<Props & WithEmojiDataWrapperProps> {
-  const { compact = false, emojis = [] } = options;
+  const { alwaysRender = false, compact = false, emojis = [], throwErrors = true } = options;
 
   return Component => {
     class WithEmojiData extends React.PureComponent<WithEmojiDataWrapperProps, WithEmojiDataState> {
@@ -140,7 +144,9 @@ export default function withEmojiData(
               this.setEmojis();
             })
             .catch(error => {
-              throw error;
+              if (throwErrors) {
+                throw error;
+              }
             });
         }
 
@@ -153,7 +159,9 @@ export default function withEmojiData(
             this.setEmojis();
           })
           .catch(error => {
-            throw error;
+            if (throwErrors) {
+              throw error;
+            }
           });
 
         promise[key] = request;
@@ -164,7 +172,7 @@ export default function withEmojiData(
       render() {
         const { locale, version, ...props } = this.props;
 
-        if (this.state.emojis.length === 0) {
+        if (this.state.emojis.length === 0 && !alwaysRender) {
           return null;
         }
 
