@@ -31,7 +31,8 @@ export default class UrlMatcher extends Matcher<UrlProps, UrlMatcherOptions> {
   }
 
   replaceWith(match: string, props: UrlProps): Node {
-    return React.createElement(Url, props, match);
+    // TODO Fix once @types/react is fixed
+    return React.createElement(Url as any, props, match);
   }
 
   asTag() {

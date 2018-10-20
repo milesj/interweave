@@ -10,7 +10,8 @@ import { HASHTAG_PATTERN } from './constants';
 
 export default class HashtagMatcher extends Matcher<HashtagProps> {
   replaceWith(match: string, props: HashtagProps): Node {
-    return React.createElement(Hashtag, props, match);
+    // TODO Fix once @types/react is fixed
+    return React.createElement(Hashtag as any, props, match);
   }
 
   asTag() {

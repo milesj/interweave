@@ -10,7 +10,8 @@ import { EMAIL_PATTERN } from './constants';
 
 export default class EmailMatcher extends Matcher<EmailProps> {
   replaceWith(match: string, props: EmailProps): Node {
-    return React.createElement(Email, props, match);
+    // TODO Fix once @types/react is fixed
+    return React.createElement(Email as any, props, match);
   }
 
   asTag() {

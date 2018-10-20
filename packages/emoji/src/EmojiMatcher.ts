@@ -47,7 +47,8 @@ export default class EmojiMatcher extends Matcher<EmojiProps, EmojiMatcherOption
   }
 
   replaceWith(match: string, props: EmojiProps): Node {
-    return React.createElement(Emoji, {
+    // TODO Fix once @types/react is fixed
+    return React.createElement(Emoji as any, {
       ...props,
       renderUnicode: this.options.renderUnicode,
     });

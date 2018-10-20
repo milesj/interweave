@@ -4,7 +4,6 @@
  */
 
 import React from 'react';
-import { ContextShape } from './shapes';
 import { Context as EmojiContext } from './types';
 
 export const Context = React.createContext({
@@ -12,15 +11,12 @@ export const Context = React.createContext({
   messages: {},
 });
 
-Context.Provider.propTypes = {
-  value: ContextShape.isRequired,
-};
-
 export interface WithContextProps {
   context: EmojiContext;
 }
 
-export default function withContext<Props extends {} = {}>(
+export default function withContext<Props = {}>(
+  // TODO Fix once @types/react is fixed
   Component: React.ComponentType<Props & WithContextProps>,
 ): React.ComponentType<Props> {
   return function WithContextWrapper(props: Props) {
