@@ -6,12 +6,10 @@
 /* eslint-disable react/no-unused-prop-types */
 
 import React from 'react';
-import PropTypes from 'prop-types';
 import Parser, { ParserProps } from './Parser';
 import Markup, { MarkupProps } from './Markup';
 import { FilterInterface } from './Filter';
 import { MatcherInterface } from './Matcher';
-import { FilterShape, MatcherShape } from './shapes';
 import { AfterParseCallback, BeforeParseCallback, TransformCallback } from './types';
 
 export interface InterweaveProps extends MarkupProps {
@@ -34,23 +32,6 @@ export interface InterweaveProps extends MarkupProps {
 }
 
 export default class Interweave extends React.PureComponent<InterweaveProps> {
-  static propTypes = {
-    content: PropTypes.string,
-    disableFilters: PropTypes.bool,
-    disableLineBreaks: PropTypes.bool,
-    disableMatchers: PropTypes.bool,
-    disableWhitelist: PropTypes.bool,
-    emptyContent: PropTypes.node,
-    filters: PropTypes.arrayOf(FilterShape),
-    matchers: PropTypes.arrayOf(MatcherShape),
-    noHtml: PropTypes.bool,
-    noHtmlExceptMatchers: PropTypes.bool,
-    onAfterParse: PropTypes.func,
-    onBeforeParse: PropTypes.func,
-    tagName: PropTypes.string,
-    transform: PropTypes.func,
-  };
-
   static defaultProps = {
     content: '',
     disableFilters: false,

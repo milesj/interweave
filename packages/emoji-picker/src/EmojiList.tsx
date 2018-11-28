@@ -57,15 +57,8 @@ export class EmojiList extends React.PureComponent<
 > {
   static propTypes = {
     activeEmoji: EmojiShape,
-    activeGroup: PropTypes.string.isRequired,
-    clearIcon: PropTypes.node,
-    columnCount: PropTypes.number.isRequired,
-    columnPadding: PropTypes.number,
-    commonMode: PropTypes.string.isRequired,
     context: ContextShape.isRequired,
-    emojiPadding: PropTypes.number.isRequired,
     emojiPath: PathShape.isRequired,
-    emojiSize: PropTypes.number.isRequired,
     emojiSource: SourceShape.isRequired,
     groupedEmojis: PropTypes.objectOf(
       PropTypes.shape({
@@ -73,19 +66,6 @@ export class EmojiList extends React.PureComponent<
         group: PropTypes.string.isRequired,
       }),
     ).isRequired,
-    hideGroupHeaders: PropTypes.bool.isRequired,
-    noResults: PropTypes.node,
-    onClear: PropTypes.func.isRequired,
-    onEnterEmoji: PropTypes.func.isRequired,
-    onLeaveEmoji: PropTypes.func.isRequired,
-    onScroll: PropTypes.func.isRequired,
-    onScrollGroup: PropTypes.func.isRequired,
-    onSelectEmoji: PropTypes.func.isRequired,
-    rowCount: PropTypes.number.isRequired,
-    rowPadding: PropTypes.number,
-    scrollToGroup: PropTypes.string.isRequired,
-    skinTonePalette: PropTypes.node,
-    stickyGroupHeader: PropTypes.bool.isRequired,
   };
 
   static defaultProps = {

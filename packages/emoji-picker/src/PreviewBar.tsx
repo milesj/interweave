@@ -4,7 +4,6 @@
  */
 
 import React from 'react';
-import PropTypes from 'prop-types';
 import {
   Emoji as EmojiCharacter,
   CanonicalEmoji,
@@ -38,9 +37,6 @@ export class PreviewBar extends React.PureComponent<PreviewBarProps & WithContex
     emojiLargeSize: SizeShape.isRequired,
     emojiPath: PathShape.isRequired,
     emojiSource: SourceShape.isRequired,
-    hideEmoticon: PropTypes.bool.isRequired,
-    hideShortcodes: PropTypes.bool.isRequired,
-    noPreview: PropTypes.node,
   };
 
   static defaultProps = {

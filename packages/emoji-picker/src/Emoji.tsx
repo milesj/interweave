@@ -4,7 +4,6 @@
  */
 
 import React from 'react';
-import PropTypes from 'prop-types';
 import {
   Emoji as EmojiCharacter,
   CanonicalEmoji,
@@ -31,16 +30,10 @@ export interface EmojiProps {
 
 export class Emoji extends React.Component<EmojiProps & WithContextProps> {
   static propTypes = {
-    active: PropTypes.bool.isRequired,
     context: ContextShape.isRequired,
     emoji: EmojiShape.isRequired,
-    emojiPadding: PropTypes.number.isRequired,
     emojiPath: PathShape.isRequired,
-    emojiSize: PropTypes.number.isRequired,
     emojiSource: SourceShape.isRequired,
-    onEnter: PropTypes.func.isRequired,
-    onLeave: PropTypes.func.isRequired,
-    onSelect: PropTypes.func.isRequired,
   };
 
   /**

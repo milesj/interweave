@@ -4,7 +4,6 @@
  */
 
 import React from 'react';
-import PropTypes from 'prop-types';
 import Element from './Element';
 import Parser from './Parser';
 
@@ -28,17 +27,6 @@ export interface MarkupProps {
 }
 
 export default class Markup extends React.PureComponent<MarkupProps> {
-  static propTypes = {
-    content: PropTypes.string,
-    disableLineBreaks: PropTypes.bool,
-    disableWhitelist: PropTypes.bool,
-    emptyContent: PropTypes.node,
-    noHtml: PropTypes.bool,
-    noHtmlExceptMatchers: PropTypes.bool,
-    parsedContent: PropTypes.node,
-    tagName: PropTypes.oneOf(['span', 'div', 'p', 'fragment']),
-  };
-
   static defaultProps = {
     content: '',
     disableLineBreaks: false,

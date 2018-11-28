@@ -4,7 +4,6 @@
  */
 
 import React from 'react';
-import PropTypes from 'prop-types';
 import camelCase from 'lodash/camelCase';
 import withContext, { WithContextProps } from './withContext';
 import { GROUP_KEY_COMMONLY_USED } from './constants';
@@ -21,12 +20,7 @@ export interface GroupProps {
 
 export class Group extends React.PureComponent<GroupProps & WithContextProps> {
   static propTypes = {
-    active: PropTypes.bool.isRequired,
-    children: PropTypes.node.isRequired,
-    commonMode: PropTypes.string.isRequired,
     context: ContextShape.isRequired,
-    group: PropTypes.string.isRequired,
-    onSelect: PropTypes.func.isRequired,
   };
 
   /**

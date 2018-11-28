@@ -4,7 +4,6 @@
  */
 
 import React from 'react';
-import PropTypes from 'prop-types';
 import Link, { LinkProps } from './Link';
 
 export interface UrlProps extends Partial<LinkProps> {
@@ -21,19 +20,6 @@ export interface UrlProps extends Partial<LinkProps> {
 }
 
 export default class Url extends React.PureComponent<UrlProps> {
-  static propTypes = {
-    children: PropTypes.string.isRequired,
-    urlParts: PropTypes.shape({
-      auth: PropTypes.string,
-      fragment: PropTypes.string,
-      host: PropTypes.string,
-      path: PropTypes.string,
-      port: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-      query: PropTypes.string,
-      scheme: PropTypes.string,
-    }).isRequired,
-  };
-
   render() {
     const { children, urlParts, ...props } = this.props;
     let url = children;

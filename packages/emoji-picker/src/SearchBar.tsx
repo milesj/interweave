@@ -4,7 +4,6 @@
  */
 
 import React from 'react';
-import PropTypes from 'prop-types';
 import withContext, { WithContextProps } from './withContext';
 import { ContextShape } from './shapes';
 
@@ -17,11 +16,7 @@ export interface SearchBarProps {
 
 export class SearchBar extends React.PureComponent<SearchBarProps & WithContextProps> {
   static propTypes = {
-    autoFocus: PropTypes.bool.isRequired,
     context: ContextShape.isRequired,
-    onChange: PropTypes.func.isRequired,
-    onKeyUp: PropTypes.func.isRequired,
-    searchQuery: PropTypes.string.isRequired,
   };
 
   inputRef = React.createRef<HTMLInputElement>();

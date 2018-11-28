@@ -27,13 +27,7 @@ export interface EmojiListHeaderProps {
 
 export class EmojiListHeader extends React.PureComponent<EmojiListHeaderProps & WithContextProps> {
   static propTypes = {
-    clearIcon: PropTypes.node,
-    commonMode: PropTypes.string.isRequired,
     context: ContextShape.isRequired,
-    group: PropTypes.string.isRequired,
-    onClear: PropTypes.func.isRequired,
-    skinTonePalette: PropTypes.node,
-    sticky: PropTypes.bool,
   };
 
   static defaultProps = {

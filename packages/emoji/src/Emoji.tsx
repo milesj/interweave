@@ -6,7 +6,6 @@
 /* eslint-disable complexity, react/no-unused-prop-types */
 
 import React from 'react';
-import PropTypes from 'prop-types';
 import { Emoticon, Hexcode, Shortcode, Unicode } from 'emojibase';
 import EmojiDataManager from './EmojiDataManager';
 import { PathShape, SizeShape, SourceShape } from './shapes';
@@ -43,13 +42,6 @@ export default class Emoji extends React.PureComponent<EmojiProps> {
     emojiPath: PathShape,
     emojiSize: SizeShape,
     emojiSource: SourceShape.isRequired,
-    emoticon: PropTypes.string,
-    enlargeEmoji: PropTypes.bool,
-    hexcode: PropTypes.string,
-    key: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-    renderUnicode: PropTypes.bool,
-    shortcode: PropTypes.string,
-    unicode: PropTypes.string,
   };
 
   static defaultProps = {

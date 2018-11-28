@@ -23,12 +23,8 @@ export interface GroupTabsProps {
 
 export class GroupTabs extends React.PureComponent<GroupTabsProps & WithContextProps> {
   static propTypes = {
-    activeGroup: PropTypes.string.isRequired,
     commonEmojis: PropTypes.arrayOf(EmojiShape).isRequired,
-    commonMode: PropTypes.string.isRequired,
     context: ContextShape.isRequired,
-    icons: PropTypes.objectOf(PropTypes.node).isRequired,
-    onSelect: PropTypes.func.isRequired,
   };
 
   render() {

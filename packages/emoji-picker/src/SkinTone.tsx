@@ -4,7 +4,6 @@
  */
 
 import React from 'react';
-import PropTypes from 'prop-types';
 import camelCase from 'lodash/camelCase';
 import upperFirst from 'lodash/upperFirst';
 import withContext, { WithContextProps } from './withContext';
@@ -21,11 +20,7 @@ export interface SkinToneProps {
 
 export class SkinTone extends React.PureComponent<SkinToneProps & WithContextProps> {
   static propTypes = {
-    active: PropTypes.bool.isRequired,
-    children: PropTypes.node,
     context: ContextShape.isRequired,
-    onSelect: PropTypes.func.isRequired,
-    skinTone: PropTypes.string.isRequired,
   };
 
   static defaultProps = {

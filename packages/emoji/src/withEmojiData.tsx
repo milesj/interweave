@@ -6,9 +6,8 @@
 /* eslint-disable promise/always-return */
 
 import React from 'react';
-import PropTypes from 'prop-types';
 import hoistNonReactStatics from 'hoist-non-react-statics';
-import { fetchFromCDN, Emoji, SUPPORTED_LOCALES } from 'emojibase';
+import { fetchFromCDN, Emoji } from 'emojibase';
 import EmojiDataManager from './EmojiDataManager';
 import { CanonicalEmoji, Source } from './types';
 
@@ -64,11 +63,6 @@ export default function withEmojiData(
 
   return Component => {
     class WithEmojiData extends React.PureComponent<WithEmojiDataWrapperProps, WithEmojiDataState> {
-      static propTypes = {
-        locale: PropTypes.oneOf(SUPPORTED_LOCALES),
-        version: PropTypes.string,
-      };
-
       static defaultProps = {
         locale: 'en',
         version: 'latest',

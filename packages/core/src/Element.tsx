@@ -4,7 +4,6 @@
  */
 
 import React from 'react';
-import PropTypes from 'prop-types';
 import { Attributes } from './types';
 
 export interface ElementProps {
@@ -16,15 +15,6 @@ export interface ElementProps {
 }
 
 export default class Element extends React.PureComponent<ElementProps> {
-  static propTypes = {
-    attributes: PropTypes.objectOf(
-      PropTypes.oneOfType([PropTypes.string, PropTypes.number, PropTypes.bool]),
-    ),
-    children: PropTypes.node,
-    selfClose: PropTypes.bool,
-    tagName: PropTypes.string.isRequired,
-  };
-
   static defaultProps = {
     attributes: {},
     children: null,
