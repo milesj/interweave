@@ -467,8 +467,7 @@ export default class Parser {
 
           content.push(
             React.createElement(
-              // TODO Fix once @types/react is fixed
-              Element as any,
+              Element,
               { ...elementProps, key: this.keyIndex },
               children || this.parseNode(nextNode, config),
             ),

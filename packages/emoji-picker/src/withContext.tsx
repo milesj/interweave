@@ -16,7 +16,6 @@ export interface WithContextProps {
 }
 
 export default function withContext<Props = {}>(
-  // TODO Fix once @types/react is fixed
   Component: React.ComponentType<Props & WithContextProps>,
 ): React.ComponentType<Props> {
   return function WithContextWrapper(props: Props) {
