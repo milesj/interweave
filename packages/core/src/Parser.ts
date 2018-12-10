@@ -312,7 +312,7 @@ export default class Parser {
 
       // Cast to boolean
       if (filter === FILTER_CAST_BOOL) {
-        newValue = newValue === 'true' || newValue === newName;
+        newValue = true;
 
         // Cast to number
       } else if (filter === FILTER_CAST_NUMBER) {
