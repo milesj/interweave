@@ -307,6 +307,7 @@ export const ATTRIBUTES: FilterMap = Object.freeze({
   srcset: FILTER_ALLOW,
   target: FILTER_ALLOW,
   title: FILTER_ALLOW,
+  type: FILTER_ALLOW,
   width: FILTER_ALLOW,
 });
 
