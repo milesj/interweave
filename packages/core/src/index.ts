@@ -10,8 +10,6 @@ import Matcher, { MatcherInterface } from './Matcher';
 
 export { InterweaveProps, Markup, MarkupProps, Filter, FilterInterface, Matcher, MatcherInterface };
 
-export * from './shapes';
-
 export * from './types';
 
 export default Interweave;

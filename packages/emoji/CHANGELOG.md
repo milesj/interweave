@@ -1,3 +1,13 @@
+# 3.0.0
+
+#### 💥 Breaking
+
+- PropType shapes have been removed.
+
+#### 🛠 Internal
+
+- Added peer dep support for `interweave` 10.0.
+
 # 2.1.0
 
 #### 🚀 New

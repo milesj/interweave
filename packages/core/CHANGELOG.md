@@ -2,7 +2,9 @@
 
 #### 💥 Breaking
 
-- HTML attributes in which their value is falsy will now be omitted from the rendered output.
+- HTML attributes in which their value is falsy will now be treated as enabled attributes, according
+  the official
+  [HTML spec](https://html.spec.whatwg.org/multipage/common-microsyntaxes.html#boolean-attributes).
 - PropType shapes have been removed.
 
 #### 🚀 New

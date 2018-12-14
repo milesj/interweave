@@ -7,7 +7,7 @@ customization, like the choice between Twitter and Instagram hashtags, or PNG or
 import React from 'react';
 import PropTypes from 'prop-types';
 import { stripHexcode } from 'emojibase';
-import BaseInterweave, { FilterShape, MatcherShape } from 'interweave';
+import BaseInterweave from 'interweave';
 import { IpMatcher, UrlMatcher, EmailMatcher, HashtagMatcher } from 'interweave-autolink';
 import withEmojiData, { EmojiMatcher } from 'interweave-emoji';
 

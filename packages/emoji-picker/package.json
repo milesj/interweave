@@ -27,7 +27,7 @@
   },
   "peerDependencies": {
     "emojibase": "^2.0.0",
-    "interweave-emoji": "^2.0.0",
+    "interweave-emoji": "^3.0.0",
     "react": "^16.3.0",
     "react-dom": "^16.3.0"
   },

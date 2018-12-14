@@ -1,3 +1,13 @@
+# 3.0.0
+
+#### 💥 Breaking
+
+- PropType shapes have been removed.
+
+#### 🛠 Internal
+
+- Updated peer dep requirement for `interweave-emoji` to 3.0.
+
 # 2.0.1 - 07/18/18
 
 #### 🐞 Fixed

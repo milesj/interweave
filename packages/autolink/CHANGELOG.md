@@ -1,3 +1,9 @@
+# 2.1.0
+
+#### 🛠 Internal
+
+- Added peer dep support for `interweave` 10.0.
+
 # 2.0.2 - 08/07/18
 
 #### 🐞 Fixed

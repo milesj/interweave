@@ -23,8 +23,6 @@ export {
   WithEmojiDataOptions,
 };
 
-export * from './shapes';
-
 export * from './types';
 
 export default withEmojiData;

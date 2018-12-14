@@ -6,18 +6,8 @@
 /* eslint-disable no-magic-numbers */
 
 import React from 'react';
-import PropTypes from 'prop-types';
 import debounce from 'lodash/debounce';
-import withEmojiData, {
-  WithEmojiDataProps,
-  // Required for TS declaration
-  // eslint-disable-next-line no-unused-vars
-  WithEmojiDataWrapperProps,
-  CanonicalEmoji,
-  Path,
-  PathShape,
-  SourceShape,
-} from 'interweave-emoji';
+import withEmojiData, { WithEmojiDataProps, CanonicalEmoji, Path } from 'interweave-emoji';
 import { Hexcode } from 'emojibase';
 import { Context } from './withContext';
 import EmojiList from './EmojiList';
@@ -29,22 +19,10 @@ import {
   GROUPS,
   GROUP_KEY_COMMONLY_USED,
   GROUP_KEY_SMILEYS_PEOPLE,
-  GROUP_KEY_ANIMALS_NATURE,
-  GROUP_KEY_FOOD_DRINK,
-  GROUP_KEY_TRAVEL_PLACES,
-  GROUP_KEY_ACTIVITIES,
-  GROUP_KEY_OBJECTS,
-  GROUP_KEY_SYMBOLS,
-  GROUP_KEY_FLAGS,
   GROUP_KEY_SEARCH_RESULTS,
   GROUP_KEY_NONE,
   SKIN_TONES,
   SKIN_KEY_NONE,
-  SKIN_KEY_LIGHT,
-  SKIN_KEY_MEDIUM_LIGHT,
-  SKIN_KEY_MEDIUM,
-  SKIN_KEY_MEDIUM_DARK,
-  SKIN_KEY_DARK,
   KEY_COMMONLY_USED,
   KEY_SKIN_TONE,
   COMMON_MODE_RECENT,
@@ -179,72 +157,6 @@ export type PickerUnifiedProps = PickerProps & WithEmojiDataProps;
 const SKIN_MODIFIER_PATTERN: RegExp = /1F3FB|1F3FC|1F3FD|1F3FE|1F3FF/g;
 
 export class Picker extends React.PureComponent<PickerUnifiedProps, PickerState> {
-  static propTypes = {
-    autoFocus: PropTypes.bool,
-    blacklist: PropTypes.arrayOf(PropTypes.string.isRequired),
-    classNames: PropTypes.objectOf(PropTypes.string.isRequired),
-    clearIcon: PropTypes.node,
-    columnCount: PropTypes.number,
-    commonMode: PropTypes.oneOf<CommonMode>([COMMON_MODE_RECENT, COMMON_MODE_FREQUENT]),
-    defaultGroup: PropTypes.oneOf<GroupKey>([
-      GROUP_KEY_COMMONLY_USED,
-      GROUP_KEY_SMILEYS_PEOPLE,
-      GROUP_KEY_ANIMALS_NATURE,
-      GROUP_KEY_FOOD_DRINK,
-      GROUP_KEY_TRAVEL_PLACES,
-      GROUP_KEY_ACTIVITIES,
-      GROUP_KEY_OBJECTS,
-      GROUP_KEY_SYMBOLS,
-      GROUP_KEY_FLAGS,
-    ]),
-    defaultSkinTone: PropTypes.oneOf<SkinToneKey>([
-      SKIN_KEY_NONE,
-      SKIN_KEY_LIGHT,
-      SKIN_KEY_MEDIUM_LIGHT,
-      SKIN_KEY_MEDIUM,
-      SKIN_KEY_MEDIUM_DARK,
-      SKIN_KEY_DARK,
-    ]),
-    disableCommonlyUsed: PropTypes.bool,
-    disableGroups: PropTypes.bool,
-    disablePreview: PropTypes.bool,
-    disableSearch: PropTypes.bool,
-    disableSkinTones: PropTypes.bool,
-    displayOrder: PropTypes.arrayOf<DisplayOrder>(
-      PropTypes.oneOf<DisplayOrder>(['preview', 'emojis', 'groups', 'search']).isRequired,
-    ),
-    emojiLargeSize: PropTypes.number.isRequired,
-    emojiPadding: PropTypes.number,
-    emojiPath: PathShape.isRequired,
-    emojis: PropTypes.arrayOf<any>(PropTypes.object.isRequired).isRequired,
-    emojiSize: PropTypes.number.isRequired,
-    emojiSource: SourceShape.isRequired,
-    groupIcons: PropTypes.objectOf(PropTypes.node),
-    hideEmoticon: PropTypes.bool,
-    hideGroupHeaders: PropTypes.bool,
-    hideShortcodes: PropTypes.bool,
-    maxCommonlyUsed: PropTypes.number,
-    maxEmojiVersion: PropTypes.number,
-    messages: PropTypes.objectOf<any>(PropTypes.node),
-    noPreview: PropTypes.node,
-    noResults: PropTypes.node,
-    onHoverEmoji: PropTypes.func,
-    onScroll: PropTypes.func,
-    onScrollGroup: PropTypes.func,
-    onSearch: PropTypes.func,
-    onSelectEmoji: PropTypes.func,
-    onSelectGroup: PropTypes.func,
-    onSelectSkinTone: PropTypes.func,
-    rowCount: PropTypes.number,
-    skinIcons: PropTypes.objectOf(PropTypes.node),
-    stickyGroupHeader: PropTypes.bool,
-    virtual: PropTypes.shape({
-      columnPadding: PropTypes.number,
-      rowPadding: PropTypes.number,
-    }),
-    whitelist: PropTypes.arrayOf(PropTypes.string.isRequired),
-  };
-
   static defaultProps: Partial<PickerUnifiedProps> = {
     autoFocus: false,
     blacklist: [],
