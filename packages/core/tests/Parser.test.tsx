@@ -274,10 +274,11 @@ describe('Parser', () => {
               [attrName]: true,
             });
 
+            // Falsy attributes are still enabled according to HTML spec
             element.setAttribute(name, 'false');
 
             expect(instance.extractAttributes(element)).toEqual({
-              [attrName]: false,
+              [attrName]: true,
             });
           });
 
@@ -291,7 +292,7 @@ describe('Parser', () => {
             element.setAttribute(name, '');
 
             expect(instance.extractAttributes(element)).toEqual({
-              [attrName]: false,
+              [attrName]: true,
             });
           });
           break;
