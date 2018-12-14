@@ -15,7 +15,7 @@ export interface WithContextProps {
   context: EmojiContext;
 }
 
-export default function withContext<Props = {}>(
+export default function withContext<Props extends object>(
   Component: React.ComponentType<Props & WithContextProps>,
 ): React.ComponentType<Props> {
   return function WithContextWrapper(props: Props) {

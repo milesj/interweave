@@ -8,7 +8,6 @@
 import React from 'react';
 import { Emoticon, Hexcode, Shortcode, Unicode } from 'emojibase';
 import EmojiDataManager from './EmojiDataManager';
-import { PathShape, SizeShape, SourceShape } from './shapes';
 import { Path, Size, Source } from './types';
 
 export interface EmojiProps {
@@ -35,13 +34,6 @@ export interface EmojiProps {
 }
 
 export default class Emoji extends React.PureComponent<EmojiProps> {
-  static propTypes = {
-    emojiLargeSize: SizeShape,
-    emojiPath: PathShape,
-    emojiSize: SizeShape,
-    emojiSource: SourceShape.isRequired,
-  };
-
   static defaultProps = {
     emojiLargeSize: '3em',
     emojiPath: '{{hexcode}}',
