@@ -19,7 +19,6 @@ export interface EmojiListProps {
   activeEmoji?: CanonicalEmoji | null;
   activeGroup: GroupKey;
   clearIcon?: React.ReactNode;
-  // children?: React.ReactNode;
   columnCount: number;
   columnPadding?: number;
   commonMode: CommonMode;

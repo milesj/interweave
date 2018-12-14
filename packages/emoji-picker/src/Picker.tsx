@@ -14,7 +14,6 @@ import withEmojiData, {
   // eslint-disable-next-line no-unused-vars
   WithEmojiDataWrapperProps,
   CanonicalEmoji,
-  EmojiShape,
   Path,
   PathShape,
   SourceShape,
