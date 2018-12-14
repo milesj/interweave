@@ -47,7 +47,10 @@
     "eslint": {
       "rules": {
         "import/no-named-as-default": "off",
-        "react/jsx-no-literals": "off"
+        "require-unicode-regexp": "off",
+        "react/jsx-no-literals": "off",
+        "react/no-unused-prop-types": "off",
+        "react/default-props-match-prop-types": "off"
       }
     }
   },

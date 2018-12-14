@@ -53,7 +53,7 @@ export default class EmojiMatcher extends Matcher<EmojiProps, EmojiMatcherOption
     });
   }
 
-  asTag() {
+  asTag(): string {
     return 'img';
   }
 

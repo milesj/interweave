@@ -4,15 +4,13 @@
  */
 
 import React from 'react';
-import PropTypes from 'prop-types';
 import { List, ListRowProps } from 'react-virtualized';
 import chunk from 'lodash/chunk';
-import { CanonicalEmoji, EmojiShape, Path, PathShape, Source, SourceShape } from 'interweave-emoji';
+import { CanonicalEmoji, Path, Source } from 'interweave-emoji';
 import withContext, { WithContextProps } from './withContext';
 import EmojiButton from './Emoji';
 import EmojiListHeader from './EmojiListHeader';
 import { GROUP_KEY_NONE } from './constants';
-import { ContextShape } from './shapes';
 import { CommonMode, GroupKey, GroupEmojiMap, GroupIndexMap } from './types';
 
 export type VirtualRow = string | CanonicalEmoji[];
@@ -55,19 +53,6 @@ export class EmojiList extends React.PureComponent<
   EmojiListProps & WithContextProps,
   EmojiListState
 > {
-  static propTypes = {
-    activeEmoji: EmojiShape,
-    context: ContextShape.isRequired,
-    emojiPath: PathShape.isRequired,
-    emojiSource: SourceShape.isRequired,
-    groupedEmojis: PropTypes.objectOf(
-      PropTypes.shape({
-        emojis: PropTypes.arrayOf(EmojiShape).isRequired,
-        group: PropTypes.string.isRequired,
-      }),
-    ).isRequired,
-  };
-
   static defaultProps = {
     activeEmoji: null,
     clearIcon: null,

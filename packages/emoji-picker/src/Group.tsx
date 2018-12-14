@@ -7,7 +7,6 @@ import React from 'react';
 import camelCase from 'lodash/camelCase';
 import withContext, { WithContextProps } from './withContext';
 import { GROUP_KEY_COMMONLY_USED } from './constants';
-import { ContextShape } from './shapes';
 import { CommonMode, GroupKey } from './types';
 
 export interface GroupProps {
@@ -19,10 +18,6 @@ export interface GroupProps {
 }
 
 export class Group extends React.PureComponent<GroupProps & WithContextProps> {
-  static propTypes = {
-    context: ContextShape.isRequired,
-  };
-
   /**
    * Triggered when the button is clicked.
    */

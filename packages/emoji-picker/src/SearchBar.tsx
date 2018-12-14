@@ -5,7 +5,6 @@
 
 import React from 'react';
 import withContext, { WithContextProps } from './withContext';
-import { ContextShape } from './shapes';
 
 export interface SearchBarProps {
   autoFocus: boolean;
@@ -15,10 +14,6 @@ export interface SearchBarProps {
 }
 
 export class SearchBar extends React.PureComponent<SearchBarProps & WithContextProps> {
-  static propTypes = {
-    context: ContextShape.isRequired,
-  };
-
   inputRef = React.createRef<HTMLInputElement>();
 
   /**

@@ -23,7 +23,7 @@ export interface MarkupProps {
   /** @ignore Pre-parsed content to render. */
   parsedContent?: React.ReactNode;
   /** HTML element or React fragment to wrap content with. */
-  tagName?: string;
+  tagName?: keyof JSX.IntrinsicElements | 'fragment';
 }
 
 export default class Markup extends React.PureComponent<MarkupProps> {
@@ -60,7 +60,7 @@ export default class Markup extends React.PureComponent<MarkupProps> {
       noHtmlExceptMatchers,
     }).parse();
 
-    return markup.length ? markup : emptyContent;
+    return markup.length > 0 ? markup : emptyContent;
   }
 
   render() {

@@ -4,13 +4,11 @@
  */
 
 import React from 'react';
-import PropTypes from 'prop-types';
 import camelCase from 'lodash/camelCase';
-import { EmojiShape, CanonicalEmoji } from 'interweave-emoji';
+import { CanonicalEmoji } from 'interweave-emoji';
 import withContext, { WithContextProps } from './withContext';
 import Group from './Group';
 import { GROUPS, GROUP_KEY_COMMONLY_USED, GROUP_ICONS } from './constants';
-import { ContextShape } from './shapes';
 import { CommonMode, GroupKey } from './types';
 
 export interface GroupTabsProps {
@@ -22,11 +20,6 @@ export interface GroupTabsProps {
 }
 
 export class GroupTabs extends React.PureComponent<GroupTabsProps & WithContextProps> {
-  static propTypes = {
-    commonEmojis: PropTypes.arrayOf(EmojiShape).isRequired,
-    context: ContextShape.isRequired,
-  };
-
   render() {
     const {
       activeGroup,

@@ -3,8 +3,6 @@
  * @license     https://opensource.org/licenses/MIT
  */
 
-/* eslint-disable react/no-unused-prop-types */
-
 import React from 'react';
 import Parser, { ParserProps } from './Parser';
 import Markup, { MarkupProps } from './Markup';

@@ -11,7 +11,7 @@ export interface ElementProps {
   attributes?: Attributes;
   children?: React.ReactNode;
   selfClose?: boolean;
-  tagName: string;
+  tagName: keyof JSX.IntrinsicElements;
 }
 
 export default class Element extends React.PureComponent<ElementProps> {
@@ -24,10 +24,7 @@ export default class Element extends React.PureComponent<ElementProps> {
   render() {
     const { attributes, children, selfClose, tagName: Tag } = this.props;
 
-    if (selfClose) {
-      return <Tag {...attributes} />;
-    }
-
-    return <Tag {...attributes}>{children}</Tag>;
+    // @ts-ignore BUG: https://github.com/Microsoft/TypeScript/issues/28806
+    return selfClose ? <Tag {...attributes} /> : <Tag {...attributes}>{children}</Tag>;
   }
 }

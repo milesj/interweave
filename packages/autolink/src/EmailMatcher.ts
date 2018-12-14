@@ -13,7 +13,7 @@ export default class EmailMatcher extends Matcher<EmailProps> {
     return React.createElement(Email, props, match);
   }
 
-  asTag() {
+  asTag(): string {
     return 'a';
   }
 

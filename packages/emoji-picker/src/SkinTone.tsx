@@ -8,7 +8,6 @@ import camelCase from 'lodash/camelCase';
 import upperFirst from 'lodash/upperFirst';
 import withContext, { WithContextProps } from './withContext';
 import { SKIN_COLORS } from './constants';
-import { ContextShape } from './shapes';
 import { SkinToneKey } from './types';
 
 export interface SkinToneProps {
@@ -19,10 +18,6 @@ export interface SkinToneProps {
 }
 
 export class SkinTone extends React.PureComponent<SkinToneProps & WithContextProps> {
-  static propTypes = {
-    context: ContextShape.isRequired,
-  };
-
   static defaultProps = {
     children: null,
   };

@@ -182,12 +182,12 @@ const SKIN_MODIFIER_PATTERN: RegExp = /1F3FB|1F3FC|1F3FD|1F3FE|1F3FF/g;
 export class Picker extends React.PureComponent<PickerUnifiedProps, PickerState> {
   static propTypes = {
     autoFocus: PropTypes.bool,
-    blacklist: PropTypes.arrayOf(PropTypes.string),
-    classNames: PropTypes.objectOf(PropTypes.string),
+    blacklist: PropTypes.arrayOf(PropTypes.string.isRequired),
+    classNames: PropTypes.objectOf(PropTypes.string.isRequired),
     clearIcon: PropTypes.node,
     columnCount: PropTypes.number,
-    commonMode: PropTypes.oneOf([COMMON_MODE_RECENT, COMMON_MODE_FREQUENT]),
-    defaultGroup: PropTypes.oneOf([
+    commonMode: PropTypes.oneOf<CommonMode>([COMMON_MODE_RECENT, COMMON_MODE_FREQUENT]),
+    defaultGroup: PropTypes.oneOf<GroupKey>([
       GROUP_KEY_COMMONLY_USED,
       GROUP_KEY_SMILEYS_PEOPLE,
       GROUP_KEY_ANIMALS_NATURE,
@@ -198,7 +198,7 @@ export class Picker extends React.PureComponent<PickerUnifiedProps, PickerState>
       GROUP_KEY_SYMBOLS,
       GROUP_KEY_FLAGS,
     ]),
-    defaultSkinTone: PropTypes.oneOf([
+    defaultSkinTone: PropTypes.oneOf<SkinToneKey>([
       SKIN_KEY_NONE,
       SKIN_KEY_LIGHT,
       SKIN_KEY_MEDIUM_LIGHT,
@@ -211,13 +211,13 @@ export class Picker extends React.PureComponent<PickerUnifiedProps, PickerState>
     disablePreview: PropTypes.bool,
     disableSearch: PropTypes.bool,
     disableSkinTones: PropTypes.bool,
-    displayOrder: PropTypes.arrayOf(PropTypes.string),
-    // eslint-disable-next-line react/forbid-prop-types
-    emojiData: PropTypes.object.isRequired,
+    displayOrder: PropTypes.arrayOf<DisplayOrder>(
+      PropTypes.oneOf<DisplayOrder>(['preview', 'emojis', 'groups', 'search']).isRequired,
+    ),
     emojiLargeSize: PropTypes.number.isRequired,
     emojiPadding: PropTypes.number,
     emojiPath: PathShape.isRequired,
-    emojis: PropTypes.arrayOf(EmojiShape).isRequired,
+    emojis: PropTypes.arrayOf<any>(PropTypes.object.isRequired).isRequired,
     emojiSize: PropTypes.number.isRequired,
     emojiSource: SourceShape.isRequired,
     groupIcons: PropTypes.objectOf(PropTypes.node),
@@ -226,7 +226,7 @@ export class Picker extends React.PureComponent<PickerUnifiedProps, PickerState>
     hideShortcodes: PropTypes.bool,
     maxCommonlyUsed: PropTypes.number,
     maxEmojiVersion: PropTypes.number,
-    messages: PropTypes.objectOf(PropTypes.node),
+    messages: PropTypes.objectOf<any>(PropTypes.node),
     noPreview: PropTypes.node,
     noResults: PropTypes.node,
     onHoverEmoji: PropTypes.func,
@@ -243,24 +243,24 @@ export class Picker extends React.PureComponent<PickerUnifiedProps, PickerState>
       columnPadding: PropTypes.number,
       rowPadding: PropTypes.number,
     }),
-    whitelist: PropTypes.arrayOf(PropTypes.string),
+    whitelist: PropTypes.arrayOf(PropTypes.string.isRequired),
   };
 
-  static defaultProps = {
+  static defaultProps: Partial<PickerUnifiedProps> = {
     autoFocus: false,
     blacklist: [],
     classNames: {},
     clearIcon: null,
     columnCount: 10,
-    commonMode: COMMON_MODE_RECENT as CommonMode,
-    defaultGroup: GROUP_KEY_COMMONLY_USED as GroupKey,
-    defaultSkinTone: SKIN_KEY_NONE as SkinToneKey,
+    commonMode: COMMON_MODE_RECENT,
+    defaultGroup: GROUP_KEY_COMMONLY_USED,
+    defaultSkinTone: SKIN_KEY_NONE,
     disableCommonlyUsed: false,
     disableGroups: false,
     disablePreview: false,
     disableSearch: false,
     disableSkinTones: false,
-    displayOrder: ['preview', 'emojis', 'groups', 'search'] as DisplayOrder[],
+    displayOrder: ['preview', 'emojis', 'groups', 'search'],
     emojiPadding: 0,
     groupIcons: {},
     hideEmoticon: false,

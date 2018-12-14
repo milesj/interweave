@@ -458,7 +458,7 @@ describe('Parser', () => {
             element.appendChild(createChild(tag, i));
 
             expect(instance.parseNode(element, parentConfig)).toEqual([
-              <Element key="0" tagName={tag}>
+              <Element key="0" tagName={tag as keyof JSX.IntrinsicElements}>
                 {[`${i}`]}
               </Element>,
             ]);

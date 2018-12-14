@@ -3,7 +3,7 @@
  * @license     https://opensource.org/licenses/MIT
  */
 
-/* eslint-disable complexity, react/no-unused-prop-types */
+/* eslint-disable complexity */
 
 import React from 'react';
 import { Emoticon, Hexcode, Shortcode, Unicode } from 'emojibase';
@@ -26,8 +26,6 @@ export interface EmojiProps {
   enlargeEmoji?: boolean;
   /** Hexcode to reference emoji from. */
   hexcode?: Hexcode;
-  /** @ignore Key provided by the parser. */
-  key?: string | number;
   /** Render literal unicode character instead of an SVG/PNG. */
   renderUnicode?: boolean;
   /** Shortcode to reference emoji from. */
@@ -51,7 +49,6 @@ export default class Emoji extends React.PureComponent<EmojiProps> {
     emoticon: '',
     enlargeEmoji: false,
     hexcode: '',
-    key: '',
     renderUnicode: false,
     shortcode: '',
     unicode: '',

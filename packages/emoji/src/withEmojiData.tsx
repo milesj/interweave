@@ -54,21 +54,22 @@ export function resetLoaded() {
   }
 }
 
-export default function withEmojiData(
-  options: WithEmojiDataOptions = {},
-): <Props extends {} = {}>(
-  Component: React.ComponentType<Props & WithEmojiDataProps>,
-) => React.ComponentType<Props & WithEmojiDataWrapperProps> {
+export default function withEmojiData(options: WithEmojiDataOptions = {}) /* infer */ {
   const { alwaysRender = false, compact = false, emojis = [], throwErrors = true } = options;
 
-  return Component => {
-    class WithEmojiData extends React.PureComponent<WithEmojiDataWrapperProps, WithEmojiDataState> {
-      static defaultProps = {
+  return function withEmojiDataFactory<Props extends object>(
+    Component: React.ComponentType<Props & WithEmojiDataProps>,
+  ): React.ComponentType<Props & WithEmojiDataWrapperProps> {
+    class WithEmojiData extends React.PureComponent<
+      Props & WithEmojiDataWrapperProps,
+      WithEmojiDataState
+    > {
+      static defaultProps: any = {
         locale: 'en',
         version: 'latest',
       };
 
-      state = {
+      state: WithEmojiDataState = {
         emojis: [],
         source: {
           compact: false,
@@ -81,7 +82,7 @@ export default function withEmojiData(
         this.loadEmojis();
       }
 
-      componentDidUpdate(prevProps: WithEmojiDataWrapperProps) {
+      componentDidUpdate(prevProps: Props & WithEmojiDataWrapperProps) {
         const { locale, version } = this.props;
 
         if (prevProps.locale !== locale || prevProps.version !== version) {
@@ -168,7 +169,7 @@ export default function withEmojiData(
 
         return (
           <Component
-            {...props}
+            {...props as any}
             emojis={this.state.emojis}
             emojiData={this.getDataInstance()}
             emojiSource={this.state.source}
@@ -177,6 +178,8 @@ export default function withEmojiData(
       }
     }
 
-    return hoistNonReactStatics<any, any>(WithEmojiData, Component);
+    hoistNonReactStatics(WithEmojiData, Component);
+
+    return WithEmojiData;
   };
 }

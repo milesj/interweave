@@ -67,7 +67,7 @@ describe('matchers/IpMatcher', () => {
       it(ipParams.ip, () => {
         const { ip, ...params } = ipParams;
         // @ts-ignore
-        const expected: RegExpMatchArray = [
+        const expected: Partial<RegExpMatchArray> = [
           ip,
           params.scheme === null ? undefined : params.scheme || 'http://',
           params.auth,

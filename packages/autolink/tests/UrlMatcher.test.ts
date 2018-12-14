@@ -177,7 +177,7 @@ describe('matchers/UrlMatcher', () => {
       it(urlParams.url, () => {
         const { url, ...params } = urlParams;
         // @ts-ignore
-        const expected: RegExpMatchArray = [
+        const expected: Partial<RegExpMatchArray> = [
           url,
           params.scheme === null ? undefined : params.scheme || 'http://',
           params.auth,

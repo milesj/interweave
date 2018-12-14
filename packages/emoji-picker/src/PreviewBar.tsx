@@ -4,19 +4,8 @@
  */
 
 import React from 'react';
-import {
-  Emoji as EmojiCharacter,
-  CanonicalEmoji,
-  EmojiShape,
-  Path,
-  PathShape,
-  Size,
-  SizeShape,
-  Source,
-  SourceShape,
-} from 'interweave-emoji';
+import { Emoji as EmojiCharacter, CanonicalEmoji, Path, Size, Source } from 'interweave-emoji';
 import withContext, { WithContextProps } from './withContext';
-import { ContextShape } from './shapes';
 
 const TITLE_REGEX: RegExp = /(^|:|\.)\s?[a-z]/g;
 
@@ -31,14 +20,6 @@ export interface PreviewBarProps {
 }
 
 export class PreviewBar extends React.PureComponent<PreviewBarProps & WithContextProps> {
-  static propTypes = {
-    context: ContextShape.isRequired,
-    emoji: EmojiShape,
-    emojiLargeSize: SizeShape.isRequired,
-    emojiPath: PathShape.isRequired,
-    emojiSource: SourceShape.isRequired,
-  };
-
   static defaultProps = {
     emoji: null,
     noPreview: null,
