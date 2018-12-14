@@ -3,13 +3,11 @@
  * @license     https://opensource.org/licenses/MIT
  */
 
-/* eslint-disable complexity, react/no-unused-prop-types */
+/* eslint-disable complexity */
 
 import React from 'react';
-import PropTypes from 'prop-types';
 import { Emoticon, Hexcode, Shortcode, Unicode } from 'emojibase';
 import EmojiDataManager from './EmojiDataManager';
-import { PathShape, SizeShape, SourceShape } from './shapes';
 import { Path, Size, Source } from './types';
 
 export interface EmojiProps {
@@ -27,8 +25,6 @@ export interface EmojiProps {
   enlargeEmoji?: boolean;
   /** Hexcode to reference emoji from. */
   hexcode?: Hexcode;
-  /** @ignore Key provided by the parser. */
-  key?: string | number;
   /** Render literal unicode character instead of an SVG/PNG. */
   renderUnicode?: boolean;
   /** Shortcode to reference emoji from. */
@@ -38,19 +34,6 @@ export interface EmojiProps {
 }
 
 export default class Emoji extends React.PureComponent<EmojiProps> {
-  static propTypes = {
-    emojiLargeSize: SizeShape,
-    emojiPath: PathShape,
-    emojiSize: SizeShape,
-    emojiSource: SourceShape.isRequired,
-    emoticon: PropTypes.string,
-    enlargeEmoji: PropTypes.bool,
-    hexcode: PropTypes.string,
-    renderUnicode: PropTypes.bool,
-    shortcode: PropTypes.string,
-    unicode: PropTypes.string,
-  };
-
   static defaultProps = {
     emojiLargeSize: '3em',
     emojiPath: '{{hexcode}}',

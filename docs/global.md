@@ -52,13 +52,6 @@ function Interweave({ filters, matchers, twitter, instagram, ...props }) {
   );
 }
 
-Interweave.propTypes = {
-  filters: PropTypes.arrayOf(FilterShape),
-  matchers: PropTypes.arrayOf(MatcherShape),
-  twitter: PropTypes.bool,
-  instagram: PropTypes.bool,
-};
-
 Interweave.defaultProps = {
   filters: [],
   matchers: [],

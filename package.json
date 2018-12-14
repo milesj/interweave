@@ -2,10 +2,10 @@
   "name": "interweave-root",
   "private": true,
   "scripts": {
-    "build": "beemo typescript --workspaces=* --priority --react",
+    "build": "beemo typescript --workspaces=*",
     "coverage": "yarn run jest --coverage",
     "eslint": "beemo eslint",
-    "jest": "beemo jest --react",
+    "jest": "beemo jest",
     "posttest": "yarn run eslint",
     "pretest": "yarn run type",
     "test": "yarn run jest",
@@ -13,28 +13,27 @@
     "prettier": "beemo prettier",
     "prerelease": "yarn test && yarn run build",
     "release": "lerna publish",
-    "type": "beemo typescript --workspaces=* --noEmit --react"
+    "type": "beemo typescript --workspaces=* --noEmit"
   },
   "devDependencies": {
-    "@milesj/build-tool-config": "^0.115.2",
-    "@types/react": "^16.4.7",
-    "@types/react-dom": "^16.0.6",
-    "babel-loader": "^7.1.5",
-    "emojibase": "^2.0.0",
-    "emojibase-test-utils": "^3.0.0",
-    "lerna": "^2.11.0",
-    "react": "^16.4.2",
-    "serve": "^9.4.0",
-    "ts-loader": "^4.4.2",
-    "typescript": "2.9.2",
-    "webpack": "^4.16.4",
-    "webpack-cli": "^3.1.0"
+    "@milesj/build-tools": "^0.11.1",
+    "@types/react": "^16.0.0",
+    "@types/react-dom": "^16.0.11",
+    "babel-loader": "^8.0.4",
+    "emojibase": "^2.1.0",
+    "emojibase-test-utils": "^3.1.0",
+    "lerna": "^3.5.0",
+    "react": "^16.6.3",
+    "serve": "^10.1.1",
+    "ts-loader": "^5.3.1",
+    "webpack": "^4.26.1",
+    "webpack-cli": "^3.1.2"
   },
   "workspaces": [
     "packages/*"
   ],
   "beemo": {
-    "module": "@milesj/build-tool-config",
+    "module": "@milesj/build-tools",
     "drivers": [
       "babel",
       "eslint",
@@ -42,10 +41,16 @@
       "prettier",
       "typescript"
     ],
+    "settings": {
+      "react": true
+    },
     "eslint": {
       "rules": {
         "import/no-named-as-default": "off",
-        "react/jsx-no-literals": "off"
+        "require-unicode-regexp": "off",
+        "react/jsx-no-literals": "off",
+        "react/no-unused-prop-types": "off",
+        "react/default-props-match-prop-types": "off"
       }
     }
   },

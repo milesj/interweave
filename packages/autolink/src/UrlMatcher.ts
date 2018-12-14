@@ -34,7 +34,7 @@ export default class UrlMatcher extends Matcher<UrlProps, UrlMatcherOptions> {
     return React.createElement(Url, props, match);
   }
 
-  asTag() {
+  asTag(): string {
     return 'a';
   }
 

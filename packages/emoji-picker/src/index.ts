@@ -7,8 +7,6 @@ import Picker, { PickerProps } from './Picker';
 
 export { PickerProps };
 
-export * from './shapes';
-
 export * from './types';
 
 export default Picker;

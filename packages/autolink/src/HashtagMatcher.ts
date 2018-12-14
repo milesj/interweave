@@ -13,7 +13,7 @@ export default class HashtagMatcher extends Matcher<HashtagProps> {
     return React.createElement(Hashtag, props, match);
   }
 
-  asTag() {
+  asTag(): string {
     return 'a';
   }
 
