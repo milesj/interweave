@@ -1,5 +1,5 @@
 /**
- * @copyright   2016-2018, Miles Johnson
+ * @copyright   2016-2019, Miles Johnson
  * @license     https://opensource.org/licenses/MIT
  */
 
