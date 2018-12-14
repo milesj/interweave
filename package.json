@@ -16,7 +16,7 @@
     "type": "beemo typescript --workspaces=* --noEmit"
   },
   "devDependencies": {
-    "@milesj/build-tools": "^0.9.1",
+    "@milesj/build-tools": "^0.11.1",
     "@types/react": "^16.0.0",
     "@types/react-dom": "^16.0.11",
     "babel-loader": "^8.0.4",
