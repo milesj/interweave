@@ -20,7 +20,7 @@ npm install interweave interweave-autolink --save
 The `UrlMatcher` will match most variations of a URL and its segments. This includes the protocol,
 user and password auth, host, port, path, query, and fragment.
 
-```javascript
+```tsx
 import Interweave from 'interweave';
 import { UrlMatcher } from 'interweave-autolink';
 
@@ -33,13 +33,13 @@ By default, the `UrlMatcher` will validate top-level domains against a whitelist
 TLDs (like .com, .net, and countries). You can disable this validation with the `validateTLD`
 option.
 
-```javascript
+```ts
 new UrlMatcher('url', { validateTLD: false });
 ```
 
 Or you can provide a whitelist of additional TLDs to validate with.
 
-```javascript
+```ts
 new UrlMatcher('url', { customTLDs: ['life', 'tech', 'ninja'] });
 ```
 
@@ -72,7 +72,7 @@ these two patterns separately. To support IPs, use the `IpMatcher`, which will m
 conform to a valid IPv4 address (IPv6 not supported). Like the `UrlMatcher`, all segments are
 included.
 
-```javascript
+```tsx
 import Interweave from 'interweave';
 import { IpMatcher } from 'interweave-autolink';
 
@@ -95,7 +95,7 @@ If a match is found, an `Ip` component is rendered with the same props as `Url`.
 
 The `EmailMatcher` will match an email address and link it using a "mailto:" target.
 
-```javascript
+```tsx
 import Interweave from 'interweave';
 import { EmailMatcher } from 'interweave-autolink';
 
@@ -126,7 +126,7 @@ The `HashtagMatcher` will match a common hashtag (like Twitter and Instagram) an
 custom URL (passed as a prop). Hashtag matching supports alpha-numeric (`a-z0-9`), underscore (`_`),
 and dash (`-`) characters, and must start with a `#`.
 
-```javascript
+```tsx
 import Interweave from 'interweave';
 import { HashtagMatcher } from 'interweave-autolink';
 
@@ -149,7 +149,7 @@ Hashtags require a URL to link to, which is defined by the `hashtagUrl` prop. Th
 the following token, `{{hashtag}}`, which will be replaced by the matched hashtag. Or a function can
 be passed, which receives the hashtag as the 1st argument.
 
-```javascript
+```tsx
 <Interweave
   hashtagUrl="https://twitter.com/hashtag/{{hashtag}}"
   matchers={[new HashtagMatcher('hashtag')]}

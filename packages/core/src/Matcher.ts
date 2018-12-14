@@ -16,7 +16,7 @@ export interface MatcherInterface<T> {
   onAfterParse?(content: Node[], props: T): Node[];
 }
 
-export default abstract class Matcher<Props extends {}, Options extends {} = {}>
+export default abstract class Matcher<Props extends {} = any, Options extends {} = {}>
   implements MatcherInterface<Props> {
   options: Options;
 

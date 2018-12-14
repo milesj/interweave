@@ -9,20 +9,20 @@ back into an array of strings and React elements, therefore, permitting it to be
 virtual DOM layer. For example, take the following string "Check out my website,
 github.com/milesj!", and a `UrlMatcher`, you'd get the following array.
 
-```javascript
+```js
 ['Check out my website, ', <Url>github.com/milesj</Url>, '!'];
 ```
 
 Matchers can be passed to each instance of `Interweave`. When adding a matcher, a unique name must
 be passed to the constructor.
 
-```javascript
+```tsx
 <Interweave matchers={[new CustomMatcher('foo')]} />
 ```
 
 To disable all matchers, per instance, pass the `disableMatchers` prop.
 
-```javascript
+```tsx
 <Interweave disableMatchers />
 ```
 
@@ -30,7 +30,7 @@ To disable a single matcher, you can pass a prop that starts with "no", and ends
 name of the matcher (the one passed to the constructor). Using the example above, you can pass a
 `noFoo` prop.
 
-```javascript
+```tsx
 <Interweave noFoo />
 ```
 
@@ -51,15 +51,15 @@ object. Both approaches will require the following methods to be defined (exclud
 - `asTag()` - The HTML tag name of the replacement element.
 - `onBeforeParse(content: string, props: object)` - Callback that fires before parsing. Is passed
   the source string and must return a string.
-- `onAfterParse(nodes: node[], props: object)` - Callback that fires after parsing. Is passed an
+- `onAfterParse(nodes: Node[], props: object)` - Callback that fires after parsing. Is passed an
   array of strings/elements and must return an array.
 
 > Using the plain object approach requires more implementation and a higher overhead.
 
-```javascript
-import { Matcher } from 'interweave';
+```tsx
+import { Matcher, MatchResponse, Node } from 'interweave';
 
-function match(string) {
+function match(string: string): MatchResponse | null {
   const matches = string.match(/foo/);
 
   if (!matches) {
@@ -73,16 +73,16 @@ function match(string) {
 }
 
 // Class
-class CustomMatcher extends Matcher {
-  match(string) {
+class CustomMatcher extends Matcher<CustomProps> {
+  match(string: string): MatchResponse | null {
     return match(string);
   }
 
-  replaceWith(match, props) {
+  replaceWith(match: string, props: CustomProps): Node {
     return <span {...props}>{match}</span>;
   }
 
-  asTag() {
+  asTag(): string {
     return 'span';
   }
 }
@@ -102,11 +102,11 @@ const matcher = {
 To ease the matching process, there is a `doMatch` method on `Matcher` that handles the `null` and
 object building logic. Simply pass it a regex pattern and a callback to build the object.
 
-```javascript
-class CustomMatcher extends Matcher {
+```ts
+class CustomMatcher extends Matcher<CustomProps> {
   // ...
 
-  match(string) {
+  match(string: string): MatchResponse | null {
     return this.doMatch(string, /foo/, matches => ({
       extraProp: 'foo',
     }));
@@ -121,7 +121,7 @@ matcher's `replaceWith` method, or from a factory. What's a factory you ask? Sim
 component reference passed to the constructor of a matcher, allowing the rendered element to be
 customized for built-in or third-party matchers.
 
-```javascript
+```ts
 new CustomMatcher('foo', {}, SomeComponent);
 ```
 

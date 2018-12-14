@@ -5,13 +5,13 @@ Filters provide an easy way of cleaning HTML attributes and nodes during the
 
 Filters can be added to each instance of `Interweave` through the `filters` prop.
 
-```javascript
+```tsx
 <Interweave filters={[new LinkFilter()]} />
 ```
 
 To disable all filters, pass the `disableFilters` prop.
 
-```javascript
+```tsx
 <Interweave disableFilters />
 ```
 
@@ -21,12 +21,12 @@ Creating a custom filter is easy. Extend the base `Filter` class, or use a plain
 the `attribute` or `node` methods. These methods receive the attribute or tag name as the 1st
 argument, and the value as the 2nd, respectively.
 
-```javascript
+```ts
 import { Filter } from 'interweave';
 
 // Class
 class LinkFilter extends Filter {
-  attribute(name, value) {
+  attribute(name: string, value: string): string {
     if (name === 'href') {
       return encodeURIComponent(value);
     }
@@ -34,7 +34,7 @@ class LinkFilter extends Filter {
     return value;
   }
 
-  node(name, node) {
+  node(name: string, node: HTMLElement): HTMLElement {
     if (name === 'a') {
       node.setAttribute('target', '_blank');
     }

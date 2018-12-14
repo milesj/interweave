@@ -21,7 +21,7 @@ npm install interweave interweave-emoji emojibase --save
 The `EmojiMatcher` makes use of complex regex patterns provided by Emojibase to find and replace
 emoji unicode sequences with SVN/PNGS.
 
-```javascript
+```tsx
 import Interweave from 'interweave';
 import { EmojiMatcher } from 'interweave-emoji';
 
@@ -56,9 +56,15 @@ Before emoji can be rendered, emoji data must be loaded from a CDN. To do this, 
 higher-order-component (HOC) is provided, which will fetch emoji data from Emojibase's CDN. This HOC
 should wrap a component that composes `Interweave`.
 
-```javascript
-import Interweave from 'interweave';
-import withEmojiData from 'interweave-emoji';
+```tsx
+import BaseInterweave, { InterweaveProps } from 'interweave';
+import withEmojiData, { WithEmojiDataProps } from 'interweave-emoji';
+
+function Interweave(props: InterweaveProps & WithEmojiDataProps) {
+  const { emojis, emojiData, emojiSource, ...restProps } = props;
+
+  return <BaseInterweave {...restProps} />;
+}
 
 export default withEmojiData({ compact: false })(Interweave);
 ```
@@ -86,7 +92,7 @@ would convert to 🙂.
 To enable conversion of an emoticon to a unicode literal character, pass the `convertEmoticon`
 option to the matcher.
 
-```javascript
+```ts
 new EmojiMatcher('emoji', { convertEmoticon: true });
 ```
 
@@ -101,7 +107,7 @@ word (or two) surrounded by two colons: `:boy:`.
 To enable conversion of a shortcode to a unicode literal character, pass the `convertShortcode`
 option to the matcher constructor.
 
-```javascript
+```ts
 new EmojiMatcher('emoji', { convertShortcode: true });
 ```
 
@@ -114,7 +120,7 @@ To begin, we must enable conversion of unicode characters to media (images, vect
 enabling the `convertUnicode` option. Secondly, if you want to support shortcodes or emoticons,
 enable `convertShortcode` or `convertEmoticon` respectively.
 
-```javascript
+```ts
 new EmojiMatcher('emoji', {
   convertEmoticon: true,
   convertShortcode: true,
@@ -129,7 +135,7 @@ the emoji.
 Or a function can be passed, which receives the hexcode as the 1st argument, `enlargeEmoji` value as
 the 2nd argument, `emojiSize` as the 3rd argument, and `emojiLargeSize` as the 4th argument.
 
-```javascript
+```tsx
 <Interweave
   emojiPath="https://example.com/images/emoji/{{hexcode}}.png"
   matchers={[new EmojiMatcher('emoji')]}
@@ -155,7 +161,7 @@ icon fonts are not supported. The following resources can be used for downloadin
 Lastly, to control the width and height of the `img`, use the `emojiSize` prop, which accepts a
 number or string. If a number is provided, it'll be passed down to React, which defaults to `px`.
 
-```javascript
+```tsx
 <Interweave emojiSize={32} emojiLargeSize={96} /> // 32px, 96px
 <Interweave emojiSize="1em" emojiLargeSize="3em" /> // 1em, 3em
 ```
@@ -168,7 +174,7 @@ To display native unicode characters as is, pass the `renderUnicode` option to t
 constructor. This option will override the rendering of SVGs or PNGs, and works quite well alongside
 shortcode or emoticon conversion.
 
-```javascript
+```ts
 new EmojiMatcher('emoji', { renderUnicode: true });
 ```
 
@@ -178,7 +184,7 @@ When an emoji is the only character within the content, it will automatically be
 disable this functionality, set `enlargeThreshold` to 0. Inversely, if you want to increase the
 threshold in which emojis are enlarged, increase the count.
 
-```javascript
+```ts
 new EmojiMatcher('emoji', { enlargeThreshold: 3 });
 ```
 

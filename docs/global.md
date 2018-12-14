@@ -3,17 +3,16 @@
 We suggest composing around `Interweave` using a custom component. This provides more options for
 customization, like the choice between Twitter and Instagram hashtags, or PNG or SVG emojis.
 
-```javascript
+```tsx
 import React from 'react';
-import PropTypes from 'prop-types';
 import { stripHexcode } from 'emojibase';
-import BaseInterweave from 'interweave';
+import BaseInterweave, { InterweaveProps, Filter, Matcher } from 'interweave';
 import { IpMatcher, UrlMatcher, EmailMatcher, HashtagMatcher } from 'interweave-autolink';
-import withEmojiData, { EmojiMatcher } from 'interweave-emoji';
+import withEmojiData, { WithEmojiDataProps, EmojiMatcher } from 'interweave-emoji';
 
-const globalFilters = [new CustomFilter()];
+const globalFilters: Filter[] = [new CustomFilter()];
 
-const globalMatchers = [
+const globalMatchers: Matcher[] = [
   new EmailMatcher('email'),
   new IpMatcher('ip'),
   new UrlMatcher('url'),
@@ -25,13 +24,24 @@ const globalMatchers = [
   }),
 ];
 
-function getEmojiPath(hexcode, enlarged) {
+function getEmojiPath(hexcode: string, enlarged: boolean): string {
   return `//cdn.jsdelivr.net/emojione/assets/3.1/png/${enlarged ? 64 : 32}/${stripHexcode(
     hexcode,
   ).toLowerCase()}.png`;
 }
 
-function Interweave({ filters, matchers, twitter, instagram, ...props }) {
+type Props = {
+  instagram?: boolean;
+  twitter?: boolean;
+} & InterweaveProps;
+
+function Interweave({
+  filters,
+  matchers,
+  twitter,
+  instagram,
+  ...props
+}: Props & WithEmojiDataProps) {
   let hashtagUrl = '';
 
   if (twitter) {
