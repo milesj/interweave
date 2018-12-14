@@ -4,15 +4,13 @@
  */
 
 import React from 'react';
-import PropTypes from 'prop-types';
 import { List, ListRowProps } from 'react-virtualized';
 import chunk from 'lodash/chunk';
-import { CanonicalEmoji, EmojiShape, Path, PathShape, Source, SourceShape } from 'interweave-emoji';
+import { CanonicalEmoji, Path, Source } from 'interweave-emoji';
 import withContext, { WithContextProps } from './withContext';
 import EmojiButton from './Emoji';
 import EmojiListHeader from './EmojiListHeader';
 import { GROUP_KEY_NONE } from './constants';
-import { ContextShape } from './shapes';
 import { CommonMode, GroupKey, GroupEmojiMap, GroupIndexMap } from './types';
 
 export type VirtualRow = string | CanonicalEmoji[];
@@ -21,7 +19,6 @@ export interface EmojiListProps {
   activeEmoji?: CanonicalEmoji | null;
   activeGroup: GroupKey;
   clearIcon?: React.ReactNode;
-  // children?: React.ReactNode;
   columnCount: number;
   columnPadding?: number;
   commonMode: CommonMode;
@@ -55,39 +52,6 @@ export class EmojiList extends React.PureComponent<
   EmojiListProps & WithContextProps,
   EmojiListState
 > {
-  static propTypes = {
-    activeEmoji: EmojiShape,
-    activeGroup: PropTypes.string.isRequired,
-    clearIcon: PropTypes.node,
-    columnCount: PropTypes.number.isRequired,
-    columnPadding: PropTypes.number,
-    commonMode: PropTypes.string.isRequired,
-    context: ContextShape.isRequired,
-    emojiPadding: PropTypes.number.isRequired,
-    emojiPath: PathShape.isRequired,
-    emojiSize: PropTypes.number.isRequired,
-    emojiSource: SourceShape.isRequired,
-    groupedEmojis: PropTypes.objectOf(
-      PropTypes.shape({
-        emojis: PropTypes.arrayOf(EmojiShape).isRequired,
-        group: PropTypes.string.isRequired,
-      }),
-    ).isRequired,
-    hideGroupHeaders: PropTypes.bool.isRequired,
-    noResults: PropTypes.node,
-    onClear: PropTypes.func.isRequired,
-    onEnterEmoji: PropTypes.func.isRequired,
-    onLeaveEmoji: PropTypes.func.isRequired,
-    onScroll: PropTypes.func.isRequired,
-    onScrollGroup: PropTypes.func.isRequired,
-    onSelectEmoji: PropTypes.func.isRequired,
-    rowCount: PropTypes.number.isRequired,
-    rowPadding: PropTypes.number,
-    scrollToGroup: PropTypes.string.isRequired,
-    skinTonePalette: PropTypes.node,
-    stickyGroupHeader: PropTypes.bool.isRequired,
-  };
-
   static defaultProps = {
     activeEmoji: null,
     clearIcon: null,

@@ -1,3 +1,15 @@
+# 10.0.0
+
+#### 💥 Breaking
+
+- HTML attributes in which their value is falsy will now be omitted from the rendered output.
+- PropType shapes have been removed.
+
+#### 🚀 New
+
+- Enabled the `type` attribute for all HTML elements.
+- Updated `tagName` prop to support any JSX supported HTML tag.
+
 # 9.2.1 - 08/07/18
 
 #### 🐞 Fixed

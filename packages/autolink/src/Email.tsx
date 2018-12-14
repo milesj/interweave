@@ -4,7 +4,6 @@
  */
 
 import React from 'react';
-import PropTypes from 'prop-types';
 import Link, { LinkProps } from './Link';
 
 export interface EmailProps extends Partial<LinkProps> {
@@ -16,14 +15,6 @@ export interface EmailProps extends Partial<LinkProps> {
 }
 
 export default class Email extends React.PureComponent<EmailProps> {
-  static propTypes = {
-    children: PropTypes.string.isRequired,
-    emailParts: PropTypes.shape({
-      host: PropTypes.string,
-      username: PropTypes.string,
-    }).isRequired,
-  };
-
   render() {
     const { children, emailParts, ...props } = this.props;
 

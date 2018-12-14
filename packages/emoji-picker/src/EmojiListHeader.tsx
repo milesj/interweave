@@ -4,7 +4,6 @@
  */
 
 import React from 'react';
-import PropTypes from 'prop-types';
 import camelCase from 'lodash/camelCase';
 import withContext, { WithContextProps } from './withContext';
 import {
@@ -13,7 +12,6 @@ import {
   GROUP_KEY_SMILEYS_PEOPLE,
   GROUP_KEY_NONE,
 } from './constants';
-import { ContextShape } from './shapes';
 import { CommonMode, GroupKey } from './types';
 
 export interface EmojiListHeaderProps {
@@ -26,16 +24,6 @@ export interface EmojiListHeaderProps {
 }
 
 export class EmojiListHeader extends React.PureComponent<EmojiListHeaderProps & WithContextProps> {
-  static propTypes = {
-    clearIcon: PropTypes.node,
-    commonMode: PropTypes.string.isRequired,
-    context: ContextShape.isRequired,
-    group: PropTypes.string.isRequired,
-    onClear: PropTypes.func.isRequired,
-    skinTonePalette: PropTypes.node,
-    sticky: PropTypes.bool,
-  };
-
   static defaultProps = {
     clearIcon: null,
     skinTonePalette: null,

@@ -135,6 +135,7 @@ describe('EmojiMatcher', () => {
         emojiSource: SOURCE_PROP,
         hexcode: UNICODE_TO_HEXCODE[unicode],
         unicode,
+        // @ts-ignore
         key,
       });
     }
@@ -144,6 +145,7 @@ describe('EmojiMatcher', () => {
         emojiSource: SOURCE_PROP,
         hexcode: SHORTCODE_TO_HEXCODE[shortcode],
         shortcode,
+        // @ts-ignore
         key,
       });
     }

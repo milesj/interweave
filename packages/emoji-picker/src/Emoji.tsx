@@ -4,18 +4,8 @@
  */
 
 import React from 'react';
-import PropTypes from 'prop-types';
-import {
-  Emoji as EmojiCharacter,
-  CanonicalEmoji,
-  EmojiShape,
-  Path,
-  PathShape,
-  Source,
-  SourceShape,
-} from 'interweave-emoji';
+import { Emoji as EmojiCharacter, CanonicalEmoji, Path, Source } from 'interweave-emoji';
 import withContext, { WithContextProps } from './withContext';
-import { ContextShape } from './shapes';
 
 export interface EmojiProps {
   active: boolean;
@@ -30,19 +20,6 @@ export interface EmojiProps {
 }
 
 export class Emoji extends React.Component<EmojiProps & WithContextProps> {
-  static propTypes = {
-    active: PropTypes.bool.isRequired,
-    context: ContextShape.isRequired,
-    emoji: EmojiShape.isRequired,
-    emojiPadding: PropTypes.number.isRequired,
-    emojiPath: PathShape.isRequired,
-    emojiSize: PropTypes.number.isRequired,
-    emojiSource: SourceShape.isRequired,
-    onEnter: PropTypes.func.isRequired,
-    onLeave: PropTypes.func.isRequired,
-    onSelect: PropTypes.func.isRequired,
-  };
-
   /**
    * Triggered when the emoji is clicked.
    */

@@ -4,7 +4,6 @@
  */
 
 import React from 'react';
-import PropTypes from 'prop-types';
 
 export interface LinkProps {
   children: React.ReactNode;
@@ -15,13 +14,6 @@ export interface LinkProps {
 }
 
 export default class Link extends React.PureComponent<LinkProps> {
-  static propTypes = {
-    children: PropTypes.node.isRequired,
-    href: PropTypes.string.isRequired,
-    newWindow: PropTypes.bool,
-    onClick: PropTypes.func,
-  };
-
   static defaultProps = {
     newWindow: false,
     onClick: null,

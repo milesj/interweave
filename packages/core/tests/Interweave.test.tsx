@@ -1,5 +1,3 @@
-/* eslint-disable react/prop-types */
-
 import React from 'react';
 import ReactDOMServer from 'react-dom/server';
 import { shallow } from 'enzyme';
@@ -315,6 +313,7 @@ describe('Interweave', () => {
         <Element key="0" attributes={{ bgcolor: 'black' }} tagName="div">
           {[
             '\n  ',
+            // @ts-ignore Allow invalid tag
             <Element key="1" attributes={{ color: 'red' }} tagName="font">
               {['Outdated font.']}
             </Element>,
@@ -323,6 +322,7 @@ describe('Interweave', () => {
             <Element key="2" attributes={{ align: 'center' }} tagName="p">
               {[
                 'More text ',
+                // @ts-ignore Allow invalid tag
                 <Element key="3" tagName="strike">
                   {['with outdated stuff']}
                 </Element>,
