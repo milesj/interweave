@@ -200,6 +200,12 @@ describe('Parser', () => {
         instance.createDocument('<body>Foo</body>');
       }).toThrowError('HTML documents as Interweave content are not supported.');
     });
+
+    it('doesnt errors out for `html` in brackets', () => {
+      expect(() => {
+        instance.createDocument('[html]Body[/html]');
+      }).not.toThrowError();
+    });
   });
 
   describe('convertLineBreaks()', () => {

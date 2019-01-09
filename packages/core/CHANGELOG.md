@@ -13,6 +13,10 @@
 - Enabled the `type` attribute for all HTML elements.
 - Updated `tagName` prop to support any JSX supported HTML tag.
 
+#### 🐞 Fixed
+
+- Fixed a bug in which content starting with BBCode (`[html]`) were not being parsed.
+
 # 9.2.1 - 2018-08-07
 
 #### 🐞 Fixed
