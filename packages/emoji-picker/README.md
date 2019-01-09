@@ -2,10 +2,10 @@
 
 [![Build Status](https://travis-ci.org/milesj/interweave.svg?branch=master)](https://travis-ci.org/milesj/interweave)
 [![npm version](https://badge.fury.io/js/interweave-emoji-picker.svg)](https://www.npmjs.com/package/interweave-emoji-picker)
-[![npm deps](https://david-dm.org/milesj/interweave-emoji-picker.svg)](https://www.npmjs.com/package/interweave-emoji-picker)
+[![npm deps](https://david-dm.org/milesj/interweave.svg?path=packages/emoji-picker)](https://www.npmjs.com/package/interweave-emoji-picker)
 
-A React based emoji picker powered by [Interweave](https://github.com/milesj/interweave) and
-[Emojibase][emojibase]. Supports the following features:
+A React based emoji picker powered by [Interweave][interweave] and [Emojibase][emojibase]. Supports
+the following features:
 
 - Customizable theme, styles, and icons.
 - Configurable element and render order.
@@ -24,6 +24,7 @@ A React based emoji picker powered by [Interweave](https://github.com/milesj/int
 
 ## Requirements
 
+- [Interweave][interweave]
 - [Emojibase][emojibase]
 
 ## Installation
@@ -38,4 +39,5 @@ npm install interweave interweave-emoji interweave-emoji-picker emojibase --save
 
 [https://milesj.gitbook.io/interweave](https://milesj.gitbook.io/interweave)
 
+[interweave]: https://github.com/milesj/interweave
 [emojibase]: https://github.com/milesj/emojibase

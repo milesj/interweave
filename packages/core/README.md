@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/milesj/interweave.svg?branch=master)](https://travis-ci.org/milesj/interweave)
 [![npm version](https://badge.fury.io/js/interweave.svg)](https://www.npmjs.com/package/interweave)
-[![npm deps](https://david-dm.org/milesj/interweave.svg)](https://www.npmjs.com/package/interweave)
+[![npm deps](https://david-dm.org/milesj/interweave.svg?path=packages/core)](https://www.npmjs.com/package/interweave)
 
 Interweave is a robust React library that can...
 
