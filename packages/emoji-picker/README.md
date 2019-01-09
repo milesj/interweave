@@ -1,5 +1,9 @@
 # Interweave Emoji Picker
 
+[![Build Status](https://travis-ci.org/milesj/interweave.svg?branch=master)](https://travis-ci.org/milesj/interweave)
+[![npm version](https://badge.fury.io/js/interweave-emoji-picker.svg)](https://www.npmjs.com/package/interweave-emoji-picker)
+[![npm deps](https://david-dm.org/milesj/interweave-emoji-picker.svg)](https://www.npmjs.com/package/interweave-emoji-picker)
+
 A React based emoji picker powered by [Interweave](https://github.com/milesj/interweave) and
 [Emojibase][emojibase]. Supports the following features:
 

@@ -1,6 +1,8 @@
 # Interweave
 
 [![Build Status](https://travis-ci.org/milesj/interweave.svg?branch=master)](https://travis-ci.org/milesj/interweave)
+[![npm version](https://badge.fury.io/js/interweave.svg)](https://www.npmjs.com/package/interweave)
+[![npm deps](https://david-dm.org/milesj/interweave.svg)](https://www.npmjs.com/package/interweave)
 
 Interweave is a robust React library that can...
 
@@ -12,6 +14,10 @@ Interweave is a robust React library that can...
 - Autolink URLs, IPs, emails, and hashtags.
 - Render Emoji and emoticon characters.
 - And much more!
+
+```tsx
+<Interweave content="This string contains <b>HTML</b>!" />
+```
 
 ## Requirements
 
