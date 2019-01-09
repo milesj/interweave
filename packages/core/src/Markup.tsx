@@ -3,6 +3,8 @@
  * @license     https://opensource.org/licenses/MIT
  */
 
+/* eslint-disable react/jsx-fragments */
+
 import React from 'react';
 import Element from './Element';
 import Parser from './Parser';

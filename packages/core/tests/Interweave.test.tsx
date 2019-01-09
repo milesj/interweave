@@ -88,9 +88,9 @@ describe('Interweave', () => {
             inverseName: 'noB',
             propName: 'b',
             asTag: () => 'span',
-            createElement: (match: string, props: any) => (
-              <Element key="0" tagName="span" {...props}>
-                {props.children.toUpperCase()}
+            createElement: (match: string, p: any) => (
+              <Element key="0" tagName="span" {...p}>
+                {p.children.toUpperCase()}
               </Element>
             ),
             match: string => matchCodeTag(string, 'b'),

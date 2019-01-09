@@ -62,7 +62,6 @@ export class EmojiList extends React.PureComponent<
   };
 
   state: EmojiListState = {
-    // eslint-disable-next-line react/no-unused-state
     emojis: {},
     indices: {},
     rows: [],
