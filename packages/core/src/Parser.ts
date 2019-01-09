@@ -229,14 +229,9 @@ export default class Parser {
    * as line breaks should be handled by `<br/>`s in the markup itself.
    */
   convertLineBreaks(markup: string): string {
-    const { noHtml, noHtmlExceptMatchers, disableLineBreaks } = this.props;
+    const { noHtml, disableLineBreaks } = this.props;
 
-    if (
-      noHtml ||
-      noHtmlExceptMatchers ||
-      disableLineBreaks ||
-      markup.match(/<((?:\/[a-z ]+)|(?:[a-z ]+\/))>/gi)
-    ) {
+    if (noHtml || disableLineBreaks || markup.match(/<((?:\/[a-z ]+)|(?:[a-z ]+\/))>/gi)) {
       return markup;
     }
 
@@ -446,7 +441,7 @@ export default class Parser {
         //  - HTML has not been disabled
         //  - Whitelist is disabled OR the child is valid within the parent
         if (
-          !(noHtml || noHtmlExceptMatchers) &&
+          !(noHtml || (noHtmlExceptMatchers && tagName !== 'br')) &&
           (disableWhitelist || this.canRenderChild(parentConfig, config))
         ) {
           this.keyIndex += 1;

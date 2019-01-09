@@ -5,6 +5,7 @@
 - HTML attributes in which their value is falsy will now be treated as enabled attributes, according
   the official
   [HTML spec](https://html.spec.whatwg.org/multipage/common-microsyntaxes.html#boolean-attributes).
+- Newlines will now be converted to `<br/>` tags when `noHtmlExceptMatchers` is passed.
 - PropType shapes have been removed.
 
 #### 🚀 New

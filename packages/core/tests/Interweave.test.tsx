@@ -267,7 +267,25 @@ describe('Interweave', () => {
       ]);
     });
 
-    it('doesnt convert line breaks', () => {
+    it('converts line breaks if `noHtmlExceptMatchers` is true', () => {
+      const wrapper = shallow(<Interweave content={'Foo\nBar'} noHtmlExceptMatchers />);
+
+      expect(wrapper.prop('parsedContent')).toEqual([
+        'Foo',
+        <Element key="0" tagName="br" selfClose>
+          {[]}
+        </Element>,
+        'Bar',
+      ]);
+    });
+
+    it('doesnt convert line breaks if `noHtml` is true', () => {
+      const wrapper = shallow(<Interweave content={'Foo\nBar'} noHtml />);
+
+      expect(wrapper.prop('parsedContent')).toEqual(['Foo\nBar']);
+    });
+
+    it('doesnt convert line breaks if `disableLineBreaks` is true', () => {
       const wrapper = shallow(<Interweave content={'Foo\nBar'} disableLineBreaks />);
 
       expect(wrapper.prop('parsedContent')).toEqual(['Foo\nBar']);
