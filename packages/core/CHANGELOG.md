@@ -1,4 +1,4 @@
-# 10.0.0
+# 10.0.0 - 2019-01-08
 
 #### 💥 Breaking
 
@@ -12,13 +12,13 @@
 - Enabled the `type` attribute for all HTML elements.
 - Updated `tagName` prop to support any JSX supported HTML tag.
 
-# 9.2.1 - 08/07/18
+# 9.2.1 - 2018-08-07
 
 #### 🐞 Fixed
 
 - Added `srcSet` to the React attribute to prop mapping.
 
-# 9.2.0 - 08/02/18
+# 9.2.0 - 2018-08-02
 
 #### 🚀 New
 
@@ -26,7 +26,7 @@
 - Updated `transform` to support blacklisted tags as a means to intercept. This allows tags like
   `iframe` and `canvas` to be used when handled manually.
 
-# 9.1.0 - 07/18/18
+# 9.1.0 - 2018-07-18
 
 #### 🚀 New
 
@@ -36,7 +36,7 @@ TypeScript
   - Only accepts `null`, `string`, and `React.ReactElement`.
   - Replaced all `React.ReactNode[]` types with `Node[]`.
 
-# 9.0.0 - 07/10/18
+# 9.0.0 - 2018-07-10
 
 #### 💥 Breaking
 
@@ -56,7 +56,7 @@ TypeScript
 - Converted from Flow to TypeScript.
 - Moved documention to Gitbook.
 
-# 8.1.0 - 04/16/18
+# 8.1.0 - 2018-04-16
 
 #### 🚀 New
 
@@ -64,7 +64,7 @@ TypeScript
 - Added a `transform` prop to hook into the parsing process.
 - Updated `tagName` prop to accept "fragment", in which a `React.Fragment` will be rendered.
 
-# 8.0.2 - 11/10/17
+# 8.0.2 - 2017-11-10
 
 #### 🐞 Fixed
 
@@ -75,13 +75,13 @@ TypeScript
 - Tested against React 16.1.
 - Improved build process.
 
-# 8.0.1 - 10/23/17
+# 8.0.1 - 2017-10-23
 
 #### 🛠 Internal
 
 - Fixed dependencies.
 
-# 8.0.0 - 10/12/17
+# 8.0.0 - 2017-10-12
 
 #### 💥 Breaking
 
@@ -90,7 +90,7 @@ TypeScript
   - A new `attribute(name, value)` method has been added (works like the previous implementation).
   - A new `node(tagName, node)` method has been added.
 
-# 7.1.0 - 9/26/17
+# 7.1.0 - 2017-09-26
 
 #### 🚀 New
 
@@ -100,7 +100,7 @@ TypeScript
 
 - Tested against React 16.
 
-# 7.0.0 - 9/25/17
+# 7.0.0 - 2017-09-25
 
 #### 💥 Breaking
 
@@ -123,7 +123,7 @@ TypeScript
 - Split Interweave into a multi-package repository using Yarn workspaces and Lerna.
 - Major refactor and cleanup on Flowtype usage.
 
-# 6.1.0 - 8/23/17
+# 6.1.0 - 2017-08-23
 
 #### 🐞 Fixed
 
@@ -135,7 +135,7 @@ TypeScript
 - Updated `emojibase` to 1.3.0.
 - Updated `emojibase-regex` to 1.0.4.
 
-# 6.0.0 - 8/21/17
+# 6.0.0 - 2017-08-21
 
 #### 💥 Breaking
 
@@ -163,13 +163,13 @@ TypeScript
 
 - Fixed and updated Flowtype and React definitions.
 
-# 5.4.0 - 7/12/17
+# 5.4.0 - 2017-07-12
 
 - Updated `emoji-database` to 0.9.
 - Updated `enlargeThreshold` to ignore whitespace when counting.
 - Fixed a bug in which emoji counts below the `enlargeThreshold` were not being enlarged.
 
-# 5.3.0 - 7/12/17
+# 5.3.0 - 2017-07-12
 
 - Added a new `emojiLargeSize` prop, which can be used to customize the size of enlarged emoji.
   - Also passed as the 4th argument to the `emojiPath` function.
@@ -180,7 +180,7 @@ TypeScript
 - Wrapped thrown errors in `process.env.NODE_ENV !== 'production'` environment checks.
 - Improvements to Flow definitions.
 
-# 5.2.0 - 7/10/17
+# 5.2.0 - 2017-07-10
 
 - Added a new `noHtmlExceptMatchers` prop.
 - Fixed a bug in which matcher after callbacks were not triggering properly.
@@ -189,23 +189,23 @@ TypeScript
 
 - Fixed prefixed TLDs not being matched correctly.
 
-# 5.1.1 - 6/23/17
+# 5.1.1 - 2017-06-23
 
 - Updated `emoji-database` to 0.8.
 - Fixed IE 10 compiled lib/ issues.
 
-# 5.1.0 - 6/16/17
+# 5.1.0 - 2017-06-16
 
 - Updated support for `react` 15.6.
 - Updated `emoji-database` to 0.7.
 - Updated `UrlMatcher` to validate against a common whitelist of TLDs (no longer wildcard).
 - Added `customTLDs` and `validateTLD` options to `UrlMatcher`.
 
-# 5.0.1 - 5/16/17
+# 5.0.1 - 2017-05-16
 
 - Fixed an issue with the index import failing.
 
-# 5.0.0 - 5/10/17
+# 5.0.0 - 2017-05-10
 
 - Updated IE requirement to 11+.
 - Updated to include src/ files in the published package.
@@ -213,13 +213,13 @@ TypeScript
 - Moved Flow definition to root of project.
 - Moved published files to a lib/ folder.
 
-# 4.1.0 - 4/25/17
+# 4.1.0 - 2017-04-25
 
 - Updated the `emojiPath` function to receive `enlargeEmoji` as the 2nd argument, and `emojiSize` as
   the 3rd argument.
 - Updated EmojiOne CDN.
 
-# 4.0.0 - 4/22/17
+# 4.0.0 - 2017-04-22
 
 - Updated support for React 15.5 and the new `prop-types` package.
 - Updated emoji parsing and rendering to use
@@ -237,22 +237,22 @@ TypeScript
 - Removed the emoji dataset and regex generation from Interweave.
 - Fixed a few issues with the flowtype definitions.
 
-# 3.1.0 - 3/31/17
+# 3.1.0 - 2017-03-31
 
 - Added an `emojiSize` prop to the `Emoji` component, which will scale the size of the emoji using
   inline styles.
 - Updated the `Emoji` component to return `img` instead of `span`.
 - Removed the extension specific class name from the `Emoji` element.
 
-# 3.0.2 - 3/30/17
+# 3.0.2 - 2017-03-30
 
 - Fixed an issue with the published build.
 
-# 3.0.1 - 3/30/17
+# 3.0.1 - 2017-03-30
 
 - Added support for `/` and `\` in URL query string parsing.
 
-# 3.0.0 - 3/25/17
+# 3.0.0 - 2017-03-25
 
 - Updated to no longer support parsing entire HTML documents.
   - This includes content that starts with `<!DOCTYPE>`, `<html>`, `<head>`, and `<body>`.
@@ -264,22 +264,22 @@ TypeScript
 - Added `CONFIG_INLINE` and `CONFIG_BLOCK` constants.
 - Removed the `PARSER_PASS_THROUGH` constant.
 
-# 2.0.3 - 2/24/17
+# 2.0.3 - 2017-02-24
 
 - Added `Parser#isSafe` to verify that a node is safe from injection attacks.
 - Fixed an issue with specific anchor link `javascript:` attacks being permitted.
 
-# 2.0.2 - 1/27/17
+# 2.0.2 - 2017-01-27
 
 - Fixed an issue with surrogate pair emojis rendering separately. For example, the MWGB family emoji
   should now render as a single emoji, instead of 4 individual.
 - Improved the efficiency of the emoji regex pattern.
 
-# 2.0.1 - 12/13/16
+# 2.0.1 - 2016-12-13
 
 - Fixed an issue with the NPM package.
 
-# 2.0.0 - 12/12/16
+# 2.0.0 - 2016-12-12
 
 - Removed the concept of global configuration. Composition should be used instead.
 - When an emoji is the only character parsed as the content, it will automatically be enlarged.
@@ -291,15 +291,15 @@ TypeScript
 - Removed `Interweave#addFilter`, `addMatcher`, `clearFilters`, `clearMatchers`, `getFilters`,
   `getMatchers`, and `configure`.
 
-# 1.2.0 - 12/15/16
+# 1.2.0 - 2016-12-15
 
 - Updated emoji to the latest EmojiOne dataset.
 
-# 1.1.1 - 11/10/16
+# 1.1.1 - 2016-11-10
 
 - Fixed an issue with the published build.
 
-# 1.1.0 - 11/10/16
+# 1.1.0 - 2016-11-10
 
 - Line breaks found in non-HTML strings will now be automatically converted to `<br/>` tags.
 - Added a `disableLineBreaks` prop to `Interweave` and `Markup`, which will disable the automatic
@@ -311,11 +311,11 @@ TypeScript
 - Removed the `className` prop from `Interweave` and `Markup`.
 - Fixed an issue where void elements (`br`, `hr`, etc) would not render correctly.
 
-# 1.0.1 - 10/21/16
+# 1.0.1 - 2016-10-21
 
 - Fixed an issue in which empty parses would pass an empty child to `Element`, triggering a prop
   type failure.
 
-# 1.0.0 - 10/20/16
+# 1.0.0 - 2016-10-20
 
 - Initial release!

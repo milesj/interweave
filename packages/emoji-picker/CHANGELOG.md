@@ -1,4 +1,4 @@
-# 3.0.0
+# 3.0.0 - 2019-01-08
 
 #### 💥 Breaking
 
@@ -8,7 +8,7 @@
 
 - Updated peer dep requirement for `interweave-emoji` to 3.0.
 
-# 2.0.1 - 07/18/18
+# 2.0.1 - 2018-07-18
 
 #### 🐞 Fixed
 
@@ -16,7 +16,7 @@ TypeScript
 
 - Updated to the new `Node` type to resolve React node issues.
 
-# 2.0.0 - 07/10/18
+# 2.0.0 - 2018-07-10
 
 #### 💥 Breaking
 
@@ -43,7 +43,7 @@ TypeScript
 - Converted from Flow to TypeScript.
 - Rewritten using the new React context API.
 
-# 1.4.0 - 04/16/18
+# 1.4.0 - 2018-04-16
 
 #### 🐞 Fixed
 
@@ -52,14 +52,14 @@ TypeScript
 - Fixed a bug where the emoji list would jump around while using the arrow keys.
 - Fixed a bug where strings weren't acceptable values for `emojiLargeSize` in the preview.
 
-# 1.3.1 - 11/10/17
+# 1.3.1 - 2017-11-10
 
 #### 🛠 Internal
 
 - Tested against React 16.1.
 - Improved build process.
 
-# 1.3.0 - 10/23/17
+# 1.3.0 - 2017-10-23
 
 #### 🚀 New
 
@@ -73,7 +73,7 @@ TypeScript
 
 - Commonly used emojis now store the `hexcode` instead of the `unicode` character.
 
-# 1.2.1 - 10/17/17
+# 1.2.1 - 2017-10-17
 
 #### 🚀 New
 
@@ -84,7 +84,7 @@ TypeScript
 - Fixed a regression caused by recent `interweave-emoji` changes in which commonly used emojis were
   not being rendered correctly.
 
-# 1.2.0 - 10/12/17
+# 1.2.0 - 2017-10-12
 
 #### 🚀 New
 
@@ -112,7 +112,7 @@ TypeScript
   - Removed `setTimeout` race conditions.
 - Improvements to scroll event handling.
 
-# 1.1.0 - 9/26/17
+# 1.1.0 - 2017-09-26
 
 #### 🚀 New
 
@@ -123,7 +123,7 @@ TypeScript
 
 - Tested against React 16.
 
-# 1.0.0 - 9/25/17
+# 1.0.0 - 2017-09-25
 
 #### 🎉 Release
 
