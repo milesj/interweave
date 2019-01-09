@@ -1,6 +1,6 @@
 {
   "name": "interweave-emoji",
-  "version": "3.0.0-alpha.0",
+  "version": "3.0.0",
   "description": "Emoji support for Interweave.",
   "keywords": [
     "interweave",
@@ -30,7 +30,7 @@
   "devDependencies": {
     "@types/hoist-non-react-statics": "^3.0.1",
     "emojibase": "^2.1.0",
-    "interweave": "^10.0.0-alpha.0",
+    "interweave": "^10.0.0",
     "react": "^16.7.0"
   }
 }
