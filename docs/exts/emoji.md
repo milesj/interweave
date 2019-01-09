@@ -4,6 +4,14 @@ Who loves emojis? Everyone loves emojis. This package provides support for rende
 their unicode character, or with SVG/PNGs. It utilizes [Emojibase][emojibase] for accurate and
 up-to-date data.
 
+```tsx
+<Interweave
+  content="This will convert emoji unicode characters (🌀), shortcodes (:cyclone:), and emoticons to SVGs! :)"
+  matchers={[new EmojiMatcher('emoji', { convertEmoticon: true, convertShortcode: true })]}
+  emojiPath={getSvgPathForEmoji}
+/>
+```
+
 ## Requirements
 
 - [Emojibase][emojibase]
@@ -19,13 +27,15 @@ npm install interweave interweave-emoji emojibase --save
 ## Matching Emojis
 
 The `EmojiMatcher` makes use of complex regex patterns provided by Emojibase to find and replace
-emoji unicode sequences with SVN/PNGS.
+emoji unicode sequences with SVG/PNGS.
 
 ```tsx
 import Interweave from 'interweave';
 import { EmojiMatcher } from 'interweave-emoji';
+```
 
-<Interweave matchers={[new EmojiMatcher('emoji')]} />;
+```tsx
+<Interweave content="Emoji unicode character: 🌀" matchers={[new EmojiMatcher('emoji')]} />
 ```
 
 ### Props
@@ -92,8 +102,11 @@ would convert to 🙂.
 To enable conversion of an emoticon to a unicode literal character, pass the `convertEmoticon`
 option to the matcher.
 
-```ts
-new EmojiMatcher('emoji', { convertEmoticon: true });
+```tsx
+<Interweave
+  content="Smiley faces :) ;p :>]"
+  matchers={[new EmojiMatcher('emoji', { convertEmoticon: true })]}
+/>
 ```
 
 > A list of supported emoticons can be found in
@@ -107,8 +120,11 @@ word (or two) surrounded by two colons: `:boy:`.
 To enable conversion of a shortcode to a unicode literal character, pass the `convertShortcode`
 option to the matcher constructor.
 
-```ts
-new EmojiMatcher('emoji', { convertShortcode: true });
+```tsx
+<Interweave
+  content="Emoji shortcode: :cyclone:"
+  matchers={[new EmojiMatcher('emoji', { convertShortcode: true })]}
+/>
 ```
 
 > A list of supported shortcodes can be found in

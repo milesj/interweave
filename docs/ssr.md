@@ -10,7 +10,7 @@ yarn add jsdom --dev
 npm install jsdom --save-dev
 ```
 
-Add instantiate an instance, configured to your liking. Once this instance is configured, you can
+And instantiate an instance, configured to your liking. Once this instance is configured, you can
 then render your React components without much issue (hopefully).
 
 ```javascript

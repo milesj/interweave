@@ -79,8 +79,10 @@ function transform(node: HTMLElement, children: Node[]): React.ReactNode {
     return <Link href={node.getAttribute('href')}>{children}</Link>;
   }
 }
+```
 
-<Interweave transform={transform} />;
+```tsx
+<Interweave transform={transform} />
 ```
 
 Note that `transform` is run before checking the whitelist, allowing you to use non-whitelisted tags

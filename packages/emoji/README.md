@@ -6,6 +6,14 @@
 
 Provides emoji support for [Interweave](https://github.com/milesj/interweave).
 
+```tsx
+<Interweave
+  content="This will convert emoji unicode characters (🌀), shortcodes (:cyclone:), and emoticons to SVGs! :)"
+  matchers={[new EmojiMatcher('emoji', { convertEmoticon: true, convertShortcode: true })]}
+  emojiPath={getSvgPathForEmoji}
+/>
+```
+
 ## Requirements
 
 - [Emojibase](https://github.com/milesj/emojibase)

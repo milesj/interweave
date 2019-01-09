@@ -7,6 +7,13 @@
 Provides URL, IP, email, and hashtag autolinking support for
 [Interweave](https://github.com/milesj/interweave).
 
+```tsx
+<Interweave
+  content="This contains a URL, https://github.com/milesj/interweave, and a hashtag, #interweave, that will be converted to an anchor link!"
+  matchers={[new UrlMatcher('url'), new HashtagMatcher('hashtag')]}
+/>
+```
+
 ## Installation
 
 ```

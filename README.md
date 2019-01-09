@@ -16,7 +16,14 @@ Interweave is a robust React library that can...
 - And much more!
 
 ```tsx
-<Interweave content="This string contains <b>HTML</b>!" />
+<Interweave content="This string contains <b>HTML</b> and will safely be rendered!" />
+```
+
+```tsx
+<Interweave
+  content="This contains a URL, https://github.com/milesj/interweave, and a hashtag, #interweave, that will be converted to an anchor link!"
+  matchers={[new UrlMatcher('url'), new HashtagMatcher('hashtag')]}
+/>
 ```
 
 ## Requirements

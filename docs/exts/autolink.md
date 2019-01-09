@@ -7,6 +7,13 @@ an anchor link. This process is achieved with Interweave matchers.
 > as we need to take into account word boundaries, punctuation, and more. Instead, the patterns will
 > do their best to match against the majority of common use cases.
 
+```tsx
+<Interweave
+  content="This contains a URL, https://github.com/milesj/interweave, and a hashtag, #interweave, that will be converted to an anchor link!"
+  matchers={[new UrlMatcher('url'), new HashtagMatcher('hashtag')]}
+/>
+```
+
 ## Installation
 
 ```
@@ -23,8 +30,13 @@ user and password auth, host, port, path, query, and fragment.
 ```tsx
 import Interweave from 'interweave';
 import { UrlMatcher } from 'interweave-autolink';
+```
 
-<Interweave matchers={[new UrlMatcher('url')]} />;
+```tsx
+<Interweave
+  content="URL: https://github.com/milesj/interweave"
+  matchers={[new UrlMatcher('url')]}
+/>
 ```
 
 ### TLD Support
@@ -75,8 +87,10 @@ included.
 ```tsx
 import Interweave from 'interweave';
 import { IpMatcher } from 'interweave-autolink';
+```
 
-<Interweave matchers={[new IpMatcher('ip')]} />;
+```tsx
+<Interweave content="IP: 127.0.0.1" matchers={[new IpMatcher('ip')]} />
 ```
 
 ### Props
@@ -98,8 +112,10 @@ The `EmailMatcher` will match an email address and link it using a "mailto:" tar
 ```tsx
 import Interweave from 'interweave';
 import { EmailMatcher } from 'interweave-autolink';
+```
 
-<Interweave matchers={[new EmailMatcher('email')]} />;
+```tsx
+<Interweave content="Email: miles@interweave.com" matchers={[new EmailMatcher('email')]} />
 ```
 
 > Email matcher must be registered before URL and IP matchers.
@@ -129,8 +145,10 @@ and dash (`-`) characters, and must start with a `#`.
 ```tsx
 import Interweave from 'interweave';
 import { HashtagMatcher } from 'interweave-autolink';
+```
 
-<Interweave matchers={[new HashtagMatcher('hashtag')]} />;
+```tsx
+<Interweave content="Hashtag: #interweave" matchers={[new HashtagMatcher('hashtag')]} />
 ```
 
 ### Props

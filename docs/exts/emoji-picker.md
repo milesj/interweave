@@ -43,8 +43,10 @@ place, so any positioning or display toggling should be done manually.
 
 ```tsx
 import EmojiPicker from 'interweave-emoji-picker';
+```
 
-<EmojiPicker />;
+```tsx
+<EmojiPicker />
 ```
 
 > View
