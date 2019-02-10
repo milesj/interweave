@@ -1,8 +1,3 @@
-/**
- * @copyright   2016-2019, Miles Johnson
- * @license     https://opensource.org/licenses/MIT
- */
-
 /* eslint-disable sort-keys, unicorn/no-fn-reference-in-iterator */
 
 import { NodeConfig, ConfigMap, FilterMap } from './types';

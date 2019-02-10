@@ -1,8 +1,3 @@
-/**
- * @copyright   2016-2019, Miles Johnson
- * @license     https://opensource.org/licenses/MIT
- */
-
 import React from 'react';
 import camelCase from 'lodash/camelCase';
 import withContext, { WithContextProps } from './withContext';

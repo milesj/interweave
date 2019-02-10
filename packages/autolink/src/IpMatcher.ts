@@ -1,8 +1,3 @@
-/**
- * @copyright   2016-2019, Miles Johnson
- * @license     https://opensource.org/licenses/MIT
- */
-
 import React from 'react';
 import { MatchResponse } from 'interweave';
 import { UrlProps } from './Url';

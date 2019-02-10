@@ -1,8 +1,3 @@
-/**
- * @copyright   2016-2019, Miles Johnson
- * @license     https://opensource.org/licenses/MIT
- */
-
 /* eslint-disable no-cond-assign, complexity */
 
 import React from 'react';

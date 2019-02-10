@@ -1,8 +1,3 @@
-/**
- * @copyright   2016-2019, Miles Johnson
- * @license     https://opensource.org/licenses/MIT
- */
-
 import { Hexcode, GroupKey as BaseGroupKey, SkinToneKey as BaseSkinToneKey } from 'emojibase';
 import { CanonicalEmoji } from 'interweave-emoji';
 

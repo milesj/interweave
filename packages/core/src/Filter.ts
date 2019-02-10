@@ -1,8 +1,3 @@
-/**
- * @copyright   2016-2019, Miles Johnson
- * @license     https://opensource.org/licenses/MIT
- */
-
 export interface FilterInterface {
   attribute?(name: string, value: string): string;
   node?(name: string, node: HTMLElement): HTMLElement | null;

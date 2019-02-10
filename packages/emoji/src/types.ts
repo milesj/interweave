@@ -1,8 +1,3 @@
-/**
- * @copyright   2016-2019, Miles Johnson
- * @license     https://opensource.org/licenses/MIT
- */
-
 import { Emoji, Hexcode, Shortcode, Unicode } from 'emojibase';
 
 export interface CanonicalEmoji extends Emoji {

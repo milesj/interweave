@@ -1,8 +1,3 @@
-/**
- * @copyright   2016-2019, Miles Johnson
- * @license     https://opensource.org/licenses/MIT
- */
-
 import React from 'react';
 import { Emoji as EmojiCharacter, CanonicalEmoji, Path, Size, Source } from 'interweave-emoji';
 import withContext, { WithContextProps } from './withContext';
