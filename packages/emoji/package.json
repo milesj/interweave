@@ -9,7 +9,9 @@
     "emojibase"
   ],
   "main": "./lib/index.js",
+  "module": "./esm/index.js",
   "types": "./lib/index.d.ts",
+  "sideEffects": false,
   "publishConfig": {
     "access": "public"
   },
