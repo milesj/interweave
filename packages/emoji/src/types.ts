@@ -3,8 +3,6 @@
  * @license     https://opensource.org/licenses/MIT
  */
 
-/* eslint-disable camelcase */
-
 import { Emoji, Hexcode, Shortcode, Unicode } from 'emojibase';
 
 export interface CanonicalEmoji extends Emoji {

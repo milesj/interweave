@@ -22,7 +22,7 @@ import {
 
 function createChild(tag: string, text: string | number): HTMLElement {
   const child = document.createElement(tag);
-  child.appendChild(document.createTextNode(String(text)));
+  child.append(document.createTextNode(String(text)));
 
   return child;
 }
@@ -452,8 +452,8 @@ describe('Parser', () => {
     });
 
     it('returns text nodes as strings', () => {
-      element.appendChild(document.createTextNode('Foo'));
-      element.appendChild(document.createTextNode('Bar'));
+      element.append(document.createTextNode('Foo'));
+      element.append(document.createTextNode('Bar'));
 
       expect(instance.parseNode(element, parentConfig)).toEqual(['FooBar']);
     });
@@ -462,7 +462,7 @@ describe('Parser', () => {
       switch (TAGS[tag]) {
         case PARSER_ALLOW:
           it(`renders <${tag}> elements that are allowed`, () => {
-            element.appendChild(createChild(tag, i));
+            element.append(createChild(tag, i));
 
             expect(instance.parseNode(element, parentConfig)).toEqual([
               <Element key="0" tagName={tag as keyof JSX.IntrinsicElements}>
@@ -474,7 +474,7 @@ describe('Parser', () => {
 
         case PARSER_DENY:
           it(`removes <${tag}> elements that are denied`, () => {
-            element.appendChild(createChild(tag, i));
+            element.append(createChild(tag, i));
 
             expect(instance.parseNode(element, parentConfig)).toEqual([]);
           });
@@ -486,15 +486,15 @@ describe('Parser', () => {
     });
 
     it('ignores unknown elements', () => {
-      element.appendChild(document.createElement('foo'));
+      element.append(document.createElement('foo'));
 
       expect(instance.parseNode(element, parentConfig)).toEqual([]);
     });
 
     it('returns text and element nodes in order', () => {
-      element.appendChild(document.createTextNode('Foo'));
-      element.appendChild(createChild('div', 'Bar'));
-      element.appendChild(document.createTextNode('Baz'));
+      element.append(document.createTextNode('Foo'));
+      element.append(createChild('div', 'Bar'));
+      element.append(document.createTextNode('Baz'));
 
       expect(instance.parseNode(element, parentConfig)).toEqual([
         'Foo',
@@ -506,11 +506,11 @@ describe('Parser', () => {
     });
 
     it('combines multiple strings together', () => {
-      element.appendChild(document.createTextNode('Foo'));
-      element.appendChild(createChild('div', 'Bar'));
-      element.appendChild(document.createTextNode('Baz'));
-      element.appendChild(document.createTextNode('Qux'));
-      element.appendChild(createChild('div', 'Bar'));
+      element.append(document.createTextNode('Foo'));
+      element.append(createChild('div', 'Bar'));
+      element.append(document.createTextNode('Baz'));
+      element.append(document.createTextNode('Qux'));
+      element.append(createChild('div', 'Bar'));
 
       expect(instance.parseNode(element, parentConfig)).toEqual([
         'Foo',
@@ -525,19 +525,19 @@ describe('Parser', () => {
     });
 
     it('ignores comment nodes', () => {
-      element.appendChild(document.createComment('Comment'));
+      element.append(document.createComment('Comment'));
 
       expect(instance.parseNode(element, parentConfig)).toEqual([]);
     });
 
     it('ignores document nodes', () => {
-      element.appendChild(document);
+      element.append(document);
 
       expect(instance.parseNode(element, parentConfig)).toEqual([]);
     });
 
     it('ignores document fragment nodes', () => {
-      element.appendChild(document.createDocumentFragment());
+      element.append(document.createDocumentFragment());
 
       expect(instance.parseNode(element, parentConfig)).toEqual([]);
     });
@@ -547,11 +547,11 @@ describe('Parser', () => {
         noHtml: true,
       });
 
-      element.appendChild(document.createTextNode('Foo'));
-      element.appendChild(createChild('div', 'Bar'));
-      element.appendChild(document.createTextNode('Baz'));
-      element.appendChild(createChild('div', 'Qux'));
-      element.appendChild(createChild('div', 'Wat'));
+      element.append(document.createTextNode('Foo'));
+      element.append(createChild('div', 'Bar'));
+      element.append(document.createTextNode('Baz'));
+      element.append(createChild('div', 'Qux'));
+      element.append(createChild('div', 'Wat'));
 
       expect(instance.parseNode(element, parentConfig)).toEqual([
         'Foo',
@@ -567,11 +567,11 @@ describe('Parser', () => {
         noHtmlExceptMatchers: true,
       });
 
-      element.appendChild(document.createTextNode('Foo'));
-      element.appendChild(createChild('div', 'Bar'));
-      element.appendChild(document.createTextNode('Baz'));
-      element.appendChild(createChild('div', 'Qux'));
-      element.appendChild(createChild('div', 'Wat'));
+      element.append(document.createTextNode('Foo'));
+      element.append(createChild('div', 'Bar'));
+      element.append(document.createTextNode('Baz'));
+      element.append(createChild('div', 'Qux'));
+      element.append(createChild('div', 'Wat'));
 
       expect(instance.parseNode(element, parentConfig)).toEqual([
         'Foo',
@@ -585,9 +585,9 @@ describe('Parser', () => {
     it('strips matchers HTML if `noHtml` prop is set', () => {
       instance.props.noHtml = true;
 
-      element.appendChild(document.createTextNode('Foo'));
-      element.appendChild(createChild('div', 'Bar'));
-      element.appendChild(document.createTextNode('[foo]'));
+      element.append(document.createTextNode('Foo'));
+      element.append(createChild('div', 'Bar'));
+      element.append(document.createTextNode('[foo]'));
 
       expect(instance.parseNode(element, parentConfig)).toEqual(['Foo', 'Bar', '[foo]']);
     });
@@ -595,19 +595,19 @@ describe('Parser', () => {
     it('doesnt strip matchers HTML if `noHtmlExceptMatchers` prop is set', () => {
       instance.props.noHtmlExceptMatchers = true;
 
-      element.appendChild(document.createTextNode('Foo'));
-      element.appendChild(createChild('div', 'Bar'));
-      element.appendChild(document.createTextNode('[foo]'));
+      element.append(document.createTextNode('Foo'));
+      element.append(createChild('div', 'Bar'));
+      element.append(document.createTextNode('[foo]'));
 
       expect(instance.parseNode(element, parentConfig)).not.toEqual(['Foo', 'Bar', '[foo]']);
     });
 
     it('only renders whitelisted children', () => {
-      element.appendChild(document.createTextNode('Foo'));
-      element.appendChild(createChild('i', 'Bar'));
-      element.appendChild(document.createTextNode('Baz'));
-      element.appendChild(createChild('b', 'Qux'));
-      element.appendChild(createChild('u', 'Wat'));
+      element.append(document.createTextNode('Foo'));
+      element.append(createChild('i', 'Bar'));
+      element.append(document.createTextNode('Baz'));
+      element.append(createChild('b', 'Qux'));
+      element.append(createChild('u', 'Wat'));
 
       expect(
         instance.parseNode(element, {
@@ -626,11 +626,11 @@ describe('Parser', () => {
     });
 
     it('only renders in whitelisted parent', () => {
-      element.appendChild(document.createTextNode('Foo'));
-      element.appendChild(createChild('li', 'Bar'));
-      element.appendChild(document.createTextNode('Baz'));
-      element.appendChild(createChild('li', 'Qux'));
-      element.appendChild(createChild('li', 'Wat'));
+      element.append(document.createTextNode('Foo'));
+      element.append(createChild('li', 'Bar'));
+      element.append(document.createTextNode('Baz'));
+      element.append(createChild('li', 'Qux'));
+      element.append(createChild('li', 'Wat'));
 
       expect(
         instance.parseNode(element, {
@@ -641,11 +641,11 @@ describe('Parser', () => {
     });
 
     it('doesnt render self children', () => {
-      element.appendChild(document.createTextNode('Foo'));
-      element.appendChild(createChild('div', 'Bar'));
-      element.appendChild(document.createTextNode('Baz'));
-      element.appendChild(createChild('span', 'Qux'));
-      element.appendChild(createChild('section', 'Wat'));
+      element.append(document.createTextNode('Foo'));
+      element.append(createChild('div', 'Bar'));
+      element.append(document.createTextNode('Baz'));
+      element.append(createChild('span', 'Qux'));
+      element.append(createChild('section', 'Wat'));
 
       expect(
         instance.parseNode(element, {
@@ -666,11 +666,11 @@ describe('Parser', () => {
     });
 
     it('doesnt render block children', () => {
-      element.appendChild(document.createTextNode('Foo'));
-      element.appendChild(createChild('div', 'Bar'));
-      element.appendChild(document.createTextNode('Baz'));
-      element.appendChild(createChild('span', 'Qux'));
-      element.appendChild(createChild('section', 'Wat'));
+      element.append(document.createTextNode('Foo'));
+      element.append(createChild('div', 'Bar'));
+      element.append(document.createTextNode('Baz'));
+      element.append(createChild('span', 'Qux'));
+      element.append(createChild('section', 'Wat'));
 
       expect(
         instance.parseNode(element, {
@@ -689,11 +689,11 @@ describe('Parser', () => {
     });
 
     it('doesnt render inline children', () => {
-      element.appendChild(document.createTextNode('Foo'));
-      element.appendChild(createChild('div', 'Bar'));
-      element.appendChild(document.createTextNode('Baz'));
-      element.appendChild(createChild('span', 'Qux'));
-      element.appendChild(createChild('section', 'Wat'));
+      element.append(document.createTextNode('Foo'));
+      element.append(createChild('div', 'Bar'));
+      element.append(document.createTextNode('Baz'));
+      element.append(createChild('span', 'Qux'));
+      element.append(createChild('section', 'Wat'));
 
       expect(
         instance.parseNode(element, {
@@ -714,18 +714,18 @@ describe('Parser', () => {
     });
 
     it('doesnt render elements where a filter returns null', () => {
-      element.appendChild(document.createTextNode('Foo'));
-      element.appendChild(createChild('link', 'Bar'));
-      element.appendChild(document.createTextNode('Baz'));
+      element.append(document.createTextNode('Foo'));
+      element.append(createChild('link', 'Bar'));
+      element.append(document.createTextNode('Baz'));
 
       expect(instance.parseNode(element, parentConfig)).toEqual(['Foo', 'Baz']);
     });
 
     it('does render an `a` tag within inline', () => {
       element = document.createElement('span');
-      element.appendChild(document.createTextNode('Foo'));
-      element.appendChild(createChild('a', 'Bar'));
-      element.appendChild(document.createTextNode('Baz'));
+      element.append(document.createTextNode('Foo'));
+      element.append(createChild('a', 'Bar'));
+      element.append(document.createTextNode('Baz'));
 
       expect(
         instance.parseNode(element, {
@@ -742,9 +742,9 @@ describe('Parser', () => {
     });
 
     it('does render an `a` tag within block', () => {
-      element.appendChild(document.createTextNode('Foo'));
-      element.appendChild(createChild('a', 'Bar'));
-      element.appendChild(document.createTextNode('Baz'));
+      element.append(document.createTextNode('Foo'));
+      element.append(createChild('a', 'Bar'));
+      element.append(document.createTextNode('Baz'));
 
       expect(
         instance.parseNode(element, {
@@ -761,9 +761,9 @@ describe('Parser', () => {
 
     it('does render inline elements within an `a` tag', () => {
       element = document.createElement('a');
-      element.appendChild(document.createTextNode('Foo'));
-      element.appendChild(createChild('span', 'Bar'));
-      element.appendChild(document.createTextNode('Baz'));
+      element.append(document.createTextNode('Foo'));
+      element.append(createChild('span', 'Bar'));
+      element.append(document.createTextNode('Baz'));
 
       expect(
         instance.parseNode(element, {
@@ -781,9 +781,9 @@ describe('Parser', () => {
 
     it('does render block elements within an `a` tag', () => {
       element = document.createElement('a');
-      element.appendChild(document.createTextNode('Foo'));
-      element.appendChild(createChild('div', 'Bar'));
-      element.appendChild(document.createTextNode('Baz'));
+      element.append(document.createTextNode('Foo'));
+      element.append(createChild('div', 'Bar'));
+      element.append(document.createTextNode('Baz'));
 
       expect(
         instance.parseNode(element, {
@@ -803,9 +803,9 @@ describe('Parser', () => {
       element = document.createElement('span');
 
       const acronym = document.createElement('acronym');
-      acronym.appendChild(createChild('a', 'Link'));
+      acronym.append(createChild('a', 'Link'));
 
-      element.appendChild(acronym);
+      element.append(acronym);
 
       expect(
         instance.parseNode(element, {

@@ -2,31 +2,31 @@
   "name": "interweave-root",
   "private": true,
   "scripts": {
-    "build": "beemo typescript --workspaces=*",
+    "build": "beemo run-script build",
     "coverage": "yarn run jest --coverage",
     "eslint": "beemo eslint",
     "jest": "beemo jest",
     "posttest": "yarn run eslint",
     "pretest": "yarn run type",
     "test": "yarn run jest",
-    "test:live": "beemo create-config jest && webpack && serve ./tests/",
+    "test:bundle": "yarn run build && beemo create-config typescript && webpack && serve ./tests/",
     "prettier": "beemo prettier",
     "prerelease": "yarn test && yarn run build",
     "release": "lerna publish",
     "type": "beemo typescript --workspaces=* --noEmit"
   },
   "devDependencies": {
-    "@milesj/build-tools": "^0.16.0",
-    "@types/react": "^16.7.18",
-    "@types/react-dom": "^16.0.11",
+    "@milesj/build-tools": "^0.25.5",
+    "@types/react": "^16.8.2",
+    "@types/react-dom": "^16.8.0",
     "babel-loader": "^8.0.5",
-    "emojibase": "^2.1.0",
-    "emojibase-test-utils": "^3.1.0",
-    "lerna": "^3.10.1",
-    "react": "^16.7.0",
-    "serve": "^10.1.1",
-    "webpack": "^4.28.1",
-    "webpack-cli": "^3.2.1"
+    "emojibase": "^2.2.0",
+    "emojibase-test-utils": "^3.2.0",
+    "lerna": "^3.11.0",
+    "react": "^16.8.1",
+    "serve": "^10.1.2",
+    "webpack": "^4.29.3",
+    "webpack-cli": "^3.2.3"
   },
   "workspaces": [
     "packages/*"
@@ -49,7 +49,8 @@
         "require-unicode-regexp": "off",
         "react/jsx-no-literals": "off",
         "react/no-unused-prop-types": "off",
-        "react/default-props-match-prop-types": "off"
+        "react/default-props-match-prop-types": "off",
+        "@typescript-eslint/camelcase": "off"
       }
     }
   },

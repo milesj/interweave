@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/camelcase */
+
 import React from 'react';
 import { shallow } from 'enzyme';
 import EmojiData from '../../emoji/src/EmojiDataManager';

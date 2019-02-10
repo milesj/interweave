@@ -5,6 +5,7 @@ import EmojiData from '../src/EmojiDataManager';
 import withEmojiData, { resetLoaded } from '../src/withEmojiData';
 
 declare global {
+  // eslint-disable-next-line @typescript-eslint/no-namespace
   namespace NodeJS {
     interface Global {
       fetch: any;

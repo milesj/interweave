@@ -3,6 +3,8 @@
  * @license     https://opensource.org/licenses/MIT
  */
 
+/* eslint-disable @typescript-eslint/camelcase */
+
 import {
   fromCodepointToUnicode,
   fromHexcodeToCodepoint,

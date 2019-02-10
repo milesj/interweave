@@ -1,13 +1,13 @@
 const path = require('path');
 
 module.exports = {
-  entry: path.resolve(__dirname, './tests/bundle.tsx'),
+  entry: './tests/bundle.tsx',
   mode: 'development',
   module: {
     rules: [
       {
-        exclude: /node_modules/,
-        test: /\.(t|j)sx?$/,
+        exclude: /node_modules/u,
+        test: /\.(t|j)sx?$/u,
         use: 'babel-loader',
       },
     ],

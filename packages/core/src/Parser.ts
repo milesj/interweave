@@ -23,11 +23,11 @@ import {
 } from './constants';
 import { Attributes, Node, NodeConfig, TransformCallback, MatchResponse } from './types';
 
-const ELEMENT_NODE: number = 1;
-const TEXT_NODE: number = 3;
+const ELEMENT_NODE = 1;
+const TEXT_NODE = 3;
 const INVALID_ROOTS: string[] = ['<!DOC', '<HTML', '<HEAD', '<BODY'];
-const ROOT_COMPARE_LENGTH: number = 5;
-const ARIA_COMPARE_LENGTH: number = 5;
+const ROOT_COMPARE_LENGTH = 5;
+const ARIA_COMPARE_LENGTH = 5;
 
 export interface ParserProps {
   [key: string]: any;

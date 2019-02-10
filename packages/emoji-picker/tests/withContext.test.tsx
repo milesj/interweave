@@ -4,7 +4,6 @@ import withContext from '../src/withContext';
 
 describe('withContext()', () => {
   it('passes context object to component', () => {
-    // eslint-disable-next-line
     const Foo = withContext(function BaseFoo({ context }) {
       expect(context).toEqual({
         classNames: {},

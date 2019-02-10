@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/camelcase */
+
 import { Presentation } from 'emojibase';
 import { loadEmojiData } from 'emojibase-test-utils';
 import EmojiDataManager from '../src/EmojiDataManager';
