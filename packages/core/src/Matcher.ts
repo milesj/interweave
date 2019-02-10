@@ -26,7 +26,7 @@ export default abstract class Matcher<Props extends {} = any, Options extends {}
     options: Partial<Options> = {},
     factory: React.ComponentType<Props> | null = null,
   ) {
-    if (process.env.NODE_ENV !== 'production') {
+    if (__DEV__) {
       if (!name || name.toLowerCase() === 'html') {
         throw new Error(`The matcher name "${name}" is not allowed.`);
       }
@@ -52,7 +52,7 @@ export default abstract class Matcher<Props extends {} = any, Options extends {}
       element = this.replaceWith(match, props);
     }
 
-    if (process.env.NODE_ENV !== 'production') {
+    if (__DEV__) {
       if (typeof element !== 'string' && !React.isValidElement(element)) {
         throw new Error(`Invalid React element created from ${this.constructor.name}.`);
       }

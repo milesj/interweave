@@ -51,7 +51,7 @@ export default class Parser {
     matchers: MatcherInterface<any>[] = [],
     filters: FilterInterface[] = [],
   ) {
-    if (process.env.NODE_ENV !== 'production') {
+    if (__DEV__) {
       if (markup && typeof markup !== 'string') {
         throw new TypeError('Interweave parser requires a valid string.');
       }
@@ -251,7 +251,7 @@ export default class Parser {
     const doc = document.implementation.createHTMLDocument('Interweave');
 
     if (INVALID_ROOTS.indexOf(markup.substr(0, ROOT_COMPARE_LENGTH).toUpperCase()) >= 0) {
-      if (process.env.NODE_ENV !== 'production') {
+      if (__DEV__) {
         throw new Error('HTML documents as Interweave content are not supported.');
       }
     } else {

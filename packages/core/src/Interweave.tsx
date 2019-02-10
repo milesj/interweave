@@ -79,7 +79,7 @@ export default class Interweave extends React.PureComponent<InterweaveProps> {
     const markup = beforeCallbacks.reduce((string, callback) => {
       const nextString = callback(string, this.props);
 
-      if (process.env.NODE_ENV !== 'production') {
+      if (__DEV__) {
         if (typeof nextString !== 'string') {
           throw new TypeError('Interweave `onBeforeParse` must return a valid HTML string.');
         }
@@ -95,7 +95,7 @@ export default class Interweave extends React.PureComponent<InterweaveProps> {
     const nodes = afterCallbacks.reduce((parserNodes, callback) => {
       const nextNodes = callback(parserNodes, this.props);
 
-      if (process.env.NODE_ENV !== 'production') {
+      if (__DEV__) {
         if (!Array.isArray(nextNodes)) {
           throw new TypeError(
             'Interweave `onAfterParse` must return an array of strings and React elements.',

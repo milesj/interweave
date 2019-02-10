@@ -55,7 +55,7 @@ export default class Emoji extends React.PureComponent<EmojiProps> {
     } = this.props as Required<EmojiProps>;
     let { hexcode } = this.props;
 
-    if (process.env.NODE_ENV !== 'production') {
+    if (__DEV__) {
       if (!emoticon && !shortcode && !unicode && !hexcode) {
         throw new Error(
           'Emoji component requires a `unicode` character, `emoticon`, `hexcode`, or a `shortcode`.',

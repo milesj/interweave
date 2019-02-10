@@ -361,7 +361,7 @@ export class Picker extends React.PureComponent<PickerUnifiedProps, PickerState>
     const map: BlackWhiteMap = {};
 
     list.forEach(hexcode => {
-      if (process.env.NODE_ENV !== 'production') {
+      if (__DEV__) {
         if (hexcode.match(SKIN_MODIFIER_PATTERN)) {
           // eslint-disable-next-line no-console
           console.warn(

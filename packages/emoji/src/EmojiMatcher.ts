@@ -144,7 +144,7 @@ export default class EmojiMatcher extends Matcher<EmojiProps, EmojiMatcherOption
   onBeforeParse(content: string, props: EmojiProps): string {
     if (props.emojiSource) {
       this.data = EmojiDataManager.getInstance(props.emojiSource.locale);
-    } else if (process.env.NODE_ENV !== 'production') {
+    } else if (__DEV__) {
       throw new Error('Missing emoji source data. Have you loaded using `withEmojiData`?');
     }
 

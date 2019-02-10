@@ -43,7 +43,7 @@ let loaded: { [locale: string]: boolean } = {};
 let promise: { [locale: string]: Promise<void> } = {};
 
 export function resetLoaded() {
-  if (process.env.NODE_ENV !== 'production') {
+  if (__DEV__) {
     loaded = {};
     promise = {};
   }
