@@ -1,3 +1,14 @@
+# 2.2.0 - 2019-02-09
+
+#### 🚀 New
+
+- Added ECMAScript module support via `esm/` built files.
+- Removed copyright docblocks from source files to reduce bundle size.
+
+#### 🛠 Internal
+
+- Tested with React v16.8.
+
 # 2.1.0 - 2019-01-08
 
 #### 🛠 Internal
