@@ -46,12 +46,12 @@ import EmojiPicker from 'interweave-emoji-picker';
 ```
 
 ```tsx
-<EmojiPicker />
+<EmojiPicker emojiSize={24} emojiLargeSize={48} emojiPath={getSvgPathForEmoji} />
 ```
 
-> View
-> [TypeScript interface](https://github.com/milesj/interweave/blob/master/packages/emoji-picker/src/Picker.tsx#L71)
-> for available list of props.
+The [sizing and path emoji props](./emoji.md#displaying-svgs-or-pngs) are required. View the
+[TypeScript interface](https://github.com/milesj/interweave/blob/master/packages/emoji-picker/src/Picker.tsx#L71)
+for a list of all available props.
 
 ## Blacklist / Whitelist
 
