@@ -1,3 +1,9 @@
+# 3.1.1 - 2019-02-10
+
+#### 🐞 Fixed
+
+- Fixed an issue with TS types being exported from the ESM index.
+
 # 3.1.0 - 2019-02-09
 
 #### 🚀 New

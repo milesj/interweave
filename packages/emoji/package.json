@@ -9,7 +9,7 @@
     "emojibase"
   ],
   "main": "./lib/index.js",
-  "module": "./esm/index.js",
+  "module": "./module.js",
   "types": "./lib/index.d.ts",
   "sideEffects": false,
   "publishConfig": {
@@ -22,7 +22,7 @@
     "@types/react": "^16.8.2",
     "emojibase-regex": "^2.0.1",
     "hoist-non-react-statics": "^3.3.0",
-    "prop-types": "^15.6.2"
+    "prop-types": "^15.7.0"
   },
   "peerDependencies": {
     "emojibase": "^2.0.0",

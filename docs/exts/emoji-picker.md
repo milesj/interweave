@@ -50,7 +50,7 @@ import EmojiPicker from 'interweave-emoji-picker';
 ```
 
 The [sizing and path emoji props](./emoji.md#displaying-svgs-or-pngs) are required. View the
-[TypeScript interface](https://github.com/milesj/interweave/blob/master/packages/emoji-picker/src/Picker.tsx#L71)
+[TypeScript interface](https://github.com/milesj/interweave/blob/master/packages/emoji-picker/src/Picker.tsx#L43)
 for a list of all available props.
 
 ## Blacklist / Whitelist

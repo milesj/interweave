@@ -1498,10 +1498,10 @@
     npmlog "^4.1.2"
     write-file-atomic "^2.3.0"
 
-"@milesj/build-tool-config@^0.147.5":
-  version "0.147.5"
-  resolved "https://registry.npmjs.org/@milesj/build-tool-config/-/build-tool-config-0.147.5.tgz#50cbca3c410364f652558e0f6b6d1b33f6be27cf"
-  integrity sha512-oQhM0B7lRA7AZFf/ddBacdvB/rj07+ZkzAwRzHinRp08uM3WkyfD5/XMIWpk2npAx38X/2HCX/E3iD2/QOiAgg==
+"@milesj/build-tool-config@^0.147.6":
+  version "0.147.6"
+  resolved "https://registry.npmjs.org/@milesj/build-tool-config/-/build-tool-config-0.147.6.tgz#9aaabbb2e58355f8504379ed3dccf4296ea282f3"
+  integrity sha512-8R26l24my7JYk3tFyi6kr6z4Tdr6JNceekiOCecwA4VscjIMAQ2SxayWJRpNO/LEYksJuJME9lZh42ksJTtT2w==
   dependencies:
     "@babel/cli" "^7.2.3"
     "@babel/core" "^7.2.2"
@@ -1562,12 +1562,12 @@
     prettier "^1.16.4"
     typescript "^3.3.3"
 
-"@milesj/build-tools@^0.25.5":
-  version "0.25.5"
-  resolved "https://registry.npmjs.org/@milesj/build-tools/-/build-tools-0.25.5.tgz#06396ca7e28ebcf9f82211b9307fe9f3bf37cceb"
-  integrity sha512-q7EqHkRV7rTQ+vFzfhxY9RGR/HV+aBonrVNU2lEhMgctrt2OhN/tKHoScgBlL63uk33OkzAVr7OyTrn+o2gWmw==
+"@milesj/build-tools@^0.25.6":
+  version "0.25.6"
+  resolved "https://registry.npmjs.org/@milesj/build-tools/-/build-tools-0.25.6.tgz#20e14550c909c3aaf5f66ae84a66acd4b59909b9"
+  integrity sha512-kptgyCK31LqJlF7SFvz9OJmHENNHYWgI8isp4yAe1OkwIqbCWR0hf+hFl+XoWSN0F08ijV+Mb3yp5xBm0h8qmQ==
   dependencies:
-    "@milesj/build-tool-config" "^0.147.5"
+    "@milesj/build-tool-config" "^0.147.6"
     "@milesj/build-tool-runtime" "^0.23.1"
 
 "@mrmlnc/readdir-enhanced@^2.2.1":
@@ -8191,6 +8191,14 @@ prop-types@^15.6.0, prop-types@^15.6.2:
   dependencies:
     loose-envify "^1.3.1"
     object-assign "^4.1.1"
+
+prop-types@^15.7.0:
+  version "15.7.0"
+  resolved "https://registry.npmjs.org/prop-types/-/prop-types-15.7.0.tgz#cc45233a8ccef80f4a2e3a6bf575bee4e19b4a50"
+  integrity sha512-rlfizAIb1WrkMkbFm3uk7cZGqeVPOhHHMj3gy9FUHE+Ha5lKvbIzj9ygvLdG8Cv2CQEhQnP5djXS7pbmTOpBqw==
+  dependencies:
+    object-assign "^4.1.1"
+    react-is "^16.8.1"
 
 proto-list@~1.2.1:
   version "1.2.4"
