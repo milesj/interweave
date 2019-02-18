@@ -1,3 +1,9 @@
+# 2.2.2 - 2019-02-17
+
+#### 🐞 Fixed
+
+- Added missing `@babel/runtime` package.
+
 # 2.2.1 - 2019-02-10
 
 #### 🐞 Fixed
