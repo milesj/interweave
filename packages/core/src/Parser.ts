@@ -25,11 +25,11 @@ const ROOT_COMPARE_LENGTH = 5;
 const ARIA_COMPARE_LENGTH = 5;
 
 export interface ParserProps {
-  [key: string]: any;
   disableLineBreaks?: boolean;
   noHtml?: boolean;
   noHtmlExceptMatchers?: boolean;
   transform?: TransformCallback;
+  [key: string]: any;
 }
 
 export default class Parser {

@@ -16,16 +16,16 @@
     "type": "beemo typescript --workspaces=* --noEmit"
   },
   "devDependencies": {
-    "@milesj/build-tools": "^0.25.6",
-    "@types/react": "^16.8.2",
-    "@types/react-dom": "^16.8.0",
+    "@milesj/build-tools": "^0.29.0",
+    "@types/react": "^16.8.5",
+    "@types/react-dom": "^16.8.2",
     "babel-loader": "^8.0.5",
     "emojibase": "^2.2.0",
     "emojibase-test-utils": "^3.2.0",
-    "lerna": "^3.11.0",
-    "react": "^16.8.1",
+    "lerna": "^3.13.0",
+    "react": "^16.8.3",
     "serve": "^10.1.2",
-    "webpack": "^4.29.3",
+    "webpack": "^4.29.5",
     "webpack-cli": "^3.2.3"
   },
   "workspaces": [

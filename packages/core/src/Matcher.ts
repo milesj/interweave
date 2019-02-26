@@ -62,22 +62,6 @@ export default abstract class Matcher<Props extends {} = any, Options extends {}
   }
 
   /**
-   * Replace the match with a React element based on the matched token and optional props.
-   */
-  abstract replaceWith(match: string, props: Props): Node;
-
-  /**
-   * Defines the HTML tag name that the resulting React element will be.
-   */
-  abstract asTag(): string;
-
-  /**
-   * Attempt to match against the defined string. Return `null` if no match found,
-   * else return the `match` and any optional props to pass along.
-   */
-  abstract match(string: string): MatchResponse | null;
-
-  /**
    * Trigger the actual pattern match and package the matched
    * response through a callback.
    */
@@ -107,4 +91,20 @@ export default abstract class Matcher<Props extends {} = any, Options extends {}
   onAfterParse(content: Node[], props: Props): Node[] {
     return content;
   }
+
+  /**
+   * Replace the match with a React element based on the matched token and optional props.
+   */
+  abstract replaceWith(match: string, props: Props): Node;
+
+  /**
+   * Defines the HTML tag name that the resulting React element will be.
+   */
+  abstract asTag(): string;
+
+  /**
+   * Attempt to match against the defined string. Return `null` if no match found,
+   * else return the `match` and any optional props to pass along.
+   */
+  abstract match(string: string): MatchResponse | null;
 }
