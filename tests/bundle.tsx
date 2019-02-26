@@ -3,15 +3,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { stripHexcode } from 'emojibase';
-import BaseInterweave from '../packages/core/src/Interweave';
-import EmailMatcher from '../packages/autolink/src/EmailMatcher';
-import HashtagMatcher from '../packages/autolink/src/HashtagMatcher';
-import IpMatcher from '../packages/autolink/src/IpMatcher';
-import UrlMatcher from '../packages/autolink/src/UrlMatcher';
-import BaseEmoji from '../packages/emoji/src/Emoji';
-import EmojiMatcher from '../packages/emoji/src/EmojiMatcher';
-import withEmojiData from '../packages/emoji/src/withEmojiData';
-import EmojiPicker from '../packages/emoji-picker/src/Picker';
+import BaseInterweave from 'interweave';
+import { EmailMatcher, HashtagMatcher, IpMatcher, UrlMatcher } from 'interweave-autolink';
+import withEmojiData, { Emoji as BaseEmoji, EmojiMatcher } from 'interweave-emoji';
+import EmojiPicker from 'interweave-emoji-picker';
 
 const contentWithNewLines = `This block has multiple new lines.
 Like how is this supposed to work.

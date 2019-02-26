@@ -7,13 +7,11 @@
 // Because of this, Webpack and other bundlers attempt to import values that do not exist.
 // To mitigate this issue, we need this module specific index file that manually exports.
 
-const withEmojiData = require('./esm/withEmojiData').default;
-const Emoji = require('./esm/Emoji').default;
-const EmojiDataManager = require('./esm/EmojiDataManager').default;
-const EmojiMatcher = require('./esm/EmojiMatcher').default;
+import Emoji from './esm/Emoji';
+import EmojiDataManager from './esm/EmojiDataManager';
+import EmojiMatcher from './esm/EmojiMatcher';
+import withEmojiData from './esm/withEmojiData';
 
-withEmojiData.Emoji = Emoji;
-withEmojiData.EmojiDataManager = EmojiDataManager;
-withEmojiData.EmojiMatcher = EmojiMatcher;
+export { Emoji, EmojiMatcher, EmojiDataManager };
 
-module.exports = withEmojiData;
+export default withEmojiData;

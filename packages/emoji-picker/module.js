@@ -7,6 +7,6 @@
 // Because of this, Webpack and other bundlers attempt to import values that do not exist.
 // To mitigate this issue, we need this module specific index file that manually exports.
 
-const Picker = require('./esm/Picker').default;
+import Picker from './esm/Picker';
 
-module.exports = Picker;
+export default Picker;

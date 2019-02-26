@@ -1,3 +1,13 @@
+# 10.1.3 - 2019-02-25
+
+#### 🐞 Fixed
+
+- More ESM improvements.
+
+#### 🛠 Internal
+
+- Updated dependencies.
+
 # 10.1.2 - 2019-02-17
 
 #### 🐞 Fixed

@@ -7,13 +7,11 @@
 // Because of this, Webpack and other bundlers attempt to import values that do not exist.
 // To mitigate this issue, we need this module specific index file that manually exports.
 
-const Interweave = require('./esm/Interweave').default;
-const Markup = require('./esm/Markup').default;
-const Filter = require('./esm/Filter').default;
-const Matcher = require('./esm/Matcher').default;
+import Interweave from './esm/Interweave';
+import Markup from './esm/Markup';
+import Filter from './esm/Filter';
+import Matcher from './esm/Matcher';
 
-Interweave.Markup = Markup;
-Interweave.Filter = Filter;
-Interweave.Matcher = Matcher;
+export { Markup, Filter, Matcher };
 
-module.exports = Interweave;
+export default Interweave;
