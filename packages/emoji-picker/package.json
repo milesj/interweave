@@ -19,11 +19,11 @@
   "repository": "https://github.com/milesj/interweave/tree/master/packages/emoji-picker",
   "license": "MIT",
   "dependencies": {
-    "@babel/runtime": "^7.3.4",
-    "@types/lodash": "^4.14.121",
-    "@types/prop-types": "^15.5.9",
-    "@types/react": "^16.8.5",
-    "@types/react-virtualized": "^9.18.12",
+    "@babel/runtime-corejs3": "^7.4.3",
+    "@types/lodash": "^4.14.123",
+    "@types/prop-types": "^15.7.0",
+    "@types/react": "^16.8.13",
+    "@types/react-virtualized": "^9.21.1",
     "lodash": "^4.17.11",
     "prop-types": "^15.7.2",
     "react-virtualized": "^9.21.0"
@@ -36,7 +36,7 @@
   },
   "devDependencies": {
     "emojibase": "^2.2.0",
-    "react": "^16.8.3",
-    "react-dom": "^16.8.3"
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6"
   }
 }
