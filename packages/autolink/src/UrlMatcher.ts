@@ -41,7 +41,7 @@ export default class UrlMatcher extends Matcher<UrlProps, UrlMatcherOptions> {
       const validList = TOP_LEVEL_TLDS.concat(this.options.customTLDs);
       const tld = host.slice(host.lastIndexOf('.') + 1).toLowerCase();
 
-      if (validList.indexOf(tld) === -1) {
+      if (!validList.includes(tld)) {
         return null;
       }
     }

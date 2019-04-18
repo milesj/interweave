@@ -1,3 +1,9 @@
+# 11.0.0
+
+#### 💥 Breaking
+
+- Updated IE requirement to v11.
+
 # 10.1.3 - 2019-02-25
 
 #### 🐞 Fixed

@@ -186,7 +186,7 @@ export default class Parser {
     if (
       parentConfig.children &&
       parentConfig.children.length > 0 &&
-      parentConfig.children.indexOf(childConfig.tagName) === -1
+      !parentConfig.children.includes(childConfig.tagName)
     ) {
       return false;
     }
@@ -195,7 +195,7 @@ export default class Parser {
     if (
       childConfig.parent &&
       childConfig.parent.length > 0 &&
-      childConfig.parent.indexOf(parentConfig.tagName) === -1
+      !childConfig.parent.includes(parentConfig.tagName)
     ) {
       return false;
     }
@@ -250,7 +250,7 @@ export default class Parser {
   createDocument(markup: string): Document {
     const doc = document.implementation.createHTMLDocument('Interweave');
 
-    if (INVALID_ROOTS.indexOf(markup.substr(0, ROOT_COMPARE_LENGTH).toUpperCase()) >= 0) {
+    if (INVALID_ROOTS.includes(markup.substr(0, ROOT_COMPARE_LENGTH).toUpperCase())) {
       if (__DEV__) {
         throw new Error('HTML documents as Interweave content are not supported.');
       }

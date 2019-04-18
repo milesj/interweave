@@ -341,7 +341,7 @@ export class Picker extends React.PureComponent<PickerUnifiedProps, PickerState>
     return searchQuery
       .toLowerCase()
       .split(' ')
-      .some(needle => haystack.indexOf(needle) >= 0);
+      .some(needle => haystack.includes(needle));
   }
 
   /**
