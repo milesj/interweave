@@ -2,17 +2,17 @@ import React from 'react';
 import EMOJI_REGEX from 'emojibase-regex';
 import EMOTICON_REGEX from 'emojibase-regex/emoticon';
 import SHORTCODE_REGEX from 'emojibase-regex/shortcode';
-import Parser from '../../core/src/Parser';
-import Emoji from '../src/Emoji';
-import EmojiMatcher from '../src/EmojiMatcher';
-import EmojiData from '../src/EmojiDataManager';
+import { Parser } from 'interweave';
 import {
   SOURCE_PROP,
   VALID_EMOJIS,
   TOKEN_LOCATIONS,
   createExpectedToken,
   parentConfig,
-} from '../../../tests/mocks';
+} from 'interweave/lib/testUtils';
+import Emoji from '../src/Emoji';
+import EmojiMatcher from '../src/EmojiMatcher';
+import EmojiData from '../src/EmojiDataManager';
 
 const INVALID_UNICODE = ['\u02A9', '\u03C6', '\u0544'];
 
@@ -125,6 +125,7 @@ describe('EmojiMatcher', () => {
     const parser = new Parser(
       '',
       {
+        // @ts-ignore
         emojiSource: SOURCE_PROP,
       },
       [matcher],

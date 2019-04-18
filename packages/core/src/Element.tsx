@@ -6,7 +6,9 @@ export interface ElementProps {
   attributes?: Attributes;
   children?: React.ReactNode;
   selfClose?: boolean;
-  tagName: keyof JSX.IntrinsicElements;
+  tagName: string;
+  // Causes an OOM error
+  // tagName: keyof JSX.IntrinsicElements;
 }
 
 export default class Element extends React.PureComponent<ElementProps> {

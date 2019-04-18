@@ -1,9 +1,11 @@
+/* eslint-disable max-classes-per-file */
+
 import React from 'react';
-import Filter from '../packages/core/src/Filter';
-import Matcher from '../packages/core/src/Matcher';
-import Element from '../packages/core/src/Element';
-import { TYPE_BLOCK, PARSER_ALLOW } from '../packages/core/src/constants';
-import { Node } from '../packages/core/src/types';
+import Filter from './Filter';
+import Matcher from './Matcher';
+import Element from './Element';
+import { TYPE_BLOCK, PARSER_ALLOW } from './constants';
+import { Node } from './types';
 
 export const TOKEN_LOCATIONS = [
   'no tokens',
@@ -32,8 +34,8 @@ export const SOURCE_PROP = {
 };
 
 export const EXTRA_PROPS = {
-  disableWhitelist: false,
   disableLineBreaks: false,
+  disableWhitelist: false,
   noHtml: false,
   noHtmlExceptMatchers: false,
   transform: null,
@@ -97,13 +99,13 @@ export const MOCK_INVALID_MARKUP = `<div bgcolor="black">
 </div>`;
 
 export const parentConfig = {
-  tagName: 'div',
-  rule: PARSER_ALLOW,
-  type: TYPE_BLOCK,
-  inline: true,
   block: true,
-  self: true,
   children: [],
+  inline: true,
+  rule: PARSER_ALLOW,
+  self: true,
+  tagName: 'div',
+  type: TYPE_BLOCK,
 };
 
 export function matchCodeTag(string: string, tag: string): any {
@@ -114,9 +116,9 @@ export function matchCodeTag(string: string, tag: string): any {
   }
 
   return {
-    match: matches[0],
     children: tag,
     customProp: 'foo',
+    match: matches[0],
   };
 }
 

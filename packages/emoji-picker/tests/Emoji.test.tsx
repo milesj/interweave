@@ -1,9 +1,9 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import EmojiData from '../../emoji/src/EmojiDataManager';
+import { SOURCE_PROP } from 'interweave/lib/testUtils';
+import { EmojiDataManager } from 'interweave-emoji';
 import { Emoji, EmojiProps } from '../src/Emoji';
 import { WithContextProps } from '../src/withContext';
-import { SOURCE_PROP } from '../../../tests/mocks';
 import { PICKER_CONTEXT, CAT_EMOJI } from './mocks';
 
 describe('Emoji', () => {
@@ -26,7 +26,7 @@ describe('Emoji', () => {
   };
 
   beforeEach(() => {
-    props.emoji = EmojiData.getInstance('en').EMOJIS['1F408'];
+    props.emoji = EmojiDataManager.getInstance('en').EMOJIS['1F408'];
   });
 
   it('renders an emoji', () => {

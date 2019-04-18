@@ -2,7 +2,7 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import Markup from '../src/Markup';
 import Element from '../src/Element';
-import { MOCK_MARKUP } from '../../../tests/mocks';
+import { MOCK_MARKUP } from '../src/testUtils';
 
 describe('Markup', () => {
   it('can change `tagName`', () => {

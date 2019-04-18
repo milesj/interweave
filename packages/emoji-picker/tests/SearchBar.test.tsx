@@ -1,8 +1,8 @@
 import React from 'react';
 import { shallow, mount } from 'enzyme';
 import { SearchBar, SearchBarProps } from '../src/SearchBar';
-import { PICKER_CONTEXT } from './mocks';
 import { WithContextProps } from '../src/withContext';
+import { PICKER_CONTEXT } from './mocks';
 
 jest.mock('lodash/debounce', () => jest.fn(fn => fn));
 

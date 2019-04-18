@@ -1,9 +1,9 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import Interweave from '../../core/src/Interweave';
+import Interweave from 'interweave';
+import { EXTRA_PROPS, SOURCE_PROP } from 'interweave/lib/testUtils';
 import Emoji from '../src/Emoji';
 import EmojiMatcher from '../src/EmojiMatcher';
-import { EXTRA_PROPS, SOURCE_PROP } from '../../../tests/mocks';
 
 describe('Interweave (with emoji)', () => {
   it('renders emoji shortcode as unicode', () => {

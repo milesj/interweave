@@ -4,6 +4,14 @@
 
 - Updated IE requirement to v11.
 
+#### 🚀 Updates
+
+- `Parser` and `Element` are now exported from the index.
+
+#### 🛠 Internals
+
+- **[ts]** Switched to project references.
+
 ### 10.1.3 - 2019-02-25
 
 #### 🐞 Fixes

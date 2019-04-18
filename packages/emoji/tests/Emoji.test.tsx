@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
+import { SOURCE_PROP, VALID_EMOJIS } from 'interweave/lib/testUtils';
 import Emoji from '../src/Emoji';
-import { SOURCE_PROP, VALID_EMOJIS } from '../../../tests/mocks';
 
 describe('Emoji', () => {
   const [[hexcode, unicode, shortcode, emoticon]] = VALID_EMOJIS;

@@ -20,7 +20,9 @@ export interface MarkupProps {
   /** @ignore Pre-parsed content to render. */
   parsedContent?: React.ReactNode;
   /** HTML element or React fragment to wrap content with. */
-  tagName?: keyof JSX.IntrinsicElements | 'fragment';
+  tagName?: string;
+  // Causes an OOM error
+  // tagName?: keyof JSX.IntrinsicElements | 'fragment';
 }
 
 export default class Markup extends React.PureComponent<MarkupProps> {

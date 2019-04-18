@@ -26,10 +26,10 @@ const ARIA_COMPARE_LENGTH = 5;
 
 export interface ParserProps {
   disableLineBreaks?: boolean;
+  disableWhitelist?: boolean;
   noHtml?: boolean;
   noHtmlExceptMatchers?: boolean;
   transform?: TransformCallback;
-  [key: string]: any;
 }
 
 export default class Parser {
@@ -104,7 +104,7 @@ export default class Parser {
 
       // Skip matchers that have been disabled from props or are not supported
       if (
-        props[matcher.inverseName] ||
+        (props as any)[matcher.inverseName] ||
         TAGS_BLACKLIST[tagName] ||
         (!props.disableWhitelist && !TAGS[tagName])
       ) {

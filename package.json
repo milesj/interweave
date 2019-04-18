@@ -13,7 +13,7 @@
     "prettier": "beemo prettier",
     "prerelease": "yarn test && yarn run build",
     "release": "lerna publish",
-    "type": "beemo typescript --workspaces=* --noEmit"
+    "type": "beemo typescript --reference-workspaces --build"
   },
   "devDependencies": {
     "@milesj/build-tools": "^0.41.1",

@@ -2,10 +2,10 @@
 
 import React from 'react';
 import { shallow } from 'enzyme';
-import EmojiData from '../../emoji/src/EmojiDataManager';
+import { EmojiDataManager } from 'interweave-emoji';
+import { SOURCE_PROP } from 'interweave/lib/testUtils';
 import { PreviewBar, PreviewBarProps } from '../src/PreviewBar';
 import { WithContextProps } from '../src/withContext';
-import { SOURCE_PROP } from '../../../tests/mocks';
 import { PICKER_CONTEXT, CAT_EMOJI } from './mocks';
 
 describe('<PreviewBar />', () => {
@@ -20,7 +20,7 @@ describe('<PreviewBar />', () => {
   };
 
   beforeEach(() => {
-    props.emoji = EmojiData.getInstance('en').EMOJIS['1F642'];
+    props.emoji = EmojiDataManager.getInstance('en').EMOJIS['1F642'];
   });
 
   it('renders a preview', () => {

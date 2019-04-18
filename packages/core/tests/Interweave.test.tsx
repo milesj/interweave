@@ -9,7 +9,7 @@ import {
   LinkFilter,
   CodeTagMatcher,
   matchCodeTag,
-} from '../../../tests/mocks';
+} from '../src/testUtils';
 
 describe('Interweave', () => {
   it('can pass filters through props', () => {

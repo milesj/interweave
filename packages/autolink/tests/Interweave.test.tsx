@@ -1,8 +1,8 @@
 import React from 'react';
 import ReactDOMServer from 'react-dom/server';
 import { shallow } from 'enzyme';
-import Interweave from '../../core/src/Interweave';
-import Element from '../../core/src/Element';
+import Interweave, { Element } from 'interweave';
+import { EXTRA_PROPS } from 'interweave/lib/testUtils';
 import Email from '../src/Email';
 import Hashtag from '../src/Hashtag';
 import Url from '../src/Url';
@@ -10,7 +10,6 @@ import EmailMatcher from '../src/EmailMatcher';
 import HashtagMatcher from '../src/HashtagMatcher';
 import UrlMatcher from '../src/UrlMatcher';
 import IpMatcher from '../src/IpMatcher';
-import { EXTRA_PROPS } from '../../../tests/mocks';
 
 describe('Interweave (with autolinking)', () => {
   const urlParts = {

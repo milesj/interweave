@@ -18,7 +18,7 @@ import {
   parentConfig,
   TOKEN_LOCATIONS,
   MOCK_MARKUP,
-} from '../../../tests/mocks';
+} from '../src/testUtils';
 
 function createChild(tag: string, text: string | number): HTMLElement {
   const child = document.createElement(tag);
@@ -145,6 +145,7 @@ describe('Parser', () => {
     describe('ignores matcher if the inverse prop is enabled', () => {
       TOKEN_LOCATIONS.forEach(location => {
         it(`for: ${location}`, () => {
+          // @ts-ignore
           instance.props.noFoo = true;
 
           const tokenString = location.replace(/\{token\}/g, '[foo]');

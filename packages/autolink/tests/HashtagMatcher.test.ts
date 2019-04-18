@@ -1,7 +1,7 @@
-import Parser from '../../core/src/Parser';
+import { Parser } from 'interweave';
+import { TOKEN_LOCATIONS, createExpectedToken, parentConfig } from 'interweave/lib/testUtils';
 import HashtagMatcher from '../src/HashtagMatcher';
 import { HASHTAG_PATTERN } from '../src/constants';
-import { TOKEN_LOCATIONS, createExpectedToken, parentConfig } from '../../../tests/mocks';
 
 const VALID_HASHTAGS = [
   '#alloneword',
