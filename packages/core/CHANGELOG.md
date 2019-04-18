@@ -4,36 +4,36 @@
 
 - Updated IE requirement to v11.
 
-# 10.1.3 - 2019-02-25
+### 10.1.3 - 2019-02-25
 
-#### 🐞 Fixed
+#### 🐞 Fixes
 
 - More ESM improvements.
 
-#### 🛠 Internal
+#### 🛠 Internals
 
 - Updated dependencies.
 
-# 10.1.2 - 2019-02-17
+### 10.1.2 - 2019-02-17
 
-#### 🐞 Fixed
+#### 🐞 Fixes
 
 - Added missing `@babel/runtime` package.
 
-# 10.1.1 - 2019-02-10
+### 10.1.1 - 2019-02-10
 
-#### 🐞 Fixed
+#### 🐞 Fixes
 
 - Fixed an issue with TS types being exported from the ESM index.
 
-# 10.1.0 - 2019-02-09
+## 10.1.0 - 2019-02-09
 
-#### 🚀 New
+#### 🚀 Updates
 
 - Added ECMAScript module support via `esm/` built files.
 - Removed copyright docblocks from source files to reduce bundle size.
 
-#### 🛠 Internal
+#### 🛠 Internals
 
 - Tested with React v16.8.
 
@@ -47,32 +47,32 @@
 - Newlines will now be converted to `<br/>` tags when `noHtmlExceptMatchers` is passed.
 - PropType shapes have been removed.
 
-#### 🚀 New
+#### 🚀 Updates
 
 - Enabled the `type` attribute for all HTML elements.
 - Updated `tagName` prop to support any JSX supported HTML tag.
 
-#### 🐞 Fixed
+#### 🐞 Fixes
 
 - Fixed a bug in which content starting with BBCode (`[html]`) were not being parsed.
 
-# 9.2.1 - 2018-08-07
+### 9.2.1 - 2018-08-07
 
-#### 🐞 Fixed
+#### 🐞 Fixes
 
 - Added `srcSet` to the React attribute to prop mapping.
 
-# 9.2.0 - 2018-08-02
+## 9.2.0 - 2018-08-02
 
-#### 🚀 New
+#### 🚀 Updates
 
 - Added `srcset` and `sizes` to the attribute whitelist.
 - Updated `transform` to support blacklisted tags as a means to intercept. This allows tags like
   `iframe` and `canvas` to be used when handled manually.
 
-# 9.1.0 - 2018-07-18
+## 9.1.0 - 2018-07-18
 
-#### 🚀 New
+#### 🚀 Updates
 
 TypeScript
 
@@ -91,37 +91,37 @@ TypeScript
   - If you require custom class names, use a `Filter` and append to the node manually.
 - Refactored `Matcher` factories to use a React component reference, instead of a factory function.
 
-#### 🐞 Fixed
+#### 🐞 Fixes
 
 - Fixed issues when `null` was passed to `content`.
 
-#### 🛠 Internal
+#### 🛠 Internals
 
 - Converted from Flow to TypeScript.
 - Moved documention to Gitbook.
 
-# 8.1.0 - 2018-04-16
+## 8.1.0 - 2018-04-16
 
-#### 🚀 New
+#### 🚀 Updates
 
 - Added a `commonClass` prop to control the class name for all Interweave elements.
 - Added a `transform` prop to hook into the parsing process.
 - Updated `tagName` prop to accept "fragment", in which a `React.Fragment` will be rendered.
 
-# 8.0.2 - 2017-11-10
+### 8.0.2 - 2017-11-10
 
-#### 🐞 Fixed
+#### 🐞 Fixes
 
 - Fixed a bug where passing a `null` content with `onBeforeParse` would throw errors.
 
-#### 🛠 Internal
+#### 🛠 Internals
 
 - Tested against React 16.1.
 - Improved build process.
 
-# 8.0.1 - 2017-10-23
+### 8.0.1 - 2017-10-23
 
-#### 🛠 Internal
+#### 🛠 Internals
 
 - Fixed dependencies.
 
@@ -134,13 +134,13 @@ TypeScript
   - A new `attribute(name, value)` method has been added (works like the previous implementation).
   - A new `node(tagName, node)` method has been added.
 
-# 7.1.0 - 2017-09-26
+## 7.1.0 - 2017-09-26
 
-#### 🚀 New
+#### 🚀 Updates
 
 - Updated `prop-types` to 15.6.
 
-#### 🛠 Internal
+#### 🛠 Internals
 
 - Tested against React 16.
 
@@ -156,25 +156,25 @@ TypeScript
 - Migrated `Markup`, `Element`, `Email`, `Hashtag`, `Link`, and `Url` components to
   `React.PureComponent`.
 
-#### 🚀 New
+#### 🚀 Updates
 
 - Matchers can now be defined as objects instead of a class that extends `Matcher`.
 - Filters can now be defined as objects instead of a class that extends `Filter`.
 - Added `FilterShape` and `MatcherShape` prop types.
 
-#### 🛠 Internal
+#### 🛠 Internals
 
 - Split Interweave into a multi-package repository using Yarn workspaces and Lerna.
 - Major refactor and cleanup on Flowtype usage.
 
-# 6.1.0 - 2017-08-23
+## 6.1.0 - 2017-08-23
 
-#### 🐞 Fixed
+#### 🐞 Fixes
 
 - Major improvements to emoticon matching and parsing.
 - Updated Flowtype definitions with more generics.
 
-#### 🛠 Internal
+#### 🛠 Internals
 
 - Updated `emojibase` to 1.3.0.
 - Updated `emojibase-regex` to 1.0.4.
@@ -187,7 +187,7 @@ TypeScript
 - Matcher files have been renamed and suffixed with `Matcher`.
 - Renamed all usage of `shortname` to `shortcode`.
 
-#### 🚀 New
+#### 🚀 Updates
 
 - Added support for React 16.
 - Emoji data is now fetched from a CDN instead of being bundled locally.
@@ -203,17 +203,17 @@ TypeScript
   - Added new `convertEmoticon` option.
   - Renamed `convertShortname` option to `convertShortcode`.
 
-#### 🛠 Internal
+#### 🛠 Internals
 
 - Fixed and updated Flowtype and React definitions.
 
-# 5.4.0 - 2017-07-12
+## 5.4.0 - 2017-07-12
 
 - Updated `emoji-database` to 0.9.
 - Updated `enlargeThreshold` to ignore whitespace when counting.
 - Fixed a bug in which emoji counts below the `enlargeThreshold` were not being enlarged.
 
-# 5.3.0 - 2017-07-12
+## 5.3.0 - 2017-07-12
 
 - Added a new `emojiLargeSize` prop, which can be used to customize the size of enlarged emoji.
   - Also passed as the 4th argument to the `emojiPath` function.
@@ -224,28 +224,28 @@ TypeScript
 - Wrapped thrown errors in `process.env.NODE_ENV !== 'production'` environment checks.
 - Improvements to Flow definitions.
 
-# 5.2.0 - 2017-07-10
+## 5.2.0 - 2017-07-10
 
 - Added a new `noHtmlExceptMatchers` prop.
 - Fixed a bug in which matcher after callbacks were not triggering properly.
 
-# 5.1.2 - 6/2/17
+### 5.1.2 - 2017-06-02
 
 - Fixed prefixed TLDs not being matched correctly.
 
-# 5.1.1 - 2017-06-23
+### 5.1.1 - 2017-06-23
 
 - Updated `emoji-database` to 0.8.
 - Fixed IE 10 compiled lib/ issues.
 
-# 5.1.0 - 2017-06-16
+## 5.1.0 - 2017-06-16
 
 - Updated support for `react` 15.6.
 - Updated `emoji-database` to 0.7.
 - Updated `UrlMatcher` to validate against a common whitelist of TLDs (no longer wildcard).
 - Added `customTLDs` and `validateTLD` options to `UrlMatcher`.
 
-# 5.0.1 - 2017-05-16
+### 5.0.1 - 2017-05-16
 
 - Fixed an issue with the index import failing.
 
@@ -257,7 +257,7 @@ TypeScript
 - Moved Flow definition to root of project.
 - Moved published files to a lib/ folder.
 
-# 4.1.0 - 2017-04-25
+## 4.1.0 - 2017-04-25
 
 - Updated the `emojiPath` function to receive `enlargeEmoji` as the 2nd argument, and `emojiSize` as
   the 3rd argument.
@@ -281,18 +281,18 @@ TypeScript
 - Removed the emoji dataset and regex generation from Interweave.
 - Fixed a few issues with the flowtype definitions.
 
-# 3.1.0 - 2017-03-31
+## 3.1.0 - 2017-03-31
 
 - Added an `emojiSize` prop to the `Emoji` component, which will scale the size of the emoji using
   inline styles.
 - Updated the `Emoji` component to return `img` instead of `span`.
 - Removed the extension specific class name from the `Emoji` element.
 
-# 3.0.2 - 2017-03-30
+### 3.0.2 - 2017-03-30
 
 - Fixed an issue with the published build.
 
-# 3.0.1 - 2017-03-30
+### 3.0.1 - 2017-03-30
 
 - Added support for `/` and `\` in URL query string parsing.
 
@@ -308,18 +308,18 @@ TypeScript
 - Added `CONFIG_INLINE` and `CONFIG_BLOCK` constants.
 - Removed the `PARSER_PASS_THROUGH` constant.
 
-# 2.0.3 - 2017-02-24
+### 2.0.3 - 2017-02-24
 
 - Added `Parser#isSafe` to verify that a node is safe from injection attacks.
 - Fixed an issue with specific anchor link `javascript:` attacks being permitted.
 
-# 2.0.2 - 2017-01-27
+### 2.0.2 - 2017-01-27
 
 - Fixed an issue with surrogate pair emojis rendering separately. For example, the MWGB family emoji
   should now render as a single emoji, instead of 4 individual.
 - Improved the efficiency of the emoji regex pattern.
 
-# 2.0.1 - 2016-12-13
+### 2.0.1 - 2016-12-13
 
 - Fixed an issue with the NPM package.
 
@@ -335,15 +335,15 @@ TypeScript
 - Removed `Interweave#addFilter`, `addMatcher`, `clearFilters`, `clearMatchers`, `getFilters`,
   `getMatchers`, and `configure`.
 
-# 1.2.0 - 2016-12-15
+## 1.2.0 - 2016-12-15
 
 - Updated emoji to the latest EmojiOne dataset.
 
-# 1.1.1 - 2016-11-10
+### 1.1.1 - 2016-11-10
 
 - Fixed an issue with the published build.
 
-# 1.1.0 - 2016-11-10
+## 1.1.0 - 2016-11-10
 
 - Line breaks found in non-HTML strings will now be automatically converted to `<br/>` tags.
 - Added a `disableLineBreaks` prop to `Interweave` and `Markup`, which will disable the automatic
@@ -355,7 +355,7 @@ TypeScript
 - Removed the `className` prop from `Interweave` and `Markup`.
 - Fixed an issue where void elements (`br`, `hr`, etc) would not render correctly.
 
-# 1.0.1 - 2016-10-21
+### 1.0.1 - 2016-10-21
 
 - Fixed an issue in which empty parses would pass an empty child to `Element`, triggering a prop
   type failure.

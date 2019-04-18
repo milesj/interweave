@@ -1,52 +1,52 @@
-# 2.2.3 - 2019-02-25
+### 2.2.3 - 2019-02-25
 
-#### 🐞 Fixed
+#### 🐞 Fixes
 
 - More ESM improvements.
 
-#### 🛠 Internal
+#### 🛠 Internals
 
 - Updated dependencies.
 
-# 2.2.2 - 2019-02-17
+### 2.2.2 - 2019-02-17
 
-#### 🐞 Fixed
+#### 🐞 Fixes
 
 - Added missing `@babel/runtime` package.
 
-# 2.2.1 - 2019-02-10
+### 2.2.1 - 2019-02-10
 
-#### 🐞 Fixed
+#### 🐞 Fixes
 
 - Fixed an issue with TS types being exported from the ESM index.
 
-# 2.2.0 - 2019-02-09
+## 2.2.0 - 2019-02-09
 
-#### 🚀 New
+#### 🚀 Updates
 
 - Added ECMAScript module support via `esm/` built files.
 - Removed copyright docblocks from source files to reduce bundle size.
 
-#### 🛠 Internal
+#### 🛠 Internals
 
 - Tested with React v16.8.
 
-# 2.1.0 - 2019-01-08
+## 2.1.0 - 2019-01-08
 
-#### 🛠 Internal
+#### 🛠 Internals
 
 - Added peer dep support for `interweave` 10.0.
 
-# 2.0.2 - 2018-08-07
+### 2.0.2 - 2018-08-07
 
-#### 🐞 Fixed
+#### 🐞 Fixes
 
 - Moved TLD validation logic to the matching process, instead of the rendering process. Fixes an
   issue where the TLD validation wasn't occuring when a custom factory was used.
 
-# 2.0.1 - 2018-07-18
+### 2.0.1 - 2018-07-18
 
-#### 🐞 Fixed
+#### 🐞 Fixes
 
 TypeScript
 
@@ -58,43 +58,43 @@ TypeScript
 
 - Updated minimum `react` requirement to 16.3.
 
-#### 🛠 Internal
+#### 🛠 Internals
 
 - Converted from Flow to TypeScript.
 
-# 1.4.0 - 2018-04-16
+## 1.4.0 - 2018-04-16
 
-#### 🛠 Internal
+#### 🛠 Internals
 
 - Tested against React 16.3.
 
-# 1.3.1 - 2017-11-10
+### 1.3.1 - 2017-11-10
 
-#### 🛠 Internal
+#### 🛠 Internals
 
 - Tested against React 16.1.
 - Improved build process.
 
-# 1.3.0 - 2017-10-23
+## 1.3.0 - 2017-10-23
 
-#### 🚀 New
+#### 🚀 Updates
 
 - Rewrote all regex patterns to more efficiently and accurately match their targets.
   - URLs are now properly captured, even when suffixed with a period (end of sentence).
 
-# 1.2.0 - 2017-10-12
+## 1.2.0 - 2017-10-12
 
-#### 🚀 New
+#### 🚀 Updates
 
 - Updated `interweave` peer dependency to 8.0.
 
-# 1.1.0 - 2017-09-26
+## 1.1.0 - 2017-09-26
 
-#### 🚀 New
+#### 🚀 Updates
 
 - Updated `prop-types` to 15.6.
 
-#### 🛠 Internal
+#### 🛠 Internals
 
 - Tested against React 16.
 
@@ -104,6 +104,6 @@ TypeScript
 
 - Initial release!
 
-#### 🚀 New
+#### 🚀 Updates
 
 - Matchers are now available as named exports from the `interweave-autolink` index.
