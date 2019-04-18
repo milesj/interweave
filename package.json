@@ -25,6 +25,7 @@
     "emojibase-test-utils": "^3.2.0",
     "lerna": "^3.13.3",
     "react": "^16.8.6",
+    "react-dom": "^16.8.6",
     "serve": "^11.0.0",
     "webpack": "^4.30.0",
     "webpack-cli": "^3.3.0"
