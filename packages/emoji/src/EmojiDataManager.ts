@@ -11,7 +11,13 @@ import {
 } from 'emojibase';
 import { CanonicalEmoji } from './types';
 
-const instances: { [locale: string]: EmojiDataManager } = {};
+const instances: Map<string, EmojiDataManager> = new Map();
+
+export function resetInstances() {
+  if (__DEV__) {
+    instances.clear();
+  }
+}
 
 export default class EmojiDataManager {
   EMOJIS: { [hexcode: string]: CanonicalEmoji } = {};
@@ -36,11 +42,11 @@ export default class EmojiDataManager {
    * Return or create a singleton instance per locale.
    */
   static getInstance(locale: string = 'en'): EmojiDataManager {
-    if (!instances[locale]) {
-      instances[locale] = new EmojiDataManager(locale);
+    if (!instances.has(locale)) {
+      instances.set(locale, new EmojiDataManager(locale));
     }
 
-    return instances[locale];
+    return instances.get(locale)!;
   }
 
   /**

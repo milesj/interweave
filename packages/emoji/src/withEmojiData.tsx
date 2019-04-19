@@ -39,26 +39,30 @@ export interface WithEmojiDataState {
 }
 
 // Share between all instances
-let loaded: { [locale: string]: boolean } = {};
-let promise: { [locale: string]: Promise<void> } = {};
+const loaded: Set<string> = new Set();
+const promise: Map<string, Promise<void>> = new Map();
 
 export function resetLoaded() {
   if (__DEV__) {
-    loaded = {};
-    promise = {};
+    loaded.clear();
+    promise.clear();
   }
 }
 
 export default function withEmojiData(options: WithEmojiDataOptions = {}) /* infer */ {
   const { alwaysRender = false, compact = false, emojis = [], throwErrors = true } = options;
 
-  return function withEmojiDataFactory<Props extends object>(
+  return function withEmojiDataFactory<Props extends object = {}>(
     Component: React.ComponentType<Props & WithEmojiDataProps>,
   ): React.ComponentType<Props & WithEmojiDataWrapperProps> {
+    const baseName = Component.displayName || Component.name;
+
     class WithEmojiData extends React.PureComponent<
       Props & WithEmojiDataWrapperProps,
       WithEmojiDataState
     > {
+      static displayName = `withEmojiData(${baseName})`;
+
       static defaultProps: any = {
         locale: 'en',
         version: 'latest',
@@ -121,15 +125,15 @@ export default function withEmojiData(options: WithEmojiDataOptions = {}) /* inf
         const key = `${locale}:${version}:${set}`;
 
         // Abort as we've already loaded data
-        if (loaded[key] || emojis.length > 0) {
+        if (loaded.has(key) || emojis.length > 0) {
           this.setEmojis(emojis);
 
           return Promise.resolve();
         }
 
         // Or hook into the promise if we're loading
-        if (promise[key]) {
-          return promise[key].then(() => {
+        if (promise.has(key)) {
+          return promise.get(key)!.then(() => {
             this.setEmojis();
           });
         }
@@ -137,20 +141,20 @@ export default function withEmojiData(options: WithEmojiDataOptions = {}) /* inf
         // Otherwise, start loading emoji data from the CDN
         const request = fetchFromCDN<Emoji>(`${locale}/${set}.json`, version)
           .then(response => {
-            loaded[key] = true;
+            loaded.add(key);
 
             this.getDataInstance().parseEmojiData(response);
             this.setEmojis();
           })
           .catch(error => {
-            loaded[key] = true;
+            loaded.add(key);
 
             if (throwErrors) {
               throw error;
             }
           });
 
-        promise[key] = request;
+        promise.set(key, request);
 
         return request;
       }
