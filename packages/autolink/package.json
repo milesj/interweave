@@ -21,9 +21,8 @@
   "repository": "https://github.com/milesj/interweave/tree/master/packages/autolink",
   "license": "MIT",
   "dependencies": {
-    "@babel/runtime-corejs3": "^7.4.3",
-    "@types/prop-types": "^15.7.0",
-    "@types/react": "^16.8.13",
+    "@types/prop-types": "^15.7.1",
+    "@types/react": "^16.8.14",
     "prop-types": "^15.7.2"
   },
   "peerDependencies": {

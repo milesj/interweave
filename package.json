@@ -16,8 +16,8 @@
     "type": "beemo typescript --reference-workspaces --build"
   },
   "devDependencies": {
-    "@milesj/build-tools": "^0.41.1",
-    "@types/react": "^16.8.13",
+    "@milesj/build-tools": "^0.42.0",
+    "@types/react": "^16.8.14",
     "@types/react-dom": "^16.8.4",
     "babel-loader": "^8.0.5",
     "core-js": "^3.0.1",

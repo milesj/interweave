@@ -325,7 +325,9 @@ describe('Interweave', () => {
     });
 
     it('doesnt filter invalid tags and attributes when disabled', () => {
-      const wrapper = shallow(<Interweave content={MOCK_INVALID_MARKUP} disableWhitelist />);
+      const wrapper = shallow(
+        <Interweave content={MOCK_INVALID_MARKUP} allowElements allowAttributes />,
+      );
 
       expect(wrapper.prop('parsedContent')).toEqual([
         <Element key="0" attributes={{ bgcolor: 'black' }} tagName="div">

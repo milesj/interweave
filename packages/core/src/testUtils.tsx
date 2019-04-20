@@ -33,13 +33,7 @@ export const SOURCE_PROP = {
   version: 'latest',
 };
 
-export const EXTRA_PROPS = {
-  disableLineBreaks: false,
-  disableWhitelist: false,
-  noHtml: false,
-  noHtmlExceptMatchers: false,
-  transform: null,
-};
+export const EXTRA_PROPS = {};
 
 export const VALID_EMOJIS = [
   ['1F621', '😡', ':enraged:', '>:/'],

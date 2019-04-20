@@ -1,9 +1,9 @@
 import React from 'react';
-import Parser, { ParserProps } from './Parser';
+import Parser from './Parser';
 import Markup, { MarkupProps } from './Markup';
 import { FilterInterface } from './Filter';
 import { MatcherInterface } from './Matcher';
-import { AfterParseCallback, BeforeParseCallback, TransformCallback } from './types';
+import { AfterParseCallback, BeforeParseCallback } from './types';
 
 export interface InterweaveProps extends MarkupProps {
   /** Support all the props used by matchers. */
@@ -20,26 +20,19 @@ export interface InterweaveProps extends MarkupProps {
   onAfterParse?: AfterParseCallback<InterweaveProps> | null;
   /** Callback fired beore parsing begins. Must return a string. */
   onBeforeParse?: BeforeParseCallback<InterweaveProps> | null;
-  /** Transformer ran on each HTML element. Return a new element, null to remove current element, or undefined to do nothing. */
-  transform?: TransformCallback | null;
 }
 
 export default class Interweave extends React.PureComponent<InterweaveProps> {
   static defaultProps = {
     content: '',
     disableFilters: false,
-    disableLineBreaks: false,
     disableMatchers: false,
-    disableWhitelist: false,
     emptyContent: null,
     filters: [],
     matchers: [],
-    noHtml: false,
-    noHtmlExceptMatchers: false,
     onAfterParse: null,
     onBeforeParse: null,
     tagName: 'span',
-    transform: null,
   };
 
   /**
@@ -47,15 +40,15 @@ export default class Interweave extends React.PureComponent<InterweaveProps> {
    */
   parseMarkup(): React.ReactNode {
     const {
-      tagName,
       content,
-      emptyContent,
-      onBeforeParse,
-      onAfterParse,
-      matchers,
-      disableMatchers,
-      filters,
       disableFilters,
+      disableMatchers,
+      emptyContent,
+      filters,
+      matchers,
+      onAfterParse,
+      onBeforeParse,
+      tagName,
       ...props
     } = this.props as Required<InterweaveProps>;
 
@@ -89,7 +82,7 @@ export default class Interweave extends React.PureComponent<InterweaveProps> {
     }, content || '');
 
     // Parse the markup
-    const parser = new Parser(markup, props as ParserProps, allMatchers, allFilters);
+    const parser = new Parser(markup, props, allMatchers, allFilters);
 
     // Trigger after callbacks
     const nodes = afterCallbacks.reduce((parserNodes, callback) => {
@@ -117,25 +110,10 @@ export default class Interweave extends React.PureComponent<InterweaveProps> {
    * Render the component by parsing the markup.
    */
   render() {
-    const {
-      disableLineBreaks,
-      disableWhitelist,
-      emptyContent,
-      noHtml,
-      noHtmlExceptMatchers,
-      tagName,
-    } = this.props;
+    const { emptyContent, tagName } = this.props;
 
     return (
-      <Markup
-        disableLineBreaks={disableLineBreaks}
-        disableWhitelist={disableWhitelist}
-        emptyContent={emptyContent}
-        noHtml={noHtml}
-        noHtmlExceptMatchers={noHtmlExceptMatchers}
-        tagName={tagName}
-        parsedContent={this.parseMarkup()}
-      />
+      <Markup emptyContent={emptyContent} tagName={tagName} parsedContent={this.parseMarkup()} />
     );
   }
 }

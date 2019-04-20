@@ -3,10 +3,14 @@
 #### 💥 Breaking
 
 - Updated IE requirement to v11.
+- Renamed `TAGS_BLACKLIST` to `BANNED_TAG_LIST`.
+- Removed `disableWhitelist` prop. Use `allowAttributes` or `allowElements` instead.
 
 #### 🚀 Updates
 
 - `Parser` and `Element` are now exported from the index.
+- Added `allowAttributes` prop, which disables all non-banned HTML attribute filtering.
+- Added `allowElements` prop, which disables all non-banned HTML element filtering.
 
 #### 🛠 Internals
 

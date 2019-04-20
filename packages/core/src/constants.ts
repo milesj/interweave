@@ -252,20 +252,22 @@ function createConfigBuilder(config: NodeConfig): (tagName: string) => void {
 export const TAGS: ConfigMap = Object.freeze(tagConfigs);
 
 // Tags that should never be allowed, even if the whitelist is disabled
-export const TAGS_BLACKLIST: { [tagName: string]: boolean } = {
-  applet: true,
-  body: true,
-  canvas: true,
-  embed: true,
-  frame: true,
-  frameset: true,
-  head: true,
-  html: true,
-  iframe: true,
-  object: true,
-  script: true,
-  style: true,
-};
+export const BANNED_TAG_LIST = [
+  'applet',
+  'body',
+  'canvas',
+  'embed',
+  'frame',
+  'frameset',
+  'head',
+  'html',
+  'iframe',
+  'object',
+  'script',
+  'style',
+];
+
+export const ALLOWED_TAG_LIST = Object.keys(TAGS);
 
 // Filters apply to HTML attributes
 export const FILTER_ALLOW = 1;
