@@ -25,7 +25,7 @@ export default class EmojiMatcher extends Matcher<EmojiProps, EmojiMatcherOption
   constructor(
     name: string,
     options?: EmojiMatcherOptions,
-    factory?: React.ComponentType<EmojiProps>,
+    factory?: React.ComponentType<EmojiProps> | null,
   ) {
     super(
       name,

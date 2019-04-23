@@ -21,7 +21,7 @@ export default abstract class Matcher<Props extends object = {}, Options extends
 
   factory: React.ComponentType<Props> | null;
 
-  constructor(name: string, options: Options, factory: React.ComponentType<Props> | null = null) {
+  constructor(name: string, options?: Options, factory?: React.ComponentType<Props> | null) {
     if (__DEV__) {
       if (!name || name.toLowerCase() === 'html') {
         throw new Error(`The matcher name "${name}" is not allowed.`);
@@ -32,7 +32,7 @@ export default abstract class Matcher<Props extends object = {}, Options extends
     this.options = { ...options };
     this.propName = name;
     this.inverseName = `no${name.charAt(0).toUpperCase() + name.slice(1)}`;
-    this.factory = factory;
+    this.factory = factory || null;
   }
 
   /**

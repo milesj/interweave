@@ -9,7 +9,11 @@ export interface UrlMatcherOptions {
 }
 
 export default class UrlMatcher extends Matcher<UrlProps, UrlMatcherOptions> {
-  constructor(name: string, options?: UrlMatcherOptions, factory?: React.ComponentType<UrlProps>) {
+  constructor(
+    name: string,
+    options?: UrlMatcherOptions,
+    factory?: React.ComponentType<UrlProps> | null,
+  ) {
     super(
       name,
       {
@@ -34,7 +38,7 @@ export default class UrlMatcher extends Matcher<UrlProps, UrlMatcherOptions> {
 
     if (response && this.options.validateTLD) {
       const { host } = response.urlParts as any;
-      const validList = TOP_LEVEL_TLDS.concat(this.options.customTLDs);
+      const validList = TOP_LEVEL_TLDS.concat(this.options.customTLDs || []);
       const tld = host.slice(host.lastIndexOf('.') + 1).toLowerCase();
 
       if (!validList.includes(tld)) {

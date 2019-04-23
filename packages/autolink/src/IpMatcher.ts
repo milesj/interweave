@@ -5,7 +5,11 @@ import UrlMatcher, { UrlMatcherOptions } from './UrlMatcher';
 import { IP_PATTERN } from './constants';
 
 export default class IpMatcher extends UrlMatcher {
-  constructor(name: string, options?: UrlMatcherOptions, factory?: React.ComponentType<UrlProps>) {
+  constructor(
+    name: string,
+    options?: UrlMatcherOptions,
+    factory?: React.ComponentType<UrlProps> | null,
+  ) {
     super(
       name,
       {
