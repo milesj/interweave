@@ -411,6 +411,48 @@ describe('Parser', () => {
     });
   });
 
+  describe('isTagAllowed()', () => {
+    it('always returns false for banned tags', () => {
+      instance.allowed.add('script');
+      instance.props.allowElements = true;
+
+      expect(instance.isTagAllowed('script')).toBe(false);
+    });
+
+    it('always returns false for blocked tags', () => {
+      instance.blocked.add('b');
+      instance.allowed.add('b');
+      instance.props.allowElements = true;
+
+      expect(instance.isTagAllowed('b')).toBe(false);
+    });
+
+    it('returns true if `allowElements` but not in allow list', () => {
+      instance.allowed.delete('b');
+      instance.props.allowElements = true;
+
+      expect(instance.isTagAllowed('b')).toBe(true);
+    });
+
+    it('returns true if in allow list', () => {
+      instance.allowed.add('custom');
+
+      expect(instance.isTagAllowed('custom')).toBe(true);
+    });
+
+    it('returns false if not in allow list', () => {
+      instance.allowed.delete('b');
+
+      expect(instance.isTagAllowed('b')).toBe(false);
+    });
+
+    it('returns true if in default list', () => {
+      instance.allowed.add('span');
+
+      expect(instance.isTagAllowed('span')).toBe(true);
+    });
+  });
+
   describe('parse()', () => {
     it('parses the entire document starting from the body', () => {
       instance = new Parser(MOCK_MARKUP);

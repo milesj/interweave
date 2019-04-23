@@ -5,6 +5,7 @@ import Interweave from '../src/Interweave';
 import Element from '../src/Element';
 import {
   EXTRA_PROPS,
+  MOCK_MARKUP,
   MOCK_INVALID_MARKUP,
   LinkFilter,
   CodeTagMatcher,
@@ -304,7 +305,7 @@ describe('Interweave', () => {
     });
   });
 
-  describe('whitelist', () => {
+  describe('allow list', () => {
     it('filters invalid tags and attributes', () => {
       const wrapper = shallow(<Interweave content={MOCK_INVALID_MARKUP} />);
 
@@ -352,6 +353,34 @@ describe('Interweave', () => {
             '\n',
           ]}
         </Element>,
+      ]);
+    });
+  });
+
+  describe('block list', () => {
+    it('filters blocked tags and attributes', () => {
+      const wrapper = shallow(<Interweave content={MOCK_MARKUP} blockList={['aside', 'a']} />);
+
+      expect(wrapper.prop('parsedContent')).toEqual([
+        <Element key="0" tagName="main" attributes={{ role: 'main' }}>
+          {[
+            '\n  Main content\n  ',
+            <Element key="1" tagName="div">
+              {[
+                '\n    ',
+                'Link',
+                '\n    ',
+                <Element key="2" tagName="span" attributes={{ className: 'foo' }}>
+                  {['String']}
+                </Element>,
+                '\n  ',
+              ]}
+            </Element>,
+            '\n',
+          ]}
+        </Element>,
+        '\n',
+        '\n  Sidebar content\n',
       ]);
     });
   });

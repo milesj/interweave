@@ -11,6 +11,9 @@
 - `Parser` and `Element` are now exported from the index.
 - Added `allowAttributes` prop, which disables all non-banned HTML attribute filtering.
 - Added `allowElements` prop, which disables all non-banned HTML element filtering.
+- Added `allowList` prop, which only enables specific HTML elements. Defaults to the previous
+  versions whitelist.
+- Added `blockList` prop, which disables specific HTML elements.
 
 #### 🛠 Internals
 

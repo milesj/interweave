@@ -28,10 +28,12 @@ const ARIA_COMPARE_LENGTH = 5;
 export interface ParserProps {
   /** Disable filtering and allow all non-banned HTML attributes. */
   allowAttributes?: boolean;
-  /** Disable filtering and allow all non-banned HTML elements to be rendered. */
+  /** Disable filtering and allow all non-banned/blocked HTML elements to be rendered. */
   allowElements?: boolean;
   /** List of HTML tag names to allow and render. Defaults to non-banned tags. */
   allowList?: string[];
+  /** List of HTML tag names to disallow and not render. */
+  blockList?: string[];
   /** Disable the conversion of new lines to `<br />` elements. */
   disableLineBreaks?: boolean;
   /** Strip all HTML while rendering. */
@@ -46,6 +48,8 @@ export default class Parser {
   allowed: Set<string>;
 
   banned: Set<string>;
+
+  blocked: Set<string>;
 
   doc: Document;
 
@@ -76,8 +80,9 @@ export default class Parser {
     this.filters = filters;
     this.keyIndex = -1;
     this.doc = this.createDocument(markup || '');
-    this.allowed = new Set(this.props.allowList || ALLOWED_TAG_LIST);
+    this.allowed = new Set(props.allowList || ALLOWED_TAG_LIST);
     this.banned = new Set(BANNED_TAG_LIST);
+    this.blocked = new Set(props.blockList);
   }
 
   /**
@@ -296,7 +301,7 @@ export default class Parser {
         return;
       }
 
-      // Do not allow blacklisted attributes excluding ARIA attributes
+      // Do not allow denied attributes, excluding ARIA attributes
       // Do not allow events or XSS injections
       if (newName.slice(0, ARIA_COMPARE_LENGTH) !== 'aria-') {
         if (
@@ -379,7 +384,7 @@ export default class Parser {
    * Verify that an HTML tag is allowed to render.
    */
   isTagAllowed(tagName: string): boolean {
-    if (this.banned.has(tagName)) {
+    if (this.banned.has(tagName) || this.blocked.has(tagName)) {
       return false;
     }
 
@@ -419,14 +424,14 @@ export default class Parser {
           mergedText = '';
         }
 
-        // Apply node filters
+        // Apply node filters first
         const nextNode = this.applyNodeFilters(tagName, node as HTMLElement);
 
         if (!nextNode) {
           return;
         }
 
-        // Apply transformation if available
+        // Apply transformation second
         let children;
 
         if (transform) {
@@ -457,9 +462,11 @@ export default class Parser {
 
         // Only render when the following criteria is met:
         //  - HTML has not been disabled
-        //  - Whitelist is disabled OR the child is valid within the parent
+        //  - Tag is allowed
+        //  - Child is valid within the parent
         if (
           !(noHtml || (noHtmlExceptMatchers && tagName !== 'br')) &&
+          this.isTagAllowed(tagName) &&
           (allowElements || this.canRenderChild(parentConfig, config))
         ) {
           this.keyIndex += 1;
