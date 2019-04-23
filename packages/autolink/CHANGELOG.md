@@ -1,3 +1,14 @@
+# 3.0.0
+
+#### 💥 Breaking
+
+- Updated IE requirement to v11.
+
+#### 🛠 Internals
+
+- Added peer dep support for `interweave` v11.0.
+- Removed `@babel/runtime` as it wasn't saving much space.
+
 ### 2.2.3 - 2019-02-25
 
 #### 🐞 Fixes

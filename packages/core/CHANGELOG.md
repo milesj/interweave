@@ -17,6 +17,7 @@
 
 #### 🛠 Internals
 
+- Removed `@babel/runtime` as it wasn't saving much space.
 - **[ts]** Switched to project references.
 
 ### 10.1.3 - 2019-02-25
