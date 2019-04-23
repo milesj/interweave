@@ -7,11 +7,11 @@ import Emoji, { EmojiProps } from './Emoji';
 import EmojiDataManager from './EmojiDataManager';
 
 export interface EmojiMatcherOptions {
-  convertEmoticon: boolean;
-  convertShortcode: boolean;
-  convertUnicode: boolean;
-  enlargeThreshold: number;
-  renderUnicode: boolean;
+  convertEmoticon?: boolean;
+  convertShortcode?: boolean;
+  convertUnicode?: boolean;
+  enlargeThreshold?: number;
+  renderUnicode?: boolean;
 }
 
 const EMOTICON_BOUNDARY_REGEX: RegExp = new RegExp(
@@ -24,8 +24,8 @@ export default class EmojiMatcher extends Matcher<EmojiProps, EmojiMatcherOption
 
   constructor(
     name: string,
-    options: Partial<EmojiMatcherOptions> = {},
-    factory: React.ComponentType<EmojiProps> | null = null,
+    options?: EmojiMatcherOptions,
+    factory?: React.ComponentType<EmojiProps>,
   ) {
     super(
       name,
@@ -159,7 +159,7 @@ export default class EmojiMatcher extends Matcher<EmojiProps, EmojiMatcherOption
       return content;
     }
 
-    const { enlargeThreshold } = this.options;
+    const { enlargeThreshold = 1 } = this.options;
     let valid = false;
     let count = 0;
 

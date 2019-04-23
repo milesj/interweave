@@ -4,16 +4,12 @@ import Url, { UrlProps } from './Url';
 import { URL_PATTERN, TOP_LEVEL_TLDS } from './constants';
 
 export interface UrlMatcherOptions {
-  customTLDs: string[];
-  validateTLD: boolean;
+  customTLDs?: string[];
+  validateTLD?: boolean;
 }
 
 export default class UrlMatcher extends Matcher<UrlProps, UrlMatcherOptions> {
-  constructor(
-    name: string,
-    options: Partial<UrlMatcherOptions> = {},
-    factory: React.ComponentType<UrlProps> | null = null,
-  ) {
+  constructor(name: string, options?: UrlMatcherOptions, factory?: React.ComponentType<UrlProps>) {
     super(
       name,
       {

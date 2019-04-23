@@ -11,7 +11,7 @@ export interface MatcherInterface<T> {
   onAfterParse?(content: Node[], props: T): Node[];
 }
 
-export default abstract class Matcher<Props extends {} = any, Options extends {} = {}>
+export default abstract class Matcher<Props extends object = {}, Options extends object = {}>
   implements MatcherInterface<Props> {
   options: Options;
 
@@ -21,11 +21,7 @@ export default abstract class Matcher<Props extends {} = any, Options extends {}
 
   factory: React.ComponentType<Props> | null;
 
-  constructor(
-    name: string,
-    options: Partial<Options> = {},
-    factory: React.ComponentType<Props> | null = null,
-  ) {
+  constructor(name: string, options: Options, factory: React.ComponentType<Props> | null = null) {
     if (__DEV__) {
       if (!name || name.toLowerCase() === 'html') {
         throw new Error(`The matcher name "${name}" is not allowed.`);

@@ -122,7 +122,7 @@ export class CodeTagMatcher extends Matcher<any> {
   key: string;
 
   constructor(tag: string, key: string = '') {
-    super(tag);
+    super(tag, {});
 
     this.tag = tag;
     this.key = key;
