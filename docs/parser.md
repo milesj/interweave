@@ -12,9 +12,9 @@ possible CSRF and arbitrary code execution.
 Furthermore, Interweave manages a whitelist of both HTML tags and attributes, further increasing
 security, and reducing the risk of XSS and vulnerabilities.
 
-## Tag Whitelist
+## Allowed Tags
 
-Interweave keeps a mapping of valid [HTML tags to parsing configurations][tagwl]. These
+Interweave keeps a mapping of renderable [HTML tags to parsing configurations][tagwl]. These
 configurations handle the following rules and processes.
 
 - Defines the type of rule: allow or deny.
@@ -24,9 +24,6 @@ configurations handle the following rules and processes.
 - Flags whether children of the same tag name can be rendered.
 - Maps the parent tags the current element can render in.
 - Maps the child tags the current element can render.
-
-Lastly, any tag not found in the mapping will be flagged using the rule "deny", and promptly not
-rendered.
 
 The following tags are not supported, but their children will still be rendered.
 
@@ -42,22 +39,29 @@ The following tags and their children will never be rendered, even when the whit
 
 `applet`, `canvas`, `embed`, `frame`, `frameset`, `iframe`, `object`, `script`, `style`
 
-## Attribute Whitelist
+> The list of allowed tags can be customized using the `allowList` prop, which accepts a list of
+> HTML tag names.
+
+## Allowed Attributes
 
 Interweave takes parsing a step further, by also [filtering](./filters.md) attribute values and HTML
-nodes. Like tags, a mapping of valid [HTML attributes to parser rules][attrwl] exist. A rule can be
-one of: allow and cast to string (default), allow and cast to number, allow and cast to boolean, and
-finally, deny.
+nodes. Like tags, a mapping of renderable [HTML attributes to parser rules][attrwl] exist. A rule
+can be one of: allow and cast to string (default), allow and cast to number, allow and cast to
+boolean, and finally, deny.
 
-Also like the tag whitelist, any attribute not found in the mapping is ignored.
+> Any attribute not found in the mapping will be ignored unless `allowAttributes` is passed.
 
-## By-passing the Whitelist
+## By-passing Allowed
 
-If need be, the whitelist can be disabled with the `disableWhitelist` prop. This is highly
-discouraged as it opens up possible XSS and injection attacks, and should only be used if the markup
-passed to `Interweave` has been sanitized beforehand.
+If need be, the allowed tag list can be disabled with the `allowElements` prop, which renders all
+HTML elements except for banned tags (hard-coded) and blocked tags (provided by `blockList`).
+Furthermore, the allowed attribute list can be disabled with `allowAttributes`, which renders all
+non-event and non-XSS attack vector attributes.
 
-That being said, specific tags like `script`, `iframe`, `applet`, and a few others are consistently
+These are highly discouraged as it opens up possible XSS and injection attacks, and should only be
+used if the markup passed to `Interweave` has been sanitized beforehand.
+
+That being said, banned tags like `script`, `iframe`, `applet`, and a few others are consistently
 removed.
 
 ## Replacing Elements
@@ -69,7 +73,7 @@ This function receives the parsed DOM node, and can return either a React elemen
 into the React element tree), undefined to use the default `Element` component, or null to skip the
 element entirely.
 
-For example, to replace `blockquote` elements with a custom element:
+For example, to replace `a` elements with a custom element:
 
 ```tsx
 import Interweave, { Node } from 'interweave';
@@ -85,8 +89,8 @@ function transform(node: HTMLElement, children: Node[]): React.ReactNode {
 <Interweave transform={transform} />
 ```
 
-Note that `transform` is run before checking the whitelist, allowing you to use non-whitelisted tags
-in a controlled way. Blacklisted tags like `script` will not be transformed.
+Note that `transform` is run before checking the allowed list, permitting you to use non-allowed
+tags in a controlled way. Banned tags like `script` will not be transformed.
 
 ## Disabling HTML
 
@@ -98,5 +102,5 @@ If you want to strip user provided HTML, but allow HTML from matchers, use the
 `noHtmlExceptMatchers` prop instead.
 
 [domhtml]: https://developer.mozilla.org/en-US/docs/Web/API/DOMImplementation/createHTMLDocument
-[tagwl]: https://github.com/milesj/interweave/blob/master/packages/core/src/constants.ts#L42
-[attrwl]: https://github.com/milesj/interweave/blob/master/packages/core/src/constants.ts#L279
+[tagwl]: https://github.com/milesj/interweave/blob/master/packages/core/src/constants.ts#L270
+[attrwl]: https://github.com/milesj/interweave/blob/master/packages/core/src/constants.ts#L280
