@@ -4,6 +4,8 @@
 
 - Updated IE requirement to v11.
 - Renamed `TAGS_BLACKLIST` to `BANNED_TAG_LIST`.
+- Removed `iframe` and `canvas` tags from the banned list. They are not in the default allow list
+  but can be enabled by the consumer.
 - Removed `disableWhitelist` prop. Use `allowAttributes` or `allowElements` instead.
 
 #### 🚀 Updates

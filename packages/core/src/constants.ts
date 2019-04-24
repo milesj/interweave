@@ -255,13 +255,11 @@ export const TAGS: ConfigMap = Object.freeze(tagConfigs);
 export const BANNED_TAG_LIST = [
   'applet',
   'body',
-  'canvas',
   'embed',
   'frame',
   'frameset',
   'head',
   'html',
-  'iframe',
   'object',
   'script',
   'style',
