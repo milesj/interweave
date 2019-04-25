@@ -503,18 +503,6 @@ describe('Parser', () => {
       expect(instance.parseNode(element, parentConfig)).toEqual(['FooBar']);
     });
 
-    Object.keys(TAGS).forEach((tag, i) => {
-      it(`renders <${tag}> elements`, () => {
-        element.append(createChild(tag, i));
-
-        expect(instance.parseNode(element, parentConfig)).toEqual([
-          <Element key="0" tagName={tag}>
-            {[`${i}`]}
-          </Element>,
-        ]);
-      });
-    });
-
     it('ignores unknown elements', () => {
       element.append(document.createElement('foo'));
 
