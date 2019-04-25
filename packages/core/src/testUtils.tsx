@@ -4,8 +4,8 @@ import React from 'react';
 import Filter from './Filter';
 import Matcher from './Matcher';
 import Element from './Element';
-import { TYPE_BLOCK, PARSER_ALLOW } from './constants';
-import { Node } from './types';
+import { TAGS } from './constants';
+import { Node, NodeConfig } from './types';
 
 export const TOKEN_LOCATIONS = [
   'no tokens',
@@ -92,14 +92,16 @@ export const MOCK_INVALID_MARKUP = `<div bgcolor="black">
   <p align="center">More text <strike>with outdated stuff</strike>.</p>
 </div>`;
 
-export const parentConfig = {
-  block: true,
+export const parentConfig: NodeConfig = {
   children: [],
-  inline: true,
-  rule: PARSER_ALLOW,
+  content: 0,
+  invalid: [],
+  parent: [],
   self: true,
   tagName: 'div',
-  type: TYPE_BLOCK,
+  type: 0,
+  void: false,
+  ...TAGS.div,
 };
 
 export function matchCodeTag(string: string, tag: string): any {

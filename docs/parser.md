@@ -27,17 +27,16 @@ configurations handle the following rules and processes.
 
 The following tags are not supported, but their children will still be rendered.
 
-`acronym`, `area`, `base`, `basefont`, `bdi`, `bdo`, `bgsound`, `big`, `blink`, `body`, `caption`,
-`center`, `col`, `colgroup`, `command`, `content`, `data`, `datalist`, `dialog`, `dir`, `font`,
-`form`, `head`, `hgroup`, `html`, `image`, `input`, `isindex`, `keygen`, `link`, `listing`,
-`marquee`, `menu`, `menuitem`, `meta`, `meter`, `multicol`, `nobr`, `noembed`, `noframes`,
-`noscript`, `optgroup`, `option`, `param`, `plaintext`, `progress`, `rp`, `rt`, `rtc`, `ruby`,
-`select`, `shadow`, `slot`, `small`, `spacer`, `strike`, `template`, `textarea`, `title`, `tt`,
-`wbr`, `xmp`
+`acronym`, `area`, `basefont`, `bgsound`, `big`, `blink`, `center`, `col`, `content`, `data`,
+`datalist`, `dialog`, `dir`, `font`, `form`, `hgroup`, `image`, `input`, `isindex`, `keygen`,
+`listing`, `marquee`, `menu`, `menuitem`, `meter`, `multicol`, `nobr`, `noembed`, `noframes`,
+`optgroup`, `option`, `param`, `plaintext`, `progress`, `select`, `shadow`, `slot`, `spacer`,
+`strike`, `template`, `textarea`, `tt`, `wbr`, `xmp`
 
 The following tags and their children will never be rendered, even when the whitelist is disabled.
 
-`applet`, `canvas`, `embed`, `frame`, `frameset`, `iframe`, `object`, `script`, `style`
+`applet`, `base`, `body`, `canvas`, `command`, `embed`, `frame`, `frameset`, `head`, `html`, `link`,
+`meta`, `noscript`, `object`, `script`, `style`, `title`
 
 > The list of allowed tags can be customized using the `allowList` prop, which accepts a list of
 > HTML tag names.
@@ -50,6 +49,20 @@ can be one of: allow and cast to string (default), allow and cast to number, all
 boolean, and finally, deny.
 
 > Any attribute not found in the mapping will be ignored unless `allowAttributes` is passed.
+
+## Render Precedence
+
+There are 3 levels of rendering, in order:
+
+- **Banned** - Tags that will _never_ be rendered, regardless of the allow list, or what the
+  consumer configures. This is based on the `BANNED_TAG_LIST` constant. _This takes the highest
+  precedence._
+- **Blocked** - Tags that will _not_ be rendered and are configured through the consumer with the
+  `blockList` prop. _This takes precedence over `allowList` and `allowElements`._
+- **Allowed** - Tags that will be rendered. The default allow list is based on the
+  `ALLOWED_TAG_LIST` constant, or can be configured by the consumer with the `allowList` prop. The
+  `allowElements` prop has a higher precedence than `allowList`, but both of which are lower than
+  blocked or banned tags.
 
 ## By-passing Allowed
 

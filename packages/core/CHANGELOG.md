@@ -1,26 +1,40 @@
 # 11.0.0
 
+The previous version of Interweave would attempt to render valid parent and child hierarchies based
+on their `inline`, `block`, and `inline-block` presentation. This worked for the majority, but broke
+down hard in minority edge cases. This valid rendering hierarchy has been rewritten from the ground
+up using
+[content categories](https://developer.mozilla.org/en-US/docs/Web/Guide/HTML/Content_categories).
+Because of this, some old HTML may now be invalid, while some additional HTML tags are now
+renderable.
+
 #### 💥 Breaking
 
 - Updated IE requirement to v11.
 - Renamed `TAGS_BLACKLIST` to `BANNED_TAG_LIST`.
+- Removed `PARSER_ALLOW`, `PARSER_DENY`, `TYPE_INLINE`, `TYPE_BLOCK`, `TYPE_INLINE_BLOCK`,
+  `CONFIG_INLINE`, and `CONFIG_BLOCK` constants.
+- Removed `disableWhitelist` prop. Use `allowAttributes` or `allowElements` instead.
 - Removed `iframe` and `canvas` tags from the banned list. They are not in the default allow list
   but can be enabled by the consumer.
-- Removed `disableWhitelist` prop. Use `allowAttributes` or `allowElements` instead.
 
 #### 🚀 Updates
 
 - `Parser` and `Element` are now exported from the index.
+- Added `TYPE_FLOW`, `TYPE_SECTION`, `TYPE_HEADING`, `TYPE_PHRASING`, `TYPE_EMBEDDED`,
+  `TYPE_INTERACTIVE`, and `TYPE_PALPABLE` constants.
 - Added `allowAttributes` prop, which disables all non-banned HTML attribute filtering.
 - Added `allowElements` prop, which disables all non-banned HTML element filtering.
-- Added `allowList` prop, which only enables specific HTML elements. Defaults to the previous
-  versions whitelist.
+- Added `allowList` prop, which only enables specific HTML elements. Defaults to the v10 whitelist.
 - Added `blockList` prop, which disables specific HTML elements.
+- Added support for HTML tags: `bdi`, `bdo`, `caption`, `colgroup`, `rp`, `rt`, `rtc`, `ruby`,
+  `small`.
 
 #### 🛠 Internals
 
 - Removed `@babel/runtime` as it wasn't saving much space.
-- **[ts]** Switched to project references.
+- **[TS]** Switched to project references.
+- **[TS]** Updated `NodeConfig` to match the new strategy.
 
 ### 10.1.3 - 2019-02-25
 

@@ -1,4 +1,4 @@
-/* eslint-disable no-cond-assign, complexity */
+/* eslint-disable no-bitwise, no-cond-assign, complexity */
 
 import React from 'react';
 import Element, { ElementProps } from './Element';
@@ -13,9 +13,6 @@ import {
   ALLOWED_TAG_LIST,
   ATTRIBUTES,
   ATTRIBUTES_TO_PROPS,
-  TYPE_INLINE,
-  TYPE_BLOCK,
-  CONFIG_BLOCK,
 } from './constants';
 import { Attributes, Node, NodeConfig, TransformCallback, MatchResponse } from './types';
 
@@ -199,21 +196,22 @@ export default class Parser {
       return false;
     }
 
+    // No children
+    if (parentConfig.void) {
+      return false;
+    }
+
     // Valid children
-    if (
-      parentConfig.children &&
-      parentConfig.children.length > 0 &&
-      !parentConfig.children.includes(childConfig.tagName)
-    ) {
+    if (parentConfig.children.length > 0 && !parentConfig.children.includes(childConfig.tagName)) {
+      return false;
+    }
+
+    if (parentConfig.invalid.length > 0 && parentConfig.invalid.includes(childConfig.tagName)) {
       return false;
     }
 
     // Valid parent
-    if (
-      childConfig.parent &&
-      childConfig.parent.length > 0 &&
-      !childConfig.parent.includes(parentConfig.tagName)
-    ) {
+    if (childConfig.parent.length > 0 && !childConfig.parent.includes(parentConfig.tagName)) {
       return false;
     }
 
@@ -222,17 +220,8 @@ export default class Parser {
       return false;
     }
 
-    // Block
-    if (!parentConfig.block && childConfig.type === TYPE_BLOCK) {
-      return false;
-    }
-
-    // Inline
-    if (!parentConfig.inline && childConfig.type === TYPE_INLINE) {
-      return false;
-    }
-
-    return true;
+    // Content type
+    return Boolean(parentConfig && parentConfig.content & childConfig.type);
   }
 
   /**
@@ -343,17 +332,31 @@ export default class Parser {
 
   /**
    * Return configuration for a specific tag.
-   * If no tag config exists, return a plain object.
    */
   getTagConfig(tagName: string): NodeConfig {
+    const common = {
+      children: [],
+      content: 0,
+      invalid: [],
+      parent: [],
+      self: true,
+      tagName: '',
+      type: 0,
+      void: false,
+    };
+
+    // Only spread when a tag config exists,
+    // otherwise we use the empty `tagName`
+    // for parent config inheritance.
     if (TAGS[tagName]) {
       return {
+        ...common,
         ...TAGS[tagName],
         tagName,
       };
     }
 
-    return {};
+    return common;
   }
 
   /**
@@ -397,10 +400,7 @@ export default class Parser {
    * array to interpolate into JSX.
    */
   parse(): Node[] {
-    return this.parseNode(this.doc.body, {
-      ...CONFIG_BLOCK,
-      tagName: 'body',
-    });
+    return this.parseNode(this.doc.body, this.getTagConfig('body'));
   }
 
   /**

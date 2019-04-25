@@ -1,132 +1,161 @@
-/* eslint-disable sort-keys, unicorn/no-fn-reference-in-iterator */
+/* eslint-disable no-bitwise, no-magic-numbers, sort-keys, unicorn/no-fn-reference-in-iterator */
 
 import { NodeConfig, ConfigMap, FilterMap } from './types';
 
-// Parser rules for HTML tags
-export const PARSER_ALLOW = 1; // Allow element and children
-export const PARSER_DENY = 2; // Do not render this element or its children
+// https://developer.mozilla.org/en-US/docs/Web/Guide/HTML/Content_categories
+export const TYPE_FLOW = 1;
+export const TYPE_SECTION = 1 << 1;
+export const TYPE_HEADING = 1 << 2;
+export const TYPE_PHRASING = 1 << 3;
+export const TYPE_EMBEDDED = 1 << 4;
+export const TYPE_INTERACTIVE = 1 << 5;
+export const TYPE_PALPABLE = 1 << 6;
 
-export const TYPE_INLINE = 'inline';
-export const TYPE_BLOCK = 'block';
-export const TYPE_INLINE_BLOCK = 'inline-block'; // Special case
-
-export const CONFIG_INLINE: NodeConfig = {
-  rule: PARSER_ALLOW,
-  type: TYPE_INLINE,
-  inline: true,
-  block: false,
-  self: false,
-  void: false,
-  parent: [],
-  children: [],
-};
-
-export const CONFIG_BLOCK: NodeConfig = {
-  rule: PARSER_ALLOW,
-  type: TYPE_BLOCK,
-  inline: true,
-  block: true,
-  self: true,
-  void: false,
-  parent: [],
-  children: [],
-};
-
-// Tags not listed here will be marked as pass-through
 // https://developer.mozilla.org/en-US/docs/Web/HTML/Element
 const tagConfigs: { [tagName: string]: Partial<NodeConfig> } = {
   a: {
-    type: TYPE_INLINE_BLOCK,
-    block: true,
+    content: TYPE_FLOW | TYPE_PHRASING,
+    self: false,
+    type: TYPE_FLOW | TYPE_PHRASING | TYPE_INTERACTIVE | TYPE_PALPABLE,
   },
   address: {
+    invalid: [
+      'h1',
+      'h2',
+      'h3',
+      'h4',
+      'h5',
+      'h6',
+      'address',
+      'article',
+      'aside',
+      'section',
+      'div',
+      'header',
+      'footer',
+    ],
     self: false,
   },
   audio: {
     children: ['track', 'source'],
   },
   br: {
-    inline: false,
+    type: TYPE_FLOW | TYPE_PHRASING,
     void: true,
   },
+  body: {
+    content:
+      TYPE_FLOW |
+      TYPE_SECTION |
+      TYPE_HEADING |
+      TYPE_PHRASING |
+      TYPE_EMBEDDED |
+      TYPE_INTERACTIVE |
+      TYPE_PALPABLE,
+  },
   button: {
-    type: TYPE_INLINE_BLOCK,
+    content: TYPE_PHRASING,
+    type: TYPE_FLOW | TYPE_PHRASING | TYPE_INTERACTIVE | TYPE_PALPABLE,
+  },
+  caption: {
+    content: TYPE_FLOW,
+    parent: ['table'],
+  },
+  col: {
+    parent: ['colgroup'],
+    void: true,
+  },
+  colgroup: {
+    children: ['col'],
+    parent: ['table'],
+  },
+  details: {
+    children: ['summary'],
+    type: TYPE_FLOW | TYPE_INTERACTIVE | TYPE_PALPABLE,
   },
   dd: {
+    content: TYPE_FLOW,
     parent: ['dl'],
   },
   dl: {
-    children: ['dt'],
+    children: ['dt', 'dd'],
+    type: TYPE_FLOW,
   },
   dt: {
+    content: TYPE_FLOW,
+    invalid: ['footer', 'header'],
     parent: ['dl'],
-    children: ['dd'],
   },
   figcaption: {
+    content: TYPE_FLOW,
     parent: ['figure'],
   },
+  figure: {
+    children: ['figcaption'],
+  },
   footer: {
-    self: false,
+    invalid: ['footer', 'header'],
   },
   header: {
-    self: false,
-  },
-  h1: {
-    self: false,
-  },
-  h2: {
-    self: false,
-  },
-  h3: {
-    self: false,
-  },
-  h4: {
-    self: false,
-  },
-  h5: {
-    self: false,
-  },
-  h6: {
-    self: false,
+    invalid: ['footer', 'header'],
   },
   hr: {
-    inline: false,
-    block: false,
+    type: TYPE_FLOW,
     void: true,
   },
   img: {
-    inline: false,
     void: true,
   },
   li: {
-    self: false,
-    parent: ['ul', 'ol'],
+    content: TYPE_FLOW,
+    parent: ['ul', 'ol', 'menu'],
   },
   main: {
     self: false,
   },
   ol: {
     children: ['li'],
+    type: TYPE_FLOW,
   },
   picture: {
     children: ['source', 'img'],
+    type: TYPE_FLOW | TYPE_PHRASING | TYPE_EMBEDDED,
+  },
+  rb: {
+    parent: ['ruby'],
+  },
+  rp: {
+    parent: ['ruby'],
+  },
+  rt: {
+    content: TYPE_PHRASING,
+    parent: ['ruby'],
+  },
+  rtc: {
+    content: TYPE_PHRASING,
+    parent: ['ruby'],
+  },
+  ruby: {
+    children: ['rb'],
   },
   source: {
-    inline: false,
     parent: ['audio', 'video', 'picture'],
     void: true,
   },
-  span: {
-    self: true,
+  summary: {
+    content: TYPE_PHRASING,
+    parent: ['details'],
   },
   table: {
-    children: ['thead', 'tbody', 'tfoot', 'tr'],
+    children: ['caption', 'colgroup', 'thead', 'tbody', 'tfoot', 'tr'],
+    type: TYPE_FLOW,
   },
   tbody: {
     parent: ['table'],
     children: ['tr'],
   },
   td: {
+    content: TYPE_FLOW,
     parent: ['tr'],
   },
   tfoot: {
@@ -134,6 +163,7 @@ const tagConfigs: { [tagName: string]: Partial<NodeConfig> } = {
     children: ['tr'],
   },
   th: {
+    content: TYPE_FLOW,
     parent: ['tr'],
   },
   thead: {
@@ -145,19 +175,23 @@ const tagConfigs: { [tagName: string]: Partial<NodeConfig> } = {
     children: ['th', 'td'],
   },
   track: {
-    inline: false,
     parent: ['audio', 'video'],
     void: true,
   },
   ul: {
     children: ['li'],
+    type: TYPE_FLOW,
   },
   video: {
     children: ['track', 'source'],
   },
+  wbr: {
+    type: TYPE_FLOW | TYPE_PHRASING,
+    void: true,
+  },
 };
 
-function createConfigBuilder(config: NodeConfig): (tagName: string) => void {
+function createConfigBuilder(config: Partial<NodeConfig>): (tagName: string) => void {
   return (tagName: string) => {
     tagConfigs[tagName] = {
       ...config,
@@ -166,87 +200,75 @@ function createConfigBuilder(config: NodeConfig): (tagName: string) => void {
   };
 }
 
-// Add inline tags
+['address', 'main', 'div', 'figure', 'p', 'pre'].forEach(
+  createConfigBuilder({
+    content: TYPE_FLOW,
+    type: TYPE_FLOW | TYPE_PALPABLE,
+  }),
+);
+
 [
-  'a',
   'abbr',
   'b',
-  'br',
-  'button',
-  'canvas',
+  'bdi',
+  'bdo',
   'cite',
   'code',
-  'del',
+  'data',
   'dfn',
   'em',
   'i',
-  'iframe',
-  'img',
-  'ins',
   'kbd',
-  'label',
   'mark',
-  'output',
-  'picture',
   'q',
-  's',
+  'ruby',
   'samp',
-  'script',
-  'source',
-  'span',
   'strong',
   'sub',
   'sup',
-  'style',
   'time',
-  'track',
   'u',
   'var',
-  'video',
-].forEach(createConfigBuilder(CONFIG_INLINE));
+].forEach(
+  createConfigBuilder({
+    content: TYPE_PHRASING,
+    type: TYPE_FLOW | TYPE_PHRASING | TYPE_PALPABLE,
+  }),
+);
 
-// Add block tags
-[
-  'address',
-  'article',
-  'aside',
-  'audio',
-  'blockquote',
-  'dd',
-  'details',
-  'div',
-  'dl',
-  'dt',
-  'fieldset',
-  'figcaption',
-  'figure',
-  'footer',
-  'header',
-  'h1',
-  'h2',
-  'h3',
-  'h4',
-  'h5',
-  'h6',
-  'hr',
-  'legend',
-  'li',
-  'main',
-  'nav',
-  'ol',
-  'p',
-  'pre',
-  'section',
-  'summary',
-  'table',
-  'thead',
-  'tbody',
-  'tfoot',
-  'tr',
-  'th',
-  'td',
-  'ul',
-].forEach(createConfigBuilder(CONFIG_BLOCK));
+['p', 'pre'].forEach(
+  createConfigBuilder({
+    content: TYPE_PHRASING,
+    type: TYPE_FLOW | TYPE_PALPABLE,
+  }),
+);
+
+['s', 'small', 'span', 'del', 'ins'].forEach(
+  createConfigBuilder({
+    content: TYPE_PHRASING,
+    type: TYPE_FLOW | TYPE_PHRASING,
+  }),
+);
+
+['article', 'aside', 'footer', 'header', 'nav', 'section', 'blockquote'].forEach(
+  createConfigBuilder({
+    content: TYPE_FLOW,
+    type: TYPE_FLOW | TYPE_SECTION | TYPE_PALPABLE,
+  }),
+);
+
+['h1', 'h2', 'h3', 'h4', 'h5', 'h6'].forEach(
+  createConfigBuilder({
+    content: TYPE_PHRASING,
+    type: TYPE_FLOW | TYPE_HEADING | TYPE_PALPABLE,
+  }),
+);
+
+['audio', 'canvas', 'iframe', 'img', 'video'].forEach(
+  createConfigBuilder({
+    type: TYPE_FLOW | TYPE_PHRASING | TYPE_EMBEDDED | TYPE_PALPABLE,
+  }),
+);
 
 // Disable this map from being modified
 export const TAGS: ConfigMap = Object.freeze(tagConfigs);
@@ -254,15 +276,21 @@ export const TAGS: ConfigMap = Object.freeze(tagConfigs);
 // Tags that should never be allowed, even if the whitelist is disabled
 export const BANNED_TAG_LIST = [
   'applet',
+  'base',
   'body',
+  'command',
   'embed',
   'frame',
   'frameset',
   'head',
   'html',
+  'link',
+  'meta',
+  'noscript',
   'object',
   'script',
   'style',
+  'title',
 ];
 
 export const ALLOWED_TAG_LIST = Object.keys(TAGS);

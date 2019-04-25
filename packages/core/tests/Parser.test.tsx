@@ -5,8 +5,6 @@ import {
   TAGS,
   ATTRIBUTES,
   ATTRIBUTES_TO_PROPS,
-  PARSER_ALLOW,
-  PARSER_DENY,
   FILTER_ALLOW,
   FILTER_CAST_BOOL,
   FILTER_CAST_NUMBER,
@@ -161,11 +159,15 @@ describe('Parser', () => {
 
   describe('canRenderChild()', () => {
     it('doesnt render if missing parent tag', () => {
-      expect(instance.canRenderChild({}, {})).toBe(false);
+      expect(instance.canRenderChild({ ...parentConfig, tagName: '' }, { ...parentConfig })).toBe(
+        false,
+      );
     });
 
     it('doesnt render if missing child tag', () => {
-      expect(instance.canRenderChild({ tagName: 'span' }, {})).toBe(false);
+      expect(instance.canRenderChild({ ...parentConfig }, { ...parentConfig, tagName: '' })).toBe(
+        false,
+      );
     });
   });
 
@@ -502,30 +504,15 @@ describe('Parser', () => {
     });
 
     Object.keys(TAGS).forEach((tag, i) => {
-      switch (TAGS[tag]) {
-        case PARSER_ALLOW:
-          it(`renders <${tag}> elements that are allowed`, () => {
-            element.append(createChild(tag, i));
+      it(`renders <${tag}> elements`, () => {
+        element.append(createChild(tag, i));
 
-            expect(instance.parseNode(element, parentConfig)).toEqual([
-              <Element key="0" tagName={tag as keyof JSX.IntrinsicElements}>
-                {[`${i}`]}
-              </Element>,
-            ]);
-          });
-          break;
-
-        case PARSER_DENY:
-          it(`removes <${tag}> elements that are denied`, () => {
-            element.append(createChild(tag, i));
-
-            expect(instance.parseNode(element, parentConfig)).toEqual([]);
-          });
-          break;
-
-        default:
-          break;
-      }
+        expect(instance.parseNode(element, parentConfig)).toEqual([
+          <Element key="0" tagName={tag as keyof JSX.IntrinsicElements}>
+            {[`${i}`]}
+          </Element>,
+        ]);
+      });
     });
 
     it('ignores unknown elements', () => {
@@ -708,54 +695,6 @@ describe('Parser', () => {
       ]);
     });
 
-    it('doesnt render block children', () => {
-      element.append(document.createTextNode('Foo'));
-      element.append(createChild('div', 'Bar'));
-      element.append(document.createTextNode('Baz'));
-      element.append(createChild('span', 'Qux'));
-      element.append(createChild('section', 'Wat'));
-
-      expect(
-        instance.parseNode(element, {
-          ...parentConfig,
-          block: false,
-        }),
-      ).toEqual([
-        'Foo',
-        'Bar',
-        'Baz',
-        <Element key="0" tagName="span">
-          {['Qux']}
-        </Element>,
-        'Wat',
-      ]);
-    });
-
-    it('doesnt render inline children', () => {
-      element.append(document.createTextNode('Foo'));
-      element.append(createChild('div', 'Bar'));
-      element.append(document.createTextNode('Baz'));
-      element.append(createChild('span', 'Qux'));
-      element.append(createChild('section', 'Wat'));
-
-      expect(
-        instance.parseNode(element, {
-          ...parentConfig,
-          inline: false,
-        }),
-      ).toEqual([
-        'Foo',
-        <Element key="0" tagName="div">
-          {['Bar']}
-        </Element>,
-        'Baz',
-        'Qux',
-        <Element key="1" tagName="section">
-          {['Wat']}
-        </Element>,
-      ]);
-    });
-
     it('doesnt render elements where a filter returns null', () => {
       element.append(document.createTextNode('Foo'));
       element.append(createChild('link', 'Bar'));
@@ -770,12 +709,7 @@ describe('Parser', () => {
       element.append(createChild('a', 'Bar'));
       element.append(document.createTextNode('Baz'));
 
-      expect(
-        instance.parseNode(element, {
-          ...TAGS.span,
-          tagName: 'span',
-        }),
-      ).toEqual([
+      expect(instance.parseNode(element, instance.getTagConfig('span'))).toEqual([
         'Foo',
         <Element key="0" tagName="a" attributes={{ target: '_blank' }}>
           {['Bar']}
@@ -808,12 +742,7 @@ describe('Parser', () => {
       element.append(createChild('span', 'Bar'));
       element.append(document.createTextNode('Baz'));
 
-      expect(
-        instance.parseNode(element, {
-          ...TAGS.a,
-          tagName: 'a',
-        }),
-      ).toEqual([
+      expect(instance.parseNode(element, instance.getTagConfig('a'))).toEqual([
         'Foo',
         <Element key="0" tagName="span">
           {['Bar']}
@@ -828,12 +757,7 @@ describe('Parser', () => {
       element.append(createChild('div', 'Bar'));
       element.append(document.createTextNode('Baz'));
 
-      expect(
-        instance.parseNode(element, {
-          ...TAGS.a,
-          tagName: 'a',
-        }),
-      ).toEqual([
+      expect(instance.parseNode(element, instance.getTagConfig('a'))).toEqual([
         'Foo',
         <Element key="0" tagName="div">
           {['Bar']}
@@ -850,12 +774,7 @@ describe('Parser', () => {
 
       element.append(acronym);
 
-      expect(
-        instance.parseNode(element, {
-          ...TAGS.span,
-          tagName: 'span',
-        }),
-      ).toEqual([
+      expect(instance.parseNode(element, instance.getTagConfig('span'))).toEqual([
         <Element key="0" tagName="a" attributes={{ target: '_blank' }}>
           {['Link']}
         </Element>,

@@ -13,8 +13,6 @@ export interface MarkupProps extends ParserProps {
   parsedContent?: React.ReactNode;
   /** HTML element or React fragment to wrap content with. */
   tagName?: string;
-  // Causes an OOM error
-  // tagName?: keyof JSX.IntrinsicElements | 'fragment';
 }
 
 export default class Markup extends React.PureComponent<MarkupProps> {

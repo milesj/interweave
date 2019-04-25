@@ -3,15 +3,22 @@ import React from 'react';
 export type Node = null | string | React.ReactElement<any>;
 
 export interface NodeConfig {
-  block?: boolean;
-  children?: string[];
-  inline?: boolean;
-  parent?: string[];
-  rule?: number;
-  self?: boolean;
-  tagName?: string;
-  type?: string;
-  void?: boolean;
+  // Only children
+  children: string[];
+  // Children content type
+  content: number;
+  // Invalid children
+  invalid: string[];
+  // Only parent
+  parent: string[];
+  // Can render self as a child
+  self: boolean;
+  // HTML tag name
+  tagName: string;
+  // Self content type
+  type: number;
+  // Self-closing tag
+  void: boolean;
 }
 
 export interface Attributes {
@@ -36,7 +43,7 @@ export interface MatchResponse {
 }
 
 export interface ConfigMap {
-  [key: string]: NodeConfig;
+  [key: string]: Partial<NodeConfig>;
 }
 
 export interface FilterMap {
