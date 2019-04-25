@@ -55,10 +55,10 @@ boolean, and finally, deny.
 There are 3 levels of rendering, in order:
 
 - **Banned** - Tags that will _never_ be rendered, regardless of the allow list, or what the
-  consumer configures. This is based on the `BANNED_TAG_LIST` constant. _This takes the highest
-  precedence._
+  consumer configures. This is based on the `BANNED_TAG_LIST` constant. This takes the highest
+  precedence.
 - **Blocked** - Tags that will _not_ be rendered and are configured through the consumer with the
-  `blockList` prop. _This takes precedence over `allowList` and `allowElements`._
+  `blockList` prop. This takes precedence over `allowList` and `allowElements`.
 - **Allowed** - Tags that will be rendered. The default allow list is based on the
   `ALLOWED_TAG_LIST` constant, or can be configured by the consumer with the `allowList` prop. The
   `allowElements` prop has a higher precedence than `allowList`, but both of which are lower than
@@ -71,11 +71,10 @@ HTML elements except for banned tags (hard-coded) and blocked tags (provided by 
 Furthermore, the allowed attribute list can be disabled with `allowAttributes`, which renders all
 non-event and non-XSS attack vector attributes.
 
-These are highly discouraged as it opens up possible XSS and injection attacks, and should only be
-used if the markup passed to `Interweave` has been sanitized beforehand.
+These props are highly discouraged as it opens up possible XSS and injection attacks, and should
+only be used if the markup passed to `Interweave` has been sanitized beforehand.
 
-That being said, banned tags like `script`, `iframe`, `applet`, and a few others are consistently
-removed.
+That being said, banned tags like `script`, `applet`, and a few others are consistently removed.
 
 ## Replacing Elements
 
@@ -115,5 +114,5 @@ If you want to strip user provided HTML, but allow HTML from matchers, use the
 `noHtmlExceptMatchers` prop instead.
 
 [domhtml]: https://developer.mozilla.org/en-US/docs/Web/API/DOMImplementation/createHTMLDocument
-[tagwl]: https://github.com/milesj/interweave/blob/master/packages/core/src/constants.ts#L270
-[attrwl]: https://github.com/milesj/interweave/blob/master/packages/core/src/constants.ts#L280
+[tagwl]: https://github.com/milesj/interweave/blob/master/packages/core/src/constants.ts#L15
+[attrwl]: https://github.com/milesj/interweave/blob/master/packages/core/src/constants.ts#L306

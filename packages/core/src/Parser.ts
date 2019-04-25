@@ -220,7 +220,7 @@ export default class Parser {
       return false;
     }
 
-    // Content type
+    // Content category type
     return Boolean(parentConfig && parentConfig.content & childConfig.type);
   }
 
@@ -415,7 +415,7 @@ export default class Parser {
     Array.from(parentNode.childNodes).forEach(node => {
       // Create React elements from HTML elements
       if (node.nodeType === ELEMENT_NODE) {
-        const tagName = node.nodeName.toLowerCase() as keyof JSX.IntrinsicElements;
+        const tagName = node.nodeName.toLowerCase();
         const config = this.getTagConfig(tagName);
 
         // Persist any previous text

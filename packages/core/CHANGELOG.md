@@ -27,14 +27,14 @@ renderable.
 - Added `allowElements` prop, which disables all non-banned HTML element filtering.
 - Added `allowList` prop, which only enables specific HTML elements. Defaults to the v10 whitelist.
 - Added `blockList` prop, which disables specific HTML elements.
-- Added support for HTML tags: `bdi`, `bdo`, `caption`, `colgroup`, `rp`, `rt`, `rtc`, `ruby`,
-  `small`.
+- Added support for HTML tags: `bdi`, `bdo`, `caption`, `col`, `colgroup`, `rb`, `rp`, `rt`, `rtc`,
+  `ruby`, `small`.
 
 #### 🛠 Internals
 
 - Removed `@babel/runtime` as it wasn't saving much space.
 - **[TS]** Switched to project references.
-- **[TS]** Updated `NodeConfig` to match the new strategy.
+- **[TS]** Updated `NodeConfig` to match the new rendering strategy.
 
 ### 10.1.3 - 2019-02-25
 
