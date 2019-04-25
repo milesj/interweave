@@ -2,7 +2,6 @@ import React from 'react';
 import Parser from '../src/Parser';
 import Element from '../src/Element';
 import {
-  TAGS,
   ATTRIBUTES,
   ATTRIBUTES_TO_PROPS,
   FILTER_ALLOW,
