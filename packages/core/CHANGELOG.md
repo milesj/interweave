@@ -27,6 +27,7 @@ renderable.
 - Added `allowElements` prop, which disables all non-banned HTML element filtering.
 - Added `allowList` prop, which only enables specific HTML elements. Defaults to the v10 whitelist.
 - Added `blockList` prop, which disables specific HTML elements.
+- Added `escapeHtml` prop, which escapes all HTML before parsing.
 - Added support for HTML tags: `bdi`, `bdo`, `caption`, `col`, `colgroup`, `rb`, `rp`, `rt`, `rtc`,
   `ruby`, `small`.
 

@@ -458,31 +458,13 @@ describe('Parser', () => {
     it('parses the entire document starting from the body', () => {
       instance = new Parser(MOCK_MARKUP);
 
-      expect(instance.parse()).toEqual([
-        <Element key="0" tagName="main" attributes={{ role: 'main' }}>
-          {[
-            '\n  Main content\n  ',
-            <Element key="1" tagName="div">
-              {[
-                '\n    ',
-                <Element key="2" tagName="a" attributes={{ href: '#' }}>
-                  {['Link']}
-                </Element>,
-                '\n    ',
-                <Element key="3" tagName="span" attributes={{ className: 'foo' }}>
-                  {['String']}
-                </Element>,
-                '\n  ',
-              ]}
-            </Element>,
-            '\n',
-          ]}
-        </Element>,
-        '\n',
-        <Element key="4" tagName="aside" attributes={{ id: 'sidebar' }}>
-          {['\n  Sidebar content\n']}
-        </Element>,
-      ]);
+      expect(instance.parse()).toMatchSnapshot();
+    });
+
+    it('doesnt parse HTML when escaped', () => {
+      instance = new Parser(MOCK_MARKUP, { escapeHtml: true });
+
+      expect(instance.parse()).toMatchSnapshot();
     });
   });
 

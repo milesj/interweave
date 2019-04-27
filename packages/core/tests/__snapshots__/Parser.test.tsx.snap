@@ -1,0 +1,130 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Parser parse() doesnt parse HTML when escaped 1`] = `
+Array [
+  "<main role=\\"main\\">",
+  <Element
+    attributes={Object {}}
+    selfClose={true}
+    tagName="br"
+  />,
+  "  Main content",
+  <Element
+    attributes={Object {}}
+    selfClose={true}
+    tagName="br"
+  />,
+  "  <div>",
+  <Element
+    attributes={Object {}}
+    selfClose={true}
+    tagName="br"
+  />,
+  "    <a href=\\"#\\">Link</a>",
+  <Element
+    attributes={Object {}}
+    selfClose={true}
+    tagName="br"
+  />,
+  "    <span class=\\"foo\\">String</span>",
+  <Element
+    attributes={Object {}}
+    selfClose={true}
+    tagName="br"
+  />,
+  "  </div>",
+  <Element
+    attributes={Object {}}
+    selfClose={true}
+    tagName="br"
+  />,
+  "</main>",
+  <Element
+    attributes={Object {}}
+    selfClose={true}
+    tagName="br"
+  />,
+  "<aside id=\\"sidebar\\">",
+  <Element
+    attributes={Object {}}
+    selfClose={true}
+    tagName="br"
+  />,
+  "  Sidebar content",
+  <Element
+    attributes={Object {}}
+    selfClose={true}
+    tagName="br"
+  />,
+  "</aside>",
+]
+`;
+
+exports[`Parser parse() parses the entire document starting from the body 1`] = `
+Array [
+  <Element
+    attributes={
+      Object {
+        "role": "main",
+      }
+    }
+    selfClose={false}
+    tagName="main"
+  >
+    
+  Main content
+  
+    <Element
+      attributes={Object {}}
+      selfClose={false}
+      tagName="div"
+    >
+      
+    
+      <Element
+        attributes={
+          Object {
+            "href": "#",
+          }
+        }
+        selfClose={false}
+        tagName="a"
+      >
+        Link
+      </Element>
+      
+    
+      <Element
+        attributes={
+          Object {
+            "className": "foo",
+          }
+        }
+        selfClose={false}
+        tagName="span"
+      >
+        String
+      </Element>
+      
+  
+    </Element>
+    
+
+  </Element>,
+  "
+",
+  <Element
+    attributes={
+      Object {
+        "id": "sidebar",
+      }
+    }
+    selfClose={false}
+    tagName="aside"
+  >
+    
+  Sidebar content
+
+  </Element>,
+]
+`;
