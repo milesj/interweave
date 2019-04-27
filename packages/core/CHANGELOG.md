@@ -1,4 +1,4 @@
-# 11.0.0
+# 11.0.0 - 2019-04-26
 
 The previous version of Interweave would attempt to render valid parent and child hierarchies based
 on their `inline`, `block`, and `inline-block` presentation. This worked for the majority, but broke
