@@ -11,7 +11,9 @@ import Interweave from './esm/Interweave';
 import Markup from './esm/Markup';
 import Filter from './esm/Filter';
 import Matcher from './esm/Matcher';
+import Element from './esm/Element';
+import Parser from './esm/Parser';
 
-export { Markup, Filter, Matcher };
+export { Markup, Filter, Matcher, Element, Parser };
 
 export default Interweave;
