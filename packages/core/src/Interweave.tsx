@@ -23,7 +23,7 @@ export interface InterweaveProps extends MarkupProps {
 }
 
 export default class Interweave extends React.PureComponent<InterweaveProps> {
-  static defaultProps = {
+  static defaultProps: InterweaveProps = {
     content: '',
     disableFilters: false,
     disableMatchers: false,

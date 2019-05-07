@@ -3,6 +3,7 @@
 #### 🐞 Fixes
 
 - Removed `canvas` and `iframe` from the default allow list (they should have been opt-in).
+- **[TS]** Fixed some default props issues.
 
 #### 🛠 Internals
 
