@@ -293,7 +293,9 @@ export const BANNED_TAG_LIST = [
   'title',
 ];
 
-export const ALLOWED_TAG_LIST = Object.keys(TAGS);
+export const ALLOWED_TAG_LIST = Object.keys(TAGS).filter(
+  tag => tag !== 'canvas' && tag !== 'iframe',
+);
 
 // Filters apply to HTML attributes
 export const FILTER_ALLOW = 1;

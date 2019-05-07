@@ -1,5 +1,9 @@
 ### 11.0.1 - 2019-05-06
 
+#### 🐞 Fixes
+
+- Removed `canvas` and `iframe` from the default allow list (they should have been opt-in).
+
 #### 🛠 Internals
 
 - Updated all `@types` dependencies to use `*` version.

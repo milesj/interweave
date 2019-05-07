@@ -3,6 +3,7 @@ import ReactDOMServer from 'react-dom/server';
 import { shallow } from 'enzyme';
 import Interweave from '../src/Interweave';
 import Element from '../src/Element';
+import { ALLOWED_TAG_LIST } from '../src/constants';
 import {
   EXTRA_PROPS,
   MOCK_MARKUP,
@@ -13,6 +14,11 @@ import {
 } from '../src/testUtils';
 
 describe('Interweave', () => {
+  it('doesnt include canvas and iframe in default allow list', () => {
+    expect(ALLOWED_TAG_LIST).not.toContain('canvas');
+    expect(ALLOWED_TAG_LIST).not.toContain('iframe');
+  });
+
   it('can pass filters through props', () => {
     const wrapper = shallow(
       <Interweave filters={[new LinkFilter()]} content={'Foo <a href="foo.com">Bar</a> Baz'} />,
