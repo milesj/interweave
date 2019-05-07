@@ -1,6 +1,6 @@
 {
   "name": "interweave-autolink",
-  "version": "3.0.0",
+  "version": "3.0.1",
   "description": "URL, IP, email, and hashtag autolinking support for Interweave.",
   "keywords": [
     "interweave",
