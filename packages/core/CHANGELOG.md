@@ -1,3 +1,9 @@
+### 11.0.1 - 2019-05-06
+
+#### 🛠 Internals
+
+- Updated all `@types` dependencies to use `*` version.
+
 # 11.0.0 - 2019-04-26
 
 The previous version of Interweave would attempt to render valid parent and child hierarchies based

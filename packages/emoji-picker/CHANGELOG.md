@@ -1,3 +1,13 @@
+### 4.0.1 - 2019-05-06
+
+#### 🐞 Fixes
+
+- Fixed `interweave-emoji` peer dependency version range.
+
+#### 🛠 Internals
+
+- Updated all `@types` dependencies to use `*` version.
+
 # 4.0.0 - 2019-04-26
 
 #### 💥 Breaking

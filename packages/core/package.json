@@ -35,8 +35,8 @@
   "repository": "https://github.com/milesj/interweave/tree/master/packages/core",
   "license": "MIT",
   "dependencies": {
-    "@types/prop-types": "^15.7.1",
-    "@types/react": "^16.8.14",
+    "@types/prop-types": "*",
+    "@types/react": "*",
     "escape-html": "^1.0.3",
     "prop-types": "^15.7.2"
   },
