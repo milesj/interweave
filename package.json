@@ -23,6 +23,7 @@
     "core-js": "^3.0.1",
     "emojibase": "^2.2.0",
     "emojibase-test-utils": "^3.2.0",
+    "enzyme-to-json": "^3.3.5",
     "lerna": "^3.13.4",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
@@ -55,6 +56,9 @@
         "react/default-props-match-prop-types": "off",
         "@typescript-eslint/camelcase": "off"
       }
+    },
+    "jest": {
+      "snapshotSerializers": ["enzyme-to-json/serializer"]
     }
   },
   "browserslist": [

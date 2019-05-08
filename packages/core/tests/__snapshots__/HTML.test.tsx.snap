@@ -1,0 +1,1737 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`html a, ul, li renders 1`] = `
+<Element
+  tagName="div"
+>
+  <Element
+    key="0"
+    tagName="ul"
+  >
+    
+  
+    <Element
+      key="1"
+      tagName="li"
+    >
+      <Element
+        attributes={
+          Object {
+            "href": "https://example.com",
+          }
+        }
+        key="2"
+        tagName="a"
+      >
+        Website
+      </Element>
+    </Element>
+    
+  
+    <Element
+      key="3"
+      tagName="li"
+    >
+      <Element
+        attributes={
+          Object {
+            "href": "mailto:m.bluth@example.com",
+          }
+        }
+        key="4"
+        tagName="a"
+      >
+        Email
+      </Element>
+    </Element>
+    
+  
+    <Element
+      key="5"
+      tagName="li"
+    >
+      <Element
+        key="6"
+        tagName="a"
+      >
+        Phone
+      </Element>
+    </Element>
+    
+
+  </Element>
+</Element>
+`;
+
+exports[`html abbr renders 1`] = `
+<Element
+  tagName="div"
+>
+  You can use 
+  <Element
+    attributes={
+      Object {
+        "title": "Cascading Style Sheets",
+      }
+    }
+    key="0"
+    tagName="abbr"
+  >
+    CSS
+  </Element>
+   to style your 
+  <Element
+    attributes={
+      Object {
+        "title": "HyperText Markup Language",
+      }
+    }
+    key="1"
+    tagName="abbr"
+  >
+    HTML
+  </Element>
+  .
+</Element>
+`;
+
+exports[`html address renders 1`] = `
+<Element
+  tagName="div"
+>
+  <Element
+    key="0"
+    tagName="address"
+  >
+    
+  
+    <Element
+      attributes={
+        Object {
+          "href": "mailto:jim@rock.com",
+        }
+      }
+      key="1"
+      tagName="a"
+    >
+      jim@rock.com
+    </Element>
+    <Element
+      key="2"
+      selfClose={true}
+      tagName="br"
+    />
+    
+  
+    <Element
+      key="3"
+      tagName="a"
+    >
+      +311-555-2368
+    </Element>
+    <Element
+      key="4"
+      selfClose={true}
+      tagName="br"
+    />
+    
+
+  </Element>
+</Element>
+`;
+
+exports[`html article renders 1`] = `
+<Element
+  tagName="div"
+>
+  <Element
+    attributes={
+      Object {
+        "className": "forecast",
+      }
+    }
+    key="0"
+    tagName="article"
+  >
+    
+  
+    <Element
+      key="1"
+      tagName="h1"
+    >
+      Weather forecast for Seattle
+    </Element>
+    
+  
+    <Element
+      attributes={
+        Object {
+          "className": "day-forecast",
+        }
+      }
+      key="2"
+      tagName="article"
+    >
+      
+    
+      <Element
+        key="3"
+        tagName="h2"
+      >
+        03 March 2018
+      </Element>
+      
+    
+      <Element
+        key="4"
+        tagName="p"
+      >
+        Rain.
+      </Element>
+      
+  
+    </Element>
+    
+  
+    <Element
+      attributes={
+        Object {
+          "className": "day-forecast",
+        }
+      }
+      key="5"
+      tagName="article"
+    >
+      
+    
+      <Element
+        key="6"
+        tagName="h2"
+      >
+        04 March 2018
+      </Element>
+      
+    
+      <Element
+        key="7"
+        tagName="p"
+      >
+        Periods of rain.
+      </Element>
+      
+  
+    </Element>
+    
+  
+    <Element
+      attributes={
+        Object {
+          "className": "day-forecast",
+        }
+      }
+      key="8"
+      tagName="article"
+    >
+      
+    
+      <Element
+        key="9"
+        tagName="h2"
+      >
+        05 March 2018
+      </Element>
+      
+    
+      <Element
+        key="10"
+        tagName="p"
+      >
+        Heavy rain.
+      </Element>
+      
+  
+    </Element>
+    
+
+  </Element>
+</Element>
+`;
+
+exports[`html aside renders 1`] = `
+<Element
+  tagName="div"
+>
+  <Element
+    key="0"
+    tagName="aside"
+  >
+    
+  
+    <Element
+      key="1"
+      tagName="p"
+    >
+      The Rough-skinned Newt defends itself with a deadly neurotoxin.
+    </Element>
+    
+
+  </Element>
+</Element>
+`;
+
+exports[`html audio renders 1`] = `
+<Element
+  tagName="div"
+>
+  <Element
+    attributes={
+      Object {
+        "controls": true,
+        "src": "/media/examples/t-rex-roar.mp3",
+      }
+    }
+    key="0"
+    tagName="audio"
+  >
+    
+  Your browser does not support the 
+    audio
+     element.
+
+  </Element>
+</Element>
+`;
+
+exports[`html audio renders with source 1`] = `
+<Element
+  tagName="div"
+>
+  <Element
+    attributes={
+      Object {
+        "controls": true,
+      }
+    }
+    key="0"
+    tagName="audio"
+  >
+    
+  
+    <Element
+      attributes={
+        Object {
+          "src": "foo.wav",
+          "type": "audio/wav",
+        }
+      }
+      key="1"
+      selfClose={true}
+      tagName="source"
+    />
+    
+  Your browser does not support the 
+    audio
+     element.
+
+  </Element>
+</Element>
+`;
+
+exports[`html b renders 1`] = `
+<Element
+  tagName="div"
+>
+  <Element
+    key="0"
+    tagName="p"
+  >
+    The two most popular science courses offered by the school are 
+    <Element
+      attributes={
+        Object {
+          "className": "term",
+        }
+      }
+      key="1"
+      tagName="b"
+    >
+      chemistry
+    </Element>
+     (the study of chemicals and the composition of substances) and 
+    <Element
+      attributes={
+        Object {
+          "className": "term",
+        }
+      }
+      key="2"
+      tagName="b"
+    >
+      physics
+    </Element>
+     (the study of the nature and properties of matter and energy).
+  </Element>
+</Element>
+`;
+
+exports[`html bdi renders 1`] = `
+<Element
+  tagName="div"
+>
+  <Element
+    key="0"
+    tagName="ul"
+  >
+    
+  
+    <Element
+      key="1"
+      tagName="li"
+    >
+      <Element
+        attributes={
+          Object {
+            "className": "name",
+          }
+        }
+        key="2"
+        tagName="bdi"
+      >
+        Evil Steven
+      </Element>
+      : 1st place
+    </Element>
+    
+  
+    <Element
+      key="3"
+      tagName="li"
+    >
+      <Element
+        attributes={
+          Object {
+            "className": "name",
+          }
+        }
+        key="4"
+        tagName="bdi"
+      >
+        François fatale
+      </Element>
+      : 2nd place
+    </Element>
+    
+  
+    <Element
+      key="5"
+      tagName="li"
+    >
+      <Element
+        attributes={
+          Object {
+            "className": "name",
+          }
+        }
+        key="6"
+        tagName="span"
+      >
+        تیز سمی
+      </Element>
+      : 3rd place
+    </Element>
+    
+  
+    <Element
+      key="7"
+      tagName="li"
+    >
+      <Element
+        attributes={
+          Object {
+            "className": "name",
+          }
+        }
+        key="8"
+        tagName="bdi"
+      >
+        الرجل القوي إيان
+      </Element>
+      : 4th place
+    </Element>
+    
+  
+    <Element
+      key="9"
+      tagName="li"
+    >
+      <Element
+        attributes={
+          Object {
+            "className": "name",
+            "dir": "auto",
+          }
+        }
+        key="10"
+        tagName="span"
+      >
+        تیز سمی
+      </Element>
+      : 5th place
+    </Element>
+    
+
+  </Element>
+</Element>
+`;
+
+exports[`html bdo renders 1`] = `
+<Element
+  tagName="div"
+>
+  In the computer's memory, this is stored as 
+  <Element
+    attributes={
+      Object {
+        "dir": "ltr",
+      }
+    }
+    key="0"
+    tagName="bdo"
+  >
+    אה, אני אוהב להיות ליד חוף הים
+  </Element>
+</Element>
+`;
+
+exports[`html blockquote renders 1`] = `
+<Element
+  tagName="div"
+>
+  <Element
+    attributes={
+      Object {
+        "cite": "https://www.huxley.net/bnw/four.html",
+      }
+    }
+    key="0"
+    tagName="blockquote"
+  >
+    
+  
+    <Element
+      key="1"
+      tagName="p"
+    >
+      Words can be like X-rays, if you use them properly – they'll go through anything. You read and you're pierced.
+    </Element>
+    
+
+  </Element>
+  
+
+
+  <Element
+    key="2"
+    tagName="cite"
+  >
+    – Aldous Huxley, Brave New World
+  </Element>
+</Element>
+`;
+
+exports[`html button renders 1`] = `
+<Element
+  tagName="div"
+>
+  <Element
+    key="0"
+    tagName="button"
+  >
+    Click me
+  </Element>
+</Element>
+`;
+
+exports[`html canvas renders 1`] = `
+<Element
+  tagName="div"
+>
+  <Element
+    attributes={
+      Object {
+        "height": "300",
+        "id": "canvas",
+        "width": "300",
+      }
+    }
+    key="0"
+    tagName="canvas"
+  >
+    
+  An alternative text describing what your canvas displays.
+
+  </Element>
+</Element>
+`;
+
+exports[`html canvas renders nothing when not allowed 1`] = `
+<Element
+  tagName="div"
+>
+  
+  An alternative text describing what your canvas displays.
+
+</Element>
+`;
+
+exports[`html caption renders 1`] = `
+<Element
+  tagName="div"
+>
+  <Element
+    key="0"
+    tagName="table"
+  >
+    
+  
+    <Element
+      key="1"
+      tagName="caption"
+    >
+      He-Man and Skeletor facts
+    </Element>
+    
+  
+    <Element
+      key="2"
+      tagName="tbody"
+    >
+      <Element
+        key="3"
+        tagName="tr"
+      >
+        
+    
+        <Element
+          key="4"
+          tagName="td"
+        >
+           
+        </Element>
+        
+    
+        <Element
+          attributes={
+            Object {
+              "className": "heman",
+              "scope": "col",
+            }
+          }
+          key="5"
+          tagName="th"
+        >
+          He-Man
+        </Element>
+        
+    
+        <Element
+          attributes={
+            Object {
+              "className": "skeletor",
+              "scope": "col",
+            }
+          }
+          key="6"
+          tagName="th"
+        >
+          Skeletor
+        </Element>
+        
+  
+      </Element>
+      
+
+    </Element>
+  </Element>
+</Element>
+`;
+
+exports[`html cite renders 1`] = `
+<Element
+  tagName="div"
+>
+  <Element
+    key="0"
+    tagName="blockquote"
+  >
+    
+  
+    <Element
+      key="1"
+      tagName="p"
+    >
+      It was a bright cold day in April, and the clocks were striking thirteen.
+    </Element>
+    
+  
+    <Element
+      key="2"
+      tagName="footer"
+    >
+      
+    First sentence in 
+      <Element
+        key="3"
+        tagName="cite"
+      >
+        <Element
+          attributes={
+            Object {
+              "href": "http://www.george-orwell.org/1984/0.html",
+            }
+          }
+          key="4"
+          tagName="a"
+        >
+          <Element
+            key="5"
+            tagName="i"
+          >
+            Nineteen Eighty-Four
+          </Element>
+        </Element>
+      </Element>
+       by George Orwell (Part 1, Chapter 1).
+  
+    </Element>
+    
+
+  </Element>
+</Element>
+`;
+
+exports[`html code renders 1`] = `
+<Element
+  tagName="div"
+>
+  <Element
+    key="0"
+    tagName="p"
+  >
+    The 
+    <Element
+      key="1"
+      tagName="code"
+    >
+      push()
+    </Element>
+     method adds one or more elements to the end of an array and returns the new length of the array.
+  </Element>
+</Element>
+`;
+
+exports[`html col, colgroup renders 1`] = `
+<Element
+  tagName="div"
+>
+  <Element
+    key="0"
+    tagName="table"
+  >
+    
+  
+    <Element
+      key="1"
+      tagName="caption"
+    >
+      Superheros and sidekicks
+    </Element>
+    
+  
+    <Element
+      key="2"
+      tagName="colgroup"
+    >
+      
+    
+      <Element
+        key="3"
+        selfClose={true}
+        tagName="col"
+      />
+      
+    
+      <Element
+        attributes={
+          Object {
+            "className": "batman",
+            "span": 2,
+          }
+        }
+        key="4"
+        selfClose={true}
+        tagName="col"
+      />
+      
+    
+      <Element
+        attributes={
+          Object {
+            "className": "flash",
+            "span": 2,
+          }
+        }
+        key="5"
+        selfClose={true}
+        tagName="col"
+      />
+      
+  
+    </Element>
+    
+
+  </Element>
+</Element>
+`;
+
+exports[`html details, summary doesnt render summary when not in details 1`] = `
+<Element
+  tagName="div"
+>
+  Details
+</Element>
+`;
+
+exports[`html details, summary renders 1`] = `
+<Element
+  tagName="div"
+>
+  <Element
+    key="0"
+    tagName="details"
+  >
+    
+  
+    <Element
+      key="1"
+      tagName="summary"
+    >
+      Details
+    </Element>
+    
+  Something small enough to escape casual notice.
+
+  </Element>
+</Element>
+`;
+
+exports[`html dfn renders 1`] = `
+<Element
+  tagName="div"
+>
+  <Element
+    key="0"
+    tagName="p"
+  >
+    A 
+    <Element
+      attributes={
+        Object {
+          "id": "def-validator",
+        }
+      }
+      key="1"
+      tagName="dfn"
+    >
+      validator
+    </Element>
+     is a program that checks for syntax errors in code or documents.
+  </Element>
+</Element>
+`;
+
+exports[`html div renders 1`] = `
+<Element
+  tagName="div"
+>
+  <Element
+    attributes={
+      Object {
+        "className": "warning",
+      }
+    }
+    key="0"
+    tagName="div"
+  >
+    
+  
+    <Element
+      attributes={
+        Object {
+          "alt": "An intimidating leopard.",
+          "src": "/media/examples/leopard.jpg",
+        }
+      }
+      key="1"
+      selfClose={true}
+      tagName="img"
+    />
+    
+  
+    <Element
+      key="2"
+      tagName="p"
+    >
+      Beware of the leopard
+    </Element>
+    
+
+  </Element>
+</Element>
+`;
+
+exports[`html dl, dt, dd renders 1`] = `
+<Element
+  tagName="div"
+>
+  <Element
+    key="0"
+    tagName="dl"
+  >
+    
+  
+    <Element
+      key="1"
+      tagName="dt"
+    >
+      Beast of Bodmin
+    </Element>
+    
+  
+    <Element
+      key="2"
+      tagName="dd"
+    >
+      A large feline inhabiting Bodmin Moor.
+    </Element>
+    
+
+  
+    <Element
+      key="3"
+      tagName="dt"
+    >
+      Morgawr
+    </Element>
+    
+  
+    <Element
+      key="4"
+      tagName="dd"
+    >
+      A sea serpent.
+    </Element>
+    
+
+  
+    <Element
+      key="5"
+      tagName="dt"
+    >
+      Owlman
+    </Element>
+    
+  
+    <Element
+      key="6"
+      tagName="dd"
+    >
+      A giant owl-like creature.
+    </Element>
+    
+
+  </Element>
+</Element>
+`;
+
+exports[`html em renders 1`] = `
+<Element
+  tagName="div"
+>
+  We 
+  <Element
+    key="0"
+    tagName="em"
+  >
+    had
+  </Element>
+   to do something about it.
+</Element>
+`;
+
+exports[`html figure, figcaption renders 1`] = `
+<Element
+  tagName="div"
+>
+  <Element
+    key="0"
+    tagName="figure"
+  >
+    
+  
+    <Element
+      attributes={
+        Object {
+          "alt": "Elephant at sunset",
+          "src": "/media/examples/elephant-660-480.jpg",
+        }
+      }
+      key="1"
+      selfClose={true}
+      tagName="img"
+    />
+    
+  
+    <Element
+      key="2"
+      tagName="figcaption"
+    >
+      An elephant at sunset
+    </Element>
+    
+
+  </Element>
+</Element>
+`;
+
+exports[`html footer renders 1`] = `
+<Element
+  tagName="div"
+>
+  <Element
+    key="0"
+    tagName="article"
+  >
+    
+  
+    <Element
+      key="1"
+      tagName="h1"
+    >
+      How to be a wizard
+    </Element>
+    
+  
+    <Element
+      key="2"
+      tagName="ol"
+    >
+      
+    
+      <Element
+        key="3"
+        tagName="li"
+      >
+        Grow a long, majestic beard.
+      </Element>
+      
+    
+      <Element
+        key="4"
+        tagName="li"
+      >
+        Wear a tall pointed hat.
+      </Element>
+      
+    
+      <Element
+        key="5"
+        tagName="li"
+      >
+        Have I mentioned the beard?
+      </Element>
+      
+  
+    </Element>
+    
+  
+    <Element
+      key="6"
+      tagName="footer"
+    >
+      
+    
+      <Element
+        key="7"
+        tagName="p"
+      >
+        © 2018 Gandalf
+      </Element>
+      
+  
+    </Element>
+    
+
+  </Element>
+</Element>
+`;
+
+exports[`html h1 - h6 renders 1`] = `
+<Element
+  tagName="div"
+>
+  <Element
+    key="0"
+    tagName="h1"
+  >
+    Beetles
+  </Element>
+  <Element
+    key="1"
+    selfClose={true}
+    tagName="br"
+  />
+        
+  <Element
+    key="2"
+    tagName="h2"
+  >
+    External morphology
+  </Element>
+  <Element
+    key="3"
+    selfClose={true}
+    tagName="br"
+  />
+            
+  <Element
+    key="4"
+    tagName="h3"
+  >
+    Head
+  </Element>
+  <Element
+    key="5"
+    selfClose={true}
+    tagName="br"
+  />
+                
+  <Element
+    key="6"
+    tagName="h4"
+  >
+    Mouthparts
+  </Element>
+  <Element
+    key="7"
+    selfClose={true}
+    tagName="br"
+  />
+            
+  <Element
+    key="8"
+    tagName="h3"
+  >
+    Thorax
+  </Element>
+  <Element
+    key="9"
+    selfClose={true}
+    tagName="br"
+  />
+                
+  <Element
+    key="10"
+    tagName="h5"
+  >
+    Prothorax
+  </Element>
+  <Element
+    key="11"
+    selfClose={true}
+    tagName="br"
+  />
+                
+  <Element
+    key="12"
+    tagName="h6"
+  >
+    Pterothorax
+  </Element>
+</Element>
+`;
+
+exports[`html header renders 1`] = `
+<Element
+  tagName="div"
+>
+  <Element
+    attributes={
+      Object {
+        "className": "page-header",
+      }
+    }
+    key="0"
+    tagName="header"
+  >
+    
+  
+    <Element
+      key="1"
+      tagName="h1"
+    >
+      Cute Puppies Express!
+    </Element>
+    
+
+  </Element>
+</Element>
+`;
+
+exports[`html hr renders 1`] = `
+<Element
+  tagName="div"
+>
+  <Element
+    key="0"
+    tagName="p"
+  >
+    §1: The first rule of Fight Club is: You do not talk about Fight Club.
+  </Element>
+  
+
+  <Element
+    key="1"
+    selfClose={true}
+    tagName="hr"
+  />
+  
+
+  <Element
+    key="2"
+    tagName="p"
+  >
+    §2: The second rule of Fight Club is: Always bring cupcakes.
+  </Element>
+</Element>
+`;
+
+exports[`html i renders 1`] = `
+<Element
+  tagName="div"
+>
+  <Element
+    key="0"
+    tagName="p"
+  >
+    <Element
+      attributes={
+        Object {
+          "className": "latin",
+        }
+      }
+      key="1"
+      tagName="i"
+    >
+      Musa
+    </Element>
+     is one of two or three genera in the family 
+    <Element
+      attributes={
+        Object {
+          "className": "latin",
+        }
+      }
+      key="2"
+      tagName="i"
+    >
+      Musaceae
+    </Element>
+    ; it includes bananas and plantains.
+  </Element>
+</Element>
+`;
+
+exports[`html iframe renders 1`] = `
+<Element
+  tagName="div"
+>
+  <Element
+    attributes={
+      Object {
+        "height": "300",
+        "src": "https://maps.google.com",
+        "width": "400",
+      }
+    }
+    key="0"
+    tagName="iframe"
+  />
+</Element>
+`;
+
+exports[`html iframe renders nothing when not allowed 1`] = `
+<Element
+  tagName="div"
+/>
+`;
+
+exports[`html img renders 1`] = `
+<Element
+  tagName="div"
+>
+  <Element
+    attributes={
+      Object {
+        "alt": "Grapefruit slice atop a pile of other slices",
+        "className": "fit-picture",
+        "src": "/media/examples/grapefruit-slice-332-332.jpg",
+      }
+    }
+    key="0"
+    selfClose={true}
+    tagName="img"
+  />
+</Element>
+`;
+
+exports[`html ins renders 1`] = `
+<Element
+  tagName="div"
+>
+  <Element
+    attributes={
+      Object {
+        "cite": "../howtobeawizard.html",
+        "dateTime": "2018-05",
+      }
+    }
+    key="0"
+    tagName="ins"
+  >
+    
+  
+    “A wizard is never late …”
+    
+
+  </Element>
+</Element>
+`;
+
+exports[`html kbd renders 1`] = `
+<Element
+  tagName="div"
+>
+  Please press 
+  <Element
+    key="0"
+    tagName="kbd"
+  >
+    Ctrl
+  </Element>
+   + 
+  <Element
+    key="1"
+    tagName="kbd"
+  >
+    Shift
+  </Element>
+   + 
+  <Element
+    key="2"
+    tagName="kbd"
+  >
+    R
+  </Element>
+   to re-render an MDN page.
+</Element>
+`;
+
+exports[`html main renders 1`] = `
+<Element
+  tagName="div"
+>
+  <Element
+    attributes={
+      Object {
+        "role": "main",
+      }
+    }
+    key="0"
+    tagName="main"
+  >
+    
+  
+    <Element
+      key="1"
+      tagName="p"
+    >
+      Geckos are a group of usually small, usually nocturnal lizards. They are found on every continent except Australia.
+    </Element>
+    
+
+  </Element>
+</Element>
+`;
+
+exports[`html mark renders 1`] = `
+<Element
+  tagName="div"
+>
+  Most 
+  <Element
+    key="0"
+    tagName="mark"
+  >
+    salamander
+  </Element>
+  s are nocturnal, and hunt for insects, worms, and other small creatures.
+</Element>
+`;
+
+exports[`html nav, ol, li renders 1`] = `
+<Element
+  tagName="div"
+>
+  <Element
+    attributes={
+      Object {
+        "className": "crumbs",
+      }
+    }
+    key="0"
+    tagName="nav"
+  >
+    
+  
+    <Element
+      key="1"
+      tagName="ol"
+    >
+      
+    
+      <Element
+        attributes={
+          Object {
+            "className": "crumb",
+          }
+        }
+        key="2"
+        tagName="li"
+      >
+        <Element
+          attributes={
+            Object {
+              "href": "bikes",
+            }
+          }
+          key="3"
+          tagName="a"
+        >
+          Bikes
+        </Element>
+      </Element>
+      
+    
+      <Element
+        attributes={
+          Object {
+            "className": "crumb",
+          }
+        }
+        key="4"
+        tagName="li"
+      >
+        <Element
+          attributes={
+            Object {
+              "href": "bikes/bmx",
+            }
+          }
+          key="5"
+          tagName="a"
+        >
+          BMX
+        </Element>
+      </Element>
+      
+    
+      <Element
+        attributes={
+          Object {
+            "className": "crumb",
+          }
+        }
+        key="6"
+        tagName="li"
+      >
+        Jump Bike 3000
+      </Element>
+      
+  
+    </Element>
+    
+
+  </Element>
+</Element>
+`;
+
+exports[`html picture renders 1`] = `
+<Element
+  tagName="div"
+>
+  <Element
+    key="0"
+    tagName="picture"
+  >
+    
+  
+    <Element
+      attributes={
+        Object {
+          "srcSet": "/media/examples/surfer-240-200.jpg",
+        }
+      }
+      key="1"
+      selfClose={true}
+      tagName="source"
+    />
+    
+  
+    <Element
+      attributes={
+        Object {
+          "src": "/media/examples/painted-hand-298-332.jpg",
+        }
+      }
+      key="2"
+      selfClose={true}
+      tagName="img"
+    />
+    
+
+  </Element>
+</Element>
+`;
+
+exports[`html pre renders 1`] = `
+<Element
+  tagName="div"
+>
+  <Element
+    key="0"
+    tagName="pre"
+  >
+      L          TE
+    A       A
+      C    V
+        R A
+        DOU
+        LOU
+      REUSE
+      QUE TU
+      PORTES
+    ET QUI T'
+    ORNE O CI
+      VILISÉ
+    OTE-  TU VEUX
+      LA    BIEN
+    SI      RESPI
+            RER       - Apollinaire
+
+  </Element>
+</Element>
+`;
+
+exports[`html q renders 1`] = `
+<Element
+  tagName="div"
+>
+  When Dave asks HAL to open the pod bay door, HAL answers: 
+  <Element
+    attributes={
+      Object {
+        "cite": "https://www.imdb.com/title/tt0062622/quotes/qt0396921",
+      }
+    }
+    key="0"
+    tagName="q"
+  >
+    I'm sorry, Dave. I'm afraid I can't do that.
+  </Element>
+</Element>
+`;
+
+exports[`html ruby, rp, rt, rtc renders 1`] = `
+<Element
+  tagName="div"
+>
+  <Element
+    attributes={
+      Object {
+        "xml:lang": "zh-Hant",
+      }
+    }
+    key="0"
+    tagName="ruby"
+  >
+    
+  
+    
+    
+    <Element
+      key="1"
+      tagName="rb"
+    >
+      馬
+    </Element>
+    <Element
+      key="2"
+      tagName="rp"
+    >
+      (
+    </Element>
+    <Element
+      key="3"
+      tagName="rt"
+    >
+      mǎ
+    </Element>
+    <Element
+      key="4"
+      tagName="rp"
+    >
+      )
+    </Element>
+    
+    
+    <Element
+      key="5"
+      tagName="rb"
+    >
+      來
+    </Element>
+    <Element
+      key="6"
+      tagName="rp"
+    >
+      (
+    </Element>
+    <Element
+      key="7"
+      tagName="rt"
+    >
+      lái
+    </Element>
+    <Element
+      key="8"
+      tagName="rp"
+    >
+      )
+    </Element>
+    
+    
+    <Element
+      key="9"
+      tagName="rb"
+    >
+      西
+    </Element>
+    <Element
+      key="10"
+      tagName="rp"
+    >
+      (
+    </Element>
+    <Element
+      key="11"
+      tagName="rt"
+    >
+      xī
+    </Element>
+    <Element
+      key="12"
+      tagName="rp"
+    >
+      )
+    </Element>
+    
+    
+    <Element
+      key="13"
+      tagName="rb"
+    >
+      亞
+    </Element>
+    <Element
+      key="14"
+      tagName="rp"
+    >
+      (
+    </Element>
+    <Element
+      key="15"
+      tagName="rt"
+    >
+      yà
+    </Element>
+    <Element
+      key="16"
+      tagName="rp"
+    >
+      )
+    </Element>
+    
+  
+    
+  
+    <Element
+      attributes={
+        Object {
+          "xml:lang": "en",
+        }
+      }
+      key="17"
+      tagName="rtc"
+    >
+      
+    
+      <Element
+        key="18"
+        tagName="rp"
+      >
+        (
+      </Element>
+      <Element
+        key="19"
+        tagName="rt"
+      >
+        Malaysia
+      </Element>
+      <Element
+        key="20"
+        tagName="rp"
+      >
+        )
+      </Element>
+      
+  
+    </Element>
+    
+
+  </Element>
+</Element>
+`;
+
+exports[`html s renders 1`] = `
+<Element
+  tagName="div"
+>
+  <Element
+    key="0"
+    tagName="s"
+  >
+    There will be a few tickets available at the box office tonight.
+  </Element>
+</Element>
+`;

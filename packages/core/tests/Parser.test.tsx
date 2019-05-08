@@ -328,10 +328,12 @@ describe('Parser', () => {
       });
     });
 
-    it('denies data attributes', () => {
+    it('allows data attributes', () => {
       element.setAttribute('data-foo', 'bar');
 
-      expect(instance.extractAttributes(element)).toBeNull();
+      expect(instance.extractAttributes(element)).toEqual({
+        'data-foo': 'bar',
+      });
     });
 
     it('denies attributes that are not whitelisted', () => {
@@ -634,7 +636,6 @@ describe('Parser', () => {
       expect(
         instance.parseNode(element, {
           ...parentConfig,
-          children: ['li'],
         }),
       ).toEqual(['Foo', 'Bar', 'Baz', 'Qux', 'Wat']);
     });

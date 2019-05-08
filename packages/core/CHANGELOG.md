@@ -1,3 +1,17 @@
+### 11.0.2
+
+#### 🚀 Updates
+
+- Namespace, data, and `scope` attributes are now rendered.
+
+#### 🐞 Fixes
+
+- A large polish pass on the new rendering hierarchy.
+  - Fixed many parent <-> child relationships.
+  - `figure` now supports all flow content.
+  - `header` can now be rendered at the root.
+  - `ruby` and siblings now render correctly.
+
 ### 11.0.1 - 2019-05-06
 
 #### 🐞 Fixes

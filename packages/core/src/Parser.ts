@@ -19,9 +19,8 @@ import { Attributes, Node, NodeConfig, TransformCallback, MatchResponse } from '
 
 const ELEMENT_NODE = 1;
 const TEXT_NODE = 3;
-const INVALID_ROOTS: string[] = ['<!DOC', '<HTML', '<HEAD', '<BODY'];
-const ROOT_COMPARE_LENGTH = 5;
-const ARIA_COMPARE_LENGTH = 5;
+const INVALID_ROOTS = /^<(!doctype|(html|head|body)(\s|>))/i;
+const ALLOWED_ATTRS = /^(aria-|data-|\w+:)/u;
 
 export interface ParserProps {
   /** Disable filtering and allow all non-banned HTML attributes. */
@@ -205,8 +204,8 @@ export default class Parser {
     }
 
     // Valid children
-    if (parentConfig.children.length > 0 && !parentConfig.children.includes(childConfig.tagName)) {
-      return false;
+    if (parentConfig.children.length > 0) {
+      return parentConfig.children.includes(childConfig.tagName);
     }
 
     if (parentConfig.invalid.length > 0 && parentConfig.invalid.includes(childConfig.tagName)) {
@@ -214,8 +213,8 @@ export default class Parser {
     }
 
     // Valid parent
-    if (childConfig.parent.length > 0 && !childConfig.parent.includes(parentConfig.tagName)) {
-      return false;
+    if (childConfig.parent.length > 0) {
+      return childConfig.parent.includes(parentConfig.tagName);
     }
 
     // Self nesting
@@ -259,7 +258,7 @@ export default class Parser {
   createDocument(markup: string): Document {
     const doc = document.implementation.createHTMLDocument('Interweave');
 
-    if (INVALID_ROOTS.includes(markup.substr(0, ROOT_COMPARE_LENGTH).toUpperCase())) {
+    if (markup.match(INVALID_ROOTS)) {
       if (__DEV__) {
         throw new Error('HTML documents as Interweave content are not supported.');
       }
@@ -297,7 +296,7 @@ export default class Parser {
 
       // Do not allow denied attributes, excluding ARIA attributes
       // Do not allow events or XSS injections
-      if (newName.slice(0, ARIA_COMPARE_LENGTH) !== 'aria-') {
+      if (!newName.match(ALLOWED_ATTRS)) {
         if (
           (!allowAttributes && (!filter || filter === FILTER_DENY)) ||
           // eslint-disable-next-line unicorn/prefer-starts-ends-with

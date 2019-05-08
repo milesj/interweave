@@ -4,55 +4,46 @@ exports[`Parser parse() doesnt parse HTML when escaped 1`] = `
 Array [
   "<main role=\\"main\\">",
   <Element
-    attributes={Object {}}
     selfClose={true}
     tagName="br"
   />,
   "  Main content",
   <Element
-    attributes={Object {}}
     selfClose={true}
     tagName="br"
   />,
   "  <div>",
   <Element
-    attributes={Object {}}
     selfClose={true}
     tagName="br"
   />,
   "    <a href=\\"#\\">Link</a>",
   <Element
-    attributes={Object {}}
     selfClose={true}
     tagName="br"
   />,
   "    <span class=\\"foo\\">String</span>",
   <Element
-    attributes={Object {}}
     selfClose={true}
     tagName="br"
   />,
   "  </div>",
   <Element
-    attributes={Object {}}
     selfClose={true}
     tagName="br"
   />,
   "</main>",
   <Element
-    attributes={Object {}}
     selfClose={true}
     tagName="br"
   />,
   "<aside id=\\"sidebar\\">",
   <Element
-    attributes={Object {}}
     selfClose={true}
     tagName="br"
   />,
   "  Sidebar content",
   <Element
-    attributes={Object {}}
     selfClose={true}
     tagName="br"
   />,
@@ -68,15 +59,12 @@ Array [
         "role": "main",
       }
     }
-    selfClose={false}
     tagName="main"
   >
     
   Main content
   
     <Element
-      attributes={Object {}}
-      selfClose={false}
       tagName="div"
     >
       
@@ -87,7 +75,6 @@ Array [
             "href": "#",
           }
         }
-        selfClose={false}
         tagName="a"
       >
         Link
@@ -100,7 +87,6 @@ Array [
             "className": "foo",
           }
         }
-        selfClose={false}
         tagName="span"
       >
         String
@@ -119,7 +105,6 @@ Array [
         "id": "sidebar",
       }
     }
-    selfClose={false}
     tagName="aside"
   >
     

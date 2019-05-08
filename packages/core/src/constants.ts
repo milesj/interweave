@@ -90,9 +90,6 @@ const tagConfigs: { [tagName: string]: Partial<NodeConfig> } = {
     content: TYPE_FLOW,
     parent: ['figure'],
   },
-  figure: {
-    children: ['figcaption'],
-  },
   footer: {
     invalid: ['footer', 'header'],
   },
@@ -122,21 +119,21 @@ const tagConfigs: { [tagName: string]: Partial<NodeConfig> } = {
     type: TYPE_FLOW | TYPE_PHRASING | TYPE_EMBEDDED,
   },
   rb: {
-    parent: ['ruby'],
+    parent: ['ruby', 'rtc'],
   },
   rp: {
-    parent: ['ruby'],
+    parent: ['ruby', 'rtc'],
   },
   rt: {
     content: TYPE_PHRASING,
-    parent: ['ruby'],
+    parent: ['ruby', 'rtc'],
   },
   rtc: {
     content: TYPE_PHRASING,
     parent: ['ruby'],
   },
   ruby: {
-    children: ['rb'],
+    children: ['rb', 'rp', 'rt', 'rtc'],
   },
   source: {
     parent: ['audio', 'video', 'picture'],
@@ -326,6 +323,7 @@ export const ATTRIBUTES: FilterMap = Object.freeze({
   poster: FILTER_ALLOW,
   role: FILTER_ALLOW,
   rowspan: FILTER_CAST_NUMBER,
+  scope: FILTER_ALLOW,
   sizes: FILTER_ALLOW,
   span: FILTER_CAST_NUMBER,
   src: FILTER_ALLOW,
