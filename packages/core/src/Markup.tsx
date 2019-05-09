@@ -5,14 +5,14 @@ import Element from './Element';
 import Parser, { ParserProps } from './Parser';
 
 export interface MarkupProps extends ParserProps {
-  /** String content with HTML to safely render. */
+  /** Content that may contain HTML to safely render. */
   content?: string | null;
   /** Content to render when the `content` prop is empty. */
   emptyContent?: React.ReactNode;
   /** @ignore Pre-parsed content to render. */
   parsedContent?: React.ReactNode;
   /** HTML element or React fragment to wrap content with. */
-  tagName?: string;
+  tagName?: 'fragment' | string;
 }
 
 export default class Markup extends React.PureComponent<MarkupProps> {

@@ -27,9 +27,9 @@ export interface ParserProps {
   allowAttributes?: boolean;
   /** Disable filtering and allow all non-banned/blocked HTML elements to be rendered. */
   allowElements?: boolean;
-  /** List of HTML tag names to allow and render. Defaults to non-banned tags. */
+  /** List of HTML tag names to allow and render. Defaults to the `ALLOWED_TAG_LIST` constant. */
   allowList?: string[];
-  /** List of HTML tag names to disallow and not render. */
+  /** List of HTML tag names to disallow and not render. Overrides allow list. */
   blockList?: string[];
   /** Disable the conversion of new lines to `<br />` elements. */
   disableLineBreaks?: boolean;

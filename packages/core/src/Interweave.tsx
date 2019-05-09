@@ -6,7 +6,6 @@ import { MatcherInterface } from './Matcher';
 import { AfterParseCallback, BeforeParseCallback } from './types';
 
 export interface InterweaveProps extends MarkupProps {
-  /** Support all the props used by matchers. */
   [prop: string]: any;
   /** Disable all filters from running. */
   disableFilters?: boolean;
@@ -22,7 +21,12 @@ export interface InterweaveProps extends MarkupProps {
   onBeforeParse?: BeforeParseCallback<InterweaveProps> | null;
 }
 
-export default class Interweave extends React.PureComponent<InterweaveProps> {
+export interface AllMatcherProps {
+  /** Support all the props used by matchers. */
+  [prop: string]: any;
+}
+
+export default class Interweave extends React.PureComponent<InterweaveProps & AllMatcherProps> {
   static defaultProps: InterweaveProps = {
     content: '',
     disableFilters: false,
