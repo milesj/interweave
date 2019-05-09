@@ -904,7 +904,7 @@ describe('html', () => {
       const wrapper = shallow(
         <Markup
           content={`<video controls width="250" src="/media/examples/friday.mp4">
-  <track default kind="captions" srcLang="en" src="/media/examples/friday.vtt"/>
+  <track default kind="captions" srclang="en" src="/media/examples/friday.vtt"/>
 
   Sorry, your browser doesn't support embedded videos.
 </video>`}
@@ -917,7 +917,7 @@ describe('html', () => {
     it('doesnt render if outside its parent', () => {
       const wrapper = shallow(
         <Markup
-          content={`<track default kind="captions" srcLang="en" src="/media/examples/friday.vtt"/>`}
+          content={`<track default kind="captions" srclang="en" src="/media/examples/friday.vtt"/>`}
         />,
       );
 

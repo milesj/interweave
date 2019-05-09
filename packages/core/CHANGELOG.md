@@ -2,7 +2,8 @@
 
 #### 🚀 Updates
 
-- Namespace, data, and `scope` attributes are now rendered.
+- Added new attributes to allow list: `media`, `scope`, `srclang`.
+- Namespace and data attributes are now rendered.
 
 #### 🐞 Fixes
 

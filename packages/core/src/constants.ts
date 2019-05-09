@@ -319,6 +319,7 @@ export const ATTRIBUTES: FilterMap = Object.freeze({
   label: FILTER_ALLOW,
   lang: FILTER_ALLOW,
   loop: FILTER_CAST_BOOL,
+  media: FILTER_ALLOW,
   muted: FILTER_CAST_BOOL,
   poster: FILTER_ALLOW,
   role: FILTER_ALLOW,
@@ -327,6 +328,7 @@ export const ATTRIBUTES: FilterMap = Object.freeze({
   sizes: FILTER_ALLOW,
   span: FILTER_CAST_NUMBER,
   src: FILTER_ALLOW,
+  srclang: FILTER_ALLOW,
   srcset: FILTER_ALLOW,
   target: FILTER_ALLOW,
   title: FILTER_ALLOW,
@@ -340,5 +342,6 @@ export const ATTRIBUTES_TO_PROPS: { [key: string]: string } = Object.freeze({
   colspan: 'colSpan',
   datetime: 'dateTime',
   rowspan: 'rowSpan',
+  srclang: 'srcLang',
   srcset: 'srcSet',
 });

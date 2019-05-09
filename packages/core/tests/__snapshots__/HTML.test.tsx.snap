@@ -1489,6 +1489,7 @@ exports[`html picture renders 1`] = `
     <Element
       attributes={
         Object {
+          "media": "(min-width: 800px)",
           "srcSet": "/media/examples/surfer-240-200.jpg",
         }
       }
@@ -2354,6 +2355,7 @@ exports[`html track renders 1`] = `
           "default": true,
           "kind": "captions",
           "src": "/media/examples/friday.vtt",
+          "srcLang": "en",
         }
       }
       key="1"
