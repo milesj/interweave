@@ -1,17 +1,18 @@
-### 11.0.2
+### 11.1.0
 
 #### 🚀 Updates
 
-- Added new attributes to allow list: `media`, `scope`, `srclang`.
-- Namespace and data attributes are now rendered.
+- Added new attributes to allow list: `media`, `scope`, `srclang`, `style`.
+- Added new `allowInlineStyles` prop, which is required to render inline styles found on HTML
+  elements.
+  - Style properties that contain `image()`, `image-set()`, or `url()` are removed.
+- Namespace and data attributes are also now rendered.
 
 #### 🐞 Fixes
 
-- A large polish pass on the new rendering hierarchy.
-  - Fixed many parent <-> child relationships.
-  - `figure` now supports all flow content.
-  - `header` can now be rendered at the root.
-  - `ruby` and siblings now render correctly.
+- Fixed many parent <-> child relationships as part of the new rendering hierarchy.
+- `figure` now supports all flow content.
+- `header` can now be rendered at the root.
 
 ### 11.0.1 - 2019-05-06
 
@@ -51,7 +52,8 @@ renderable.
   `TYPE_INTERACTIVE`, and `TYPE_PALPABLE` constants.
 - Added `allowAttributes` prop, which disables all non-banned HTML attribute filtering.
 - Added `allowElements` prop, which disables all non-banned HTML element filtering.
-- Added `allowList` prop, which only enables specific HTML elements. Defaults to the v10 whitelist.
+- Added `allowList` prop, which only enables specific HTML elements. Defaults to the
+  `ALLOWED_TAG_LIST` constant.
 - Added `blockList` prop, which disables specific HTML elements.
 - Added `escapeHtml` prop, which escapes all HTML before parsing.
 - Added support for HTML tags: `bdi`, `bdo`, `caption`, `col`, `colgroup`, `rb`, `rp`, `rt`, `rtc`,

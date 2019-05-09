@@ -65,8 +65,10 @@ _Markup & Interweave_
 - `allowAttributes` (boolean) - Disable filtering and allow all non-banned HTML attributes.
 - `allowElements` (boolean) - Disable filtering and allow all non-banned/blocked HTML elements to be
   rendered.
-- `allowList` (string[]) - List of HTML tag names to allow and render. Defaults to non-banned tags.
-- `blockList` (string[]) - List of HTML tag names to disallow and not render.
+- `allowInlineStyles` (boolean) - Allow inline styles on parsed HTML elements.
+- `allowList` (string[]) - List of HTML tag names to allow and render. Defaults to the
+  `ALLOWED_TAG_LIST` constant.
+- `blockList` (string[]) - List of HTML tag names to disallow and not render. Overrides allow list.
 - `content` (string) - The string to render and apply matchers and filters to. Supports HTML.
 - `disableLineBreaks` (boolean) - Disables automatic line break conversion.
 - `emptyContent` (node) - React node to render if no content was rendered.

@@ -9,6 +9,7 @@ import {
   FILTER_DENY,
   FILTER_CAST_NUMBER,
   FILTER_CAST_BOOL,
+  FILTER_NO_CAST,
   TAGS,
   BANNED_TAG_LIST,
   ALLOWED_TAG_LIST,
@@ -20,13 +21,16 @@ import { Attributes, Node, NodeConfig, TransformCallback, MatchResponse } from '
 const ELEMENT_NODE = 1;
 const TEXT_NODE = 3;
 const INVALID_ROOTS = /^<(!doctype|(html|head|body)(\s|>))/i;
-const ALLOWED_ATTRS = /^(aria-|data-|\w+:)/u;
+const INVALID_STYLES = /(url|image|image-set)\(/i;
+const ALLOWED_ATTRS = /^(aria-|data-|\w+:)/iu;
 
 export interface ParserProps {
   /** Disable filtering and allow all non-banned HTML attributes. */
   allowAttributes?: boolean;
   /** Disable filtering and allow all non-banned/blocked HTML elements to be rendered. */
   allowElements?: boolean;
+  /** Allow inline styles on parsed HTML elements. */
+  allowInlineStyles?: boolean;
   /** List of HTML tag names to allow and render. Defaults to the `ALLOWED_TAG_LIST` constant. */
   allowList?: string[];
   /** List of HTML tag names to disallow and not render. Overrides allow list. */
@@ -276,7 +280,7 @@ export default class Parser {
    * Returns null if no attributes are defined.
    */
   extractAttributes(node: HTMLElement): Attributes | null {
-    const { allowAttributes } = this.props;
+    const { allowAttributes, allowInlineStyles } = this.props;
     const attributes: Attributes = {};
     let count = 0;
 
@@ -310,6 +314,14 @@ export default class Parser {
       // Apply attribute filters
       let newValue: any = this.applyAttributeFilters(newName, value);
 
+      if (newName === 'style') {
+        if (allowInlineStyles) {
+          newValue = this.extractStyleAttribute(node);
+        } else {
+          return;
+        }
+      }
+
       // Cast to boolean
       if (filter === FILTER_CAST_BOOL) {
         newValue = true;
@@ -319,7 +331,7 @@ export default class Parser {
         newValue = parseFloat(newValue);
 
         // Cast to string
-      } else {
+      } else if (filter !== FILTER_NO_CAST) {
         newValue = String(newValue);
       }
 
@@ -332,6 +344,25 @@ export default class Parser {
     }
 
     return attributes;
+  }
+
+  /**
+   * Extract the style attribute as an object and remove values that allow for attack vectors.
+   */
+  extractStyleAttribute(node: HTMLElement): object {
+    const styles: any = {};
+    const camelCase = (match: string, letter: string) => letter.toUpperCase();
+
+    Array.from(node.style).forEach(key => {
+      const prop = key as keyof CSSStyleDeclaration;
+      const value = node.style[prop];
+
+      if (!value.match(INVALID_STYLES)) {
+        styles[key.replace(/-([a-z])/g, camelCase)] = value;
+      }
+    });
+
+    return styles;
   }
 
   /**

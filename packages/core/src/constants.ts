@@ -299,6 +299,7 @@ export const FILTER_ALLOW = 1;
 export const FILTER_DENY = 2;
 export const FILTER_CAST_NUMBER = 3;
 export const FILTER_CAST_BOOL = 4;
+export const FILTER_NO_CAST = 5;
 
 // Attributes not listed here will be denied
 // https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes
@@ -327,6 +328,7 @@ export const ATTRIBUTES: FilterMap = Object.freeze({
   scope: FILTER_ALLOW,
   sizes: FILTER_ALLOW,
   span: FILTER_CAST_NUMBER,
+  style: FILTER_NO_CAST,
   src: FILTER_ALLOW,
   srclang: FILTER_ALLOW,
   srcset: FILTER_ALLOW,
