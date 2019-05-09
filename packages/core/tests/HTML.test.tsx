@@ -640,4 +640,338 @@ describe('html', () => {
       expect(wrapper).toMatchSnapshot();
     });
   });
+
+  describe('samp', () => {
+    it('renders', () => {
+      const wrapper = shallow(
+        <Markup content={`<samp>Keyboard not found <br>Press F1 to continue</samp>`} />,
+      );
+
+      expect(wrapper).toMatchSnapshot();
+    });
+  });
+
+  describe('section', () => {
+    it('renders', () => {
+      const wrapper = shallow(
+        <Markup
+          content={`<section>
+  <h1>Introduction</h1>
+  <p>People have been catching fish for food since before recorded history...</p>
+</section>`}
+        />,
+      );
+
+      expect(wrapper).toMatchSnapshot();
+    });
+  });
+
+  describe('small', () => {
+    it('renders', () => {
+      const wrapper = shallow(
+        <Markup
+          content={`<p><small>The content is licensed under a Creative Commons Attribution-ShareAlike 2.5 Generic License.</small></p>`}
+        />,
+      );
+
+      expect(wrapper).toMatchSnapshot();
+    });
+  });
+
+  describe('source', () => {
+    it('renders', () => {
+      const wrapper = shallow(
+        <Markup
+          content={`<video controls width="250" height="200" muted>
+  <source src="/media/examples/flower.webm" type="video/webm">
+  <source src="/media/examples/flower.mp4" type="video/mp4">
+  This browser does not support the HTML5 video element.
+</video>`}
+        />,
+      );
+
+      expect(wrapper).toMatchSnapshot();
+    });
+
+    it('doesnt render if outside its parent', () => {
+      const wrapper = shallow(
+        <Markup content={`<source src="/media/examples/flower.webm" type="video/webm">`} />,
+      );
+
+      expect(wrapper).toMatchSnapshot();
+    });
+  });
+
+  describe('span', () => {
+    it('renders', () => {
+      const wrapper = shallow(
+        <Markup
+          content={`Add the <span class="ingredient">basil</span>, <span class="ingredient">pine nuts</span> and <span class="ingredient">garlic</span> to a blender and blend into a paste.`}
+        />,
+      );
+
+      expect(wrapper).toMatchSnapshot();
+    });
+  });
+
+  describe('strong', () => {
+    it('renders', () => {
+      const wrapper = shallow(
+        <Markup
+          content={`... the most important rule, the rule you can never forget, no matter how much he cries, no matter how much he begs: <strong>never feed him after midnight</strong>.`}
+        />,
+      );
+
+      expect(wrapper).toMatchSnapshot();
+    });
+  });
+
+  describe('sub', () => {
+    it('renders', () => {
+      const wrapper = shallow(
+        <Markup
+          content={`Almost every developer's favorite molecule is
+          C<sub>8</sub>H<sub>10</sub>N<sub>4</sub>O<sub>2</sub>, also known as "caffeine."`}
+        />,
+      );
+
+      expect(wrapper).toMatchSnapshot();
+    });
+  });
+
+  describe('sup', () => {
+    it('renders', () => {
+      const wrapper = shallow(
+        <Markup
+          content={`<var>a<sup>2</sup></var> + <var>b<sup>2</sup></var> = <var>c<sup>2</sup></var>`}
+        />,
+      );
+
+      expect(wrapper).toMatchSnapshot();
+    });
+  });
+
+  describe('table, thead, tbody, tfoot', () => {
+    it('renders', () => {
+      const wrapper = shallow(
+        <Markup
+          content={`<table>
+  <thead>
+    <tr>
+      <th>Items</th>
+      <th scope="col">Expenditure</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th scope="row">Donuts</th>
+      <td>3,000</td>
+    </tr>
+    <tr>
+      <th scope="row">Stationary</th>
+      <td>18,000</td>
+    </tr>
+  </tbody>
+  <tfoot>
+    <tr>
+      <th scope="row">Totals</th>
+      <td>21,000</td>
+    </tr>
+  </tfoot>
+</table>`}
+        />,
+      );
+
+      expect(wrapper).toMatchSnapshot();
+    });
+
+    it('renders table with direct rows', () => {
+      const wrapper = shallow(
+        <Markup
+          content={`<table>
+  <tr>
+    <th scope="row">Donuts</th>
+    <td>3,000</td>
+  </tr>
+  <tr>
+    <th scope="row">Stationary</th>
+    <td>18,000</td>
+  </tr>
+</table>`}
+        />,
+      );
+
+      expect(wrapper).toMatchSnapshot();
+    });
+  });
+
+  describe('thead', () => {
+    it('doesnt render outside of table', () => {
+      const wrapper = shallow(
+        <Markup
+          content={`<thead>
+  <tr>
+    <th>Items</th>
+    <th scope="col">Expenditure</th>
+  </tr>
+</thead>`}
+        />,
+      );
+
+      expect(wrapper).toMatchSnapshot();
+    });
+  });
+
+  describe('tbody', () => {
+    it('doesnt render outside of table', () => {
+      const wrapper = shallow(
+        <Markup
+          content={`<tbody>
+  <tr>
+    <th scope="row">Donuts</th>
+    <td>3,000</td>
+  </tr>
+</tbody>`}
+        />,
+      );
+
+      expect(wrapper).toMatchSnapshot();
+    });
+  });
+
+  describe('tfoot', () => {
+    it('doesnt render outside of table', () => {
+      const wrapper = shallow(
+        <Markup
+          content={`<tfoot>
+  <tr>
+    <th scope="row">Totals</th>
+    <td>21,000</td>
+  </tr>
+</tfoot>`}
+        />,
+      );
+
+      expect(wrapper).toMatchSnapshot();
+    });
+  });
+
+  describe('tr', () => {
+    it('doesnt render outside of table', () => {
+      const wrapper = shallow(
+        <Markup
+          content={`<tr>
+  <th scope="row">Donuts</th>
+  <td>3,000</td>
+</tr>`}
+        />,
+      );
+
+      expect(wrapper).toMatchSnapshot();
+    });
+  });
+
+  describe('td', () => {
+    it('doesnt render outside of tr', () => {
+      const wrapper = shallow(<Markup content={`<td>3,000</td>`} />);
+
+      expect(wrapper).toMatchSnapshot();
+    });
+  });
+
+  describe('th', () => {
+    it('doesnt render outside of tr', () => {
+      const wrapper = shallow(<Markup content={`<th scope="row">Donuts</th>`} />);
+
+      expect(wrapper).toMatchSnapshot();
+    });
+  });
+
+  describe('time', () => {
+    it('renders', () => {
+      const wrapper = shallow(
+        <Markup
+          content={`The Cure will be celebrating their 40th anniversary on <time datetime="2018-07-07">July 7</time> in London's Hyde Park.`}
+        />,
+      );
+
+      expect(wrapper).toMatchSnapshot();
+    });
+  });
+
+  describe('track', () => {
+    it('renders', () => {
+      const wrapper = shallow(
+        <Markup
+          content={`<video controls width="250" src="/media/examples/friday.mp4">
+  <track default kind="captions" srcLang="en" src="/media/examples/friday.vtt"/>
+
+  Sorry, your browser doesn't support embedded videos.
+</video>`}
+        />,
+      );
+
+      expect(wrapper).toMatchSnapshot();
+    });
+
+    it('doesnt render if outside its parent', () => {
+      const wrapper = shallow(
+        <Markup
+          content={`<track default kind="captions" srcLang="en" src="/media/examples/friday.vtt"/>`}
+        />,
+      );
+
+      expect(wrapper).toMatchSnapshot();
+    });
+  });
+
+  describe('u', () => {
+    it('renders', () => {
+      const wrapper = shallow(
+        <Markup
+          content={`<p>You could use this element to highlight <u>speling</u> mistakes, so the writer can <u>corect</u> them.</p>`}
+        />,
+      );
+
+      expect(wrapper).toMatchSnapshot();
+    });
+  });
+
+  describe('var', () => {
+    it('renders', () => {
+      const wrapper = shallow(
+        <Markup
+          content={`The volume of a box is <var>l</var> × <var>w</var> × <var>h</var>, where <var>l</var> represents the length, <var>w</var> the width and <var>h</var> the height of the box.`}
+        />,
+      );
+
+      expect(wrapper).toMatchSnapshot();
+    });
+  });
+
+  describe('video', () => {
+    it('renders', () => {
+      const wrapper = shallow(
+        <Markup
+          content={`<video controls>
+  <source src="myVideo.mp4" type="video/mp4">
+  <source src="myVideo.webm" type="video/webm">
+  <p>Your browser doesn't support HTML5 video. Here is a <a href="myVideo.mp4">link to the video</a> instead.</p>
+</video>`}
+        />,
+      );
+
+      expect(wrapper).toMatchSnapshot();
+    });
+  });
+
+  describe('wbr', () => {
+    it('renders', () => {
+      const wrapper = shallow(
+        <Markup content={`Fernstraßen<wbr>bau<wbr>privat<wbr>finanzierungs<wbr>gesetz`} />,
+      );
+
+      expect(wrapper).toMatchSnapshot();
+    });
+  });
 });

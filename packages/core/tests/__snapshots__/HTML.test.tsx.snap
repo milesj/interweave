@@ -1735,3 +1735,804 @@ exports[`html s renders 1`] = `
   </Element>
 </Element>
 `;
+
+exports[`html samp renders 1`] = `
+<Element
+  tagName="div"
+>
+  <Element
+    key="0"
+    tagName="samp"
+  >
+    Keyboard not found 
+    <Element
+      key="1"
+      selfClose={true}
+      tagName="br"
+    />
+    Press F1 to continue
+  </Element>
+</Element>
+`;
+
+exports[`html section renders 1`] = `
+<Element
+  tagName="div"
+>
+  <Element
+    key="0"
+    tagName="section"
+  >
+    
+  
+    <Element
+      key="1"
+      tagName="h1"
+    >
+      Introduction
+    </Element>
+    
+  
+    <Element
+      key="2"
+      tagName="p"
+    >
+      People have been catching fish for food since before recorded history...
+    </Element>
+    
+
+  </Element>
+</Element>
+`;
+
+exports[`html small renders 1`] = `
+<Element
+  tagName="div"
+>
+  <Element
+    key="0"
+    tagName="p"
+  >
+    <Element
+      key="1"
+      tagName="small"
+    >
+      The content is licensed under a Creative Commons Attribution-ShareAlike 2.5 Generic License.
+    </Element>
+  </Element>
+</Element>
+`;
+
+exports[`html source doesnt render if outside its parent 1`] = `
+<Element
+  tagName="div"
+/>
+`;
+
+exports[`html source renders 1`] = `
+<Element
+  tagName="div"
+>
+  <Element
+    attributes={
+      Object {
+        "controls": true,
+        "height": "200",
+        "muted": true,
+        "width": "250",
+      }
+    }
+    key="0"
+    tagName="video"
+  >
+    
+  
+    <Element
+      attributes={
+        Object {
+          "src": "/media/examples/flower.webm",
+          "type": "video/webm",
+        }
+      }
+      key="1"
+      selfClose={true}
+      tagName="source"
+    />
+    
+  
+    <Element
+      attributes={
+        Object {
+          "src": "/media/examples/flower.mp4",
+          "type": "video/mp4",
+        }
+      }
+      key="2"
+      selfClose={true}
+      tagName="source"
+    />
+    
+  This browser does not support the HTML5 video element.
+
+  </Element>
+</Element>
+`;
+
+exports[`html span renders 1`] = `
+<Element
+  tagName="div"
+>
+  Add the 
+  <Element
+    attributes={
+      Object {
+        "className": "ingredient",
+      }
+    }
+    key="0"
+    tagName="span"
+  >
+    basil
+  </Element>
+  , 
+  <Element
+    attributes={
+      Object {
+        "className": "ingredient",
+      }
+    }
+    key="1"
+    tagName="span"
+  >
+    pine nuts
+  </Element>
+   and 
+  <Element
+    attributes={
+      Object {
+        "className": "ingredient",
+      }
+    }
+    key="2"
+    tagName="span"
+  >
+    garlic
+  </Element>
+   to a blender and blend into a paste.
+</Element>
+`;
+
+exports[`html strong renders 1`] = `
+<Element
+  tagName="div"
+>
+  ... the most important rule, the rule you can never forget, no matter how much he cries, no matter how much he begs: 
+  <Element
+    key="0"
+    tagName="strong"
+  >
+    never feed him after midnight
+  </Element>
+  .
+</Element>
+`;
+
+exports[`html sub renders 1`] = `
+<Element
+  tagName="div"
+>
+  Almost every developer's favorite molecule is
+          C
+  <Element
+    key="0"
+    tagName="sub"
+  >
+    8
+  </Element>
+  H
+  <Element
+    key="1"
+    tagName="sub"
+  >
+    10
+  </Element>
+  N
+  <Element
+    key="2"
+    tagName="sub"
+  >
+    4
+  </Element>
+  O
+  <Element
+    key="3"
+    tagName="sub"
+  >
+    2
+  </Element>
+  , also known as "caffeine."
+</Element>
+`;
+
+exports[`html sup renders 1`] = `
+<Element
+  tagName="div"
+>
+  <Element
+    key="0"
+    tagName="var"
+  >
+    a
+    <Element
+      key="1"
+      tagName="sup"
+    >
+      2
+    </Element>
+  </Element>
+   + 
+  <Element
+    key="2"
+    tagName="var"
+  >
+    b
+    <Element
+      key="3"
+      tagName="sup"
+    >
+      2
+    </Element>
+  </Element>
+   = 
+  <Element
+    key="4"
+    tagName="var"
+  >
+    c
+    <Element
+      key="5"
+      tagName="sup"
+    >
+      2
+    </Element>
+  </Element>
+</Element>
+`;
+
+exports[`html table, thead, tbody, tfoot renders 1`] = `
+<Element
+  tagName="div"
+>
+  <Element
+    key="0"
+    tagName="table"
+  >
+    
+  
+    <Element
+      key="1"
+      tagName="thead"
+    >
+      
+    
+      <Element
+        key="2"
+        tagName="tr"
+      >
+        
+      
+        <Element
+          key="3"
+          tagName="th"
+        >
+          Items
+        </Element>
+        
+      
+        <Element
+          attributes={
+            Object {
+              "scope": "col",
+            }
+          }
+          key="4"
+          tagName="th"
+        >
+          Expenditure
+        </Element>
+        
+    
+      </Element>
+      
+  
+    </Element>
+    
+  
+    <Element
+      key="5"
+      tagName="tbody"
+    >
+      
+    
+      <Element
+        key="6"
+        tagName="tr"
+      >
+        
+      
+        <Element
+          attributes={
+            Object {
+              "scope": "row",
+            }
+          }
+          key="7"
+          tagName="th"
+        >
+          Donuts
+        </Element>
+        
+      
+        <Element
+          key="8"
+          tagName="td"
+        >
+          3,000
+        </Element>
+        
+    
+      </Element>
+      
+    
+      <Element
+        key="9"
+        tagName="tr"
+      >
+        
+      
+        <Element
+          attributes={
+            Object {
+              "scope": "row",
+            }
+          }
+          key="10"
+          tagName="th"
+        >
+          Stationary
+        </Element>
+        
+      
+        <Element
+          key="11"
+          tagName="td"
+        >
+          18,000
+        </Element>
+        
+    
+      </Element>
+      
+  
+    </Element>
+    
+  
+    <Element
+      key="12"
+      tagName="tfoot"
+    >
+      
+    
+      <Element
+        key="13"
+        tagName="tr"
+      >
+        
+      
+        <Element
+          attributes={
+            Object {
+              "scope": "row",
+            }
+          }
+          key="14"
+          tagName="th"
+        >
+          Totals
+        </Element>
+        
+      
+        <Element
+          key="15"
+          tagName="td"
+        >
+          21,000
+        </Element>
+        
+    
+      </Element>
+      
+  
+    </Element>
+    
+
+  </Element>
+</Element>
+`;
+
+exports[`html table, thead, tbody, tfoot renders table with direct rows 1`] = `
+<Element
+  tagName="div"
+>
+  <Element
+    key="0"
+    tagName="table"
+  >
+    
+  
+    <Element
+      key="1"
+      tagName="tbody"
+    >
+      <Element
+        key="2"
+        tagName="tr"
+      >
+        
+    
+        <Element
+          attributes={
+            Object {
+              "scope": "row",
+            }
+          }
+          key="3"
+          tagName="th"
+        >
+          Donuts
+        </Element>
+        
+    
+        <Element
+          key="4"
+          tagName="td"
+        >
+          3,000
+        </Element>
+        
+  
+      </Element>
+      
+  
+      <Element
+        key="5"
+        tagName="tr"
+      >
+        
+    
+        <Element
+          attributes={
+            Object {
+              "scope": "row",
+            }
+          }
+          key="6"
+          tagName="th"
+        >
+          Stationary
+        </Element>
+        
+    
+        <Element
+          key="7"
+          tagName="td"
+        >
+          18,000
+        </Element>
+        
+  
+      </Element>
+      
+
+    </Element>
+  </Element>
+</Element>
+`;
+
+exports[`html tbody doesnt render outside of table 1`] = `
+<Element
+  tagName="div"
+>
+  
+  
+    Donuts
+    3,000
+  
+
+</Element>
+`;
+
+exports[`html td doesnt render outside of tr 1`] = `
+<Element
+  tagName="div"
+>
+  3,000
+</Element>
+`;
+
+exports[`html tfoot doesnt render outside of table 1`] = `
+<Element
+  tagName="div"
+>
+  
+  
+    Totals
+    21,000
+  
+
+</Element>
+`;
+
+exports[`html th doesnt render outside of tr 1`] = `
+<Element
+  tagName="div"
+>
+  Donuts
+</Element>
+`;
+
+exports[`html thead doesnt render outside of table 1`] = `
+<Element
+  tagName="div"
+>
+  
+  
+    Items
+    Expenditure
+  
+
+</Element>
+`;
+
+exports[`html time renders 1`] = `
+<Element
+  tagName="div"
+>
+  The Cure will be celebrating their 40th anniversary on 
+  <Element
+    attributes={
+      Object {
+        "dateTime": "2018-07-07",
+      }
+    }
+    key="0"
+    tagName="time"
+  >
+    July 7
+  </Element>
+   in London's Hyde Park.
+</Element>
+`;
+
+exports[`html tr doesnt render outside of table 1`] = `
+<Element
+  tagName="div"
+>
+  
+  Donuts
+  3,000
+
+</Element>
+`;
+
+exports[`html track doesnt render if outside its parent 1`] = `
+<Element
+  tagName="div"
+/>
+`;
+
+exports[`html track renders 1`] = `
+<Element
+  tagName="div"
+>
+  <Element
+    attributes={
+      Object {
+        "controls": true,
+        "src": "/media/examples/friday.mp4",
+        "width": "250",
+      }
+    }
+    key="0"
+    tagName="video"
+  >
+    
+  
+    <Element
+      attributes={
+        Object {
+          "default": true,
+          "kind": "captions",
+          "src": "/media/examples/friday.vtt",
+        }
+      }
+      key="1"
+      selfClose={true}
+      tagName="track"
+    />
+    
+
+  Sorry, your browser doesn't support embedded videos.
+
+  </Element>
+</Element>
+`;
+
+exports[`html u renders 1`] = `
+<Element
+  tagName="div"
+>
+  <Element
+    key="0"
+    tagName="p"
+  >
+    You could use this element to highlight 
+    <Element
+      key="1"
+      tagName="u"
+    >
+      speling
+    </Element>
+     mistakes, so the writer can 
+    <Element
+      key="2"
+      tagName="u"
+    >
+      corect
+    </Element>
+     them.
+  </Element>
+</Element>
+`;
+
+exports[`html var renders 1`] = `
+<Element
+  tagName="div"
+>
+  The volume of a box is 
+  <Element
+    key="0"
+    tagName="var"
+  >
+    l
+  </Element>
+   × 
+  <Element
+    key="1"
+    tagName="var"
+  >
+    w
+  </Element>
+   × 
+  <Element
+    key="2"
+    tagName="var"
+  >
+    h
+  </Element>
+  , where 
+  <Element
+    key="3"
+    tagName="var"
+  >
+    l
+  </Element>
+   represents the length, 
+  <Element
+    key="4"
+    tagName="var"
+  >
+    w
+  </Element>
+   the width and 
+  <Element
+    key="5"
+    tagName="var"
+  >
+    h
+  </Element>
+   the height of the box.
+</Element>
+`;
+
+exports[`html video renders 1`] = `
+<Element
+  tagName="div"
+>
+  <Element
+    attributes={
+      Object {
+        "controls": true,
+      }
+    }
+    key="0"
+    tagName="video"
+  >
+    
+  
+    <Element
+      attributes={
+        Object {
+          "src": "myVideo.mp4",
+          "type": "video/mp4",
+        }
+      }
+      key="1"
+      selfClose={true}
+      tagName="source"
+    />
+    
+  
+    <Element
+      attributes={
+        Object {
+          "src": "myVideo.webm",
+          "type": "video/webm",
+        }
+      }
+      key="2"
+      selfClose={true}
+      tagName="source"
+    />
+    
+  
+    Your browser doesn't support HTML5 video. Here is a 
+    <Element
+      attributes={
+        Object {
+          "href": "myVideo.mp4",
+        }
+      }
+      key="3"
+      tagName="a"
+    >
+      link to the video
+    </Element>
+     instead.
+    
+
+  </Element>
+</Element>
+`;
+
+exports[`html wbr renders 1`] = `
+<Element
+  tagName="div"
+>
+  Fernstraßen
+  <Element
+    key="0"
+    selfClose={true}
+    tagName="wbr"
+  />
+  bau
+  <Element
+    key="1"
+    selfClose={true}
+    tagName="wbr"
+  />
+  privat
+  <Element
+    key="2"
+    selfClose={true}
+    tagName="wbr"
+  />
+  finanzierungs
+  <Element
+    key="3"
+    selfClose={true}
+    tagName="wbr"
+  />
+  gesetz
+</Element>
+`;
