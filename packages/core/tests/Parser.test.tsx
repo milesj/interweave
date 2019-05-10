@@ -413,15 +413,7 @@ describe('Parser', () => {
       });
     });
 
-    it('denies `style` if not allowed', () => {
-      instance.props.allowInlineStyles = false;
-      element.setAttribute('style', 'background-color: red; color: black; display: inline-block;');
-
-      expect(instance.extractAttributes(element)).toBeNull();
-    });
-
     it('converts `style` to an object', () => {
-      instance.props.allowInlineStyles = true;
       element.setAttribute('style', 'background-color: red; color: black; display: inline-block;');
 
       expect(instance.extractAttributes(element)).toEqual({
@@ -434,7 +426,6 @@ describe('Parser', () => {
     });
 
     it('removes problematic values from `style`', () => {
-      instance.props.allowInlineStyles = true;
       element.setAttribute(
         'style',
         'color: blue; background-image: url("foo.png"); background: image(ltr "arrow.png#xywh=0,0,16,16", red); border: image-set("cat.jpg" 1x, "dog.jpg" 1x)',

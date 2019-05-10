@@ -22,7 +22,7 @@ export interface NodeConfig {
 }
 
 export interface Attributes {
-  [attr: string]: string | number | boolean;
+  [attr: string]: string | number | boolean | object;
 }
 
 export type AfterParseCallback<T> = (content: Node[], props: T) => Node[];

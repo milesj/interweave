@@ -4,6 +4,7 @@ import React from 'react';
 import escapeHtml from 'escape-html';
 import Element, { ElementProps } from './Element';
 import { FilterInterface } from './Filter';
+import StyleFilter from './StyleFilter';
 import { MatcherInterface } from './Matcher';
 import {
   FILTER_DENY,
@@ -21,7 +22,6 @@ import { Attributes, Node, NodeConfig, TransformCallback, MatchResponse } from '
 const ELEMENT_NODE = 1;
 const TEXT_NODE = 3;
 const INVALID_ROOTS = /^<(!doctype|(html|head|body)(\s|>))/i;
-const INVALID_STYLES = /(url|image|image-set)\(/i;
 const ALLOWED_ATTRS = /^(aria-|data-|\w+:)/iu;
 
 export interface ParserProps {
@@ -29,8 +29,6 @@ export interface ParserProps {
   allowAttributes?: boolean;
   /** Disable filtering and allow all non-banned/blocked HTML elements to be rendered. */
   allowElements?: boolean;
-  /** Allow inline styles on parsed HTML elements. */
-  allowInlineStyles?: boolean;
   /** List of HTML tag names to allow and render. Defaults to the `ALLOWED_TAG_LIST` constant. */
   allowList?: string[];
   /** List of HTML tag names to disallow and not render. Overrides allow list. */
@@ -80,7 +78,7 @@ export default class Parser {
 
     this.props = props;
     this.matchers = matchers;
-    this.filters = filters;
+    this.filters = [...filters, new StyleFilter()];
     this.keyIndex = -1;
     this.doc = this.createDocument(markup || '');
     this.allowed = new Set(props.allowList || ALLOWED_TAG_LIST);
@@ -91,10 +89,12 @@ export default class Parser {
   /**
    * Loop through and apply all registered attribute filters.
    */
-  applyAttributeFilters(name: string, value: string): string {
+  applyAttributeFilters(name: string, value: any): any {
     return this.filters.reduce(
       (nextValue, filter) =>
-        typeof filter.attribute === 'function' ? filter.attribute(name, nextValue) : nextValue,
+        nextValue !== null && typeof filter.attribute === 'function'
+          ? filter.attribute(name, nextValue)
+          : nextValue,
       value,
     );
   }
@@ -106,7 +106,9 @@ export default class Parser {
     // Allow null to be returned
     return this.filters.reduce(
       (nextNode, filter) =>
-        nextNode && typeof filter.node === 'function' ? filter.node(name, nextNode) : nextNode,
+        nextNode !== null && typeof filter.node === 'function'
+          ? filter.node(name, nextNode)
+          : nextNode,
       node,
     );
   }
@@ -280,7 +282,7 @@ export default class Parser {
    * Returns null if no attributes are defined.
    */
   extractAttributes(node: HTMLElement): Attributes | null {
-    const { allowAttributes, allowInlineStyles } = this.props;
+    const { allowAttributes } = this.props;
     const attributes: Attributes = {};
     let count = 0;
 
@@ -291,7 +293,7 @@ export default class Parser {
     Array.from(node.attributes).forEach(attr => {
       const { name, value } = attr;
       const newName = name.toLowerCase();
-      const filter: number = ATTRIBUTES[newName] || ATTRIBUTES[name];
+      const filter = ATTRIBUTES[newName] || ATTRIBUTES[name];
 
       // Verify the node is safe from attacks
       if (!this.isSafe(node)) {
@@ -312,15 +314,7 @@ export default class Parser {
       }
 
       // Apply attribute filters
-      let newValue: any = this.applyAttributeFilters(newName, value);
-
-      if (newName === 'style') {
-        if (allowInlineStyles) {
-          newValue = this.extractStyleAttribute(node);
-        } else {
-          return;
-        }
-      }
+      let newValue: any = newName === 'style' ? this.extractStyleAttribute(node) : value;
 
       // Cast to boolean
       if (filter === FILTER_CAST_BOOL) {
@@ -335,7 +329,10 @@ export default class Parser {
         newValue = String(newValue);
       }
 
-      attributes[ATTRIBUTES_TO_PROPS[newName] || newName] = newValue;
+      attributes[ATTRIBUTES_TO_PROPS[newName] || newName] = this.applyAttributeFilters(
+        newName,
+        newValue,
+      );
       count += 1;
     });
 
@@ -354,12 +351,9 @@ export default class Parser {
     const camelCase = (match: string, letter: string) => letter.toUpperCase();
 
     Array.from(node.style).forEach(key => {
-      const prop = key as keyof CSSStyleDeclaration;
-      const value = node.style[prop];
+      const value = node.style[key as keyof CSSStyleDeclaration];
 
-      if (!value.match(INVALID_STYLES)) {
-        styles[key.replace(/-([a-z])/g, camelCase)] = value;
-      }
+      styles[key.replace(/-([a-z])/g, camelCase)] = value;
     });
 
     return styles;

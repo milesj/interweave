@@ -1570,6 +1570,9 @@ exports[`html ruby, rp, rt, rtc renders 1`] = `
   <Element
     attributes={
       Object {
+        "style": Object {
+          "rubyPosition": "under",
+        },
         "xml:lang": "zh-Hant",
       }
     }
@@ -1689,6 +1692,9 @@ exports[`html ruby, rp, rt, rtc renders 1`] = `
     <Element
       attributes={
         Object {
+          "style": Object {
+            "rubyPosition": "over",
+          },
           "xml:lang": "en",
         }
       }

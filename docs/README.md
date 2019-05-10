@@ -65,7 +65,6 @@ _Markup & Interweave_
 - `allowAttributes` (boolean) - Disable filtering and allow all non-banned HTML attributes.
 - `allowElements` (boolean) - Disable filtering and allow all non-banned/blocked HTML elements to be
   rendered.
-- `allowInlineStyles` (boolean) - Allow inline styles on parsed HTML elements.
 - `allowList` (string[]) - List of HTML tag names to allow and render. Defaults to the
   `ALLOWED_TAG_LIST` constant.
 - `blockList` (string[]) - List of HTML tag names to disallow and not render. Overrides allow list.

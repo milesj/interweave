@@ -3,8 +3,6 @@
 #### 🚀 Updates
 
 - Added new attributes to allow list: `media`, `scope`, `srclang`, `style`.
-- Added new `allowInlineStyles` prop, which is required to render inline styles found on HTML
-  elements.
   - Style properties that contain `image()`, `image-set()`, or `url()` are removed.
 - Namespace and data attributes are also now rendered.
 
@@ -13,6 +11,10 @@
 - Fixed many parent <-> child relationships as part of the new rendering hierarchy.
 - `figure` now supports all flow content.
 - `header` can now be rendered at the root.
+
+#### 🛠 Internals
+
+- Filters are now applied after attributes have been type casted, instead of before.
 
 ### 11.0.1 - 2019-05-06
 
