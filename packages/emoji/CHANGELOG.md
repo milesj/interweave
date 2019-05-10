@@ -1,3 +1,12 @@
+## 4.1.0 - 2019-05-09
+
+#### 🚀 Updates
+
+- `withEmojiData` version now defaults to the Emojibase `package.json` version instead of `latest`.
+  This change has been made as Emojibase v3 has been released, which supports Emoji/Unicode v12, but
+  most systems do not support this specification yet, so we want to lock to the latest Emojibase v2
+  version.
+
 ### 4.0.1 - 2019-05-06
 
 #### 🛠 Internals

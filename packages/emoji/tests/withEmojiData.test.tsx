@@ -130,7 +130,7 @@ describe('withEmojiData', () => {
 
     await delay();
 
-    expect(fetchSpy).not.toHaveBeenCalledWith('en/data.json', 'latest');
+    expect(fetchSpy).not.toHaveBeenCalledWith('en/data.json', '2.2.0');
 
     expect(wrapper.state('emojis')).toEqual(mockEmojis);
   });
@@ -182,7 +182,7 @@ describe('withEmojiData', () => {
 
     await delay();
 
-    expect(fetchSpy).toHaveBeenCalledWith('en/compact.json', 'latest');
+    expect(fetchSpy).toHaveBeenCalledWith('en/compact.json', '2.2.0');
   });
 
   it('supports multiple locales', async () => {
@@ -194,7 +194,7 @@ describe('withEmojiData', () => {
 
     await delay();
 
-    expect(fetchSpy).toHaveBeenCalledWith('ja/data.json', 'latest');
+    expect(fetchSpy).toHaveBeenCalledWith('ja/data.json', '2.2.0');
 
     shallow(
       <Component locale="it">
@@ -204,7 +204,7 @@ describe('withEmojiData', () => {
 
     await delay();
 
-    expect(fetchSpy).toHaveBeenCalledWith('it/data.json', 'latest');
+    expect(fetchSpy).toHaveBeenCalledWith('it/data.json', '2.2.0');
   });
 
   it('uses locale cache if it exists', async () => {

@@ -49,6 +49,8 @@ export function resetLoaded() {
   }
 }
 
+const EMOJIBASE_LATEST_VERSION = require('emojibase/package.json').version;
+
 export default function withEmojiData(options: WithEmojiDataOptions = {}) /* infer */ {
   const { alwaysRender = false, compact = false, emojis = [], throwErrors = true } = options;
 
@@ -65,7 +67,7 @@ export default function withEmojiData(options: WithEmojiDataOptions = {}) /* inf
 
       static defaultProps: any = {
         locale: 'en',
-        version: 'latest',
+        version: EMOJIBASE_LATEST_VERSION,
       };
 
       state: WithEmojiDataState = {
@@ -73,7 +75,7 @@ export default function withEmojiData(options: WithEmojiDataOptions = {}) /* inf
         source: {
           compact: false,
           locale: 'en',
-          version: 'latest',
+          version: EMOJIBASE_LATEST_VERSION,
         },
       };
 
