@@ -1,6 +1,6 @@
 {
   "name": "interweave",
-  "version": "11.0.1",
+  "version": "11.1.0",
   "description": "React library to safely render HTML, filter attributes, autowrap text, autolink, and much more.",
   "keywords": [
     "interweave",
