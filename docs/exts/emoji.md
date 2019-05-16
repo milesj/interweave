@@ -76,9 +76,7 @@ import BaseInterweave, { InterweaveProps } from 'interweave';
 import withEmojiData, { WithEmojiDataProps } from 'interweave-emoji';
 
 function Interweave(props: InterweaveProps & WithEmojiDataProps) {
-  const { emojis, emojiData, emojiSource, ...restProps } = props;
-
-  return <BaseInterweave {...restProps} />;
+  return <BaseInterweave {...props} />;
 }
 
 export default withEmojiData({ compact: false })(Interweave);
