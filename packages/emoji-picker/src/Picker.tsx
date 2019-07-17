@@ -149,7 +149,7 @@ export interface PickerState {
 
 export type PickerUnifiedProps = PickerProps & WithEmojiDataProps;
 
-const SKIN_MODIFIER_PATTERN: RegExp = /1F3FB|1F3FC|1F3FD|1F3FE|1F3FF/g;
+const SKIN_MODIFIER_PATTERN = /1F3FB|1F3FC|1F3FD|1F3FE|1F3FF/g;
 
 export class Picker extends React.PureComponent<PickerUnifiedProps, PickerState> {
   static defaultProps: Partial<PickerUnifiedProps> = {

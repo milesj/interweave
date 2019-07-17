@@ -23,9 +23,9 @@
     "@types/prop-types": "*",
     "@types/react": "*",
     "@types/react-virtualized": "*",
-    "lodash": "^4.17.11",
+    "lodash": "^4.17.14",
     "prop-types": "^15.7.2",
-    "react-virtualized": "^9.21.0"
+    "react-virtualized": "^9.21.1"
   },
   "peerDependencies": {
     "emojibase": "^2.0.0",

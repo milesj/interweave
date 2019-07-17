@@ -14,7 +14,7 @@ export interface EmojiMatcherOptions {
   renderUnicode?: boolean;
 }
 
-const EMOTICON_BOUNDARY_REGEX: RegExp = new RegExp(
+const EMOTICON_BOUNDARY_REGEX = new RegExp(
   // eslint-disable-next-line no-useless-escape
   `(^|\\\b|\\\s)(${EMOTICON_REGEX.source})(?=\\\s|\\\b|$)`,
 );

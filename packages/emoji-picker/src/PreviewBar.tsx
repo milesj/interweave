@@ -2,7 +2,7 @@ import React from 'react';
 import { Emoji as EmojiCharacter, CanonicalEmoji, Path, Size, Source } from 'interweave-emoji';
 import withContext, { WithContextProps } from './withContext';
 
-const TITLE_REGEX: RegExp = /(^|:|\.)\s?[a-z]/g;
+const TITLE_REGEX = /(^|:|\.)\s?[a-z]/g;
 
 export interface PreviewBarProps {
   emoji?: CanonicalEmoji | null;
