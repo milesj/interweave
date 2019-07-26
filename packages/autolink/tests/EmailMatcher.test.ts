@@ -105,6 +105,7 @@ describe('matchers/EmailMatcher', () => {
           const tokenString = location.replace(/\{token\}/g, email);
           const actual = parser.applyMatchers(tokenString, parentConfig);
 
+          // eslint-disable-next-line jest/no-if
           if (i === 0) {
             expect(actual).toBe(createExpectedToken(email, createEmail, 0));
           } else {

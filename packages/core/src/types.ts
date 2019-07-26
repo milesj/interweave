@@ -1,6 +1,6 @@
 import React from 'react';
 
-export type Node = null | string | React.ReactElement<any>;
+export type Node = null | string | React.ReactElement<unknown>;
 
 export interface NodeConfig {
   // Only children
@@ -21,8 +21,10 @@ export interface NodeConfig {
   void: boolean;
 }
 
+export type AttributeValue = string | number | boolean | object;
+
 export interface Attributes {
-  [attr: string]: string | number | boolean | object;
+  [attr: string]: AttributeValue;
 }
 
 export type AfterParseCallback<T> = (content: Node[], props: T) => Node[];

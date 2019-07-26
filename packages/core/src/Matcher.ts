@@ -40,7 +40,7 @@ export default abstract class Matcher<Props extends object = {}, Options extends
    * or the default matcher factory.
    */
   createElement(match: string, props: Props): Node {
-    let element: any = null;
+    let element: Node = null;
 
     if (this.factory) {
       element = React.createElement(this.factory, props, match);

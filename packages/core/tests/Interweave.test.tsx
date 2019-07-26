@@ -95,7 +95,7 @@ describe('Interweave', () => {
             inverseName: 'noB',
             propName: 'b',
             asTag: () => 'span',
-            createElement: (match: string, p: any) => (
+            createElement: (match: string, p: { children: string }) => (
               <Element key="0" tagName="span" {...p}>
                 {p.children.toUpperCase()}
               </Element>

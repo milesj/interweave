@@ -17,7 +17,14 @@ import {
   ATTRIBUTES,
   ATTRIBUTES_TO_PROPS,
 } from './constants';
-import { Attributes, Node, NodeConfig, TransformCallback, MatchResponse } from './types';
+import {
+  Attributes,
+  Node,
+  NodeConfig,
+  TransformCallback,
+  MatchResponse,
+  AttributeValue,
+} from './types';
 
 const ELEMENT_NODE = 1;
 const TEXT_NODE = 3;
@@ -58,7 +65,7 @@ export default class Parser {
 
   props: ParserProps;
 
-  matchers: MatcherInterface<any>[];
+  matchers: MatcherInterface<unknown>[];
 
   filters: FilterInterface[];
 
@@ -67,7 +74,7 @@ export default class Parser {
   constructor(
     markup: string,
     props: ParserProps = {},
-    matchers: MatcherInterface<any>[] = [],
+    matchers: MatcherInterface<unknown>[] = [],
     filters: FilterInterface[] = [],
   ) {
     if (__DEV__) {
@@ -89,7 +96,7 @@ export default class Parser {
   /**
    * Loop through and apply all registered attribute filters.
    */
-  applyAttributeFilters(name: string, value: any): any {
+  applyAttributeFilters(name: string, value: unknown): unknown {
     return this.filters.reduce(
       (nextValue, filter) =>
         nextValue !== null && typeof filter.attribute === 'function'
@@ -119,7 +126,7 @@ export default class Parser {
    * This array allows React to interpolate and render accordingly.
    */
   applyMatchers(string: string, parentConfig: NodeConfig): string | Node[] {
-    const elements: any = [];
+    const elements: Node[] = [];
     const { props } = this;
     let matchedString = string;
     let parts = null;
@@ -129,7 +136,10 @@ export default class Parser {
       const config = this.getTagConfig(tagName);
 
       // Skip matchers that have been disabled from props or are not supported
-      if ((props as any)[matcher.inverseName] || !this.isTagAllowed(tagName)) {
+      if (
+        (props as { [key: string]: unknown })[matcher.inverseName] ||
+        !this.isTagAllowed(tagName)
+      ) {
         return;
       }
 
@@ -314,7 +324,7 @@ export default class Parser {
       }
 
       // Apply attribute filters
-      let newValue: any = newName === 'style' ? this.extractStyleAttribute(node) : value;
+      let newValue: AttributeValue = newName === 'style' ? this.extractStyleAttribute(node) : value;
 
       // Cast to boolean
       if (filter === FILTER_CAST_BOOL) {
@@ -322,7 +332,7 @@ export default class Parser {
 
         // Cast to number
       } else if (filter === FILTER_CAST_NUMBER) {
-        newValue = parseFloat(newValue);
+        newValue = parseFloat(String(newValue));
 
         // Cast to string
       } else if (filter !== FILTER_NO_CAST) {
@@ -332,7 +342,7 @@ export default class Parser {
       attributes[ATTRIBUTES_TO_PROPS[newName] || newName] = this.applyAttributeFilters(
         newName,
         newValue,
-      );
+      ) as AttributeValue;
       count += 1;
     });
 
@@ -347,7 +357,7 @@ export default class Parser {
    * Extract the style attribute as an object and remove values that allow for attack vectors.
    */
   extractStyleAttribute(node: HTMLElement): object {
-    const styles: any = {};
+    const styles: { [key: string]: string } = {};
     const camelCase = (match: string, letter: string) => letter.toUpperCase();
 
     Array.from(node.style).forEach(key => {
@@ -475,7 +485,7 @@ export default class Parser {
           if (transformed === null) {
             return;
           } else if (typeof transformed !== 'undefined') {
-            content.push(React.cloneElement(transformed as React.ReactElement<any>, { key }));
+            content.push(React.cloneElement(transformed as React.ReactElement<unknown>, { key }));
 
             return;
           }

@@ -170,7 +170,7 @@ export default function withEmojiData(options: WithEmojiDataOptions = {}) /* inf
 
         return (
           <Component
-            {...props as any}
+            {...props as Props}
             emojis={this.state.emojis}
             emojiData={this.getDataInstance()}
             emojiSource={this.state.source}

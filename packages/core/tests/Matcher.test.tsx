@@ -28,7 +28,7 @@ describe('Matcher', () => {
     });
 
     it('can use a React component as a custom factory', () => {
-      function CustomFactoryComponent(props: any) {
+      function CustomFactoryComponent(props: { children: React.ReactNode; tagName: string }) {
         return <Element tagName={props.tagName}>{props.children}</Element>;
       }
 

@@ -69,6 +69,7 @@ describe('matchers/IpMatcher', () => {
         // @ts-ignore
         const expected: Partial<RegExpMatchArray> = [
           ip,
+          // eslint-disable-next-line jest/no-if
           params.scheme === null ? undefined : params.scheme || 'http://',
           params.auth,
           params.host,
@@ -122,6 +123,7 @@ describe('matchers/IpMatcher', () => {
           const tokenString = location.replace(/\{token\}/g, ipParams.ip);
           const actual = parser.applyMatchers(tokenString, parentConfig);
 
+          // eslint-disable-next-line jest/no-if
           if (i === 0) {
             expect(actual).toBe(createExpectedToken(ipParams, createIp, 0));
           } else {

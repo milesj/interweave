@@ -1,4 +1,4 @@
-/* eslint-disable no-bitwise, no-magic-numbers, sort-keys, unicorn/no-fn-reference-in-iterator */
+/* eslint-disable no-bitwise, no-magic-numbers, sort-keys */
 
 import { NodeConfig, ConfigMap, FilterMap } from './types';
 

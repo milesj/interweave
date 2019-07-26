@@ -785,7 +785,7 @@ export class Picker extends React.PureComponent<PickerUnifiedProps, PickerState>
         onSelect={this.handleSelectSkinTone}
       />
     );
-    const components: { [name: string]: React.ReactElement<any> | null } = {
+    const components: { [name: string]: React.ReactElement<unknown> | null } = {
       emojis: (
         <EmojiList
           key="emojis"

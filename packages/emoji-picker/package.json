@@ -23,7 +23,7 @@
     "@types/prop-types": "*",
     "@types/react": "*",
     "@types/react-virtualized": "*",
-    "lodash": "^4.17.14",
+    "lodash": "^4.17.15",
     "prop-types": "^15.7.2",
     "react-virtualized": "^9.21.1"
   },

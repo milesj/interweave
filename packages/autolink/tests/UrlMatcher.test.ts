@@ -179,8 +179,10 @@ describe('matchers/UrlMatcher', () => {
         // @ts-ignore
         const expected: Partial<RegExpMatchArray> = [
           url,
+          // eslint-disable-next-line jest/no-if
           params.scheme === null ? undefined : params.scheme || 'http://',
           params.auth,
+          // eslint-disable-next-line jest/no-if
           typeof params.host === 'undefined' ? 'example.com' : params.host,
           params.port,
           params.path,
@@ -232,6 +234,7 @@ describe('matchers/UrlMatcher', () => {
           const tokenString = location.replace(/\{token\}/g, urlParams.url);
           const actual = parser.applyMatchers(tokenString, parentConfig);
 
+          // eslint-disable-next-line jest/no-if
           if (i === 0) {
             expect(actual).toBe(createExpectedToken(urlParams, createUrl, 0));
           } else {

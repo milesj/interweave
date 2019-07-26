@@ -23,7 +23,7 @@ export class SearchBar extends React.PureComponent<SearchBarProps & WithContextP
   /**
    * Triggered when the input field value changes.
    */
-  private handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  private readonly handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     // Check if were still mounted
     if (this.inputRef.current) {
       this.props.onChange(event.target.value.trim(), event);

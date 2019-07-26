@@ -37,7 +37,7 @@ export default class UrlMatcher extends Matcher<UrlProps, UrlMatcherOptions> {
     const response = this.doMatch(string, URL_PATTERN, this.handleMatches);
 
     if (response && this.options.validateTLD) {
-      const { host } = response.urlParts as any;
+      const { host } = (response.urlParts as unknown) as UrlProps['urlParts'];
       const validList = TOP_LEVEL_TLDS.concat(this.options.customTLDs || []);
       const tld = host.slice(host.lastIndexOf('.') + 1).toLowerCase();
 

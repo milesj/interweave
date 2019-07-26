@@ -99,6 +99,7 @@ describe('Parser', () => {
           const tokenString = location.replace(/\{token\}/g, '[foo]');
           const actual = instance.applyMatchers(tokenString, parentConfig);
 
+          // eslint-disable-next-line jest/no-if
           if (i === 0) {
             expect(actual).toBe(createExpectedToken('foo', createElement, 0));
           } else {
@@ -119,6 +120,7 @@ describe('Parser', () => {
             .replace('{token}', '[baz]');
           const actual = instance.applyMatchers(tokenString, parentConfig);
 
+          // eslint-disable-next-line jest/no-if
           if (i === 0) {
             expect(actual).toBe(createExpectedToken('', createMultiElement, 0));
           } else {
