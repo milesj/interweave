@@ -3,7 +3,7 @@
 import React from 'react';
 import escapeHtml from 'escape-html';
 import Element, { ElementProps } from './Element';
-import { FilterInterface } from './Filter';
+import { FilterInterface, ElementAttributes } from './Filter';
 import StyleFilter from './StyleFilter';
 import { MatcherInterface } from './Matcher';
 import {
@@ -96,7 +96,10 @@ export default class Parser {
   /**
    * Loop through and apply all registered attribute filters.
    */
-  applyAttributeFilters(name: string, value: unknown): unknown {
+  applyAttributeFilters<K extends keyof ElementAttributes>(
+    name: K,
+    value: ElementAttributes[K],
+  ): ElementAttributes[K] {
     return this.filters.reduce(
       (nextValue, filter) =>
         nextValue !== null && typeof filter.attribute === 'function'
@@ -340,7 +343,7 @@ export default class Parser {
       }
 
       attributes[ATTRIBUTES_TO_PROPS[newName] || newName] = this.applyAttributeFilters(
-        newName,
+        newName as keyof ElementAttributes,
         newValue,
       ) as AttributeValue;
       count += 1;
