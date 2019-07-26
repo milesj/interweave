@@ -1,3 +1,10 @@
+## 11.2.0 - 2017-07-25
+
+#### 🚀 Updates
+
+- **[TS]** Updated `Filter#attribute` types to extend from `React.AllHTMLAttributes`.
+- **[TS]** Refined some internal types to not use `any`.
+
 ## 11.1.0 - 2019-05-09
 
 #### 🚀 Updates

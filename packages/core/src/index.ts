@@ -5,7 +5,7 @@
 
 import Interweave, { InterweaveProps } from './Interweave';
 import Markup, { MarkupProps } from './Markup';
-import Filter, { FilterInterface } from './Filter';
+import Filter, { FilterInterface, ElementAttributes } from './Filter';
 import Matcher, { MatcherInterface } from './Matcher';
 import Element from './Element';
 import Parser from './Parser';
@@ -16,6 +16,7 @@ export {
   MarkupProps,
   Filter,
   FilterInterface,
+  ElementAttributes,
   Matcher,
   MatcherInterface,
   Element,
