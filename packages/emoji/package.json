@@ -32,6 +32,6 @@
   "devDependencies": {
     "@types/hoist-non-react-statics": "^3.3.1",
     "emojibase": "^2.2.0",
-    "react": "^16.8.6"
+    "react": "^16.9.0"
   }
 }
