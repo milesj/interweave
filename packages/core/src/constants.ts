@@ -328,6 +328,7 @@ export const ATTRIBUTES: FilterMap = Object.freeze({
   scope: FILTER_ALLOW,
   sizes: FILTER_ALLOW,
   span: FILTER_CAST_NUMBER,
+  start: FILTER_CAST_NUMBER,
   style: FILTER_NO_CAST,
   src: FILTER_ALLOW,
   srclang: FILTER_ALLOW,
