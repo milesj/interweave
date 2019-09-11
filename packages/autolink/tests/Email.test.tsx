@@ -1,17 +1,18 @@
 import React from 'react';
-import { shallow } from 'enzyme';
-import Email from '../src/Email';
+import { render } from 'rut';
+import Email, { EmailProps } from '../src/Email';
+import Link from '../src/Link';
 
 describe('components/Email', () => {
   it('can pass props to Link', () => {
     const func = () => {};
-    const wrapper = shallow(
+    const { root } = render<EmailProps>(
       <Email emailParts={{ host: '', username: '' }} onClick={func} newWindow>
         user@domain.com
       </Email>,
     );
 
-    expect(wrapper.find('Link').prop('newWindow')).toBe(true);
-    expect(wrapper.find('Link').prop('onClick')).toBe(func);
+    expect(root.findOne(Link)).toHaveProp('newWindow', true);
+    expect(root.findOne(Link)).toHaveProp('onClick', func);
   });
 });

@@ -1,41 +1,37 @@
 import React from 'react';
-import { shallow } from 'enzyme';
-import Link from '../src/Link';
+import { render, mockSyntheticEvent } from 'rut';
+import Link, { LinkProps } from '../src/Link';
 
 describe('components/Link', () => {
   it('renders a link with href', () => {
-    const wrapper = shallow(<Link href="/home">Foo</Link>);
+    const { root } = render<LinkProps>(<Link href="/home">Foo</Link>);
 
-    expect(wrapper.is('a')).toBe(true);
-    expect(wrapper.prop('href')).toBe('/home');
-    expect(wrapper.prop('children')).toBe('Foo');
+    expect(root.findOne('a')).toHaveProp('href', '/home');
+    expect(root).toContainNode('Foo');
   });
 
   it('can set and trigger an onClick', () => {
-    let clicked = false;
-    const clicker = () => {
-      clicked = true;
-    };
-    const wrapper = shallow(
-      <Link href="/blog" onClick={clicker}>
+    const spy = jest.fn();
+    const { root } = render<LinkProps>(
+      <Link href="/blog" onClick={spy}>
         Foo
       </Link>,
     );
 
-    expect(wrapper.prop('onClick')).toBe(clicker);
+    expect(root.findOne('a')).toHaveProp('onClick', spy);
 
-    wrapper.simulate('click');
+    root.findOne('a').dispatch('onClick', {}, mockSyntheticEvent('onClick'));
 
-    expect(clicked).toBe(true);
+    expect(spy).toHaveBeenCalled();
   });
 
   it('can set target blank via newWindow', () => {
-    const wrapper = shallow(<Link href="/forums">Foo</Link>);
+    const { root, update } = render<LinkProps>(<Link href="/forums">Foo</Link>);
 
-    expect(wrapper.prop('target')).toBeUndefined();
+    expect(root.findOne('a')).not.toHaveProp('target');
 
-    wrapper.setProps({ newWindow: true });
+    update({ newWindow: true });
 
-    expect(wrapper.prop('target')).toBe('_blank');
+    expect(root.findOne('a')).toHaveProp('target', '_blank');
   });
 });

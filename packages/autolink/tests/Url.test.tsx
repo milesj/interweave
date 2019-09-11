@@ -1,6 +1,7 @@
 import React from 'react';
-import { shallow } from 'enzyme';
-import Url from '../src/Url';
+import { render } from 'rut';
+import Url, { UrlProps } from '../src/Url';
+import Link from '../src/Link';
 
 describe('components/Url', () => {
   const baseParts = {
@@ -14,28 +15,30 @@ describe('components/Url', () => {
   };
 
   it('passes the child as an href', () => {
-    const wrapper = shallow(<Url urlParts={baseParts}>{'http://domain.com/some/url'}</Url>);
+    const { root } = render<UrlProps>(
+      <Url urlParts={baseParts}>{'http://domain.com/some/url'}</Url>,
+    );
 
-    expect(wrapper.prop('children')).toBe('http://domain.com/some/url');
-    expect(wrapper.prop('href')).toBe('http://domain.com/some/url');
+    expect(root).toContainNode('http://domain.com/some/url');
+    expect(root.findOne(Link)).toHaveProp('href', 'http://domain.com/some/url');
   });
 
   it('automatically prepends http://', () => {
-    const wrapper = shallow(<Url urlParts={baseParts}>domain.com/some/url</Url>);
+    const { root } = render<UrlProps>(<Url urlParts={baseParts}>domain.com/some/url</Url>);
 
-    expect(wrapper.prop('children')).toBe('domain.com/some/url');
-    expect(wrapper.prop('href')).toBe('http://domain.com/some/url');
+    expect(root).toContainNode('domain.com/some/url');
+    expect(root.findOne(Link)).toHaveProp('href', 'http://domain.com/some/url');
   });
 
   it('can pass props to Link', () => {
     const func = () => {};
-    const wrapper = shallow(
+    const { root } = render<UrlProps>(
       <Url urlParts={baseParts} onClick={func} newWindow>
         {'http://domain.com/some/url'}
       </Url>,
     );
 
-    expect(wrapper.find('Link').prop('newWindow')).toBe(true);
-    expect(wrapper.find('Link').prop('onClick')).toBe(func);
+    expect(root.findOne(Link)).toHaveProp('newWindow', true);
+    expect(root.findOne(Link)).toHaveProp('onClick', func);
   });
 });
