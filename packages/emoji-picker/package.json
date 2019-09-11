@@ -20,7 +20,6 @@
   "license": "MIT",
   "dependencies": {
     "@types/lodash": "*",
-    "@types/prop-types": "*",
     "@types/react": "*",
     "@types/react-virtualized": "*",
     "lodash": "^4.17.15",
