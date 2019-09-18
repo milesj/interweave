@@ -70,6 +70,8 @@ export default function withEmojiData(options: WithEmojiDataOptions = {}) /* inf
         version: EMOJIBASE_LATEST_VERSION,
       };
 
+      mounted = false;
+
       state: WithEmojiDataState = {
         emojis: [],
         source: {
@@ -80,15 +82,23 @@ export default function withEmojiData(options: WithEmojiDataOptions = {}) /* inf
       };
 
       componentDidMount() {
+        console.log('componentDidMount');
+        this.mounted = true;
         this.loadEmojis();
       }
 
       componentDidUpdate(prevProps: Props & WithEmojiDataWrapperProps) {
+        console.log('componentDidUpdate');
         const { locale, version } = this.props;
 
         if (prevProps.locale !== locale || prevProps.version !== version) {
-          this.loadEmojis();
+          // this.loadEmojis();
         }
+      }
+
+      componentWillUnmount() {
+        console.log('componentWillUnmount');
+        this.mounted = false;
       }
 
       /**
@@ -103,6 +113,10 @@ export default function withEmojiData(options: WithEmojiDataOptions = {}) /* inf
        * use it instead of the parsed data.
        */
       setEmojis(nextEmojis: Emoji[] = []) {
+        if (!this.mounted) {
+          return;
+        }
+
         const { locale, version } = this.props as Required<WithEmojiDataWrapperProps>;
 
         this.setState({
@@ -128,28 +142,36 @@ export default function withEmojiData(options: WithEmojiDataOptions = {}) /* inf
 
         // Abort as we've already loaded data
         if (loaded.has(key) || emojis.length > 0) {
+          console.log('loadEmojis', 'LOADED', emojis);
           this.setEmojis(emojis);
 
-          return Promise.resolve();
+          return promise.get(key)!;
         }
 
         // Or hook into the promise if we're loading
         if (promise.has(key)) {
+          console.log('loadEmojis', 'PROMISE');
           return promise.get(key)!.then(() => {
             this.setEmojis();
           });
         }
+
+        console.log('loadEmojis', 'FETCH', key);
 
         // Otherwise, start loading emoji data from the CDN
         const request = fetchFromCDN<Emoji>(`${locale}/${set}.json`, version)
           .then(response => {
             loaded.add(key);
 
+            console.log({ response });
+
             this.getDataInstance().parseEmojiData(response);
             this.setEmojis();
           })
           .catch(error => {
             loaded.add(key);
+
+            console.log({ error });
 
             if (throwErrors) {
               throw error;
@@ -164,13 +186,15 @@ export default function withEmojiData(options: WithEmojiDataOptions = {}) /* inf
       render() {
         const { locale, version, ...props } = this.props;
 
-        if (this.state.emojis.length === 0 && !alwaysRender) {
+        if (!this.mounted || (this.state.emojis.length === 0 && !alwaysRender)) {
           return null;
         }
 
+        console.log('render', this.state);
+
         return (
           <Component
-            {...props as Props}
+            {...(props as Props)}
             emojis={this.state.emojis}
             emojiData={this.getDataInstance()}
             emojiSource={this.state.source}

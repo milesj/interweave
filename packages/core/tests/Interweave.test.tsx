@@ -1,11 +1,10 @@
 import React from 'react';
 import ReactDOMServer from 'react-dom/server';
-import { shallow } from 'enzyme';
+import { render } from 'rut';
 import Interweave from '../src/Interweave';
 import Element from '../src/Element';
 import { ALLOWED_TAG_LIST } from '../src/constants';
 import {
-  EXTRA_PROPS,
   MOCK_MARKUP,
   MOCK_INVALID_MARKUP,
   LinkFilter,
@@ -20,21 +19,15 @@ describe('Interweave', () => {
   });
 
   it('can pass filters through props', () => {
-    const wrapper = shallow(
+    const { root } = render(
       <Interweave filters={[new LinkFilter()]} content={'Foo <a href="foo.com">Bar</a> Baz'} />,
-    ).shallow();
+    );
 
-    expect(wrapper.prop('children')).toEqual([
-      'Foo ',
-      <Element tagName="a" key="0" attributes={{ href: 'bar.net', target: '_blank' }}>
-        {['Bar']}
-      </Element>,
-      ' Baz',
-    ]);
+    expect(root.findAt(Element, 'first')).toMatchSnapshot();
   });
 
   it('can pass object based filters through props', () => {
-    const wrapper = shallow(
+    const { root } = render(
       <Interweave
         filters={[
           {
@@ -44,51 +37,33 @@ describe('Interweave', () => {
         ]}
         content={'Foo <a href="foo.com">Bar</a> Baz'}
       />,
-    ).shallow();
+    );
 
-    expect(wrapper.prop('children')).toEqual([
-      'Foo ',
-      <Element tagName="a" key="0" attributes={{ href: 'bar.net' }}>
-        {['Bar']}
-      </Element>,
-      ' Baz',
-    ]);
+    expect(root.findAt(Element, 'first')).toMatchSnapshot();
   });
 
   it('can disable all filters using `disableFilters`', () => {
-    const wrapper = shallow(
+    const { root } = render(
       <Interweave
         filters={[new LinkFilter()]}
         disableFilters
         content={'Foo <a href="foo.com">Bar</a> Baz'}
       />,
-    ).shallow();
+    );
 
-    expect(wrapper.prop('children')).toEqual([
-      'Foo ',
-      <Element tagName="a" key="0" attributes={{ href: 'foo.com' }}>
-        {['Bar']}
-      </Element>,
-      ' Baz',
-    ]);
+    expect(root.findAt(Element, 'first')).toMatchSnapshot();
   });
 
   it('can pass matchers through props', () => {
-    const wrapper = shallow(
+    const { root } = render(
       <Interweave matchers={[new CodeTagMatcher('b', '1')]} content="Foo [b] Bar Baz" />,
-    ).shallow();
+    );
 
-    expect(wrapper.prop('children')).toEqual([
-      'Foo ',
-      <Element {...EXTRA_PROPS} tagName="span" key="1" customProp="foo">
-        B
-      </Element>,
-      ' Bar Baz',
-    ]);
+    expect(root.findAt(Element, 'first')).toMatchSnapshot();
   });
 
   it('can pass object based matchers through props', () => {
-    const wrapper = shallow(
+    const { root } = render(
       <Interweave
         matchers={[
           {
@@ -105,75 +80,63 @@ describe('Interweave', () => {
         ]}
         content="Foo [b] Bar Baz"
       />,
-    ).shallow();
+    );
 
-    expect(wrapper.prop('children')).toEqual([
-      'Foo ',
-      <Element {...EXTRA_PROPS} tagName="span" key="0" customProp="foo">
-        B
-      </Element>,
-      ' Bar Baz',
-    ]);
+    expect(root.findAt(Element, 'first')).toMatchSnapshot();
   });
 
   it('can disable all matchers using `disableMatchers', () => {
-    const wrapper = shallow(
+    const { root } = render(
       <Interweave
         matchers={[new CodeTagMatcher('b', '1')]}
         disableMatchers
         content="Foo [b] Bar Baz"
       />,
-    ).shallow();
+    );
 
-    expect(wrapper.prop('children')).toEqual(['Foo [b] Bar Baz']);
+    expect(root.findAt(Element, 'first')).toMatchSnapshot();
   });
 
   it('allows empty `content` to be passed', () => {
-    const wrapper = shallow(<Interweave content={null} />);
+    const { root } = render(<Interweave content={null} />);
 
-    expect(wrapper.prop('parsedContent')).toBeNull();
+    expect(root.findAt(Element, 'first')).toMatchSnapshot();
   });
 
   it('allows empty `content` to be passed when using callbacks', () => {
-    const wrapper = shallow(<Interweave content={null} onBeforeParse={value => value} />);
+    const { root } = render(<Interweave content={null} onBeforeParse={value => value} />);
 
-    expect(wrapper.prop('parsedContent')).toBeNull();
+    expect(root.findAt(Element, 'first')).toMatchSnapshot();
   });
 
   describe('parseMarkup()', () => {
     it('errors if onBeforeParse doesnt return a string', () => {
       expect(() => {
         // @ts-ignore
-        shallow(<Interweave onBeforeParse={() => 123} content="Foo" />);
-      }).toThrow('Interweave `onBeforeParse` must return a valid HTML string.');
+        render(<Interweave onBeforeParse={() => 123} content="Foo" />);
+      }).toThrowErrorMatchingSnapshot();
     });
 
     it('errors if onAfterParse doesnt return an array', () => {
       expect(() => {
         // @ts-ignore
-        shallow(<Interweave onAfterParse={() => 123} content="Foo" />);
-      }).toThrow('Interweave `onAfterParse` must return an array of strings and React elements.');
+        render(<Interweave onAfterParse={() => 123} content="Foo" />);
+      }).toThrowErrorMatchingSnapshot();
     });
 
     it('can modify the markup using onBeforeParse', () => {
-      const wrapper = shallow(
+      const { root } = render(
         <Interweave
           onBeforeParse={content => content.replace(/b>/g, 'i>')}
           content={'Foo <b>Bar</b> Baz'}
         />,
-      ).shallow();
+      );
 
-      expect(wrapper.prop('children')).toEqual([
-        'Foo ',
-        <Element tagName="i" key="0">
-          {['Bar']}
-        </Element>,
-        ' Baz',
-      ]);
+      expect(root.findAt(Element, 'first')).toMatchSnapshot();
     });
 
     it('can modify the tree using onAfterParse', () => {
-      const wrapper = shallow(
+      const { root } = render(
         <Interweave
           onAfterParse={content => {
             content.push(
@@ -186,208 +149,101 @@ describe('Interweave', () => {
           }}
           content={'Foo <b>Bar</b> Baz'}
         />,
-      ).shallow();
+      );
 
-      expect(wrapper.prop('children')).toEqual([
-        'Foo ',
-        <Element tagName="b" key="0">
-          {['Bar']}
-        </Element>,
-        ' Baz',
-        <Element tagName="u" key="1">
-          Qux
-        </Element>,
-      ]);
+      expect(root.findAt(Element, 'first')).toMatchSnapshot();
     });
   });
 
   describe('render()', () => {
     it('renders with a default tag name', () => {
-      const wrapper = shallow(<Interweave content="Foo" />);
+      const { root } = render(<Interweave content="Foo" />);
 
-      expect(wrapper.prop('tagName')).toBe('span');
+      expect(root.findAt(Element, 'first')).toHaveProp('tagName', 'span');
     });
 
     it('renders with a custom tag name', () => {
-      const wrapper = shallow(<Interweave tagName="div" content="Foo" />);
+      const { root } = render(<Interweave tagName="div" content="Foo" />);
 
-      expect(wrapper.prop('tagName')).toBe('div');
+      expect(root.findAt(Element, 'first')).toHaveProp('tagName', 'div');
     });
 
     it('parses HTML', () => {
-      const wrapper = shallow(<Interweave tagName="div" content={'Foo <b>Bar</b> Baz'} />);
+      const { root } = render(<Interweave tagName="div" content={'Foo <b>Bar</b> Baz'} />);
 
-      expect(wrapper.prop('tagName')).toBe('div');
-      expect(wrapper.prop('parsedContent')).toEqual([
-        'Foo ',
-        <Element tagName="b" key="0">
-          {['Bar']}
-        </Element>,
-        ' Baz',
-      ]);
+      expect(root.findAt(Element, 'first')).toHaveProp('tagName', 'div');
+      expect(root.findAt(Element, 'first')).toMatchSnapshot();
     });
   });
 
   describe('parsing and rendering', () => {
     it('handles void elements correctly', () => {
-      const wrapper = shallow(
+      const { root } = render(
         <Interweave
           tagName="div"
           content={
             'This has line breaks.<br>Horizontal rule.<hr />An image.<img src="http://domain.com/image.jpg" />'
           }
         />,
-      ).shallow();
+      );
 
-      expect(wrapper.prop('children')).toEqual([
-        'This has line breaks.',
-        <Element key="0" tagName="br" selfClose>
-          {[]}
-        </Element>,
-        'Horizontal rule.',
-        <Element key="1" tagName="hr" selfClose>
-          {[]}
-        </Element>,
-        'An image.',
-        <Element
-          key="2"
-          tagName="img"
-          attributes={{ src: 'http://domain.com/image.jpg' }}
-          selfClose
-        >
-          {[]}
-        </Element>,
-      ]);
+      expect(root.findAt(Element, 'first')).toMatchSnapshot();
     });
   });
 
   describe('line breaks', () => {
     it('converts line breaks', () => {
-      const wrapper = shallow(<Interweave content={'Foo\nBar'} />);
+      const { root } = render(<Interweave content={'Foo\nBar'} />);
 
-      expect(wrapper.prop('parsedContent')).toEqual([
-        'Foo',
-        <Element key="0" tagName="br" selfClose>
-          {[]}
-        </Element>,
-        'Bar',
-      ]);
+      expect(root.findAt(Element, 'first')).toMatchSnapshot();
     });
 
     it('converts line breaks if `noHtmlExceptMatchers` is true', () => {
-      const wrapper = shallow(<Interweave content={'Foo\nBar'} noHtmlExceptMatchers />);
+      const { root } = render(<Interweave content={'Foo\nBar'} noHtmlExceptMatchers />);
 
-      expect(wrapper.prop('parsedContent')).toEqual([
-        'Foo',
-        <Element key="0" tagName="br" selfClose>
-          {[]}
-        </Element>,
-        'Bar',
-      ]);
+      expect(root.findAt(Element, 'first')).toMatchSnapshot();
     });
 
     it('doesnt convert line breaks if `noHtml` is true', () => {
-      const wrapper = shallow(<Interweave content={'Foo\nBar'} noHtml />);
+      const { root } = render(<Interweave content={'Foo\nBar'} noHtml />);
 
-      expect(wrapper.prop('parsedContent')).toEqual(['Foo\nBar']);
+      expect(root.findAt(Element, 'first')).toMatchSnapshot();
     });
 
     it('doesnt convert line breaks if `disableLineBreaks` is true', () => {
-      const wrapper = shallow(<Interweave content={'Foo\nBar'} disableLineBreaks />);
+      const { root } = render(<Interweave content={'Foo\nBar'} disableLineBreaks />);
 
-      expect(wrapper.prop('parsedContent')).toEqual(['Foo\nBar']);
+      expect(root.findAt(Element, 'first')).toMatchSnapshot();
     });
 
     it('doesnt convert line breaks if it contains HTML', () => {
-      const wrapper = shallow(<Interweave content={'Foo\n<br/>Bar'} />);
+      const { root } = render(<Interweave content={'Foo\n<br/>Bar'} />);
 
-      expect(wrapper.prop('parsedContent')).toEqual([
-        'Foo\n',
-        <Element key="0" tagName="br" selfClose>
-          {[]}
-        </Element>,
-        'Bar',
-      ]);
+      expect(root.findAt(Element, 'first')).toMatchSnapshot();
     });
   });
 
   describe('allow list', () => {
     it('filters invalid tags and attributes', () => {
-      const wrapper = shallow(<Interweave content={MOCK_INVALID_MARKUP} />);
+      const { root } = render(<Interweave content={MOCK_INVALID_MARKUP} />);
 
-      expect(wrapper.prop('parsedContent')).toEqual([
-        <Element key="0" tagName="div">
-          {[
-            '\n  ',
-            'Outdated font.',
-            '\n  ',
-            '\n  ',
-            <Element key="1" tagName="p">
-              {['More text ', 'with outdated stuff', '.']}
-            </Element>,
-            '\n',
-          ]}
-        </Element>,
-      ]);
+      expect(root.findAt(Element, 'first')).toMatchSnapshot();
     });
 
     it('doesnt filter invalid tags and attributes when disabled', () => {
-      const wrapper = shallow(
+      const { root } = render(
         <Interweave content={MOCK_INVALID_MARKUP} allowElements allowAttributes />,
       );
 
-      expect(wrapper.prop('parsedContent')).toEqual([
-        <Element key="0" attributes={{ bgcolor: 'black' }} tagName="div">
-          {[
-            '\n  ',
-            // @ts-ignore Allow invalid tag
-            <Element key="1" attributes={{ color: 'red' }} tagName="font">
-              {['Outdated font.']}
-            </Element>,
-            '\n  ',
-            '\n  ',
-            <Element key="2" attributes={{ align: 'center' }} tagName="p">
-              {[
-                'More text ',
-                // @ts-ignore Allow invalid tag
-                <Element key="3" tagName="strike">
-                  {['with outdated stuff']}
-                </Element>,
-                '.',
-              ]}
-            </Element>,
-            '\n',
-          ]}
-        </Element>,
-      ]);
+      expect(root.findAt(Element, 'first')).toMatchSnapshot();
     });
   });
 
   describe('block list', () => {
     it('filters blocked tags and attributes', () => {
-      const wrapper = shallow(<Interweave content={MOCK_MARKUP} blockList={['aside', 'a']} />);
+      const { root } = render(<Interweave content={MOCK_MARKUP} blockList={['aside', 'a']} />);
 
-      expect(wrapper.prop('parsedContent')).toEqual([
-        <Element key="0" tagName="main" attributes={{ role: 'main' }}>
-          {[
-            '\n  Main content\n  ',
-            <Element key="1" tagName="div">
-              {[
-                '\n    ',
-                'Link',
-                '\n    ',
-                <Element key="2" tagName="span" attributes={{ className: 'foo' }}>
-                  {['String']}
-                </Element>,
-                '\n  ',
-              ]}
-            </Element>,
-            '\n',
-          ]}
-        </Element>,
-        '\n',
-        '\n  Sidebar content\n',
-      ]);
+      expect(root.findAt(Element, 'first')).toMatchSnapshot();
     });
   });
 
@@ -428,27 +284,27 @@ describe('Interweave', () => {
   describe('transform prop', () => {
     it('skips the element', () => {
       const transform = (node: HTMLElement) => (node.nodeName === 'IMG' ? null : undefined);
-      const wrapper = shallow(<Interweave content={'Foo <img/> Bar'} transform={transform} />);
+      const { root } = render(<Interweave content={'Foo <img/> Bar'} transform={transform} />);
 
-      expect(wrapper.prop('parsedContent')).toEqual(['Foo ', ' Bar']);
+      expect(root.findAt(Element, 'first')).toMatchSnapshot();
     });
 
     it('replaces the element', () => {
       const Dummy = () => <div />;
       const transform = (node: HTMLElement) => (node.nodeName === 'IMG' ? <Dummy /> : undefined);
-      const wrapper = shallow(<Interweave content={'Foo <img/> Bar'} transform={transform} />);
+      const { root } = render(<Interweave content={'Foo <img/> Bar'} transform={transform} />);
 
-      expect(wrapper.prop('parsedContent')).toEqual(['Foo ', <Dummy key="0" />, ' Bar']);
+      expect(root.findAt(Element, 'first')).toMatchSnapshot();
     });
 
     it('allows blacklisted', () => {
       const Dummy = () => <iframe title="foo" />;
       const transform = (node: HTMLElement) => (node.nodeName === 'IFRAME' ? <Dummy /> : undefined);
-      const wrapper = shallow(
+      const { root } = render(
         <Interweave content={'Foo <iframe></iframe> Bar'} transform={transform} />,
       );
 
-      expect(wrapper.prop('parsedContent')).toEqual(['Foo ', <Dummy key="0" />, ' Bar']);
+      expect(root.findAt(Element, 'first')).toMatchSnapshot();
     });
   });
 });

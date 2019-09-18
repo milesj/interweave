@@ -16,19 +16,19 @@
     "type": "beemo typescript --reference-workspaces --build"
   },
   "devDependencies": {
-    "@milesj/build-tools": "^0.56.2",
+    "@milesj/build-tools": "^0.57.0",
     "@types/react": "16.9.2",
     "@types/react-dom": "16.9.0",
     "babel-loader": "^8.0.6",
     "emojibase": "^2.2.0",
     "emojibase-test-utils": "^3.2.0",
-    "eslint-plugin-rut": "^0.1.3",
-    "jest-rut": "^0.6.0",
+    "eslint-plugin-rut": "^0.1.5",
+    "jest-rut": "^0.6.2",
     "lerna": "^3.16.4",
     "react": "^16.9.0",
     "react-dom": "^16.9.0",
     "regenerator-runtime": "^0.13.3",
-    "rut": "^0.6.4",
+    "rut": "^0.7.3",
     "serve": "^11.1.0",
     "webpack": "^4.39.3",
     "webpack-cli": "^3.3.8"
@@ -49,7 +49,9 @@
       "react": true
     },
     "eslint": {
-      "extends": ["plugin:rut/recommended"],
+      "extends": [
+        "plugin:rut/recommended"
+      ],
       "rules": {
         "import/no-named-as-default": "off",
         "require-unicode-regexp": "off",
@@ -62,7 +64,8 @@
     "jest": {
       "setupFilesAfterEnv": [
         "jest-rut"
-      ]
+      ],
+      "timers": "real"
     }
   },
   "browserslist": [

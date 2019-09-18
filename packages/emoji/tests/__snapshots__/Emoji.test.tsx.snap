@@ -1,0 +1,83 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Emoji errors if no emoticon, shortcode or unicode 1`] = `"Emoji component requires a \`unicode\` character, \`emoticon\`, \`hexcode\`, or a \`shortcode\`."`;
+
+exports[`Emoji renders the unicode character 1`] = `<span>😡</span>`;
+
+exports[`Emoji renders with both 1`] = `
+<img
+  alt="😡"
+  aria-label="pouting face"
+  data-emoticon=">:/"
+  data-hexcode="1F621"
+  data-shortcodes=":enraged:, :pout:"
+  data-unicode="😡"
+  src="1F621"
+  style={{ display: "inline-block", verticalAlign: "middle", width: "1em", height: "1em" }}
+  title="pouting face"
+/>
+`;
+
+exports[`Emoji renders with only the emoticon 1`] = `
+<img
+  alt="😡"
+  aria-label="pouting face"
+  data-emoticon=">:/"
+  data-hexcode="1F621"
+  data-shortcodes=":enraged:, :pout:"
+  data-unicode="😡"
+  src="1F621"
+  style={{ display: "inline-block", verticalAlign: "middle", width: "1em", height: "1em" }}
+  title="pouting face"
+/>
+`;
+
+exports[`Emoji renders with only the hexcode 1`] = `
+<img
+  alt="😡"
+  aria-label="pouting face"
+  data-emoticon=">:/"
+  data-hexcode="1F621"
+  data-shortcodes=":enraged:, :pout:"
+  data-unicode="😡"
+  src="1F621"
+  style={{ display: "inline-block", verticalAlign: "middle", width: "1em", height: "1em" }}
+  title="pouting face"
+/>
+`;
+
+exports[`Emoji renders with only the shortcode 1`] = `
+<img
+  alt="😡"
+  aria-label="pouting face"
+  data-emoticon=">:/"
+  data-hexcode="1F621"
+  data-shortcodes=":enraged:, :pout:"
+  data-unicode="😡"
+  src="1F621"
+  style={{ display: "inline-block", verticalAlign: "middle", width: "1em", height: "1em" }}
+  title="pouting face"
+/>
+`;
+
+exports[`Emoji renders with only the unicode 1`] = `
+<img
+  alt="😡"
+  aria-label="pouting face"
+  data-emoticon=">:/"
+  data-hexcode="1F621"
+  data-shortcodes=":enraged:, :pout:"
+  data-unicode="😡"
+  src="1F621"
+  style={{ display: "inline-block", verticalAlign: "middle", width: "1em", height: "1em" }}
+  title="pouting face"
+/>
+`;
+
+exports[`Emoji returns empty for invalid unicode 1`] = `<span>fake</span>`;
+
+exports[`Emoji returns value for invalid emoticon 1`] = `<span>0P</span>`;
+
+exports[`Emoji returns value for invalid hexcode 1`] = `<span>FA</span>`;
+
+exports[`Emoji returns value for invalid shortcode 1`] = `<span>fake</span>`;
