@@ -31,8 +31,8 @@
     "regenerator-runtime": "^0.13.3",
     "rut": "^0.7.3",
     "serve": "^11.1.0",
-    "webpack": "^4.39.3",
-    "webpack-cli": "^3.3.8"
+    "webpack": "^4.40.2",
+    "webpack-cli": "^3.3.9"
   },
   "workspaces": [
     "packages/*"
