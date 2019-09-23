@@ -2,6 +2,7 @@
   "name": "interweave-root",
   "private": true,
   "scripts": {
+    "prepare": "beemo create-config --silent",
     "build": "beemo run-script build --workspaces=*",
     "coverage": "yarn run jest --coverage",
     "eslint": "beemo eslint",
@@ -16,20 +17,22 @@
     "type": "beemo typescript --reference-workspaces --build"
   },
   "devDependencies": {
-    "@milesj/build-tools": "^0.51.0",
-    "@types/react": "16.9.0",
-    "@types/react-dom": "16.8.5",
+    "@milesj/build-tools": "^0.57.0",
+    "@types/react": "16.9.2",
+    "@types/react-dom": "16.9.0",
     "babel-loader": "^8.0.6",
     "emojibase": "^2.2.0",
     "emojibase-test-utils": "^3.2.0",
-    "enzyme-to-json": "^3.4.0",
+    "eslint-plugin-rut": "^0.1.5",
+    "jest-rut": "^0.6.2",
     "lerna": "^3.16.4",
     "react": "^16.9.0",
     "react-dom": "^16.9.0",
     "regenerator-runtime": "^0.13.3",
+    "rut": "^0.7.3",
     "serve": "^11.1.0",
-    "webpack": "^4.39.1",
-    "webpack-cli": "^3.3.6"
+    "webpack": "^4.40.2",
+    "webpack-cli": "^3.3.9"
   },
   "workspaces": [
     "packages/*"
@@ -47,6 +50,9 @@
       "react": true
     },
     "eslint": {
+      "extends": [
+        "plugin:rut/recommended"
+      ],
       "rules": {
         "import/no-named-as-default": "off",
         "require-unicode-regexp": "off",
@@ -57,9 +63,10 @@
       }
     },
     "jest": {
-      "snapshotSerializers": [
-        "enzyme-to-json/serializer"
-      ]
+      "setupFilesAfterEnv": [
+        "jest-rut"
+      ],
+      "timers": "real"
     }
   },
   "browserslist": [

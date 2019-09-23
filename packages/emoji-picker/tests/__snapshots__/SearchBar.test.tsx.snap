@@ -1,17 +1,15 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`<SearchBar /> renders a search bar 1`] = `
-<div
-  className="interweave-picker__search"
->
+exports[`SearchBar renders a search bar 1`] = `
+<div className="interweave-picker__search">
   <input
     aria-label="Search for emojis by keyword"
     className="interweave-picker__search-input"
-    onChange={[Function]}
-    onKeyUp={[Function]}
     placeholder="Search"
     type="search"
     value=""
+    onChange={func()}
+    onKeyUp={onKeyUp()}
   />
 </div>
 `;

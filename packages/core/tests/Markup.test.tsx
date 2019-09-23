@@ -1,93 +1,58 @@
 import React from 'react';
-import { shallow } from 'enzyme';
-import Markup from '../src/Markup';
+import { render } from 'rut';
+import Markup, { MarkupProps } from '../src/Markup';
 import Element from '../src/Element';
 import { MOCK_MARKUP } from '../src/testUtils';
 
+const options = { log: false, reactElements: false };
+
 describe('Markup', () => {
   it('can change `tagName`', () => {
-    const wrapper = shallow(<Markup tagName="p" content="Foo Bar" />);
+    const { root } = render<MarkupProps>(<Markup tagName="p" content="Foo Bar" />);
 
-    expect(wrapper.is(Element)).toBe(true);
-    expect(wrapper.prop('tagName')).toBe('p');
+    expect(root.findOne(Element)).toHaveProp('tagName', 'p');
   });
 
   it('can use a fragment', () => {
-    const wrapper = shallow(<Markup tagName="fragment" content="Foo Bar" />);
+    const { root } = render<MarkupProps>(<Markup tagName="fragment" content="Foo Bar" />);
 
-    expect(wrapper.is(Element)).toBe(false);
+    expect(root).toContainNode('Foo Bar');
   });
 
   it('allows empty `content` to be passed', () => {
-    const wrapper = shallow(<Markup content={null} />);
+    const { root } = render<MarkupProps>(<Markup content={null} />);
 
-    expect(wrapper.prop('children')).toBeNull();
+    expect(root.debug(options)).toMatchSnapshot();
   });
 
   it('will render the `emptyContent` if no content exists', () => {
     const empty = <div>Foo</div>;
-    const wrapper = shallow(<Markup content="" emptyContent={empty} />);
+    const { root } = render<MarkupProps>(<Markup content="" emptyContent={empty} />);
 
-    expect(wrapper.contains(empty)).toBe(true);
+    expect(root).toContainNode(empty);
   });
 
   it('parses the entire document starting from the body', () => {
-    const wrapper = shallow(<Markup content={MOCK_MARKUP} />);
+    const { root } = render<MarkupProps>(<Markup content={MOCK_MARKUP} />);
 
-    expect(wrapper.prop('children')).toEqual([
-      <Element key="0" tagName="main" attributes={{ role: 'main' }}>
-        {[
-          '\n  Main content\n  ',
-          <Element key="1" tagName="div">
-            {[
-              '\n    ',
-              <Element key="2" tagName="a" attributes={{ href: '#' }}>
-                {['Link']}
-              </Element>,
-              '\n    ',
-              <Element key="3" tagName="span" attributes={{ className: 'foo' }}>
-                {['String']}
-              </Element>,
-              '\n  ',
-            ]}
-          </Element>,
-          '\n',
-        ]}
-      </Element>,
-      '\n',
-      <Element key="4" tagName="aside" attributes={{ id: 'sidebar' }}>
-        {['\n  Sidebar content\n']}
-      </Element>,
-    ]);
+    expect(root.debug(options)).toMatchSnapshot();
   });
 
   it('converts line breaks', () => {
-    const wrapper = shallow(<Markup content={'Foo\nBar'} />);
+    const { root } = render<MarkupProps>(<Markup content={'Foo\nBar'} />);
 
-    expect(wrapper.prop('children')).toEqual([
-      'Foo',
-      <Element key="0" tagName="br" selfClose>
-        {[]}
-      </Element>,
-      'Bar',
-    ]);
+    expect(root.debug(options)).toMatchSnapshot();
   });
 
   it('doesnt convert line breaks', () => {
-    const wrapper = shallow(<Markup content={'Foo\nBar'} disableLineBreaks />);
+    const { root } = render<MarkupProps>(<Markup content={'Foo\nBar'} disableLineBreaks />);
 
-    expect(wrapper.prop('children')).toEqual(['Foo\nBar']);
+    expect(root.debug(options)).toMatchSnapshot();
   });
 
   it('doesnt convert line breaks if it contains HTML', () => {
-    const wrapper = shallow(<Markup content={'Foo\n<br/>Bar'} />);
+    const { root } = render<MarkupProps>(<Markup content={'Foo\n<br/>Bar'} />);
 
-    expect(wrapper.prop('children')).toEqual([
-      'Foo\n',
-      <Element key="0" tagName="br" selfClose>
-        {[]}
-      </Element>,
-      'Bar',
-    ]);
+    expect(root.debug(options)).toMatchSnapshot();
   });
 });

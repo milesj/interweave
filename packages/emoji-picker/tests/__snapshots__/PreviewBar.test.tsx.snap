@@ -1,44 +1,46 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`<PreviewBar /> renders a preview 1`] = `
-<div
-  className="interweave-picker__preview"
->
-  <div
-    className="interweave-picker__preview-emoji"
-  >
+exports[`PreviewBar no emoji renders nothing if no preview message or preview element 1`] = `
+<section className="interweave-picker__preview">
+  
+</section>
+`;
+
+exports[`PreviewBar renders a preview 1`] = `
+<section className="interweave-picker__preview">
+  <div className="interweave-picker__preview-emoji">
     <Emoji
+      enlargeEmoji
       emojiLargeSize="3em"
       emojiPath="{{hexcode}}"
       emojiSize="1em"
-      emojiSource={
-        Object {
-          "compact": false,
-          "locale": "en",
-          "version": "latest",
-        }
-      }
+      emojiSource={{ compact: false, locale: "en", version: "latest" }}
       emoticon=""
-      enlargeEmoji={true}
       hexcode="1F642"
       renderUnicode={false}
       shortcode=""
       unicode=""
-    />
-  </div>
-  <div
-    className="interweave-picker__preview-content"
-  >
-    <div
-      className="interweave-picker__preview-title"
     >
+      <img
+        alt="🙂"
+        aria-label="slightly smiling face"
+        data-emoticon=":)"
+        data-hexcode="1F642"
+        data-shortcodes=":pleased:"
+        data-unicode="🙂"
+        src="1F642"
+        style={{ display: "inline-block", verticalAlign: "middle", width: "3em", height: "3em" }}
+        title="slightly smiling face"
+      />
+    </Emoji>
+  </div>
+  <div className="interweave-picker__preview-content">
+    <div className="interweave-picker__preview-title">
       Slightly smiling face
     </div>
-    <div
-      className="interweave-picker__preview-subtitle"
-    >
+    <div className="interweave-picker__preview-subtitle">
       :) :pleased:
     </div>
   </div>
-</div>
+</section>
 `;

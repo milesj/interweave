@@ -1,20 +1,16 @@
 import React from 'react';
-import { shallow, ShallowWrapper } from 'enzyme';
+import { render, Element } from 'rut';
 import { SKIN_TONES, SKIN_KEY_NONE, SKIN_KEY_DARK, SKIN_KEY_MEDIUM_LIGHT } from '../src/constants';
 import SkinTone from '../src/SkinTone';
 import { SkinTonePalette, SkinTonePaletteProps } from '../src/SkinTonePalette';
 import { WithContextProps } from '../src/withContext';
 import { PICKER_CONTEXT } from './mocks';
 
-function findSkinToneByKey(wrapper: ShallowWrapper, key: string) {
-  return wrapper
-    .find('li')
-    .filterWhere(node => node.key() === key)
-    .find(SkinTone)
-    .at(0);
+function findSkinToneByKey(root: Element<typeof SkinTonePalette>, key: string) {
+  return root.query((node, fiber) => node.type === 'li' && fiber.key === key)[0].findOne(SkinTone);
 }
 
-describe('<SkinTonePalette />', () => {
+describe('SkinTonePalette', () => {
   const props: SkinTonePaletteProps & WithContextProps = {
     activeSkinTone: SKIN_KEY_NONE,
     context: PICKER_CONTEXT,
@@ -23,19 +19,19 @@ describe('<SkinTonePalette />', () => {
   };
 
   it('renders a palette', () => {
-    const wrapper = shallow(<SkinTonePalette {...props} />);
+    const { root } = render<SkinTonePaletteProps>(<SkinTonePalette {...props} />);
 
-    expect(wrapper).toMatchSnapshot();
+    expect(root.findOne('nav')).toMatchSnapshot();
   });
 
   it('renders a node for each skin tone', () => {
-    const wrapper = shallow(<SkinTonePalette {...props} />);
+    const { root } = render<SkinTonePaletteProps>(<SkinTonePalette {...props} />);
 
-    expect(wrapper.find(SkinTone)).toHaveLength(SKIN_TONES.length);
+    expect(root.find(SkinTone)).toHaveLength(SKIN_TONES.length);
   });
 
   it('can customize class name', () => {
-    const wrapper = shallow(
+    const { root } = render<SkinTonePaletteProps>(
       <SkinTonePalette
         {...props}
         context={{
@@ -48,44 +44,46 @@ describe('<SkinTonePalette />', () => {
       />,
     );
 
-    expect(wrapper.prop('className')).toBe('test-skin-tones');
+    expect(root.findOne('nav')).toHaveProp('className', 'test-skin-tones');
   });
 
   it('passes `onSelect` to skin tones', () => {
-    const wrapper = shallow(<SkinTonePalette {...props} />);
+    const { root } = render<SkinTonePaletteProps>(<SkinTonePalette {...props} />);
 
-    expect(
-      wrapper
-        .find(SkinTone)
-        .at(0)
-        .prop('onSelect'),
-    ).toBe(props.onSelect);
+    expect(root.findAt(SkinTone, 0)).toHaveProp('onSelect', props.onSelect);
   });
 
   it('sets active skin tone', () => {
-    const wrapper = shallow(<SkinTonePalette {...props} activeSkinTone={SKIN_KEY_DARK} />);
+    const { root } = render<SkinTonePaletteProps>(
+      <SkinTonePalette {...props} activeSkinTone={SKIN_KEY_DARK} />,
+    );
 
-    expect(findSkinToneByKey(wrapper, SKIN_KEY_NONE).prop('active')).toBe(false);
-    expect(findSkinToneByKey(wrapper, SKIN_KEY_DARK).prop('active')).toBe(true);
+    expect(findSkinToneByKey(root, SKIN_KEY_NONE)).toHaveProp('active', false);
+    expect(findSkinToneByKey(root, SKIN_KEY_DARK)).toHaveProp('active', true);
   });
 
   it('renders default icon as null', () => {
-    const wrapper = shallow(<SkinTonePalette {...props} />);
+    const { root } = render<SkinTonePaletteProps>(<SkinTonePalette {...props} />);
 
-    expect(findSkinToneByKey(wrapper, SKIN_KEY_MEDIUM_LIGHT).prop('children')).toBeNull();
+    // SkinTone renders white space so the button doesnt collapse
+    expect(findSkinToneByKey(root, SKIN_KEY_MEDIUM_LIGHT)).toContainNode(' ');
   });
 
   it('renders icon using kebab case', () => {
     const icon = <b>Animal</b>;
-    const wrapper = shallow(<SkinTonePalette {...props} icons={{ 'medium-light': icon }} />);
+    const { root } = render<SkinTonePaletteProps>(
+      <SkinTonePalette {...props} icons={{ 'medium-light': icon }} />,
+    );
 
-    expect(findSkinToneByKey(wrapper, SKIN_KEY_MEDIUM_LIGHT).contains(icon)).toBe(true);
+    expect(findSkinToneByKey(root, SKIN_KEY_MEDIUM_LIGHT)).toContainNode(icon);
   });
 
   it('renders icon using camel case', () => {
     const icon = <b>Animal</b>;
-    const wrapper = shallow(<SkinTonePalette {...props} icons={{ mediumLight: icon }} />);
+    const { root } = render<SkinTonePaletteProps>(
+      <SkinTonePalette {...props} icons={{ mediumLight: icon }} />,
+    );
 
-    expect(findSkinToneByKey(wrapper, SKIN_KEY_MEDIUM_LIGHT).contains(icon)).toBe(true);
+    expect(findSkinToneByKey(root, SKIN_KEY_MEDIUM_LIGHT)).toContainNode(icon);
   });
 });

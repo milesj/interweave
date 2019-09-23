@@ -1,0 +1,330 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Interweave allow list doesnt filter invalid tags and attributes when disabled 1`] = `
+<Element tagName="span">
+  <span>
+    <Element key="0" attributes={{ bgcolor: "black" }} tagName="div">
+      <div bgcolor="black">
+        
+  
+        <Element key="1" attributes={{ color: "red" }} tagName="font">
+          <font color="red">
+            Outdated font.
+          </font>
+        </Element>
+        
+  
+        
+  
+        <Element key="2" attributes={{ align: "center" }} tagName="p">
+          <p align="center">
+            More text 
+            <Element key="3" tagName="strike">
+              <strike>with outdated stuff</strike>
+            </Element>
+            .
+          </p>
+        </Element>
+        
+
+      </div>
+    </Element>
+  </span>
+</Element>
+`;
+
+exports[`Interweave allow list filters invalid tags and attributes 1`] = `
+<Element tagName="span">
+  <span>
+    <Element key="0" tagName="div">
+      <div>
+        
+  
+        Outdated font.
+        
+  
+        
+  
+        <Element key="1" tagName="p">
+          <p>More text with outdated stuff.</p>
+        </Element>
+        
+
+      </div>
+    </Element>
+  </span>
+</Element>
+`;
+
+exports[`Interweave allows empty \`content\` to be passed 1`] = `
+<Element tagName="span">
+  <span />
+</Element>
+`;
+
+exports[`Interweave allows empty \`content\` to be passed when using callbacks 1`] = `
+<Element tagName="span">
+  <span />
+</Element>
+`;
+
+exports[`Interweave block list filters blocked tags and attributes 1`] = `
+<Element tagName="span">
+  <span>
+    <Element key="0" attributes={{ role: "main" }} tagName="main">
+      <main role="main">
+        
+  Main content
+  
+        <Element key="1" tagName="div">
+          <div>
+            
+    
+            Link
+            
+    
+            <Element key="2" attributes={{ className: "foo" }} tagName="span">
+              <span className="foo">
+                String
+              </span>
+            </Element>
+            
+  
+          </div>
+        </Element>
+        
+
+      </main>
+    </Element>
+    
+
+    
+  Sidebar content
+
+  </span>
+</Element>
+`;
+
+exports[`Interweave can disable all filters using \`disableFilters\` 1`] = `
+<Element tagName="span">
+  <span>
+    Foo 
+    <Element key="0" attributes={{ href: "foo.com" }} tagName="a">
+      <a href="foo.com">
+        Bar
+      </a>
+    </Element>
+     Baz
+  </span>
+</Element>
+`;
+
+exports[`Interweave can disable all matchers using \`disableMatchers 1`] = `
+<Element tagName="span">
+  <span>Foo [b] Bar Baz</span>
+</Element>
+`;
+
+exports[`Interweave can pass filters through props 1`] = `
+<Element tagName="span">
+  <span>
+    Foo 
+    <Element
+      key="0"
+      attributes={{ href: "bar.net", target: "_blank" }}
+      tagName="a"
+    >
+      <a href="bar.net" target="_blank">
+        Bar
+      </a>
+    </Element>
+     Baz
+  </span>
+</Element>
+`;
+
+exports[`Interweave can pass matchers through props 1`] = `
+<Element tagName="span">
+  <span>
+    Foo 
+    <Element key="1" customProp="foo" tagName="span">
+      <span>B</span>
+    </Element>
+     Bar Baz
+  </span>
+</Element>
+`;
+
+exports[`Interweave can pass object based filters through props 1`] = `
+<Element tagName="span">
+  <span>
+    Foo 
+    <Element key="0" attributes={{ href: "bar.net" }} tagName="a">
+      <a href="bar.net">
+        Bar
+      </a>
+    </Element>
+     Baz
+  </span>
+</Element>
+`;
+
+exports[`Interweave can pass object based matchers through props 1`] = `
+<Element tagName="span">
+  <span>
+    Foo 
+    <Element key="0" customProp="foo" tagName="span">
+      <span>B</span>
+    </Element>
+     Bar Baz
+  </span>
+</Element>
+`;
+
+exports[`Interweave line breaks converts line breaks 1`] = `
+<Element tagName="span">
+  <span>
+    Foo
+    <Element key="0" selfClose tagName="br">
+      <br />
+    </Element>
+    Bar
+  </span>
+</Element>
+`;
+
+exports[`Interweave line breaks converts line breaks if \`noHtmlExceptMatchers\` is true 1`] = `
+<Element tagName="span">
+  <span>
+    Foo
+    <Element key="0" selfClose tagName="br">
+      <br />
+    </Element>
+    Bar
+  </span>
+</Element>
+`;
+
+exports[`Interweave line breaks doesnt convert line breaks if \`disableLineBreaks\` is true 1`] = `
+<Element tagName="span">
+  <span>Foo
+Bar</span>
+</Element>
+`;
+
+exports[`Interweave line breaks doesnt convert line breaks if \`noHtml\` is true 1`] = `
+<Element tagName="span">
+  <span>Foo
+Bar</span>
+</Element>
+`;
+
+exports[`Interweave line breaks doesnt convert line breaks if it contains HTML 1`] = `
+<Element tagName="span">
+  <span>
+    Foo
+
+    <Element key="0" selfClose tagName="br">
+      <br />
+    </Element>
+    Bar
+  </span>
+</Element>
+`;
+
+exports[`Interweave parseMarkup() can modify the markup using onBeforeParse 1`] = `
+<Element tagName="span">
+  <span>
+    Foo 
+    <Element key="0" tagName="i">
+      <i>Bar</i>
+    </Element>
+     Baz
+  </span>
+</Element>
+`;
+
+exports[`Interweave parseMarkup() can modify the tree using onAfterParse 1`] = `
+<Element tagName="span">
+  <span>
+    Foo 
+    <Element key="0" tagName="b">
+      <b>Bar</b>
+    </Element>
+     Baz
+    <Element key="1" tagName="u">
+      <u>Qux</u>
+    </Element>
+  </span>
+</Element>
+`;
+
+exports[`Interweave parseMarkup() errors if onAfterParse doesnt return an array 1`] = `"Interweave \`onAfterParse\` must return an array of strings and React elements."`;
+
+exports[`Interweave parseMarkup() errors if onBeforeParse doesnt return a string 1`] = `"Interweave \`onBeforeParse\` must return a valid HTML string."`;
+
+exports[`Interweave parsing and rendering handles void elements correctly 1`] = `
+<Element tagName="div">
+  <div>
+    This has line breaks.
+    <Element key="0" selfClose tagName="br">
+      <br />
+    </Element>
+    Horizontal rule.
+    <Element key="1" selfClose tagName="hr">
+      <hr />
+    </Element>
+    An image.
+    <Element
+      key="2"
+      selfClose
+      attributes={{ src: "http://domain.com/image.jpg" }}
+      tagName="img"
+    >
+      <img src="http://domain.com/image.jpg" />
+    </Element>
+  </div>
+</Element>
+`;
+
+exports[`Interweave render<InterweaveProps>() parses HTML 1`] = `
+<Element tagName="div">
+  <div>
+    Foo 
+    <Element key="0" tagName="b">
+      <b>Bar</b>
+    </Element>
+     Baz
+  </div>
+</Element>
+`;
+
+exports[`Interweave transform prop allows blacklisted 1`] = `
+<Element tagName="span">
+  <span>
+    Foo 
+    <Dummy>
+      <iframe title="foo" />
+    </Dummy>
+     Bar
+  </span>
+</Element>
+`;
+
+exports[`Interweave transform prop replaces the element 1`] = `
+<Element tagName="span">
+  <span>
+    Foo 
+    <Dummy>
+      <div />
+    </Dummy>
+     Bar
+  </span>
+</Element>
+`;
+
+exports[`Interweave transform prop skips the element 1`] = `
+<Element tagName="span">
+  <span>Foo  Bar</span>
+</Element>
+`;

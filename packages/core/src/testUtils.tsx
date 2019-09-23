@@ -33,8 +33,6 @@ export const SOURCE_PROP = {
   version: 'latest',
 };
 
-export const EXTRA_PROPS = {};
-
 export const VALID_EMOJIS = [
   ['1F621', '😡', ':enraged:', '>:/'],
   ['1F468-200D-1F469-200D-1F467-200D-1F466', '👨‍👩‍👧‍👦', ':family_mwgb:'],

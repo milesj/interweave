@@ -21,7 +21,6 @@
   "repository": "https://github.com/milesj/interweave/tree/master/packages/autolink",
   "license": "MIT",
   "dependencies": {
-    "@types/prop-types": "*",
     "@types/react": "*",
     "prop-types": "^15.7.2"
   },

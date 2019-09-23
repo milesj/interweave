@@ -1,5 +1,5 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { render } from 'rut';
 import { Group, GroupProps } from '../src/Group';
 import { WithContextProps } from '../src/withContext';
 import {
@@ -20,45 +20,41 @@ describe('Group', () => {
     onSelect() {},
   };
 
-  const event = {
-    preventDefault() {},
-    stopPropagation() {},
-  };
-
   it('renders a group', () => {
-    const wrapper = shallow(<Group {...props} />);
+    const { root } = render<GroupProps>(<Group {...props} />);
 
-    expect(wrapper).toMatchSnapshot();
+    expect(root.findOne('button')).toMatchSnapshot();
   });
 
   it('sets group title', () => {
-    const wrapper = shallow(<Group {...props} />);
+    const { root } = render<GroupProps>(<Group {...props} />);
 
-    expect(wrapper.prop('title')).toBe('Smileys & People');
+    expect(root.findOne('button')).toHaveProp('title', 'Smileys & People');
   });
 
   it('sets common mode group title', () => {
-    const wrapper = shallow(<Group {...props} group={GROUP_KEY_COMMONLY_USED} />);
+    const { root } = render<GroupProps>(<Group {...props} group={GROUP_KEY_COMMONLY_USED} />);
 
-    expect(wrapper.prop('title')).toBe('Frequently Used');
+    expect(root.findOne('button')).toHaveProp('title', 'Frequently Used');
   });
 
   it('updates the active state', () => {
-    const wrapper = shallow(<Group {...props} />);
+    const { root, update } = render<GroupProps>(<Group {...props} />);
 
-    expect(wrapper.prop('className')).toBe('interweave-picker__group');
+    expect(root.findOne('button')).toHaveProp('className', 'interweave-picker__group');
 
-    wrapper.setProps({
+    update({
       active: true,
     });
 
-    expect(wrapper.prop('className')).toBe(
+    expect(root.findOne('button')).toHaveProp(
+      'className',
       'interweave-picker__group interweave-picker__group--active',
     );
   });
 
   it('can customize class name', () => {
-    const wrapper = shallow(
+    const { root } = render<GroupProps>(
       <Group
         {...props}
         context={{
@@ -73,15 +69,15 @@ describe('Group', () => {
       />,
     );
 
-    expect(wrapper.prop('className')).toBe('test-group test-group--active');
+    expect(root.findOne('button')).toHaveProp('className', 'test-group test-group--active');
   });
 
   it('triggers `onSelect` when clicking', () => {
     const spy = jest.fn();
-    const wrapper = shallow(<Group {...props} onSelect={spy} />);
+    const { root } = render<GroupProps>(<Group {...props} onSelect={spy} />);
 
-    wrapper.simulate('click', event);
+    root.findOne('button').dispatch('onClick');
 
-    expect(spy).toHaveBeenCalledWith(props.group, event);
+    expect(spy).toHaveBeenCalledWith(props.group, expect.anything());
   });
 });

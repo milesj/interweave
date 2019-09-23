@@ -13,11 +13,15 @@ export interface WithContextProps {
 export default function withContext<Props extends object>(
   Component: React.ComponentType<Props & WithContextProps>,
 ): React.ComponentType<Props> {
-  return function WithContextWrapper(props: Props) {
+  function WithContextWrapper(props: Props) {
     return (
       <Context.Consumer>
         {/* istanbul ignore next */ context => <Component {...props} context={context} />}
       </Context.Consumer>
     );
-  };
+  }
+
+  WithContextWrapper.displayName = `withEmojiContext(${Component.displayName || Component.name})`;
+
+  return WithContextWrapper;
 }

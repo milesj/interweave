@@ -1,1529 +1,1564 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`html a, ul, li renders 1`] = `
-<Element
+<Markup
+  content="<ul>
+    <li><a href="https://example.com">Website</a></li>
+    <li><a href="mailto:m.bluth@example.com">Email</a></li>
+    <li><a href="tel:+123456789">Phone</a></li>
+  </ul>"
+  emptyContent={null}
+  parsedContent={null}
   tagName="div"
 >
-  <Element
-    key="0"
-    tagName="ul"
-  >
-    
+  <Element tagName="div">
+    <div>
+      <Element key="0" tagName="ul">
+        <ul>
+          
   
-    <Element
-      key="1"
-      tagName="li"
-    >
-      <Element
-        attributes={
-          Object {
-            "href": "https://example.com",
-          }
-        }
-        key="2"
-        tagName="a"
-      >
-        Website
-      </Element>
-    </Element>
-    
+          <Element key="1" tagName="li">
+            <li>
+              <Element
+                key="2"
+                attributes={{ href: "https://example.com" }}
+                tagName="a"
+              >
+                <a href="https://example.com">
+                  Website
+                </a>
+              </Element>
+            </li>
+          </Element>
+          
   
-    <Element
-      key="3"
-      tagName="li"
-    >
-      <Element
-        attributes={
-          Object {
-            "href": "mailto:m.bluth@example.com",
-          }
-        }
-        key="4"
-        tagName="a"
-      >
-        Email
-      </Element>
-    </Element>
-    
+          <Element key="3" tagName="li">
+            <li>
+              <Element
+                key="4"
+                attributes={{ href: "mailto:m.bluth@example.com" }}
+                tagName="a"
+              >
+                <a href="mailto:m.bluth@example.com">
+                  Email
+                </a>
+              </Element>
+            </li>
+          </Element>
+          
   
-    <Element
-      key="5"
-      tagName="li"
-    >
-      <Element
-        key="6"
-        tagName="a"
-      >
-        Phone
-      </Element>
-    </Element>
-    
+          <Element key="5" tagName="li">
+            <li>
+              <Element key="6" tagName="a">
+                <a>Phone</a>
+              </Element>
+            </li>
+          </Element>
+          
 
+        </ul>
+      </Element>
+    </div>
   </Element>
-</Element>
+</Markup>
 `;
 
 exports[`html abbr renders 1`] = `
-<Element
+<Markup
+  content="You can use <abbr title="Cascading Style Sheets">CSS</abbr> to style your <abbr title="HyperText Markup Language">HTML</abbr>."
+  emptyContent={null}
+  parsedContent={null}
   tagName="div"
 >
-  You can use 
-  <Element
-    attributes={
-      Object {
-        "title": "Cascading Style Sheets",
-      }
-    }
-    key="0"
-    tagName="abbr"
-  >
-    CSS
+  <Element tagName="div">
+    <div>
+      You can use 
+      <Element
+        key="0"
+        attributes={{ title: "Cascading Style Sheets" }}
+        tagName="abbr"
+      >
+        <abbr title="Cascading Style Sheets">
+          CSS
+        </abbr>
+      </Element>
+       to style your 
+      <Element
+        key="1"
+        attributes={{ title: "HyperText Markup Language" }}
+        tagName="abbr"
+      >
+        <abbr title="HyperText Markup Language">
+          HTML
+        </abbr>
+      </Element>
+      .
+    </div>
   </Element>
-   to style your 
-  <Element
-    attributes={
-      Object {
-        "title": "HyperText Markup Language",
-      }
-    }
-    key="1"
-    tagName="abbr"
-  >
-    HTML
-  </Element>
-  .
-</Element>
+</Markup>
 `;
 
 exports[`html address renders 1`] = `
-<Element
+<Markup
+  content="<address>
+    <a href="mailto:jim@rock.com">jim@rock.com</a><br/>
+    <a href="tel:+311-555-2368">+311-555-2368</a><br/>
+  </address>"
+  emptyContent={null}
+  parsedContent={null}
   tagName="div"
 >
-  <Element
-    key="0"
-    tagName="address"
-  >
-    
+  <Element tagName="div">
+    <div>
+      <Element key="0" tagName="address">
+        <address>
+          
   
-    <Element
-      attributes={
-        Object {
-          "href": "mailto:jim@rock.com",
-        }
-      }
-      key="1"
-      tagName="a"
-    >
-      jim@rock.com
-    </Element>
-    <Element
-      key="2"
-      selfClose={true}
-      tagName="br"
-    />
-    
+          <Element
+            key="1"
+            attributes={{ href: "mailto:jim@rock.com" }}
+            tagName="a"
+          >
+            <a href="mailto:jim@rock.com">
+              jim@rock.com
+            </a>
+          </Element>
+          <Element key="2" selfClose tagName="br">
+            <br />
+          </Element>
+          
   
-    <Element
-      key="3"
-      tagName="a"
-    >
-      +311-555-2368
-    </Element>
-    <Element
-      key="4"
-      selfClose={true}
-      tagName="br"
-    />
-    
+          <Element key="3" tagName="a">
+            <a>+311-555-2368</a>
+          </Element>
+          <Element key="4" selfClose tagName="br">
+            <br />
+          </Element>
+          
 
+        </address>
+      </Element>
+    </div>
   </Element>
-</Element>
+</Markup>
 `;
 
 exports[`html article renders 1`] = `
-<Element
+<Markup
+  content="<article class="forecast">
+    <h1>Weather forecast for Seattle</h1>
+    <article class="day-forecast">
+      <h2>03 March 2018</h2>
+      <p>Rain.</p>
+    </article>
+    <article class="day-forecast">
+      <h2>04 March 2018</h2>
+      <p>Periods of rain.</p>
+    </article>
+    <article class="day-forecast">
+      <h2>05 March 2018</h2>
+      <p>Heavy rain.</p>
+    </article>
+  </article>"
+  emptyContent={null}
+  parsedContent={null}
   tagName="div"
 >
-  <Element
-    attributes={
-      Object {
-        "className": "forecast",
-      }
-    }
-    key="0"
-    tagName="article"
-  >
-    
+  <Element tagName="div">
+    <div>
+      <Element key="0" attributes={{ className: "forecast" }} tagName="article">
+        <article className="forecast">
+          
   
-    <Element
-      key="1"
-      tagName="h1"
-    >
-      Weather forecast for Seattle
-    </Element>
-    
+          <Element key="1" tagName="h1">
+            <h1>Weather forecast for Seattle</h1>
+          </Element>
+          
   
-    <Element
-      attributes={
-        Object {
-          "className": "day-forecast",
-        }
-      }
-      key="2"
-      tagName="article"
-    >
-      
+          <Element
+            key="2"
+            attributes={{ className: "day-forecast" }}
+            tagName="article"
+          >
+            <article className="day-forecast">
+              
     
-      <Element
-        key="3"
-        tagName="h2"
-      >
-        03 March 2018
-      </Element>
-      
+              <Element key="3" tagName="h2">
+                <h2>03 March 2018</h2>
+              </Element>
+              
     
-      <Element
-        key="4"
-        tagName="p"
-      >
-        Rain.
-      </Element>
-      
+              <Element key="4" tagName="p">
+                <p>Rain.</p>
+              </Element>
+              
   
-    </Element>
-    
+            </article>
+          </Element>
+          
   
-    <Element
-      attributes={
-        Object {
-          "className": "day-forecast",
-        }
-      }
-      key="5"
-      tagName="article"
-    >
-      
+          <Element
+            key="5"
+            attributes={{ className: "day-forecast" }}
+            tagName="article"
+          >
+            <article className="day-forecast">
+              
     
-      <Element
-        key="6"
-        tagName="h2"
-      >
-        04 March 2018
-      </Element>
-      
+              <Element key="6" tagName="h2">
+                <h2>04 March 2018</h2>
+              </Element>
+              
     
-      <Element
-        key="7"
-        tagName="p"
-      >
-        Periods of rain.
-      </Element>
-      
+              <Element key="7" tagName="p">
+                <p>Periods of rain.</p>
+              </Element>
+              
   
-    </Element>
-    
+            </article>
+          </Element>
+          
   
-    <Element
-      attributes={
-        Object {
-          "className": "day-forecast",
-        }
-      }
-      key="8"
-      tagName="article"
-    >
-      
+          <Element
+            key="8"
+            attributes={{ className: "day-forecast" }}
+            tagName="article"
+          >
+            <article className="day-forecast">
+              
     
-      <Element
-        key="9"
-        tagName="h2"
-      >
-        05 March 2018
-      </Element>
-      
+              <Element key="9" tagName="h2">
+                <h2>05 March 2018</h2>
+              </Element>
+              
     
-      <Element
-        key="10"
-        tagName="p"
-      >
-        Heavy rain.
-      </Element>
-      
+              <Element key="10" tagName="p">
+                <p>Heavy rain.</p>
+              </Element>
+              
   
-    </Element>
-    
+            </article>
+          </Element>
+          
 
+        </article>
+      </Element>
+    </div>
   </Element>
-</Element>
+</Markup>
 `;
 
 exports[`html aside renders 1`] = `
-<Element
+<Markup
+  content="<aside>
+    <p>The Rough-skinned Newt defends itself with a deadly neurotoxin.</p>
+  </aside>"
+  emptyContent={null}
+  parsedContent={null}
   tagName="div"
 >
-  <Element
-    key="0"
-    tagName="aside"
-  >
-    
+  <Element tagName="div">
+    <div>
+      <Element key="0" tagName="aside">
+        <aside>
+          
   
-    <Element
-      key="1"
-      tagName="p"
-    >
-      The Rough-skinned Newt defends itself with a deadly neurotoxin.
-    </Element>
-    
+          <Element key="1" tagName="p">
+            <p>The Rough-skinned Newt defends itself with a deadly neurotoxin.</p>
+          </Element>
+          
 
+        </aside>
+      </Element>
+    </div>
   </Element>
-</Element>
+</Markup>
 `;
 
 exports[`html audio renders 1`] = `
-<Element
+<Markup
+  content="<audio controls src="/media/examples/t-rex-roar.mp3">
+    Your browser does not support the <code>audio</code> element.
+  </audio>"
+  emptyContent={null}
+  parsedContent={null}
   tagName="div"
 >
-  <Element
-    attributes={
-      Object {
-        "controls": true,
-        "src": "/media/examples/t-rex-roar.mp3",
-      }
-    }
-    key="0"
-    tagName="audio"
-  >
-    
+  <Element tagName="div">
+    <div>
+      <Element
+        key="0"
+        attributes={{ controls: true, src: "/media/examples/t-rex-roar.mp3" }}
+        tagName="audio"
+      >
+        <audio controls src="/media/examples/t-rex-roar.mp3">
+          
   Your browser does not support the 
-    audio
-     element.
+          audio
+           element.
 
+        </audio>
+      </Element>
+    </div>
   </Element>
-</Element>
+</Markup>
 `;
 
 exports[`html audio renders with source 1`] = `
-<Element
+<Markup
+  content="<audio controls="controls">
+    <source src="foo.wav" type="audio/wav">
+    Your browser does not support the <code>audio</code> element.
+  </audio>"
+  emptyContent={null}
+  parsedContent={null}
   tagName="div"
 >
-  <Element
-    attributes={
-      Object {
-        "controls": true,
-      }
-    }
-    key="0"
-    tagName="audio"
-  >
-    
+  <Element tagName="div">
+    <div>
+      <Element key="0" attributes={{ controls: true }} tagName="audio">
+        <audio controls>
+          
   
-    <Element
-      attributes={
-        Object {
-          "src": "foo.wav",
-          "type": "audio/wav",
-        }
-      }
-      key="1"
-      selfClose={true}
-      tagName="source"
-    />
-    
+          <Element
+            key="1"
+            selfClose
+            attributes={{ src: "foo.wav", type: "audio/wav" }}
+            tagName="source"
+          >
+            <source src="foo.wav" type="audio/wav" />
+          </Element>
+          
   Your browser does not support the 
-    audio
-     element.
+          audio
+           element.
 
+        </audio>
+      </Element>
+    </div>
   </Element>
-</Element>
+</Markup>
 `;
 
 exports[`html b renders 1`] = `
-<Element
+<Markup
+  content="<p>The two most popular science courses offered by the school are <b class="term">chemistry</b> (the study of chemicals and the composition of substances) and <b class="term">physics</b> (the study of the nature and properties of matter and energy).</p>"
+  emptyContent={null}
+  parsedContent={null}
   tagName="div"
 >
-  <Element
-    key="0"
-    tagName="p"
-  >
-    The two most popular science courses offered by the school are 
-    <Element
-      attributes={
-        Object {
-          "className": "term",
-        }
-      }
-      key="1"
-      tagName="b"
-    >
-      chemistry
-    </Element>
-     (the study of chemicals and the composition of substances) and 
-    <Element
-      attributes={
-        Object {
-          "className": "term",
-        }
-      }
-      key="2"
-      tagName="b"
-    >
-      physics
-    </Element>
-     (the study of the nature and properties of matter and energy).
+  <Element tagName="div">
+    <div>
+      <Element key="0" tagName="p">
+        <p>
+          The two most popular science courses offered by the school are 
+          <Element key="1" attributes={{ className: "term" }} tagName="b">
+            <b className="term">
+              chemistry
+            </b>
+          </Element>
+           (the study of chemicals and the composition of substances) and 
+          <Element key="2" attributes={{ className: "term" }} tagName="b">
+            <b className="term">
+              physics
+            </b>
+          </Element>
+           (the study of the nature and properties of matter and energy).
+        </p>
+      </Element>
+    </div>
   </Element>
-</Element>
+</Markup>
 `;
 
 exports[`html bdi renders 1`] = `
-<Element
+<Markup
+  content="<ul>
+    <li><bdi class="name">Evil Steven</bdi>: 1st place</li>
+    <li><bdi class="name">François fatale</bdi>: 2nd place</li>
+    <li><span class="name">تیز سمی</span>: 3rd place</li>
+    <li><bdi class="name">الرجل القوي إيان</bdi>: 4th place</li>
+    <li><span class="name" dir="auto">تیز سمی</span>: 5th place</li>
+  </ul>"
+  emptyContent={null}
+  parsedContent={null}
   tagName="div"
 >
-  <Element
-    key="0"
-    tagName="ul"
-  >
-    
+  <Element tagName="div">
+    <div>
+      <Element key="0" tagName="ul">
+        <ul>
+          
   
-    <Element
-      key="1"
-      tagName="li"
-    >
-      <Element
-        attributes={
-          Object {
-            "className": "name",
-          }
-        }
-        key="2"
-        tagName="bdi"
-      >
-        Evil Steven
-      </Element>
-      : 1st place
-    </Element>
-    
+          <Element key="1" tagName="li">
+            <li>
+              <Element key="2" attributes={{ className: "name" }} tagName="bdi">
+                <bdi className="name">
+                  Evil Steven
+                </bdi>
+              </Element>
+              : 1st place
+            </li>
+          </Element>
+          
   
-    <Element
-      key="3"
-      tagName="li"
-    >
-      <Element
-        attributes={
-          Object {
-            "className": "name",
-          }
-        }
-        key="4"
-        tagName="bdi"
-      >
-        François fatale
-      </Element>
-      : 2nd place
-    </Element>
-    
+          <Element key="3" tagName="li">
+            <li>
+              <Element key="4" attributes={{ className: "name" }} tagName="bdi">
+                <bdi className="name">
+                  François fatale
+                </bdi>
+              </Element>
+              : 2nd place
+            </li>
+          </Element>
+          
   
-    <Element
-      key="5"
-      tagName="li"
-    >
-      <Element
-        attributes={
-          Object {
-            "className": "name",
-          }
-        }
-        key="6"
-        tagName="span"
-      >
-        تیز سمی
-      </Element>
-      : 3rd place
-    </Element>
-    
+          <Element key="5" tagName="li">
+            <li>
+              <Element key="6" attributes={{ className: "name" }} tagName="span">
+                <span className="name">
+                  تیز سمی
+                </span>
+              </Element>
+              : 3rd place
+            </li>
+          </Element>
+          
   
-    <Element
-      key="7"
-      tagName="li"
-    >
-      <Element
-        attributes={
-          Object {
-            "className": "name",
-          }
-        }
-        key="8"
-        tagName="bdi"
-      >
-        الرجل القوي إيان
-      </Element>
-      : 4th place
-    </Element>
-    
+          <Element key="7" tagName="li">
+            <li>
+              <Element key="8" attributes={{ className: "name" }} tagName="bdi">
+                <bdi className="name">
+                  الرجل القوي إيان
+                </bdi>
+              </Element>
+              : 4th place
+            </li>
+          </Element>
+          
   
-    <Element
-      key="9"
-      tagName="li"
-    >
-      <Element
-        attributes={
-          Object {
-            "className": "name",
-            "dir": "auto",
-          }
-        }
-        key="10"
-        tagName="span"
-      >
-        تیز سمی
-      </Element>
-      : 5th place
-    </Element>
-    
+          <Element key="9" tagName="li">
+            <li>
+              <Element
+                key="10"
+                attributes={{ className: "name", dir: "auto" }}
+                tagName="span"
+              >
+                <span className="name" dir="auto">
+                  تیز سمی
+                </span>
+              </Element>
+              : 5th place
+            </li>
+          </Element>
+          
 
+        </ul>
+      </Element>
+    </div>
   </Element>
-</Element>
+</Markup>
 `;
 
 exports[`html bdo renders 1`] = `
-<Element
+<Markup
+  content="In the computer's memory, this is stored as <bdo dir="ltr">אה, אני אוהב להיות ליד חוף הים</bdo>"
+  emptyContent={null}
+  parsedContent={null}
   tagName="div"
 >
-  In the computer's memory, this is stored as 
-  <Element
-    attributes={
-      Object {
-        "dir": "ltr",
-      }
-    }
-    key="0"
-    tagName="bdo"
-  >
-    אה, אני אוהב להיות ליד חוף הים
+  <Element tagName="div">
+    <div>
+      In the computer's memory, this is stored as 
+      <Element key="0" attributes={{ dir: "ltr" }} tagName="bdo">
+        <bdo dir="ltr">
+          אה, אני אוהב להיות ליד חוף הים
+        </bdo>
+      </Element>
+    </div>
   </Element>
-</Element>
+</Markup>
 `;
 
 exports[`html blockquote renders 1`] = `
-<Element
+<Markup
+  content="<blockquote cite="https://www.huxley.net/bnw/four.html">
+    <p>Words can be like X-rays, if you use them properly – they'll go through anything. You read and you're pierced.</p>
+  </blockquote>
+  
+  <cite>– Aldous Huxley, Brave New World</cite>"
+  emptyContent={null}
+  parsedContent={null}
   tagName="div"
 >
-  <Element
-    attributes={
-      Object {
-        "cite": "https://www.huxley.net/bnw/four.html",
-      }
-    }
-    key="0"
-    tagName="blockquote"
-  >
-    
+  <Element tagName="div">
+    <div>
+      <Element
+        key="0"
+        attributes={{ cite: "https://www.huxley.net/bnw/four.html" }}
+        tagName="blockquote"
+      >
+        <blockquote cite="https://www.huxley.net/bnw/four.html">
+          
   
-    <Element
-      key="1"
-      tagName="p"
-    >
-      Words can be like X-rays, if you use them properly – they'll go through anything. You read and you're pierced.
-    </Element>
-    
+          <Element key="1" tagName="p">
+            <p>Words can be like X-rays, if you use them properly – they'll go through anything. You read and you're pierced.</p>
+          </Element>
+          
 
+        </blockquote>
+      </Element>
+      
+
+
+      <Element key="2" tagName="cite">
+        <cite>– Aldous Huxley, Brave New World</cite>
+      </Element>
+    </div>
   </Element>
-  
-
-
-  <Element
-    key="2"
-    tagName="cite"
-  >
-    – Aldous Huxley, Brave New World
-  </Element>
-</Element>
+</Markup>
 `;
 
 exports[`html button renders 1`] = `
-<Element
+<Markup
+  content="<button name="button">Click me</button>"
+  emptyContent={null}
+  parsedContent={null}
   tagName="div"
 >
-  <Element
-    key="0"
-    tagName="button"
-  >
-    Click me
+  <Element tagName="div">
+    <div>
+      <Element key="0" tagName="button">
+        <button>Click me</button>
+      </Element>
+    </div>
   </Element>
-</Element>
+</Markup>
 `;
 
 exports[`html canvas renders 1`] = `
-<Element
+<Markup
+  allowList={[ "canvas" ]}
+  content="<canvas id="canvas" width="300" height="300">
+    An alternative text describing what your canvas displays.
+  </canvas>"
+  emptyContent={null}
+  parsedContent={null}
   tagName="div"
 >
-  <Element
-    attributes={
-      Object {
-        "height": "300",
-        "id": "canvas",
-        "width": "300",
-      }
-    }
-    key="0"
-    tagName="canvas"
-  >
-    
+  <Element tagName="div">
+    <div>
+      <Element
+        key="0"
+        attributes={{ id: "canvas", width: "300", height: "300" }}
+        tagName="canvas"
+      >
+        <canvas height="300" id="canvas" width="300">
+          
   An alternative text describing what your canvas displays.
 
+        </canvas>
+      </Element>
+    </div>
   </Element>
-</Element>
+</Markup>
 `;
 
 exports[`html canvas renders nothing when not allowed 1`] = `
-<Element
+<Markup
+  content="<canvas id="canvas" width="300" height="300">
+    An alternative text describing what your canvas displays.
+  </canvas>"
+  emptyContent={null}
+  parsedContent={null}
   tagName="div"
 >
-  
+  <Element tagName="div">
+    <div>
   An alternative text describing what your canvas displays.
-
-</Element>
+</div>
+  </Element>
+</Markup>
 `;
 
 exports[`html caption renders 1`] = `
-<Element
+<Markup
+  content="<table>
+    <caption>He-Man and Skeletor facts</caption>
+    <tr>
+      <td> </td>
+      <th scope="col" class="heman">He-Man</th>
+      <th scope="col" class="skeletor">Skeletor</th>
+    </tr>
+  </table>"
+  emptyContent={null}
+  parsedContent={null}
   tagName="div"
 >
-  <Element
-    key="0"
-    tagName="table"
-  >
-    
+  <Element tagName="div">
+    <div>
+      <Element key="0" tagName="table">
+        <table>
+          
   
-    <Element
-      key="1"
-      tagName="caption"
-    >
-      He-Man and Skeletor facts
-    </Element>
-    
+          <Element key="1" tagName="caption">
+            <caption>He-Man and Skeletor facts</caption>
+          </Element>
+          
   
-    <Element
-      key="2"
-      tagName="tbody"
-    >
-      <Element
-        key="3"
-        tagName="tr"
-      >
-        
+          <Element key="2" tagName="tbody">
+            <tbody>
+              <Element key="3" tagName="tr">
+                <tr>
+                  
     
-        <Element
-          key="4"
-          tagName="td"
-        >
-           
-        </Element>
-        
+                  <Element key="4" tagName="td">
+                    <td> </td>
+                  </Element>
+                  
     
-        <Element
-          attributes={
-            Object {
-              "className": "heman",
-              "scope": "col",
-            }
-          }
-          key="5"
-          tagName="th"
-        >
-          He-Man
-        </Element>
-        
+                  <Element
+                    key="5"
+                    attributes={{ scope: "col", className: "heman" }}
+                    tagName="th"
+                  >
+                    <th className="heman" scope="col">
+                      He-Man
+                    </th>
+                  </Element>
+                  
     
-        <Element
-          attributes={
-            Object {
-              "className": "skeletor",
-              "scope": "col",
-            }
-          }
-          key="6"
-          tagName="th"
-        >
-          Skeletor
-        </Element>
-        
+                  <Element
+                    key="6"
+                    attributes={{ scope: "col", className: "skeletor" }}
+                    tagName="th"
+                  >
+                    <th className="skeletor" scope="col">
+                      Skeletor
+                    </th>
+                  </Element>
+                  
   
-      </Element>
-      
+                </tr>
+              </Element>
+              
 
-    </Element>
+            </tbody>
+          </Element>
+        </table>
+      </Element>
+    </div>
   </Element>
-</Element>
+</Markup>
 `;
 
 exports[`html cite renders 1`] = `
-<Element
+<Markup
+  content="<blockquote>
+    <p>It was a bright cold day in April, and the clocks were striking thirteen.</p>
+    <footer>
+      First sentence in <cite><a href="http://www.george-orwell.org/1984/0.html"><i>Nineteen Eighty-Four</i></a></cite> by George Orwell (Part 1, Chapter 1).
+    </footer>
+  </blockquote>"
+  emptyContent={null}
+  parsedContent={null}
   tagName="div"
 >
-  <Element
-    key="0"
-    tagName="blockquote"
-  >
-    
+  <Element tagName="div">
+    <div>
+      <Element key="0" tagName="blockquote">
+        <blockquote>
+          
   
-    <Element
-      key="1"
-      tagName="p"
-    >
-      It was a bright cold day in April, and the clocks were striking thirteen.
-    </Element>
-    
-  
-    <Element
-      key="2"
-      tagName="footer"
-    >
-      
-    First sentence in 
-      <Element
-        key="3"
-        tagName="cite"
-      >
-        <Element
-          attributes={
-            Object {
-              "href": "http://www.george-orwell.org/1984/0.html",
-            }
-          }
-          key="4"
-          tagName="a"
-        >
-          <Element
-            key="5"
-            tagName="i"
-          >
-            Nineteen Eighty-Four
+          <Element key="1" tagName="p">
+            <p>It was a bright cold day in April, and the clocks were striking thirteen.</p>
           </Element>
-        </Element>
-      </Element>
-       by George Orwell (Part 1, Chapter 1).
+          
   
-    </Element>
-    
+          <Element key="2" tagName="footer">
+            <footer>
+              
+    First sentence in 
+              <Element key="3" tagName="cite">
+                <cite>
+                  <Element
+                    key="4"
+                    attributes={{ href: "http://www.george-orwell.org/1984/0.html" }}
+                    tagName="a"
+                  >
+                    <a href="http://www.george-orwell.org/1984/0.html">
+                      <Element key="5" tagName="i">
+                        <i>Nineteen Eighty-Four</i>
+                      </Element>
+                    </a>
+                  </Element>
+                </cite>
+              </Element>
+               by George Orwell (Part 1, Chapter 1).
+  
+            </footer>
+          </Element>
+          
 
+        </blockquote>
+      </Element>
+    </div>
   </Element>
-</Element>
+</Markup>
 `;
 
 exports[`html code renders 1`] = `
-<Element
+<Markup
+  content="<p>The <code>push()</code> method adds one or more elements to the end of an array and returns the new length of the array.</p>"
+  emptyContent={null}
+  parsedContent={null}
   tagName="div"
 >
-  <Element
-    key="0"
-    tagName="p"
-  >
-    The 
-    <Element
-      key="1"
-      tagName="code"
-    >
-      push()
-    </Element>
-     method adds one or more elements to the end of an array and returns the new length of the array.
+  <Element tagName="div">
+    <div>
+      <Element key="0" tagName="p">
+        <p>
+          The 
+          <Element key="1" tagName="code">
+            <code>push()</code>
+          </Element>
+           method adds one or more elements to the end of an array and returns the new length of the array.
+        </p>
+      </Element>
+    </div>
   </Element>
-</Element>
+</Markup>
 `;
 
 exports[`html col, colgroup renders 1`] = `
-<Element
+<Markup
+  content="<table>
+    <caption>Superheros and sidekicks</caption>
+    <colgroup>
+      <col>
+      <col span="2" class="batman">
+      <col span="2" class="flash">
+    </colgroup>
+  </table>"
+  emptyContent={null}
+  parsedContent={null}
   tagName="div"
 >
-  <Element
-    key="0"
-    tagName="table"
-  >
-    
+  <Element tagName="div">
+    <div>
+      <Element key="0" tagName="table">
+        <table>
+          
   
-    <Element
-      key="1"
-      tagName="caption"
-    >
-      Superheros and sidekicks
-    </Element>
-    
+          <Element key="1" tagName="caption">
+            <caption>Superheros and sidekicks</caption>
+          </Element>
+          
   
-    <Element
-      key="2"
-      tagName="colgroup"
-    >
-      
+          <Element key="2" tagName="colgroup">
+            <colgroup>
+              
     
-      <Element
-        key="3"
-        selfClose={true}
-        tagName="col"
-      />
-      
+              <Element key="3" selfClose tagName="col">
+                <col />
+              </Element>
+              
     
-      <Element
-        attributes={
-          Object {
-            "className": "batman",
-            "span": 2,
-          }
-        }
-        key="4"
-        selfClose={true}
-        tagName="col"
-      />
-      
+              <Element
+                key="4"
+                selfClose
+                attributes={{ span: 2, className: "batman" }}
+                tagName="col"
+              >
+                <col className="batman" span={2} />
+              </Element>
+              
     
-      <Element
-        attributes={
-          Object {
-            "className": "flash",
-            "span": 2,
-          }
-        }
-        key="5"
-        selfClose={true}
-        tagName="col"
-      />
-      
+              <Element
+                key="5"
+                selfClose
+                attributes={{ span: 2, className: "flash" }}
+                tagName="col"
+              >
+                <col className="flash" span={2} />
+              </Element>
+              
   
-    </Element>
-    
+            </colgroup>
+          </Element>
+          
 
+        </table>
+      </Element>
+    </div>
   </Element>
-</Element>
+</Markup>
 `;
 
 exports[`html details, summary doesnt render summary when not in details 1`] = `
-<Element
+<Markup
+  content="<summary>Details</summary>"
+  emptyContent={null}
+  parsedContent={null}
   tagName="div"
 >
-  Details
-</Element>
+  <Element tagName="div">
+    <div>Details</div>
+  </Element>
+</Markup>
 `;
 
 exports[`html details, summary renders 1`] = `
-<Element
+<Markup
+  content="<details>
+    <summary>Details</summary>
+    Something small enough to escape casual notice.
+  </details>"
+  emptyContent={null}
+  parsedContent={null}
   tagName="div"
 >
-  <Element
-    key="0"
-    tagName="details"
-  >
-    
+  <Element tagName="div">
+    <div>
+      <Element key="0" tagName="details">
+        <details>
+          
   
-    <Element
-      key="1"
-      tagName="summary"
-    >
-      Details
-    </Element>
-    
+          <Element key="1" tagName="summary">
+            <summary>Details</summary>
+          </Element>
+          
   Something small enough to escape casual notice.
 
+        </details>
+      </Element>
+    </div>
   </Element>
-</Element>
+</Markup>
 `;
 
 exports[`html dfn renders 1`] = `
-<Element
+<Markup
+  content="<p>A <dfn id="def-validator">validator</dfn> is a program that checks for syntax errors in code or documents.</p>"
+  emptyContent={null}
+  parsedContent={null}
   tagName="div"
 >
-  <Element
-    key="0"
-    tagName="p"
-  >
-    A 
-    <Element
-      attributes={
-        Object {
-          "id": "def-validator",
-        }
-      }
-      key="1"
-      tagName="dfn"
-    >
-      validator
-    </Element>
-     is a program that checks for syntax errors in code or documents.
+  <Element tagName="div">
+    <div>
+      <Element key="0" tagName="p">
+        <p>
+          A 
+          <Element key="1" attributes={{ id: "def-validator" }} tagName="dfn">
+            <dfn id="def-validator">
+              validator
+            </dfn>
+          </Element>
+           is a program that checks for syntax errors in code or documents.
+        </p>
+      </Element>
+    </div>
   </Element>
-</Element>
+</Markup>
 `;
 
 exports[`html div renders 1`] = `
-<Element
+<Markup
+  content="<div class="warning">
+    <img src="/media/examples/leopard.jpg" alt="An intimidating leopard.">
+    <p>Beware of the leopard</p>
+  </div>"
+  emptyContent={null}
+  parsedContent={null}
   tagName="div"
 >
-  <Element
-    attributes={
-      Object {
-        "className": "warning",
-      }
-    }
-    key="0"
-    tagName="div"
-  >
-    
+  <Element tagName="div">
+    <div>
+      <Element key="0" attributes={{ className: "warning" }} tagName="div">
+        <div className="warning">
+          
   
-    <Element
-      attributes={
-        Object {
-          "alt": "An intimidating leopard.",
-          "src": "/media/examples/leopard.jpg",
-        }
-      }
-      key="1"
-      selfClose={true}
-      tagName="img"
-    />
-    
+          <Element
+            key="1"
+            selfClose
+            attributes={{ src: "/media/examples/leopard.jpg", alt: "An intimidating leopard." }}
+            tagName="img"
+          >
+            <img
+              alt="An intimidating leopard."
+              src="/media/examples/leopard.jpg"
+            />
+          </Element>
+          
   
-    <Element
-      key="2"
-      tagName="p"
-    >
-      Beware of the leopard
-    </Element>
-    
+          <Element key="2" tagName="p">
+            <p>Beware of the leopard</p>
+          </Element>
+          
 
+        </div>
+      </Element>
+    </div>
   </Element>
-</Element>
+</Markup>
 `;
 
 exports[`html dl, dt, dd renders 1`] = `
-<Element
+<Markup
+  content="<dl>
+    <dt>Beast of Bodmin</dt>
+    <dd>A large feline inhabiting Bodmin Moor.</dd>
+  
+    <dt>Morgawr</dt>
+    <dd>A sea serpent.</dd>
+  
+    <dt>Owlman</dt>
+    <dd>A giant owl-like creature.</dd>
+  </dl>"
+  emptyContent={null}
+  parsedContent={null}
   tagName="div"
 >
-  <Element
-    key="0"
-    tagName="dl"
-  >
-    
+  <Element tagName="div">
+    <div>
+      <Element key="0" tagName="dl">
+        <dl>
+          
   
-    <Element
-      key="1"
-      tagName="dt"
-    >
-      Beast of Bodmin
-    </Element>
-    
+          <Element key="1" tagName="dt">
+            <dt>Beast of Bodmin</dt>
+          </Element>
+          
   
-    <Element
-      key="2"
-      tagName="dd"
-    >
-      A large feline inhabiting Bodmin Moor.
-    </Element>
-    
+          <Element key="2" tagName="dd">
+            <dd>A large feline inhabiting Bodmin Moor.</dd>
+          </Element>
+          
 
   
-    <Element
-      key="3"
-      tagName="dt"
-    >
-      Morgawr
-    </Element>
-    
+          <Element key="3" tagName="dt">
+            <dt>Morgawr</dt>
+          </Element>
+          
   
-    <Element
-      key="4"
-      tagName="dd"
-    >
-      A sea serpent.
-    </Element>
-    
+          <Element key="4" tagName="dd">
+            <dd>A sea serpent.</dd>
+          </Element>
+          
 
   
-    <Element
-      key="5"
-      tagName="dt"
-    >
-      Owlman
-    </Element>
-    
+          <Element key="5" tagName="dt">
+            <dt>Owlman</dt>
+          </Element>
+          
   
-    <Element
-      key="6"
-      tagName="dd"
-    >
-      A giant owl-like creature.
-    </Element>
-    
+          <Element key="6" tagName="dd">
+            <dd>A giant owl-like creature.</dd>
+          </Element>
+          
 
+        </dl>
+      </Element>
+    </div>
   </Element>
-</Element>
+</Markup>
 `;
 
 exports[`html em renders 1`] = `
-<Element
+<Markup
+  content="We <em>had</em> to do something about it."
+  emptyContent={null}
+  parsedContent={null}
   tagName="div"
 >
-  We 
-  <Element
-    key="0"
-    tagName="em"
-  >
-    had
+  <Element tagName="div">
+    <div>
+      We 
+      <Element key="0" tagName="em">
+        <em>had</em>
+      </Element>
+       to do something about it.
+    </div>
   </Element>
-   to do something about it.
-</Element>
+</Markup>
 `;
 
 exports[`html figure, figcaption renders 1`] = `
-<Element
+<Markup
+  content="<figure>
+    <img src="/media/examples/elephant-660-480.jpg" alt="Elephant at sunset" />
+    <figcaption>An elephant at sunset</figcaption>
+  </figure>"
+  emptyContent={null}
+  parsedContent={null}
   tagName="div"
 >
-  <Element
-    key="0"
-    tagName="figure"
-  >
-    
+  <Element tagName="div">
+    <div>
+      <Element key="0" tagName="figure">
+        <figure>
+          
   
-    <Element
-      attributes={
-        Object {
-          "alt": "Elephant at sunset",
-          "src": "/media/examples/elephant-660-480.jpg",
-        }
-      }
-      key="1"
-      selfClose={true}
-      tagName="img"
-    />
-    
+          <Element
+            key="1"
+            selfClose
+            attributes={{ src: "/media/examples/elephant-660-480.jpg", alt: "Elephant at sunset" }}
+            tagName="img"
+          >
+            <img
+              alt="Elephant at sunset"
+              src="/media/examples/elephant-660-480.jpg"
+            />
+          </Element>
+          
   
-    <Element
-      key="2"
-      tagName="figcaption"
-    >
-      An elephant at sunset
-    </Element>
-    
+          <Element key="2" tagName="figcaption">
+            <figcaption>An elephant at sunset</figcaption>
+          </Element>
+          
 
+        </figure>
+      </Element>
+    </div>
   </Element>
-</Element>
+</Markup>
 `;
 
 exports[`html footer renders 1`] = `
-<Element
+<Markup
+  content="<article>
+    <h1>How to be a wizard</h1>
+    <ol>
+      <li>Grow a long, majestic beard.</li>
+      <li>Wear a tall pointed hat.</li>
+      <li>Have I mentioned the beard?</li>
+    </ol>
+    <footer>
+      <p>© 2018 Gandalf</p>
+    </footer>
+  </article>"
+  emptyContent={null}
+  parsedContent={null}
   tagName="div"
 >
-  <Element
-    key="0"
-    tagName="article"
-  >
-    
+  <Element tagName="div">
+    <div>
+      <Element key="0" tagName="article">
+        <article>
+          
   
-    <Element
-      key="1"
-      tagName="h1"
-    >
-      How to be a wizard
-    </Element>
-    
+          <Element key="1" tagName="h1">
+            <h1>How to be a wizard</h1>
+          </Element>
+          
   
-    <Element
-      key="2"
-      tagName="ol"
-    >
-      
+          <Element key="2" tagName="ol">
+            <ol>
+              
     
-      <Element
-        key="3"
-        tagName="li"
-      >
-        Grow a long, majestic beard.
-      </Element>
-      
+              <Element key="3" tagName="li">
+                <li>Grow a long, majestic beard.</li>
+              </Element>
+              
     
-      <Element
-        key="4"
-        tagName="li"
-      >
-        Wear a tall pointed hat.
-      </Element>
-      
+              <Element key="4" tagName="li">
+                <li>Wear a tall pointed hat.</li>
+              </Element>
+              
     
-      <Element
-        key="5"
-        tagName="li"
-      >
-        Have I mentioned the beard?
-      </Element>
-      
+              <Element key="5" tagName="li">
+                <li>Have I mentioned the beard?</li>
+              </Element>
+              
   
-    </Element>
-    
+            </ol>
+          </Element>
+          
   
-    <Element
-      key="6"
-      tagName="footer"
-    >
-      
+          <Element key="6" tagName="footer">
+            <footer>
+              
     
-      <Element
-        key="7"
-        tagName="p"
-      >
-        © 2018 Gandalf
-      </Element>
-      
+              <Element key="7" tagName="p">
+                <p>© 2018 Gandalf</p>
+              </Element>
+              
   
-    </Element>
-    
+            </footer>
+          </Element>
+          
 
+        </article>
+      </Element>
+    </div>
   </Element>
-</Element>
+</Markup>
 `;
 
 exports[`html h1 - h6 renders 1`] = `
-<Element
+<Markup
+  content="<h1>Beetles</h1>
+        <h2>External morphology</h2>
+            <h3>Head</h3>
+                <h4>Mouthparts</h4>
+            <h3>Thorax</h3>
+                <h5>Prothorax</h5>
+                <h6>Pterothorax</h6>"
+  emptyContent={null}
+  parsedContent={null}
   tagName="div"
 >
-  <Element
-    key="0"
-    tagName="h1"
-  >
-    Beetles
-  </Element>
-  <Element
-    key="1"
-    selfClose={true}
-    tagName="br"
-  />
-        
-  <Element
-    key="2"
-    tagName="h2"
-  >
-    External morphology
-  </Element>
-  <Element
-    key="3"
-    selfClose={true}
-    tagName="br"
-  />
+  <Element tagName="div">
+    <div>
+      <Element key="0" tagName="h1">
+        <h1>Beetles</h1>
+      </Element>
+      <Element key="1" selfClose tagName="br">
+        <br />
+      </Element>
             
-  <Element
-    key="4"
-    tagName="h3"
-  >
-    Head
-  </Element>
-  <Element
-    key="5"
-    selfClose={true}
-    tagName="br"
-  />
+      <Element key="2" tagName="h2">
+        <h2>External morphology</h2>
+      </Element>
+      <Element key="3" selfClose tagName="br">
+        <br />
+      </Element>
                 
-  <Element
-    key="6"
-    tagName="h4"
-  >
-    Mouthparts
-  </Element>
-  <Element
-    key="7"
-    selfClose={true}
-    tagName="br"
-  />
-            
-  <Element
-    key="8"
-    tagName="h3"
-  >
-    Thorax
-  </Element>
-  <Element
-    key="9"
-    selfClose={true}
-    tagName="br"
-  />
+      <Element key="4" tagName="h3">
+        <h3>Head</h3>
+      </Element>
+      <Element key="5" selfClose tagName="br">
+        <br />
+      </Element>
+                    
+      <Element key="6" tagName="h4">
+        <h4>Mouthparts</h4>
+      </Element>
+      <Element key="7" selfClose tagName="br">
+        <br />
+      </Element>
                 
-  <Element
-    key="10"
-    tagName="h5"
-  >
-    Prothorax
+      <Element key="8" tagName="h3">
+        <h3>Thorax</h3>
+      </Element>
+      <Element key="9" selfClose tagName="br">
+        <br />
+      </Element>
+                    
+      <Element key="10" tagName="h5">
+        <h5>Prothorax</h5>
+      </Element>
+      <Element key="11" selfClose tagName="br">
+        <br />
+      </Element>
+                    
+      <Element key="12" tagName="h6">
+        <h6>Pterothorax</h6>
+      </Element>
+    </div>
   </Element>
-  <Element
-    key="11"
-    selfClose={true}
-    tagName="br"
-  />
-                
-  <Element
-    key="12"
-    tagName="h6"
-  >
-    Pterothorax
-  </Element>
-</Element>
+</Markup>
 `;
 
 exports[`html header renders 1`] = `
-<Element
+<Markup
+  content="<header class="page-header">
+    <h1>Cute Puppies Express!</h1>
+  </header>"
+  emptyContent={null}
+  parsedContent={null}
   tagName="div"
 >
-  <Element
-    attributes={
-      Object {
-        "className": "page-header",
-      }
-    }
-    key="0"
-    tagName="header"
-  >
-    
+  <Element tagName="div">
+    <div>
+      <Element
+        key="0"
+        attributes={{ className: "page-header" }}
+        tagName="header"
+      >
+        <header className="page-header">
+          
   
-    <Element
-      key="1"
-      tagName="h1"
-    >
-      Cute Puppies Express!
-    </Element>
-    
+          <Element key="1" tagName="h1">
+            <h1>Cute Puppies Express!</h1>
+          </Element>
+          
 
+        </header>
+      </Element>
+    </div>
   </Element>
-</Element>
+</Markup>
 `;
 
 exports[`html hr renders 1`] = `
-<Element
+<Markup
+  content="<p>§1: The first rule of Fight Club is: You do not talk about Fight Club.</p>
+  <hr>
+  <p>§2: The second rule of Fight Club is: Always bring cupcakes.</p>"
+  emptyContent={null}
+  parsedContent={null}
   tagName="div"
 >
-  <Element
-    key="0"
-    tagName="p"
-  >
-    §1: The first rule of Fight Club is: You do not talk about Fight Club.
-  </Element>
-  
+  <Element tagName="div">
+    <div>
+      <Element key="0" tagName="p">
+        <p>§1: The first rule of Fight Club is: You do not talk about Fight Club.</p>
+      </Element>
+      
 
-  <Element
-    key="1"
-    selfClose={true}
-    tagName="hr"
-  />
-  
+      <Element key="1" selfClose tagName="hr">
+        <hr />
+      </Element>
+      
 
-  <Element
-    key="2"
-    tagName="p"
-  >
-    §2: The second rule of Fight Club is: Always bring cupcakes.
+      <Element key="2" tagName="p">
+        <p>§2: The second rule of Fight Club is: Always bring cupcakes.</p>
+      </Element>
+    </div>
   </Element>
-</Element>
+</Markup>
 `;
 
 exports[`html i renders 1`] = `
-<Element
+<Markup
+  content="<p><i class="latin">Musa</i> is one of two or three genera in the family <i class="latin">Musaceae</i>; it includes bananas and plantains.</p>"
+  emptyContent={null}
+  parsedContent={null}
   tagName="div"
 >
-  <Element
-    key="0"
-    tagName="p"
-  >
-    <Element
-      attributes={
-        Object {
-          "className": "latin",
-        }
-      }
-      key="1"
-      tagName="i"
-    >
-      Musa
-    </Element>
-     is one of two or three genera in the family 
-    <Element
-      attributes={
-        Object {
-          "className": "latin",
-        }
-      }
-      key="2"
-      tagName="i"
-    >
-      Musaceae
-    </Element>
-    ; it includes bananas and plantains.
+  <Element tagName="div">
+    <div>
+      <Element key="0" tagName="p">
+        <p>
+          <Element key="1" attributes={{ className: "latin" }} tagName="i">
+            <i className="latin">
+              Musa
+            </i>
+          </Element>
+           is one of two or three genera in the family 
+          <Element key="2" attributes={{ className: "latin" }} tagName="i">
+            <i className="latin">
+              Musaceae
+            </i>
+          </Element>
+          ; it includes bananas and plantains.
+        </p>
+      </Element>
+    </div>
   </Element>
-</Element>
+</Markup>
 `;
 
 exports[`html iframe renders 1`] = `
-<Element
+<Markup
+  allowList={[ "iframe" ]}
+  content="<iframe width="400" height="300" src="https://maps.google.com"></iframe>"
+  emptyContent={null}
+  parsedContent={null}
   tagName="div"
 >
-  <Element
-    attributes={
-      Object {
-        "height": "300",
-        "src": "https://maps.google.com",
-        "width": "400",
-      }
-    }
-    key="0"
-    tagName="iframe"
-  />
-</Element>
+  <Element tagName="div">
+    <div>
+      <Element
+        key="0"
+        attributes={{ width: "400", height: "300", src: "https://maps.google.com" }}
+        tagName="iframe"
+      >
+        <iframe height="300" src="https://maps.google.com" width="400" />
+      </Element>
+    </div>
+  </Element>
+</Markup>
 `;
 
 exports[`html iframe renders nothing when not allowed 1`] = `
-<Element
+<Markup
+  content="<iframe width="400" height="300" src="https://maps.google.com"></iframe>"
+  emptyContent={null}
+  parsedContent={null}
   tagName="div"
-/>
+>
+  <Element tagName="div">
+    <div />
+  </Element>
+</Markup>
 `;
 
 exports[`html img renders 1`] = `
-<Element
+<Markup
+  content="<img class="fit-picture" src="/media/examples/grapefruit-slice-332-332.jpg" alt="Grapefruit slice atop a pile of other slices" />"
+  emptyContent={null}
+  parsedContent={null}
   tagName="div"
 >
-  <Element
-    attributes={
-      Object {
-        "alt": "Grapefruit slice atop a pile of other slices",
-        "className": "fit-picture",
-        "src": "/media/examples/grapefruit-slice-332-332.jpg",
-      }
-    }
-    key="0"
-    selfClose={true}
-    tagName="img"
-  />
-</Element>
+  <Element tagName="div">
+    <div>
+      <Element
+        key="0"
+        selfClose
+        attributes={{
+          className: "fit-picture",
+          src: "/media/examples/grapefruit-slice-332-332.jpg",
+          alt: "Grapefruit slice atop a pile of other slices",
+        }}
+        tagName="img"
+      >
+        <img
+          alt="Grapefruit slice atop a pile of other slices"
+          className="fit-picture"
+          src="/media/examples/grapefruit-slice-332-332.jpg"
+        />
+      </Element>
+    </div>
+  </Element>
+</Markup>
 `;
 
 exports[`html ins renders 1`] = `
-<Element
+<Markup
+  content="<ins cite="../howtobeawizard.html" datetime="2018-05">
+    <p>“A wizard is never late …”</p>
+  </ins>"
+  emptyContent={null}
+  parsedContent={null}
   tagName="div"
 >
-  <Element
-    attributes={
-      Object {
-        "cite": "../howtobeawizard.html",
-        "dateTime": "2018-05",
-      }
-    }
-    key="0"
-    tagName="ins"
-  >
-    
+  <Element tagName="div">
+    <div>
+      <Element
+        key="0"
+        attributes={{ cite: "../howtobeawizard.html", dateTime: "2018-05" }}
+        tagName="ins"
+      >
+        <ins cite="../howtobeawizard.html" dateTime="2018-05">
+          
   
-    “A wizard is never late …”
-    
+          “A wizard is never late …”
+          
 
+        </ins>
+      </Element>
+    </div>
   </Element>
-</Element>
+</Markup>
 `;
 
 exports[`html kbd renders 1`] = `
-<Element
+<Markup
+  content="Please press <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>R</kbd> to re-render an MDN page."
+  emptyContent={null}
+  parsedContent={null}
   tagName="div"
 >
-  Please press 
-  <Element
-    key="0"
-    tagName="kbd"
-  >
-    Ctrl
+  <Element tagName="div">
+    <div>
+      Please press 
+      <Element key="0" tagName="kbd">
+        <kbd>Ctrl</kbd>
+      </Element>
+       + 
+      <Element key="1" tagName="kbd">
+        <kbd>Shift</kbd>
+      </Element>
+       + 
+      <Element key="2" tagName="kbd">
+        <kbd>R</kbd>
+      </Element>
+       to re-render an MDN page.
+    </div>
   </Element>
-   + 
-  <Element
-    key="1"
-    tagName="kbd"
-  >
-    Shift
-  </Element>
-   + 
-  <Element
-    key="2"
-    tagName="kbd"
-  >
-    R
-  </Element>
-   to re-render an MDN page.
-</Element>
+</Markup>
 `;
 
 exports[`html main renders 1`] = `
-<Element
+<Markup
+  content="<main role="main">
+    <p>Geckos are a group of usually small, usually nocturnal lizards. They are found on every continent except Australia.</p>
+  </main>"
+  emptyContent={null}
+  parsedContent={null}
   tagName="div"
 >
-  <Element
-    attributes={
-      Object {
-        "role": "main",
-      }
-    }
-    key="0"
-    tagName="main"
-  >
-    
+  <Element tagName="div">
+    <div>
+      <Element key="0" attributes={{ role: "main" }} tagName="main">
+        <main role="main">
+          
   
-    <Element
-      key="1"
-      tagName="p"
-    >
-      Geckos are a group of usually small, usually nocturnal lizards. They are found on every continent except Australia.
-    </Element>
-    
+          <Element key="1" tagName="p">
+            <p>Geckos are a group of usually small, usually nocturnal lizards. They are found on every continent except Australia.</p>
+          </Element>
+          
 
+        </main>
+      </Element>
+    </div>
   </Element>
-</Element>
+</Markup>
 `;
 
 exports[`html mark renders 1`] = `
-<Element
+<Markup
+  content="Most <mark>salamander</mark>s are nocturnal, and hunt for insects, worms, and other small creatures."
+  emptyContent={null}
+  parsedContent={null}
   tagName="div"
 >
-  Most 
-  <Element
-    key="0"
-    tagName="mark"
-  >
-    salamander
+  <Element tagName="div">
+    <div>
+      Most 
+      <Element key="0" tagName="mark">
+        <mark>salamander</mark>
+      </Element>
+      s are nocturnal, and hunt for insects, worms, and other small creatures.
+    </div>
   </Element>
-  s are nocturnal, and hunt for insects, worms, and other small creatures.
-</Element>
+</Markup>
 `;
 
 exports[`html nav, ol, li renders 1`] = `
-<Element
+<Markup
+  content="<nav class="crumbs">
+    <ol>
+      <li class="crumb"><a href="bikes">Bikes</a></li>
+      <li class="crumb"><a href="bikes/bmx">BMX</a></li>
+      <li class="crumb">Jump Bike 3000</li>
+    </ol>
+  </nav>"
+  emptyContent={null}
+  parsedContent={null}
   tagName="div"
 >
-  <Element
-    attributes={
-      Object {
-        "className": "crumbs",
-      }
-    }
-    key="0"
-    tagName="nav"
-  >
-    
+  <Element tagName="div">
+    <div>
+      <Element key="0" attributes={{ className: "crumbs" }} tagName="nav">
+        <nav className="crumbs">
+          
   
-    <Element
-      key="1"
-      tagName="ol"
-    >
-      
+          <Element key="1" tagName="ol">
+            <ol>
+              
     
-      <Element
-        attributes={
-          Object {
-            "className": "crumb",
-          }
-        }
-        key="2"
-        tagName="li"
-      >
-        <Element
-          attributes={
-            Object {
-              "href": "bikes",
-            }
-          }
-          key="3"
-          tagName="a"
-        >
-          Bikes
-        </Element>
-      </Element>
-      
+              <Element key="2" attributes={{ className: "crumb" }} tagName="li">
+                <li className="crumb">
+                  <Element key="3" attributes={{ href: "bikes" }} tagName="a">
+                    <a href="bikes">
+                      Bikes
+                    </a>
+                  </Element>
+                </li>
+              </Element>
+              
     
-      <Element
-        attributes={
-          Object {
-            "className": "crumb",
-          }
-        }
-        key="4"
-        tagName="li"
-      >
-        <Element
-          attributes={
-            Object {
-              "href": "bikes/bmx",
-            }
-          }
-          key="5"
-          tagName="a"
-        >
-          BMX
-        </Element>
-      </Element>
-      
+              <Element key="4" attributes={{ className: "crumb" }} tagName="li">
+                <li className="crumb">
+                  <Element
+                    key="5"
+                    attributes={{ href: "bikes/bmx" }}
+                    tagName="a"
+                  >
+                    <a href="bikes/bmx">
+                      BMX
+                    </a>
+                  </Element>
+                </li>
+              </Element>
+              
     
-      <Element
-        attributes={
-          Object {
-            "className": "crumb",
-          }
-        }
-        key="6"
-        tagName="li"
-      >
-        Jump Bike 3000
-      </Element>
-      
+              <Element key="6" attributes={{ className: "crumb" }} tagName="li">
+                <li className="crumb">
+                  Jump Bike 3000
+                </li>
+              </Element>
+              
   
-    </Element>
-    
+            </ol>
+          </Element>
+          
 
+        </nav>
+      </Element>
+    </div>
   </Element>
-</Element>
+</Markup>
 `;
 
 exports[`html picture renders 1`] = `
-<Element
+<Markup
+  content="<picture>
+    <source srcset="/media/examples/surfer-240-200.jpg" media="(min-width: 800px)">
+    <img src="/media/examples/painted-hand-298-332.jpg" />
+  </picture>"
+  emptyContent={null}
+  parsedContent={null}
   tagName="div"
 >
-  <Element
-    key="0"
-    tagName="picture"
-  >
-    
+  <Element tagName="div">
+    <div>
+      <Element key="0" tagName="picture">
+        <picture>
+          
   
-    <Element
-      attributes={
-        Object {
-          "media": "(min-width: 800px)",
-          "srcSet": "/media/examples/surfer-240-200.jpg",
-        }
-      }
-      key="1"
-      selfClose={true}
-      tagName="source"
-    />
-    
+          <Element
+            key="1"
+            selfClose
+            attributes={{ srcSet: "/media/examples/surfer-240-200.jpg", media: "(min-width: 800px)" }}
+            tagName="source"
+          >
+            <source
+              media="(min-width: 800px)"
+              srcSet="/media/examples/surfer-240-200.jpg"
+            />
+          </Element>
+          
   
-    <Element
-      attributes={
-        Object {
-          "src": "/media/examples/painted-hand-298-332.jpg",
-        }
-      }
-      key="2"
-      selfClose={true}
-      tagName="img"
-    />
-    
+          <Element
+            key="2"
+            selfClose
+            attributes={{ src: "/media/examples/painted-hand-298-332.jpg" }}
+            tagName="img"
+          >
+            <img src="/media/examples/painted-hand-298-332.jpg" />
+          </Element>
+          
 
+        </picture>
+      </Element>
+    </div>
   </Element>
-</Element>
+</Markup>
 `;
 
 exports[`html pre renders 1`] = `
-<Element
+<Markup
+  content="<pre>
+    L          TE
+      A       A
+        C    V
+          R A
+          DOU
+          LOU
+        REUSE
+        QUE TU
+        PORTES
+      ET QUI T'
+      ORNE O CI
+        VILISÉ
+      OTE-  TU VEUX
+        LA    BIEN
+      SI      RESPI
+              RER       - Apollinaire
+  </pre>"
+  emptyContent={null}
+  parsedContent={null}
   tagName="div"
 >
-  <Element
-    key="0"
-    tagName="pre"
-  >
-      L          TE
+  <Element tagName="div">
+    <div>
+      <Element key="0" tagName="pre">
+        <pre>  L          TE
     A       A
       C    V
         R A
@@ -1539,1008 +1574,999 @@ exports[`html pre renders 1`] = `
       LA    BIEN
     SI      RESPI
             RER       - Apollinaire
-
+</pre>
+      </Element>
+    </div>
   </Element>
-</Element>
+</Markup>
 `;
 
 exports[`html q renders 1`] = `
-<Element
+<Markup
+  content="When Dave asks HAL to open the pod bay door, HAL answers: <q cite="https://www.imdb.com/title/tt0062622/quotes/qt0396921">I'm sorry, Dave. I'm afraid I can't do that.</q>"
+  emptyContent={null}
+  parsedContent={null}
   tagName="div"
 >
-  When Dave asks HAL to open the pod bay door, HAL answers: 
-  <Element
-    attributes={
-      Object {
-        "cite": "https://www.imdb.com/title/tt0062622/quotes/qt0396921",
-      }
-    }
-    key="0"
-    tagName="q"
-  >
-    I'm sorry, Dave. I'm afraid I can't do that.
+  <Element tagName="div">
+    <div>
+      When Dave asks HAL to open the pod bay door, HAL answers: 
+      <Element
+        key="0"
+        attributes={{ cite: "https://www.imdb.com/title/tt0062622/quotes/qt0396921" }}
+        tagName="q"
+      >
+        <q cite="https://www.imdb.com/title/tt0062622/quotes/qt0396921">
+          I'm sorry, Dave. I'm afraid I can't do that.
+        </q>
+      </Element>
+    </div>
   </Element>
-</Element>
+</Markup>
 `;
 
 exports[`html ruby, rp, rt, rtc renders 1`] = `
-<Element
+<Markup
+  content="<ruby xml:lang="zh-Hant" style="ruby-position: under;">
+    <rbc>
+      <rb>馬</rb><rp>(</rp><rt>mǎ</rt><rp>)</rp>
+      <rb>來</rb><rp>(</rp><rt>lái</rt><rp>)</rp>
+      <rb>西</rb><rp>(</rp><rt>xī</rt><rp>)</rp>
+      <rb>亞</rb><rp>(</rp><rt>yà</rt><rp>)</rp>
+    </rbc>
+    <rtc xml:lang="en" style="ruby-position: over;">
+      <rp>(</rp><rt>Malaysia</rt><rp>)</rp>
+    </rtc>
+  </ruby>"
+  emptyContent={null}
+  parsedContent={null}
   tagName="div"
 >
-  <Element
-    attributes={
-      Object {
-        "style": Object {
-          "rubyPosition": "under",
-        },
-        "xml:lang": "zh-Hant",
-      }
-    }
-    key="0"
-    tagName="ruby"
-  >
-    
-  
-    
-    
-    <Element
-      key="1"
-      tagName="rb"
-    >
-      馬
-    </Element>
-    <Element
-      key="2"
-      tagName="rp"
-    >
-      (
-    </Element>
-    <Element
-      key="3"
-      tagName="rt"
-    >
-      mǎ
-    </Element>
-    <Element
-      key="4"
-      tagName="rp"
-    >
-      )
-    </Element>
-    
-    
-    <Element
-      key="5"
-      tagName="rb"
-    >
-      來
-    </Element>
-    <Element
-      key="6"
-      tagName="rp"
-    >
-      (
-    </Element>
-    <Element
-      key="7"
-      tagName="rt"
-    >
-      lái
-    </Element>
-    <Element
-      key="8"
-      tagName="rp"
-    >
-      )
-    </Element>
-    
-    
-    <Element
-      key="9"
-      tagName="rb"
-    >
-      西
-    </Element>
-    <Element
-      key="10"
-      tagName="rp"
-    >
-      (
-    </Element>
-    <Element
-      key="11"
-      tagName="rt"
-    >
-      xī
-    </Element>
-    <Element
-      key="12"
-      tagName="rp"
-    >
-      )
-    </Element>
-    
-    
-    <Element
-      key="13"
-      tagName="rb"
-    >
-      亞
-    </Element>
-    <Element
-      key="14"
-      tagName="rp"
-    >
-      (
-    </Element>
-    <Element
-      key="15"
-      tagName="rt"
-    >
-      yà
-    </Element>
-    <Element
-      key="16"
-      tagName="rp"
-    >
-      )
-    </Element>
-    
-  
-    
-  
-    <Element
-      attributes={
-        Object {
-          "style": Object {
-            "rubyPosition": "over",
-          },
-          "xml:lang": "en",
-        }
-      }
-      key="17"
-      tagName="rtc"
-    >
-      
-    
+  <Element tagName="div">
+    <div>
       <Element
-        key="18"
-        tagName="rp"
+        key="0"
+        attributes={{ xml:lang: "zh-Hant", style: { rubyPosition: "under" } }}
+        tagName="ruby"
       >
-        (
-      </Element>
-      <Element
-        key="19"
-        tagName="rt"
-      >
-        Malaysia
-      </Element>
-      <Element
-        key="20"
-        tagName="rp"
-      >
-        )
-      </Element>
-      
+        <ruby style={{ rubyPosition: "under" }} xml:lang="zh-Hant">
+          
   
-    </Element>
+          
     
+          <Element key="1" tagName="rb">
+            <rb>馬</rb>
+          </Element>
+          <Element key="2" tagName="rp">
+            <rp>(</rp>
+          </Element>
+          <Element key="3" tagName="rt">
+            <rt>mǎ</rt>
+          </Element>
+          <Element key="4" tagName="rp">
+            <rp>)</rp>
+          </Element>
+          
+    
+          <Element key="5" tagName="rb">
+            <rb>來</rb>
+          </Element>
+          <Element key="6" tagName="rp">
+            <rp>(</rp>
+          </Element>
+          <Element key="7" tagName="rt">
+            <rt>lái</rt>
+          </Element>
+          <Element key="8" tagName="rp">
+            <rp>)</rp>
+          </Element>
+          
+    
+          <Element key="9" tagName="rb">
+            <rb>西</rb>
+          </Element>
+          <Element key="10" tagName="rp">
+            <rp>(</rp>
+          </Element>
+          <Element key="11" tagName="rt">
+            <rt>xī</rt>
+          </Element>
+          <Element key="12" tagName="rp">
+            <rp>)</rp>
+          </Element>
+          
+    
+          <Element key="13" tagName="rb">
+            <rb>亞</rb>
+          </Element>
+          <Element key="14" tagName="rp">
+            <rp>(</rp>
+          </Element>
+          <Element key="15" tagName="rt">
+            <rt>yà</rt>
+          </Element>
+          <Element key="16" tagName="rp">
+            <rp>)</rp>
+          </Element>
+          
+  
+          
+  
+          <Element
+            key="17"
+            attributes={{ xml:lang: "en", style: { rubyPosition: "over" } }}
+            tagName="rtc"
+          >
+            <rtc style={{ rubyPosition: "over" }} xml:lang="en">
+              
+    
+              <Element key="18" tagName="rp">
+                <rp>(</rp>
+              </Element>
+              <Element key="19" tagName="rt">
+                <rt>Malaysia</rt>
+              </Element>
+              <Element key="20" tagName="rp">
+                <rp>)</rp>
+              </Element>
+              
+  
+            </rtc>
+          </Element>
+          
 
+        </ruby>
+      </Element>
+    </div>
   </Element>
-</Element>
+</Markup>
 `;
 
 exports[`html s renders 1`] = `
-<Element
+<Markup
+  content="<s>There will be a few tickets available at the box office tonight.</s>"
+  emptyContent={null}
+  parsedContent={null}
   tagName="div"
 >
-  <Element
-    key="0"
-    tagName="s"
-  >
-    There will be a few tickets available at the box office tonight.
+  <Element tagName="div">
+    <div>
+      <Element key="0" tagName="s">
+        <s>There will be a few tickets available at the box office tonight.</s>
+      </Element>
+    </div>
   </Element>
-</Element>
+</Markup>
 `;
 
 exports[`html samp renders 1`] = `
-<Element
+<Markup
+  content="<samp>Keyboard not found <br>Press F1 to continue</samp>"
+  emptyContent={null}
+  parsedContent={null}
   tagName="div"
 >
-  <Element
-    key="0"
-    tagName="samp"
-  >
-    Keyboard not found 
-    <Element
-      key="1"
-      selfClose={true}
-      tagName="br"
-    />
-    Press F1 to continue
+  <Element tagName="div">
+    <div>
+      <Element key="0" tagName="samp">
+        <samp>
+          Keyboard not found 
+          <Element key="1" selfClose tagName="br">
+            <br />
+          </Element>
+          Press F1 to continue
+        </samp>
+      </Element>
+    </div>
   </Element>
-</Element>
+</Markup>
 `;
 
 exports[`html section renders 1`] = `
-<Element
+<Markup
+  content="<section>
+    <h1>Introduction</h1>
+    <p>People have been catching fish for food since before recorded history...</p>
+  </section>"
+  emptyContent={null}
+  parsedContent={null}
   tagName="div"
 >
-  <Element
-    key="0"
-    tagName="section"
-  >
-    
+  <Element tagName="div">
+    <div>
+      <Element key="0" tagName="section">
+        <section>
+          
   
-    <Element
-      key="1"
-      tagName="h1"
-    >
-      Introduction
-    </Element>
-    
+          <Element key="1" tagName="h1">
+            <h1>Introduction</h1>
+          </Element>
+          
   
-    <Element
-      key="2"
-      tagName="p"
-    >
-      People have been catching fish for food since before recorded history...
-    </Element>
-    
+          <Element key="2" tagName="p">
+            <p>People have been catching fish for food since before recorded history...</p>
+          </Element>
+          
 
+        </section>
+      </Element>
+    </div>
   </Element>
-</Element>
+</Markup>
 `;
 
 exports[`html small renders 1`] = `
-<Element
+<Markup
+  content="<p><small>The content is licensed under a Creative Commons Attribution-ShareAlike 2.5 Generic License.</small></p>"
+  emptyContent={null}
+  parsedContent={null}
   tagName="div"
 >
-  <Element
-    key="0"
-    tagName="p"
-  >
-    <Element
-      key="1"
-      tagName="small"
-    >
-      The content is licensed under a Creative Commons Attribution-ShareAlike 2.5 Generic License.
-    </Element>
+  <Element tagName="div">
+    <div>
+      <Element key="0" tagName="p">
+        <p>
+          <Element key="1" tagName="small">
+            <small>The content is licensed under a Creative Commons Attribution-ShareAlike 2.5 Generic License.</small>
+          </Element>
+        </p>
+      </Element>
+    </div>
   </Element>
-</Element>
+</Markup>
 `;
 
 exports[`html source doesnt render if outside its parent 1`] = `
-<Element
+<Markup
+  content="<source src="/media/examples/flower.webm" type="video/webm">"
+  emptyContent={null}
+  parsedContent={null}
   tagName="div"
-/>
+>
+  <Element tagName="div">
+    <div />
+  </Element>
+</Markup>
 `;
 
 exports[`html source renders 1`] = `
-<Element
+<Markup
+  content="<video controls width="250" height="200" muted>
+    <source src="/media/examples/flower.webm" type="video/webm">
+    <source src="/media/examples/flower.mp4" type="video/mp4">
+    This browser does not support the HTML5 video element.
+  </video>"
+  emptyContent={null}
+  parsedContent={null}
   tagName="div"
 >
-  <Element
-    attributes={
-      Object {
-        "controls": true,
-        "height": "200",
-        "muted": true,
-        "width": "250",
-      }
-    }
-    key="0"
-    tagName="video"
-  >
-    
+  <Element tagName="div">
+    <div>
+      <Element
+        key="0"
+        attributes={{ controls: true, width: "250", height: "200", muted: true }}
+        tagName="video"
+      >
+        <video controls muted height="200" width="250">
+          
   
-    <Element
-      attributes={
-        Object {
-          "src": "/media/examples/flower.webm",
-          "type": "video/webm",
-        }
-      }
-      key="1"
-      selfClose={true}
-      tagName="source"
-    />
-    
+          <Element
+            key="1"
+            selfClose
+            attributes={{ src: "/media/examples/flower.webm", type: "video/webm" }}
+            tagName="source"
+          >
+            <source src="/media/examples/flower.webm" type="video/webm" />
+          </Element>
+          
   
-    <Element
-      attributes={
-        Object {
-          "src": "/media/examples/flower.mp4",
-          "type": "video/mp4",
-        }
-      }
-      key="2"
-      selfClose={true}
-      tagName="source"
-    />
-    
+          <Element
+            key="2"
+            selfClose
+            attributes={{ src: "/media/examples/flower.mp4", type: "video/mp4" }}
+            tagName="source"
+          >
+            <source src="/media/examples/flower.mp4" type="video/mp4" />
+          </Element>
+          
   This browser does not support the HTML5 video element.
 
+        </video>
+      </Element>
+    </div>
   </Element>
-</Element>
+</Markup>
 `;
 
 exports[`html span renders 1`] = `
-<Element
+<Markup
+  content="Add the <span class="ingredient">basil</span>, <span class="ingredient">pine nuts</span> and <span class="ingredient">garlic</span> to a blender and blend into a paste."
+  emptyContent={null}
+  parsedContent={null}
   tagName="div"
 >
-  Add the 
-  <Element
-    attributes={
-      Object {
-        "className": "ingredient",
-      }
-    }
-    key="0"
-    tagName="span"
-  >
-    basil
+  <Element tagName="div">
+    <div>
+      Add the 
+      <Element key="0" attributes={{ className: "ingredient" }} tagName="span">
+        <span className="ingredient">
+          basil
+        </span>
+      </Element>
+      , 
+      <Element key="1" attributes={{ className: "ingredient" }} tagName="span">
+        <span className="ingredient">
+          pine nuts
+        </span>
+      </Element>
+       and 
+      <Element key="2" attributes={{ className: "ingredient" }} tagName="span">
+        <span className="ingredient">
+          garlic
+        </span>
+      </Element>
+       to a blender and blend into a paste.
+    </div>
   </Element>
-  , 
-  <Element
-    attributes={
-      Object {
-        "className": "ingredient",
-      }
-    }
-    key="1"
-    tagName="span"
-  >
-    pine nuts
-  </Element>
-   and 
-  <Element
-    attributes={
-      Object {
-        "className": "ingredient",
-      }
-    }
-    key="2"
-    tagName="span"
-  >
-    garlic
-  </Element>
-   to a blender and blend into a paste.
-</Element>
+</Markup>
 `;
 
 exports[`html strong renders 1`] = `
-<Element
+<Markup
+  content="... the most important rule, the rule you can never forget, no matter how much he cries, no matter how much he begs: <strong>never feed him after midnight</strong>."
+  emptyContent={null}
+  parsedContent={null}
   tagName="div"
 >
-  ... the most important rule, the rule you can never forget, no matter how much he cries, no matter how much he begs: 
-  <Element
-    key="0"
-    tagName="strong"
-  >
-    never feed him after midnight
+  <Element tagName="div">
+    <div>
+      ... the most important rule, the rule you can never forget, no matter how much he cries, no matter how much he begs: 
+      <Element key="0" tagName="strong">
+        <strong>never feed him after midnight</strong>
+      </Element>
+      .
+    </div>
   </Element>
-  .
-</Element>
+</Markup>
 `;
 
 exports[`html sub renders 1`] = `
-<Element
+<Markup
+  content="Almost every developer's favorite molecule is
+            C<sub>8</sub>H<sub>10</sub>N<sub>4</sub>O<sub>2</sub>, also known as "caffeine.""
+  emptyContent={null}
+  parsedContent={null}
   tagName="div"
 >
-  Almost every developer's favorite molecule is
+  <Element tagName="div">
+    <div>
+      Almost every developer's favorite molecule is
           C
-  <Element
-    key="0"
-    tagName="sub"
-  >
-    8
+      <Element key="0" tagName="sub">
+        <sub>8</sub>
+      </Element>
+      H
+      <Element key="1" tagName="sub">
+        <sub>10</sub>
+      </Element>
+      N
+      <Element key="2" tagName="sub">
+        <sub>4</sub>
+      </Element>
+      O
+      <Element key="3" tagName="sub">
+        <sub>2</sub>
+      </Element>
+      , also known as "caffeine."
+    </div>
   </Element>
-  H
-  <Element
-    key="1"
-    tagName="sub"
-  >
-    10
-  </Element>
-  N
-  <Element
-    key="2"
-    tagName="sub"
-  >
-    4
-  </Element>
-  O
-  <Element
-    key="3"
-    tagName="sub"
-  >
-    2
-  </Element>
-  , also known as "caffeine."
-</Element>
+</Markup>
 `;
 
 exports[`html sup renders 1`] = `
-<Element
+<Markup
+  content="<var>a<sup>2</sup></var> + <var>b<sup>2</sup></var> = <var>c<sup>2</sup></var>"
+  emptyContent={null}
+  parsedContent={null}
   tagName="div"
 >
-  <Element
-    key="0"
-    tagName="var"
-  >
-    a
-    <Element
-      key="1"
-      tagName="sup"
-    >
-      2
-    </Element>
+  <Element tagName="div">
+    <div>
+      <Element key="0" tagName="var">
+        <var>
+          a
+          <Element key="1" tagName="sup">
+            <sup>2</sup>
+          </Element>
+        </var>
+      </Element>
+       + 
+      <Element key="2" tagName="var">
+        <var>
+          b
+          <Element key="3" tagName="sup">
+            <sup>2</sup>
+          </Element>
+        </var>
+      </Element>
+       = 
+      <Element key="4" tagName="var">
+        <var>
+          c
+          <Element key="5" tagName="sup">
+            <sup>2</sup>
+          </Element>
+        </var>
+      </Element>
+    </div>
   </Element>
-   + 
-  <Element
-    key="2"
-    tagName="var"
-  >
-    b
-    <Element
-      key="3"
-      tagName="sup"
-    >
-      2
-    </Element>
-  </Element>
-   = 
-  <Element
-    key="4"
-    tagName="var"
-  >
-    c
-    <Element
-      key="5"
-      tagName="sup"
-    >
-      2
-    </Element>
-  </Element>
-</Element>
+</Markup>
 `;
 
 exports[`html table, thead, tbody, tfoot renders 1`] = `
-<Element
+<Markup
+  content="<table>
+    <thead>
+      <tr>
+        <th>Items</th>
+        <th scope="col">Expenditure</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <th scope="row">Donuts</th>
+        <td>3,000</td>
+      </tr>
+      <tr>
+        <th scope="row">Stationary</th>
+        <td>18,000</td>
+      </tr>
+    </tbody>
+    <tfoot>
+      <tr>
+        <th scope="row">Totals</th>
+        <td>21,000</td>
+      </tr>
+    </tfoot>
+  </table>"
+  emptyContent={null}
+  parsedContent={null}
   tagName="div"
 >
-  <Element
-    key="0"
-    tagName="table"
-  >
-    
+  <Element tagName="div">
+    <div>
+      <Element key="0" tagName="table">
+        <table>
+          
   
-    <Element
-      key="1"
-      tagName="thead"
-    >
-      
+          <Element key="1" tagName="thead">
+            <thead>
+              
     
-      <Element
-        key="2"
-        tagName="tr"
-      >
-        
+              <Element key="2" tagName="tr">
+                <tr>
+                  
       
-        <Element
-          key="3"
-          tagName="th"
-        >
-          Items
-        </Element>
-        
+                  <Element key="3" tagName="th">
+                    <th>Items</th>
+                  </Element>
+                  
       
-        <Element
-          attributes={
-            Object {
-              "scope": "col",
-            }
-          }
-          key="4"
-          tagName="th"
-        >
-          Expenditure
-        </Element>
-        
+                  <Element key="4" attributes={{ scope: "col" }} tagName="th">
+                    <th scope="col">
+                      Expenditure
+                    </th>
+                  </Element>
+                  
     
-      </Element>
-      
+                </tr>
+              </Element>
+              
   
-    </Element>
-    
+            </thead>
+          </Element>
+          
   
-    <Element
-      key="5"
-      tagName="tbody"
-    >
-      
+          <Element key="5" tagName="tbody">
+            <tbody>
+              
     
-      <Element
-        key="6"
-        tagName="tr"
-      >
-        
+              <Element key="6" tagName="tr">
+                <tr>
+                  
       
-        <Element
-          attributes={
-            Object {
-              "scope": "row",
-            }
-          }
-          key="7"
-          tagName="th"
-        >
-          Donuts
-        </Element>
-        
+                  <Element key="7" attributes={{ scope: "row" }} tagName="th">
+                    <th scope="row">
+                      Donuts
+                    </th>
+                  </Element>
+                  
       
-        <Element
-          key="8"
-          tagName="td"
-        >
-          3,000
-        </Element>
-        
+                  <Element key="8" tagName="td">
+                    <td>3,000</td>
+                  </Element>
+                  
     
-      </Element>
-      
+                </tr>
+              </Element>
+              
     
-      <Element
-        key="9"
-        tagName="tr"
-      >
-        
+              <Element key="9" tagName="tr">
+                <tr>
+                  
       
-        <Element
-          attributes={
-            Object {
-              "scope": "row",
-            }
-          }
-          key="10"
-          tagName="th"
-        >
-          Stationary
-        </Element>
-        
+                  <Element key="10" attributes={{ scope: "row" }} tagName="th">
+                    <th scope="row">
+                      Stationary
+                    </th>
+                  </Element>
+                  
       
-        <Element
-          key="11"
-          tagName="td"
-        >
-          18,000
-        </Element>
-        
+                  <Element key="11" tagName="td">
+                    <td>18,000</td>
+                  </Element>
+                  
     
-      </Element>
-      
+                </tr>
+              </Element>
+              
   
-    </Element>
-    
+            </tbody>
+          </Element>
+          
   
-    <Element
-      key="12"
-      tagName="tfoot"
-    >
-      
+          <Element key="12" tagName="tfoot">
+            <tfoot>
+              
     
-      <Element
-        key="13"
-        tagName="tr"
-      >
-        
+              <Element key="13" tagName="tr">
+                <tr>
+                  
       
-        <Element
-          attributes={
-            Object {
-              "scope": "row",
-            }
-          }
-          key="14"
-          tagName="th"
-        >
-          Totals
-        </Element>
-        
+                  <Element key="14" attributes={{ scope: "row" }} tagName="th">
+                    <th scope="row">
+                      Totals
+                    </th>
+                  </Element>
+                  
       
-        <Element
-          key="15"
-          tagName="td"
-        >
-          21,000
-        </Element>
-        
+                  <Element key="15" tagName="td">
+                    <td>21,000</td>
+                  </Element>
+                  
     
-      </Element>
-      
+                </tr>
+              </Element>
+              
   
-    </Element>
-    
+            </tfoot>
+          </Element>
+          
 
+        </table>
+      </Element>
+    </div>
   </Element>
-</Element>
+</Markup>
 `;
 
 exports[`html table, thead, tbody, tfoot renders table with direct rows 1`] = `
-<Element
+<Markup
+  content="<table>
+    <tr>
+      <th scope="row">Donuts</th>
+      <td>3,000</td>
+    </tr>
+    <tr>
+      <th scope="row">Stationary</th>
+      <td>18,000</td>
+    </tr>
+  </table>"
+  emptyContent={null}
+  parsedContent={null}
   tagName="div"
 >
-  <Element
-    key="0"
-    tagName="table"
-  >
-    
+  <Element tagName="div">
+    <div>
+      <Element key="0" tagName="table">
+        <table>
+          
   
-    <Element
-      key="1"
-      tagName="tbody"
-    >
-      <Element
-        key="2"
-        tagName="tr"
-      >
-        
+          <Element key="1" tagName="tbody">
+            <tbody>
+              <Element key="2" tagName="tr">
+                <tr>
+                  
     
-        <Element
-          attributes={
-            Object {
-              "scope": "row",
-            }
-          }
-          key="3"
-          tagName="th"
-        >
-          Donuts
-        </Element>
-        
+                  <Element key="3" attributes={{ scope: "row" }} tagName="th">
+                    <th scope="row">
+                      Donuts
+                    </th>
+                  </Element>
+                  
     
-        <Element
-          key="4"
-          tagName="td"
-        >
-          3,000
-        </Element>
-        
+                  <Element key="4" tagName="td">
+                    <td>3,000</td>
+                  </Element>
+                  
   
-      </Element>
-      
+                </tr>
+              </Element>
+              
   
-      <Element
-        key="5"
-        tagName="tr"
-      >
-        
+              <Element key="5" tagName="tr">
+                <tr>
+                  
     
-        <Element
-          attributes={
-            Object {
-              "scope": "row",
-            }
-          }
-          key="6"
-          tagName="th"
-        >
-          Stationary
-        </Element>
-        
+                  <Element key="6" attributes={{ scope: "row" }} tagName="th">
+                    <th scope="row">
+                      Stationary
+                    </th>
+                  </Element>
+                  
     
-        <Element
-          key="7"
-          tagName="td"
-        >
-          18,000
-        </Element>
-        
+                  <Element key="7" tagName="td">
+                    <td>18,000</td>
+                  </Element>
+                  
   
-      </Element>
-      
+                </tr>
+              </Element>
+              
 
-    </Element>
+            </tbody>
+          </Element>
+        </table>
+      </Element>
+    </div>
   </Element>
-</Element>
+</Markup>
 `;
 
 exports[`html tbody doesnt render outside of table 1`] = `
-<Element
+<Markup
+  content="<tbody>
+    <tr>
+      <th scope="row">Donuts</th>
+      <td>3,000</td>
+    </tr>
+  </tbody>"
+  emptyContent={null}
+  parsedContent={null}
   tagName="div"
 >
-  
+  <Element tagName="div">
+    <div>
   
     Donuts
     3,000
   
-
-</Element>
+</div>
+  </Element>
+</Markup>
 `;
 
 exports[`html td doesnt render outside of tr 1`] = `
-<Element
+<Markup
+  content="<td>3,000</td>"
+  emptyContent={null}
+  parsedContent={null}
   tagName="div"
 >
-  3,000
-</Element>
+  <Element tagName="div">
+    <div>3,000</div>
+  </Element>
+</Markup>
 `;
 
 exports[`html tfoot doesnt render outside of table 1`] = `
-<Element
+<Markup
+  content="<tfoot>
+    <tr>
+      <th scope="row">Totals</th>
+      <td>21,000</td>
+    </tr>
+  </tfoot>"
+  emptyContent={null}
+  parsedContent={null}
   tagName="div"
 >
-  
+  <Element tagName="div">
+    <div>
   
     Totals
     21,000
   
-
-</Element>
+</div>
+  </Element>
+</Markup>
 `;
 
 exports[`html th doesnt render outside of tr 1`] = `
-<Element
+<Markup
+  content="<th scope="row">Donuts</th>"
+  emptyContent={null}
+  parsedContent={null}
   tagName="div"
 >
-  Donuts
-</Element>
+  <Element tagName="div">
+    <div>Donuts</div>
+  </Element>
+</Markup>
 `;
 
 exports[`html thead doesnt render outside of table 1`] = `
-<Element
+<Markup
+  content="<thead>
+    <tr>
+      <th>Items</th>
+      <th scope="col">Expenditure</th>
+    </tr>
+  </thead>"
+  emptyContent={null}
+  parsedContent={null}
   tagName="div"
 >
-  
+  <Element tagName="div">
+    <div>
   
     Items
     Expenditure
   
-
-</Element>
+</div>
+  </Element>
+</Markup>
 `;
 
 exports[`html time renders 1`] = `
-<Element
+<Markup
+  content="The Cure will be celebrating their 40th anniversary on <time datetime="2018-07-07">July 7</time> in London's Hyde Park."
+  emptyContent={null}
+  parsedContent={null}
   tagName="div"
 >
-  The Cure will be celebrating their 40th anniversary on 
-  <Element
-    attributes={
-      Object {
-        "dateTime": "2018-07-07",
-      }
-    }
-    key="0"
-    tagName="time"
-  >
-    July 7
+  <Element tagName="div">
+    <div>
+      The Cure will be celebrating their 40th anniversary on 
+      <Element key="0" attributes={{ dateTime: "2018-07-07" }} tagName="time">
+        <time dateTime="2018-07-07">
+          July 7
+        </time>
+      </Element>
+       in London's Hyde Park.
+    </div>
   </Element>
-   in London's Hyde Park.
-</Element>
+</Markup>
 `;
 
 exports[`html tr doesnt render outside of table 1`] = `
-<Element
+<Markup
+  content="<tr>
+    <th scope="row">Donuts</th>
+    <td>3,000</td>
+  </tr>"
+  emptyContent={null}
+  parsedContent={null}
   tagName="div"
 >
-  
+  <Element tagName="div">
+    <div>
   Donuts
   3,000
-
-</Element>
+</div>
+  </Element>
+</Markup>
 `;
 
 exports[`html track doesnt render if outside its parent 1`] = `
-<Element
+<Markup
+  content="<track default kind="captions" srclang="en" src="/media/examples/friday.vtt"/>"
+  emptyContent={null}
+  parsedContent={null}
   tagName="div"
-/>
+>
+  <Element tagName="div">
+    <div />
+  </Element>
+</Markup>
 `;
 
 exports[`html track renders 1`] = `
-<Element
+<Markup
+  content="<video controls width="250" src="/media/examples/friday.mp4">
+    <track default kind="captions" srclang="en" src="/media/examples/friday.vtt"/>
+  
+    Sorry, your browser doesn't support embedded videos.
+  </video>"
+  emptyContent={null}
+  parsedContent={null}
   tagName="div"
 >
-  <Element
-    attributes={
-      Object {
-        "controls": true,
-        "src": "/media/examples/friday.mp4",
-        "width": "250",
-      }
-    }
-    key="0"
-    tagName="video"
-  >
-    
+  <Element tagName="div">
+    <div>
+      <Element
+        key="0"
+        attributes={{ controls: true, width: "250", src: "/media/examples/friday.mp4" }}
+        tagName="video"
+      >
+        <video controls src="/media/examples/friday.mp4" width="250">
+          
   
-    <Element
-      attributes={
-        Object {
-          "default": true,
-          "kind": "captions",
-          "src": "/media/examples/friday.vtt",
-          "srcLang": "en",
-        }
-      }
-      key="1"
-      selfClose={true}
-      tagName="track"
-    />
-    
+          <Element
+            key="1"
+            selfClose
+            attributes={{
+              default: true,
+              kind: "captions",
+              srcLang: "en",
+              src: "/media/examples/friday.vtt",
+            }}
+            tagName="track"
+          >
+            <track
+              default
+              kind="captions"
+              src="/media/examples/friday.vtt"
+              srcLang="en"
+            />
+          </Element>
+          
 
   Sorry, your browser doesn't support embedded videos.
 
+        </video>
+      </Element>
+    </div>
   </Element>
-</Element>
+</Markup>
 `;
 
 exports[`html u renders 1`] = `
-<Element
+<Markup
+  content="<p>You could use this element to highlight <u>speling</u> mistakes, so the writer can <u>corect</u> them.</p>"
+  emptyContent={null}
+  parsedContent={null}
   tagName="div"
 >
-  <Element
-    key="0"
-    tagName="p"
-  >
-    You could use this element to highlight 
-    <Element
-      key="1"
-      tagName="u"
-    >
-      speling
-    </Element>
-     mistakes, so the writer can 
-    <Element
-      key="2"
-      tagName="u"
-    >
-      corect
-    </Element>
-     them.
+  <Element tagName="div">
+    <div>
+      <Element key="0" tagName="p">
+        <p>
+          You could use this element to highlight 
+          <Element key="1" tagName="u">
+            <u>speling</u>
+          </Element>
+           mistakes, so the writer can 
+          <Element key="2" tagName="u">
+            <u>corect</u>
+          </Element>
+           them.
+        </p>
+      </Element>
+    </div>
   </Element>
-</Element>
+</Markup>
 `;
 
 exports[`html var renders 1`] = `
-<Element
+<Markup
+  content="The volume of a box is <var>l</var> × <var>w</var> × <var>h</var>, where <var>l</var> represents the length, <var>w</var> the width and <var>h</var> the height of the box."
+  emptyContent={null}
+  parsedContent={null}
   tagName="div"
 >
-  The volume of a box is 
-  <Element
-    key="0"
-    tagName="var"
-  >
-    l
+  <Element tagName="div">
+    <div>
+      The volume of a box is 
+      <Element key="0" tagName="var">
+        <var>l</var>
+      </Element>
+       × 
+      <Element key="1" tagName="var">
+        <var>w</var>
+      </Element>
+       × 
+      <Element key="2" tagName="var">
+        <var>h</var>
+      </Element>
+      , where 
+      <Element key="3" tagName="var">
+        <var>l</var>
+      </Element>
+       represents the length, 
+      <Element key="4" tagName="var">
+        <var>w</var>
+      </Element>
+       the width and 
+      <Element key="5" tagName="var">
+        <var>h</var>
+      </Element>
+       the height of the box.
+    </div>
   </Element>
-   × 
-  <Element
-    key="1"
-    tagName="var"
-  >
-    w
-  </Element>
-   × 
-  <Element
-    key="2"
-    tagName="var"
-  >
-    h
-  </Element>
-  , where 
-  <Element
-    key="3"
-    tagName="var"
-  >
-    l
-  </Element>
-   represents the length, 
-  <Element
-    key="4"
-    tagName="var"
-  >
-    w
-  </Element>
-   the width and 
-  <Element
-    key="5"
-    tagName="var"
-  >
-    h
-  </Element>
-   the height of the box.
-</Element>
+</Markup>
 `;
 
 exports[`html video renders 1`] = `
-<Element
+<Markup
+  content="<video controls>
+    <source src="myVideo.mp4" type="video/mp4">
+    <source src="myVideo.webm" type="video/webm">
+    <p>Your browser doesn't support HTML5 video. Here is a <a href="myVideo.mp4">link to the video</a> instead.</p>
+  </video>"
+  emptyContent={null}
+  parsedContent={null}
   tagName="div"
 >
-  <Element
-    attributes={
-      Object {
-        "controls": true,
-      }
-    }
-    key="0"
-    tagName="video"
-  >
-    
+  <Element tagName="div">
+    <div>
+      <Element key="0" attributes={{ controls: true }} tagName="video">
+        <video controls>
+          
   
-    <Element
-      attributes={
-        Object {
-          "src": "myVideo.mp4",
-          "type": "video/mp4",
-        }
-      }
-      key="1"
-      selfClose={true}
-      tagName="source"
-    />
-    
+          <Element
+            key="1"
+            selfClose
+            attributes={{ src: "myVideo.mp4", type: "video/mp4" }}
+            tagName="source"
+          >
+            <source src="myVideo.mp4" type="video/mp4" />
+          </Element>
+          
   
-    <Element
-      attributes={
-        Object {
-          "src": "myVideo.webm",
-          "type": "video/webm",
-        }
-      }
-      key="2"
-      selfClose={true}
-      tagName="source"
-    />
-    
+          <Element
+            key="2"
+            selfClose
+            attributes={{ src: "myVideo.webm", type: "video/webm" }}
+            tagName="source"
+          >
+            <source src="myVideo.webm" type="video/webm" />
+          </Element>
+          
   
-    Your browser doesn't support HTML5 video. Here is a 
-    <Element
-      attributes={
-        Object {
-          "href": "myVideo.mp4",
-        }
-      }
-      key="3"
-      tagName="a"
-    >
-      link to the video
-    </Element>
-     instead.
-    
+          Your browser doesn't support HTML5 video. Here is a 
+          <Element key="3" attributes={{ href: "myVideo.mp4" }} tagName="a">
+            <a href="myVideo.mp4">
+              link to the video
+            </a>
+          </Element>
+           instead.
+          
 
+        </video>
+      </Element>
+    </div>
   </Element>
-</Element>
+</Markup>
 `;
 
 exports[`html wbr renders 1`] = `
-<Element
+<Markup
+  content="Fernstraßen<wbr>bau<wbr>privat<wbr>finanzierungs<wbr>gesetz"
+  emptyContent={null}
+  parsedContent={null}
   tagName="div"
 >
-  Fernstraßen
-  <Element
-    key="0"
-    selfClose={true}
-    tagName="wbr"
-  />
-  bau
-  <Element
-    key="1"
-    selfClose={true}
-    tagName="wbr"
-  />
-  privat
-  <Element
-    key="2"
-    selfClose={true}
-    tagName="wbr"
-  />
-  finanzierungs
-  <Element
-    key="3"
-    selfClose={true}
-    tagName="wbr"
-  />
-  gesetz
-</Element>
+  <Element tagName="div">
+    <div>
+      Fernstraßen
+      <Element key="0" selfClose tagName="wbr">
+        <wbr />
+      </Element>
+      bau
+      <Element key="1" selfClose tagName="wbr">
+        <wbr />
+      </Element>
+      privat
+      <Element key="2" selfClose tagName="wbr">
+        <wbr />
+      </Element>
+      finanzierungs
+      <Element key="3" selfClose tagName="wbr">
+        <wbr />
+      </Element>
+      gesetz
+    </div>
+  </Element>
+</Markup>
 `;

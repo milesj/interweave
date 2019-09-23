@@ -43,9 +43,9 @@ export class PreviewBar extends React.PureComponent<PreviewBarProps & WithContex
       const preview = noPreview || messages.noPreview;
 
       return (
-        <div className={classNames.preview}>
+        <section className={classNames.preview}>
           {preview && <div className={classNames.noPreview}>{preview}</div>}
-        </div>
+        </section>
       );
     }
 
@@ -61,7 +61,7 @@ export class PreviewBar extends React.PureComponent<PreviewBarProps & WithContex
     }
 
     return (
-      <div className={classNames.preview}>
+      <section className={classNames.preview}>
         <div className={classNames.previewEmoji}>
           <EmojiCharacter
             emojiLargeSize={emojiLargeSize}
@@ -79,7 +79,7 @@ export class PreviewBar extends React.PureComponent<PreviewBarProps & WithContex
             <div className={classNames.previewSubtitle}>{subtitle.join(' ')}</div>
           )}
         </div>
-      </div>
+      </section>
     );
   }
 }

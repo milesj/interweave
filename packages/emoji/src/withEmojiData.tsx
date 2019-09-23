@@ -70,6 +70,8 @@ export default function withEmojiData(options: WithEmojiDataOptions = {}) /* inf
         version: EMOJIBASE_LATEST_VERSION,
       };
 
+      mounted = false;
+
       state: WithEmojiDataState = {
         emojis: [],
         source: {
@@ -80,6 +82,7 @@ export default function withEmojiData(options: WithEmojiDataOptions = {}) /* inf
       };
 
       componentDidMount() {
+        this.mounted = true;
         this.loadEmojis();
       }
 
@@ -89,6 +92,10 @@ export default function withEmojiData(options: WithEmojiDataOptions = {}) /* inf
         if (prevProps.locale !== locale || prevProps.version !== version) {
           this.loadEmojis();
         }
+      }
+
+      componentWillUnmount() {
+        this.mounted = false;
       }
 
       /**
@@ -103,6 +110,10 @@ export default function withEmojiData(options: WithEmojiDataOptions = {}) /* inf
        * use it instead of the parsed data.
        */
       setEmojis(nextEmojis: Emoji[] = []) {
+        if (!this.mounted) {
+          return;
+        }
+
         const { locale, version } = this.props as Required<WithEmojiDataWrapperProps>;
 
         this.setState({
@@ -130,7 +141,7 @@ export default function withEmojiData(options: WithEmojiDataOptions = {}) /* inf
         if (loaded.has(key) || emojis.length > 0) {
           this.setEmojis(emojis);
 
-          return Promise.resolve();
+          return promise.get(key)!;
         }
 
         // Or hook into the promise if we're loading
@@ -164,13 +175,13 @@ export default function withEmojiData(options: WithEmojiDataOptions = {}) /* inf
       render() {
         const { locale, version, ...props } = this.props;
 
-        if (this.state.emojis.length === 0 && !alwaysRender) {
+        if (!this.mounted || (this.state.emojis.length === 0 && !alwaysRender)) {
           return null;
         }
 
         return (
           <Component
-            {...props as Props}
+            {...(props as Props)}
             emojis={this.state.emojis}
             emojiData={this.getDataInstance()}
             emojiSource={this.state.source}

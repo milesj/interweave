@@ -3,9 +3,9 @@
 exports[`Group renders a group 1`] = `
 <button
   className="interweave-picker__group"
-  onClick={[Function]}
   title="Smileys & People"
   type="button"
+  onClick={func()}
 >
   😃
 </button>

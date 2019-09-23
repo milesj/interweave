@@ -1,11 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`EmojiListHeader renders a group list 1`] = `
-<header
-  className="interweave-picker__emojis-header"
->
-  <span>
-    Smileys & People
-  </span>
+<header className="interweave-picker__emojis-header">
+  <span>Smileys & People</span>
 </header>
 `;

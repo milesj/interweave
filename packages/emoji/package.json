@@ -18,7 +18,6 @@
   "repository": "https://github.com/milesj/interweave/tree/master/packages/emoji",
   "license": "MIT",
   "dependencies": {
-    "@types/prop-types": "*",
     "@types/react": "*",
     "emojibase-regex": "^2.0.1",
     "hoist-non-react-statics": "^3.3.0",

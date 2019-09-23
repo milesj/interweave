@@ -1,18 +1,12 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`<SkinTone /> renders a skin tone 1`] = `
+exports[`SkinTone renders a skin tone 1`] = `
 <button
   className="interweave-picker__skin-tone"
-  onClick={[Function]}
-  style={
-    Object {
-      "backgroundColor": "#5A463A",
-      "borderColor": "#5A463A",
-      "color": "#5A463A",
-    }
-  }
+  style={{ backgroundColor: "#5A463A", borderColor: "#5A463A", color: "#5A463A" }}
   title="Dark skin tone"
   type="button"
+  onClick={func()}
 >
    
 </button>

@@ -1,50 +1,56 @@
 import React from 'react';
-import { shallow } from 'enzyme';
-import Hashtag from '../src/Hashtag';
+import { render } from 'rut';
+import Hashtag, { HashtagProps } from '../src/Hashtag';
+import Link from '../src/Link';
 
 describe('components/Hashtag', () => {
   it('can define the URL', () => {
-    const wrapper = shallow(
+    const { root } = render<HashtagProps>(
       <Hashtag hashtagName="interweave" hashtagUrl="http://foo.com/{{hashtag}}">
         #interweave
       </Hashtag>,
     );
 
-    expect(wrapper.prop('children')).toBe('#interweave');
-    expect(wrapper.prop('href')).toBe('http://foo.com/interweave');
+    expect(root).toContainNode('#interweave');
+    // @ts-ignore TODO figure out
+    expect(root.findOne(Link)).toHaveProp('href', 'http://foo.com/interweave');
   });
 
   it('can define the URL with a function', () => {
-    const wrapper = shallow(
+    const { root } = render<HashtagProps>(
       <Hashtag hashtagName="interweave" hashtagUrl={tag => `http://foo.com/${tag.toUpperCase()}`}>
         #interweave
       </Hashtag>,
     );
 
-    expect(wrapper.prop('children')).toBe('#interweave');
-    expect(wrapper.prop('href')).toBe('http://foo.com/INTERWEAVE');
+    expect(root).toContainNode('#interweave');
+    // @ts-ignore TODO figure out
+    expect(root.findOne(Link)).toHaveProp('href', 'http://foo.com/INTERWEAVE');
   });
 
   it('can encode the hashtag', () => {
-    const wrapper = shallow(
+    const { root } = render<HashtagProps>(
       <Hashtag hashtagName="interweave" encodeHashtag preserveHash>
         #interweave
       </Hashtag>,
     );
 
-    expect(wrapper.prop('children')).toBe('#interweave');
-    expect(wrapper.prop('href')).toBe('%23interweave');
+    expect(root).toContainNode('#interweave');
+    // @ts-ignore TODO figure out
+    expect(root.findOne(Link)).toHaveProp('href', '%23interweave');
   });
 
   it('can pass props to Link', () => {
     const func = () => {};
-    const wrapper = shallow(
+    const { root } = render<HashtagProps>(
       <Hashtag hashtagName="interweave" onClick={func} newWindow>
         #interweave
       </Hashtag>,
     );
 
-    expect(wrapper.find('Link').prop('newWindow')).toBe(true);
-    expect(wrapper.find('Link').prop('onClick')).toBe(func);
+    // @ts-ignore TODO figure out
+    expect(root.findOne(Link)).toHaveProp('newWindow', true);
+    // @ts-ignore TODO figure out
+    expect(root.findOne(Link)).toHaveProp('onClick', func);
   });
 });

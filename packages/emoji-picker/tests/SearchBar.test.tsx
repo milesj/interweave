@@ -1,12 +1,12 @@
 import React from 'react';
-import { shallow, mount } from 'enzyme';
+import { render } from 'rut';
 import { SearchBar, SearchBarProps } from '../src/SearchBar';
 import { WithContextProps } from '../src/withContext';
 import { PICKER_CONTEXT } from './mocks';
 
 jest.mock('lodash/debounce', () => jest.fn(fn => fn));
 
-describe('<SearchBar />', () => {
+describe('SearchBar', () => {
   const props: SearchBarProps & WithContextProps = {
     autoFocus: false,
     context: PICKER_CONTEXT,
@@ -24,32 +24,30 @@ describe('<SearchBar />', () => {
   });
 
   it('renders a search bar', () => {
-    const wrapper = shallow(<SearchBar {...props} />);
+    const { root } = render<SearchBarProps>(<SearchBar {...props} />);
 
-    expect(wrapper).toMatchSnapshot();
+    expect(root.findOne('div')).toMatchSnapshot();
   });
 
   it('focuses on mount if `autoFocus` is true', () => {
-    const wrapper = mount(<SearchBar {...props} />);
+    const ref = document.createElement('input');
+    const spy = jest.spyOn(ref, 'focus');
 
-    // @ts-ignore
-    const spy = jest.spyOn(wrapper.instance().inputRef.current, 'focus');
-
-    wrapper.instance().componentDidMount!();
+    render<SearchBarProps>(<SearchBar {...props} />, {
+      mockRef: () => ref,
+    });
 
     expect(spy).not.toHaveBeenCalled();
 
-    wrapper.setProps({
-      autoFocus: true,
+    render<SearchBarProps>(<SearchBar {...props} autoFocus />, {
+      mockRef: () => ref,
     });
-
-    wrapper.instance().componentDidMount!();
 
     expect(spy).toHaveBeenCalled();
   });
 
   it('can customize class name', () => {
-    const wrapper = shallow(
+    const { root } = render<SearchBarProps>(
       <SearchBar
         {...props}
         context={{
@@ -63,12 +61,12 @@ describe('<SearchBar />', () => {
       />,
     );
 
-    expect(wrapper.prop('className')).toBe('test-search');
-    expect(wrapper.find('input').prop('className')).toBe('test-search-input');
+    expect(root.findOne('div')).toHaveProp('className', 'test-search');
+    expect(root.findOne('input')).toHaveProp('className', 'test-search-input');
   });
 
   it('can customize messages', () => {
-    const wrapper = shallow(
+    const { root } = render<SearchBarProps>(
       <SearchBar
         {...props}
         context={{
@@ -81,44 +79,41 @@ describe('<SearchBar />', () => {
         }}
       />,
     );
+    const input = root.findOne('input');
 
-    expect(wrapper.find('input').prop('placeholder')).toBe('search');
-    expect(wrapper.find('input').prop('aria-label')).toBe('searchA11y');
+    expect(input).toHaveProp('placeholder', 'search');
+    expect(input).toHaveProp('aria-label', 'searchA11y');
   });
 
   it('triggers `onKeyUp` when pressing keys', () => {
     const spy = jest.fn();
-    const wrapper = shallow(<SearchBar {...props} onKeyUp={spy} />);
+    const { root } = render<SearchBarProps>(<SearchBar {...props} onKeyUp={spy} />, {
+      mockRef: () => document.createElement('input'),
+    });
 
-    wrapper.find('input').simulate('keyup');
+    root.findOne('input').dispatch('onKeyUp');
 
     expect(spy).toHaveBeenCalled();
   });
 
   it('triggers `onChange` when changing values', () => {
     const spy = jest.fn();
-    const wrapper = mount(<SearchBar {...props} onChange={spy} />);
-
-    wrapper.find('input').simulate('change', {
-      persist() {},
-      target: {
-        value: 'foo',
-      },
+    const { root } = render<SearchBarProps>(<SearchBar {...props} onChange={spy} />, {
+      mockRef: () => document.createElement('input'),
     });
+
+    root.findOne('input').dispatch('onChange', { target: { value: 'foo' } });
 
     expect(spy).toHaveBeenCalledWith('foo', expect.objectContaining({}));
   });
 
   it('trims changed value', () => {
     const spy = jest.fn();
-    const wrapper = mount(<SearchBar {...props} onChange={spy} />);
-
-    wrapper.find('input').simulate('change', {
-      persist() {},
-      target: {
-        value: ' baz ',
-      },
+    const { root } = render<SearchBarProps>(<SearchBar {...props} onChange={spy} />, {
+      mockRef: () => document.createElement('input'),
     });
+
+    root.findOne('input').dispatch('onChange', { target: { value: ' baz ' } });
 
     expect(spy).toHaveBeenCalledWith('baz', expect.objectContaining({}));
   });

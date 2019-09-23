@@ -1,0 +1,58 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Markup allows empty \`content\` to be passed 1`] = `"<div />"`;
+
+exports[`Markup converts line breaks 1`] = `
+"<div>
+  Foo
+  <br />
+  Bar
+</div>"
+`;
+
+exports[`Markup doesnt convert line breaks 1`] = `
+"<div>Foo
+Bar</div>"
+`;
+
+exports[`Markup doesnt convert line breaks if it contains HTML 1`] = `
+"<div>
+  Foo
+
+  <br />
+  Bar
+</div>"
+`;
+
+exports[`Markup parses the entire document starting from the body 1`] = `
+"<div>
+  <main role=\\"main\\">
+    
+  Main content
+  
+    <div>
+      
+    
+      <a href=\\"#\\">
+        Link
+      </a>
+      
+    
+      <span className=\\"foo\\">
+        String
+      </span>
+      
+  
+    </div>
+    
+
+  </main>
+  
+
+  <aside id=\\"sidebar\\">
+    
+  Sidebar content
+
+  </aside>
+</div>"
+`;
