@@ -12,7 +12,9 @@ describe('components/Email', () => {
       </Email>,
     );
 
+    // @ts-ignore TODO figure out
     expect(root.findOne(Link)).toHaveProp('newWindow', true);
+    // @ts-ignore TODO figure out
     expect(root.findOne(Link)).toHaveProp('onClick', func);
   });
 });
