@@ -1,7 +1,7 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { render } from 'rut';
 import { SOURCE_PROP } from 'interweave/lib/testUtils';
-import { EmojiDataManager } from 'interweave-emoji';
+import { EmojiDataManager, Emoji as EmojiCharacter } from 'interweave-emoji';
 import { Emoji, EmojiProps } from '../src/Emoji';
 import { WithContextProps } from '../src/withContext';
 import { PICKER_CONTEXT, CAT_EMOJI } from './mocks';
@@ -20,40 +20,34 @@ describe('Emoji', () => {
     onSelect() {},
   };
 
-  const event = {
-    preventDefault() {},
-    stopPropagation() {},
-  };
-
   beforeEach(() => {
     props.emoji = EmojiDataManager.getInstance('en').EMOJIS['1F408'];
   });
 
   it('renders an emoji', () => {
-    const wrapper = shallow(<Emoji {...props} />);
-    const char = wrapper.find('Emoji');
+    const { root } = render<EmojiProps>(<Emoji {...props} />);
 
-    expect(wrapper).toMatchSnapshot();
-    expect(char).toHaveLength(1);
-    expect(char.prop('hexcode')).toBe(props.emoji.hexcode);
+    expect(root.findOne('button')).toMatchSnapshot();
+    expect(root.findOne(EmojiCharacter)).toHaveProp('hexcode', props.emoji.hexcode);
   });
 
   it('updates the active state', () => {
-    const wrapper = shallow(<Emoji {...props} />);
+    const { root, update } = render<EmojiProps>(<Emoji {...props} />);
 
-    expect(wrapper.prop('className')).toBe('interweave-picker__emoji');
+    expect(root.findOne('button')).toHaveProp('className', 'interweave-picker__emoji');
 
-    wrapper.setProps({
+    update({
       active: true,
     });
 
-    expect(wrapper.prop('className')).toBe(
+    expect(root.findOne('button')).toHaveProp(
+      'className',
       'interweave-picker__emoji interweave-picker__emoji--active',
     );
   });
 
   it('can customize class name', () => {
-    const wrapper = shallow(
+    const { root } = render<EmojiProps>(
       <Emoji
         {...props}
         context={{
@@ -68,13 +62,13 @@ describe('Emoji', () => {
       />,
     );
 
-    expect(wrapper.prop('className')).toBe('test-emoji test-emoji--active');
+    expect(root.findOne('button')).toHaveProp('className', 'test-emoji test-emoji--active');
   });
 
   it('sets correct sizes', () => {
-    const wrapper = shallow(<Emoji {...props} />);
+    const { root } = render<EmojiProps>(<Emoji {...props} />);
 
-    expect(wrapper.prop('style')).toEqual({
+    expect(root.findOne('button')).toHaveProp('style', {
       width: 32,
       height: 32,
       padding: 5,
@@ -83,28 +77,28 @@ describe('Emoji', () => {
 
   it('triggers `onSelect` when clicking', () => {
     const spy = jest.fn();
-    const wrapper = shallow(<Emoji {...props} onSelect={spy} />);
+    const { root } = render<EmojiProps>(<Emoji {...props} onSelect={spy} />);
 
-    wrapper.simulate('click', event);
+    root.findOne('button').dispatch('onClick');
 
-    expect(spy).toHaveBeenCalledWith(props.emoji, event);
+    expect(spy).toHaveBeenCalledWith(props.emoji, expect.anything());
   });
 
   it('triggers `onEnter` when entering node', () => {
     const spy = jest.fn();
-    const wrapper = shallow(<Emoji {...props} onEnter={spy} />);
+    const { root } = render<EmojiProps>(<Emoji {...props} onEnter={spy} />);
 
-    wrapper.simulate('mouseenter', event);
+    root.findOne('button').dispatch('onMouseEnter');
 
-    expect(spy).toHaveBeenCalledWith(props.emoji, event);
+    expect(spy).toHaveBeenCalledWith(props.emoji, expect.anything());
   });
 
   it('triggers `onLeave` when leaving node', () => {
     const spy = jest.fn();
-    const wrapper = shallow(<Emoji {...props} onLeave={spy} />);
+    const { root } = render<EmojiProps>(<Emoji {...props} onLeave={spy} />);
 
-    wrapper.simulate('mouseleave', event);
+    root.findOne('button').dispatch('onMouseLeave');
 
-    expect(spy).toHaveBeenCalledWith(props.emoji, event);
+    expect(spy).toHaveBeenCalledWith(props.emoji, expect.anything());
   });
 });

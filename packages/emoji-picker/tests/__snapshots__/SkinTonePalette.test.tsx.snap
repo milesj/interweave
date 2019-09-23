@@ -1,65 +1,141 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`<SkinTonePalette /> renders a palette 1`] = `
-<nav
-  className="interweave-picker__skin-tones"
->
-  <ul
-    className="interweave-picker__skin-tones-list"
-  >
-    <li
-      key="none"
-    >
-      <WithContextWrapper
-        active={true}
-        onSelect={[Function]}
-        skinTone="none"
-      />
+exports[`SkinTonePalette renders a palette 1`] = `
+<nav className="interweave-picker__skin-tones">
+  <ul className="interweave-picker__skin-tones-list">
+    <li>
+      <withEmojiContext(SkinTone) active skinTone="none" onSelect={onSelect()}>
+        <SkinTone
+          active
+          context={{ classNames: {}, messages: {} }}
+          skinTone="none"
+          onSelect={onSelect()}
+        >
+          <button
+            className=" "
+            style={{ backgroundColor: "#FFCC22", borderColor: "#FFCC22", color: "#FFCC22" }}
+            type="button"
+            onClick={func()}
+          >
+             
+          </button>
+        </SkinTone>
+      </withEmojiContext(SkinTone)>
     </li>
-    <li
-      key="light"
-    >
-      <WithContextWrapper
+    <li>
+      <withEmojiContext(SkinTone)
         active={false}
-        onSelect={[Function]}
         skinTone="light"
-      />
+        onSelect={onSelect()}
+      >
+        <SkinTone
+          active={false}
+          context={{ classNames: {}, messages: {} }}
+          skinTone="light"
+          onSelect={onSelect()}
+        >
+          <button
+            className=""
+            style={{ backgroundColor: "#FADCBC", borderColor: "#FADCBC", color: "#FADCBC" }}
+            type="button"
+            onClick={func()}
+          >
+             
+          </button>
+        </SkinTone>
+      </withEmojiContext(SkinTone)>
     </li>
-    <li
-      key="medium-light"
-    >
-      <WithContextWrapper
+    <li>
+      <withEmojiContext(SkinTone)
         active={false}
-        onSelect={[Function]}
         skinTone="medium-light"
-      />
+        onSelect={onSelect()}
+      >
+        <SkinTone
+          active={false}
+          context={{ classNames: {}, messages: {} }}
+          skinTone="medium-light"
+          onSelect={onSelect()}
+        >
+          <button
+            className=""
+            style={{ backgroundColor: "#E0BB95", borderColor: "#E0BB95", color: "#E0BB95" }}
+            type="button"
+            onClick={func()}
+          >
+             
+          </button>
+        </SkinTone>
+      </withEmojiContext(SkinTone)>
     </li>
-    <li
-      key="medium"
-    >
-      <WithContextWrapper
+    <li>
+      <withEmojiContext(SkinTone)
         active={false}
-        onSelect={[Function]}
         skinTone="medium"
-      />
+        onSelect={onSelect()}
+      >
+        <SkinTone
+          active={false}
+          context={{ classNames: {}, messages: {} }}
+          skinTone="medium"
+          onSelect={onSelect()}
+        >
+          <button
+            className=""
+            style={{ backgroundColor: "#BF8F68", borderColor: "#BF8F68", color: "#BF8F68" }}
+            type="button"
+            onClick={func()}
+          >
+             
+          </button>
+        </SkinTone>
+      </withEmojiContext(SkinTone)>
     </li>
-    <li
-      key="medium-dark"
-    >
-      <WithContextWrapper
+    <li>
+      <withEmojiContext(SkinTone)
         active={false}
-        onSelect={[Function]}
         skinTone="medium-dark"
-      />
+        onSelect={onSelect()}
+      >
+        <SkinTone
+          active={false}
+          context={{ classNames: {}, messages: {} }}
+          skinTone="medium-dark"
+          onSelect={onSelect()}
+        >
+          <button
+            className=""
+            style={{ backgroundColor: "#9B643D", borderColor: "#9B643D", color: "#9B643D" }}
+            type="button"
+            onClick={func()}
+          >
+             
+          </button>
+        </SkinTone>
+      </withEmojiContext(SkinTone)>
     </li>
-    <li
-      key="dark"
-    >
-      <WithContextWrapper
+    <li>
+      <withEmojiContext(SkinTone)
         active={false}
-        onSelect={[Function]}
         skinTone="dark"
-      />
+        onSelect={onSelect()}
+      >
+        <SkinTone
+          active={false}
+          context={{ classNames: {}, messages: {} }}
+          skinTone="dark"
+          onSelect={onSelect()}
+        >
+          <button
+            className=""
+            style={{ backgroundColor: "#5A463A", borderColor: "#5A463A", color: "#5A463A" }}
+            type="button"
+            onClick={func()}
+          >
+             
+          </button>
+        </SkinTone>
+      </withEmojiContext(SkinTone)>
     </li>
   </ul>
 </nav>

@@ -1,5 +1,5 @@
 import React from 'react';
-import { shallow, ShallowWrapper } from 'enzyme';
+import { render, Element } from 'rut';
 import {
   GROUPS,
   GROUP_KEY_NONE,
@@ -13,15 +13,11 @@ import { GroupTabs, GroupTabsProps } from '../src/GroupTabs';
 import { WithContextProps } from '../src/withContext';
 import { PICKER_CONTEXT, CAT_EMOJI } from './mocks';
 
-function findGroupByKey(wrapper: ShallowWrapper, key: string) {
-  return wrapper
-    .find('li')
-    .filterWhere(node => node.key() === key)
-    .find(Group)
-    .at(0);
+function findGroupByKey(root: Element<typeof GroupTabs>, key: string) {
+  return root.query((node, fiber) => node.type === 'li' && fiber.key === key)[0].findOne(Group);
 }
 
-describe('<GroupTabs />', () => {
+describe('GroupTabs', () => {
   const props: GroupTabsProps & WithContextProps = {
     activeGroup: GROUP_KEY_NONE,
     commonEmojis: [],
@@ -32,31 +28,26 @@ describe('<GroupTabs />', () => {
   };
 
   it('renders a list', () => {
-    const wrapper = shallow(<GroupTabs {...props} />);
+    const { root } = render<GroupTabsProps>(<GroupTabs {...props} />);
 
-    expect(wrapper).toMatchSnapshot();
+    expect(root.findOne('nav')).toMatchSnapshot();
   });
 
   it('renders a node for each group', () => {
-    const wrapper = shallow(<GroupTabs {...props} />);
+    const { root } = render<GroupTabsProps>(<GroupTabs {...props} />);
 
-    expect(wrapper.find(Group)).toHaveLength(GROUPS.length);
+    expect(root.find(Group)).toHaveLength(GROUPS.length);
   });
 
   it('adds common mode group if there are common emojis', () => {
-    const wrapper = shallow(<GroupTabs {...props} commonEmojis={[CAT_EMOJI]} />);
+    const { root } = render<GroupTabsProps>(<GroupTabs {...props} commonEmojis={[CAT_EMOJI]} />);
 
-    expect(wrapper.find(Group)).toHaveLength(GROUPS.length + 1);
-    expect(
-      wrapper
-        .find(Group)
-        .at(0)
-        .prop('group'),
-    ).toBe(GROUP_KEY_COMMONLY_USED);
+    expect(root.find(Group)).toHaveLength(GROUPS.length + 1);
+    expect(root.findAt(Group, 0)).toHaveProp('group', GROUP_KEY_COMMONLY_USED);
   });
 
   it('can customize class name', () => {
-    const wrapper = shallow(
+    const { root } = render<GroupTabsProps>(
       <GroupTabs
         {...props}
         context={{
@@ -69,44 +60,45 @@ describe('<GroupTabs />', () => {
       />,
     );
 
-    expect(wrapper.prop('className')).toBe('test-groups');
+    expect(root.findOne('nav')).toHaveProp('className', 'test-groups');
   });
 
   it('passes `onSelect` to group tabs', () => {
-    const wrapper = shallow(<GroupTabs {...props} />);
+    const { root } = render<GroupTabsProps>(<GroupTabs {...props} />);
 
-    expect(
-      wrapper
-        .find(Group)
-        .at(0)
-        .prop('onSelect'),
-    ).toBe(props.onSelect);
+    expect(root.findAt(Group, 0)).toHaveProp('onSelect', props.onSelect);
   });
 
   it('sets active group', () => {
-    const wrapper = shallow(<GroupTabs {...props} activeGroup={GROUP_KEY_ACTIVITIES} />);
+    const { root } = render<GroupTabsProps>(
+      <GroupTabs {...props} activeGroup={GROUP_KEY_ACTIVITIES} />,
+    );
 
-    expect(findGroupByKey(wrapper, GROUP_KEY_ANIMALS_NATURE).prop('active')).toBe(false);
-    expect(findGroupByKey(wrapper, GROUP_KEY_ACTIVITIES).prop('active')).toBe(true);
+    expect(findGroupByKey(root, GROUP_KEY_ANIMALS_NATURE)).toHaveProp('active', false);
+    expect(findGroupByKey(root, GROUP_KEY_ACTIVITIES)).toHaveProp('active', true);
   });
 
   it('renders default icon', () => {
-    const wrapper = shallow(<GroupTabs {...props} />);
+    const { root } = render<GroupTabsProps>(<GroupTabs {...props} />);
 
-    expect(findGroupByKey(wrapper, GROUP_KEY_ANIMALS_NATURE).prop('children')).toBe('🌿');
+    expect(findGroupByKey(root, GROUP_KEY_ANIMALS_NATURE)).toContainNode('🌿');
   });
 
   it('renders icon using kebab case', () => {
     const icon = <b>Animal</b>;
-    const wrapper = shallow(<GroupTabs {...props} icons={{ 'animals-nature': icon }} />);
+    const { root } = render<GroupTabsProps>(
+      <GroupTabs {...props} icons={{ 'animals-nature': icon }} />,
+    );
 
-    expect(findGroupByKey(wrapper, GROUP_KEY_ANIMALS_NATURE).contains(icon)).toBe(true);
+    expect(findGroupByKey(root, GROUP_KEY_ANIMALS_NATURE)).toContainNode(icon);
   });
 
   it('renders icon using camel case', () => {
     const icon = <b>Animal</b>;
-    const wrapper = shallow(<GroupTabs {...props} icons={{ animalsNature: icon }} />);
+    const { root } = render<GroupTabsProps>(
+      <GroupTabs {...props} icons={{ animalsNature: icon }} />,
+    );
 
-    expect(findGroupByKey(wrapper, GROUP_KEY_ANIMALS_NATURE).contains(icon)).toBe(true);
+    expect(findGroupByKey(root, GROUP_KEY_ANIMALS_NATURE)).toContainNode(icon);
   });
 });

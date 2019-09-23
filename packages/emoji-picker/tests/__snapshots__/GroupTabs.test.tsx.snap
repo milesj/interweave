@@ -1,107 +1,167 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`<GroupTabs /> renders a list 1`] = `
-<nav
-  className="interweave-picker__groups"
->
-  <ul
-    className="interweave-picker__groups-list"
-  >
-    <li
-      key="smileys-people"
-    >
-      <WithContextWrapper
+exports[`GroupTabs renders a list 1`] = `
+<nav className="interweave-picker__groups">
+  <ul className="interweave-picker__groups-list">
+    <li>
+      <withEmojiContext(Group)
         active={false}
         commonMode="frequently-used"
         group="smileys-people"
-        onSelect={[Function]}
+        onSelect={onSelect()}
       >
-        😃
-      </WithContextWrapper>
+        <Group
+          active={false}
+          commonMode="frequently-used"
+          context={{ classNames: {}, messages: {} }}
+          group="smileys-people"
+          onSelect={onSelect()}
+        >
+          <button className="" type="button" onClick={func()}>
+            😃
+          </button>
+        </Group>
+      </withEmojiContext(Group)>
     </li>
-    <li
-      key="animals-nature"
-    >
-      <WithContextWrapper
+    <li>
+      <withEmojiContext(Group)
         active={false}
         commonMode="frequently-used"
         group="animals-nature"
-        onSelect={[Function]}
+        onSelect={onSelect()}
       >
-        🌿
-      </WithContextWrapper>
+        <Group
+          active={false}
+          commonMode="frequently-used"
+          context={{ classNames: {}, messages: {} }}
+          group="animals-nature"
+          onSelect={onSelect()}
+        >
+          <button className="" type="button" onClick={func()}>
+            🌿
+          </button>
+        </Group>
+      </withEmojiContext(Group)>
     </li>
-    <li
-      key="food-drink"
-    >
-      <WithContextWrapper
+    <li>
+      <withEmojiContext(Group)
         active={false}
         commonMode="frequently-used"
         group="food-drink"
-        onSelect={[Function]}
+        onSelect={onSelect()}
       >
-        🍎
-      </WithContextWrapper>
+        <Group
+          active={false}
+          commonMode="frequently-used"
+          context={{ classNames: {}, messages: {} }}
+          group="food-drink"
+          onSelect={onSelect()}
+        >
+          <button className="" type="button" onClick={func()}>
+            🍎
+          </button>
+        </Group>
+      </withEmojiContext(Group)>
     </li>
-    <li
-      key="travel-places"
-    >
-      <WithContextWrapper
+    <li>
+      <withEmojiContext(Group)
         active={false}
         commonMode="frequently-used"
         group="travel-places"
-        onSelect={[Function]}
+        onSelect={onSelect()}
       >
-        🗺️
-      </WithContextWrapper>
+        <Group
+          active={false}
+          commonMode="frequently-used"
+          context={{ classNames: {}, messages: {} }}
+          group="travel-places"
+          onSelect={onSelect()}
+        >
+          <button className="" type="button" onClick={func()}>
+            🗺️
+          </button>
+        </Group>
+      </withEmojiContext(Group)>
     </li>
-    <li
-      key="activities"
-    >
-      <WithContextWrapper
+    <li>
+      <withEmojiContext(Group)
         active={false}
         commonMode="frequently-used"
         group="activities"
-        onSelect={[Function]}
+        onSelect={onSelect()}
       >
-        ⚽️
-      </WithContextWrapper>
+        <Group
+          active={false}
+          commonMode="frequently-used"
+          context={{ classNames: {}, messages: {} }}
+          group="activities"
+          onSelect={onSelect()}
+        >
+          <button className="" type="button" onClick={func()}>
+            ⚽️
+          </button>
+        </Group>
+      </withEmojiContext(Group)>
     </li>
-    <li
-      key="objects"
-    >
-      <WithContextWrapper
+    <li>
+      <withEmojiContext(Group)
         active={false}
         commonMode="frequently-used"
         group="objects"
-        onSelect={[Function]}
+        onSelect={onSelect()}
       >
-        📘
-      </WithContextWrapper>
+        <Group
+          active={false}
+          commonMode="frequently-used"
+          context={{ classNames: {}, messages: {} }}
+          group="objects"
+          onSelect={onSelect()}
+        >
+          <button className="" type="button" onClick={func()}>
+            📘
+          </button>
+        </Group>
+      </withEmojiContext(Group)>
     </li>
-    <li
-      key="symbols"
-    >
-      <WithContextWrapper
+    <li>
+      <withEmojiContext(Group)
         active={false}
         commonMode="frequently-used"
         group="symbols"
-        onSelect={[Function]}
+        onSelect={onSelect()}
       >
-        ⛔️
-      </WithContextWrapper>
+        <Group
+          active={false}
+          commonMode="frequently-used"
+          context={{ classNames: {}, messages: {} }}
+          group="symbols"
+          onSelect={onSelect()}
+        >
+          <button className="" type="button" onClick={func()}>
+            ⛔️
+          </button>
+        </Group>
+      </withEmojiContext(Group)>
     </li>
-    <li
-      key="flags"
-    >
-      <WithContextWrapper
+    <li>
+      <withEmojiContext(Group)
         active={false}
         commonMode="frequently-used"
         group="flags"
-        onSelect={[Function]}
+        onSelect={onSelect()}
       >
-        🏴
-      </WithContextWrapper>
+        <Group
+          active={false}
+          commonMode="frequently-used"
+          context={{ classNames: {}, messages: {} }}
+          group="flags"
+          onSelect={onSelect()}
+        >
+          <button className="" type="button" onClick={func()}>
+            🏴
+          </button>
+        </Group>
+      </withEmojiContext(Group)>
     </li>
   </ul>
 </nav>

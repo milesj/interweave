@@ -1,14 +1,14 @@
 /* eslint-disable @typescript-eslint/camelcase */
 
 import React from 'react';
-import { shallow } from 'enzyme';
-import { EmojiDataManager } from 'interweave-emoji';
+import { render } from 'rut';
+import { EmojiDataManager, Emoji } from 'interweave-emoji';
 import { SOURCE_PROP } from 'interweave/lib/testUtils';
 import { PreviewBar, PreviewBarProps } from '../src/PreviewBar';
 import { WithContextProps } from '../src/withContext';
 import { PICKER_CONTEXT, CAT_EMOJI } from './mocks';
 
-describe('<PreviewBar />', () => {
+describe('PreviewBar', () => {
   const props: PreviewBarProps & WithContextProps = {
     context: PICKER_CONTEXT,
     emoji: CAT_EMOJI,
@@ -24,14 +24,14 @@ describe('<PreviewBar />', () => {
   });
 
   it('renders a preview', () => {
-    const wrapper = shallow(<PreviewBar {...props} />);
+    const { root } = render<PreviewBarProps>(<PreviewBar {...props} />);
 
-    expect(wrapper).toMatchSnapshot();
+    expect(root.findOne('section')).toMatchSnapshot();
   });
 
   describe('with emoji', () => {
     it('can customize class name', () => {
-      const wrapper = shallow(
+      const { root } = render<PreviewBarProps>(
         <PreviewBar
           {...props}
           context={{
@@ -47,19 +47,19 @@ describe('<PreviewBar />', () => {
           }}
         />,
       );
-      const divs = wrapper.find('div');
+      const divs = root.find('div');
 
-      expect(divs.at(0).prop('className')).toBe('test-preview');
-      expect(divs.at(1).prop('className')).toBe('test-preview-emoji');
-      expect(divs.at(2).prop('className')).toBe('test-preview-content');
-      expect(divs.at(3).prop('className')).toBe('test-preview-title');
-      expect(divs.at(4).prop('className')).toBe('test-preview-subtitle');
+      expect(root.findOne('section')).toHaveProp('className', 'test-preview');
+      expect(divs[0]).toHaveProp('className', 'test-preview-emoji');
+      expect(divs[1]).toHaveProp('className', 'test-preview-content');
+      expect(divs[2]).toHaveProp('className', 'test-preview-title');
+      expect(divs[3]).toHaveProp('className', 'test-preview-subtitle');
     });
 
     it('renders an emoji', () => {
-      const wrapper = shallow(<PreviewBar {...props} />);
+      const { root } = render<PreviewBarProps>(<PreviewBar {...props} />);
 
-      expect(wrapper.find('Emoji').props()).toEqual(
+      expect(root.findOne(Emoji)).toHaveProps(
         expect.objectContaining({
           emojiLargeSize: props.emojiLargeSize,
           emojiPath: props.emojiPath,
@@ -71,15 +71,13 @@ describe('<PreviewBar />', () => {
     });
 
     it('displays title', () => {
-      const wrapper = shallow(<PreviewBar {...props} />);
+      const { root } = render<PreviewBarProps>(<PreviewBar {...props} />);
 
-      expect(wrapper.find('.interweave-picker__preview-title').text()).toBe(
-        'Slightly smiling face',
-      );
+      expect(root).toContainNode('Slightly smiling face');
     });
 
     it('displays title when no annotation', () => {
-      const wrapper = shallow(
+      const { root } = render<PreviewBarProps>(
         <PreviewBar
           {...props}
           emoji={{
@@ -89,13 +87,11 @@ describe('<PreviewBar />', () => {
         />,
       );
 
-      expect(wrapper.find('.interweave-picker__preview-title').text()).toBe(
-        'SLIGHTLY SMILING FACE',
-      );
+      expect(root).toContainNode('SLIGHTLY SMILING FACE');
     });
 
     it('doesnt display title if no annotation or name', () => {
-      const wrapper = shallow(
+      const { root } = render<PreviewBarProps>(
         <PreviewBar
           {...props}
           emoji={{
@@ -106,17 +102,17 @@ describe('<PreviewBar />', () => {
         />,
       );
 
-      expect(wrapper.find('.interweave-picker__preview-title')).toHaveLength(0);
+      expect(root.find('div', { className: 'interweave-picker__preview-title' })).toHaveLength(0);
     });
 
     it('displays subtitle', () => {
-      const wrapper = shallow(<PreviewBar {...props} />);
+      const { root } = render<PreviewBarProps>(<PreviewBar {...props} />);
 
-      expect(wrapper.find('.interweave-picker__preview-subtitle').text()).toBe(':) :pleased:');
+      expect(root).toContainNode(':) :pleased:');
     });
 
     it('displays subtitle without emoticon', () => {
-      const wrapper = shallow(
+      const { root } = render<PreviewBarProps>(
         <PreviewBar
           {...props}
           emoji={{
@@ -126,11 +122,11 @@ describe('<PreviewBar />', () => {
         />,
       );
 
-      expect(wrapper.find('.interweave-picker__preview-subtitle').text()).toBe(':pleased:');
+      expect(root).toContainNode(':pleased:');
     });
 
     it('displays subtitle without shortcodes', () => {
-      const wrapper = shallow(
+      const { root } = render<PreviewBarProps>(
         <PreviewBar
           {...props}
           emoji={{
@@ -140,23 +136,23 @@ describe('<PreviewBar />', () => {
         />,
       );
 
-      expect(wrapper.find('.interweave-picker__preview-subtitle').text()).toBe(':)');
+      expect(root).toContainNode(':)');
     });
 
     it('hides emoticon in subtitle', () => {
-      const wrapper = shallow(<PreviewBar {...props} hideEmoticon />);
+      const { root } = render<PreviewBarProps>(<PreviewBar {...props} hideEmoticon />);
 
-      expect(wrapper.find('.interweave-picker__preview-subtitle').text()).toBe(':pleased:');
+      expect(root).toContainNode(':pleased:');
     });
 
     it('hides shortcodes in subtitle', () => {
-      const wrapper = shallow(<PreviewBar {...props} hideShortcodes />);
+      const { root } = render<PreviewBarProps>(<PreviewBar {...props} hideShortcodes />);
 
-      expect(wrapper.find('.interweave-picker__preview-subtitle').text()).toBe(':)');
+      expect(root).toContainNode(':)');
     });
 
     it('doesnt display subtitle if no emoticon or shortcodes', () => {
-      const wrapper = shallow(
+      const { root } = render<PreviewBarProps>(
         <PreviewBar
           {...props}
           emoji={{
@@ -167,19 +163,25 @@ describe('<PreviewBar />', () => {
         />,
       );
 
-      expect(wrapper.find('.interweave-picker__preview-subtitle')).toHaveLength(0);
+      expect(root.find('div', { className: 'interweave-picker__preview-subtitle' })).toHaveLength(
+        0,
+      );
     });
 
     it('doesnt display subtitle if all are hidden', () => {
-      const wrapper = shallow(<PreviewBar {...props} hideEmoticon hideShortcodes />);
+      const { root } = render<PreviewBarProps>(
+        <PreviewBar {...props} hideEmoticon hideShortcodes />,
+      );
 
-      expect(wrapper.find('.interweave-picker__preview-subtitle')).toHaveLength(0);
+      expect(root.find('div', { className: 'interweave-picker__preview-subtitle' })).toHaveLength(
+        0,
+      );
     });
   });
 
   describe('no emoji', () => {
     it('can customize class name', () => {
-      const wrapper = shallow(
+      const { root } = render<PreviewBarProps>(
         <PreviewBar
           {...props}
           emoji={null}
@@ -193,15 +195,14 @@ describe('<PreviewBar />', () => {
           }}
         />,
       );
-      const divs = wrapper.find('div');
 
-      expect(divs.at(0).prop('className')).toBe('test-preview');
-      expect(divs.at(1).prop('className')).toBe('test-preview-none');
+      expect(root.findOne('section')).toHaveProp('className', 'test-preview');
+      expect(root.findOne('div')).toHaveProp('className', 'test-preview-none');
     });
 
     it('renders no preview message', () => {
       const none = 'No preview';
-      const wrapper = shallow(
+      const { root } = render<PreviewBarProps>(
         <PreviewBar
           {...props}
           emoji={null}
@@ -215,20 +216,20 @@ describe('<PreviewBar />', () => {
         />,
       );
 
-      expect(wrapper.find('div')).toHaveLength(2);
-      expect(wrapper.contains(none)).toBe(true);
+      expect(root).toContainNode(none);
     });
 
     it('renders no preview element', () => {
       const none = <b>No preview</b>;
-      const wrapper = shallow(<PreviewBar {...props} emoji={null} noPreview={none} />);
+      const { root } = render<PreviewBarProps>(
+        <PreviewBar {...props} emoji={null} noPreview={none} />,
+      );
 
-      expect(wrapper.find('div')).toHaveLength(2);
-      expect(wrapper.contains(none)).toBe(true);
+      expect(root).toContainNode(none);
     });
 
     it('renders nothing if no preview message or preview element', () => {
-      const wrapper = shallow(
+      const { root } = render<PreviewBarProps>(
         <PreviewBar
           {...props}
           emoji={null}
@@ -243,7 +244,7 @@ describe('<PreviewBar />', () => {
         />,
       );
 
-      expect(wrapper.find('div')).toHaveLength(1);
+      expect(root.findOne('section')).toMatchSnapshot();
     });
   });
 });

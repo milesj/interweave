@@ -1,11 +1,11 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { render } from 'rut';
 import { SKIN_COLORS, SKIN_KEY_NONE, SKIN_KEY_DARK } from '../src/constants';
 import { SkinTone, SkinToneProps } from '../src/SkinTone';
 import { WithContextProps } from '../src/withContext';
 import { PICKER_CONTEXT } from './mocks';
 
-describe('<SkinTone />', () => {
+describe('SkinTone', () => {
   const props: SkinToneProps & WithContextProps = {
     active: false,
     context: PICKER_CONTEXT,
@@ -14,33 +14,34 @@ describe('<SkinTone />', () => {
   };
 
   it('renders a skin tone', () => {
-    const wrapper = shallow(<SkinTone {...props} />);
+    const { root } = render<SkinToneProps>(<SkinTone {...props} />);
 
-    expect(wrapper).toMatchSnapshot();
+    expect(root.findOne('button')).toMatchSnapshot();
   });
 
   it('sets group title', () => {
-    const wrapper = shallow(<SkinTone {...props} />);
+    const { root } = render<SkinToneProps>(<SkinTone {...props} />);
 
-    expect(wrapper.prop('title')).toBe('Dark skin tone');
+    expect(root.findOne('button')).toHaveProp('title', 'Dark skin tone');
   });
 
   it('updates the active state', () => {
-    const wrapper = shallow(<SkinTone {...props} />);
+    const { root, update } = render<SkinToneProps>(<SkinTone {...props} />);
 
-    expect(wrapper.prop('className')).toBe('interweave-picker__skin-tone');
+    expect(root.findOne('button')).toHaveProp('className', 'interweave-picker__skin-tone');
 
-    wrapper.setProps({
+    update({
       active: true,
     });
 
-    expect(wrapper.prop('className')).toBe(
+    expect(root.findOne('button')).toHaveProp(
+      'className',
       'interweave-picker__skin-tone interweave-picker__skin-tone--active',
     );
   });
 
   it('can customize class name', () => {
-    const wrapper = shallow(
+    const { root } = render<SkinToneProps>(
       <SkinTone
         {...props}
         active
@@ -55,23 +56,23 @@ describe('<SkinTone />', () => {
       />,
     );
 
-    expect(wrapper.prop('className')).toBe('test-tone test-tone--active');
+    expect(root.findOne('button')).toHaveProp('className', 'test-tone test-tone--active');
   });
 
   it('sets correct colors based on tone', () => {
-    const wrapper = shallow(<SkinTone {...props} />);
+    const { root, update } = render<SkinToneProps>(<SkinTone {...props} />);
 
-    expect(wrapper.prop('style')).toEqual({
+    expect(root.findOne('button')).toHaveProp('style', {
       backgroundColor: SKIN_COLORS[SKIN_KEY_DARK],
       borderColor: SKIN_COLORS[SKIN_KEY_DARK],
       color: SKIN_COLORS[SKIN_KEY_DARK],
     });
 
-    wrapper.setProps({
+    update({
       skinTone: SKIN_KEY_NONE,
     });
 
-    expect(wrapper.prop('style')).toEqual({
+    expect(root.findOne('button')).toHaveProp('style', {
       backgroundColor: SKIN_COLORS[SKIN_KEY_NONE],
       borderColor: SKIN_COLORS[SKIN_KEY_NONE],
       color: SKIN_COLORS[SKIN_KEY_NONE],
@@ -80,14 +81,10 @@ describe('<SkinTone />', () => {
 
   it('triggers `onSelect` when clicking', () => {
     const spy = jest.fn();
-    const wrapper = shallow(<SkinTone {...props} onSelect={spy} />);
-    const event = {
-      preventDefault() {},
-      stopPropagation() {},
-    };
+    const { root } = render<SkinToneProps>(<SkinTone {...props} onSelect={spy} />);
 
-    wrapper.simulate('click', event);
+    root.findOne('button').dispatch('onClick');
 
-    expect(spy).toHaveBeenCalledWith(SKIN_KEY_DARK, event);
+    expect(spy).toHaveBeenCalledWith(SKIN_KEY_DARK, expect.anything());
   });
 });

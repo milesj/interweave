@@ -1,5 +1,5 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { render } from 'rut';
 import { EmojiListHeader, EmojiListHeaderProps } from '../src/EmojiListHeader';
 import { WithContextProps } from '../src/withContext';
 import {
@@ -22,19 +22,14 @@ describe('EmojiListHeader', () => {
     sticky: false,
   };
 
-  const event = {
-    preventDefault() {},
-    stopPropagation() {},
-  };
-
   it('renders a group list', () => {
-    const wrapper = shallow(<EmojiListHeader {...props} />);
+    const { root } = render<EmojiListHeaderProps>(<EmojiListHeader {...props} />);
 
-    expect(wrapper).toMatchSnapshot();
+    expect(root.findOne('header')).toMatchSnapshot();
   });
 
   it('can customize class name', () => {
-    const wrapper = shallow(
+    const { root } = render<EmojiListHeaderProps>(
       <EmojiListHeader
         {...props}
         context={{
@@ -49,74 +44,76 @@ describe('EmojiListHeader', () => {
       />,
     );
 
-    expect(wrapper.prop('className')).toBe('test-header test-header--sticky');
+    expect(root.findOne('header')).toHaveProp('className', 'test-header test-header--sticky');
   });
 
   it('displays group name', () => {
-    const wrapper = shallow(<EmojiListHeader {...props} />);
+    const { root } = render<EmojiListHeaderProps>(<EmojiListHeader {...props} />);
 
-    expect(wrapper.find('span').text()).toBe('Smileys & People');
+    expect(root.findOne('span')).toContainNode('Smileys & People');
   });
 
   it('displays commonly used group name', () => {
-    const wrapper = shallow(<EmojiListHeader {...props} group={GROUP_KEY_COMMONLY_USED} />);
+    const { root } = render<EmojiListHeaderProps>(
+      <EmojiListHeader {...props} group={GROUP_KEY_COMMONLY_USED} />,
+    );
 
-    expect(wrapper.find('span').text()).toBe('Frequently Used');
+    expect(root.findOne('span')).toContainNode('Frequently Used');
   });
 
   it('shows palette if smileys group', () => {
     const palette = <div>Palette</div>;
-    const wrapper = shallow(
+    const { root } = render<EmojiListHeaderProps>(
       <EmojiListHeader {...props} group={GROUP_KEY_SMILEYS_PEOPLE} skinTonePalette={palette} />,
     );
 
-    expect(wrapper.contains(palette)).toBe(true);
+    expect(root).toContainNode(palette);
   });
 
   it('shows palette if search results', () => {
     const palette = <div>Palette</div>;
-    const wrapper = shallow(
+    const { root } = render<EmojiListHeaderProps>(
       <EmojiListHeader {...props} group={GROUP_KEY_SEARCH_RESULTS} skinTonePalette={palette} />,
     );
 
-    expect(wrapper.contains(palette)).toBe(true);
+    expect(root).toContainNode(palette);
   });
 
   it('doesnt show palette for other groups', () => {
     const palette = <div>Palette</div>;
-    const wrapper = shallow(
+    const { root } = render<EmojiListHeaderProps>(
       <EmojiListHeader {...props} group={GROUP_KEY_FLAGS} skinTonePalette={palette} />,
     );
 
-    expect(wrapper.contains(palette)).toBe(false);
+    expect(root).not.toContainNode(palette);
   });
 
   it('shows clear icon if common group', () => {
     const icon = <div>Icon</div>;
-    const wrapper = shallow(
+    const { root } = render<EmojiListHeaderProps>(
       <EmojiListHeader {...props} group={GROUP_KEY_COMMONLY_USED} clearIcon={icon} />,
     );
 
-    expect(wrapper.contains(icon)).toBe(true);
+    expect(root).toContainNode(icon);
   });
 
   it('doesnt show clear icon for other group', () => {
     const icon = <div>Icon</div>;
-    const wrapper = shallow(
+    const { root } = render<EmojiListHeaderProps>(
       <EmojiListHeader {...props} group={GROUP_KEY_SEARCH_RESULTS} clearIcon={icon} />,
     );
 
-    expect(wrapper.contains(icon)).toBe(false);
+    expect(root).not.toContainNode(icon);
   });
 
   it('triggers `onClear` when clicking', () => {
     const spy = jest.fn();
     const icon = <div>Icon</div>;
-    const wrapper = shallow(
+    const { root } = render<EmojiListHeaderProps>(
       <EmojiListHeader {...props} group={GROUP_KEY_COMMONLY_USED} clearIcon={icon} onClear={spy} />,
     );
 
-    wrapper.find('button').simulate('click', event);
+    root.findOne('button').dispatch('onClick');
 
     expect(spy).toHaveBeenCalled();
   });
