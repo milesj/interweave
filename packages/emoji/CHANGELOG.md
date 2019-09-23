@@ -1,3 +1,17 @@
+### 4.1.1 - 2019-09-23
+
+#### 🐞 Fixes
+
+- Updated `withEmojiData` to no longer set state if the component has been unmounted.
+
+#### 📦 Dependencies
+
+- Updated all dependencies.
+
+#### 🛠 Internals
+
+- Migrated from `enzyme` to `rut` for React testing.
+
 ## 4.1.0 - 2019-05-09
 
 #### 🚀 Updates

@@ -1,3 +1,13 @@
+### 4.0.2 - 2019-09-23
+
+#### 📦 Dependencies
+
+- Updated all dependencies.
+
+#### 🛠 Internals
+
+- Migrated from `enzyme` to `rut` for React testing.
+
 ### 4.0.1 - 2019-05-06
 
 #### 🐞 Fixes

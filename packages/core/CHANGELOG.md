@@ -1,9 +1,21 @@
-## 11.2.0 - 2017-07-25
+### 11.2.0 - 2019-09-23
 
 #### 🚀 Updates
 
+- Added `start` to the attribute allow list.
+
+#### 📦 Dependencies
+
+- Updated all dependencies.
+
+#### ⚙️ Types
+
 - **[TS]** Updated `Filter#attribute` types to extend from `React.AllHTMLAttributes`.
 - **[TS]** Refined some internal types to not use `any`.
+
+#### 🛠 Internals
+
+- Migrated from `enzyme` to `rut` for React testing.
 
 ## 11.1.0 - 2019-05-09
 
