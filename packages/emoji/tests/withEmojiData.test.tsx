@@ -1,12 +1,30 @@
 /* eslint-disable @typescript-eslint/camelcase */
 
 import React from 'react';
-import { renderAndWait } from 'rut';
+import { render, mockFetch, MockFetchResult } from 'rut';
+// @ts-ignore
+import emojibase from 'emojibase/package.json';
 import EmojiData, { resetInstances } from '../src/EmojiDataManager';
-import withEmojiData, { resetLoaded } from '../src/withEmojiData';
+import withEmojiData, {
+  resetLoaded,
+  WithEmojiDataProps,
+  WithEmojiDataWrapperProps,
+} from '../src/withEmojiData';
 import { CanonicalEmoji } from '../src/types';
 
-describe('withEmojiData', () => {
+function wait() {
+  return new Promise(resolve => {
+    setTimeout(resolve, 150);
+  });
+}
+
+function cdn(locale: string, version: string = '', compact: boolean = false) {
+  return `https://cdn.jsdelivr.net/npm/emojibase-data@${version || emojibase.version}/${locale}/${
+    compact ? 'compact' : 'data'
+  }.json`;
+}
+
+describe('withEmojiData()', () => {
   const mockEmojis: CanonicalEmoji[] = [
     {
       annotation: 'grinning face',
@@ -28,19 +46,31 @@ describe('withEmojiData', () => {
     },
   ];
 
-  beforeEach(() => {
-    // @ts-ignore
-    global.fetch = () =>
-      Promise.resolve({
-        ok: true,
-        json: () => mockEmojis,
-      });
+  let fetchSpy: MockFetchResult;
 
+  beforeEach(() => {
+    fetchSpy = mockFetch('/', 200)
+      .get(cdn('en'), mockEmojis)
+      .get(cdn('en', '', true), mockEmojis) // Compact
+      .get(cdn('it'), mockEmojis)
+      .get(cdn('de', '2.0.0'), mockEmojis)
+      .get(cdn('ja', '1.2.3'), []) // No data
+      .get(cdn('fr'), 404) // Not found
+      .spy();
+  });
+
+  afterEach(() => {
+    // Emojibase caches requests
+    sessionStorage.clear();
     resetLoaded();
     resetInstances();
   });
 
-  class BaseComponent extends React.Component<any> {
+  interface BaseProps {
+    noop?: boolean;
+  }
+
+  class BaseComponent extends React.Component<BaseProps & WithEmojiDataProps> {
     property = true;
 
     render() {
@@ -50,189 +80,154 @@ describe('withEmojiData', () => {
 
   const Component = withEmojiData()(BaseComponent);
 
-  it.only('sets display name', () => {
+  it('sets display name', () => {
     expect(Component.displayName).toBe('withEmojiData(BaseComponent)');
   });
 
-  it.only('renders null if no emojis', async () => {
-    // fetchSpy.mockImplementation(() => Promise.resolve([]));
+  it('renders null if no emojis', async () => {
+    const result = render<WithEmojiDataWrapperProps>(<Component locale="ja" version="1.2.3" />);
 
-    const { root } = await renderAndWait(<Component locale="ja" version="1.2.3" />);
+    await wait();
 
-    // root.debug();
-
-    expect(root).not.toHaveRendered();
+    expect(result.root).not.toHaveRendered();
   });
 
-  // it('fetches data on mount', async () => {
-  //   const { root } = await renderAndWait(
-  //     <Component locale="ja" version="1.2.3">
-  //       <div>Foo</div>
-  //     </Component>,
-  //   );
+  it('fetches data on mount', async () => {
+    const result = render<WithEmojiDataWrapperProps>(
+      <Component>
+        <div>Foo</div>
+      </Component>,
+    );
 
-  //   await delay();
+    await wait();
 
-  //   expect(fetchSpy).toHaveBeenCalledWith('ja/data.json', '1.2.3');
+    expect(fetchSpy.called(cdn('en'))).toBe(true);
 
-  //   expect(wrapper.state('emojis')).toEqual(mockEmojis);
-  // });
+    expect(result.root.findOne(BaseComponent)).toHaveProp('emojis', mockEmojis);
+  });
 
-  // it('re-fetches data if a prop changes', async () => {
-  //   const { root } = await renderAndWait(
-  //     <Component locale="ja" version="1.2.3">
-  //       <div>Foo</div>
-  //     </Component>,
-  //   );
+  it('re-fetches data if a prop changes', async () => {
+    const result = render<WithEmojiDataWrapperProps>(
+      <Component locale="ja" version="1.2.3">
+        <div>Foo</div>
+      </Component>,
+    );
 
-  //   await delay();
+    await wait();
 
-  //   expect(fetchSpy).toHaveBeenCalledWith('ja/data.json', '1.2.3');
+    expect(fetchSpy.called(cdn('ja', '1.2.3'))).toBe(true);
 
-  //   wrapper.setProps({
-  //     locale: 'de',
-  //     version: '2.0.0',
-  //   });
+    result.update({
+      locale: 'de',
+      version: '2.0.0',
+    });
 
-  //   await delay();
+    await wait();
 
-  //   expect(fetchSpy).toHaveBeenCalledWith('de/data.json', '2.0.0');
-  // });
+    expect(fetchSpy.called(cdn('de', '2.0.0'))).toBe(true);
+  });
 
-  // it('doesnt fetch when emojis are passed manually', async () => {
-  //   const PreloadComponent = withEmojiData({ emojis: mockEmojis })(() => <span>Foo</span>);
+  it('doesnt fetch when emojis are passed manually', async () => {
+    const loadedEmojis = [...mockEmojis, ...mockEmojis];
 
-  //   const { root } = await renderAndWait(
-  //     <PreloadComponent>
-  //       <div>Foo</div>
-  //     </PreloadComponent>,
-  //   );
+    const PreloadComponent = withEmojiData({ emojis: loadedEmojis })(BaseComponent);
 
-  //   await delay();
+    const result = render<{}>(
+      <PreloadComponent>
+        <div>Foo</div>
+      </PreloadComponent>,
+    );
 
-  //   expect(fetchSpy).not.toHaveBeenCalledWith('en/data.json', '2.2.0');
+    await wait();
 
-  //   expect(wrapper.state('emojis')).toEqual(mockEmojis);
-  // });
+    expect(fetchSpy.called(cdn('en'))).toBe(false);
 
-  // it('doesnt fetch multiple times', async () => {
-  //   shallow(
-  //     <Component>
-  //       <div>Foo</div>
-  //     </Component>,
-  //   );
+    expect(result.root.findOne(BaseComponent)).toHaveProp('emojis', loadedEmojis);
+  });
 
-  //   await delay();
+  it('doesnt fetch multiple times', async () => {
+    const result = render<WithEmojiDataWrapperProps>(
+      <Component>
+        <div>Foo</div>
+      </Component>,
+    );
 
-  //   shallow(
-  //     <Component>
-  //       <div>Foo</div>
-  //     </Component>,
-  //   );
+    await wait();
 
-  //   await delay();
+    result.update();
 
-  //   expect(fetchSpy).toHaveBeenCalledTimes(1);
-  // });
+    await wait();
 
-  // it('doesnt mutate `EmojiData` when emojis are passed manually', async () => {
-  //   const PreloadComponent = withEmojiData({ emojis: mockEmojis })(() => <span>Foo</span>);
+    expect(fetchSpy.calls()).toHaveLength(1);
+  });
 
-  //   EmojiData.getInstance('en').EMOJIS = {};
+  it('doesnt mutate `EmojiData` when emojis are passed manually', async () => {
+    const PreloadComponent = withEmojiData({ emojis: mockEmojis })(() => <span>Foo</span>);
 
-  //   shallow(
-  //     <PreloadComponent locale="en">
-  //       <div>Foo</div>
-  //     </PreloadComponent>,
-  //   );
+    EmojiData.getInstance('en').EMOJIS = {};
 
-  //   await delay();
+    render<WithEmojiDataWrapperProps>(
+      <PreloadComponent locale="en">
+        <div>Foo</div>
+      </PreloadComponent>,
+    );
 
-  //   expect(EmojiData.getInstance('en').EMOJIS).toEqual({});
-  // });
+    await wait();
 
-  // it('supports compact datasets', async () => {
-  //   const CompactComponent = withEmojiData({ compact: true })(() => <span>Foo</span>);
+    expect(EmojiData.getInstance('en').EMOJIS).toEqual({});
+  });
 
-  //   shallow(
-  //     <CompactComponent>
-  //       <div>Foo</div>
-  //     </CompactComponent>,
-  //   );
+  it('supports compact datasets', async () => {
+    const CompactComponent = withEmojiData({ compact: true })(() => <span>Foo</span>);
 
-  //   await delay();
+    render<WithEmojiDataWrapperProps>(
+      <CompactComponent>
+        <div>Foo</div>
+      </CompactComponent>,
+    );
 
-  //   expect(fetchSpy).toHaveBeenCalledWith('en/compact.json', '2.2.0');
-  // });
+    await wait();
 
-  // it('supports multiple locales', async () => {
-  //   shallow(
-  //     <Component locale="ja">
-  //       <div>Foo</div>
-  //     </Component>,
-  //   );
+    expect(fetchSpy.called(cdn('en', '', true))).toBe(true);
+  });
 
-  //   await delay();
+  it('supports multiple locales', async () => {
+    const result = render<WithEmojiDataWrapperProps>(
+      <Component locale="de" version="2.0.0">
+        <div>Foo</div>
+      </Component>,
+    );
 
-  //   expect(fetchSpy).toHaveBeenCalledWith('ja/data.json', '2.2.0');
+    await wait();
 
-  //   shallow(
-  //     <Component locale="it">
-  //       <div>Foo</div>
-  //     </Component>,
-  //   );
+    expect(fetchSpy.called(cdn('de', '2.0.0'))).toBe(true);
 
-  //   await delay();
+    result.rerender(
+      <Component locale="it">
+        <div>Foo</div>
+      </Component>,
+    );
 
-  //   expect(fetchSpy).toHaveBeenCalledWith('it/data.json', '2.2.0');
-  // });
+    await wait();
 
-  // it('uses locale cache if it exists', async () => {
-  //   shallow(
-  //     <Component locale="ja">
-  //       <div>Foo</div>
-  //     </Component>,
-  //   );
+    expect(fetchSpy.called(cdn('it'))).toBe(true);
+  });
 
-  //   await delay();
+  it.skip('re-throws errors', async () => {
+    const result = render<WithEmojiDataWrapperProps>(
+      <Component>
+        <div>Foo</div>
+      </Component>,
+    );
 
-  //   shallow(
-  //     <Component locale="ja">
-  //       <div>Foo</div>
-  //     </Component>,
-  //   );
+    await wait();
 
-  //   await delay();
-
-  //   shallow(
-  //     <Component locale="ja">
-  //       <div>Foo</div>
-  //     </Component>,
-  //   );
-
-  //   await delay();
-
-  //   expect(fetchSpy).toHaveBeenCalledTimes(1);
-  // });
-
-  // it('re-throws errors', async () => {
-  //   const { root } = await renderAndWait(
-  //     <Component locale="ja">
-  //       <div>Foo</div>
-  //     </Component>,
-  //   );
-
-  //   (fetchFromCDN as jest.Mock).mockImplementation(() => Promise.reject(new Error('Oops')));
-
-  //   wrapper.setProps({
-  //     locale: 'es',
-  //   });
-
-  //   try {
-  //     // @ts-ignore
-  //     await wrapper.instance().loadEmojis();
-  //   } catch (error) {
-  //     expect(error).toEqual(new Error('Oops'));
-  //   }
-  // });
+    try {
+      await result.updateAndWait({
+        locale: 'fr',
+      });
+    } catch (error) {
+      expect(error).toEqual(new Error('Failed to load Emojibase dataset.'));
+    }
+  });
 });

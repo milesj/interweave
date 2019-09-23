@@ -1,5 +1,3 @@
-/* eslint-disable spaced-comment */
-
 import React from 'react';
 import ReactDOMServer from 'react-dom/server';
 import { render } from 'rut';
@@ -10,16 +8,6 @@ import UrlMatcher from '../src/UrlMatcher';
 import IpMatcher from '../src/IpMatcher';
 
 describe('Interweave (with autolinking)', () => {
-  const urlParts = {
-    scheme: 'http',
-    auth: '',
-    host: '',
-    port: '',
-    path: '',
-    query: '',
-    fragment: '',
-  };
-
   it('renders large blocks of text with all matchers', () => {
     const result = render<InterweaveProps>(
       <Interweave

@@ -1,10 +1,10 @@
 import React from 'react';
 import { render } from 'rut';
-import Element from '../src/Element';
+import Element, { ElementProps } from '../src/Element';
 
 describe('Element', () => {
   it('renders with a custom HTML tag', () => {
-    const { root, update } = render(<Element tagName="div">Foo</Element>);
+    const { root, update } = render<ElementProps>(<Element tagName="div">Foo</Element>);
 
     expect(root.find('div')).toHaveLength(1);
 
@@ -18,7 +18,7 @@ describe('Element', () => {
   });
 
   it('renders without children', () => {
-    const { root } = render(<Element tagName="div" />);
+    const { root } = render<ElementProps>(<Element tagName="div" />);
 
     expect(root.findOne('div')).toHaveProps({
       children: null,
@@ -26,7 +26,7 @@ describe('Element', () => {
   });
 
   it('renders without attributes', () => {
-    const { root } = render(<Element tagName="div">Foo</Element>);
+    const { root } = render<ElementProps>(<Element tagName="div">Foo</Element>);
 
     expect(root).toHaveRendered();
     expect(root.findOne('div')).toHaveProps({
@@ -35,7 +35,7 @@ describe('Element', () => {
   });
 
   it('renders with attributes', () => {
-    const { root } = render(
+    const { root } = render<ElementProps>(
       <Element tagName="div" attributes={{ id: 'foo' }}>
         Foo
       </Element>,
@@ -49,7 +49,7 @@ describe('Element', () => {
   });
 
   it('renders with attributes of each type', () => {
-    const { root } = render(
+    const { root } = render<ElementProps>(
       <Element
         tagName="input"
         attributes={{

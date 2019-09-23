@@ -2,6 +2,7 @@
   "name": "interweave-root",
   "private": true,
   "scripts": {
+    "prepare": "beemo create-config --silent",
     "build": "beemo run-script build --workspaces=*",
     "coverage": "yarn run jest --coverage",
     "eslint": "beemo eslint",

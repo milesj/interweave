@@ -1,12 +1,12 @@
 import React from 'react';
 import { render } from 'rut';
-import Interweave, { Element } from 'interweave';
+import Interweave, { Element, InterweaveProps } from 'interweave';
 import { SOURCE_PROP } from 'interweave/lib/testUtils';
 import EmojiMatcher from '../src/EmojiMatcher';
 
 describe('Interweave (with emoji)', () => {
   it('renders emoji shortcode as unicode', () => {
-    const { root } = render(
+    const { root } = render<InterweaveProps>(
       <Interweave
         tagName="div"
         matchers={[new EmojiMatcher('emoji', { convertShortcode: true, renderUnicode: true })]}
@@ -19,7 +19,7 @@ describe('Interweave (with emoji)', () => {
   });
 
   it('renders emoji unicode (literals) as unicode', () => {
-    const { root } = render(
+    const { root } = render<InterweaveProps>(
       <Interweave
         tagName="div"
         matchers={[new EmojiMatcher('emoji', { convertUnicode: true, renderUnicode: true })]}
@@ -32,7 +32,7 @@ describe('Interweave (with emoji)', () => {
   });
 
   it('renders emoji unicode (escapes) as unicode', () => {
-    const { root } = render(
+    const { root } = render<InterweaveProps>(
       <Interweave
         tagName="div"
         matchers={[new EmojiMatcher('emoji', { convertUnicode: true, renderUnicode: true })]}
@@ -45,7 +45,7 @@ describe('Interweave (with emoji)', () => {
   });
 
   it('renders a single emoji enlarged', () => {
-    const { root } = render(
+    const { root } = render<InterweaveProps>(
       <Interweave
         tagName="div"
         matchers={[new EmojiMatcher('emoji', { convertUnicode: true, convertShortcode: true })]}

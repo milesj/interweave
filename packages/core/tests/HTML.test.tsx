@@ -1,12 +1,12 @@
 import React from 'react';
 import { render } from 'rut';
-import Markup from '../src/Markup';
+import Markup, { MarkupProps } from '../src/Markup';
 
 // All examples taken from MDN https://developer.mozilla.org/en-US/docs/Web/HTML/Element
 describe('html', () => {
   describe('a, ul, li', () => {
     it('renders', () => {
-      const result = render(
+      const result = render<MarkupProps>(
         <Markup
           content={`<ul>
   <li><a href="https://example.com">Website</a></li>
@@ -22,7 +22,7 @@ describe('html', () => {
 
   describe('abbr', () => {
     it('renders', () => {
-      const result = render(
+      const result = render<MarkupProps>(
         <Markup
           content={`You can use <abbr title="Cascading Style Sheets">CSS</abbr> to style your <abbr title="HyperText Markup Language">HTML</abbr>.`}
         />,
@@ -34,7 +34,7 @@ describe('html', () => {
 
   describe('address', () => {
     it('renders', () => {
-      const result = render(
+      const result = render<MarkupProps>(
         <Markup
           content={`<address>
   <a href="mailto:jim@rock.com">jim@rock.com</a><br/>
@@ -49,7 +49,7 @@ describe('html', () => {
 
   describe('article', () => {
     it('renders', () => {
-      const result = render(
+      const result = render<MarkupProps>(
         <Markup
           content={`<article class="forecast">
   <h1>Weather forecast for Seattle</h1>
@@ -75,7 +75,7 @@ describe('html', () => {
 
   describe('aside', () => {
     it('renders', () => {
-      const result = render(
+      const result = render<MarkupProps>(
         <Markup
           content={`<aside>
   <p>The Rough-skinned Newt defends itself with a deadly neurotoxin.</p>
@@ -89,7 +89,7 @@ describe('html', () => {
 
   describe('audio', () => {
     it('renders', () => {
-      const result = render(
+      const result = render<MarkupProps>(
         <Markup
           content={`<audio controls src="/media/examples/t-rex-roar.mp3">
   Your browser does not support the <code>audio</code> element.
@@ -101,7 +101,7 @@ describe('html', () => {
     });
 
     it('renders with source', () => {
-      const result = render(
+      const result = render<MarkupProps>(
         <Markup
           content={`<audio controls="controls">
   <source src="foo.wav" type="audio/wav">
@@ -116,7 +116,7 @@ describe('html', () => {
 
   describe('b', () => {
     it('renders', () => {
-      const result = render(
+      const result = render<MarkupProps>(
         <Markup
           content={`<p>The two most popular science courses offered by the school are <b class="term">chemistry</b> (the study of chemicals and the composition of substances) and <b class="term">physics</b> (the study of the nature and properties of matter and energy).</p>`}
         />,
@@ -128,7 +128,7 @@ describe('html', () => {
 
   describe('bdi', () => {
     it('renders', () => {
-      const result = render(
+      const result = render<MarkupProps>(
         <Markup
           content={`<ul>
   <li><bdi class="name">Evil Steven</bdi>: 1st place</li>
@@ -146,7 +146,7 @@ describe('html', () => {
 
   describe('bdo', () => {
     it('renders', () => {
-      const result = render(
+      const result = render<MarkupProps>(
         <Markup
           content={`In the computer's memory, this is stored as <bdo dir="ltr">אה, אני אוהב להיות ליד חוף הים</bdo>`}
         />,
@@ -158,7 +158,7 @@ describe('html', () => {
 
   describe('blockquote', () => {
     it('renders', () => {
-      const result = render(
+      const result = render<MarkupProps>(
         <Markup
           content={`<blockquote cite="https://www.huxley.net/bnw/four.html">
   <p>Words can be like X-rays, if you use them properly – they'll go through anything. You read and you're pierced.</p>
@@ -174,7 +174,9 @@ describe('html', () => {
 
   describe('button', () => {
     it('renders', () => {
-      const result = render(<Markup content={`<button name="button">Click me</button>`} />);
+      const result = render<MarkupProps>(
+        <Markup content={`<button name="button">Click me</button>`} />,
+      );
 
       expect(result).toMatchSnapshot();
     });
@@ -182,7 +184,7 @@ describe('html', () => {
 
   describe('canvas', () => {
     it('renders', () => {
-      const result = render(
+      const result = render<MarkupProps>(
         <Markup
           content={`<canvas id="canvas" width="300" height="300">
   An alternative text describing what your canvas displays.
@@ -195,7 +197,7 @@ describe('html', () => {
     });
 
     it('renders nothing when not allowed', () => {
-      const result = render(
+      const result = render<MarkupProps>(
         <Markup
           content={`<canvas id="canvas" width="300" height="300">
   An alternative text describing what your canvas displays.
@@ -209,7 +211,7 @@ describe('html', () => {
 
   describe('caption', () => {
     it('renders', () => {
-      const result = render(
+      const result = render<MarkupProps>(
         <Markup
           content={`<table>
   <caption>He-Man and Skeletor facts</caption>
@@ -228,7 +230,7 @@ describe('html', () => {
 
   describe('cite', () => {
     it('renders', () => {
-      const result = render(
+      const result = render<MarkupProps>(
         <Markup
           content={`<blockquote>
   <p>It was a bright cold day in April, and the clocks were striking thirteen.</p>
@@ -245,7 +247,7 @@ describe('html', () => {
 
   describe('code', () => {
     it('renders', () => {
-      const result = render(
+      const result = render<MarkupProps>(
         <Markup
           content={`<p>The <code>push()</code> method adds one or more elements to the end of an array and returns the new length of the array.</p>`}
         />,
@@ -257,7 +259,7 @@ describe('html', () => {
 
   describe('col, colgroup', () => {
     it('renders', () => {
-      const result = render(
+      const result = render<MarkupProps>(
         <Markup
           content={`<table>
   <caption>Superheros and sidekicks</caption>
@@ -276,7 +278,7 @@ describe('html', () => {
 
   describe('dl, dt, dd', () => {
     it('renders', () => {
-      const result = render(
+      const result = render<MarkupProps>(
         <Markup
           content={`<dl>
   <dt>Beast of Bodmin</dt>
@@ -297,7 +299,7 @@ describe('html', () => {
 
   describe('details, summary', () => {
     it('renders', () => {
-      const result = render(
+      const result = render<MarkupProps>(
         <Markup
           content={`<details>
   <summary>Details</summary>
@@ -310,7 +312,7 @@ describe('html', () => {
     });
 
     it('doesnt render summary when not in details', () => {
-      const result = render(<Markup content={`<summary>Details</summary>`} />);
+      const result = render<MarkupProps>(<Markup content={`<summary>Details</summary>`} />);
 
       expect(result).toMatchSnapshot();
     });
@@ -318,7 +320,7 @@ describe('html', () => {
 
   describe('dfn', () => {
     it('renders', () => {
-      const result = render(
+      const result = render<MarkupProps>(
         <Markup
           content={`<p>A <dfn id="def-validator">validator</dfn> is a program that checks for syntax errors in code or documents.</p>`}
         />,
@@ -330,7 +332,7 @@ describe('html', () => {
 
   describe('div', () => {
     it('renders', () => {
-      const result = render(
+      const result = render<MarkupProps>(
         <Markup
           content={`<div class="warning">
   <img src="/media/examples/leopard.jpg" alt="An intimidating leopard.">
@@ -345,7 +347,9 @@ describe('html', () => {
 
   describe('em', () => {
     it('renders', () => {
-      const result = render(<Markup content={`We <em>had</em> to do something about it.`} />);
+      const result = render<MarkupProps>(
+        <Markup content={`We <em>had</em> to do something about it.`} />,
+      );
 
       expect(result).toMatchSnapshot();
     });
@@ -353,7 +357,7 @@ describe('html', () => {
 
   describe('figure, figcaption', () => {
     it('renders', () => {
-      const result = render(
+      const result = render<MarkupProps>(
         <Markup
           content={`<figure>
   <img src="/media/examples/elephant-660-480.jpg" alt="Elephant at sunset" />
@@ -368,7 +372,7 @@ describe('html', () => {
 
   describe('footer', () => {
     it('renders', () => {
-      const result = render(
+      const result = render<MarkupProps>(
         <Markup
           content={`<article>
   <h1>How to be a wizard</h1>
@@ -390,7 +394,7 @@ describe('html', () => {
 
   describe('h1 - h6', () => {
     it('renders', () => {
-      const result = render(
+      const result = render<MarkupProps>(
         <Markup
           content={`<h1>Beetles</h1>
       <h2>External morphology</h2>
@@ -408,7 +412,7 @@ describe('html', () => {
 
   describe('header', () => {
     it('renders', () => {
-      const result = render(
+      const result = render<MarkupProps>(
         <Markup
           content={`<header class="page-header">
   <h1>Cute Puppies Express!</h1>
@@ -422,7 +426,7 @@ describe('html', () => {
 
   describe('hr', () => {
     it('renders', () => {
-      const result = render(
+      const result = render<MarkupProps>(
         <Markup
           content={`<p>§1: The first rule of Fight Club is: You do not talk about Fight Club.</p>
 <hr>
@@ -436,7 +440,7 @@ describe('html', () => {
 
   describe('i', () => {
     it('renders', () => {
-      const result = render(
+      const result = render<MarkupProps>(
         <Markup
           content={`<p><i class="latin">Musa</i> is one of two or three genera in the family <i class="latin">Musaceae</i>; it includes bananas and plantains.</p>`}
         />,
@@ -448,7 +452,7 @@ describe('html', () => {
 
   describe('iframe', () => {
     it('renders', () => {
-      const result = render(
+      const result = render<MarkupProps>(
         <Markup
           content={`<iframe width="400" height="300" src="https://maps.google.com"></iframe>`}
           allowList={['iframe']}
@@ -459,7 +463,7 @@ describe('html', () => {
     });
 
     it('renders nothing when not allowed', () => {
-      const result = render(
+      const result = render<MarkupProps>(
         <Markup
           content={`<iframe width="400" height="300" src="https://maps.google.com"></iframe>`}
         />,
@@ -471,7 +475,7 @@ describe('html', () => {
 
   describe('img', () => {
     it('renders', () => {
-      const result = render(
+      const result = render<MarkupProps>(
         <Markup
           content={`<img class="fit-picture" src="/media/examples/grapefruit-slice-332-332.jpg" alt="Grapefruit slice atop a pile of other slices" />`}
         />,
@@ -483,7 +487,7 @@ describe('html', () => {
 
   describe('ins', () => {
     it('renders', () => {
-      const result = render(
+      const result = render<MarkupProps>(
         <Markup
           content={`<ins cite="../howtobeawizard.html" datetime="2018-05">
   <p>“A wizard is never late …”</p>
@@ -497,7 +501,7 @@ describe('html', () => {
 
   describe('kbd', () => {
     it('renders', () => {
-      const result = render(
+      const result = render<MarkupProps>(
         <Markup
           content={`Please press <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>R</kbd> to re-render an MDN page.`}
         />,
@@ -509,7 +513,7 @@ describe('html', () => {
 
   describe('main', () => {
     it('renders', () => {
-      const result = render(
+      const result = render<MarkupProps>(
         <Markup
           content={`<main role="main">
   <p>Geckos are a group of usually small, usually nocturnal lizards. They are found on every continent except Australia.</p>
@@ -523,7 +527,7 @@ describe('html', () => {
 
   describe('mark', () => {
     it('renders', () => {
-      const result = render(
+      const result = render<MarkupProps>(
         <Markup
           content={`Most <mark>salamander</mark>s are nocturnal, and hunt for insects, worms, and other small creatures.`}
         />,
@@ -535,7 +539,7 @@ describe('html', () => {
 
   describe('nav, ol, li', () => {
     it('renders', () => {
-      const result = render(
+      const result = render<MarkupProps>(
         <Markup
           content={`<nav class="crumbs">
   <ol>
@@ -553,7 +557,7 @@ describe('html', () => {
 
   describe('picture', () => {
     it('renders', () => {
-      const result = render(
+      const result = render<MarkupProps>(
         <Markup
           content={`<picture>
   <source srcset="/media/examples/surfer-240-200.jpg" media="(min-width: 800px)">
@@ -568,7 +572,7 @@ describe('html', () => {
 
   describe('pre', () => {
     it('renders', () => {
-      const result = render(
+      const result = render<MarkupProps>(
         <Markup
           content={`<pre>
   L          TE
@@ -597,7 +601,7 @@ describe('html', () => {
 
   describe('q', () => {
     it('renders', () => {
-      const result = render(
+      const result = render<MarkupProps>(
         <Markup
           content={`When Dave asks HAL to open the pod bay door, HAL answers: <q cite="https://www.imdb.com/title/tt0062622/quotes/qt0396921">I'm sorry, Dave. I'm afraid I can't do that.</q>`}
         />,
@@ -609,7 +613,7 @@ describe('html', () => {
 
   describe('ruby, rp, rt, rtc', () => {
     it('renders', () => {
-      const result = render(
+      const result = render<MarkupProps>(
         <Markup
           content={`<ruby xml:lang="zh-Hant" style="ruby-position: under;">
   <rbc>
@@ -631,7 +635,7 @@ describe('html', () => {
 
   describe('s', () => {
     it('renders', () => {
-      const result = render(
+      const result = render<MarkupProps>(
         <Markup
           content={`<s>There will be a few tickets available at the box office tonight.</s>`}
         />,
@@ -643,7 +647,7 @@ describe('html', () => {
 
   describe('samp', () => {
     it('renders', () => {
-      const result = render(
+      const result = render<MarkupProps>(
         <Markup content={`<samp>Keyboard not found <br>Press F1 to continue</samp>`} />,
       );
 
@@ -653,7 +657,7 @@ describe('html', () => {
 
   describe('section', () => {
     it('renders', () => {
-      const result = render(
+      const result = render<MarkupProps>(
         <Markup
           content={`<section>
   <h1>Introduction</h1>
@@ -668,7 +672,7 @@ describe('html', () => {
 
   describe('small', () => {
     it('renders', () => {
-      const result = render(
+      const result = render<MarkupProps>(
         <Markup
           content={`<p><small>The content is licensed under a Creative Commons Attribution-ShareAlike 2.5 Generic License.</small></p>`}
         />,
@@ -680,7 +684,7 @@ describe('html', () => {
 
   describe('source', () => {
     it('renders', () => {
-      const result = render(
+      const result = render<MarkupProps>(
         <Markup
           content={`<video controls width="250" height="200" muted>
   <source src="/media/examples/flower.webm" type="video/webm">
@@ -694,7 +698,7 @@ describe('html', () => {
     });
 
     it('doesnt render if outside its parent', () => {
-      const result = render(
+      const result = render<MarkupProps>(
         <Markup content={`<source src="/media/examples/flower.webm" type="video/webm">`} />,
       );
 
@@ -704,7 +708,7 @@ describe('html', () => {
 
   describe('span', () => {
     it('renders', () => {
-      const result = render(
+      const result = render<MarkupProps>(
         <Markup
           content={`Add the <span class="ingredient">basil</span>, <span class="ingredient">pine nuts</span> and <span class="ingredient">garlic</span> to a blender and blend into a paste.`}
         />,
@@ -716,7 +720,7 @@ describe('html', () => {
 
   describe('strong', () => {
     it('renders', () => {
-      const result = render(
+      const result = render<MarkupProps>(
         <Markup
           content={`... the most important rule, the rule you can never forget, no matter how much he cries, no matter how much he begs: <strong>never feed him after midnight</strong>.`}
         />,
@@ -728,7 +732,7 @@ describe('html', () => {
 
   describe('sub', () => {
     it('renders', () => {
-      const result = render(
+      const result = render<MarkupProps>(
         <Markup
           content={`Almost every developer's favorite molecule is
           C<sub>8</sub>H<sub>10</sub>N<sub>4</sub>O<sub>2</sub>, also known as "caffeine."`}
@@ -741,7 +745,7 @@ describe('html', () => {
 
   describe('sup', () => {
     it('renders', () => {
-      const result = render(
+      const result = render<MarkupProps>(
         <Markup
           content={`<var>a<sup>2</sup></var> + <var>b<sup>2</sup></var> = <var>c<sup>2</sup></var>`}
         />,
@@ -753,7 +757,7 @@ describe('html', () => {
 
   describe('table, thead, tbody, tfoot', () => {
     it('renders', () => {
-      const result = render(
+      const result = render<MarkupProps>(
         <Markup
           content={`<table>
   <thead>
@@ -786,7 +790,7 @@ describe('html', () => {
     });
 
     it('renders table with direct rows', () => {
-      const result = render(
+      const result = render<MarkupProps>(
         <Markup
           content={`<table>
   <tr>
@@ -807,7 +811,7 @@ describe('html', () => {
 
   describe('thead', () => {
     it('doesnt render outside of table', () => {
-      const result = render(
+      const result = render<MarkupProps>(
         <Markup
           content={`<thead>
   <tr>
@@ -824,7 +828,7 @@ describe('html', () => {
 
   describe('tbody', () => {
     it('doesnt render outside of table', () => {
-      const result = render(
+      const result = render<MarkupProps>(
         <Markup
           content={`<tbody>
   <tr>
@@ -841,7 +845,7 @@ describe('html', () => {
 
   describe('tfoot', () => {
     it('doesnt render outside of table', () => {
-      const result = render(
+      const result = render<MarkupProps>(
         <Markup
           content={`<tfoot>
   <tr>
@@ -858,7 +862,7 @@ describe('html', () => {
 
   describe('tr', () => {
     it('doesnt render outside of table', () => {
-      const result = render(
+      const result = render<MarkupProps>(
         <Markup
           content={`<tr>
   <th scope="row">Donuts</th>
@@ -873,7 +877,7 @@ describe('html', () => {
 
   describe('td', () => {
     it('doesnt render outside of tr', () => {
-      const result = render(<Markup content={`<td>3,000</td>`} />);
+      const result = render<MarkupProps>(<Markup content={`<td>3,000</td>`} />);
 
       expect(result).toMatchSnapshot();
     });
@@ -881,7 +885,7 @@ describe('html', () => {
 
   describe('th', () => {
     it('doesnt render outside of tr', () => {
-      const result = render(<Markup content={`<th scope="row">Donuts</th>`} />);
+      const result = render<MarkupProps>(<Markup content={`<th scope="row">Donuts</th>`} />);
 
       expect(result).toMatchSnapshot();
     });
@@ -889,7 +893,7 @@ describe('html', () => {
 
   describe('time', () => {
     it('renders', () => {
-      const result = render(
+      const result = render<MarkupProps>(
         <Markup
           content={`The Cure will be celebrating their 40th anniversary on <time datetime="2018-07-07">July 7</time> in London's Hyde Park.`}
         />,
@@ -901,7 +905,7 @@ describe('html', () => {
 
   describe('track', () => {
     it('renders', () => {
-      const result = render(
+      const result = render<MarkupProps>(
         <Markup
           content={`<video controls width="250" src="/media/examples/friday.mp4">
   <track default kind="captions" srclang="en" src="/media/examples/friday.vtt"/>
@@ -915,7 +919,7 @@ describe('html', () => {
     });
 
     it('doesnt render if outside its parent', () => {
-      const result = render(
+      const result = render<MarkupProps>(
         <Markup
           content={`<track default kind="captions" srclang="en" src="/media/examples/friday.vtt"/>`}
         />,
@@ -927,7 +931,7 @@ describe('html', () => {
 
   describe('u', () => {
     it('renders', () => {
-      const result = render(
+      const result = render<MarkupProps>(
         <Markup
           content={`<p>You could use this element to highlight <u>speling</u> mistakes, so the writer can <u>corect</u> them.</p>`}
         />,
@@ -939,7 +943,7 @@ describe('html', () => {
 
   describe('var', () => {
     it('renders', () => {
-      const result = render(
+      const result = render<MarkupProps>(
         <Markup
           content={`The volume of a box is <var>l</var> × <var>w</var> × <var>h</var>, where <var>l</var> represents the length, <var>w</var> the width and <var>h</var> the height of the box.`}
         />,
@@ -951,7 +955,7 @@ describe('html', () => {
 
   describe('video', () => {
     it('renders', () => {
-      const result = render(
+      const result = render<MarkupProps>(
         <Markup
           content={`<video controls>
   <source src="myVideo.mp4" type="video/mp4">
@@ -967,7 +971,7 @@ describe('html', () => {
 
   describe('wbr', () => {
     it('renders', () => {
-      const result = render(
+      const result = render<MarkupProps>(
         <Markup content={`Fernstraßen<wbr>bau<wbr>privat<wbr>finanzierungs<wbr>gesetz`} />,
       );
 
