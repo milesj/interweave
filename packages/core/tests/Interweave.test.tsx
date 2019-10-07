@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOMServer from 'react-dom/server';
 import { render } from 'rut';
+import { createHTMLDocument } from 'interweave-ssr';
 import Interweave, { InterweaveProps } from '../src/Interweave';
 import Element from '../src/Element';
 import { ALLOWED_TAG_LIST } from '../src/constants';
@@ -258,6 +259,18 @@ describe('Interweave', () => {
   });
 
   describe('server side rendering', () => {
+    let implSpy: jest.SpyInstance;
+
+    beforeEach(() => {
+      implSpy = jest
+        .spyOn(document.implementation, 'createHTMLDocument')
+        .mockImplementation(createHTMLDocument);
+    });
+
+    afterEach(() => {
+      implSpy.mockRestore();
+    });
+
     it('renders basic HTML', () => {
       const actual = ReactDOMServer.renderToStaticMarkup(
         <Interweave content="This is <b>bold</b>." />,
@@ -272,6 +285,14 @@ describe('Interweave', () => {
       );
 
       expect(actual).toBe('<span>This is bold.</span>');
+    });
+
+    it('supports styles', () => {
+      const actual = ReactDOMServer.renderToStaticMarkup(
+        <Interweave content="This is <b style='font-weight: bold'>bold</b>." />,
+      );
+
+      expect(actual).toBe('<span>This is <b style="font-weight:bold">bold</b>.</span>');
     });
 
     it('supports filters', () => {

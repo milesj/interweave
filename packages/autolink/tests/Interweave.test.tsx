@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOMServer from 'react-dom/server';
 import { render } from 'rut';
 import Interweave, { InterweaveProps } from 'interweave';
+import { createHTMLDocument } from 'interweave-ssr';
 import EmailMatcher from '../src/EmailMatcher';
 import HashtagMatcher from '../src/HashtagMatcher';
 import UrlMatcher from '../src/UrlMatcher';
@@ -73,6 +74,18 @@ Curabitur lectus odio, tempus quis velit vitae, cursus sagittis nulla. Maecenas 
   });
 
   describe('server side rendering', () => {
+    let implSpy: jest.SpyInstance;
+
+    beforeEach(() => {
+      implSpy = jest
+        .spyOn(document.implementation, 'createHTMLDocument')
+        .mockImplementation(createHTMLDocument);
+    });
+
+    afterEach(() => {
+      implSpy.mockRestore();
+    });
+
     it('supports complex content', () => {
       const actual = ReactDOMServer.renderToStaticMarkup(
         <Interweave

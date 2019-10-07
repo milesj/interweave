@@ -1,0 +1,26 @@
+{
+  "name": "interweave-ssr",
+  "version": "0.0.0",
+  "description": "Server-side rendering support for Interweave.",
+  "keywords": [
+    "interweave",
+    "react",
+    "ssr"
+  ],
+  "main": "./lib/index.js",
+  "module": "./esm/index.js",
+  "types": "./lib/index.d.ts",
+  "sideEffects": false,
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": "https://github.com/milesj/interweave/tree/master/packages/ssr",
+  "license": "MIT",
+  "dependencies": {
+    "parse5": "^5.1.0",
+    "style-parser": "^1.1.1"
+  },
+  "devDependencies": {
+    "@types/parse5": "^5.0.2"
+  }
+}

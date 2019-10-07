@@ -2236,6 +2236,11 @@
   resolved "https://registry.npmjs.org/@types/normalize-package-data/-/normalize-package-data-2.4.0.tgz#e486d0d97396d79beedd0a6e33f4534ff6b4973e"
   integrity sha512-f5j5b/Gf71L+dbqxIpQ4Z2WlmI/mPJ0fOkGGmFgtb6sAu97EPczzbS3/tJKxmcYDj55OX6ssqwDAWOHIYDRDGA==
 
+"@types/parse5@^5.0.2":
+  version "5.0.2"
+  resolved "https://registry.npmjs.org/@types/parse5/-/parse5-5.0.2.tgz#a877a4658f8238c8266faef300ae41c84d72ec8a"
+  integrity sha512-BOl+6KDs4ItndUWUFchy3aEqGdHhw0BC4Uu+qoDonN/f0rbUnJbm71Ulj8Tt9jLFRaAxPLKvdS1bBLfx1qXR9g==
+
 "@types/pluralize@^0.0.29":
   version "0.0.29"
   resolved "https://registry.npmjs.org/@types/pluralize/-/pluralize-0.0.29.tgz#6ffa33ed1fc8813c469b859681d09707eb40d03c"
@@ -8231,6 +8236,16 @@ parse5@4.0.0:
   resolved "https://registry.npmjs.org/parse5/-/parse5-4.0.0.tgz#6d78656e3da8d78b4ec0b906f7c08ef1dfe3f608"
   integrity sha512-VrZ7eOd3T1Fk4XWNXMgiGBK/z0MG48BWG2uQNU4I72fkQuKUTZpl+u9k+CxEG0twMVzSmXEEz12z5Fnw1jIQFA==
 
+parse5@^5.1.0:
+  version "5.1.0"
+  resolved "https://registry.npmjs.org/parse5/-/parse5-5.1.0.tgz#c59341c9723f414c452975564c7c00a68d58acd2"
+  integrity sha512-fxNG2sQjHvlVAYmzBZS9YlDp6PTSSDwa98vkD4QgVDDCAo84z5X1t5XyJQ62ImdLXx5NdIIfihey6xpum9/gRQ==
+
+parsimmon@^0.7.0:
+  version "0.7.2"
+  resolved "https://registry.npmjs.org/parsimmon/-/parsimmon-0.7.2.tgz#805fc6d1ed52d0c9b65cbf6b4da58a161e68e7e1"
+  integrity sha1-gF/G0e1S0Mm2XL9rTaWKFh5o5+E=
+
 pascal-case@^2.0.0:
   version "2.0.1"
   resolved "https://registry.npmjs.org/pascal-case/-/pascal-case-2.0.1.tgz#2d578d3455f660da65eca18ef95b4e0de912761e"
@@ -9817,6 +9832,13 @@ strong-log-transformer@^2.0.0:
     duplexer "^0.1.1"
     minimist "^1.2.0"
     through "^2.3.4"
+
+style-parser@^1.1.1:
+  version "1.1.1"
+  resolved "https://registry.npmjs.org/style-parser/-/style-parser-1.1.1.tgz#9deb628d75462ff07b15662a72c0d5a8e4d5ffc5"
+  integrity sha1-netijXVGL/B7FWYqcsDVqOTV/8U=
+  dependencies:
+    parsimmon "^0.7.0"
 
 supports-color@6.1.0, supports-color@^6.1.0:
   version "6.1.0"
