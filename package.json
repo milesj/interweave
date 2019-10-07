@@ -13,7 +13,7 @@
     "test": "yarn run jest",
     "test:bundle": "yarn run build && beemo create-config typescript && webpack && serve ./tests/",
     "prettier": "beemo prettier",
-    "prerelease": "yarn test && yarn run build",
+    "prerelease": "yarn run clean && yarn test && yarn run build",
     "release": "lerna publish",
     "type": "beemo typescript --reference-workspaces --build"
   },

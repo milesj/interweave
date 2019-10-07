@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOMServer from 'react-dom/server';
 import { render } from 'rut';
+import { createHTMLDocument } from 'interweave-ssr';
 import Interweave, { InterweaveProps } from '../src/Interweave';
 import Element from '../src/Element';
 import { ALLOWED_TAG_LIST } from '../src/constants';
@@ -258,6 +259,10 @@ describe('Interweave', () => {
   });
 
   describe('server side rendering', () => {
+    beforeEach(() => {
+      document.implementation.createHTMLDocument = createHTMLDocument;
+    });
+
     it('renders basic HTML', () => {
       const actual = ReactDOMServer.renderToStaticMarkup(
         <Interweave content="This is <b>bold</b>." />,
