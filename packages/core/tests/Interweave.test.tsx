@@ -259,8 +259,16 @@ describe('Interweave', () => {
   });
 
   describe('server side rendering', () => {
+    let implSpy: jest.SpyInstance;
+
     beforeEach(() => {
-      document.implementation.createHTMLDocument = createHTMLDocument;
+      implSpy = jest
+        .spyOn(document.implementation, 'createHTMLDocument')
+        .mockImplementation(createHTMLDocument);
+    });
+
+    afterEach(() => {
+      implSpy.mockRestore();
     });
 
     it('renders basic HTML', () => {

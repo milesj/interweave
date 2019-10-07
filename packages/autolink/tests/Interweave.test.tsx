@@ -74,8 +74,16 @@ Curabitur lectus odio, tempus quis velit vitae, cursus sagittis nulla. Maecenas 
   });
 
   describe('server side rendering', () => {
+    let implSpy: jest.SpyInstance;
+
     beforeEach(() => {
-      document.implementation.createHTMLDocument = createHTMLDocument;
+      implSpy = jest
+        .spyOn(document.implementation, 'createHTMLDocument')
+        .mockImplementation(createHTMLDocument);
+    });
+
+    afterEach(() => {
+      implSpy.mockRestore();
     });
 
     it('supports complex content', () => {
