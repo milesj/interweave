@@ -21,8 +21,11 @@ import { polyfillDOMImplementation } from 'interweave-ssr';
 polyfillDOMImplementation();
 ```
 
-This option is very _lightweight_ and only supports the bare minimum. For example, nodes in the tree
-only support the `getAttribute`, `hasAttribute`, `removeAttribute`, and `setAttribute` methods.
+> This option is very _lightweight_ and only supports the bare minimum. For example, nodes in the
+> tree only support the `getAttribute`, `hasAttribute`, `removeAttribute`, and `setAttribute`
+> methods
+> ([view all available](https://github.com/milesj/interweave/blob/master/packages/ssr/src/index.ts#L59)).
+> If you encounter a situation where you need more functionality, please submit a pull request!
 
 ## JSDOM
 
