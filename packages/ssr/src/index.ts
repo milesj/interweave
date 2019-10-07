@@ -12,6 +12,7 @@ import {
 } from 'parse5';
 // @ts-ignore
 import * as adapter from 'parse5/lib/tree-adapters/default';
+import parseStyle from 'style-parser';
 
 declare module 'parse5' {
   interface DefaultTreeNode {
@@ -41,6 +42,15 @@ function patchTextNodeInChildren(parentNode: DefaultTreeParentNode) {
       });
     }
   });
+}
+
+function createStyleDeclaration(decls: string) {
+  const object = parseStyle(decls);
+  const style = Object.keys(object);
+
+  Object.assign(style, object);
+
+  return style;
 }
 
 const treeAdapter: TreeAdapter = {
@@ -78,10 +88,16 @@ const treeAdapter: TreeAdapter = {
           attributes.push({ name, value });
         }
       },
-      style: {},
+      style: [],
       tagName,
       textContent: '',
     };
+
+    const style = element.getAttribute('style');
+
+    if (style) {
+      element.style = createStyleDeclaration(style);
+    }
 
     if (element.nodeName === 'a') {
       element.protocol = ':';

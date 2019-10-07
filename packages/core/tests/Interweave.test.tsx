@@ -287,6 +287,14 @@ describe('Interweave', () => {
       expect(actual).toBe('<span>This is bold.</span>');
     });
 
+    it('supports styles', () => {
+      const actual = ReactDOMServer.renderToStaticMarkup(
+        <Interweave content="This is <b style='font-weight: bold'>bold</b>." />,
+      );
+
+      expect(actual).toBe('<span>This is <b style="font-weight:bold">bold</b>.</span>');
+    });
+
     it('supports filters', () => {
       const actual = ReactDOMServer.renderToStaticMarkup(
         <Interweave filters={[new LinkFilter()]} content={'Foo <a href="foo.com">Bar</a> Baz'} />,

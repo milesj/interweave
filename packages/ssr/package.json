@@ -17,7 +17,8 @@
   "repository": "https://github.com/milesj/interweave/tree/master/packages/ssr",
   "license": "MIT",
   "dependencies": {
-    "parse5": "^5.1.0"
+    "parse5": "^5.1.0",
+    "style-parser": "^1.1.1"
   },
   "devDependencies": {
     "@types/parse5": "^5.0.2"
