@@ -12,8 +12,8 @@ polyfill, based on the [parse5](https://www.npmjs.com/package/parse5) HTML parse
 yarn add interweave-ssr --dev
 ```
 
-Begin by importing and executing the `polyfillDOMImplementation` function. This will polyfill the
-appropriate DOM that Interweave relies on.
+Begin by importing and executing the `polyfillDOMImplementation` function before rendering React.
+This will polyfill the appropriate DOM that Interweave relies on.
 
 ```ts
 import { polyfillDOMImplementation } from 'interweave-ssr';
@@ -36,8 +36,8 @@ easily polyfill the document. This approach may be heavy but is the most robust.
 yarn add jsdom --dev
 ```
 
-Begin by instantiating an instance and setting the `window` and `document` global. Once configured,
-you can then render your React components without much issue (hopefully).
+Begin by creating an instance and setting the `window` and `document` globals before rendering
+React.
 
 ```ts
 import JSDOM from 'jsdom';
