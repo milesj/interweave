@@ -1,5 +1,5 @@
-import React from 'react';
-import withContext, { WithContextProps } from './withContext';
+import React, { useRef, useEffect, useContext } from 'react';
+import Context from './Context';
 
 export interface SearchBarProps {
   autoFocus: boolean;
@@ -8,47 +8,35 @@ export interface SearchBarProps {
   searchQuery: string;
 }
 
-export class SearchBar extends React.PureComponent<SearchBarProps & WithContextProps> {
-  inputRef = React.createRef<HTMLInputElement>();
+export default function SearchBar({ autoFocus, searchQuery, onChange, onKeyUp }: SearchBarProps) {
+  const { classNames, messages } = useContext(Context);
+  const ref = useRef<HTMLInputElement>(null);
 
-  /**
-   * Focus the input field if `autoFocus` is true.
-   */
-  componentDidMount() {
-    if (this.props.autoFocus && this.inputRef.current) {
-      this.inputRef.current.focus();
+  useEffect(() => {
+    if (autoFocus && ref.current) {
+      ref.current.focus();
     }
-  }
+  });
 
-  /**
-   * Triggered when the input field value changes.
-   */
-  private readonly handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     // Check if were still mounted
-    if (this.inputRef.current) {
-      this.props.onChange(event.target.value.trim(), event);
+    if (ref.current) {
+      onChange(event.target.value.trim(), event);
     }
   };
 
-  render() {
-    const { classNames, messages } = this.props.context;
-    const { onKeyUp } = this.props;
-
-    return (
-      <div className={classNames.search}>
-        <input
-          aria-label={messages.searchA11y}
-          className={classNames.searchInput}
-          placeholder={messages.search}
-          ref={this.inputRef}
-          type="search"
-          value={this.props.searchQuery}
-          onChange={this.handleChange}
-          onKeyUp={onKeyUp}
-        />
-      </div>
-    );
-  }
+  return (
+    <div className={classNames.search}>
+      <input
+        ref={ref}
+        aria-label={messages.searchA11y}
+        className={classNames.searchInput}
+        placeholder={messages.search}
+        type="search"
+        value={searchQuery}
+        onChange={handleChange}
+        onKeyUp={onKeyUp}
+      />
+    </div>
+  );
 }
-
-export default withContext(SearchBar);

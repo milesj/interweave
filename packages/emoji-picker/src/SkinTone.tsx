@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import camelCase from 'lodash/camelCase';
 import upperFirst from 'lodash/upperFirst';
-import withContext, { WithContextProps } from './withContext';
 import { SKIN_COLORS } from './constants';
 import { SkinToneKey } from './types';
+import Context from './Context';
 
 export interface SkinToneProps {
   active: boolean;
@@ -12,47 +12,31 @@ export interface SkinToneProps {
   skinTone: SkinToneKey;
 }
 
-export class SkinTone extends React.PureComponent<SkinToneProps & WithContextProps> {
-  static defaultProps = {
-    children: null,
-  };
+export default function SkinTone({ active, children, skinTone, onSelect }: SkinToneProps) {
+  const { classNames, messages } = useContext(Context);
+  const className = [classNames.skinTone];
+  const color = SKIN_COLORS[skinTone];
+  const key = camelCase(skinTone);
 
-  /**
-   * Triggered when the button is clicked.
-   */
-  private readonly handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-    event.stopPropagation();
-
-    this.props.onSelect(this.props.skinTone, event);
-  };
-
-  render() {
-    const {
-      active,
-      children,
-      context: { classNames, messages },
-      skinTone,
-    } = this.props;
-    const className = [classNames.skinTone];
-    const color = SKIN_COLORS[skinTone];
-    const key = camelCase(skinTone);
-
-    if (active) {
-      className.push(classNames.skinToneActive);
-    }
-
-    return (
-      <button
-        className={className.join(' ')}
-        style={{ backgroundColor: color, borderColor: color, color }}
-        title={messages[`skin${upperFirst(key)}`]}
-        type="button"
-        onClick={this.handleClick}
-      >
-        {children || ' '}
-      </button>
-    );
+  if (active) {
+    className.push(classNames.skinToneActive);
   }
-}
 
-export default withContext(SkinTone);
+  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.stopPropagation();
+    onSelect(skinTone, event);
+  };
+
+  return (
+    <button
+      className={className.join(' ')}
+      data-color={color}
+      style={{ backgroundColor: color, borderColor: color, color }}
+      title={messages[`skin${upperFirst(key)}`]}
+      type="button"
+      onClick={handleClick}
+    >
+      {children || ' '}
+    </button>
+  );
+}
