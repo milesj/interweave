@@ -19,5 +19,3 @@ export {
 };
 
 export * from './types';
-
-export default withEmojiData;

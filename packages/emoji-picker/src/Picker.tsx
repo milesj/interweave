@@ -2,14 +2,21 @@
 
 import React from 'react';
 import debounce from 'lodash/debounce';
-import withEmojiData, { WithEmojiDataProps, CanonicalEmoji, Path } from 'interweave-emoji';
+import {
+  useEmojiData,
+  UseEmojiDataOptions,
+  CanonicalEmoji,
+  Path,
+  Source,
+  EmojiDataManager,
+} from 'interweave-emoji';
 import { Hexcode } from 'emojibase';
-import { Context } from './withContext';
 import EmojiList from './EmojiList';
 import SkinTonePalette from './SkinTonePalette';
 import GroupTabs from './GroupTabs';
 import PreviewBar from './PreviewBar';
 import SearchBar from './SearchBar';
+import Context from './Context';
 import {
   GROUPS,
   GROUP_KEY_COMMONLY_USED,
@@ -69,6 +76,10 @@ export interface PickerProps {
   disableSkinTones?: boolean;
   /** Order to render components in. */
   displayOrder?: DisplayOrder[];
+  /** List of all emojis. */
+  emojis: CanonicalEmoji[];
+  /** Data manager instance. */
+  emojiData: EmojiDataManager;
   /** Size of the emoji within the preview bar. */
   emojiLargeSize: number;
   /** Padding around each emoji. */
@@ -77,6 +88,8 @@ export interface PickerProps {
   emojiPath: Path;
   /** Pixel size of emoji within the list. */
   emojiSize: number;
+  /** Emoji data source metadata. */
+  emojiSource: Source;
   /** Mapping of custom icons for each group tab. */
   groupIcons?: { [key: string]: React.ReactNode };
   /** Hide emoticons within the preview bar. */
@@ -147,12 +160,10 @@ export interface PickerState {
   searchQuery: string;
 }
 
-export type PickerUnifiedProps = PickerProps & WithEmojiDataProps;
-
 const SKIN_MODIFIER_PATTERN = /1F3FB|1F3FC|1F3FD|1F3FE|1F3FF/g;
 
-export class Picker extends React.PureComponent<PickerUnifiedProps, PickerState> {
-  static defaultProps: Partial<PickerUnifiedProps> = {
+export class PickerInternal extends React.PureComponent<PickerProps, PickerState> {
+  static defaultProps: Partial<PickerProps> = {
     autoFocus: false,
     blacklist: [],
     classNames: {},
@@ -195,11 +206,11 @@ export class Picker extends React.PureComponent<PickerUnifiedProps, PickerState>
 
   whitelist: BlackWhiteMap;
 
-  constructor(props: PickerUnifiedProps) {
+  constructor(props: PickerProps) {
     super(props);
 
     const { blacklist, classNames, defaultSkinTone, messages, whitelist } = props as Required<
-      PickerUnifiedProps
+      PickerProps
     >;
 
     this.blacklist = this.generateBlackWhiteMap(blacklist);
@@ -297,7 +308,7 @@ export class Picker extends React.PureComponent<PickerUnifiedProps, PickerState>
    */
   // eslint-disable-next-line complexity
   filterOrSearch(emoji: CanonicalEmoji, searchQuery: string): boolean {
-    const { blacklist, maxEmojiVersion, whitelist } = this.props as Required<PickerUnifiedProps>;
+    const { blacklist, maxEmojiVersion, whitelist } = this.props as Required<PickerProps>;
 
     // Remove blacklisted emojis and non-whitelisted emojis
     if (
@@ -766,7 +777,7 @@ export class Picker extends React.PureComponent<PickerUnifiedProps, PickerState>
       stickyGroupHeader,
       virtual,
       onScroll,
-    } = this.props as Required<PickerUnifiedProps>;
+    } = this.props as Required<PickerProps>;
     const {
       activeEmoji,
       activeGroup,
@@ -856,4 +867,17 @@ export class Picker extends React.PureComponent<PickerUnifiedProps, PickerState>
   }
 }
 
-export default withEmojiData()(Picker);
+type PickerProviderProps = Omit<PickerProps, 'emojis' | 'emojiData' | 'emojiSource'> &
+  UseEmojiDataOptions;
+
+export default function Picker({
+  compact,
+  locale,
+  throwErrors,
+  version,
+  ...props
+}: PickerProviderProps) {
+  const [emojis, source, data] = useEmojiData({ compact, locale, throwErrors, version });
+
+  return <PickerInternal {...props} emojis={emojis} emojiData={data} emojiSource={source} />;
+}

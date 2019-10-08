@@ -1,12 +1,18 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { List, ListRowProps } from 'react-virtualized';
 import chunk from 'lodash/chunk';
 import { CanonicalEmoji, Path, Source } from 'interweave-emoji';
-import withContext, { WithContextProps } from './withContext';
 import EmojiButton from './Emoji';
 import EmojiListHeader from './EmojiListHeader';
 import { GROUP_KEY_NONE } from './constants';
-import { CommonMode, GroupKey, GroupEmojiMap, GroupIndexMap } from './types';
+import {
+  CommonMode,
+  GroupKey,
+  GroupEmojiMap,
+  GroupIndexMap,
+  Context as EmojiContext,
+} from './types';
+import Context from './Context';
 
 export type VirtualRow = string | CanonicalEmoji[];
 
@@ -43,8 +49,8 @@ export interface EmojiListState {
   rows: VirtualRow[];
 }
 
-export class EmojiList extends React.PureComponent<
-  EmojiListProps & WithContextProps,
+export class EmojiListInternal extends React.PureComponent<
+  EmojiListProps & { context: EmojiContext },
   EmojiListState
 > {
   static defaultProps = {
@@ -264,5 +270,8 @@ export class EmojiList extends React.PureComponent<
   }
 }
 
-// @ts-ignore Not sure why this is failing...
-export default withContext(EmojiList);
+export default function EmojiList(props: EmojiListProps) {
+  const context = useContext(Context);
+
+  return <EmojiListInternal {...props} context={context} />;
+}
