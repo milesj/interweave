@@ -6,7 +6,6 @@ import { MatcherInterface } from './Matcher';
 import { AfterParseCallback, BeforeParseCallback } from './types';
 
 export interface InterweaveProps extends MarkupProps {
-  [prop: string]: any;
   /** Disable all filters from running. */
   disableFilters?: boolean;
   /** Disable all matches from running. */
@@ -26,98 +25,70 @@ export interface AllMatcherProps {
   [prop: string]: any;
 }
 
-export default class Interweave extends React.PureComponent<InterweaveProps & AllMatcherProps> {
-  static defaultProps: InterweaveProps = {
-    content: '',
-    disableFilters: false,
-    disableMatchers: false,
-    emptyContent: null,
-    filters: [],
-    matchers: [],
-    onAfterParse: null,
-    onBeforeParse: null,
-    tagName: 'span',
-  };
+export default function Interweave(props: InterweaveProps & AllMatcherProps) {
+  const {
+    content = '',
+    disableFilters = false,
+    disableMatchers = false,
+    emptyContent = null,
+    filters = [],
+    matchers = [],
+    onAfterParse = null,
+    onBeforeParse = null,
+    tagName = 'span',
+  } = props;
+  const allMatchers = disableMatchers ? [] : matchers;
+  const allFilters = disableFilters ? [] : filters;
+  const beforeCallbacks = onBeforeParse ? [onBeforeParse] : [];
+  const afterCallbacks = onAfterParse ? [onAfterParse] : [];
 
-  /**
-   * Parse the markup and apply hooks.
-   */
-  parseMarkup(): React.ReactNode {
-    const {
-      content,
-      disableFilters,
-      disableMatchers,
-      emptyContent,
-      filters,
-      matchers,
-      onAfterParse,
-      onBeforeParse,
-      tagName,
-      ...props
-    } = this.props as Required<InterweaveProps>;
-
-    const allMatchers = disableMatchers ? [] : matchers;
-    const allFilters = disableFilters ? [] : filters;
-    const beforeCallbacks = onBeforeParse ? [onBeforeParse] : [];
-    const afterCallbacks = onAfterParse ? [onAfterParse] : [];
-
-    // Inherit callbacks from matchers
-    allMatchers.forEach(matcher => {
-      if (matcher.onBeforeParse) {
-        beforeCallbacks.push(matcher.onBeforeParse.bind(matcher));
-      }
-
-      if (matcher.onAfterParse) {
-        afterCallbacks.push(matcher.onAfterParse.bind(matcher));
-      }
-    });
-
-    // Trigger before callbacks
-    const markup = beforeCallbacks.reduce((string, callback) => {
-      const nextString = callback(string, this.props);
-
-      if (__DEV__) {
-        if (typeof nextString !== 'string') {
-          throw new TypeError('Interweave `onBeforeParse` must return a valid HTML string.');
-        }
-      }
-
-      return nextString;
-    }, content || '');
-
-    // Parse the markup
-    const parser = new Parser(markup, props, allMatchers, allFilters);
-
-    // Trigger after callbacks
-    const nodes = afterCallbacks.reduce((parserNodes, callback) => {
-      const nextNodes = callback(parserNodes, this.props);
-
-      if (__DEV__) {
-        if (!Array.isArray(nextNodes)) {
-          throw new TypeError(
-            'Interweave `onAfterParse` must return an array of strings and React elements.',
-          );
-        }
-      }
-
-      return nextNodes;
-    }, parser.parse());
-
-    if (nodes.length === 0) {
-      return emptyContent;
+  // Inherit callbacks from matchers
+  allMatchers.forEach(matcher => {
+    if (matcher.onBeforeParse) {
+      beforeCallbacks.push(matcher.onBeforeParse.bind(matcher));
     }
 
-    return nodes;
-  }
+    if (matcher.onAfterParse) {
+      afterCallbacks.push(matcher.onAfterParse.bind(matcher));
+    }
+  });
 
-  /**
-   * Render the component by parsing the markup.
-   */
-  render() {
-    const { emptyContent, tagName } = this.props;
+  // Trigger before callbacks
+  const markup = beforeCallbacks.reduce((string, callback) => {
+    const nextString = callback(string, props);
 
-    return (
-      <Markup emptyContent={emptyContent} tagName={tagName} parsedContent={this.parseMarkup()} />
-    );
-  }
+    if (__DEV__) {
+      if (typeof nextString !== 'string') {
+        throw new TypeError('Interweave `onBeforeParse` must return a valid HTML string.');
+      }
+    }
+
+    return nextString;
+  }, content || '');
+
+  // Parse the markup
+  const parser = new Parser(markup, props, allMatchers, allFilters);
+
+  // Trigger after callbacks
+  const nodes = afterCallbacks.reduce((parserNodes, callback) => {
+    const nextNodes = callback(parserNodes, props);
+
+    if (__DEV__) {
+      if (!Array.isArray(nextNodes)) {
+        throw new TypeError(
+          'Interweave `onAfterParse` must return an array of strings and React elements.',
+        );
+      }
+    }
+
+    return nextNodes;
+  }, parser.parse());
+
+  return (
+    <Markup
+      emptyContent={emptyContent}
+      tagName={tagName}
+      parsedContent={nodes.length === 0 ? undefined : nodes}
+    />
+  );
 }

@@ -9,11 +9,12 @@ export interface ElementProps {
   tagName: string;
 }
 
-export default class Element extends React.PureComponent<ElementProps> {
-  render() {
-    const { attributes = {}, children = null, selfClose = false, tagName: Tag } = this.props;
-
-    // @ts-ignore BUG: https://github.com/Microsoft/TypeScript/issues/28806
-    return selfClose ? <Tag {...attributes} /> : <Tag {...attributes}>{children}</Tag>;
-  }
+export default function Element({
+  attributes = {},
+  children = null,
+  selfClose = false,
+  tagName: Tag,
+}: ElementProps) {
+  // @ts-ignore BUG: https://github.com/Microsoft/TypeScript/issues/28806
+  return selfClose ? <Tag {...attributes} /> : <Tag {...attributes}>{children}</Tag>;
 }
