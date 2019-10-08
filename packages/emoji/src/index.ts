@@ -6,11 +6,7 @@
 import Emoji, { EmojiProps } from './Emoji';
 import EmojiDataManager from './EmojiDataManager';
 import EmojiMatcher, { EmojiMatcherOptions } from './EmojiMatcher';
-import withEmojiData, {
-  WithEmojiDataWrapperProps,
-  WithEmojiDataProps,
-  WithEmojiDataOptions,
-} from './withEmojiData';
+import useEmojiData, { UseEmojiDataOptions } from './useEmojiData';
 
 export {
   Emoji,
@@ -18,9 +14,8 @@ export {
   EmojiMatcher,
   EmojiMatcherOptions,
   EmojiDataManager,
-  WithEmojiDataWrapperProps,
-  WithEmojiDataProps,
-  WithEmojiDataOptions,
+  useEmojiData,
+  UseEmojiDataOptions,
 };
 
 export * from './types';
