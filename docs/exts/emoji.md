@@ -67,34 +67,30 @@ found, an `Emoji` component will be rendered and passed some of the following pr
 
 ## Loading Emoji Data
 
-Before emoji can be rendered, emoji data must be loaded from a CDN. To do this, a `withEmojiData`
-higher-order-component (HOC) is provided, which will fetch emoji data from Emojibase's CDN. This HOC
-should wrap a component that composes `Interweave`.
+Before emoji can be rendered, emoji data must be loaded from a CDN. To do this, the `useEmojiData`
+hook can be used, which will fetch emoji data from Emojibase's CDN. The hook returns a tuple, with
+the first item being an array of all emoji data, the second item the source object (locale, version,
+etc), and the third being the data manager instance.
 
 ```tsx
 import BaseInterweave, { InterweaveProps } from 'interweave';
-import withEmojiData, { WithEmojiDataProps } from 'interweave-emoji';
+import { useEmojiData } from 'interweave-emoji';
 
-function Interweave(props: InterweaveProps & WithEmojiDataProps) {
+export default function Interweave(props: InterweaveProps) {
+  const [emojis, source, manager] = useEmojiData({ compact: false });
+
   return <BaseInterweave {...props} />;
 }
-
-export default withEmojiData({ compact: false })(Interweave);
 ```
 
-This HOC supports the following optional props.
-
-- `locale` (string) - The localized data to fetch. Defaults to `en`.
-  [View supported locales](https://github.com/milesj/emojibase#usage).
-- `version` (string) - The `emojibase-data` release version to fetch. Defaults to `latest`.
-  [Read more](https://github.com/milesj/emojibase#fetchfromcdn).
-
-And the following options to pass as the 1st argument to `withEmojiData`.
+The hook supports the following optional options.
 
 - `compact` (bool) - Whether to load the compact or full dataset. Defaults to `false`.
-- `emojis` (Emoji[]) - Custom list of emoji to use instead of fetching from the CDN.
-
-> An `emojis` and `emojiSource` prop will be passed to the underlying component.
+- `locale` (string) - The localized data to fetch. Defaults to `en`.
+  [View supported locales](https://github.com/milesj/emojibase#usage).
+- `throwErrors` (bool) - Throw an error when the fetch fails. Defaults to `true`.
+- `version` (string) - The `emojibase-data` release version to fetch. Defaults to `latest`.
+  [Read more](https://github.com/milesj/emojibase#fetchfromcdn).
 
 ## Converting Emoticons
 

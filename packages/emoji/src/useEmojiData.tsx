@@ -53,7 +53,7 @@ export default function useEmojiData({
   locale = 'en',
   throwErrors = false,
   version = EMOJIBASE_LATEST_VERSION,
-}: UseEmojiDataOptions): [CanonicalEmoji[], Source, EmojiDataManager] {
+}: UseEmojiDataOptions = {}): [CanonicalEmoji[], Source, EmojiDataManager] {
   const [emojis, setEmojis] = useState<CanonicalEmoji[]>([]);
 
   useEffect(() => {

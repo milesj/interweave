@@ -227,7 +227,7 @@ describe('EmojiMatcher', () => {
       expect(() => {
         // @ts-ignore
         matcher.onBeforeParse('', {});
-      }).toThrowError('Missing emoji source data. Have you loaded using `withEmojiData`?');
+      }).toThrowError('Missing emoji source data. Have you loaded with `useEmojiData`?');
     });
 
     it('doesnt error when emojiSource is passed', () => {

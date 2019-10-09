@@ -3,9 +3,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { stripHexcode } from 'emojibase';
-import BaseInterweave from 'interweave';
+import Interweave from 'interweave';
 import { EmailMatcher, HashtagMatcher, IpMatcher, UrlMatcher } from 'interweave-autolink';
-import withEmojiData, { Emoji as BaseEmoji, EmojiMatcher } from 'interweave-emoji';
+import { Emoji as BaseEmoji, EmojiProps, EmojiMatcher, useEmojiData } from 'interweave-emoji';
 import EmojiPicker from 'interweave-emoji-picker';
 
 const contentWithNewLines = `This block has multiple new lines.
@@ -29,8 +29,11 @@ const emojiPath = (hexcode: string, large: boolean) =>
     hexcode,
   ).toLowerCase()}.png`;
 
-  // @ts-ignore
-const Emoji = withEmojiData()(BaseEmoji);
+function Emoji(props: EmojiProps) {
+  const [, source] = useEmojiData();
+
+  return <BaseEmoji {...props} emojiSource={source} />;
+}
 
 const emojiProps = {
   emojiPath,
@@ -120,9 +123,6 @@ const japaneseMessages = {
   flags: 'フラグ',
   search: 'サーチ',
 };
-
-// @ts-ignore
-const Interweave = withEmojiData()(BaseInterweave);
 
 function App() {
   return (

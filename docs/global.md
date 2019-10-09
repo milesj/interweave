@@ -8,7 +8,7 @@ import React from 'react';
 import { stripHexcode } from 'emojibase';
 import BaseInterweave, { InterweaveProps, Filter, Matcher } from 'interweave';
 import { IpMatcher, UrlMatcher, EmailMatcher, HashtagMatcher } from 'interweave-autolink';
-import withEmojiData, { WithEmojiDataProps, EmojiMatcher } from 'interweave-emoji';
+import { EmojiMatcher } from 'interweave-emoji';
 
 const globalFilters: Filter[] = [new CustomFilter()];
 
@@ -35,13 +35,13 @@ type Props = {
   twitter?: boolean;
 } & InterweaveProps;
 
-function Interweave({
-  filters,
-  matchers,
+export default function Interweave({
+  filters = [],
+  matchers = [],
   twitter,
   instagram,
   ...props
-}: Props & WithEmojiDataProps) {
+}: Props) {
   let hashtagUrl = '';
 
   if (twitter) {
@@ -61,13 +61,4 @@ function Interweave({
     />
   );
 }
-
-Interweave.defaultProps = {
-  filters: [],
-  matchers: [],
-  twitter: false,
-  instagram: false,
-};
-
-export default withEmojiData()(Interweave);
 ```
