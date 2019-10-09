@@ -76,10 +76,6 @@ export interface PickerProps {
   disableSkinTones?: boolean;
   /** Order to render components in. */
   displayOrder?: DisplayOrder[];
-  /** List of all emojis. */
-  emojis: CanonicalEmoji[];
-  /** Data manager instance. */
-  emojiData: EmojiDataManager;
   /** Size of the emoji within the preview bar. */
   emojiLargeSize: number;
   /** Padding around each emoji. */
@@ -88,8 +84,6 @@ export interface PickerProps {
   emojiPath: Path;
   /** Pixel size of emoji within the list. */
   emojiSize: number;
-  /** Emoji data source metadata. */
-  emojiSource: Source;
   /** Mapping of custom icons for each group tab. */
   groupIcons?: { [key: string]: React.ReactNode };
   /** Hide emoticons within the preview bar. */
@@ -137,7 +131,16 @@ export interface PickerProps {
   whitelist?: Hexcode[];
 }
 
-export interface PickerState {
+export interface InternalPickerProps extends PickerProps {
+  /** List of all emojis. */
+  emojis: CanonicalEmoji[];
+  /** Data manager instance. */
+  emojiData: EmojiDataManager;
+  /** Emoji data source metadata. */
+  emojiSource: Source;
+}
+
+export interface InternalPickerState {
   /** Emoji to display in the preview. */
   activeEmoji: CanonicalEmoji | null;
   /** Index for the highlighted emoji within search results. */
@@ -162,8 +165,8 @@ export interface PickerState {
 
 const SKIN_MODIFIER_PATTERN = /1F3FB|1F3FC|1F3FD|1F3FE|1F3FF/g;
 
-export class PickerInternal extends React.PureComponent<PickerProps, PickerState> {
-  static defaultProps: Partial<PickerProps> = {
+export class InternalPicker extends React.PureComponent<InternalPickerProps, InternalPickerState> {
+  static defaultProps: Partial<InternalPickerProps> = {
     autoFocus: false,
     blacklist: [],
     classNames: {},
@@ -206,11 +209,11 @@ export class PickerInternal extends React.PureComponent<PickerProps, PickerState
 
   whitelist: BlackWhiteMap;
 
-  constructor(props: PickerProps) {
+  constructor(props: InternalPickerProps) {
     super(props);
 
     const { blacklist, classNames, defaultSkinTone, messages, whitelist } = props as Required<
-      PickerProps
+      InternalPickerProps
     >;
 
     this.blacklist = this.generateBlackWhiteMap(blacklist);
@@ -308,7 +311,7 @@ export class PickerInternal extends React.PureComponent<PickerProps, PickerState
    */
   // eslint-disable-next-line complexity
   filterOrSearch(emoji: CanonicalEmoji, searchQuery: string): boolean {
-    const { blacklist, maxEmojiVersion, whitelist } = this.props as Required<PickerProps>;
+    const { blacklist, maxEmojiVersion, whitelist } = this.props as Required<InternalPickerProps>;
 
     // Remove blacklisted emojis and non-whitelisted emojis
     if (
@@ -696,7 +699,7 @@ export class PickerInternal extends React.PureComponent<PickerProps, PickerState
    * Catch all method to easily update the state. Will automatically handle updates
    * and branching based on values being set.
    */
-  setUpdatedState(nextState: Partial<PickerState>) {
+  setUpdatedState(nextState: Partial<InternalPickerState>) {
     // eslint-disable-next-line complexity
     this.setState(prevState => {
       const state = { ...prevState, ...nextState };
@@ -777,7 +780,7 @@ export class PickerInternal extends React.PureComponent<PickerProps, PickerState
       stickyGroupHeader,
       virtual,
       onScroll,
-    } = this.props as Required<PickerProps>;
+    } = this.props as Required<InternalPickerProps>;
     const {
       activeEmoji,
       activeGroup,
@@ -867,17 +870,14 @@ export class PickerInternal extends React.PureComponent<PickerProps, PickerState
   }
 }
 
-type PickerProviderProps = Omit<PickerProps, 'emojis' | 'emojiData' | 'emojiSource'> &
-  UseEmojiDataOptions;
-
 export default function Picker({
   compact,
   locale,
   throwErrors,
   version,
   ...props
-}: PickerProviderProps) {
+}: PickerProps & UseEmojiDataOptions) {
   const [emojis, source, data] = useEmojiData({ compact, locale, throwErrors, version });
 
-  return <PickerInternal {...props} emojis={emojis} emojiData={data} emojiSource={source} />;
+  return <InternalPicker {...props} emojis={emojis} emojiData={data} emojiSource={source} />;
 }

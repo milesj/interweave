@@ -55,6 +55,7 @@ export default function useEmojiData({
   version = EMOJIBASE_LATEST_VERSION,
 }: UseEmojiDataOptions = {}): [CanonicalEmoji[], Source, EmojiDataManager] {
   const [emojis, setEmojis] = useState<CanonicalEmoji[]>([]);
+  const [error, setError] = useState<Error>();
 
   useEffect(() => {
     let mounted = true;
@@ -67,16 +68,16 @@ export default function useEmojiData({
 
         return loadedEmojis;
       })
-      .catch(error => {
-        if (throwErrors) {
-          throw error;
-        }
-      });
+      .catch(setError);
 
     return () => {
       mounted = false;
     };
-  }, [compact, locale, version, throwErrors]);
+  }, [compact, locale, version]);
+
+  if (error && throwErrors) {
+    throw error;
+  }
 
   return [
     emojis,

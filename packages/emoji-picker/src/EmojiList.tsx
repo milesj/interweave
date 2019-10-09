@@ -43,15 +43,19 @@ export interface EmojiListProps {
   stickyGroupHeader?: boolean;
 }
 
-export interface EmojiListState {
+export interface InternalEmojiListProps extends EmojiListProps {
+  context: EmojiContext;
+}
+
+export interface InternalEmojiListState {
   emojis: GroupEmojiMap;
   indices: GroupIndexMap;
   rows: VirtualRow[];
 }
 
-export class EmojiListInternal extends React.PureComponent<
-  EmojiListProps & { context: EmojiContext },
-  EmojiListState
+export class InternalEmojiList extends React.PureComponent<
+  InternalEmojiListProps,
+  InternalEmojiListState
 > {
   static defaultProps = {
     activeEmoji: null,
@@ -62,7 +66,7 @@ export class EmojiListInternal extends React.PureComponent<
     skinTonePalette: null,
   };
 
-  state: EmojiListState = {
+  state: InternalEmojiListState = {
     emojis: {},
     indices: {},
     rows: [],
@@ -70,7 +74,7 @@ export class EmojiListInternal extends React.PureComponent<
 
   static getDerivedStateFromProps(
     { columnCount, groupedEmojis, hideGroupHeaders }: EmojiListProps,
-    state: EmojiListState,
+    state: InternalEmojiListState,
   ) {
     if (groupedEmojis === state.emojis) {
       return null;
@@ -273,5 +277,5 @@ export class EmojiListInternal extends React.PureComponent<
 export default function EmojiList(props: EmojiListProps) {
   const context = useContext(Context);
 
-  return <EmojiListInternal {...props} context={context} />;
+  return <InternalEmojiList {...props} context={context} />;
 }
