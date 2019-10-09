@@ -15,34 +15,28 @@ export interface MarkupProps extends ParserProps {
   tagName?: 'fragment' | string;
 }
 
-export default class Markup extends React.PureComponent<MarkupProps> {
-  static defaultProps = {
-    content: '',
-    emptyContent: null,
-    parsedContent: null,
-    tagName: 'div',
-  };
+export default function Markup(props: MarkupProps) {
+  const { content, emptyContent, parsedContent, tagName } = props;
+  const tag = tagName || 'div';
+  let mainContent;
 
-  getContent(): React.ReactNode {
-    const { content, emptyContent, parsedContent, tagName, ...props } = this.props;
-
-    if (parsedContent) {
-      return parsedContent;
-    }
-
+  if (parsedContent) {
+    mainContent = parsedContent;
+  } else {
     const markup = new Parser(content || '', props).parse();
 
-    return markup.length > 0 ? markup : null;
+    if (markup.length > 0) {
+      mainContent = markup;
+    }
   }
 
-  render() {
-    const content = this.getContent() || this.props.emptyContent;
-    const tag = this.props.tagName || 'div';
-
-    return tag === 'fragment' ? (
-      <React.Fragment>{content}</React.Fragment>
-    ) : (
-      <Element tagName={tag}>{content}</Element>
-    );
+  if (!mainContent) {
+    mainContent = emptyContent;
   }
+
+  if (tag === 'fragment') {
+    return <React.Fragment>{mainContent}</React.Fragment>;
+  }
+
+  return <Element tagName={tag}>{mainContent}</Element>;
 }

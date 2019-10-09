@@ -10,8 +10,6 @@
 import Emoji from './esm/Emoji';
 import EmojiDataManager from './esm/EmojiDataManager';
 import EmojiMatcher from './esm/EmojiMatcher';
-import withEmojiData from './esm/withEmojiData';
+import useEmojiData from './esm/useEmojiData';
 
-export { Emoji, EmojiMatcher, EmojiDataManager };
-
-export default withEmojiData;
+export { Emoji, EmojiMatcher, EmojiDataManager, useEmojiData };

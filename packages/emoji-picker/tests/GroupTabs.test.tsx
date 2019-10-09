@@ -9,20 +9,18 @@ import {
   GROUP_KEY_ANIMALS_NATURE,
 } from '../src/constants';
 import Group from '../src/Group';
-import { GroupTabs, GroupTabsProps } from '../src/GroupTabs';
-import { WithContextProps } from '../src/withContext';
-import { PICKER_CONTEXT, CAT_EMOJI } from './mocks';
+import GroupTabs, { GroupTabsProps } from '../src/GroupTabs';
+import { CAT_EMOJI, ContextWrapper } from './mocks';
 
 function findGroupByKey(root: Element<typeof GroupTabs>, key: string) {
   return root.query((node, fiber) => node.type === 'li' && fiber.key === key)[0].findOne(Group);
 }
 
 describe('GroupTabs', () => {
-  const props: GroupTabsProps & WithContextProps = {
+  const props: GroupTabsProps = {
     activeGroup: GROUP_KEY_NONE,
     commonEmojis: [],
     commonMode: COMMON_MODE_FREQUENT,
-    context: PICKER_CONTEXT,
     icons: {},
     onSelect() {},
   };
@@ -47,18 +45,15 @@ describe('GroupTabs', () => {
   });
 
   it('can customize class name', () => {
-    const { root } = render<GroupTabsProps>(
-      <GroupTabs
-        {...props}
-        context={{
-          ...props.context,
-          classNames: {
-            ...props.context.classNames,
+    const { root } = render<GroupTabsProps>(<GroupTabs {...props} />, {
+      wrapper: (
+        <ContextWrapper
+          classNames={{
             groups: 'test-groups',
-          },
-        }}
-      />,
-    );
+          }}
+        />
+      ),
+    });
 
     expect(root.findOne('nav')).toHaveProp('className', 'test-groups');
   });

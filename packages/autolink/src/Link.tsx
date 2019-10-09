@@ -8,24 +8,15 @@ export interface LinkProps {
   onClick?: () => void | null;
 }
 
-export default class Link extends React.PureComponent<LinkProps> {
-  static defaultProps = {
-    newWindow: false,
-    onClick: null,
-  };
-
-  render() {
-    const { children, href, onClick, newWindow } = this.props;
-
-    return (
-      <a
-        href={href}
-        target={newWindow ? '_blank' : undefined}
-        onClick={onClick}
-        rel="noopener noreferrer"
-      >
-        {children}
-      </a>
-    );
-  }
+export default function Link({ children, href, onClick, newWindow }: LinkProps) {
+  return (
+    <a
+      href={href}
+      target={newWindow ? '_blank' : undefined}
+      onClick={onClick}
+      rel="noopener noreferrer"
+    >
+      {children}
+    </a>
+  );
 }

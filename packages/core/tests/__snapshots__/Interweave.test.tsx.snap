@@ -3,11 +3,11 @@
 exports[`Interweave allow list doesnt filter invalid tags and attributes when disabled 1`] = `
 <Element tagName="span">
   <span>
-    <Element key="0" attributes={{ bgcolor: "black" }} tagName="div">
+    <Element attributes={{ bgcolor: "black" }} tagName="div">
       <div bgcolor="black">
         
   
-        <Element key="1" attributes={{ color: "red" }} tagName="font">
+        <Element attributes={{ color: "red" }} tagName="font">
           <font color="red">
             Outdated font.
           </font>
@@ -16,10 +16,10 @@ exports[`Interweave allow list doesnt filter invalid tags and attributes when di
   
         
   
-        <Element key="2" attributes={{ align: "center" }} tagName="p">
+        <Element attributes={{ align: "center" }} tagName="p">
           <p align="center">
             More text 
-            <Element key="3" tagName="strike">
+            <Element tagName="strike">
               <strike>with outdated stuff</strike>
             </Element>
             .
@@ -36,7 +36,7 @@ exports[`Interweave allow list doesnt filter invalid tags and attributes when di
 exports[`Interweave allow list filters invalid tags and attributes 1`] = `
 <Element tagName="span">
   <span>
-    <Element key="0" tagName="div">
+    <Element tagName="div">
       <div>
         
   
@@ -45,7 +45,7 @@ exports[`Interweave allow list filters invalid tags and attributes 1`] = `
   
         
   
-        <Element key="1" tagName="p">
+        <Element tagName="p">
           <p>More text with outdated stuff.</p>
         </Element>
         
@@ -71,19 +71,19 @@ exports[`Interweave allows empty \`content\` to be passed when using callbacks 1
 exports[`Interweave block list filters blocked tags and attributes 1`] = `
 <Element tagName="span">
   <span>
-    <Element key="0" attributes={{ role: "main" }} tagName="main">
+    <Element attributes={{ role: "main" }} tagName="main">
       <main role="main">
         
   Main content
   
-        <Element key="1" tagName="div">
+        <Element tagName="div">
           <div>
             
     
             Link
             
     
-            <Element key="2" attributes={{ className: "foo" }} tagName="span">
+            <Element attributes={{ className: "foo" }} tagName="span">
               <span className="foo">
                 String
               </span>
@@ -109,7 +109,7 @@ exports[`Interweave can disable all filters using \`disableFilters\` 1`] = `
 <Element tagName="span">
   <span>
     Foo 
-    <Element key="0" attributes={{ href: "foo.com" }} tagName="a">
+    <Element attributes={{ href: "foo.com" }} tagName="a">
       <a href="foo.com">
         Bar
       </a>
@@ -119,7 +119,7 @@ exports[`Interweave can disable all filters using \`disableFilters\` 1`] = `
 </Element>
 `;
 
-exports[`Interweave can disable all matchers using \`disableMatchers 1`] = `
+exports[`Interweave can disable all matchers using \`disableMatchers\` 1`] = `
 <Element tagName="span">
   <span>Foo [b] Bar Baz</span>
 </Element>
@@ -129,11 +129,7 @@ exports[`Interweave can pass filters through props 1`] = `
 <Element tagName="span">
   <span>
     Foo 
-    <Element
-      key="0"
-      attributes={{ href: "bar.net", target: "_blank" }}
-      tagName="a"
-    >
+    <Element attributes={{ href: "bar.net", target: "_blank" }} tagName="a">
       <a href="bar.net" target="_blank">
         Bar
       </a>
@@ -147,7 +143,7 @@ exports[`Interweave can pass matchers through props 1`] = `
 <Element tagName="span">
   <span>
     Foo 
-    <Element key="1" customProp="foo" tagName="span">
+    <Element customProp="foo" tagName="span">
       <span>B</span>
     </Element>
      Bar Baz
@@ -159,7 +155,7 @@ exports[`Interweave can pass object based filters through props 1`] = `
 <Element tagName="span">
   <span>
     Foo 
-    <Element key="0" attributes={{ href: "bar.net" }} tagName="a">
+    <Element attributes={{ href: "bar.net" }} tagName="a">
       <a href="bar.net">
         Bar
       </a>
@@ -173,7 +169,7 @@ exports[`Interweave can pass object based matchers through props 1`] = `
 <Element tagName="span">
   <span>
     Foo 
-    <Element key="0" customProp="foo" tagName="span">
+    <Element customProp="foo" tagName="span">
       <span>B</span>
     </Element>
      Bar Baz
@@ -185,7 +181,7 @@ exports[`Interweave line breaks converts line breaks 1`] = `
 <Element tagName="span">
   <span>
     Foo
-    <Element key="0" selfClose tagName="br">
+    <Element selfClose tagName="br">
       <br />
     </Element>
     Bar
@@ -197,7 +193,7 @@ exports[`Interweave line breaks converts line breaks if \`noHtmlExceptMatchers\`
 <Element tagName="span">
   <span>
     Foo
-    <Element key="0" selfClose tagName="br">
+    <Element selfClose tagName="br">
       <br />
     </Element>
     Bar
@@ -224,7 +220,7 @@ exports[`Interweave line breaks doesnt convert line breaks if it contains HTML 1
   <span>
     Foo
 
-    <Element key="0" selfClose tagName="br">
+    <Element selfClose tagName="br">
       <br />
     </Element>
     Bar
@@ -236,7 +232,7 @@ exports[`Interweave parseMarkup() can modify the markup using onBeforeParse 1`] 
 <Element tagName="span">
   <span>
     Foo 
-    <Element key="0" tagName="i">
+    <Element tagName="i">
       <i>Bar</i>
     </Element>
      Baz
@@ -248,11 +244,11 @@ exports[`Interweave parseMarkup() can modify the tree using onAfterParse 1`] = `
 <Element tagName="span">
   <span>
     Foo 
-    <Element key="0" tagName="b">
+    <Element tagName="b">
       <b>Bar</b>
     </Element>
      Baz
-    <Element key="1" tagName="u">
+    <Element tagName="u">
       <u>Qux</u>
     </Element>
   </span>
@@ -267,16 +263,15 @@ exports[`Interweave parsing and rendering handles void elements correctly 1`] = 
 <Element tagName="div">
   <div>
     This has line breaks.
-    <Element key="0" selfClose tagName="br">
+    <Element selfClose tagName="br">
       <br />
     </Element>
     Horizontal rule.
-    <Element key="1" selfClose tagName="hr">
+    <Element selfClose tagName="hr">
       <hr />
     </Element>
     An image.
     <Element
-      key="2"
       selfClose
       attributes={{ src: "http://domain.com/image.jpg" }}
       tagName="img"
@@ -287,11 +282,11 @@ exports[`Interweave parsing and rendering handles void elements correctly 1`] = 
 </Element>
 `;
 
-exports[`Interweave render<InterweaveProps>() parses HTML 1`] = `
+exports[`Interweave render() parses HTML 1`] = `
 <Element tagName="div">
   <div>
     Foo 
-    <Element key="0" tagName="b">
+    <Element tagName="b">
       <b>Bar</b>
     </Element>
      Baz

@@ -1,27 +1,17 @@
 import React from 'react';
 import { render } from 'rut';
-import { SearchBar, SearchBarProps } from '../src/SearchBar';
-import { WithContextProps } from '../src/withContext';
-import { PICKER_CONTEXT } from './mocks';
+import SearchBar, { SearchBarProps } from '../src/SearchBar';
+import { ContextWrapper } from './mocks';
 
 jest.mock('lodash/debounce', () => jest.fn(fn => fn));
 
 describe('SearchBar', () => {
-  const props: SearchBarProps & WithContextProps = {
+  const props: SearchBarProps = {
     autoFocus: false,
-    context: PICKER_CONTEXT,
     onChange() {},
     onKeyUp() {},
     searchQuery: '',
   };
-
-  beforeEach(() => {
-    jest.useFakeTimers();
-  });
-
-  afterEach(() => {
-    jest.useRealTimers();
-  });
 
   it('renders a search bar', () => {
     const { root } = render<SearchBarProps>(<SearchBar {...props} />);
@@ -47,38 +37,32 @@ describe('SearchBar', () => {
   });
 
   it('can customize class name', () => {
-    const { root } = render<SearchBarProps>(
-      <SearchBar
-        {...props}
-        context={{
-          ...props.context,
-          classNames: {
-            ...props.context.classNames,
+    const { root } = render<SearchBarProps>(<SearchBar {...props} />, {
+      wrapper: (
+        <ContextWrapper
+          classNames={{
             search: 'test-search',
             searchInput: 'test-search-input',
-          },
-        }}
-      />,
-    );
+          }}
+        />
+      ),
+    });
 
     expect(root.findOne('div')).toHaveProp('className', 'test-search');
     expect(root.findOne('input')).toHaveProp('className', 'test-search-input');
   });
 
   it('can customize messages', () => {
-    const { root } = render<SearchBarProps>(
-      <SearchBar
-        {...props}
-        context={{
-          ...props.context,
-          messages: {
-            ...props.context.messages,
+    const { root } = render<SearchBarProps>(<SearchBar {...props} />, {
+      wrapper: (
+        <ContextWrapper
+          messages={{
             search: 'search',
             searchA11y: 'searchA11y',
-          },
-        }}
-      />,
-    );
+          }}
+        />
+      ),
+    });
     const input = root.findOne('input');
 
     expect(input).toHaveProp('placeholder', 'search');

@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Emoji as EmojiCharacter, CanonicalEmoji, Path, Source } from 'interweave-emoji';
-import withContext, { WithContextProps } from './withContext';
+import Context from './Context';
 
 export interface EmojiProps {
   active: boolean;
@@ -14,75 +14,62 @@ export interface EmojiProps {
   onSelect: (emoji: CanonicalEmoji, event: React.MouseEvent<HTMLButtonElement>) => void;
 }
 
-export class Emoji extends React.Component<EmojiProps & WithContextProps> {
-  /**
-   * Triggered when the emoji is clicked.
-   */
-  private handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-    event.stopPropagation();
+export default function Emoji({
+  active,
+  emoji,
+  emojiPadding,
+  emojiPath,
+  emojiSize,
+  emojiSource,
+  onEnter,
+  onLeave,
+  onSelect,
+}: EmojiProps) {
+  const { classNames } = useContext(Context);
+  const dimension = emojiPadding + emojiPadding + emojiSize;
+  const className = [classNames.emoji];
 
-    this.props.onSelect(this.props.emoji, event);
-  };
-
-  /**
-   * Triggered when the emoji is hovered.
-   */
-  private handleEnter = (event: React.MouseEvent<HTMLButtonElement>) => {
-    event.stopPropagation();
-
-    this.props.onEnter(this.props.emoji, event);
-  };
-
-  /**
-   * Triggered when the emoji is no longer hovered.
-   */
-  private handleLeave = (event: React.MouseEvent<HTMLButtonElement>) => {
-    event.stopPropagation();
-
-    this.props.onLeave(this.props.emoji, event);
-  };
-
-  render() {
-    const {
-      active,
-      context: { classNames },
-      emoji,
-      emojiPadding,
-      emojiPath,
-      emojiSize,
-      emojiSource,
-    } = this.props;
-    const dimension = emojiPadding + emojiPadding + emojiSize;
-    const className = [classNames.emoji];
-
-    if (active) {
-      className.push(classNames.emojiActive);
-    }
-
-    return (
-      <button
-        key={emoji.hexcode}
-        className={className.join(' ')}
-        style={{
-          height: dimension,
-          padding: emojiPadding,
-          width: dimension,
-        }}
-        title={emoji.annotation}
-        type="button"
-        onClick={this.handleClick}
-        onMouseEnter={this.handleEnter}
-        onMouseLeave={this.handleLeave}
-      >
-        <EmojiCharacter
-          emojiPath={emojiPath}
-          emojiSize={emojiSize}
-          emojiSource={emojiSource}
-          hexcode={emoji.hexcode}
-        />
-      </button>
-    );
+  if (active) {
+    className.push(classNames.emojiActive);
   }
-}
 
-export default withContext(Emoji);
+  // Handlers
+  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.stopPropagation();
+    onSelect(emoji, event);
+  };
+
+  const handleEnter = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.stopPropagation();
+    onEnter(emoji, event);
+  };
+
+  const handleLeave = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.stopPropagation();
+    onLeave(emoji, event);
+  };
+
+  return (
+    <button
+      key={emoji.hexcode}
+      className={className.join(' ')}
+      style={{
+        height: dimension,
+        padding: emojiPadding,
+        width: dimension,
+      }}
+      title={emoji.annotation}
+      type="button"
+      onClick={handleClick}
+      onMouseEnter={handleEnter}
+      onMouseLeave={handleLeave}
+    >
+      <EmojiCharacter
+        emojiPath={emojiPath}
+        emojiSize={emojiSize}
+        emojiSource={emojiSource}
+        hexcode={emoji.hexcode}
+      />
+    </button>
+  );
+}

@@ -1,12 +1,18 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { List, ListRowProps } from 'react-virtualized';
 import chunk from 'lodash/chunk';
 import { CanonicalEmoji, Path, Source } from 'interweave-emoji';
-import withContext, { WithContextProps } from './withContext';
 import EmojiButton from './Emoji';
 import EmojiListHeader from './EmojiListHeader';
 import { GROUP_KEY_NONE } from './constants';
-import { CommonMode, GroupKey, GroupEmojiMap, GroupIndexMap } from './types';
+import {
+  CommonMode,
+  GroupKey,
+  GroupEmojiMap,
+  GroupIndexMap,
+  Context as EmojiContext,
+} from './types';
+import Context from './Context';
 
 export type VirtualRow = string | CanonicalEmoji[];
 
@@ -37,15 +43,19 @@ export interface EmojiListProps {
   stickyGroupHeader?: boolean;
 }
 
-export interface EmojiListState {
+export interface InternalEmojiListProps extends EmojiListProps {
+  context: EmojiContext;
+}
+
+export interface InternalEmojiListState {
   emojis: GroupEmojiMap;
   indices: GroupIndexMap;
   rows: VirtualRow[];
 }
 
-export class EmojiList extends React.PureComponent<
-  EmojiListProps & WithContextProps,
-  EmojiListState
+export class InternalEmojiList extends React.PureComponent<
+  InternalEmojiListProps,
+  InternalEmojiListState
 > {
   static defaultProps = {
     activeEmoji: null,
@@ -56,7 +66,7 @@ export class EmojiList extends React.PureComponent<
     skinTonePalette: null,
   };
 
-  state: EmojiListState = {
+  state: InternalEmojiListState = {
     emojis: {},
     indices: {},
     rows: [],
@@ -64,7 +74,7 @@ export class EmojiList extends React.PureComponent<
 
   static getDerivedStateFromProps(
     { columnCount, groupedEmojis, hideGroupHeaders }: EmojiListProps,
-    state: EmojiListState,
+    state: InternalEmojiListState,
   ) {
     if (groupedEmojis === state.emojis) {
       return null;
@@ -264,5 +274,8 @@ export class EmojiList extends React.PureComponent<
   }
 }
 
-// @ts-ignore Not sure why this is failing...
-export default withContext(EmojiList);
+export default function EmojiList(props: EmojiListProps) {
+  const context = useContext(Context);
+
+  return <InternalEmojiList {...props} context={context} />;
+}

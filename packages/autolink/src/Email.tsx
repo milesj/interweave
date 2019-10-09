@@ -9,14 +9,10 @@ export interface EmailProps extends Partial<LinkProps> {
   };
 }
 
-export default class Email extends React.PureComponent<EmailProps> {
-  render() {
-    const { children, emailParts, ...props } = this.props;
-
-    return (
-      <Link {...props} href={`mailto:${children}`}>
-        {children}
-      </Link>
-    );
-  }
+export default function Email({ children, emailParts, ...props }: EmailProps) {
+  return (
+    <Link {...props} href={`mailto:${children}`}>
+      {children}
+    </Link>
+  );
 }

@@ -6576,10 +6576,10 @@ jest-runtime@^24.9.0:
     strip-bom "^3.0.0"
     yargs "^13.3.0"
 
-jest-rut@^0.6.2:
-  version "0.6.2"
-  resolved "https://registry.npmjs.org/jest-rut/-/jest-rut-0.6.2.tgz#7c66bbe9113c44cf7bf3d692d7b8436c8455b0d4"
-  integrity sha512-BeP+ljtlISbi0dORnHXa1TKyFQTXDuUG/2FYHPGvzRel963Jt7HjfnrtmT5KKrGl3vnXlhjUapU5gef2nhT0hw==
+jest-rut@^0.7.0:
+  version "0.7.0"
+  resolved "https://registry.npmjs.org/jest-rut/-/jest-rut-0.7.0.tgz#6c39604078357153229c4d7c69407f220f496fec"
+  integrity sha512-Q6izs2MeGZd8fbBWIcIDcx11V3x8RdYwLRMJNRlZAZK4I41HiGW6DrfgIKXJmgqJLVL/dklu+n+EQkkdsd5YUw==
 
 jest-serializer@^24.9.0:
   version "24.9.0"
@@ -9195,10 +9195,10 @@ run-queue@^1.0.0, run-queue@^1.0.3:
   dependencies:
     aproba "^1.1.1"
 
-rut@^0.7.3:
-  version "0.7.3"
-  resolved "https://registry.npmjs.org/rut/-/rut-0.7.3.tgz#7581ae9e297ecd5ea20abb477a537e36f54ad21b"
-  integrity sha512-vAUpToUgG2J1y/VzPvR5JVTspE/j9vTREcL3sYOePiT+dnnNBm1ybgOGvRVw7JhVjxXN405PbfOVaSerFahtEQ==
+rut@^0.8.0:
+  version "0.8.0"
+  resolved "https://registry.npmjs.org/rut/-/rut-0.8.0.tgz#8fcad496b28a32e99abfdb79e5f912c0142868cb"
+  integrity sha512-y+0euaphph0OwKo65KBZ1sJJE3zE3eZsj97T11yI/AEvoDMm7Y1xweiF0tt2g+jp7gYnbnZbd9wrj3XOk4QG3w==
   dependencies:
     "@types/fetch-mock" "*"
     "@types/react" "*"

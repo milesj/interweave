@@ -4,17 +4,11 @@ exports[`Interweave (with emoji) renders a single emoji enlarged 1`] = `
 <Element tagName="div">
   <div>
     <Emoji
-      key="0"
       enlargeEmoji
-      emojiLargeSize="3em"
-      emojiPath="{{hexcode}}"
-      emojiSize="1em"
       emojiSource={{ compact: false, locale: "en", version: "latest" }}
-      emoticon=""
       hexcode="1F408"
       renderUnicode={false}
       shortcode=":cat:"
-      unicode=""
     >
       <img
         alt="🐈️"
@@ -36,33 +30,19 @@ exports[`Interweave (with emoji) renders emoji shortcode as unicode 1`] = `
   <div>
     This has 
     <Emoji
-      key="0"
       renderUnicode
-      emojiLargeSize="3em"
-      emojiPath="{{hexcode}}"
-      emojiSize="1em"
       emojiSource={{ compact: false, locale: "en", version: "latest" }}
-      emoticon=""
-      enlargeEmoji={false}
       hexcode="1F408"
       shortcode=":cat:"
-      unicode=""
     >
       <span>🐈️</span>
     </Emoji>
      and 
     <Emoji
-      key="1"
       renderUnicode
-      emojiLargeSize="3em"
-      emojiPath="{{hexcode}}"
-      emojiSize="1em"
       emojiSource={{ compact: false, locale: "en", version: "latest" }}
-      emoticon=""
-      enlargeEmoji={false}
       hexcode="1F415"
       shortcode=":dog:"
-      unicode=""
     >
       <span>🐕️</span>
     </Emoji>
@@ -76,32 +56,18 @@ exports[`Interweave (with emoji) renders emoji unicode (escapes) as unicode 1`] 
   <div>
     This has 
     <Emoji
-      key="0"
       renderUnicode
-      emojiLargeSize="3em"
-      emojiPath="{{hexcode}}"
-      emojiSize="1em"
       emojiSource={{ compact: false, locale: "en", version: "latest" }}
-      emoticon=""
-      enlargeEmoji={false}
       hexcode="1F431"
-      shortcode=""
       unicode="🐱"
     >
       <span>🐱</span>
     </Emoji>
      and 
     <Emoji
-      key="1"
       renderUnicode
-      emojiLargeSize="3em"
-      emojiPath="{{hexcode}}"
-      emojiSize="1em"
       emojiSource={{ compact: false, locale: "en", version: "latest" }}
-      emoticon=""
-      enlargeEmoji={false}
       hexcode="1F436"
-      shortcode=""
       unicode="🐶"
     >
       <span>🐶</span>
@@ -116,32 +82,18 @@ exports[`Interweave (with emoji) renders emoji unicode (literals) as unicode 1`]
   <div>
     This has 
     <Emoji
-      key="0"
       renderUnicode
-      emojiLargeSize="3em"
-      emojiPath="{{hexcode}}"
-      emojiSize="1em"
       emojiSource={{ compact: false, locale: "en", version: "latest" }}
-      emoticon=""
-      enlargeEmoji={false}
       hexcode="1F408"
-      shortcode=""
       unicode="🐈️"
     >
       <span>🐈️</span>
     </Emoji>
      and 
     <Emoji
-      key="1"
       renderUnicode
-      emojiLargeSize="3em"
-      emojiPath="{{hexcode}}"
-      emojiSize="1em"
       emojiSource={{ compact: false, locale: "en", version: "latest" }}
-      emoticon=""
-      enlargeEmoji={false}
       hexcode="1F415"
-      shortcode=""
       unicode="🐕️"
     >
       <span>🐕️</span>

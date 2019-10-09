@@ -14,19 +14,16 @@ export interface UrlProps extends Partial<LinkProps> {
   };
 }
 
-export default class Url extends React.PureComponent<UrlProps> {
-  render() {
-    const { children, urlParts, ...props } = this.props;
-    let url = children;
+export default function Url({ children, urlParts, ...props }: UrlProps) {
+  let url = children;
 
-    if (!url.match(/^https?:\/\//)) {
-      url = `http://${url}`;
-    }
-
-    return (
-      <Link {...props} href={url}>
-        {children}
-      </Link>
-    );
+  if (!url.match(/^https?:\/\//)) {
+    url = `http://${url}`;
   }
+
+  return (
+    <Link {...props} href={url}>
+      {children}
+    </Link>
+  );
 }
