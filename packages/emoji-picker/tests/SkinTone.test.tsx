@@ -1,14 +1,12 @@
 import React from 'react';
 import { render } from 'rut';
 import { SKIN_COLORS, SKIN_KEY_NONE, SKIN_KEY_DARK } from '../src/constants';
-import { SkinTone, SkinToneProps } from '../src/SkinTone';
-import { WithContextProps } from '../src/withContext';
-import { PICKER_CONTEXT } from './mocks';
+import SkinTone, { SkinToneProps } from '../src/SkinTone';
+import { ContextWrapper } from './mocks';
 
 describe('SkinTone', () => {
-  const props: SkinToneProps & WithContextProps = {
+  const props: SkinToneProps = {
     active: false,
-    context: PICKER_CONTEXT,
     onSelect() {},
     skinTone: SKIN_KEY_DARK,
   };
@@ -41,20 +39,16 @@ describe('SkinTone', () => {
   });
 
   it('can customize class name', () => {
-    const { root } = render<SkinToneProps>(
-      <SkinTone
-        {...props}
-        active
-        context={{
-          ...props.context,
-          classNames: {
-            ...props.context.classNames,
+    const { root } = render<SkinToneProps>(<SkinTone {...props} active />, {
+      wrapper: (
+        <ContextWrapper
+          classNames={{
             skinTone: 'test-tone',
             skinToneActive: 'test-tone--active',
-          },
-        }}
-      />,
-    );
+          }}
+        />
+      ),
+    });
 
     expect(root.findOne('button')).toHaveProp('className', 'test-tone test-tone--active');
   });

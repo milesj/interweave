@@ -1,20 +1,18 @@
 import React from 'react';
 import { render } from 'rut';
-import { Group, GroupProps } from '../src/Group';
-import { WithContextProps } from '../src/withContext';
+import Group, { GroupProps } from '../src/Group';
 import {
   COMMON_MODE_FREQUENT,
   GROUP_KEY_SMILEYS_PEOPLE,
   GROUP_ICONS,
   GROUP_KEY_COMMONLY_USED,
 } from '../src/constants';
-import { PICKER_CONTEXT } from './mocks';
+import { ContextWrapper } from './mocks';
 
 describe('Group', () => {
-  const props: GroupProps & WithContextProps = {
+  const props: GroupProps = {
     active: false,
     children: GROUP_ICONS[GROUP_KEY_SMILEYS_PEOPLE],
-    context: PICKER_CONTEXT,
     commonMode: COMMON_MODE_FREQUENT,
     group: GROUP_KEY_SMILEYS_PEOPLE,
     onSelect() {},
@@ -54,20 +52,16 @@ describe('Group', () => {
   });
 
   it('can customize class name', () => {
-    const { root } = render<GroupProps>(
-      <Group
-        {...props}
-        context={{
-          ...props.context,
-          classNames: {
-            ...props.context.classNames,
+    const { root } = render<GroupProps>(<Group {...props} active />, {
+      wrapper: (
+        <ContextWrapper
+          classNames={{
             group: 'test-group',
             groupActive: 'test-group--active',
-          },
-        }}
-        active
-      />,
-    );
+          }}
+        />
+      ),
+    });
 
     expect(root.findOne('button')).toHaveProp('className', 'test-group test-group--active');
   });

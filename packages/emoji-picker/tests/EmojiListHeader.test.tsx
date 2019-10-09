@@ -1,7 +1,6 @@
 import React from 'react';
 import { render } from 'rut';
-import { EmojiListHeader, EmojiListHeaderProps } from '../src/EmojiListHeader';
-import { WithContextProps } from '../src/withContext';
+import EmojiListHeader, { EmojiListHeaderProps } from '../src/EmojiListHeader';
 import {
   COMMON_MODE_FREQUENT,
   GROUP_KEY_SMILEYS_PEOPLE,
@@ -9,13 +8,12 @@ import {
   GROUP_KEY_SEARCH_RESULTS,
   GROUP_KEY_FLAGS,
 } from '../src/constants';
-import { PICKER_CONTEXT } from './mocks';
+import { ContextWrapper } from './mocks';
 
 describe('EmojiListHeader', () => {
-  const props: EmojiListHeaderProps & WithContextProps = {
+  const props: EmojiListHeaderProps = {
     clearIcon: null,
     commonMode: COMMON_MODE_FREQUENT,
-    context: PICKER_CONTEXT,
     group: GROUP_KEY_SMILEYS_PEOPLE,
     onClear() {},
     skinTonePalette: null,
@@ -29,20 +27,16 @@ describe('EmojiListHeader', () => {
   });
 
   it('can customize class name', () => {
-    const { root } = render<EmojiListHeaderProps>(
-      <EmojiListHeader
-        {...props}
-        context={{
-          ...props.context,
-          classNames: {
-            ...props.context.classNames,
+    const { root } = render<EmojiListHeaderProps>(<EmojiListHeader {...props} sticky />, {
+      wrapper: (
+        <ContextWrapper
+          classNames={{
             emojisHeader: 'test-header',
             emojisHeaderSticky: 'test-header--sticky',
-          },
-        }}
-        sticky
-      />,
-    );
+          }}
+        />
+      ),
+    });
 
     expect(root.findOne('header')).toHaveProp('className', 'test-header test-header--sticky');
   });

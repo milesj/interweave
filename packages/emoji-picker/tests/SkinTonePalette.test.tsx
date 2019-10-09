@@ -2,18 +2,16 @@ import React from 'react';
 import { render, Element } from 'rut';
 import { SKIN_TONES, SKIN_KEY_NONE, SKIN_KEY_DARK, SKIN_KEY_MEDIUM_LIGHT } from '../src/constants';
 import SkinTone from '../src/SkinTone';
-import { SkinTonePalette, SkinTonePaletteProps } from '../src/SkinTonePalette';
-import { WithContextProps } from '../src/withContext';
-import { PICKER_CONTEXT } from './mocks';
+import SkinTonePalette, { SkinTonePaletteProps } from '../src/SkinTonePalette';
+import { ContextWrapper } from './mocks';
 
 function findSkinToneByKey(root: Element<typeof SkinTonePalette>, key: string) {
   return root.query((node, fiber) => node.type === 'li' && fiber.key === key)[0].findOne(SkinTone);
 }
 
 describe('SkinTonePalette', () => {
-  const props: SkinTonePaletteProps & WithContextProps = {
+  const props: SkinTonePaletteProps = {
     activeSkinTone: SKIN_KEY_NONE,
-    context: PICKER_CONTEXT,
     icons: {},
     onSelect() {},
   };
@@ -31,18 +29,15 @@ describe('SkinTonePalette', () => {
   });
 
   it('can customize class name', () => {
-    const { root } = render<SkinTonePaletteProps>(
-      <SkinTonePalette
-        {...props}
-        context={{
-          ...props.context,
-          classNames: {
-            ...props.context.classNames,
+    const { root } = render<SkinTonePaletteProps>(<SkinTonePalette {...props} />, {
+      wrapper: (
+        <ContextWrapper
+          classNames={{
             skinTones: 'test-skin-tones',
-          },
-        }}
-      />,
-    );
+          }}
+        />
+      ),
+    });
 
     expect(root.findOne('nav')).toHaveProp('className', 'test-skin-tones');
   });

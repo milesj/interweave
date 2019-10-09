@@ -2,14 +2,12 @@ import React from 'react';
 import { render } from 'rut';
 import { SOURCE_PROP } from 'interweave/lib/testUtils';
 import { EmojiDataManager, Emoji as EmojiCharacter } from 'interweave-emoji';
-import { Emoji, EmojiProps } from '../src/Emoji';
-import { WithContextProps } from '../src/withContext';
-import { PICKER_CONTEXT, CAT_EMOJI } from './mocks';
+import Emoji, { EmojiProps } from '../src/Emoji';
+import { CAT_EMOJI, ContextWrapper } from './mocks';
 
 describe('Emoji', () => {
-  const props: EmojiProps & WithContextProps = {
+  const props: EmojiProps = {
     active: false,
-    context: PICKER_CONTEXT,
     emoji: CAT_EMOJI,
     emojiPadding: 5,
     emojiPath: '{{hexcode}}',
@@ -47,20 +45,16 @@ describe('Emoji', () => {
   });
 
   it('can customize class name', () => {
-    const { root } = render<EmojiProps>(
-      <Emoji
-        {...props}
-        context={{
-          ...props.context,
-          classNames: {
-            ...props.context.classNames,
+    const { root } = render<EmojiProps>(<Emoji {...props} active />, {
+      wrapper: (
+        <ContextWrapper
+          classNames={{
             emoji: 'test-emoji',
             emojiActive: 'test-emoji--active',
-          },
-        }}
-        active
-      />,
-    );
+          }}
+        />
+      ),
+    });
 
     expect(root.findOne('button')).toHaveProp('className', 'test-emoji test-emoji--active');
   });

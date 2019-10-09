@@ -4,13 +4,11 @@ import React from 'react';
 import { render } from 'rut';
 import { EmojiDataManager, Emoji } from 'interweave-emoji';
 import { SOURCE_PROP } from 'interweave/lib/testUtils';
-import { PreviewBar, PreviewBarProps } from '../src/PreviewBar';
-import { WithContextProps } from '../src/withContext';
-import { PICKER_CONTEXT, CAT_EMOJI } from './mocks';
+import PreviewBar, { PreviewBarProps } from '../src/PreviewBar';
+import { CAT_EMOJI, ContextWrapper } from './mocks';
 
 describe('PreviewBar', () => {
-  const props: PreviewBarProps & WithContextProps = {
-    context: PICKER_CONTEXT,
+  const props: PreviewBarProps = {
     emoji: CAT_EMOJI,
     emojiLargeSize: '3em',
     emojiPath: '{{hexcode}}',
@@ -31,22 +29,19 @@ describe('PreviewBar', () => {
 
   describe('with emoji', () => {
     it('can customize class name', () => {
-      const { root } = render<PreviewBarProps>(
-        <PreviewBar
-          {...props}
-          context={{
-            ...props.context,
-            classNames: {
-              ...props.context.classNames,
+      const { root } = render<PreviewBarProps>(<PreviewBar {...props} />, {
+        wrapper: (
+          <ContextWrapper
+            classNames={{
               preview: 'test-preview',
               previewEmoji: 'test-preview-emoji',
               previewContent: 'test-preview-content',
               previewTitle: 'test-preview-title',
               previewSubtitle: 'test-preview-subtitle',
-            },
-          }}
-        />,
-      );
+            }}
+          />
+        ),
+      });
       const divs = root.find('div');
 
       expect(root.findOne('section')).toHaveProp('className', 'test-preview');
@@ -182,18 +177,17 @@ describe('PreviewBar', () => {
   describe('no emoji', () => {
     it('can customize class name', () => {
       const { root } = render<PreviewBarProps>(
-        <PreviewBar
-          {...props}
-          emoji={null}
-          context={{
-            ...props.context,
-            classNames: {
-              ...props.context.classNames,
-              preview: 'test-preview',
-              noPreview: 'test-preview-none',
-            },
-          }}
-        />,
+        <PreviewBar {...props} emoji={null} noPreview="Preview" />,
+        {
+          wrapper: (
+            <ContextWrapper
+              classNames={{
+                preview: 'test-preview',
+                noPreview: 'test-preview-none',
+              }}
+            />
+          ),
+        },
       );
 
       expect(root.findOne('section')).toHaveProp('className', 'test-preview');
@@ -202,19 +196,15 @@ describe('PreviewBar', () => {
 
     it('renders no preview message', () => {
       const none = 'No preview';
-      const { root } = render<PreviewBarProps>(
-        <PreviewBar
-          {...props}
-          emoji={null}
-          context={{
-            ...props.context,
-            messages: {
-              ...props.context.messages,
+      const { root } = render<PreviewBarProps>(<PreviewBar {...props} emoji={null} />, {
+        wrapper: (
+          <ContextWrapper
+            messages={{
               noPreview: none,
-            },
-          }}
-        />,
-      );
+            }}
+          />
+        ),
+      });
 
       expect(root).toContainNode(none);
     });
@@ -230,18 +220,16 @@ describe('PreviewBar', () => {
 
     it('renders nothing if no preview message or preview element', () => {
       const { root } = render<PreviewBarProps>(
-        <PreviewBar
-          {...props}
-          emoji={null}
-          context={{
-            ...props.context,
-            messages: {
-              ...props.context.messages,
-              noPreview: '',
-            },
-          }}
-          noPreview={null}
-        />,
+        <PreviewBar {...props} emoji={null} noPreview={null} />,
+        {
+          wrapper: (
+            <ContextWrapper
+              messages={{
+                noPreview: '',
+              }}
+            />
+          ),
+        },
       );
 
       expect(root.findOne('section')).toMatchSnapshot();

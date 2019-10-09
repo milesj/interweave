@@ -6,21 +6,15 @@ exports[`Emoji renders an emoji 1`] = `
   style={{ height: 32, padding: 5, width: 32 }}
   title="cat"
   type="button"
-  onClick={func()}
-  onMouseEnter={func()}
-  onMouseLeave={func()}
+  onClick={handleClick()}
+  onMouseEnter={handleEnter()}
+  onMouseLeave={handleLeave()}
 >
   <Emoji
-    emojiLargeSize="3em"
     emojiPath="{{hexcode}}"
     emojiSize={22}
     emojiSource={{ compact: false, locale: "en", version: "latest" }}
-    emoticon=""
-    enlargeEmoji={false}
     hexcode="1F408"
-    renderUnicode={false}
-    shortcode=""
-    unicode=""
   >
     <img
       alt="🐈️"

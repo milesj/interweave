@@ -13,13 +13,8 @@ exports[`PreviewBar renders a preview 1`] = `
       enlargeEmoji
       emojiLargeSize="3em"
       emojiPath="{{hexcode}}"
-      emojiSize="1em"
       emojiSource={{ compact: false, locale: "en", version: "latest" }}
-      emoticon=""
       hexcode="1F642"
-      renderUnicode={false}
-      shortcode=""
-      unicode=""
     >
       <img
         alt="🙂"
