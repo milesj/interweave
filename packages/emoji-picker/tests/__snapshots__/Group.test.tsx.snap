@@ -3,7 +3,7 @@
 exports[`Group renders a group 1`] = `
 <button
   className="interweave-picker__group"
-  title="Smileys & People"
+  title="Smileys & Emotion"
   type="button"
   onClick={handleClick()}
 >

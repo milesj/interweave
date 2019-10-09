@@ -3,7 +3,8 @@ import { render } from 'rut';
 import EmojiListHeader, { EmojiListHeaderProps } from '../src/EmojiListHeader';
 import {
   COMMON_MODE_FREQUENT,
-  GROUP_KEY_SMILEYS_PEOPLE,
+  GROUP_KEY_SMILEYS_EMOTION,
+  GROUP_KEY_PEOPLE_BODY,
   GROUP_KEY_COMMONLY_USED,
   GROUP_KEY_SEARCH_RESULTS,
   GROUP_KEY_FLAGS,
@@ -14,7 +15,7 @@ describe('EmojiListHeader', () => {
   const props: EmojiListHeaderProps = {
     clearIcon: null,
     commonMode: COMMON_MODE_FREQUENT,
-    group: GROUP_KEY_SMILEYS_PEOPLE,
+    group: GROUP_KEY_SMILEYS_EMOTION,
     onClear() {},
     skinTonePalette: null,
     sticky: false,
@@ -44,7 +45,7 @@ describe('EmojiListHeader', () => {
   it('displays group name', () => {
     const { root } = render<EmojiListHeaderProps>(<EmojiListHeader {...props} />);
 
-    expect(root.findOne('span')).toContainNode('Smileys & People');
+    expect(root.findOne('span')).toContainNode('Smileys & Emotion');
   });
 
   it('displays commonly used group name', () => {
@@ -58,7 +59,16 @@ describe('EmojiListHeader', () => {
   it('shows palette if smileys group', () => {
     const palette = <div>Palette</div>;
     const { root } = render<EmojiListHeaderProps>(
-      <EmojiListHeader {...props} group={GROUP_KEY_SMILEYS_PEOPLE} skinTonePalette={palette} />,
+      <EmojiListHeader {...props} group={GROUP_KEY_SMILEYS_EMOTION} skinTonePalette={palette} />,
+    );
+
+    expect(root).toContainNode(palette);
+  });
+
+  it('shows palette if people group', () => {
+    const palette = <div>Palette</div>;
+    const { root } = render<EmojiListHeaderProps>(
+      <EmojiListHeader {...props} group={GROUP_KEY_PEOPLE_BODY} skinTonePalette={palette} />,
     );
 
     expect(root).toContainNode(palette);

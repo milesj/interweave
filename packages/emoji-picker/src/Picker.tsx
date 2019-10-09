@@ -10,7 +10,7 @@ import {
   Source,
   EmojiDataManager,
 } from 'interweave-emoji';
-import { Hexcode } from 'emojibase';
+import { Hexcode, SkinTone } from 'emojibase';
 import EmojiList from './EmojiList';
 import SkinTonePalette from './SkinTonePalette';
 import GroupTabs from './GroupTabs';
@@ -20,7 +20,7 @@ import Context from './Context';
 import {
   GROUPS,
   GROUP_KEY_COMMONLY_USED,
-  GROUP_KEY_SMILEYS_PEOPLE,
+  GROUP_KEY_SMILEYS_EMOTION,
   GROUP_KEY_SEARCH_RESULTS,
   GROUP_KEY_NONE,
   SKIN_TONES,
@@ -418,7 +418,7 @@ export class InternalPicker extends React.PureComponent<InternalPickerProps, Int
         return group;
       }
 
-      group = GROUP_KEY_SMILEYS_PEOPLE;
+      group = GROUP_KEY_SMILEYS_EMOTION;
     }
 
     return disableGroups ? GROUP_KEY_NONE : group;
@@ -447,7 +447,12 @@ export class InternalPicker extends React.PureComponent<InternalPickerProps, Int
     }
 
     const toneIndex = SKIN_TONES.findIndex(tone => tone === skinTone);
-    const skinnedEmoji = (emoji.skins || []).find(skin => !!skin.tone && skin.tone === toneIndex);
+    const skinnedEmoji = (emoji.skins || []).find(
+      skin =>
+        !!skin.tone &&
+        (skin.tone === toneIndex ||
+          (Array.isArray(skin.tone) && skin.tone.includes(toneIndex as SkinTone))),
+    );
 
     return (skinnedEmoji || emoji) as CanonicalEmoji;
   }

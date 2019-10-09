@@ -1,7 +1,8 @@
 /* eslint-disable sort-keys */
 
 import {
-  GROUP_KEY_SMILEYS_PEOPLE,
+  GROUP_KEY_SMILEYS_EMOTION,
+  GROUP_KEY_PEOPLE_BODY,
   GROUP_KEY_ANIMALS_NATURE,
   GROUP_KEY_FOOD_DRINK,
   GROUP_KEY_TRAVEL_PLACES,
@@ -18,7 +19,8 @@ import {
 import { GroupKey, SkinToneKey } from './types';
 
 export {
-  GROUP_KEY_SMILEYS_PEOPLE,
+  GROUP_KEY_SMILEYS_EMOTION,
+  GROUP_KEY_PEOPLE_BODY,
   GROUP_KEY_ANIMALS_NATURE,
   GROUP_KEY_FOOD_DRINK,
   GROUP_KEY_TRAVEL_PLACES,
@@ -38,7 +40,8 @@ export const GROUP_KEY_SEARCH_RESULTS = 'search-results';
 export const GROUP_KEY_NONE = 'none';
 
 export const GROUPS: GroupKey[] = [
-  GROUP_KEY_SMILEYS_PEOPLE,
+  GROUP_KEY_SMILEYS_EMOTION,
+  GROUP_KEY_PEOPLE_BODY,
   GROUP_KEY_ANIMALS_NATURE,
   GROUP_KEY_FOOD_DRINK,
   GROUP_KEY_TRAVEL_PLACES,
@@ -50,7 +53,8 @@ export const GROUPS: GroupKey[] = [
 
 export const GROUP_ICONS: { [group: string]: string } = {
   [GROUP_KEY_COMMONLY_USED]: '🕑',
-  [GROUP_KEY_SMILEYS_PEOPLE]: '😃',
+  [GROUP_KEY_SMILEYS_EMOTION]: '😃',
+  [GROUP_KEY_PEOPLE_BODY]: '👍',
   [GROUP_KEY_ANIMALS_NATURE]: '🌿',
   [GROUP_KEY_FOOD_DRINK]: '🍎',
   [GROUP_KEY_TRAVEL_PLACES]: '🗺️',
@@ -124,7 +128,8 @@ export const CONTEXT_MESSAGES = {
   // Emoji groups
   frequentlyUsed: 'Frequently Used',
   recentlyUsed: 'Recently Used',
-  smileysPeople: 'Smileys & People',
+  smileysEmotion: 'Smileys & Emotion',
+  peopleBody: 'People & Bodies',
   animalsNature: 'Animals & Nature',
   foodDrink: 'Food & Drink',
   travelPlaces: 'Travel & Places',

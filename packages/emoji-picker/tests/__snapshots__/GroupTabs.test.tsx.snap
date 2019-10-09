@@ -7,16 +7,33 @@ exports[`GroupTabs renders a list 1`] = `
       <Group
         active={false}
         commonMode="frequently-used"
-        group="smileys-people"
+        group="smileys-emotion"
         onSelect={onSelect()}
       >
         <button
           className="interweave-picker__group"
-          title="Smileys & People"
+          title="Smileys & Emotion"
           type="button"
           onClick={handleClick()}
         >
           😃
+        </button>
+      </Group>
+    </li>
+    <li>
+      <Group
+        active={false}
+        commonMode="frequently-used"
+        group="people-body"
+        onSelect={onSelect()}
+      >
+        <button
+          className="interweave-picker__group"
+          title="People & Bodies"
+          type="button"
+          onClick={handleClick()}
+        >
+          👍
         </button>
       </Group>
     </li>
