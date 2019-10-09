@@ -143,12 +143,7 @@ exports[`Interweave can pass matchers through props 1`] = `
 <Element tagName="span">
   <span>
     Foo 
-    <Element
-      content="Foo [b] Bar Baz"
-      customProp="foo"
-      matchers={[ new CodeTagMatcher() ]}
-      tagName="span"
-    >
+    <Element customProp="foo" tagName="span">
       <span>B</span>
     </Element>
      Bar Baz
@@ -174,20 +169,7 @@ exports[`Interweave can pass object based matchers through props 1`] = `
 <Element tagName="span">
   <span>
     Foo 
-    <Element
-      content="Foo [b] Bar Baz"
-      customProp="foo"
-      matchers={[
-        {
-        inverseName: "noB",
-        propName: "b",
-        asTag: asTag(),
-        createElement: createElement(),
-        match: match(),
-      },
-      ]}
-      tagName="span"
-    >
+    <Element customProp="foo" tagName="span">
       <span>B</span>
     </Element>
      Bar Baz

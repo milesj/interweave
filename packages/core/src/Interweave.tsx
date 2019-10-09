@@ -36,6 +36,7 @@ export default function Interweave(props: InterweaveProps & AllMatcherProps) {
     onAfterParse = null,
     onBeforeParse = null,
     tagName = 'span',
+    ...parserProps
   } = props;
   const allMatchers = disableMatchers ? [] : matchers;
   const allFilters = disableFilters ? [] : filters;
@@ -67,7 +68,7 @@ export default function Interweave(props: InterweaveProps & AllMatcherProps) {
   }, content || '');
 
   // Parse the markup
-  const parser = new Parser(markup, props, allMatchers, allFilters);
+  const parser = new Parser(markup, parserProps, allMatchers, allFilters);
 
   // Trigger after callbacks
   const nodes = afterCallbacks.reduce((parserNodes, callback) => {

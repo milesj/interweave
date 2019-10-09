@@ -6,17 +6,10 @@ exports[`Interweave (with autolinking) doesnt render anchor links within anchor 
   - <a href="www.domain.com">www.domain.com</a>
   - (http://domain.com/some/path?with=query)
   - <a href="http://domain.com">This text should stay</a>"
-  disableFilters={false}
-  disableMatchers={false}
-  emptyContent={null}
-  filters={[]}
   matchers={[ new EmailMatcher(), new HashtagMatcher(), new IpMatcher(), new UrlMatcher() ]}
-  onAfterParse={null}
-  onBeforeParse={null}
   tagName="div"
 >
   <Markup
-    content=""
     emptyContent={null}
     parsedContent={[
       "- ",
@@ -46,7 +39,7 @@ exports[`Interweave (with autolinking) doesnt render anchor links within anchor 
         </Url>
         
 - 
-        <Element key="1" attributes={{ href: "www.domain.com" }} tagName="a">
+        <Element attributes={{ href: "www.domain.com" }} tagName="a">
           <a href="www.domain.com">
             www.domain.com
           </a>
@@ -74,7 +67,7 @@ exports[`Interweave (with autolinking) doesnt render anchor links within anchor 
         </Url>
         )
 - 
-        <Element key="3" attributes={{ href: "http://domain.com" }} tagName="a">
+        <Element attributes={{ href: "http://domain.com" }} tagName="a">
           <a href="http://domain.com">
             This text should stay
           </a>
@@ -94,17 +87,10 @@ exports[`Interweave (with autolinking) renders HTML text with all matchers 1`] =
   <div>Curabitur lectus odio, <em>tempus quis velit vitae, cursus sagittis nulla</em>. Maecenas sem nulla, tempor nec risus nec, ultricies ultricies magna. https://127.0.0.1/foo Nulla malesuada lacinia libero non mollis. Curabitur id lacus id dolor vestibulum ornare quis a nisi (http://domain.com/some/path?with=query). Pellentesque ac finibus mauris. Sed eu luctus diam. Quisque porta lectus in turpis imperdiet dapibus.</div>
   
   <section>#blessed #interweave #milesj</section>"
-  disableFilters={false}
-  disableMatchers={false}
-  emptyContent={null}
-  filters={[]}
   matchers={[ new EmailMatcher(), new HashtagMatcher(), new IpMatcher(), new UrlMatcher() ]}
-  onAfterParse={null}
-  onBeforeParse={null}
   tagName="div"
 >
   <Markup
-    content=""
     emptyContent={null}
     parsedContent={[
       <Element tagName="h1" />,
@@ -122,15 +108,15 @@ exports[`Interweave (with autolinking) renders HTML text with all matchers 1`] =
   >
     <Element tagName="div">
       <div>
-        <Element key="0" tagName="h1">
+        <Element tagName="h1">
           <h1>Lorem ipsum dolor sit amet</h1>
         </Element>
         
 
 
-        <Element key="1" tagName="p">
+        <Element tagName="p">
           <p>
-            <Element key="2" tagName="b">
+            <Element tagName="b">
               <b>Consectetur adipiscing elit.</b>
             </Element>
              Donec massa lorem, mollis non commodo quis, ultricies at elit. 
@@ -150,7 +136,7 @@ exports[`Interweave (with autolinking) renders HTML text with all matchers 1`] =
               </Link>
             </Hashtag>
              Donec eu sem non nibh condimentum luctus. Vivamus pharetra feugiat blandit. Vestibulum neque velit, semper id vestibulum id, viverra a felis. Integer convallis in orci nec bibendum. Ut consequat posuere metus, 
-            <Element key="5" attributes={{ href: "www.domain.com" }} tagName="a">
+            <Element attributes={{ href: "www.domain.com" }} tagName="a">
               <a href="www.domain.com">
                 www.domain.com
               </a>
@@ -161,10 +147,10 @@ exports[`Interweave (with autolinking) renders HTML text with all matchers 1`] =
         
 
 
-        <Element key="6" tagName="div">
+        <Element tagName="div">
           <div>
             Curabitur lectus odio, 
-            <Element key="7" tagName="em">
+            <Element tagName="em">
               <em>tempus quis velit vitae, cursus sagittis nulla</em>
             </Element>
             . Maecenas sem nulla, tempor nec risus nec, ultricies ultricies magna. 
@@ -203,7 +189,7 @@ exports[`Interweave (with autolinking) renders HTML text with all matchers 1`] =
         
 
 
-        <Element key="10" tagName="section">
+        <Element tagName="section">
           <section>
             <Hashtag hashtagName="blessed">
               <Link hashtagName="blessed" href="blessed">
@@ -243,17 +229,10 @@ exports[`Interweave (with autolinking) renders large blocks of text with all mat
   Curabitur lectus odio, tempus quis velit vitae, cursus sagittis nulla. Maecenas sem nulla, tempor nec risus nec, ultricies ultricies magna. https://127.0.0.1/foo Nulla malesuada lacinia libero non mollis. Curabitur id lacus id dolor vestibulum ornare quis a nisi (http://domain.com/some/path?with=query). Pellentesque ac finibus mauris. Sed eu luctus diam. Quisque porta lectus in turpis imperdiet dapibus.
   
   #blessed #interweave #milesj"
-  disableFilters={false}
-  disableMatchers={false}
-  emptyContent={null}
-  filters={[]}
   matchers={[ new EmailMatcher(), new HashtagMatcher(), new IpMatcher(), new UrlMatcher() ]}
-  onAfterParse={null}
-  onBeforeParse={null}
   tagName="div"
 >
   <Markup
-    content=""
     emptyContent={null}
     parsedContent={[
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec massa lorem, mollis non commodo quis, ultricies at elit. ",
@@ -294,10 +273,10 @@ exports[`Interweave (with autolinking) renders large blocks of text with all mat
           </Link>
         </Url>
         .
-        <Element key="3" selfClose tagName="br">
+        <Element selfClose tagName="br">
           <br />
         </Element>
-        <Element key="4" selfClose tagName="br">
+        <Element selfClose tagName="br">
           <br />
         </Element>
         Curabitur lectus odio, tempus quis velit vitae, cursus sagittis nulla. Maecenas sem nulla, tempor nec risus nec, ultricies ultricies magna. 
@@ -331,10 +310,10 @@ exports[`Interweave (with autolinking) renders large blocks of text with all mat
           </Link>
         </Url>
         ). Pellentesque ac finibus mauris. Sed eu luctus diam. Quisque porta lectus in turpis imperdiet dapibus.
-        <Element key="7" selfClose tagName="br">
+        <Element selfClose tagName="br">
           <br />
         </Element>
-        <Element key="8" selfClose tagName="br">
+        <Element selfClose tagName="br">
           <br />
         </Element>
         <Hashtag hashtagName="blessed">
