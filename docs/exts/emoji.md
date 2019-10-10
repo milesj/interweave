@@ -79,7 +79,7 @@ import { useEmojiData } from 'interweave-emoji';
 export default function Interweave(props: InterweaveProps) {
   const [emojis, source, manager] = useEmojiData({ compact: false });
 
-  return <BaseInterweave {...props} />;
+  return <BaseInterweave {...props} emojiSource={source} />;
 }
 ```
 

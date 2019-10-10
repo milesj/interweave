@@ -3,10 +3,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { stripHexcode } from 'emojibase';
-import Interweave from 'interweave';
+import BaseInterweave, { InterweaveProps } from 'interweave';
 import { EmailMatcher, HashtagMatcher, IpMatcher, UrlMatcher } from 'interweave-autolink';
 import { Emoji as BaseEmoji, EmojiProps, EmojiMatcher, useEmojiData } from 'interweave-emoji';
 import EmojiPicker from 'interweave-emoji-picker';
+import { AllMatcherProps } from 'interweave/lib/Interweave';
 
 const contentWithNewLines = `This block has multiple new lines.
 Like how is this supposed to work.
@@ -25,12 +26,26 @@ Help!`;
 
 // http://getemoji.com/
 const emojiPath = (hexcode: string, large: boolean) =>
-  `https://cdn.jsdelivr.net/emojione/assets/3.1/png/${large ? 64 : 32}/${stripHexcode(
+  `https://cdn.jsdelivr.net/emojione/assets/4.5/png/${large ? 64 : 32}/${stripHexcode(
     hexcode,
   ).toLowerCase()}.png`;
 
-function Emoji(props: EmojiProps) {
-  const [, source] = useEmojiData();
+function Interweave(props: InterweaveProps & AllMatcherProps) {
+  const [emojis, source] = useEmojiData();
+
+  if (emojis.length === 0) {
+    return null;
+  }
+
+  return <BaseInterweave {...props} emojiSource={source} />
+}
+
+function Emoji(props: Omit<EmojiProps, 'emojiSource'>) {
+  const [emojis, source] = useEmojiData();
+
+  if (emojis.length === 0) {
+    return null;
+  }
 
   return <BaseEmoji {...props} emojiSource={source} />;
 }
@@ -78,7 +93,8 @@ const emojiUnicodeProps = {
 
 const slackGroupIcons = {
   commonlyUsed: <i className="fas fa-clock" />,
-  smileysPeople: <i className="fas fa-smile" />,
+  smileysEmotion: <i className="fas fa-smile" />,
+  peopleBody: <i className="fas fa-thumbs-up" />,
   animalsNature: <i className="fas fa-leaf" />,
   foodDrink: <i className="fas fa-coffee" />,
   travelPlaces: <i className="fas fa-plane" />,
@@ -90,7 +106,8 @@ const slackGroupIcons = {
 
 const twitterGroupIcons = {
   commonlyUsed: <Emoji hexcode="1F552" emojiSize="24px" emojiPath={emojiPath} />,
-  smileysPeople: <Emoji hexcode="1F603" emojiSize="24px" emojiPath={emojiPath} />,
+  smileysEmotion: <Emoji hexcode="1F603" emojiSize="24px" emojiPath={emojiPath} />,
+  peopleBody: <Emoji hexcode="1F44D" emojiSize="24px" emojiPath={emojiPath} />,
   animalsNature: <Emoji hexcode="1F436" emojiSize="24px" emojiPath={emojiPath} />,
   foodDrink: <Emoji hexcode="1F374" emojiSize="24px" emojiPath={emojiPath} />,
   travelPlaces: <Emoji hexcode="1F698" emojiSize="24px" emojiPath={emojiPath} />,

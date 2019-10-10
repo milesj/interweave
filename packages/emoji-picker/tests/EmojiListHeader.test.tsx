@@ -56,15 +56,6 @@ describe('EmojiListHeader', () => {
     expect(root.findOne('span')).toContainNode('Frequently Used');
   });
 
-  it('shows palette if smileys group', () => {
-    const palette = <div>Palette</div>;
-    const { root } = render<EmojiListHeaderProps>(
-      <EmojiListHeader {...props} group={GROUP_KEY_SMILEYS_EMOTION} skinTonePalette={palette} />,
-    );
-
-    expect(root).toContainNode(palette);
-  });
-
   it('shows palette if people group', () => {
     const palette = <div>Palette</div>;
     const { root } = render<EmojiListHeaderProps>(

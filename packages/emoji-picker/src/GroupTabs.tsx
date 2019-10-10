@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import camelCase from 'lodash/camelCase';
 import { CanonicalEmoji } from 'interweave-emoji';
 import Group from './Group';
-import { GROUPS, GROUP_KEY_COMMONLY_USED, GROUP_ICONS } from './constants';
+import { GROUPS, GROUP_KEY_COMMONLY_USED, GROUP_KEY_COMPONENT, GROUP_ICONS } from './constants';
 import { CommonMode, GroupKey } from './types';
 import Context from './Context';
 
@@ -22,7 +22,7 @@ export default function GroupTabs({
   onSelect,
 }: GroupTabsProps) {
   const { classNames } = useContext(Context);
-  const groups = [...GROUPS];
+  const groups = GROUPS.filter(group => group !== GROUP_KEY_COMPONENT);
 
   if (commonEmojis.length > 0) {
     groups.unshift(GROUP_KEY_COMMONLY_USED);

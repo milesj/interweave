@@ -884,5 +884,9 @@ export default function Picker({
 }: PickerProps & UseEmojiDataOptions) {
   const [emojis, source, data] = useEmojiData({ compact, locale, throwErrors, version });
 
+  if (emojis.length === 0) {
+    return null;
+  }
+
   return <InternalPicker {...props} emojis={emojis} emojiData={data} emojiSource={source} />;
 }

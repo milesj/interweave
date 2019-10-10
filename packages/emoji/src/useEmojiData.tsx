@@ -3,8 +3,6 @@ import { fetchFromCDN, Emoji } from 'emojibase';
 import EmojiDataManager from './EmojiDataManager';
 import { CanonicalEmoji, Source } from './types';
 
-const EMOJIBASE_LATEST_VERSION = require('emojibase/package.json').version;
-
 export interface UseEmojiDataOptions {
   /** Load compact emoji dataset instead of full dataset. */
   compact?: boolean;
@@ -52,7 +50,7 @@ export default function useEmojiData({
   compact = false,
   locale = 'en',
   throwErrors = false,
-  version = EMOJIBASE_LATEST_VERSION,
+  version = 'latest',
 }: UseEmojiDataOptions = {}): [CanonicalEmoji[], Source, EmojiDataManager] {
   const [emojis, setEmojis] = useState<CanonicalEmoji[]>([]);
   const [error, setError] = useState<Error>();

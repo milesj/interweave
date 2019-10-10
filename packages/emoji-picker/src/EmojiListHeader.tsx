@@ -3,7 +3,6 @@ import camelCase from 'lodash/camelCase';
 import {
   GROUP_KEY_COMMONLY_USED,
   GROUP_KEY_SEARCH_RESULTS,
-  GROUP_KEY_SMILEYS_EMOTION,
   GROUP_KEY_PEOPLE_BODY,
   GROUP_KEY_NONE,
 } from './constants';
@@ -31,8 +30,7 @@ export default function EmojiListHeader({
   const showClear = clearIcon && group === GROUP_KEY_COMMONLY_USED;
   const showPalette =
     skinTonePalette &&
-    (group === GROUP_KEY_SMILEYS_EMOTION ||
-      group === GROUP_KEY_PEOPLE_BODY ||
+    (group === GROUP_KEY_PEOPLE_BODY ||
       group === GROUP_KEY_SEARCH_RESULTS ||
       group === GROUP_KEY_NONE);
   const className = [classNames.emojisHeader];

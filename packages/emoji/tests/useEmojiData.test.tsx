@@ -2,14 +2,12 @@
 
 import React from 'react';
 import { renderAndWait, mockFetch, MockFetchResult } from 'rut';
-// @ts-ignore
-import emojibase from 'emojibase/package.json';
 import { resetInstances } from '../src/EmojiDataManager';
 import useEmojiData, { resetLoaded, UseEmojiDataOptions } from '../src/useEmojiData';
 import { CanonicalEmoji, Source } from '../src/types';
 
-function cdn(locale: string, version: string = '', compact: boolean = false) {
-  return `https://cdn.jsdelivr.net/npm/emojibase-data@${version || emojibase.version}/${locale}/${
+function cdn(locale: string, version: string = '1.0.0', compact: boolean = false) {
+  return `https://cdn.jsdelivr.net/npm/emojibase-data@${version}/${locale}/${
     compact ? 'compact' : 'data'
   }.json`;
 }
@@ -22,7 +20,7 @@ describe('useEmojiData()', () => {
   }
 
   function EmojiData(props: Props) {
-    const [emojis, source] = useEmojiData(props);
+    const [emojis, source] = useEmojiData({ version: '1.0.0', ...props });
 
     return <TestComp emojis={emojis} source={source} />;
   }
@@ -52,9 +50,9 @@ describe('useEmojiData()', () => {
 
   beforeEach(() => {
     fetchSpy = mockFetch('/', 200)
-      .get(cdn('en'), mockEmojis)
-      .get(cdn('en', '', true), mockEmojis) // Compact
-      .get(cdn('it'), mockEmojis)
+      .get(cdn('en', '1.0.0'), mockEmojis)
+      .get(cdn('en', '1.0.0', true), mockEmojis) // Compact
+      .get(cdn('it', '1.0.0'), mockEmojis)
       .get(cdn('de', '2.0.0'), mockEmojis)
       .get(cdn('ja', '1.2.3'), []) // No data
       .get(cdn('fr', '1.0.0'), 404) // Not found
@@ -101,7 +99,7 @@ describe('useEmojiData()', () => {
   it('supports compact datasets', async () => {
     await renderAndWait<Props>(<EmojiData compact />);
 
-    expect(fetchSpy.called(cdn('en', '', true))).toBe(true);
+    expect(fetchSpy.called(cdn('en', '1.0.0', true))).toBe(true);
   });
 
   it('supports multiple locales', async () => {

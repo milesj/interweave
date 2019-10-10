@@ -34,13 +34,13 @@ describe('GroupTabs', () => {
   it('renders a node for each group', () => {
     const { root } = render<GroupTabsProps>(<GroupTabs {...props} />);
 
-    expect(root.find(Group)).toHaveLength(GROUPS.length);
+    expect(root.find(Group)).toHaveLength(GROUPS.length - 1);
   });
 
   it('adds common mode group if there are common emojis', () => {
     const { root } = render<GroupTabsProps>(<GroupTabs {...props} commonEmojis={[CAT_EMOJI]} />);
 
-    expect(root.find(Group)).toHaveLength(GROUPS.length + 1);
+    expect(root.find(Group)).toHaveLength(GROUPS.length);
     expect(root.findAt(Group, 0)).toHaveProp('group', GROUP_KEY_COMMONLY_USED);
   });
 

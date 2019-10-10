@@ -4,7 +4,7 @@ import chunk from 'lodash/chunk';
 import { CanonicalEmoji, Path, Source } from 'interweave-emoji';
 import EmojiButton from './Emoji';
 import EmojiListHeader from './EmojiListHeader';
-import { GROUP_KEY_NONE } from './constants';
+import { GROUP_KEY_NONE, GROUP_KEY_COMPONENT } from './constants';
 import {
   CommonMode,
   GroupKey,
@@ -87,6 +87,10 @@ export class InternalEmojiList extends React.PureComponent<
 
     Object.keys(groupedEmojis).forEach(group => {
       indices[group] = rows.length;
+
+      if (group === GROUP_KEY_COMPONENT) {
+        return;
+      }
 
       if (!hideGroupHeaders) {
         rows.push(group);
