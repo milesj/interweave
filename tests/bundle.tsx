@@ -25,10 +25,11 @@ Me.<br /><br />
 Help!`;
 
 // http://getemoji.com/
-const emojiPath = (hexcode: string, large: boolean) =>
-  `https://cdn.jsdelivr.net/emojione/assets/4.5/png/${large ? 64 : 32}/${stripHexcode(
+function emojiPath(hexcode: string, large: boolean) {
+  return `https://cdn.jsdelivr.net/emojione/assets/4.5/png/${large ? 64 : 32}/${stripHexcode(
     hexcode,
   ).toLowerCase()}.png`;
+}
 
 function Interweave(props: InterweaveProps & AllMatcherProps) {
   const [emojis, source] = useEmojiData();
