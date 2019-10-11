@@ -43,15 +43,17 @@ import {
   GroupEmojiMap,
 } from './types';
 
-export interface BlackWhiteMap {
+export interface AllowBlockMap {
   [hexcode: string]: boolean;
 }
 
 export interface PickerProps {
+  /** List of emoji hexcodes to only show. */
+  allowList?: Hexcode[];
   /** Focus the search bar on mount. */
   autoFocus?: boolean;
   /** List of emoji hexcodes to hide. */
-  blacklist?: Hexcode[];
+  blockList?: Hexcode[];
   /** Mapping of custom CSS class names. */
   classNames?: { [key: string]: string };
   /** Icon to display within the clear commonly used button. Omit the icon to hide the button. */
@@ -127,8 +129,6 @@ export interface PickerProps {
     columnPadding?: number;
     rowPadding?: number;
   };
-  /** List of emoji hexcodes to only show. */
-  whitelist?: Hexcode[];
 }
 
 export interface InternalPickerProps extends PickerProps {
@@ -167,8 +167,9 @@ const SKIN_MODIFIER_PATTERN = /1F3FB|1F3FC|1F3FD|1F3FE|1F3FF/g;
 
 export class InternalPicker extends React.PureComponent<InternalPickerProps, InternalPickerState> {
   static defaultProps: Partial<InternalPickerProps> = {
+    allowList: [],
     autoFocus: false,
-    blacklist: [],
+    blockList: [],
     classNames: {},
     clearIcon: null,
     columnCount: 10,
@@ -202,22 +203,21 @@ export class InternalPicker extends React.PureComponent<InternalPickerProps, Int
     skinIcons: {},
     stickyGroupHeader: false,
     virtual: {},
-    whitelist: [],
   };
 
-  blacklist: BlackWhiteMap;
+  allowList: AllowBlockMap;
 
-  whitelist: BlackWhiteMap;
+  blockList: AllowBlockMap;
 
   constructor(props: InternalPickerProps) {
     super(props);
 
-    const { blacklist, classNames, defaultSkinTone, messages, whitelist } = props as Required<
+    const { blockList, classNames, defaultSkinTone, messages, allowList } = props as Required<
       InternalPickerProps
     >;
 
-    this.blacklist = this.generateBlackWhiteMap(blacklist);
-    this.whitelist = this.generateBlackWhiteMap(whitelist);
+    this.allowList = this.generateAllowBlockMap(allowList);
+    this.blockList = this.generateAllowBlockMap(blockList);
 
     const searchQuery = '';
     const commonEmojis = this.generateCommonEmojis(this.getCommonEmojisFromStorage());
@@ -311,12 +311,12 @@ export class InternalPicker extends React.PureComponent<InternalPickerProps, Int
    */
   // eslint-disable-next-line complexity
   filterOrSearch(emoji: CanonicalEmoji, searchQuery: string): boolean {
-    const { blacklist, maxEmojiVersion, whitelist } = this.props as Required<InternalPickerProps>;
+    const { blockList, maxEmojiVersion, allowList } = this.props as Required<InternalPickerProps>;
 
-    // Remove blacklisted emojis and non-whitelisted emojis
+    // Remove blocked emojis and non-allowed emojis
     if (
-      (blacklist.length > 0 && this.blacklist[emoji.hexcode]) ||
-      (whitelist.length > 0 && !this.whitelist[emoji.hexcode])
+      (blockList.length > 0 && this.blockList[emoji.hexcode]) ||
+      (allowList.length > 0 && !this.allowList[emoji.hexcode])
     ) {
       return false;
     }
@@ -369,10 +369,10 @@ export class InternalPicker extends React.PureComponent<InternalPickerProps, Int
   }
 
   /**
-   * Convert the `blacklist` or `whitelist` prop to a map for quicker lookups.
+   * Convert the `blockList` or `allowList` prop to a map for quicker lookups.
    */
-  generateBlackWhiteMap(list: string[]): BlackWhiteMap {
-    const map: BlackWhiteMap = {};
+  generateAllowBlockMap(list: string[]): AllowBlockMap {
+    const map: AllowBlockMap = {};
 
     list.forEach(hexcode => {
       if (__DEV__) {
@@ -380,7 +380,7 @@ export class InternalPicker extends React.PureComponent<InternalPickerProps, Int
           // eslint-disable-next-line no-console
           console.warn(
             `Hexcode with a skin modifier has been detected: ${hexcode}`,
-            'Emojis without skin modifiers are required for blacklist/whitelist.',
+            'Emojis without skin modifiers are required for allow/block lists.',
           );
         }
       }

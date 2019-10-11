@@ -338,7 +338,7 @@ describe('Parser', () => {
       });
     });
 
-    it('denies attributes that are not whitelisted', () => {
+    it('denies attributes that are not allowed', () => {
       element.setAttribute('readonly', 'true');
 
       expect(instance.extractAttributes(element)).toBeNull();
@@ -630,7 +630,7 @@ describe('Parser', () => {
       expect(instance.parseNode(element, parentConfig)).not.toEqual(['Foo', 'Bar', '[foo]']);
     });
 
-    it('only renders whitelisted children', () => {
+    it('only renders allowed children', () => {
       element.append(document.createTextNode('Foo'));
       element.append(createChild('i', 'Bar'));
       element.append(document.createTextNode('Baz'));
@@ -653,7 +653,7 @@ describe('Parser', () => {
       ]);
     });
 
-    it('only renders in whitelisted parent', () => {
+    it('only renders in allowed parent', () => {
       element.append(document.createTextNode('Foo'));
       element.append(createChild('li', 'Bar'));
       element.append(document.createTextNode('Baz'));

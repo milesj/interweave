@@ -53,27 +53,27 @@ The [sizing and path emoji props](./emoji.md#displaying-svgs-or-pngs) are requir
 [TypeScript interface](https://github.com/milesj/interweave/blob/master/packages/emoji-picker/src/Picker.tsx#L43)
 for a list of all available props.
 
-## Blacklist / Whitelist
+## Allow and Block Lists
 
 Sometimes specific emojis should not be used, like the poop emoji. This can easily be achieved with
-the `blacklist` prop, which accepts an array of hexcodes.
+the `blockList` prop, which accepts an array of hexcodes.
 
 ```tsx
 <EmojiPicker
-  blacklist={[
+  blockList={[
     '1F4A9', // poop
     '1F52B', // gun
   ]}
 />
 ```
 
-The inverse, the `whitelist` prop, can be used for situations where a restricted list of emojis
+The inverse, the `allowList` prop, can be used for situations where a restricted list of emojis
 should _only_ be used. This also accepts an array of hexcodes.
 
 ```tsx
 // Only trees
 <EmojiPicker
-  whitelist={[
+  allowList={[
     '1F332', // evergreen
     '1F333', // deciduous
     '1F334', // palm

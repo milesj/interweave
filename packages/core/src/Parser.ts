@@ -536,7 +536,7 @@ export default class Parser {
           );
 
           // Render the children of the current element only.
-          // Important: If the current element is not whitelisted,
+          // Important: If the current element is not allowed,
           // use the parent element for the next scope.
         } else {
           content = content.concat(

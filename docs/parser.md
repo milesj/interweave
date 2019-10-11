@@ -9,7 +9,7 @@ React elements. This implementation is supported by all modern browsers and IE9+
 the document has been rendered to the page. This provides an extra layer of security by avoiding
 possible CSRF and arbitrary code execution.
 
-Furthermore, Interweave manages a whitelist of both HTML tags and attributes, further increasing
+Furthermore, Interweave manages a list of both HTML tags and attributes, further increasing
 security, and reducing the risk of XSS and vulnerabilities.
 
 ## Allowed Tags
@@ -33,7 +33,7 @@ The following tags are not supported, but their children will still be rendered.
 `optgroup`, `option`, `param`, `plaintext`, `progress`, `select`, `shadow`, `slot`, `spacer`,
 `strike`, `template`, `textarea`, `tt`, `wbr`, `xmp`
 
-The following tags and their children will never be rendered, even when the whitelist is disabled.
+The following tags and their children will never be rendered, even when the allow list is disabled.
 
 `applet`, `base`, `body`, `canvas`, `command`, `embed`, `frame`, `frameset`, `head`, `html`, `link`,
 `meta`, `noscript`, `object`, `script`, `style`, `title`

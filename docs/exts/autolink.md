@@ -41,15 +41,14 @@ import { UrlMatcher } from 'interweave-autolink';
 
 ### TLD Support
 
-By default, the `UrlMatcher` will validate top-level domains against a whitelist of the most common
-TLDs (like .com, .net, and countries). You can disable this validation with the `validateTLD`
-option.
+By default, the `UrlMatcher` will validate top-level domains against a list of the most common TLDs
+(like .com, .net, and countries). You can disable this validation with the `validateTLD` option.
 
 ```ts
 new UrlMatcher('url', { validateTLD: false });
 ```
 
-Or you can provide a whitelist of additional TLDs to validate with.
+Or you can provide a list of additional TLDs to validate with.
 
 ```ts
 new UrlMatcher('url', { customTLDs: ['life', 'tech', 'ninja'] });

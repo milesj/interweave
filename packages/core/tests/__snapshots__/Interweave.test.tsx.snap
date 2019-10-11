@@ -294,7 +294,7 @@ exports[`Interweave render() parses HTML 1`] = `
 </Element>
 `;
 
-exports[`Interweave transform prop allows blacklisted 1`] = `
+exports[`Interweave transform prop allows blocked 1`] = `
 <Element tagName="span">
   <span>
     Foo 

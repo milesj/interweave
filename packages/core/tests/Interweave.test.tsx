@@ -332,7 +332,7 @@ describe('Interweave', () => {
       expect(root.findAt(Element, 0)).toMatchSnapshot();
     });
 
-    it('allows blacklisted', () => {
+    it('allows blocked', () => {
       const Dummy = () => <iframe title="foo" />;
       const transform = (node: HTMLElement) => (node.nodeName === 'IFRAME' ? <Dummy /> : undefined);
       const { root } = render<InterweaveProps>(

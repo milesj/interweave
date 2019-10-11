@@ -270,7 +270,7 @@ function createConfigBuilder(config: Partial<NodeConfig>): (tagName: string) => 
 // Disable this map from being modified
 export const TAGS: ConfigMap = Object.freeze(tagConfigs);
 
-// Tags that should never be allowed, even if the whitelist is disabled
+// Tags that should never be allowed, even if the allow list is disabled
 export const BANNED_TAG_LIST = [
   'applet',
   'base',
