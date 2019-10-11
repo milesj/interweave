@@ -26,7 +26,7 @@
     "emojibase-test-utils": "^4.1.0",
     "eslint-plugin-rut": "^0.1.6",
     "jest-rut": "^0.7.0",
-    "lerna": "^3.16.5",
+    "lerna": "^3.17.0",
     "react": "^16.10.2",
     "react-dom": "^16.10.2",
     "regenerator-runtime": "^0.13.3",
