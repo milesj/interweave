@@ -124,7 +124,7 @@ export interface PickerProps {
   skinIcons?: { [key: string]: React.ReactNode };
   /** Sticky the active group header to the top of the emoji list. */
   stickyGroupHeader?: boolean;
-  /** Custom props to pass to react-virtualized list component. */
+  /** Custom props to pass to react-window list component. */
   virtual?: {
     columnPadding?: number;
     rowPadding?: number;

@@ -12,7 +12,7 @@ A React based emoji picker powered by [Interweave](https://github.com/milesj/int
 - Enlarged preview on hover.
 - Emoticons and shortcodes.
 - Recently and frequently used.
-- Virtualized rendering.
+- [Virtualized rendering](https://github.com/bvaughn/react-window).
 - And much more!
 
 <img src="https://raw.githubusercontent.com/milesj/interweave/master/docs/img/slack.png" height="350">
@@ -206,4 +206,3 @@ Localization is important, and thus, all messages within the picker can be trans
 ```
 
 [emojibase]: https://github.com/milesj/emojibase
-[react-virtualized]: https://github.com/bvaughn/react-virtualized

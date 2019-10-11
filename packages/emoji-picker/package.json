@@ -21,10 +21,10 @@
   "dependencies": {
     "@types/lodash": "*",
     "@types/react": "*",
-    "@types/react-virtualized": "*",
+    "@types/react-window": "*",
     "lodash": "^4.17.15",
     "prop-types": "^15.7.2",
-    "react-virtualized": "^9.21.1"
+    "react-window": "^1.8.5"
   },
   "peerDependencies": {
     "emojibase": "^3.0.0",
