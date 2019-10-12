@@ -11,7 +11,7 @@ exports[`PreviewBar renders a preview 1`] = `
   <div className="interweave-picker__preview-emoji">
     <Emoji
       enlargeEmoji
-      emojiLargeSize="3em"
+      emojiLargeSize={72}
       emojiPath="{{hexcode}}"
       emojiSource={{ compact: false, locale: "en", version: "latest" }}
       hexcode="1F642"
@@ -24,7 +24,7 @@ exports[`PreviewBar renders a preview 1`] = `
         data-shortcodes=":pleased:"
         data-unicode="🙂"
         src="1F642"
-        style={{ display: "inline-block", verticalAlign: "middle", width: "3em", height: "3em" }}
+        style={{ display: "inline-block", verticalAlign: "middle", width: 72, height: 72 }}
         title="slightly smiling face"
       />
     </Emoji>

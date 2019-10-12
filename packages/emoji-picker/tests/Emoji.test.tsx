@@ -1,6 +1,5 @@
 import React from 'react';
 import { render } from 'rut';
-import { SOURCE_PROP } from 'interweave/lib/testUtils';
 import { EmojiDataManager, Emoji as EmojiCharacter } from 'interweave-emoji';
 import Emoji, { EmojiProps } from '../src/Emoji';
 import { CAT_EMOJI, ContextWrapper } from './mocks';
@@ -9,10 +8,6 @@ describe('Emoji', () => {
   const props: EmojiProps = {
     active: false,
     emoji: CAT_EMOJI,
-    emojiPadding: 5,
-    emojiPath: '{{hexcode}}',
-    emojiSize: 22,
-    emojiSource: SOURCE_PROP,
     onEnter() {},
     onLeave() {},
     onSelect() {},
@@ -23,7 +18,7 @@ describe('Emoji', () => {
   });
 
   it('renders an emoji', () => {
-    const { root } = render<EmojiProps>(<Emoji {...props} />);
+    const { root } = render<EmojiProps>(<Emoji {...props} />, { wrapper: <ContextWrapper /> });
 
     expect(root.findOne('button')).toMatchSnapshot();
     expect(root.findOne(EmojiCharacter)).toHaveProp('hexcode', props.emoji.hexcode);
@@ -60,11 +55,11 @@ describe('Emoji', () => {
   });
 
   it('sets correct sizes', () => {
-    const { root } = render<EmojiProps>(<Emoji {...props} />);
+    const { root } = render<EmojiProps>(<Emoji {...props} />, { wrapper: <ContextWrapper /> });
 
     expect(root.findOne('button')).toHaveProp('style', {
-      width: 32,
-      height: 32,
+      width: 34,
+      height: 34,
       padding: 5,
     });
   });

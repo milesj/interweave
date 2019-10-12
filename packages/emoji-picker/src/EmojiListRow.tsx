@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { ListChildComponentProps } from 'react-window';
-import { CanonicalEmoji, Path, Source } from 'interweave-emoji';
+import { CanonicalEmoji } from 'interweave-emoji';
 import EmojiButton from './Emoji';
 import EmojiListHeader from './EmojiListHeader';
 import { CommonMode, GroupKey } from './types';
@@ -12,10 +12,6 @@ export interface EmojiListRowProps {
   activeEmoji?: CanonicalEmoji | null;
   clearIcon?: React.ReactNode;
   commonMode: CommonMode;
-  emojiPadding: number;
-  emojiPath: Path;
-  emojiSize: number;
-  emojiSource: Source;
   onClear: () => void;
   onEnterEmoji: (emoji: CanonicalEmoji, event: React.MouseEvent<HTMLButtonElement>) => void;
   onLeaveEmoji: (emoji: CanonicalEmoji, event: React.MouseEvent<HTMLButtonElement>) => void;
@@ -31,10 +27,6 @@ export default function EmojiListRow({
   activeEmoji,
   clearIcon,
   commonMode,
-  emojiPadding,
-  emojiPath,
-  emojiSize,
-  emojiSource,
   skinTonePalette,
   onClear,
   onEnterEmoji,
@@ -53,10 +45,6 @@ export default function EmojiListRow({
               key={emoji.hexcode}
               active={activeEmoji ? activeEmoji.hexcode === emoji.hexcode : false}
               emoji={emoji}
-              emojiPadding={emojiPadding}
-              emojiPath={emojiPath}
-              emojiSize={emojiSize}
-              emojiSource={emojiSource}
               onEnter={onEnterEmoji}
               onLeave={onLeaveEmoji}
               onSelect={onSelectEmoji}

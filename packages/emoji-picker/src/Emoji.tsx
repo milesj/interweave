@@ -1,31 +1,17 @@
 import React, { useContext } from 'react';
-import { Emoji as EmojiCharacter, CanonicalEmoji, Path, Source } from 'interweave-emoji';
+import { Emoji as EmojiCharacter, CanonicalEmoji } from 'interweave-emoji';
 import Context from './Context';
 
 export interface EmojiProps {
   active: boolean;
   emoji: CanonicalEmoji;
-  emojiPadding: number;
-  emojiPath: Path;
-  emojiSize: number;
-  emojiSource: Source;
   onEnter: (emoji: CanonicalEmoji, event: React.MouseEvent<HTMLButtonElement>) => void;
   onLeave: (emoji: CanonicalEmoji, event: React.MouseEvent<HTMLButtonElement>) => void;
   onSelect: (emoji: CanonicalEmoji, event: React.MouseEvent<HTMLButtonElement>) => void;
 }
 
-export default function Emoji({
-  active,
-  emoji,
-  emojiPadding,
-  emojiPath,
-  emojiSize,
-  emojiSource,
-  onEnter,
-  onLeave,
-  onSelect,
-}: EmojiProps) {
-  const { classNames } = useContext(Context);
+export default function Emoji({ active, emoji, onEnter, onLeave, onSelect }: EmojiProps) {
+  const { classNames, emojiPadding, emojiPath, emojiSize, emojiSource } = useContext(Context);
   const dimension = emojiPadding + emojiPadding + emojiSize;
   const className = [classNames.emoji];
 

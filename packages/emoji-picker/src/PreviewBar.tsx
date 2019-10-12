@@ -1,14 +1,11 @@
 import React, { useContext } from 'react';
-import { Emoji as EmojiCharacter, CanonicalEmoji, Path, Size, Source } from 'interweave-emoji';
+import { Emoji as EmojiCharacter, CanonicalEmoji } from 'interweave-emoji';
 import Context from './Context';
 
 const TITLE_REGEX = /(^|:|\.)\s?[a-z]/g;
 
 export interface PreviewBarProps {
   emoji?: CanonicalEmoji | null;
-  emojiLargeSize: Size;
-  emojiPath: Path;
-  emojiSource: Source;
   hideEmoticon: boolean;
   hideShortcodes: boolean;
   noPreview?: React.ReactNode;
@@ -22,14 +19,11 @@ function formatTitle(title: string): string {
 // eslint-disable-next-line complexity
 export default function PreviewBar({
   emoji,
-  emojiLargeSize,
-  emojiPath,
-  emojiSource,
   hideEmoticon,
   hideShortcodes,
   noPreview,
 }: PreviewBarProps) {
-  const { classNames, messages } = useContext(Context);
+  const { classNames, emojiLargeSize, emojiPath, emojiSource, messages } = useContext(Context);
 
   if (!emoji) {
     const preview = noPreview || messages.noPreview;

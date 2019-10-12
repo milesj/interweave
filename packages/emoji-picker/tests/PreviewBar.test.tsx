@@ -3,16 +3,12 @@
 import React from 'react';
 import { render } from 'rut';
 import { EmojiDataManager, Emoji } from 'interweave-emoji';
-import { SOURCE_PROP } from 'interweave/lib/testUtils';
 import PreviewBar, { PreviewBarProps } from '../src/PreviewBar';
 import { CAT_EMOJI, ContextWrapper } from './mocks';
 
 describe('PreviewBar', () => {
   const props: PreviewBarProps = {
     emoji: CAT_EMOJI,
-    emojiLargeSize: '3em',
-    emojiPath: '{{hexcode}}',
-    emojiSource: SOURCE_PROP,
     hideEmoticon: false,
     hideShortcodes: false,
   };
@@ -22,7 +18,9 @@ describe('PreviewBar', () => {
   });
 
   it('renders a preview', () => {
-    const { root } = render<PreviewBarProps>(<PreviewBar {...props} />);
+    const { root } = render<PreviewBarProps>(<PreviewBar {...props} />, {
+      wrapper: <ContextWrapper />,
+    });
 
     expect(root.findOne('section')).toMatchSnapshot();
   });
@@ -56,9 +54,6 @@ describe('PreviewBar', () => {
 
       expect(root.findOne(Emoji)).toHaveProps(
         expect.objectContaining({
-          emojiLargeSize: props.emojiLargeSize,
-          emojiPath: props.emojiPath,
-          emojiSource: props.emojiSource,
           enlargeEmoji: true,
           hexcode: props.emoji!.hexcode,
         }),

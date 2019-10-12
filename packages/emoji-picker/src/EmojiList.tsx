@@ -30,8 +30,6 @@ export default function EmojiList({
   activeGroup,
   columnCount,
   columnPadding = 0,
-  emojiPadding,
-  emojiSize,
   groupedEmojis,
   hideGroupHeaders,
   noResults,
@@ -43,7 +41,7 @@ export default function EmojiList({
   onScrollGroup,
   ...rowProps
 }: EmojiListProps) {
-  const { classNames, messages } = useContext(Context);
+  const { classNames, emojiPadding, emojiSize, messages } = useContext(Context);
   const [rows, setRows] = useState<VirtualRow[]>([]);
   const [indices, setIndices] = useState<IndicesMap>({});
   const ref = useRef<List>(null);
@@ -138,14 +136,7 @@ export default function EmojiList({
         onItemsRendered={handleRendered}
         onScroll={onScroll}
       >
-        {props => (
-          <EmojiListRow
-            {...rowProps}
-            {...props}
-            emojiPadding={emojiPadding}
-            emojiSize={emojiSize}
-          />
-        )}
+        {props => <EmojiListRow {...rowProps} {...props} />}
       </List>
 
       {stickyGroupHeader && activeGroup !== GROUP_KEY_NONE && (

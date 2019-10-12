@@ -1,5 +1,5 @@
 import { Hexcode, GroupKey as BaseGroupKey, SkinToneKey as BaseSkinToneKey } from 'emojibase';
-import { CanonicalEmoji } from 'interweave-emoji';
+import { CanonicalEmoji, Path, Source } from 'interweave-emoji';
 
 export interface CommonEmoji {
   count: number;
@@ -10,6 +10,11 @@ export type CommonMode = 'recently-used' | 'frequently-used';
 
 export interface Context {
   classNames: { [name: string]: string };
+  emojiLargeSize: number;
+  emojiPadding: number;
+  emojiPath: Path;
+  emojiSize: number;
+  emojiSource: Source;
   messages: { [key: string]: string };
 }
 

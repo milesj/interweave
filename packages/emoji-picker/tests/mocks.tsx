@@ -33,6 +33,15 @@ export function ContextWrapper({
     <EmojiContext.Provider
       value={{
         classNames: { ...CONTEXT_CLASSNAMES, ...classNames },
+        emojiLargeSize: 72,
+        emojiPadding: 5,
+        emojiPath: '{{hexcode}}',
+        emojiSize: 24,
+        emojiSource: {
+          compact: false,
+          locale: 'en',
+          version: 'latest',
+        },
         messages: { ...CONTEXT_MESSAGES, ...messages },
       }}
     >

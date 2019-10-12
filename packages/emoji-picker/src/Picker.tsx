@@ -238,6 +238,11 @@ export class InternalPicker extends React.PureComponent<InternalPickerProps, Int
           ...CONTEXT_CLASSNAMES,
           ...classNames,
         },
+        emojiLargeSize: props.emojiLargeSize,
+        emojiPadding: props.emojiPadding!,
+        emojiPath: props.emojiPath,
+        emojiSize: props.emojiSize,
+        emojiSource: props.emojiSource,
         messages: {
           ...CONTEXT_MESSAGES,
           ...messages,
@@ -798,11 +803,6 @@ export class InternalPicker extends React.PureComponent<InternalPickerProps, Int
       disableSearch,
       disableSkinTones,
       displayOrder,
-      emojiLargeSize,
-      emojiPadding,
-      emojiPath,
-      emojiSize,
-      emojiSource,
       groupIcons,
       hideEmoticon,
       hideGroupHeaders,
@@ -843,10 +843,6 @@ export class InternalPicker extends React.PureComponent<InternalPickerProps, Int
           clearIcon={clearIcon}
           columnCount={columnCount}
           commonMode={commonMode}
-          emojiPadding={emojiPadding}
-          emojiPath={emojiPath}
-          emojiSize={emojiSize}
-          emojiSource={emojiSource}
           groupedEmojis={groupedEmojis}
           hideGroupHeaders={hideGroupHeaders}
           noResults={noResults}
@@ -876,9 +872,6 @@ export class InternalPicker extends React.PureComponent<InternalPickerProps, Int
         <PreviewBar
           key="preview"
           emoji={activeEmoji}
-          emojiLargeSize={emojiLargeSize}
-          emojiPath={emojiPath}
-          emojiSource={emojiSource}
           hideEmoticon={hideEmoticon}
           hideShortcodes={hideShortcodes}
           noPreview={noPreview}

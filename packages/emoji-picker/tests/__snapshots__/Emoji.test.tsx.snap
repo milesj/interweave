@@ -3,7 +3,7 @@
 exports[`Emoji renders an emoji 1`] = `
 <button
   className="interweave-picker__emoji"
-  style={{ height: 32, padding: 5, width: 32 }}
+  style={{ height: 34, padding: 5, width: 34 }}
   title="cat"
   type="button"
   onClick={handleClick()}
@@ -12,7 +12,7 @@ exports[`Emoji renders an emoji 1`] = `
 >
   <Emoji
     emojiPath="{{hexcode}}"
-    emojiSize={22}
+    emojiSize={24}
     emojiSource={{ compact: false, locale: "en", version: "latest" }}
     hexcode="1F408"
   >
@@ -23,7 +23,7 @@ exports[`Emoji renders an emoji 1`] = `
       data-shortcodes=":cat:"
       data-unicode="🐈️"
       src="1F408"
-      style={{ display: "inline-block", verticalAlign: "middle", width: 22, height: 22 }}
+      style={{ display: "inline-block", verticalAlign: "middle", width: 24, height: 24 }}
       title="cat"
     />
   </Emoji>
