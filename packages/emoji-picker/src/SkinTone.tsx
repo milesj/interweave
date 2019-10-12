@@ -30,7 +30,8 @@ export default function SkinTone({ active, children, skinTone, onSelect }: SkinT
   return (
     <button
       className={className.join(' ')}
-      data-color={color}
+      data-skin-color={color}
+      data-skin-tone={skinTone}
       style={{ backgroundColor: color, borderColor: color, color }}
       title={messages[`skin${upperFirst(key)}`]}
       type="button"

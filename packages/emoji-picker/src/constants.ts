@@ -39,6 +39,7 @@ export {
 
 export const GROUP_KEY_COMMONLY_USED = 'commonly-used';
 export const GROUP_KEY_SEARCH_RESULTS = 'search-results';
+export const GROUP_KEY_VARIATIONS = 'variations';
 export const GROUP_KEY_NONE = 'none';
 
 export const GROUPS: GroupKey[] = [
@@ -122,6 +123,7 @@ export const CONTEXT_CLASSNAMES = {
   previewContent: 'interweave-picker__preview-content',
   previewTitle: 'interweave-picker__preview-title',
   previewSubtitle: 'interweave-picker__preview-subtitle',
+  previewShiftMore: 'interweave-picker__preview-more',
   search: 'interweave-picker__search',
   searchInput: 'interweave-picker__search-input',
   clear: 'interweave-picker__clear',
@@ -141,6 +143,7 @@ export const CONTEXT_MESSAGES = {
   symbols: 'Symbols',
   flags: 'Flags',
   searchResults: 'Search Results',
+  variations: 'Variations',
   none: 'All Emojis',
   // Skin tones
   skinNone: 'No skin tone',

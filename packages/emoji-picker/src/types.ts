@@ -15,7 +15,7 @@ export interface Context {
 
 export type DisplayOrder = 'preview' | 'emojis' | 'groups' | 'search' | 'skin-tones';
 
-export type GroupKey = BaseGroupKey | 'commonly-used' | 'search-results' | 'none';
+export type GroupKey = BaseGroupKey | 'commonly-used' | 'search-results' | 'variations' | 'none';
 
 export interface GroupEmojiMap {
   [group: string]: {

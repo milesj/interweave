@@ -5,6 +5,7 @@ import {
   GROUP_KEY_SEARCH_RESULTS,
   GROUP_KEY_PEOPLE_BODY,
   GROUP_KEY_NONE,
+  GROUP_KEY_VARIATIONS,
 } from './constants';
 import { CommonMode, GroupKey } from './types';
 import Context from './Context';
@@ -27,7 +28,8 @@ export default function EmojiListHeader({
   onClear,
 }: EmojiListHeaderProps) {
   const { classNames, messages } = useContext(Context);
-  const showClear = clearIcon && group === GROUP_KEY_COMMONLY_USED;
+  const showClear =
+    clearIcon && (group === GROUP_KEY_COMMONLY_USED || group === GROUP_KEY_VARIATIONS);
   const showPalette =
     skinTonePalette &&
     (group === GROUP_KEY_PEOPLE_BODY ||

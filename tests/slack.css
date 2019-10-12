@@ -175,6 +175,13 @@
   font-size: 0.8rem;
 }
 
+.slack .interweave-picker__preview-more {
+  opacity: 0.75;
+  display: inline-block;
+  margin-left: 8px;
+  font-weight: normal;
+}
+
 .slack .interweave-picker__clear,
 .slack .interweave-picker__skin-tone {
   background: transparent !important;

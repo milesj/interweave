@@ -3,7 +3,8 @@
 exports[`SkinTone renders a skin tone 1`] = `
 <button
   className="interweave-picker__skin-tone"
-  data-color="#5A463A"
+  data-skin-color="#5A463A"
+  data-skin-tone="dark"
   style={{ backgroundColor: "#5A463A", borderColor: "#5A463A", color: "#5A463A" }}
   title="Dark skin tone"
   type="button"

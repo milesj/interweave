@@ -32,6 +32,7 @@ import {
   CONTEXT_CLASSNAMES,
   CONTEXT_MESSAGES,
   SEARCH_THROTTLE,
+  GROUP_KEY_VARIATIONS,
 } from './constants';
 import {
   CommonEmoji,
@@ -529,14 +530,25 @@ export class InternalPicker extends React.PureComponent<InternalPickerProps, Int
   }
 
   /**
-   * Triggered when common emoji cache is cleared.
+   * Triggered when common emoji cache or variation window is cleared.
    */
-  private handleClearCommonEmoji = () => {
-    this.setUpdatedState({
-      commonEmojis: [],
-    });
+  private handleClear = () => {
+    if (this.state.activeGroup === GROUP_KEY_VARIATIONS) {
+      this.setUpdatedState(
+        {
+          activeGroup: this.state.searchQuery
+            ? GROUP_KEY_SEARCH_RESULTS
+            : GROUP_KEY_SMILEYS_EMOTION,
+        },
+        true,
+      );
+    } else {
+      this.setUpdatedState({
+        commonEmojis: [],
+      });
 
-    localStorage.removeItem(KEY_COMMONLY_USED);
+      localStorage.removeItem(KEY_COMMONLY_USED);
+    }
   };
 
   /**
@@ -665,7 +677,24 @@ export class InternalPicker extends React.PureComponent<InternalPickerProps, Int
   ) => {
     this.addCommonEmoji(emoji);
 
-    this.props.onSelectEmoji!(emoji, event);
+    if (event.shiftKey && emoji.skins && emoji.skins.length > 0) {
+      // Avoid bulk logic when using `setUpdatedState`
+      this.setState({
+        activeEmoji: emoji,
+        activeEmojiIndex: 0,
+        activeGroup: GROUP_KEY_VARIATIONS,
+        emojis: emoji.skins,
+        groupedEmojis: {
+          [GROUP_KEY_VARIATIONS]: {
+            emojis: emoji.skins,
+            group: GROUP_KEY_VARIATIONS,
+          },
+        },
+        scrollToGroup: GROUP_KEY_VARIATIONS,
+      });
+    } else {
+      this.props.onSelectEmoji!(emoji, event);
+    }
   };
 
   /**
@@ -704,7 +733,7 @@ export class InternalPicker extends React.PureComponent<InternalPickerProps, Int
    * Catch all method to easily update the state. Will automatically handle updates
    * and branching based on values being set.
    */
-  setUpdatedState(nextState: Partial<InternalPickerState>) {
+  setUpdatedState(nextState: Partial<InternalPickerState>, forceRebuild: boolean = false) {
     // eslint-disable-next-line complexity
     this.setState(prevState => {
       const state = { ...prevState, ...nextState };
@@ -744,7 +773,7 @@ export class InternalPicker extends React.PureComponent<InternalPickerProps, Int
       }
 
       // Rebuild the emoji datasets
-      if (rebuildEmojis) {
+      if (rebuildEmojis || forceRebuild) {
         state.emojis = this.generateEmojis(state.activeSkinTone, state.searchQuery);
         state.groupedEmojis = this.groupEmojis(state.emojis, state.commonEmojis, state.searchQuery);
 
@@ -825,7 +854,7 @@ export class InternalPicker extends React.PureComponent<InternalPickerProps, Int
           scrollToGroup={scrollToGroup}
           skinTonePalette={displayOrder.includes('skin-tones') ? null : skinTones}
           stickyGroupHeader={stickyGroupHeader}
-          onClear={this.handleClearCommonEmoji}
+          onClear={this.handleClear}
           onEnterEmoji={this.handleEnterEmoji}
           onLeaveEmoji={this.handleLeaveEmoji}
           onScroll={onScroll}

@@ -19,6 +19,7 @@ function formatTitle(title: string): string {
   return title.replace(TITLE_REGEX, token => token.toUpperCase());
 }
 
+// eslint-disable-next-line complexity
 export default function PreviewBar({
   emoji,
   emojiLargeSize,
@@ -64,7 +65,15 @@ export default function PreviewBar({
       </div>
 
       <div className={classNames.previewContent}>
-        {title && <div className={classNames.previewTitle}>{formatTitle(title)}</div>}
+        {title && (
+          <div className={classNames.previewTitle}>
+            {formatTitle(title)}
+
+            {emoji.skins && emoji.skins.length > 0 && (
+              <span className={classNames.previewShiftMore}>(+{emoji.skins.length})</span>
+            )}
+          </div>
+        )}
 
         {subtitle.length > 0 && (
           <div className={classNames.previewSubtitle}>{subtitle.join(' ')}</div>

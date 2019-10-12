@@ -73,7 +73,7 @@ export default class EmojiDataManager {
       ...baseEmoji,
       canonical_shortcodes: [],
       primary_shortcode: '',
-      skins: (baseEmoji.skins || []) as CanonicalEmoji[],
+      skins: [],
       unicode: '',
     };
 
@@ -113,6 +113,11 @@ export default class EmojiDataManager {
 
     // Map each emoji
     this.EMOJIS[hexcode] = emoji;
+
+    // Apply same logic to all variations
+    if (baseEmoji.skins) {
+      emoji.skins = baseEmoji.skins.map(skinEmoji => this.packageEmoji(skinEmoji));
+    }
 
     return emoji;
   }
