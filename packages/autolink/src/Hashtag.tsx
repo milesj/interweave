@@ -1,8 +1,9 @@
 import React from 'react';
+import { ChildrenNode } from 'interweave';
 import Link, { LinkProps } from './Link';
 
 export interface HashtagProps extends Partial<LinkProps> {
-  children: string;
+  children: ChildrenNode;
   encodeHashtag?: boolean;
   hashtagName: string;
   hashtagUrl?: string | ((hashtag: string) => string);
@@ -16,7 +17,11 @@ export default function Hashtag({
   preserveHash = false,
   ...props
 }: HashtagProps) {
-  let hashtag = String(children);
+  if (typeof children !== 'string') {
+    return <>{children}</>;
+  }
+
+  let hashtag = children;
 
   // Prepare the hashtag
   if (!preserveHash && hashtag.charAt(0) === '#') {

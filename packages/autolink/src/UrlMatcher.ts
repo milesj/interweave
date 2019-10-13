@@ -1,5 +1,5 @@
 import React from 'react';
-import { Matcher, MatchResponse, Node } from 'interweave';
+import { Matcher, MatchResponse, Node, ChildrenNode } from 'interweave';
 import Url, { UrlProps } from './Url';
 import { URL_PATTERN, TOP_LEVEL_TLDS } from './constants';
 
@@ -25,8 +25,8 @@ export default class UrlMatcher extends Matcher<UrlProps, UrlMatcherOptions> {
     );
   }
 
-  replaceWith(match: string, props: UrlProps): Node {
-    return React.createElement(Url, props, match);
+  replaceWith(children: ChildrenNode, props: UrlProps): Node {
+    return React.createElement(Url, props, children);
   }
 
   asTag(): string {

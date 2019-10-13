@@ -129,9 +129,15 @@ export default class Parser {
    * This array allows React to interpolate and render accordingly.
    */
   applyMatchers(string: string, parentConfig: NodeConfig): string | Node[] {
-    const elements: Node[] = [];
+    const elements: {
+      [key: string]: {
+        matcher: MatcherInterface<{}>;
+        props: object;
+      };
+    } = {};
     const { props } = this;
     let matchedString = string;
+    let elementIndex = 0;
     let parts = null;
 
     this.matchers.forEach(matcher => {
@@ -154,59 +160,113 @@ export default class Parser {
       // Continuously trigger the matcher until no matches are found
       while ((parts = matcher.match(matchedString))) {
         const { match, ...partProps } = parts as MatchResponse;
+        const tokenName = `${matcher.propName}_${elementIndex}`;
 
-        // Replace the matched portion with a placeholder
-        matchedString = matchedString.replace(match, `#{{${elements.length}}}#`);
+        // Replace the matched portion with a token
+        matchedString = matchedString.replace(
+          match,
+          `#{{${tokenName}}}#${match}#{{/${tokenName}}}#`,
+        );
 
         // Create an element through the matchers factory
         this.keyIndex += 1;
 
-        const element = matcher.createElement(match, {
-          ...props,
-          ...partProps,
-          key: this.keyIndex,
-        });
+        // const element = matcher.createElement(match, {
+        //   ...props,
+        //   ...partProps,
+        //   key: this.keyIndex,
+        // });
 
-        if (element) {
-          elements.push(element);
-        }
+        elementIndex += 1;
+        elements[tokenName] = {
+          matcher,
+          props: {
+            ...props,
+            ...partProps,
+            key: this.keyIndex,
+          },
+        };
       }
     });
 
-    if (elements.length === 0) {
+    if (elementIndex === 0) {
       return matchedString;
     }
 
+    console.log({ matchedString });
+
+    return matchedString;
+
     // Deconstruct the string into an array so that React can render it
-    const matchedArray = [];
-    let lastIndex = 0;
+    const tokenOpen = /#\{\{(\w+)\}\}#/;
 
-    while ((parts = matchedString.match(/#\{\{(\d+)\}\}#/))) {
-      const [, no] = parts as RegExpMatchArray;
-      const { index = 0 } = parts as RegExpMatchArray;
-
-      // Extract the previous string
-      if (lastIndex !== index) {
-        matchedArray.push(matchedString.slice(lastIndex, index));
+    // What is going #{{emoji-1}}on here#{{/emoji-1}}
+    function replaceTokens(tokenizedString: string): Node[] {
+      if (!tokenizedString.includes('#{{')) {
+        return [tokenizedString];
       }
 
-      // Inject the element
-      matchedArray.push(elements[parseInt(no, 10)]);
+      const nodes: Node[] = [];
+      let text = tokenizedString;
+      let open: RegExpMatchArray | null = null;
 
-      // Set the next index
-      lastIndex = index + parts[0].length;
+      // Find an open token tag
+      while ((open = text.match(tokenOpen))) {
+        const [match, tokenName] = open;
+        const startIndex = open.index!;
 
-      // Replace the token so it won't be matched again
-      // And so that the string length doesn't change
-      matchedString = matchedString.replace(`#{{${no}}}#`, `%{{${no}}}%`);
+        if (__DEV__) {
+          if (!elements[tokenName]) {
+            throw new Error(`Token "${tokenName}" found but no matching element to replace with.`);
+          }
+        }
+
+        // Extract the previous non-token text
+        if (startIndex > 0) {
+          nodes.push(text.slice(0, startIndex));
+
+          // Reduce text so that the closing tag will be found after the opening
+          text = text.slice(startIndex);
+        }
+
+        // Find the closing tag
+        const close = text.match(new RegExp(`#{{/${tokenName}}}#`))!;
+
+        if (__DEV__) {
+          if (!close) {
+            throw new Error(`Closing token missing for interpolated element "${tokenName}".`);
+          }
+        }
+
+        const endIndex = close.index! + close[0].length;
+
+        // Create and append the element
+        const { matcher, props: elementProps } = elements[tokenName];
+        const innerTextWithoutTokens = text.slice(match.length, close.index!);
+
+        nodes.push(matcher.createElement(replaceTokens(innerTextWithoutTokens), elementProps));
+
+        // Reduce text for the next interation
+        text = text.slice(endIndex);
+      }
+
+      // Extra the remaining text
+      if (text.length > 0) {
+        nodes.push(text);
+      }
+
+      return nodes;
     }
 
-    // Extra the remaining string
-    if (lastIndex < matchedString.length) {
-      matchedArray.push(matchedString.slice(lastIndex));
+    const children = replaceTokens(matchedString);
+
+    if (children.length === 0) {
+      return '';
+    } else if (children.length === 1 && typeof children[0] === 'string') {
+      return children[0];
     }
 
-    return matchedArray;
+    return children;
   }
 
   /**

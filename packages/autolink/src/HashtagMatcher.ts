@@ -1,11 +1,11 @@
 import React from 'react';
-import { Matcher, MatchResponse, Node } from 'interweave';
+import { Matcher, MatchResponse, Node, ChildrenNode } from 'interweave';
 import Hashtag, { HashtagProps } from './Hashtag';
 import { HASHTAG_PATTERN } from './constants';
 
 export default class HashtagMatcher extends Matcher<HashtagProps> {
-  replaceWith(match: string, props: HashtagProps): Node {
-    return React.createElement(Hashtag, props, match);
+  replaceWith(children: ChildrenNode, props: HashtagProps): Node {
+    return React.createElement(Hashtag, props, children);
   }
 
   asTag(): string {

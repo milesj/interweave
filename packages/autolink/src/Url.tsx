@@ -1,8 +1,9 @@
 import React from 'react';
+import { ChildrenNode } from 'interweave';
 import Link, { LinkProps } from './Link';
 
 export interface UrlProps extends Partial<LinkProps> {
-  children: string;
+  children: ChildrenNode;
   urlParts: {
     auth: string;
     fragment: string;
@@ -15,6 +16,10 @@ export interface UrlProps extends Partial<LinkProps> {
 }
 
 export default function Url({ children, urlParts, ...props }: UrlProps) {
+  if (typeof children !== 'string') {
+    return <>{children}</>;
+  }
+
   let url = children;
 
   if (!url.match(/^https?:\/\//)) {

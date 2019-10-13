@@ -1,6 +1,9 @@
 import React from 'react';
 
-export type Node = null | string | React.ReactElement<unknown>;
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export type Node = null | string | React.ReactElement<any>;
+
+export type ChildrenNode = NonNullable<React.ReactNode>;
 
 export interface NodeConfig {
   // Only children

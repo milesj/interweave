@@ -1,11 +1,11 @@
 import React from 'react';
-import { MatchCallback, MatchResponse, Node } from './types';
+import { MatchCallback, MatchResponse, Node, ChildrenNode } from './types';
 
 export interface MatcherInterface<T> {
   inverseName: string;
   propName: string;
   asTag(): string;
-  createElement(match: string, props: T): Node;
+  createElement(children: ChildrenNode, props: T): Node;
   match(value: string): MatchResponse | null;
   onBeforeParse?(content: string, props: T): string;
   onAfterParse?(content: Node[], props: T): Node[];
@@ -39,13 +39,13 @@ export default abstract class Matcher<Props extends object = {}, Options extends
    * Attempts to create a React element using a custom user provided factory,
    * or the default matcher factory.
    */
-  createElement(match: string, props: Props): Node {
+  createElement(children: ChildrenNode, props: Props): Node {
     let element: Node = null;
 
     if (this.factory) {
-      element = React.createElement(this.factory, props, match);
+      element = React.createElement(this.factory, props, children);
     } else {
-      element = this.replaceWith(match, props);
+      element = this.replaceWith(children, props);
     }
 
     if (__DEV__) {
@@ -91,7 +91,7 @@ export default abstract class Matcher<Props extends object = {}, Options extends
   /**
    * Replace the match with a React element based on the matched token and optional props.
    */
-  abstract replaceWith(match: string, props: Props): Node;
+  abstract replaceWith(children: ChildrenNode, props: Props): Node;
 
   /**
    * Defines the HTML tag name that the resulting React element will be.
