@@ -123,6 +123,7 @@ describe('matchers/EmailMatcher', () => {
 
     it('returns object for valid match', () => {
       expect(matcher.match('user@domain.com')).toEqual({
+        index: 0,
         match: 'user@domain.com',
         emailParts: {
           username: 'user',

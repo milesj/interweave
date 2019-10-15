@@ -81,6 +81,7 @@ describe('matchers/HashtagMatcher', () => {
 
     it('returns object for valid match', () => {
       expect(matcher.match('#hashtag')).toEqual({
+        index: 0,
         match: '#hashtag',
         hashtagName: 'hashtag',
       });

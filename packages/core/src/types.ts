@@ -3,7 +3,7 @@ import React from 'react';
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type Node = null | string | React.ReactElement<any>;
 
-export type ChildrenNode = NonNullable<React.ReactNode>;
+export type ChildrenNode = string | Node[];
 
 export interface NodeConfig {
   // Only children
@@ -43,8 +43,9 @@ export type TransformCallback = (
 export type MatchCallback = (matches: string[]) => object;
 
 export interface MatchResponse {
+  index: number;
   match: string;
-  [key: string]: string;
+  [key: string]: string | number;
 }
 
 export interface ConfigMap {

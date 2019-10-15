@@ -141,6 +141,7 @@ describe('matchers/IpMatcher', () => {
 
     it('returns object for valid match', () => {
       expect(matcher.match('https://127.0.0.1:8080/some/path?with=query#fragment')).toEqual({
+        index: 0,
         match: 'https://127.0.0.1:8080/some/path?with=query#fragment',
         urlParts: {
           scheme: 'https',

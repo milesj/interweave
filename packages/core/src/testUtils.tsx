@@ -5,7 +5,7 @@ import Filter from './Filter';
 import Matcher from './Matcher';
 import Element from './Element';
 import { TAGS } from './constants';
-import { Node, NodeConfig } from './types';
+import { Node, NodeConfig, MatchResponse } from './types';
 
 export const TOKEN_LOCATIONS = [
   'no tokens',
@@ -46,9 +46,9 @@ export const VALID_EMOJIS = [
   ['1F3C0', '🏀', ':basketball:'],
 ];
 
-export function createExpectedToken(
-  value: any,
-  factory: (value: any, count: number) => React.ReactNode,
+export function createExpectedToken<T>(
+  value: T,
+  factory: (value: T, count: number) => React.ReactNode,
   index: number,
   join: boolean = false,
 ): React.ReactNode | string {
@@ -102,7 +102,7 @@ export const parentConfig: NodeConfig = {
   ...TAGS.div,
 };
 
-export function matchCodeTag(string: string, tag: string): any {
+export function matchCodeTag(string: string, tag: string): MatchResponse | null {
   const matches = string.match(new RegExp(`\\[${tag}\\]`));
 
   if (!matches) {
@@ -112,11 +112,12 @@ export function matchCodeTag(string: string, tag: string): any {
   return {
     children: tag,
     customProp: 'foo',
+    index: matches.index!,
     match: matches[0],
   };
 }
 
-export class CodeTagMatcher extends Matcher<any> {
+export class CodeTagMatcher extends Matcher<{}> {
   tag: string;
 
   key: string;
@@ -128,7 +129,7 @@ export class CodeTagMatcher extends Matcher<any> {
     this.key = key;
   }
 
-  replaceWith(match: string, props: any = {}): Node {
+  replaceWith(match: string, props: { children?: string; key?: string } = {}): Node {
     const { children } = props;
 
     if (this.key) {
@@ -138,7 +139,7 @@ export class CodeTagMatcher extends Matcher<any> {
 
     return (
       <Element tagName="span" {...props}>
-        {children.toUpperCase()}
+        {children!.toUpperCase()}
       </Element>
     );
   }

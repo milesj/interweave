@@ -92,7 +92,7 @@ export default class EmojiMatcher extends Matcher<EmojiProps, EmojiMatcherOption
       this.data.EMOTICON_TO_HEXCODE[response.emoticon]
     ) {
       response.hexcode = this.data.EMOTICON_TO_HEXCODE[response.emoticon];
-      response.match = response.emoticon; // Remove padding
+      response.match = String(response.emoticon); // Remove padding
 
       return response;
     }

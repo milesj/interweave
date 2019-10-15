@@ -70,6 +70,7 @@ export default abstract class Matcher<Props extends object = {}, Options extends
 
     return {
       ...callback(matches),
+      index: matches.index!,
       match: matches[0],
     };
   }

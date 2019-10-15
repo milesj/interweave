@@ -64,6 +64,7 @@ describe('Matcher', () => {
   describe('match()', () => {
     it('does match', () => {
       expect(matcher.match('[foo]')).toEqual({
+        index: 0,
         match: '[foo]',
         children: 'foo',
         customProp: 'foo',
@@ -76,8 +77,9 @@ describe('Matcher', () => {
   });
 
   describe('doMatch()', () => {
-    it('returns a match object', () => {
+    it('returns a match object with index', () => {
       expect(matcher.doMatch('foo', /foo/, () => ({ pass: true }))).toEqual({
+        index: 0,
         match: 'foo',
         pass: true,
       });

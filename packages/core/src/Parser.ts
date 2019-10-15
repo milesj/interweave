@@ -24,12 +24,21 @@ import {
   TransformCallback,
   MatchResponse,
   AttributeValue,
+  ChildrenNode,
 } from './types';
 
 const ELEMENT_NODE = 1;
 const TEXT_NODE = 3;
 const INVALID_ROOTS = /^<(!doctype|(html|head|body)(\s|>))/i;
 const ALLOWED_ATTRS = /^(aria-|data-|\w+:)/iu;
+const OPEN_TOKEN = /#\{\{(\w+)\}\}#/;
+
+interface MatcherElementsMap {
+  [key: string]: {
+    matcher: MatcherInterface<{}>;
+    props: object;
+  };
+}
 
 export interface ParserProps {
   /** Disable filtering and allow all non-banned HTML attributes. */
@@ -128,13 +137,8 @@ export default class Parser {
    * If a match is found, create a React element, and build a new array.
    * This array allows React to interpolate and render accordingly.
    */
-  applyMatchers(string: string, parentConfig: NodeConfig): string | Node[] {
-    const elements: {
-      [key: string]: {
-        matcher: MatcherInterface<{}>;
-        props: object;
-      };
-    } = {};
+  applyMatchers(string: string, parentConfig: NodeConfig): ChildrenNode {
+    const elements: MatcherElementsMap = {};
     const { props } = this;
     let matchedString = string;
     let elementIndex = 0;
@@ -158,24 +162,21 @@ export default class Parser {
       }
 
       // Continuously trigger the matcher until no matches are found
-      while ((parts = matcher.match(matchedString))) {
-        const { match, ...partProps } = parts as MatchResponse;
+      let tokenizedString = '';
+
+      while (matchedString && (parts = matcher.match(matchedString))) {
+        const { index, match, ...partProps } = parts as MatchResponse;
         const tokenName = `${matcher.propName}_${elementIndex}`;
 
-        // Replace the matched portion with a token
-        matchedString = matchedString.replace(
-          match,
-          `#{{${tokenName}}}#${match}#{{/${tokenName}}}#`,
-        );
+        // Piece together a new string with interpolated tokens
+        if (index > 0) {
+          tokenizedString += matchedString.slice(0, index);
+        }
+
+        tokenizedString += `#{{${tokenName}}}#${match}#{{/${tokenName}}}#`;
 
         // Create an element through the matchers factory
         this.keyIndex += 1;
-
-        // const element = matcher.createElement(match, {
-        //   ...props,
-        //   ...partProps,
-        //   key: this.keyIndex,
-        // });
 
         elementIndex += 1;
         elements[tokenName] = {
@@ -186,87 +187,22 @@ export default class Parser {
             key: this.keyIndex,
           },
         };
+
+        // Reduce the string being matched against,
+        // otherwise we end up in an infinite loop!
+        matchedString = matchedString.slice(index + match.length);
       }
+
+      // Update the matched string with the tokenized string,
+      // so that the next matcher can apply to it.
+      matchedString = tokenizedString + matchedString;
     });
 
     if (elementIndex === 0) {
-      return matchedString;
+      return string;
     }
 
-    console.log({ matchedString });
-
-    return matchedString;
-
-    // Deconstruct the string into an array so that React can render it
-    const tokenOpen = /#\{\{(\w+)\}\}#/;
-
-    // What is going #{{emoji-1}}on here#{{/emoji-1}}
-    function replaceTokens(tokenizedString: string): Node[] {
-      if (!tokenizedString.includes('#{{')) {
-        return [tokenizedString];
-      }
-
-      const nodes: Node[] = [];
-      let text = tokenizedString;
-      let open: RegExpMatchArray | null = null;
-
-      // Find an open token tag
-      while ((open = text.match(tokenOpen))) {
-        const [match, tokenName] = open;
-        const startIndex = open.index!;
-
-        if (__DEV__) {
-          if (!elements[tokenName]) {
-            throw new Error(`Token "${tokenName}" found but no matching element to replace with.`);
-          }
-        }
-
-        // Extract the previous non-token text
-        if (startIndex > 0) {
-          nodes.push(text.slice(0, startIndex));
-
-          // Reduce text so that the closing tag will be found after the opening
-          text = text.slice(startIndex);
-        }
-
-        // Find the closing tag
-        const close = text.match(new RegExp(`#{{/${tokenName}}}#`))!;
-
-        if (__DEV__) {
-          if (!close) {
-            throw new Error(`Closing token missing for interpolated element "${tokenName}".`);
-          }
-        }
-
-        const endIndex = close.index! + close[0].length;
-
-        // Create and append the element
-        const { matcher, props: elementProps } = elements[tokenName];
-        const innerTextWithoutTokens = text.slice(match.length, close.index!);
-
-        nodes.push(matcher.createElement(replaceTokens(innerTextWithoutTokens), elementProps));
-
-        // Reduce text for the next interation
-        text = text.slice(endIndex);
-      }
-
-      // Extra the remaining text
-      if (text.length > 0) {
-        nodes.push(text);
-      }
-
-      return nodes;
-    }
-
-    const children = replaceTokens(matchedString);
-
-    if (children.length === 0) {
-      return '';
-    } else if (children.length === 1 && typeof children[0] === 'string') {
-      return children[0];
-    }
-
-    return children;
+    return this.replaceTokens(matchedString, elements);
   }
 
   /**
@@ -624,5 +560,75 @@ export default class Parser {
     }
 
     return content;
+  }
+
+  /**
+   * Deconstruct the string into an array, by replacing custom tokens with React elements,
+   * so that React can render it correctly.
+   */
+  replaceTokens(tokenizedString: string, elements: MatcherElementsMap): ChildrenNode {
+    if (!tokenizedString.includes('#{{')) {
+      return tokenizedString;
+    }
+
+    const nodes: Node[] = [];
+    let text = tokenizedString;
+    let open: RegExpMatchArray | null = null;
+
+    // Find an open token tag
+    while ((open = text.match(OPEN_TOKEN))) {
+      const [match, tokenName] = open;
+      const startIndex = open.index!;
+
+      if (__DEV__) {
+        if (!elements[tokenName]) {
+          throw new Error(`Token "${tokenName}" found but no matching element to replace with.`);
+        }
+      }
+
+      // Extract the previous non-token text
+      if (startIndex > 0) {
+        nodes.push(text.slice(0, startIndex));
+
+        // Reduce text so that the closing tag will be found after the opening
+        text = text.slice(startIndex);
+      }
+
+      // Find the closing tag
+      const close = text.match(new RegExp(`#{{/${tokenName}}}#`))!;
+
+      if (__DEV__) {
+        if (!close) {
+          throw new Error(`Closing token missing for interpolated element "${tokenName}".`);
+        }
+      }
+
+      const endIndex = close.index! + close[0].length;
+
+      // Create and append the element
+      const { matcher, props: elementProps } = elements[tokenName];
+      const innerTextWithoutTokens = text.slice(match.length, close.index!);
+
+      nodes.push(
+        matcher.createElement(this.replaceTokens(innerTextWithoutTokens, elements), elementProps),
+      );
+
+      // Reduce text for the next interation
+      text = text.slice(endIndex);
+    }
+
+    // Extra the remaining text
+    if (text.length > 0) {
+      nodes.push(text);
+    }
+
+    // Reduce to a string if possible
+    if (nodes.length === 0) {
+      return '';
+    } else if (nodes.length === 1 && typeof nodes[0] === 'string') {
+      return nodes[0];
+    }
+
+    return nodes;
   }
 }
