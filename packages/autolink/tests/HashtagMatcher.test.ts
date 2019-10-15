@@ -82,6 +82,7 @@ describe('matchers/HashtagMatcher', () => {
     it('returns object for valid match', () => {
       expect(matcher.match('#hashtag')).toEqual({
         index: 0,
+        length: 8,
         match: '#hashtag',
         hashtagName: 'hashtag',
         valid: true,

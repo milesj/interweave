@@ -45,6 +45,7 @@ object. Both approaches will require the following methods to be defined (exclud
   rendered element.
   - `index` (`number`) - The starting index in which the match was found (is provided by the native
     `String#match()`).
+  - `length` (`number`) - The original length of the match, before it was potentially modified.
   - `match` (`string`) - The content that was matched (is usually the 0-index in the result).
   - `valid` (`boolean`) - Whether the match is valid or not. This can be used to control false
     positives.
@@ -65,23 +66,24 @@ object. Both approaches will require the following methods to be defined (exclud
 import { Matcher, MatchResponse, Node } from 'interweave';
 
 function match(string: string): MatchResponse<{ extraProp: string }> | null {
-  const matches = string.match(/foo/);
+  const result = string.match(/foo/);
 
-  if (!matches) {
+  if (!result) {
     return null;
   }
 
   return {
-    index: matches.index!,
-    match: matches[0],
-    extraProp: 'foo', // or matches[1], etc
+    index: result.index!,
+    length: result[0].length,
+    match: result[0],
+    extraProp: 'foo', // or result[1], etc
     valid: true,
   };
 }
 
 // Class
 class CustomMatcher extends Matcher<CustomProps> {
-  match(string: string): MatchResponse | null {
+  match(string: string): MatchResponse<{ extraProp: string }> | null {
     return match(string);
   }
 
@@ -120,6 +122,11 @@ class CustomMatcher extends Matcher<CustomProps> {
   }
 }
 ```
+
+> When the matcher finds a match, the parser will temporarily wrap the match in a token that looks
+> like the following: `{{{foo1}}}matched content{{{/foo1}}}`. This token _is present_ for subsequent
+> matchers, so be weary of the patterns you're attempting to match, as they may capture the
+> temporary tokens.
 
 ## Rendered Elements
 

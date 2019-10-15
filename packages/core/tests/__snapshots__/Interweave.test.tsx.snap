@@ -177,6 +177,42 @@ exports[`Interweave can pass object based matchers through props 1`] = `
 </Element>
 `;
 
+exports[`Interweave interleaving renders bold in italic 1`] = `
+<Element tagName="span">
+  <span>
+    This should be 
+    <i>
+      <b>bold and italic</b>
+    </i>
+    .
+  </span>
+</Element>
+`;
+
+exports[`Interweave interleaving renders italic in bold 1`] = `
+<Element tagName="span">
+  <span>
+    This should be 
+    <b>
+      <i>italic and bold</i>
+    </b>
+    .
+  </span>
+</Element>
+`;
+
+exports[`Interweave interleaving renders them separately 1`] = `
+<Element tagName="span">
+  <span>
+    This should be 
+    <b>bold</b>
+     and this 
+    <i>italic</i>
+    .
+  </span>
+</Element>
+`;
+
 exports[`Interweave line breaks converts line breaks 1`] = `
 <Element tagName="span">
   <span>

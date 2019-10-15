@@ -301,6 +301,7 @@ describe('matchers/UrlMatcher', () => {
         matcher.match('http://user:pass@domain.com:8080/some/path?with=query#fragment'),
       ).toEqual({
         index: 0,
+        length: 62,
         match: 'http://user:pass@domain.com:8080/some/path?with=query#fragment',
         urlParts: {
           scheme: 'http',

@@ -192,6 +192,7 @@ describe('EmojiMatcher', () => {
     it('returns object for valid unicode match', () => {
       expect(matcher.match(MAN_EMOJI)).toEqual({
         index: 0,
+        length: 2,
         match: MAN_EMOJI,
         unicode: MAN_EMOJI,
         hexcode: UNICODE_TO_HEXCODE[MAN_EMOJI],
@@ -206,6 +207,7 @@ describe('EmojiMatcher', () => {
     it('returns object for valid shortcode match', () => {
       expect(matcher.match(':man:')).toEqual({
         index: 0,
+        length: 5,
         match: ':man:',
         shortcode: ':man:',
         hexcode: SHORTCODE_TO_HEXCODE[':man:'],
@@ -220,6 +222,7 @@ describe('EmojiMatcher', () => {
     it('returns object for valid emoticon match', () => {
       expect(matcher.match(':)')).toEqual({
         index: 0,
+        length: 2,
         match: ':)',
         emoticon: ':)',
         hexcode: EMOTICON_TO_HEXCODE[':)'],

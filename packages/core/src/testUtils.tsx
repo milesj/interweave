@@ -119,6 +119,7 @@ export function matchCodeTag(
     children: tag,
     customProp: 'foo',
     index: matches.index!,
+    length: matches[0].length,
     match: matches[0],
     valid: true,
   };
@@ -160,9 +161,37 @@ export class CodeTagMatcher extends Matcher<{}> {
   }
 }
 
+export class MarkdownBoldMatcher extends Matcher<any> {
+  replaceWith(children: ChildrenNode, props: object): Node {
+    return <b {...props}>{children}</b>;
+  }
+
+  asTag() {
+    return 'b';
+  }
+
+  match(value: string) {
+    return this.doMatch(value, /\*\*([^*]+)\*\*/u, matches => ({ match: matches[1] }));
+  }
+}
+
+export class MarkdownItalicMatcher extends Matcher<any> {
+  replaceWith(children: ChildrenNode, props: object): Node {
+    return <i {...props}>{children}</i>;
+  }
+
+  asTag() {
+    return 'i';
+  }
+
+  match(value: string) {
+    return this.doMatch(value, /_([^_]+)_/u, matches => ({ match: matches[1] }));
+  }
+}
+
 export class MockMatcher extends Matcher<any> {
-  replaceWith(match: ChildrenNode, props: any): Node {
-    return <div {...props}>{match}</div>;
+  replaceWith(children: ChildrenNode, props: any): Node {
+    return <div {...props}>{children}</div>;
   }
 
   asTag() {

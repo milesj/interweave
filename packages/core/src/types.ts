@@ -44,6 +44,7 @@ export type MatchCallback<T> = (matches: string[]) => T;
 
 export type MatchResponse<T> = T & {
   index: number;
+  length: number;
   match: string;
   valid: boolean;
 };

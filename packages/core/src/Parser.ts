@@ -164,8 +164,8 @@ export default class Parser {
       let tokenizedString = '';
 
       while (matchedString && (parts = matcher.match(matchedString))) {
-        const { index, match, valid, ...partProps } = parts;
-        const tokenName = `${matcher.propName}_${elementIndex}`;
+        const { index, length, match, valid, ...partProps } = parts;
+        const tokenName = matcher.propName + elementIndex;
 
         // Piece together a new string with interpolated tokens
         if (index > 0) {
@@ -191,7 +191,7 @@ export default class Parser {
 
         // Reduce the string being matched against,
         // otherwise we end up in an infinite loop!
-        matchedString = matchedString.slice(index + match.length);
+        matchedString = matchedString.slice(index + (length || match.length));
       }
 
       // Update the matched string with the tokenized string,

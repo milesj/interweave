@@ -66,16 +66,17 @@ export default abstract class Matcher<Props extends object = {}, Options extends
     pattern: string | RegExp,
     callback: MatchCallback<T>,
   ): MatchResponse<T> | null {
-    const matches = string.match(pattern instanceof RegExp ? pattern : new RegExp(pattern, 'i'));
+    const match = string.match(pattern instanceof RegExp ? pattern : new RegExp(pattern, 'i'));
 
-    if (!matches) {
+    if (!match) {
       return null;
     }
 
     return {
-      ...callback(matches),
-      index: matches.index!,
-      match: matches[0],
+      match: match[0],
+      ...callback(match),
+      index: match.index!,
+      length: match[0].length,
       valid: true,
     };
   }
