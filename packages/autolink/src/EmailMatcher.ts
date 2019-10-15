@@ -3,9 +3,7 @@ import { Matcher, MatchResponse, Node, ChildrenNode } from 'interweave';
 import Email, { EmailProps } from './Email';
 import { EMAIL_PATTERN } from './constants';
 
-export interface EmailMatch {
-  emailParts: EmailProps['emailParts'];
-}
+export type EmailMatch = Pick<EmailProps, 'email' | 'emailParts'>;
 
 export default class EmailMatcher extends Matcher<EmailProps> {
   replaceWith(children: ChildrenNode, props: EmailProps): Node {
@@ -18,6 +16,7 @@ export default class EmailMatcher extends Matcher<EmailProps> {
 
   match(string: string): MatchResponse<EmailMatch> | null {
     return this.doMatch(string, EMAIL_PATTERN, matches => ({
+      email: matches[0],
       emailParts: {
         host: matches[2],
         username: matches[1],

@@ -4,6 +4,7 @@ import Link, { LinkProps } from './Link';
 
 export interface UrlProps extends Partial<LinkProps> {
   children: ChildrenNode;
+  url: string;
   urlParts: {
     auth: string;
     fragment: string;
@@ -15,19 +16,15 @@ export interface UrlProps extends Partial<LinkProps> {
   };
 }
 
-export default function Url({ children, urlParts, ...props }: UrlProps) {
-  if (typeof children !== 'string') {
-    return <>{children}</>;
-  }
+export default function Url({ children, url, urlParts, ...props }: UrlProps) {
+  let href = url;
 
-  let url = children;
-
-  if (!url.match(/^https?:\/\//)) {
-    url = `http://${url}`;
+  if (!href.match(/^https?:\/\//)) {
+    href = `http://${href}`;
   }
 
   return (
-    <Link {...props} href={url}>
+    <Link {...props} href={href}>
       {children}
     </Link>
   );

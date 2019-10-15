@@ -89,6 +89,7 @@ describe('matchers/EmailMatcher', () => {
 
       return matcher.replaceWith(email, {
         children: email,
+        email,
         emailParts: {
           username: parts[0],
           host: parts[1],
@@ -126,6 +127,7 @@ describe('matchers/EmailMatcher', () => {
         index: 0,
         length: 15,
         match: 'user@domain.com',
+        email: 'user@domain.com',
         emailParts: {
           username: 'user',
           host: 'domain.com',

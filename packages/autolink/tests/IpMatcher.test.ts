@@ -101,6 +101,7 @@ describe('matchers/IpMatcher', () => {
 
       return matcher.replaceWith(ip, {
         children: ip,
+        url: ip,
         urlParts: {
           host: '',
           path: '',
@@ -144,6 +145,7 @@ describe('matchers/IpMatcher', () => {
         index: 0,
         length: 52,
         match: 'https://127.0.0.1:8080/some/path?with=query#fragment',
+        url: 'https://127.0.0.1:8080/some/path?with=query#fragment',
         urlParts: {
           scheme: 'https',
           auth: '',

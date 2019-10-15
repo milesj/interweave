@@ -3,9 +3,7 @@ import { Matcher, MatchResponse, Node, ChildrenNode } from 'interweave';
 import Url, { UrlProps } from './Url';
 import { URL_PATTERN, TOP_LEVEL_TLDS, EMAIL_DISTINCT_PATTERN } from './constants';
 
-export interface UrlMatch {
-  urlParts: UrlProps['urlParts'];
-}
+export type UrlMatch = Pick<UrlProps, 'url' | 'urlParts'>;
 
 export interface UrlMatcherOptions {
   customTLDs?: string[];
@@ -63,6 +61,7 @@ export default class UrlMatcher extends Matcher<UrlProps, UrlMatcherOptions> {
    */
   handleMatches(matches: string[]): UrlMatch {
     return {
+      url: matches[0],
       urlParts: {
         auth: matches[2] ? matches[2].slice(0, -1) : '',
         fragment: matches[7] || '',

@@ -212,6 +212,7 @@ describe('matchers/UrlMatcher', () => {
 
       return matcher.replaceWith(url, {
         children: url,
+        url,
         urlParts: {
           host: 'example.com',
           path: '',
@@ -248,6 +249,7 @@ describe('matchers/UrlMatcher', () => {
   describe('replaceWith()', () => {
     const props = {
       children: '',
+      url: 'http://domain.foo',
       urlParts: {
         auth: '',
         scheme: 'http',
@@ -275,6 +277,7 @@ describe('matchers/UrlMatcher', () => {
       expect(
         matcher.replaceWith('http://domain.co.uk', {
           children: 'http://domain.co.uk',
+          url: 'http://domain.co.uk',
           urlParts: {
             ...props.urlParts,
             scheme: 'http',
@@ -303,6 +306,7 @@ describe('matchers/UrlMatcher', () => {
         index: 0,
         length: 62,
         match: 'http://user:pass@domain.com:8080/some/path?with=query#fragment',
+        url: 'http://user:pass@domain.com:8080/some/path?with=query#fragment',
         urlParts: {
           scheme: 'http',
           auth: 'user:pass',

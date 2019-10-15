@@ -358,12 +358,11 @@ export default class Parser {
    */
   extractStyleAttribute(node: HTMLElement): object {
     const styles: { [key: string]: string } = {};
-    const camelCase = (match: string, letter: string) => letter.toUpperCase();
 
     Array.from(node.style).forEach(key => {
       const value = node.style[key as keyof CSSStyleDeclaration];
 
-      styles[key.replace(/-([a-z])/g, camelCase)] = value;
+      styles[key.replace(/-([a-z])/g, (match, letter) => letter.toUpperCase())] = value;
     });
 
     return styles;

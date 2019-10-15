@@ -5,7 +5,7 @@ import Link, { LinkProps } from './Link';
 export interface HashtagProps extends Partial<LinkProps> {
   children: ChildrenNode;
   encodeHashtag?: boolean;
-  hashtagName: string;
+  hashtag: string;
   hashtagUrl?: string | ((hashtag: string) => string);
   preserveHash?: boolean;
 }
@@ -13,32 +13,29 @@ export interface HashtagProps extends Partial<LinkProps> {
 export default function Hashtag({
   children,
   encodeHashtag = false,
+  hashtag,
   hashtagUrl = '{{hashtag}}',
   preserveHash = false,
   ...props
 }: HashtagProps) {
-  if (typeof children !== 'string') {
-    return <>{children}</>;
-  }
-
-  let hashtag = children;
+  let tag = hashtag;
 
   // Prepare the hashtag
-  if (!preserveHash && hashtag.charAt(0) === '#') {
-    hashtag = hashtag.slice(1);
+  if (!preserveHash && tag.charAt(0) === '#') {
+    tag = tag.slice(1);
   }
 
   if (encodeHashtag) {
-    hashtag = encodeURIComponent(hashtag);
+    tag = encodeURIComponent(tag);
   }
 
   // Determine the URL
   let url = hashtagUrl || '{{hashtag}}';
 
   if (typeof url === 'function') {
-    url = url(hashtag);
+    url = url(tag);
   } else {
-    url = url.replace('{{hashtag}}', hashtag);
+    url = url.replace('{{hashtag}}', tag);
   }
 
   return (

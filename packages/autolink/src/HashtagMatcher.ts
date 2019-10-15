@@ -3,9 +3,7 @@ import { Matcher, MatchResponse, Node, ChildrenNode } from 'interweave';
 import Hashtag, { HashtagProps } from './Hashtag';
 import { HASHTAG_PATTERN } from './constants';
 
-export interface HashtagMatch {
-  hashtagName: string;
-}
+export type HashtagMatch = Pick<HashtagProps, 'hashtag'>;
 
 export default class HashtagMatcher extends Matcher<HashtagProps> {
   replaceWith(children: ChildrenNode, props: HashtagProps): Node {
@@ -18,7 +16,7 @@ export default class HashtagMatcher extends Matcher<HashtagProps> {
 
   match(string: string): MatchResponse<HashtagMatch> | null {
     return this.doMatch(string, HASHTAG_PATTERN, matches => ({
-      hashtagName: matches[1],
+      hashtag: matches[0],
     }));
   }
 }

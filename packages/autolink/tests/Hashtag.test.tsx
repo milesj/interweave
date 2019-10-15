@@ -6,7 +6,7 @@ import Link from '../src/Link';
 describe('components/Hashtag', () => {
   it('can define the URL', () => {
     const { root } = render<HashtagProps>(
-      <Hashtag hashtagName="interweave" hashtagUrl="http://foo.com/{{hashtag}}">
+      <Hashtag hashtag="#interweave" hashtagUrl="http://foo.com/{{hashtag}}">
         #interweave
       </Hashtag>,
     );
@@ -18,7 +18,7 @@ describe('components/Hashtag', () => {
 
   it('can define the URL with a function', () => {
     const { root } = render<HashtagProps>(
-      <Hashtag hashtagName="interweave" hashtagUrl={tag => `http://foo.com/${tag.toUpperCase()}`}>
+      <Hashtag hashtag="#interweave" hashtagUrl={tag => `http://foo.com/${tag.toUpperCase()}`}>
         #interweave
       </Hashtag>,
     );
@@ -30,7 +30,7 @@ describe('components/Hashtag', () => {
 
   it('can encode the hashtag', () => {
     const { root } = render<HashtagProps>(
-      <Hashtag hashtagName="interweave" encodeHashtag preserveHash>
+      <Hashtag hashtag="#interweave" encodeHashtag preserveHash>
         #interweave
       </Hashtag>,
     );
@@ -43,7 +43,7 @@ describe('components/Hashtag', () => {
   it('can pass props to Link', () => {
     const func = () => {};
     const { root } = render<HashtagProps>(
-      <Hashtag hashtagName="interweave" onClick={func} newWindow>
+      <Hashtag hashtag="#interweave" onClick={func} newWindow>
         #interweave
       </Hashtag>,
     );
