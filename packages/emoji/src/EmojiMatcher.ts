@@ -184,7 +184,6 @@ export default class EmojiMatcher extends Matcher<EmojiProps, EmojiMatcherOption
         }
       } else if (React.isValidElement(item)) {
         // Only count towards emojis
-        // @ts-ignore
         if (item && item.type === Emoji) {
           count += 1;
           valid = true;

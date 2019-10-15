@@ -12,7 +12,6 @@ describe('components/Hashtag', () => {
     );
 
     expect(root).toContainNode('#interweave');
-    // @ts-ignore TODO figure out
     expect(root.findOne(Link)).toHaveProp('href', 'http://foo.com/interweave');
   });
 
@@ -24,7 +23,6 @@ describe('components/Hashtag', () => {
     );
 
     expect(root).toContainNode('#interweave');
-    // @ts-ignore TODO figure out
     expect(root.findOne(Link)).toHaveProp('href', 'http://foo.com/INTERWEAVE');
   });
 
@@ -36,7 +34,6 @@ describe('components/Hashtag', () => {
     );
 
     expect(root).toContainNode('#interweave');
-    // @ts-ignore TODO figure out
     expect(root.findOne(Link)).toHaveProp('href', '%23interweave');
   });
 
@@ -48,9 +45,7 @@ describe('components/Hashtag', () => {
       </Hashtag>,
     );
 
-    // @ts-ignore TODO figure out
     expect(root.findOne(Link)).toHaveProp('newWindow', true);
-    // @ts-ignore TODO figure out
     expect(root.findOne(Link)).toHaveProp('onClick', func);
   });
 });

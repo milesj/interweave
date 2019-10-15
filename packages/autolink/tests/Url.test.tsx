@@ -22,7 +22,6 @@ describe('components/Url', () => {
     );
 
     expect(root).toContainNode('http://domain.com/some/url');
-    // @ts-ignore TODO figure out
     expect(root.findOne(Link)).toHaveProp('href', 'http://domain.com/some/url');
   });
 
@@ -34,7 +33,6 @@ describe('components/Url', () => {
     );
 
     expect(root).toContainNode('domain.com/some/url');
-    // @ts-ignore TODO figure out
     expect(root.findOne(Link)).toHaveProp('href', 'http://domain.com/some/url');
   });
 
@@ -46,9 +44,7 @@ describe('components/Url', () => {
       </Url>,
     );
 
-    // @ts-ignore TODO figure out
     expect(root.findOne(Link)).toHaveProp('newWindow', true);
-    // @ts-ignore TODO figure out
     expect(root.findOne(Link)).toHaveProp('onClick', func);
   });
 });
