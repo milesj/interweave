@@ -5,7 +5,7 @@ import Filter from './Filter';
 import Matcher from './Matcher';
 import Element from './Element';
 import { TAGS } from './constants';
-import { Node, NodeConfig, MatchResponse } from './types';
+import { Node, NodeConfig, MatchResponse, ChildrenNode } from './types';
 
 export const TOKEN_LOCATIONS = [
   'no tokens',
@@ -102,7 +102,13 @@ export const parentConfig: NodeConfig = {
   ...TAGS.div,
 };
 
-export function matchCodeTag(string: string, tag: string): MatchResponse | null {
+export function matchCodeTag(
+  string: string,
+  tag: string,
+): MatchResponse<{
+  children: string;
+  customProp: string;
+}> | null {
   const matches = string.match(new RegExp(`\\[${tag}\\]`));
 
   if (!matches) {
@@ -114,6 +120,7 @@ export function matchCodeTag(string: string, tag: string): MatchResponse | null 
     customProp: 'foo',
     index: matches.index!,
     match: matches[0],
+    valid: true,
   };
 }
 
@@ -129,7 +136,7 @@ export class CodeTagMatcher extends Matcher<{}> {
     this.key = key;
   }
 
-  replaceWith(match: string, props: { children?: string; key?: string } = {}): Node {
+  replaceWith(match: ChildrenNode, props: { children?: string; key?: string } = {}): Node {
     const { children } = props;
 
     if (this.key) {
@@ -154,7 +161,7 @@ export class CodeTagMatcher extends Matcher<{}> {
 }
 
 export class MockMatcher extends Matcher<any> {
-  replaceWith(match: string, props: any): Node {
+  replaceWith(match: ChildrenNode, props: any): Node {
     return <div {...props}>{match}</div>;
   }
 

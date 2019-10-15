@@ -68,6 +68,7 @@ describe('Matcher', () => {
         match: '[foo]',
         children: 'foo',
         customProp: 'foo',
+        valid: true,
       });
     });
 
@@ -82,6 +83,7 @@ describe('Matcher', () => {
         index: 0,
         match: 'foo',
         pass: true,
+        valid: true,
       });
     });
 

@@ -40,13 +40,13 @@ export type TransformCallback = (
   config: NodeConfig,
 ) => React.ReactNode;
 
-export type MatchCallback = (matches: string[]) => object;
+export type MatchCallback<T> = (matches: string[]) => T;
 
-export interface MatchResponse {
+export type MatchResponse<T> = T & {
   index: number;
   match: string;
-  [key: string]: string | number;
-}
+  valid: boolean;
+};
 
 export interface ConfigMap {
   [key: string]: Partial<NodeConfig>;

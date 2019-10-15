@@ -6,7 +6,7 @@ export interface MatcherInterface<T> {
   propName: string;
   asTag(): string;
   createElement(children: ChildrenNode, props: T): Node;
-  match(value: string): MatchResponse | null;
+  match(value: string): MatchResponse<Partial<T>> | null;
   onBeforeParse?(content: string, props: T): string;
   onAfterParse?(content: Node[], props: T): Node[];
 }
@@ -61,7 +61,11 @@ export default abstract class Matcher<Props extends object = {}, Options extends
    * Trigger the actual pattern match and package the matched
    * response through a callback.
    */
-  doMatch(string: string, pattern: string | RegExp, callback: MatchCallback): MatchResponse | null {
+  doMatch<T>(
+    string: string,
+    pattern: string | RegExp,
+    callback: MatchCallback<T>,
+  ): MatchResponse<T> | null {
     const matches = string.match(pattern instanceof RegExp ? pattern : new RegExp(pattern, 'i'));
 
     if (!matches) {
@@ -72,6 +76,7 @@ export default abstract class Matcher<Props extends object = {}, Options extends
       ...callback(matches),
       index: matches.index!,
       match: matches[0],
+      valid: true,
     };
   }
 
@@ -103,5 +108,6 @@ export default abstract class Matcher<Props extends object = {}, Options extends
    * Attempt to match against the defined string. Return `null` if no match found,
    * else return the `match` and any optional props to pass along.
    */
-  abstract match(string: string): MatchResponse | null;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  abstract match(string: string): MatchResponse<any> | null;
 }

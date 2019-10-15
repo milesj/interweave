@@ -22,7 +22,6 @@ import {
   Node,
   NodeConfig,
   TransformCallback,
-  MatchResponse,
   AttributeValue,
   ChildrenNode,
 } from './types';
@@ -31,7 +30,7 @@ const ELEMENT_NODE = 1;
 const TEXT_NODE = 3;
 const INVALID_ROOTS = /^<(!doctype|(html|head|body)(\s|>))/i;
 const ALLOWED_ATTRS = /^(aria-|data-|\w+:)/iu;
-const OPEN_TOKEN = /#\{\{(\w+)\}\}#/;
+const OPEN_TOKEN = /\{\{\{(\w+)\}\}\}/;
 
 interface MatcherElementsMap {
   [key: string]: {
@@ -165,7 +164,7 @@ export default class Parser {
       let tokenizedString = '';
 
       while (matchedString && (parts = matcher.match(matchedString))) {
-        const { index, match, ...partProps } = parts as MatchResponse;
+        const { index, match, valid, ...partProps } = parts;
         const tokenName = `${matcher.propName}_${elementIndex}`;
 
         // Piece together a new string with interpolated tokens
@@ -173,20 +172,22 @@ export default class Parser {
           tokenizedString += matchedString.slice(0, index);
         }
 
-        tokenizedString += `#{{${tokenName}}}#${match}#{{/${tokenName}}}#`;
+        if (valid) {
+          tokenizedString += `{{{${tokenName}}}}${match}{{{/${tokenName}}}}`;
+          this.keyIndex += 1;
 
-        // Create an element through the matchers factory
-        this.keyIndex += 1;
-
-        elementIndex += 1;
-        elements[tokenName] = {
-          matcher,
-          props: {
-            ...props,
-            ...partProps,
-            key: this.keyIndex,
-          },
-        };
+          elementIndex += 1;
+          elements[tokenName] = {
+            matcher,
+            props: {
+              ...props,
+              ...partProps,
+              key: this.keyIndex,
+            },
+          };
+        } else {
+          tokenizedString += match;
+        }
 
         // Reduce the string being matched against,
         // otherwise we end up in an infinite loop!
@@ -567,7 +568,7 @@ export default class Parser {
    * so that React can render it correctly.
    */
   replaceTokens(tokenizedString: string, elements: MatcherElementsMap): ChildrenNode {
-    if (!tokenizedString.includes('#{{')) {
+    if (!tokenizedString.includes('{{{')) {
       return tokenizedString;
     }
 
@@ -595,7 +596,7 @@ export default class Parser {
       }
 
       // Find the closing tag
-      const close = text.match(new RegExp(`#{{/${tokenName}}}#`))!;
+      const close = text.match(new RegExp(`{{{/${tokenName}}}}`))!;
 
       if (__DEV__) {
         if (!close) {

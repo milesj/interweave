@@ -1,7 +1,7 @@
 import React from 'react';
 import { MatchResponse } from 'interweave';
 import { UrlProps } from './Url';
-import UrlMatcher, { UrlMatcherOptions } from './UrlMatcher';
+import UrlMatcher, { UrlMatch, UrlMatcherOptions } from './UrlMatcher';
 import { IP_PATTERN } from './constants';
 
 export default class IpMatcher extends UrlMatcher {
@@ -21,7 +21,7 @@ export default class IpMatcher extends UrlMatcher {
     );
   }
 
-  match(string: string): MatchResponse | null {
+  match(string: string): MatchResponse<UrlMatch> | null {
     return this.doMatch(string, IP_PATTERN, this.handleMatches);
   }
 }

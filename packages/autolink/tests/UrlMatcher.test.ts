@@ -311,6 +311,7 @@ describe('matchers/UrlMatcher', () => {
           query: '?with=query',
           fragment: '#fragment',
         },
+        valid: true,
       });
     });
   });

@@ -1,10 +1,17 @@
 import React from 'react';
-import { Matcher, MatchResponse, Node } from 'interweave';
+import { Matcher, MatchResponse, Node, ChildrenNode } from 'interweave';
 import EMOJI_REGEX from 'emojibase-regex';
 import EMOTICON_REGEX from 'emojibase-regex/emoticon';
 import SHORTCODE_REGEX from 'emojibase-regex/shortcode';
 import Emoji, { EmojiProps } from './Emoji';
 import EmojiDataManager from './EmojiDataManager';
+
+export interface EmojiMatch {
+  emoticon?: string;
+  hexcode?: string;
+  shortcode?: string;
+  unicode?: string;
+}
 
 export interface EmojiMatcherOptions {
   convertEmoticon?: boolean;
@@ -41,7 +48,7 @@ export default class EmojiMatcher extends Matcher<EmojiProps, EmojiMatcherOption
     );
   }
 
-  replaceWith(match: string, props: EmojiProps): Node {
+  replaceWith(match: ChildrenNode, props: EmojiProps): Node {
     return React.createElement(Emoji, {
       ...props,
       renderUnicode: this.options.renderUnicode,
@@ -80,8 +87,8 @@ export default class EmojiMatcher extends Matcher<EmojiProps, EmojiMatcherOption
     return response;
   }
 
-  matchEmoticon(string: string): MatchResponse | null {
-    const response = this.doMatch(string, EMOTICON_BOUNDARY_REGEX, matches => ({
+  matchEmoticon(string: string): MatchResponse<EmojiMatch> | null {
+    const response = this.doMatch<EmojiMatch>(string, EMOTICON_BOUNDARY_REGEX, matches => ({
       emoticon: matches[0].trim(),
     }));
 
@@ -100,8 +107,8 @@ export default class EmojiMatcher extends Matcher<EmojiProps, EmojiMatcherOption
     return null;
   }
 
-  matchShortcode(string: string): MatchResponse | null {
-    const response = this.doMatch(string, SHORTCODE_REGEX, matches => ({
+  matchShortcode(string: string): MatchResponse<EmojiMatch> | null {
+    const response = this.doMatch<EmojiMatch>(string, SHORTCODE_REGEX, matches => ({
       shortcode: matches[0].toLowerCase(),
     }));
 
@@ -119,8 +126,8 @@ export default class EmojiMatcher extends Matcher<EmojiProps, EmojiMatcherOption
     return null;
   }
 
-  matchUnicode(string: string): MatchResponse | null {
-    const response = this.doMatch(string, EMOJI_REGEX, matches => ({
+  matchUnicode(string: string): MatchResponse<EmojiMatch> | null {
+    const response = this.doMatch<EmojiMatch>(string, EMOJI_REGEX, matches => ({
       unicode: matches[0],
     }));
 

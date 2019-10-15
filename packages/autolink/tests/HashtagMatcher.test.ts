@@ -84,6 +84,7 @@ describe('matchers/HashtagMatcher', () => {
         index: 0,
         match: '#hashtag',
         hashtagName: 'hashtag',
+        valid: true,
       });
     });
   });

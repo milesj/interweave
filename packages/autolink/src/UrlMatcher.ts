@@ -1,7 +1,11 @@
 import React from 'react';
 import { Matcher, MatchResponse, Node, ChildrenNode } from 'interweave';
 import Url, { UrlProps } from './Url';
-import { URL_PATTERN, TOP_LEVEL_TLDS } from './constants';
+import { URL_PATTERN, TOP_LEVEL_TLDS, EMAIL_DISTINCT_PATTERN } from './constants';
+
+export interface UrlMatch {
+  urlParts: UrlProps['urlParts'];
+}
 
 export interface UrlMatcherOptions {
   customTLDs?: string[];
@@ -33,8 +37,13 @@ export default class UrlMatcher extends Matcher<UrlProps, UrlMatcherOptions> {
     return 'a';
   }
 
-  match(string: string): MatchResponse | null {
+  match(string: string): MatchResponse<UrlMatch> | null {
     const response = this.doMatch(string, URL_PATTERN, this.handleMatches);
+
+    // False positives with URL auth scheme
+    if (response && response.match.match(EMAIL_DISTINCT_PATTERN)) {
+      response.valid = false;
+    }
 
     if (response && this.options.validateTLD) {
       const { host } = (response.urlParts as unknown) as UrlProps['urlParts'];
@@ -52,7 +61,7 @@ export default class UrlMatcher extends Matcher<UrlProps, UrlMatcherOptions> {
   /**
    * Package the matched response.
    */
-  handleMatches(matches: string[]): { [key: string]: string | object } {
+  handleMatches(matches: string[]): UrlMatch {
     return {
       urlParts: {
         auth: matches[2] ? matches[2].slice(0, -1) : '',

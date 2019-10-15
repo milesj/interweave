@@ -152,6 +152,7 @@ describe('matchers/IpMatcher', () => {
           query: '?with=query',
           fragment: '#fragment',
         },
+        valid: true,
       });
     });
   });

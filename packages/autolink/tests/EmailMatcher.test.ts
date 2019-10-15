@@ -129,6 +129,7 @@ describe('matchers/EmailMatcher', () => {
           username: 'user',
           host: 'domain.com',
         },
+        valid: true,
       });
     });
   });

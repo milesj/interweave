@@ -195,6 +195,7 @@ describe('EmojiMatcher', () => {
         match: MAN_EMOJI,
         unicode: MAN_EMOJI,
         hexcode: UNICODE_TO_HEXCODE[MAN_EMOJI],
+        valid: true,
       });
     });
 
@@ -208,6 +209,7 @@ describe('EmojiMatcher', () => {
         match: ':man:',
         shortcode: ':man:',
         hexcode: SHORTCODE_TO_HEXCODE[':man:'],
+        valid: true,
       });
     });
 
@@ -221,6 +223,7 @@ describe('EmojiMatcher', () => {
         match: ':)',
         emoticon: ':)',
         hexcode: EMOTICON_TO_HEXCODE[':)'],
+        valid: true,
       });
     });
   });
