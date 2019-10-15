@@ -1,6 +1,6 @@
 # Emoji Extension
 
-Who loves emojis? Everyone loves emojis. This package provides support for rendering emoji, either
+Who loves emojis? Everyone loves emojis! This package provides support for rendering emoji, either
 their unicode character, or with SVG/PNGs. It utilizes [Emojibase][emojibase] for accurate and
 up-to-date data.
 
@@ -26,7 +26,7 @@ up-to-date data.
 ```
 yarn add interweave interweave-emoji emojibase
 // Or
-npm install interweave interweave-emoji emojibase --save
+npm install interweave interweave-emoji emojibase
 ```
 
 ## Matching Emojis
@@ -48,29 +48,30 @@ import { EmojiMatcher } from 'interweave-emoji';
 The following props are available for `Emoji` components, all of which should be passed to an
 `Interweave` instance.
 
-- `emojiSize` (string | number) - The width and height of emojis. Defaults to `1em`.
-- `emojiLargeSize` (string | number) - The width and height of enlarged emojis. Defaults to `3em`.
-- `emojiPath` (string | func) - A path to the [PNG or SVG file](#displaying-svgs-or-pngs).
-- `enlargeEmoji` (bool) - Whether to enlarge the emoji or not. Automatically triggers via the
+- `emojiSize` (`string | number`) - The width and height of emojis. Defaults to `1em`.
+- `emojiLargeSize` (`string | number`) - The width and height of enlarged emojis. Defaults to `3em`.
+- `emojiPath` (`string | func`) - A path to the [PNG or SVG file](#displaying-svgs-or-pngs).
+- `enlargeEmoji` (`boolean`) - Whether to enlarge the emoji or not. Automatically triggers via the
   matcher but can be forced with this prop. Defaults to `false`.
-- `renderUnicode` (bool) - Render the unicode character instead of an image. Defaults to `false`.
+- `renderUnicode` (`boolean`) - Render the unicode character instead of an image. Defaults to
+  `false`.
 
 ### Match Result
 
 Both unicode literal characters and escape sequences are supported when matching. If a match is
 found, an `Emoji` component will be rendered and passed some of the following props.
 
-- `emoticon` (string) - If applicable, an emoticon for the specific emoji character.
-- `hexcode` (string) - The hexcode for the specific emoji character.
-- `shortcode` (string) - The shortcode for the specific emoji character.
-- `unicode` (string) - The unicode literal character.
+- `emoticon` (`string`) - If applicable, an emoticon for the specific emoji character.
+- `hexcode` (`string`) - The hexcode for the specific emoji character.
+- `shortcode` (`string`) - The shortcode for the specific emoji character.
+- `unicode` (`string`) - The unicode literal character.
 
 ## Loading Emoji Data
 
-Before emoji can be rendered, emoji data must be loaded from a CDN. To do this, the `useEmojiData`
+Before emoji can be rendered, emoji data must be loaded from a CDN. To do this, the `useEmojiData()`
 hook can be used, which will fetch emoji data from Emojibase's CDN. The hook returns a tuple, with
-the first item being an array of all emoji data, the second item the source object (locale, version,
-etc), and the third being the data manager instance.
+the first item being an array of all emoji data, the second item being the source object (locale,
+version, etc), and the third being the data manager instance.
 
 ```tsx
 import BaseInterweave, { InterweaveProps } from 'interweave';
@@ -85,11 +86,11 @@ export default function Interweave(props: InterweaveProps) {
 
 The hook supports the following optional options.
 
-- `compact` (bool) - Whether to load the compact or full dataset. Defaults to `false`.
-- `locale` (string) - The localized data to fetch. Defaults to `en`.
+- `compact` (`boolean`) - Whether to load the compact or full dataset. Defaults to `false`.
+- `locale` (`string`) - The localized data to fetch. Defaults to `en`.
   [View supported locales](https://github.com/milesj/emojibase#usage).
-- `throwErrors` (bool) - Throw an error when the fetch fails. Defaults to `true`.
-- `version` (string) - The `emojibase-data` release version to fetch. Defaults to `latest`.
+- `throwErrors` (`boolean`) - Throw an error when the fetch fails. Defaults to `true`.
+- `version` (`string`) - The `emojibase-data` release version to fetch. Defaults to `latest`.
   [Read more](https://github.com/milesj/emojibase#fetchfromcdn).
 
 ## Converting Emoticons
@@ -147,8 +148,8 @@ Now we need to provide an absolute path to the SVG/PNG file using the `emojiPath
 must contain a `{{hexcode}}` token, which will be replaced by the hexadecimal codepoint (hexcode) of
 the emoji.
 
-Or a function can be passed, which receives the hexcode as the 1st argument, `enlargeEmoji` value as
-the 2nd argument, `emojiSize` as the 3rd argument, and `emojiLargeSize` as the 4th argument.
+Or a function can be passed, which receives the hexcode as the 1st argument, and an object with
+`enlarged`, `smallSize`, `largeSize`, and `size` (either depending on enlarge state) properties.
 
 ```tsx
 <Interweave
@@ -159,7 +160,7 @@ the 2nd argument, `emojiSize` as the 3rd argument, and `emojiLargeSize` as the 4
 // OR
 
 <Interweave
-  emojiPath={hexcode => `https://example.com/images/emoji/${hexcode}.png`}
+  emojiPath={(hexcode, { size }) => `https://example.com/images/emoji/${size}/${hexcode}.png`}
   matchers={[new EmojiMatcher('emoji')]}
 />
 ```

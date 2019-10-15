@@ -112,9 +112,8 @@ describe('Emoji', () => {
         emojiSource={SOURCE_PROP}
         shortcode={shortcode}
         unicode={unicode}
-        emojiPath={(hex, large, size) =>
-          `http://foo.com/path/to/${large ? Number(size) * 2 : size}/${hex.toLowerCase()}.svg`
-        }
+        emojiPath={(hex, { size }) => `http://foo.com/path/to/${size}/${hex.toLowerCase()}.svg`}
+        emojiLargeSize={4}
         emojiSize={2}
         enlargeEmoji
       />,

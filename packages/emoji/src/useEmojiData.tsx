@@ -81,6 +81,7 @@ export default function useEmojiData({
     emojis,
     {
       compact,
+      error,
       locale,
       version,
     },

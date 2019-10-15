@@ -1,8 +1,8 @@
 # Matchers
 
 Matchers are the backbone of Interweave as they allow arbitrary insertion of React elements into
-strings, through the use of regex matching. This feature is quite powerful as it opens up many
-possibilities.
+strings, through the use of regex pattern matching. This feature is quite powerful as it opens up
+many possibilities.
 
 It works by matching patterns within a string, deconstructing it into tokens, and reconstructing it
 back into an array of strings and React elements, therefore, permitting it to be rendered by React's
@@ -13,14 +13,14 @@ github.com/milesj!", and a `UrlMatcher`, you'd get the following array.
 ['Check out my website, ', <Url>github.com/milesj</Url>, '!'];
 ```
 
-Matchers can be passed to each instance of `Interweave`. When adding a matcher, a unique name must
-be passed to the constructor.
+Matchers can be passed to each render of `Interweave`. When adding a matcher, a unique camel-case
+name must be passed to the constructor.
 
 ```tsx
 <Interweave matchers={[new CustomMatcher('foo')]} />
 ```
 
-To disable all matchers, per instance, pass the `disableMatchers` prop.
+To disable all matchers, per render, pass the `disableMatchers` prop.
 
 ```tsx
 <Interweave disableMatchers />
@@ -40,14 +40,19 @@ To create a custom matcher, implement a class that extends the base `Matcher` cl
 object. Both approaches will require the following methods to be defined (excluding callbacks).
 
 - `match(string: string)` - Match the passed string using a regex pattern. This method must return
-  `null` if no match is found, else it must return an object with a `match` key and the matched
-  value. Furthermore, any additional keys defined in this object will be passed as props to the
+  `null` if no match is found (will abort matching), else it must return an object with the
+  properties below. Any additional keys defined in this object will be passed as props to the
   rendered element.
-- `replaceWith(match: string, props: object)` - Returns a React element that replaces the matched
-  content in the string. The match is passed as the 1st argument, and any matched props or parent
-  props are passed as the 2nd argument.
-- `createElement(match: string, props: object)` - The same as `replaceWith` but used in object
-  matchers.
+  - `index` (`number`) - The starting index in which the match was found (is provided by the native
+    `String#match()`).
+  - `match` (`string`) - The content that was matched (is usually the 0-index in the result).
+  - `valid` (`boolean`) - Whether the match is valid or not. This can be used to control false
+    positives.
+- `replaceWith(children: ChildrenNode, props: object)` - Returns a React element that replaces the
+  matched content in the string. The parsed children are passed as the 1st argument, and any matched
+  props or parent props are passed as the 2nd argument.
+- `createElement(children: ChildrenNode, props: object)` - The same as `replaceWith` but used in
+  object matchers.
 - `asTag()` - The HTML tag name of the replacement element.
 - `onBeforeParse(content: string, props: object)` - Callback that fires before parsing. Is passed
   the source string and must return a string.
@@ -59,7 +64,7 @@ object. Both approaches will require the following methods to be defined (exclud
 ```tsx
 import { Matcher, MatchResponse, Node } from 'interweave';
 
-function match(string: string): MatchResponse | null {
+function match(string: string): MatchResponse<{ extraProp: string }> | null {
   const matches = string.match(/foo/);
 
   if (!matches) {
@@ -67,8 +72,10 @@ function match(string: string): MatchResponse | null {
   }
 
   return {
+    index: matches.index!,
     match: matches[0],
     extraProp: 'foo', // or matches[1], etc
+    valid: true,
   };
 }
 
@@ -78,8 +85,8 @@ class CustomMatcher extends Matcher<CustomProps> {
     return match(string);
   }
 
-  replaceWith(match: string, props: CustomProps): Node {
-    return <span {...props}>{match}</span>;
+  replaceWith(children: ChildrenNode, props: CustomProps): Node {
+    return <span {...props}>{children}</span>;
   }
 
   asTag(): string {
@@ -94,19 +101,19 @@ const matcher = {
   inverseName: 'noFoo',
   propName: 'foo',
   asTag: () => 'span',
-  createElement: (match, props) => <span {...props}>{match}</span>,
+  createElement: (children, props) => <span {...props}>{children}</span>,
   match,
 };
 ```
 
-To ease the matching process, there is a `doMatch` method on `Matcher` that handles the `null` and
+To ease the matching process, there is a `doMatch()` method on `Matcher` that handles the `null` and
 object building logic. Simply pass it a regex pattern and a callback to build the object.
 
 ```ts
 class CustomMatcher extends Matcher<CustomProps> {
   // ...
 
-  match(string: string): MatchResponse | null {
+  match(string: string): MatchResponse<{ extraProp: string }> | null {
     return this.doMatch(string, /foo/, matches => ({
       extraProp: 'foo',
     }));
@@ -117,7 +124,7 @@ class CustomMatcher extends Matcher<CustomProps> {
 ## Rendered Elements
 
 When a match is found, a React element is rendered (from a React component) from either the
-matcher's `replaceWith` method, or from a factory. What's a factory you ask? Simply put, it's a
+matcher's `replaceWith()` method, or from a factory. What's a factory you ask? Simply put, it's a
 component reference passed to the constructor of a matcher, allowing the rendered element to be
 customized for built-in or third-party matchers.
 
@@ -125,5 +132,5 @@ customized for built-in or third-party matchers.
 new CustomMatcher('foo', {}, SomeComponent);
 ```
 
-> Elements returned from `replaceWith` or the factory must return an HTML element with the same tag
-> name as defined by `asTag`.
+> Elements returned from `replaceWith()` or the factory must return an HTML element with the same
+> tag name as defined by `asTag()`.

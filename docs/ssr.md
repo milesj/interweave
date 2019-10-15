@@ -12,7 +12,7 @@ polyfill, based on the [parse5](https://www.npmjs.com/package/parse5) HTML parse
 yarn add interweave-ssr --dev
 ```
 
-Begin by importing and executing the `polyfillDOMImplementation` function before rendering React.
+Begin by importing and executing the `polyfillDOMImplementation()` function before rendering React.
 This will polyfill the appropriate DOM that Interweave relies on.
 
 ```ts
@@ -22,8 +22,8 @@ polyfillDOMImplementation();
 ```
 
 > This option is very _lightweight_ and only supports the bare minimum. For example, nodes in the
-> tree only support the `getAttribute`, `hasAttribute`, `removeAttribute`, and `setAttribute`
-> methods
+> tree only support the `getAttribute()`, `hasAttribute()`, `removeAttribute()`, and
+> `setAttribute()` methods
 > ([view all available](https://github.com/milesj/interweave/blob/master/packages/ssr/src/index.ts#L59)).
 > If you encounter a situation where you need more functionality, please submit a pull request!
 

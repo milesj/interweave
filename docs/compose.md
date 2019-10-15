@@ -1,4 +1,4 @@
-# Global Configuration
+# Composition
 
 We suggest composing around `Interweave` using a custom component. This provides more options for
 customization, like the choice between Twitter and Instagram hashtags, or PNG or SVG emojis.
@@ -8,7 +8,7 @@ import React from 'react';
 import { stripHexcode } from 'emojibase';
 import BaseInterweave, { InterweaveProps, Filter, Matcher } from 'interweave';
 import { IpMatcher, UrlMatcher, EmailMatcher, HashtagMatcher } from 'interweave-autolink';
-import { EmojiMatcher } from 'interweave-emoji';
+import { EmojiMatcher, PathConfig } from 'interweave-emoji';
 
 const globalFilters: Filter[] = [new CustomFilter()];
 
@@ -24,7 +24,7 @@ const globalMatchers: Matcher[] = [
   }),
 ];
 
-function getEmojiPath(hexcode: string, enlarged: boolean): string {
+function getEmojiPath(hexcode: string, { enlarged }: PathConfig): string {
   return `//cdn.jsdelivr.net/emojione/assets/3.1/png/${enlarged ? 64 : 32}/${stripHexcode(
     hexcode,
   ).toLowerCase()}.png`;
