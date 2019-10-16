@@ -19,7 +19,7 @@ Provides URL, IP, email, and hashtag autolinking support for
 ```
 yarn add interweave interweave-autolink
 // Or
-npm install interweave interweave-autolink --save
+npm install interweave interweave-autolink
 ```
 
 ## Documentation

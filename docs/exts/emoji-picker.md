@@ -9,6 +9,7 @@ A React based emoji picker powered by [Interweave](https://github.com/milesj/int
 - Emoji grouping and categorization.
 - Multi-word deep search.
 - Skin tone palette selector.
+- Variation gallery selector.
 - Enlarged preview on hover.
 - Emoticons and shortcodes.
 - Recently and frequently used.
@@ -24,7 +25,7 @@ A React based emoji picker powered by [Interweave](https://github.com/milesj/int
 
 ## Requirements
 
-- React 16.3+
+- React 16.8+
 - Interweave + Emoji
 - [Emojibase][emojibase]
 
@@ -50,7 +51,7 @@ import EmojiPicker from 'interweave-emoji-picker';
 ```
 
 The [sizing and path emoji props](./emoji.md#displaying-svgs-or-pngs) are required. View the
-[TypeScript interface](https://github.com/milesj/interweave/blob/master/packages/emoji-picker/src/Picker.tsx#L43)
+[TypeScript interface](https://github.com/milesj/interweave/blob/master/packages/emoji-picker/src/Picker.tsx)
 for a list of all available props.
 
 ## Allow and Block Lists

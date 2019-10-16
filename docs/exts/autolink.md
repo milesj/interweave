@@ -1,7 +1,7 @@
 # Autolink Extension
 
 Autolinking is the concept of matching patterns within a string and wrapping the matched result in
-an anchor link. This process is achieved with Interweave matchers.
+an anchor link. This process is achieved through Interweave matchers.
 
 > Note: The regex patterns used in autolinking do not conform to their official RFC specifications,
 > as we need to take into account word boundaries, punctuation, and more. Instead, the patterns will
@@ -9,7 +9,7 @@ an anchor link. This process is achieved with Interweave matchers.
 
 ```tsx
 <Interweave
-  content="This contains a URL, https://github.com/milesj/interweave, and a hashtag, #interweave, that will be converted to an anchor link!"
+  content="This contains a URL, https://github.com/milesj/interweave, and a #hashtag, that will be converted to an anchor link!"
   matchers={[new UrlMatcher('url'), new HashtagMatcher('hashtag')]}
 />
 ```
@@ -30,13 +30,11 @@ user and password auth, host, port, path, query, and fragment.
 ```tsx
 import Interweave from 'interweave';
 import { UrlMatcher } from 'interweave-autolink';
-```
 
-```tsx
 <Interweave
   content="URL: https://github.com/milesj/interweave"
   matchers={[new UrlMatcher('url')]}
-/>
+/>;
 ```
 
 ### TLD Support
@@ -66,8 +64,8 @@ The following props are available for `Url` components, all of which should be p
 
 If a match is found, a `Url` component will be rendered and passed the following props.
 
-- `children` (`string`) - The entire URL/IP that was matched.
-- `urlParts` (`object`)
+- `url` (`string`) - The entire URL/IP that was matched.
+- `urlParts` (`object`) - Parts for the previous.
   - `scheme` (`string`) - The protocol. Defaults to "http".
   - `auth` (`string`) - The username and password authorization, excluding `@`.
   - `host` (`string`) - The host, domain, or IP address.
@@ -86,10 +84,8 @@ included.
 ```tsx
 import Interweave from 'interweave';
 import { IpMatcher } from 'interweave-autolink';
-```
 
-```tsx
-<Interweave content="IP: 127.0.0.1" matchers={[new IpMatcher('ip')]} />
+<Interweave content="IP: 127.0.0.1" matchers={[new IpMatcher('ip')]} />;
 ```
 
 ### Props
@@ -111,10 +107,8 @@ The `EmailMatcher` will match an email address and link it using a "mailto:" tar
 ```tsx
 import Interweave from 'interweave';
 import { EmailMatcher } from 'interweave-autolink';
-```
 
-```tsx
-<Interweave content="Email: miles@interweave.com" matchers={[new EmailMatcher('email')]} />
+<Interweave content="Email: miles@interweave.com" matchers={[new EmailMatcher('email')]} />;
 ```
 
 ### Props
@@ -128,7 +122,7 @@ The following props are available for `Email` components, all of which should be
 
 If a match is found, an `Email` component will be rendered and passed the following props.
 
-- `children` (`ChildrenNode`) - The entire email address that was matched.
+- `email` (`string`) - The entire email address that was matched.
 - `emailParts` (`object`)
   - `username` (`string`) - The username. Found before the `@`.
   - `host` (`string`) - The host or domain. Found after the `@`.
@@ -142,10 +136,8 @@ and dash (`-`) characters, and must start with a `#`.
 ```tsx
 import Interweave from 'interweave';
 import { HashtagMatcher } from 'interweave-autolink';
-```
 
-```tsx
-<Interweave content="Hashtag: #interweave" matchers={[new HashtagMatcher('hashtag')]} />
+<Interweave content="Hashtag: #interweave" matchers={[new HashtagMatcher('hashtag')]} />;
 ```
 
 ### Props
@@ -153,7 +145,8 @@ import { HashtagMatcher } from 'interweave-autolink';
 The following props are available for `Hashtag` components, all of which should be passed to an
 `Interweave` instance.
 
-- `encodeHashtag` (`boolean`) - Encodes the hashtag using `encodeURIComponent`. Defaults to `false`.
+- `encodeHashtag` (`boolean`) - Encodes the hashtag using `encodeURIComponent()`. Defaults to
+  `false`.
 - `hashtagUrl` (`string | func`) - The URL to interpolate the matched hashtag with.
 - `newWindow` (`boolean`) - Open links in a new window. Defaults to `false`.
 - `preserveHash` (`boolean`) - Preserve the leading hash (`#`) when interpolating into a URL.
@@ -182,5 +175,4 @@ be passed, which receives the hashtag as the 1st argument.
 
 If a match is found, a `Hashtag` component will be rendered and passed the following props.
 
-- `children` (`string`) - The entire hashtag that was matched.
-- `hashtagName` (`string`) - The hashtag name without `#`.
+- `hashtag` (`string`) - The entire hashtag that was matched (with `#`).

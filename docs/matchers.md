@@ -9,7 +9,7 @@ back into an array of strings and React elements, therefore, permitting it to be
 virtual DOM layer. For example, take the following string "Check out my website,
 github.com/milesj!", and a `UrlMatcher`, you'd get the following array.
 
-```js
+```tsx
 ['Check out my website, ', <Url>github.com/milesj</Url>, '!'];
 ```
 
