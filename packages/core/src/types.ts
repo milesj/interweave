@@ -1,7 +1,6 @@
 import React from 'react';
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export type Node = null | string | React.ReactElement<any>;
+export type Node = null | string | React.ReactElement<unknown>;
 
 export type ChildrenNode = string | Node[];
 
