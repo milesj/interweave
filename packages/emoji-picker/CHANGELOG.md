@@ -1,3 +1,30 @@
+# 5.0.0
+
+#### 💥 Breaking
+
+- Updated `interweave` peer requirement to v12.
+- Updated `interweave-emoji` peer requirement to v5.
+- Updated `react` requirement to v16.8.
+- Renamed `blacklist` prop to `blockList`.
+- Renamed `whitelist` prop to `allowList`.
+- Renamed `GROUP_KEY_SMILEYS_PEOPLE` constant to `GROUP_KEY_SMILEYS_EMOTION`.
+- Renamed `smileysPeople` message key to `smileysEmotion`.
+
+#### 🚀 Updates
+
+- Updated `emojibase` to v3, which includes new 2019 emojis.
+- Added a variation gallery view (shift + click an emoji that has multiple skin variations).
+- Added `data-skin-color` and `data-skin-tone` attributes to skin tone buttons.
+- Added `GROUP_KEY_PEOPLE_BODY`, `GROUP_KEY_COMPONENT`, and `GROUP_KEY_VARIATIONS` constants.
+- Added `peopleBody`, `variations`, and `previewShiftMore` message keys.
+- Rewrote all components to use function components. Reduced file sizes by 43%.
+- Rewrote emoji list view using `react-window`, from `react-virtualized`.
+- Refactored internals to use `useContext` and `useEffect`.
+
+#### 📦 Dependencies
+
+- Updated all dependencies.
+
 ### 4.0.2 - 2019-09-23
 
 #### 📦 Dependencies

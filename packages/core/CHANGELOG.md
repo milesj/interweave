@@ -1,3 +1,22 @@
+# 12.0.0
+
+#### 💥 Breaking
+
+- Updated `react` requirement to v16.8.
+- Updated `Matcher#createElement` and `Matcher#replaceWith` to receive any React node, not just the
+  matched string.
+- Updated `Matcher#match` response structure. Must return `index`, `length`, and `valid` properties.
+
+#### 🚀 Updates
+
+- Added interleaving supports to matchers, which allows for nested elements to be possible. Required
+  a heavy rewrite of the parsing and matching layer, so may incur performance regressions.
+- Rewrote all components to use function components. Reduced file sizes by 35%.
+
+#### 📦 Dependencies
+
+- Updated all dependencies.
+
 ### 11.2.0 - 2019-09-23
 
 #### 🚀 Updates

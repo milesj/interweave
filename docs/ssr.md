@@ -3,7 +3,7 @@
 Interweave utilizes the DOM to parse and validate HTML, and as such, requires a polyfill for
 server-side rendering to work correctly. There are 2 options to solve this.
 
-## Interweave (IN DEVELOPMENT)
+## Interweave
 
 The [interweave-ssr](https://www.npmjs.com/package/interweave-ssr) package provides a simple DOM
 polyfill, based on the [parse5](https://www.npmjs.com/package/parse5) HTML parser.

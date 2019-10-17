@@ -1,3 +1,23 @@
+# 4.0.0
+
+#### 💥 Breaking
+
+- Updated `interweave` peer requirement to v12.
+- Updated `react` requirement to v16.8.
+- Updated `children` prop for all components to no longer be a string. Can now be any React node.
+- Removed `hashtagName` prop from `Hashtag` component.
+
+#### 🚀 Updates
+
+- Added `email` prop to `Email` component (passed from `EmailMatcher`).
+- Added `hashtag` prop to `Hashtag` component (passed from `HashtagMatcher`).
+- Added `url` prop to `Url` component (passed from `UrlMatcher`).
+- Rewrote all components to use function components. Reduced file sizes by 65%.
+
+#### 📦 Dependencies
+
+- Updated all dependencies.
+
 ### 3.0.2 - 2019-09-23
 
 #### 📦 Dependencies

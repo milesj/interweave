@@ -1,3 +1,23 @@
+# 5.0.0
+
+#### 💥 Breaking
+
+- Updated `interweave` peer requirement to v12.
+- Updated `react` requirement to v16.8.
+- Updated `emojiPath` prop to receive an object of sizes as the 2nd argument, instead of the 3
+  trailing size arguments.
+- Removed the `withEmojiData` HOC.
+
+#### 🚀 Updates
+
+- Updated `emojibase` to v3, which includes new 2019 emojis.
+- Added a new `useEmojiData` hook.
+- Rewrote all components to use function components. Reduced file sizes by 28%.
+
+#### 📦 Dependencies
+
+- Updated all dependencies.
+
 ### 4.1.1 - 2019-09-23
 
 #### 🐞 Fixes
