@@ -101,6 +101,7 @@ describe('matchers/IpMatcher', () => {
 
       return matcher.replaceWith(ip, {
         children: ip,
+        url: ip,
         urlParts: {
           host: '',
           path: '',
@@ -141,7 +142,10 @@ describe('matchers/IpMatcher', () => {
 
     it('returns object for valid match', () => {
       expect(matcher.match('https://127.0.0.1:8080/some/path?with=query#fragment')).toEqual({
+        index: 0,
+        length: 52,
         match: 'https://127.0.0.1:8080/some/path?with=query#fragment',
+        url: 'https://127.0.0.1:8080/some/path?with=query#fragment',
         urlParts: {
           scheme: 'https',
           auth: '',
@@ -151,6 +155,7 @@ describe('matchers/IpMatcher', () => {
           query: '?with=query',
           fragment: '#fragment',
         },
+        valid: true,
       });
     });
   });

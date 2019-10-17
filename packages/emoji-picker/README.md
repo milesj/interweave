@@ -32,7 +32,7 @@ the following features:
 ```
 yarn add interweave interweave-emoji interweave-emoji-picker emojibase
 // Or
-npm install interweave interweave-emoji interweave-emoji-picker emojibase --save
+npm install interweave interweave-emoji interweave-emoji-picker emojibase
 ```
 
 ## Documentation

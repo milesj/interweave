@@ -7,14 +7,20 @@ export interface CanonicalEmoji extends Emoji {
   unicode: Unicode;
 }
 
-export type Path =
-  | string
-  | ((hexcode: Hexcode, enlarged: boolean, smallSize: Size, largeSize: Size) => string);
+export interface PathConfig {
+  enlarged: boolean;
+  largeSize: Size;
+  size: Size;
+  smallSize: Size;
+}
+
+export type Path = string | ((hexcode: Hexcode, config: PathConfig) => string);
 
 export type Size = string | number;
 
 export interface Source {
   compact: boolean;
+  error?: Error;
   locale: string;
   version: string;
 }

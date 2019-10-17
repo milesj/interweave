@@ -1,12 +1,12 @@
 import React from 'react';
-import { MatchCallback, MatchResponse, Node } from './types';
+import { MatchCallback, MatchResponse, Node, ChildrenNode } from './types';
 
 export interface MatcherInterface<T> {
   inverseName: string;
   propName: string;
   asTag(): string;
-  createElement(match: string, props: T): Node;
-  match(value: string): MatchResponse | null;
+  createElement(children: ChildrenNode, props: T): Node;
+  match(value: string): MatchResponse<Partial<T>> | null;
   onBeforeParse?(content: string, props: T): string;
   onAfterParse?(content: Node[], props: T): Node[];
 }
@@ -39,13 +39,13 @@ export default abstract class Matcher<Props extends object = {}, Options extends
    * Attempts to create a React element using a custom user provided factory,
    * or the default matcher factory.
    */
-  createElement(match: string, props: Props): Node {
+  createElement(children: ChildrenNode, props: Props): Node {
     let element: Node = null;
 
     if (this.factory) {
-      element = React.createElement(this.factory, props, match);
+      element = React.createElement(this.factory, props, children);
     } else {
-      element = this.replaceWith(match, props);
+      element = this.replaceWith(children, props);
     }
 
     if (__DEV__) {
@@ -61,16 +61,23 @@ export default abstract class Matcher<Props extends object = {}, Options extends
    * Trigger the actual pattern match and package the matched
    * response through a callback.
    */
-  doMatch(string: string, pattern: string | RegExp, callback: MatchCallback): MatchResponse | null {
-    const matches = string.match(pattern instanceof RegExp ? pattern : new RegExp(pattern, 'i'));
+  doMatch<T>(
+    string: string,
+    pattern: string | RegExp,
+    callback: MatchCallback<T>,
+  ): MatchResponse<T> | null {
+    const match = string.match(pattern instanceof RegExp ? pattern : new RegExp(pattern, 'i'));
 
-    if (!matches) {
+    if (!match) {
       return null;
     }
 
     return {
-      ...callback(matches),
-      match: matches[0],
+      match: match[0],
+      ...callback(match),
+      index: match.index!,
+      length: match[0].length,
+      valid: true,
     };
   }
 
@@ -91,7 +98,7 @@ export default abstract class Matcher<Props extends object = {}, Options extends
   /**
    * Replace the match with a React element based on the matched token and optional props.
    */
-  abstract replaceWith(match: string, props: Props): Node;
+  abstract replaceWith(children: ChildrenNode, props: Props): Node;
 
   /**
    * Defines the HTML tag name that the resulting React element will be.
@@ -102,5 +109,6 @@ export default abstract class Matcher<Props extends object = {}, Options extends
    * Attempt to match against the defined string. Return `null` if no match found,
    * else return the `match` and any optional props to pass along.
    */
-  abstract match(string: string): MatchResponse | null;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  abstract match(string: string): MatchResponse<any> | null;
 }

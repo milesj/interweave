@@ -5,7 +5,7 @@ import Filter from './Filter';
 import Matcher from './Matcher';
 import Element from './Element';
 import { TAGS } from './constants';
-import { Node, NodeConfig } from './types';
+import { Node, NodeConfig, MatchResponse, ChildrenNode } from './types';
 
 export const TOKEN_LOCATIONS = [
   'no tokens',
@@ -46,9 +46,9 @@ export const VALID_EMOJIS = [
   ['1F3C0', '🏀', ':basketball:'],
 ];
 
-export function createExpectedToken(
-  value: any,
-  factory: (value: any, count: number) => React.ReactNode,
+export function createExpectedToken<T>(
+  value: T,
+  factory: (value: T, count: number) => React.ReactNode,
   index: number,
   join: boolean = false,
 ): React.ReactNode | string {
@@ -102,7 +102,13 @@ export const parentConfig: NodeConfig = {
   ...TAGS.div,
 };
 
-export function matchCodeTag(string: string, tag: string): any {
+export function matchCodeTag(
+  string: string,
+  tag: string,
+): MatchResponse<{
+  children: string;
+  customProp: string;
+}> | null {
   const matches = string.match(new RegExp(`\\[${tag}\\]`));
 
   if (!matches) {
@@ -112,11 +118,14 @@ export function matchCodeTag(string: string, tag: string): any {
   return {
     children: tag,
     customProp: 'foo',
+    index: matches.index!,
+    length: matches[0].length,
     match: matches[0],
+    valid: true,
   };
 }
 
-export class CodeTagMatcher extends Matcher<any> {
+export class CodeTagMatcher extends Matcher<{}> {
   tag: string;
 
   key: string;
@@ -128,7 +137,7 @@ export class CodeTagMatcher extends Matcher<any> {
     this.key = key;
   }
 
-  replaceWith(match: string, props: any = {}): Node {
+  replaceWith(match: ChildrenNode, props: { children?: string; key?: string } = {}): Node {
     const { children } = props;
 
     if (this.key) {
@@ -138,7 +147,7 @@ export class CodeTagMatcher extends Matcher<any> {
 
     return (
       <Element tagName="span" {...props}>
-        {children.toUpperCase()}
+        {children!.toUpperCase()}
       </Element>
     );
   }
@@ -152,9 +161,37 @@ export class CodeTagMatcher extends Matcher<any> {
   }
 }
 
+export class MarkdownBoldMatcher extends Matcher<any> {
+  replaceWith(children: ChildrenNode, props: object): Node {
+    return <b {...props}>{children}</b>;
+  }
+
+  asTag() {
+    return 'b';
+  }
+
+  match(value: string) {
+    return this.doMatch(value, /\*\*([^*]+)\*\*/u, matches => ({ match: matches[1] }));
+  }
+}
+
+export class MarkdownItalicMatcher extends Matcher<any> {
+  replaceWith(children: ChildrenNode, props: object): Node {
+    return <i {...props}>{children}</i>;
+  }
+
+  asTag() {
+    return 'i';
+  }
+
+  match(value: string) {
+    return this.doMatch(value, /_([^_]+)_/u, matches => ({ match: matches[1] }));
+  }
+}
+
 export class MockMatcher extends Matcher<any> {
-  replaceWith(match: string, props: any): Node {
-    return <div {...props}>{match}</div>;
+  replaceWith(children: ChildrenNode, props: any): Node {
+    return <div {...props}>{children}</div>;
   }
 
   asTag() {

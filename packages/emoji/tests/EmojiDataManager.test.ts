@@ -23,7 +23,6 @@ describe('EmojiDataManager', () => {
       expect(manager.getData()).toHaveLength(0);
       expect(manager.getFlatData()).toHaveLength(0);
 
-      // @ts-ignore
       manager.parseEmojiData(loadEmojiData());
 
       expect(manager.getData()).toHaveLength(1724);

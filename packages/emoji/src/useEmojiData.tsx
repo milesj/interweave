@@ -14,7 +14,6 @@ export interface UseEmojiDataOptions {
   version?: string;
 }
 
-// Share between all instances
 const promises: Map<string, Promise<CanonicalEmoji[]>> = new Map();
 
 export function resetLoaded() {
@@ -81,6 +80,7 @@ export default function useEmojiData({
     emojis,
     {
       compact,
+      error,
       locale,
       version,
     },

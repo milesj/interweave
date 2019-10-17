@@ -2,6 +2,8 @@ import React from 'react';
 
 export type Node = null | string | React.ReactElement<unknown>;
 
+export type ChildrenNode = string | Node[];
+
 export interface NodeConfig {
   // Only children
   children: string[];
@@ -37,12 +39,14 @@ export type TransformCallback = (
   config: NodeConfig,
 ) => React.ReactNode;
 
-export type MatchCallback = (matches: string[]) => object;
+export type MatchCallback<T> = (matches: string[]) => T;
 
-export interface MatchResponse {
+export type MatchResponse<T> = T & {
+  index: number;
+  length: number;
   match: string;
-  [key: string]: string;
-}
+  valid: boolean;
+};
 
 export interface ConfigMap {
   [key: string]: Partial<NodeConfig>;

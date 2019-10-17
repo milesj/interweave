@@ -14,6 +14,7 @@ exports[`Interweave (with autolinking) doesnt render anchor links within anchor 
     parsedContent={[
       "- ",
       <Url
+      url="https://127.0.0.1/foo"
       urlParts={{ auth: "", fragment: "", host: "127.0.0.1", path: "/foo", port: "", ... 2 more }}
     />,
       "
@@ -29,6 +30,7 @@ exports[`Interweave (with autolinking) doesnt render anchor links within anchor 
       <div>
         - 
         <Url
+          url="https://127.0.0.1/foo"
           urlParts={{ auth: "", fragment: "", host: "127.0.0.1", path: "/foo", port: "", ... 2 more }}
         >
           <Link href="https://127.0.0.1/foo">
@@ -47,6 +49,7 @@ exports[`Interweave (with autolinking) doesnt render anchor links within anchor 
         
 - (
         <Url
+          url="http://domain.com/some/path?with=query"
           urlParts={{
             auth: "",
             fragment: "",
@@ -120,7 +123,10 @@ exports[`Interweave (with autolinking) renders HTML text with all matchers 1`] =
               <b>Consectetur adipiscing elit.</b>
             </Element>
              Donec massa lorem, mollis non commodo quis, ultricies at elit. 
-            <Email emailParts={{ host: "domain.com", username: "email" }}>
+            <Email
+              email="email@domain.com"
+              emailParts={{ host: "domain.com", username: "email" }}
+            >
               <Link href="mailto:email@domain.com">
                 <a href="mailto:email@domain.com" rel="noopener noreferrer">
                   email@domain.com
@@ -128,8 +134,8 @@ exports[`Interweave (with autolinking) renders HTML text with all matchers 1`] =
               </Link>
             </Email>
             . Aliquam a arcu porttitor, aliquam eros sed, convallis massa. Nunc vitae vehicula quam, in feugiat ligula. 
-            <Hashtag hashtagName="interweave">
-              <Link hashtagName="interweave" href="interweave">
+            <Hashtag hashtag="#interweave">
+              <Link href="interweave">
                 <a href="interweave" rel="noopener noreferrer">
                   #interweave
                 </a>
@@ -155,6 +161,7 @@ exports[`Interweave (with autolinking) renders HTML text with all matchers 1`] =
             </Element>
             . Maecenas sem nulla, tempor nec risus nec, ultricies ultricies magna. 
             <Url
+              url="https://127.0.0.1/foo"
               urlParts={{ auth: "", fragment: "", host: "127.0.0.1", path: "/foo", port: "", ... 2 more }}
             >
               <Link href="https://127.0.0.1/foo">
@@ -165,6 +172,7 @@ exports[`Interweave (with autolinking) renders HTML text with all matchers 1`] =
             </Url>
              Nulla malesuada lacinia libero non mollis. Curabitur id lacus id dolor vestibulum ornare quis a nisi (
             <Url
+              url="http://domain.com/some/path?with=query"
               urlParts={{
                 auth: "",
                 fragment: "",
@@ -191,24 +199,24 @@ exports[`Interweave (with autolinking) renders HTML text with all matchers 1`] =
 
         <Element tagName="section">
           <section>
-            <Hashtag hashtagName="blessed">
-              <Link hashtagName="blessed" href="blessed">
+            <Hashtag hashtag="#blessed">
+              <Link href="blessed">
                 <a href="blessed" rel="noopener noreferrer">
                   #blessed
                 </a>
               </Link>
             </Hashtag>
              
-            <Hashtag hashtagName="interweave">
-              <Link hashtagName="interweave" href="interweave">
+            <Hashtag hashtag="#interweave">
+              <Link href="interweave">
                 <a href="interweave" rel="noopener noreferrer">
                   #interweave
                 </a>
               </Link>
             </Hashtag>
              
-            <Hashtag hashtagName="milesj">
-              <Link hashtagName="milesj" href="milesj">
+            <Hashtag hashtag="#milesj">
+              <Link href="milesj">
                 <a href="milesj" rel="noopener noreferrer">
                   #milesj
                 </a>
@@ -236,9 +244,12 @@ exports[`Interweave (with autolinking) renders large blocks of text with all mat
     emptyContent={null}
     parsedContent={[
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec massa lorem, mollis non commodo quis, ultricies at elit. ",
-      <Email emailParts={{ host: "domain.com", username: "email" }} />,
+      <Email
+      email="email@domain.com"
+      emailParts={{ host: "domain.com", username: "email" }}
+    />,
       ". Aliquam a arcu porttitor, aliquam eros sed, convallis massa. Nunc vitae vehicula quam, in feugiat ligula. ",
-      <Hashtag hashtagName="interweave" />,
+      <Hashtag hashtag="#interweave" />,
       " Donec eu sem non nibh condimentum luctus. Vivamus pharetra feugiat blandit. Vestibulum neque velit, semper id vestibulum id, viverra a felis. Integer convallis in orci nec bibendum. Ut consequat posuere metus, ",
       ... 16 more,
     ]}
@@ -247,7 +258,10 @@ exports[`Interweave (with autolinking) renders large blocks of text with all mat
     <Element tagName="div">
       <div>
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec massa lorem, mollis non commodo quis, ultricies at elit. 
-        <Email emailParts={{ host: "domain.com", username: "email" }}>
+        <Email
+          email="email@domain.com"
+          emailParts={{ host: "domain.com", username: "email" }}
+        >
           <Link href="mailto:email@domain.com">
             <a href="mailto:email@domain.com" rel="noopener noreferrer">
               email@domain.com
@@ -255,8 +269,8 @@ exports[`Interweave (with autolinking) renders large blocks of text with all mat
           </Link>
         </Email>
         . Aliquam a arcu porttitor, aliquam eros sed, convallis massa. Nunc vitae vehicula quam, in feugiat ligula. 
-        <Hashtag hashtagName="interweave">
-          <Link hashtagName="interweave" href="interweave">
+        <Hashtag hashtag="#interweave">
+          <Link href="interweave">
             <a href="interweave" rel="noopener noreferrer">
               #interweave
             </a>
@@ -264,6 +278,7 @@ exports[`Interweave (with autolinking) renders large blocks of text with all mat
         </Hashtag>
          Donec eu sem non nibh condimentum luctus. Vivamus pharetra feugiat blandit. Vestibulum neque velit, semper id vestibulum id, viverra a felis. Integer convallis in orci nec bibendum. Ut consequat posuere metus, 
         <Url
+          url="www.domain.com"
           urlParts={{ auth: "", fragment: "", host: "www.domain.com", path: "", port: "", ... 2 more }}
         >
           <Link href="http://www.domain.com">
@@ -281,6 +296,7 @@ exports[`Interweave (with autolinking) renders large blocks of text with all mat
         </Element>
         Curabitur lectus odio, tempus quis velit vitae, cursus sagittis nulla. Maecenas sem nulla, tempor nec risus nec, ultricies ultricies magna. 
         <Url
+          url="https://127.0.0.1/foo"
           urlParts={{ auth: "", fragment: "", host: "127.0.0.1", path: "/foo", port: "", ... 2 more }}
         >
           <Link href="https://127.0.0.1/foo">
@@ -291,6 +307,7 @@ exports[`Interweave (with autolinking) renders large blocks of text with all mat
         </Url>
          Nulla malesuada lacinia libero non mollis. Curabitur id lacus id dolor vestibulum ornare quis a nisi (
         <Url
+          url="http://domain.com/some/path?with=query"
           urlParts={{
             auth: "",
             fragment: "",
@@ -316,24 +333,24 @@ exports[`Interweave (with autolinking) renders large blocks of text with all mat
         <Element selfClose tagName="br">
           <br />
         </Element>
-        <Hashtag hashtagName="blessed">
-          <Link hashtagName="blessed" href="blessed">
+        <Hashtag hashtag="#blessed">
+          <Link href="blessed">
             <a href="blessed" rel="noopener noreferrer">
               #blessed
             </a>
           </Link>
         </Hashtag>
          
-        <Hashtag hashtagName="interweave">
-          <Link hashtagName="interweave" href="interweave">
+        <Hashtag hashtag="#interweave">
+          <Link href="interweave">
             <a href="interweave" rel="noopener noreferrer">
               #interweave
             </a>
           </Link>
         </Hashtag>
          
-        <Hashtag hashtagName="milesj">
-          <Link hashtagName="milesj" href="milesj">
+        <Hashtag hashtag="#milesj">
+          <Link href="milesj">
             <a href="milesj" rel="noopener noreferrer">
               #milesj
             </a>

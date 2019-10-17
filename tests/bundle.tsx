@@ -5,7 +5,7 @@ import ReactDOM from 'react-dom';
 import { stripHexcode } from 'emojibase';
 import BaseInterweave, { InterweaveProps } from 'interweave';
 import { EmailMatcher, HashtagMatcher, IpMatcher, UrlMatcher } from 'interweave-autolink';
-import { Emoji as BaseEmoji, EmojiProps, EmojiMatcher, useEmojiData } from 'interweave-emoji';
+import { Emoji as BaseEmoji, EmojiProps, EmojiMatcher, useEmojiData, PathConfig } from 'interweave-emoji';
 import EmojiPicker from 'interweave-emoji-picker';
 import { AllMatcherProps } from 'interweave/lib/Interweave';
 
@@ -25,8 +25,8 @@ Me.<br /><br />
 Help!`;
 
 // http://getemoji.com/
-function emojiPath(hexcode: string, large: boolean) {
-  return `https://cdn.jsdelivr.net/emojione/assets/4.5/png/${large ? 64 : 32}/${stripHexcode(
+function emojiPath(hexcode: string, { enlarged }: PathConfig) {
+  return `https://cdn.jsdelivr.net/emojione/assets/4.5/png/${enlarged ? 64 : 32}/${stripHexcode(
     hexcode,
   ).toLowerCase()}.png`;
 }

@@ -96,7 +96,12 @@ export default function Emoji({
   let path = emojiPath || '{{hexcode}}';
 
   if (typeof path === 'function') {
-    path = path(emoji.hexcode, enlargeEmoji, emojiSize, emojiLargeSize);
+    path = path(emoji.hexcode, {
+      enlarged: enlargeEmoji,
+      largeSize: emojiLargeSize,
+      size: enlargeEmoji ? emojiLargeSize : emojiSize,
+      smallSize: emojiSize,
+    });
   } else {
     path = path.replace('{{hexcode}}', emoji.hexcode);
   }

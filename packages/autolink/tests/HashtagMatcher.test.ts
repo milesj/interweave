@@ -51,7 +51,7 @@ describe('matchers/HashtagMatcher', () => {
     const createHashtag = (hashtag: string, key: number) =>
       matcher.replaceWith(hashtag, {
         children: hashtag,
-        hashtagName: hashtag.slice(1),
+        hashtag,
         key,
       });
 
@@ -81,8 +81,11 @@ describe('matchers/HashtagMatcher', () => {
 
     it('returns object for valid match', () => {
       expect(matcher.match('#hashtag')).toEqual({
+        index: 0,
+        length: 8,
         match: '#hashtag',
-        hashtagName: 'hashtag',
+        hashtag: '#hashtag',
+        valid: true,
       });
     });
   });

@@ -95,10 +95,8 @@ function transform(node: HTMLElement, children: Node[]): React.ReactNode {
     return <Link href={node.getAttribute('href')}>{children}</Link>;
   }
 }
-```
 
-```tsx
-<Interweave transform={transform} />
+<Interweave transform={transform} />;
 ```
 
 Note that `transform` is run before checking the allowed list, permitting you to use non-allowed

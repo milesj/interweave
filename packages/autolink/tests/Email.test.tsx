@@ -7,14 +7,17 @@ describe('components/Email', () => {
   it('can pass props to Link', () => {
     const func = () => {};
     const { root } = render<EmailProps>(
-      <Email emailParts={{ host: '', username: '' }} onClick={func} newWindow>
+      <Email
+        email="user@domain.com"
+        emailParts={{ host: '', username: '' }}
+        onClick={func}
+        newWindow
+      >
         user@domain.com
       </Email>,
     );
 
-    // @ts-ignore TODO figure out
     expect(root.findOne(Link)).toHaveProp('newWindow', true);
-    // @ts-ignore TODO figure out
     expect(root.findOne(Link)).toHaveProp('onClick', func);
   });
 });

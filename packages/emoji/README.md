@@ -28,7 +28,7 @@ Provides emoji support for [Interweave](https://github.com/milesj/interweave).
 ```
 yarn add interweave interweave-emoji emojibase
 // Or
-npm install interweave interweave-emoji emojibase --save
+npm install interweave interweave-emoji emojibase
 ```
 
 ## Documentation

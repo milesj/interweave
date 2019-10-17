@@ -171,6 +171,8 @@ export const EMAIL_PATTERN = combinePatterns([EMAIL_USERNAME, URL_HOST], {
   join: '@',
 });
 
+export const EMAIL_DISTINCT_PATTERN = new RegExp(`^${EMAIL_PATTERN.source}$`, EMAIL_PATTERN.flags);
+
 // Properly and efficiently detecting URLs + all TLDs is nigh impossible,
 // instead we will only support the most common top-level TLDs.
 // https://en.wikipedia.org/wiki/List_of_Internet_top-level_domains

@@ -89,6 +89,7 @@ describe('matchers/EmailMatcher', () => {
 
       return matcher.replaceWith(email, {
         children: email,
+        email,
         emailParts: {
           username: parts[0],
           host: parts[1],
@@ -123,11 +124,15 @@ describe('matchers/EmailMatcher', () => {
 
     it('returns object for valid match', () => {
       expect(matcher.match('user@domain.com')).toEqual({
+        index: 0,
+        length: 15,
         match: 'user@domain.com',
+        email: 'user@domain.com',
         emailParts: {
           username: 'user',
           host: 'domain.com',
         },
+        valid: true,
       });
     });
   });

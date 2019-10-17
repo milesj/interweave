@@ -11,6 +11,8 @@ import {
   LinkFilter,
   CodeTagMatcher,
   matchCodeTag,
+  MarkdownBoldMatcher,
+  MarkdownItalicMatcher,
 } from '../src/testUtils';
 
 describe('Interweave', () => {
@@ -337,6 +339,34 @@ describe('Interweave', () => {
       const transform = (node: HTMLElement) => (node.nodeName === 'IFRAME' ? <Dummy /> : undefined);
       const { root } = render<InterweaveProps>(
         <Interweave content={'Foo <iframe></iframe> Bar'} transform={transform} />,
+      );
+
+      expect(root.findAt(Element, 0)).toMatchSnapshot();
+    });
+  });
+
+  describe('interleaving', () => {
+    const matchers = [new MarkdownBoldMatcher('bold'), new MarkdownItalicMatcher('italic')];
+
+    it('renders them separately', () => {
+      const { root } = render<InterweaveProps>(
+        <Interweave content="This should be **bold** and this _italic_." matchers={matchers} />,
+      );
+
+      expect(root.findAt(Element, 0)).toMatchSnapshot();
+    });
+
+    it('renders italic in bold', () => {
+      const { root } = render<InterweaveProps>(
+        <Interweave content="This should be **_italic and bold_**." matchers={matchers} />,
+      );
+
+      expect(root.findAt(Element, 0)).toMatchSnapshot();
+    });
+
+    it('renders bold in italic', () => {
+      const { root } = render<InterweaveProps>(
+        <Interweave content="This should be _**bold and italic**_." matchers={matchers} />,
       );
 
       expect(root.findAt(Element, 0)).toMatchSnapshot();
