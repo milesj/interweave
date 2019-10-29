@@ -6,6 +6,8 @@ import { MatcherInterface } from './Matcher';
 import { AfterParseCallback, BeforeParseCallback } from './types';
 
 export interface InterweaveProps extends MarkupProps {
+  /** Support all the props used by matchers. */
+  [prop: string]: any;
   /** Disable all filters from running. */
   disableFilters?: boolean;
   /** Disable all matches from running. */
@@ -20,12 +22,7 @@ export interface InterweaveProps extends MarkupProps {
   onBeforeParse?: BeforeParseCallback<InterweaveProps> | null;
 }
 
-export interface AllMatcherProps {
-  /** Support all the props used by matchers. */
-  [prop: string]: any;
-}
-
-export default function Interweave(props: InterweaveProps & AllMatcherProps) {
+export default function Interweave(props: InterweaveProps) {
   const {
     content = '',
     disableFilters = false,
