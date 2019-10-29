@@ -4,7 +4,7 @@
   "scripts": {
     "prepare": "beemo create-config --silent",
     "build": "beemo run-script build --workspaces=*",
-    "clean": "rm -rf packages/*/{lib,*.tsbuildinfo}",
+    "clean": "rm -rf packages/*/{lib,esm,*.tsbuildinfo}",
     "coverage": "yarn run jest --coverage",
     "eslint": "beemo eslint",
     "jest": "beemo jest",

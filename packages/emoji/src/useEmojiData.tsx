@@ -10,7 +10,7 @@ export interface UseEmojiDataOptions {
   locale?: string;
   /** Throw errors that occurred during a fetch. Defaults to `true`. */
   throwErrors?: boolean;
-  /** Emojibase dataset version to load. Defaults to latest `emojibase` version. */
+  /** Emojibase dataset version to load. Defaults to `latest`. */
   version?: string;
 }
 
