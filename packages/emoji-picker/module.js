@@ -9,4 +9,6 @@
 
 import Picker from './esm/Picker';
 
+export * from './esm/constants';
+
 export default Picker;

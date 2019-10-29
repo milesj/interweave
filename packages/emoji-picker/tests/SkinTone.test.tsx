@@ -1,6 +1,6 @@
 import React from 'react';
 import { render } from 'rut';
-import { SKIN_COLORS, SKIN_KEY_NONE, SKIN_KEY_DARK } from '../src/constants';
+import { SKIN_KEY_NONE, SKIN_KEY_DARK } from '../src/constants';
 import SkinTone, { SkinToneProps } from '../src/SkinTone';
 import { ContextWrapper } from './mocks';
 

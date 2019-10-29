@@ -16,4 +16,6 @@ import Parser from './esm/Parser';
 
 export { Markup, Filter, Matcher, Element, Parser };
 
+export * from './esm/constants';
+
 export default Interweave;

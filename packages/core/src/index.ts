@@ -23,6 +23,7 @@ export {
   Parser,
 };
 
+export * from './constants';
 export * from './types';
 
 export default Interweave;
