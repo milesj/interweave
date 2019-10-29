@@ -56,21 +56,15 @@ describe('SkinTone', () => {
   it('sets correct colors based on tone', () => {
     const { root, update } = render<SkinToneProps>(<SkinTone {...props} />);
 
-    expect(root.findOne('button')).toHaveProp('style', {
-      backgroundColor: SKIN_COLORS[SKIN_KEY_DARK],
-      borderColor: SKIN_COLORS[SKIN_KEY_DARK],
-      color: SKIN_COLORS[SKIN_KEY_DARK],
-    });
+    // @ts-ignore
+    expect(root.findOne('button')).toHaveProp('data-skin-tone', SKIN_KEY_DARK);
 
     update({
       skinTone: SKIN_KEY_NONE,
     });
 
-    expect(root.findOne('button')).toHaveProp('style', {
-      backgroundColor: SKIN_COLORS[SKIN_KEY_NONE],
-      borderColor: SKIN_COLORS[SKIN_KEY_NONE],
-      color: SKIN_COLORS[SKIN_KEY_NONE],
-    });
+    // @ts-ignore
+    expect(root.findOne('button')).toHaveProp('data-skin-tone', SKIN_KEY_NONE);
   });
 
   it('triggers `onSelect` when clicking', () => {

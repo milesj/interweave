@@ -9,6 +9,7 @@
 - Renamed `whitelist` prop to `allowList`.
 - Renamed `GROUP_KEY_SMILEYS_PEOPLE` constant to `GROUP_KEY_SMILEYS_EMOTION`.
 - Renamed `smileysPeople` message key to `smileysEmotion`.
+- Removed the inline skin tone styles.
 
 #### 🚀 Updates
 
@@ -16,7 +17,8 @@
 - Added a variation gallery view (shift + click an emoji that has multiple skin variations).
 - Added `data-skin-color` and `data-skin-tone` attributes to skin tone buttons.
 - Added `GROUP_KEY_PEOPLE_BODY`, `GROUP_KEY_COMPONENT`, and `GROUP_KEY_VARIATIONS` constants.
-- Added `peopleBody`, `variations`, and `previewShiftMore` message keys.
+- Added `peopleBody` and `variations` message keys.
+- Added `previewShiftMore` class name.
 - Rewrote all components to use function components. Reduced file sizes by 43%.
 - Rewrote emoji list view using `react-window`, from `react-virtualized`.
 - Refactored internals to use `useContext` and `useEffect`.
