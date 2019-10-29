@@ -7,7 +7,6 @@ import BaseInterweave, { InterweaveProps } from 'interweave';
 import { EmailMatcher, HashtagMatcher, IpMatcher, UrlMatcher } from 'interweave-autolink';
 import { Emoji as BaseEmoji, EmojiProps, EmojiMatcher, useEmojiData, PathConfig } from 'interweave-emoji';
 import EmojiPicker from 'interweave-emoji-picker';
-import { AllMatcherProps } from 'interweave/lib/Interweave';
 
 const contentWithNewLines = `This block has multiple new lines.
 Like how is this supposed to work.
@@ -31,7 +30,7 @@ function emojiPath(hexcode: string, { enlarged }: PathConfig) {
   ).toLowerCase()}.png`;
 }
 
-function Interweave(props: InterweaveProps & AllMatcherProps) {
+function Interweave(props: InterweaveProps) {
   const [emojis, source] = useEmojiData();
 
   if (emojis.length === 0) {
