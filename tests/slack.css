@@ -184,13 +184,37 @@
 
 .slack .interweave-picker__clear,
 .slack .interweave-picker__skin-tone {
-  background: transparent !important;
-  border: 0 !important;
+  background: transparent;
+  border: 0;
   padding: 0;
   margin-left: 4px;
   cursor: pointer;
   font-size: 1em;
   opacity: 0.65;
+}
+
+.slack .interweave-picker__skin-tone[data-skin-tone='none'] {
+  color: #ffcc22;
+}
+
+.slack .interweave-picker__skin-tone[data-skin-tone='light'] {
+  color: #fadcbc;
+}
+
+.slack .interweave-picker__skin-tone[data-skin-tone='medium-light'] {
+  color: #e0bb95;
+}
+
+.slack .interweave-picker__skin-tone[data-skin-tone='medium'] {
+  color: #bf8f68;
+}
+
+.slack .interweave-picker__skin-tone[data-skin-tone='medium-dark'] {
+  color: #9b643d;
+}
+
+.slack .interweave-picker__skin-tone[data-skin-tone='dark'] {
+  color: #5a463a;
 }
 
 .slack .interweave-picker__skin-tone--active,
@@ -234,7 +258,7 @@
   50% {
     background-color: #fff;
   }
-  100 {
+  100% {
     background-color: #eee;
   }
 }
