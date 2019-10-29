@@ -22,9 +22,12 @@ export function resetLoaded() {
   }
 }
 
-function loadEmojis(locale: string, version: string, compact: boolean) {
+function loadEmojis(locale: string, version: string, compact: boolean): Promise<CanonicalEmoji[]> {
   const set = compact ? 'compact' : 'data';
   const key = `${locale}:${version}:${set}`;
+  const stubRequest =
+    (process.env.NODE_ENV === 'test' && !process.env.INTERWEAVE_ALLOW_FETCH_EMOJI) ||
+    typeof (global as any).fetch === 'undefined';
 
   // Return as we've already loaded or are loading data
   if (promises.has(key)) {
@@ -32,17 +35,35 @@ function loadEmojis(locale: string, version: string, compact: boolean) {
   }
 
   // Otherwise, start loading emoji data from the CDN
-  const request = fetchFromCDN<Emoji>(`${locale}/${set}.json`, version).then(response => {
-    const instance = EmojiDataManager.getInstance(locale);
+  let request: Promise<Emoji[]>;
 
-    instance.parseEmojiData(response);
+  if (stubRequest) {
+    let testData = [];
 
-    return instance.getData();
-  });
+    try {
+      // eslint-disable-next-line
+      testData = require('emojibase-test-utils/test-data.json');
+    } catch {
+      testData = [];
+    }
 
-  promises.set(key, request);
+    request = Promise.resolve(testData);
+  } else {
+    request = fetchFromCDN<Emoji>(`${locale}/${set}.json`, version);
+  }
 
-  return request;
+  promises.set(
+    key,
+    request.then(response => {
+      const instance = EmojiDataManager.getInstance(locale);
+
+      instance.parseEmojiData(response);
+
+      return instance.getData();
+    }),
+  );
+
+  return promises.get(key)!;
 }
 
 export default function useEmojiData({

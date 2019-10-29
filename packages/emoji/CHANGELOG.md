@@ -14,6 +14,12 @@
 - Added a new `useEmojiData` hook.
 - Rewrote all components to use function components. Reduced file sizes by 28%.
 
+#### 🛠 Internals
+
+- Updated `useEmojiData` to fake all CDN fetches when `NODE_ENV` is "test" or `fetch` is undefined,
+  unless `INTERWEAVE_ALLOW_FETCH_EMOJI` is explicitly defined. This should make testing emoji aware
+  components in consumers much easier.
+
 #### 📦 Dependencies
 
 - Updated all dependencies.

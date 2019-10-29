@@ -49,6 +49,8 @@ describe('useEmojiData()', () => {
   let fetchSpy: MockFetchResult;
 
   beforeEach(() => {
+    process.env.INTERWEAVE_ALLOW_FETCH_EMOJI = 'true';
+
     fetchSpy = mockFetch('/', 200)
       .get(cdn('en', '1.0.0'), mockEmojis)
       .get(cdn('en', '1.0.0', true), mockEmojis) // Compact
