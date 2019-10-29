@@ -44,6 +44,6 @@
   },
   "devDependencies": {
     "interweave-ssr": "^1.0.0-alpha.0",
-    "react": "^16.10.2"
+    "react": "^16.11.0"
   }
 }
