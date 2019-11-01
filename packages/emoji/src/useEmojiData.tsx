@@ -4,6 +4,8 @@ import EmojiDataManager from './EmojiDataManager';
 import { CanonicalEmoji, Source } from './types';
 
 export interface UseEmojiDataOptions {
+  /** Avoid fetching emoji data. Assumes data has already been fetched. */
+  avoidFetch?: boolean;
   /** Load compact emoji dataset instead of full dataset. */
   compact?: boolean;
   /** Locale to load emoji annotations in. Defaults to `en`. */
@@ -67,6 +69,7 @@ function loadEmojis(locale: string, version: string, compact: boolean): Promise<
 }
 
 export default function useEmojiData({
+  avoidFetch = false,
   compact = false,
   locale = 'en',
   throwErrors = false,
@@ -78,20 +81,22 @@ export default function useEmojiData({
   useEffect(() => {
     let mounted = true;
 
-    loadEmojis(locale, version, compact)
-      .then(loadedEmojis => {
-        if (mounted) {
-          setEmojis(loadedEmojis);
-        }
+    if (!avoidFetch) {
+      loadEmojis(locale, version, compact)
+        .then(loadedEmojis => {
+          if (mounted) {
+            setEmojis(loadedEmojis);
+          }
 
-        return loadedEmojis;
-      })
-      .catch(setError);
+          return loadedEmojis;
+        })
+        .catch(setError);
+    }
 
     return () => {
       mounted = false;
     };
-  }, [compact, locale, version]);
+  }, [avoidFetch, compact, locale, version]);
 
   if (error && throwErrors) {
     throw error;

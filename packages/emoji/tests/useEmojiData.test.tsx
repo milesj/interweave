@@ -85,6 +85,12 @@ describe('useEmojiData()', () => {
     expect(fetchSpy.calls()).toHaveLength(1);
   });
 
+  it('doesnt fetch if `avoidFetch` is true', async () => {
+    await renderAndWait<Props>(<EmojiData avoidFetch />);
+
+    expect(fetchSpy.calls()).toHaveLength(0);
+  });
+
   it('re-fetches data if a prop changes', async () => {
     const result = await renderAndWait<Props>(<EmojiData locale="ja" version="1.2.3" />);
 

@@ -1,3 +1,9 @@
+## 5.1.0 - 2019-10-30
+
+#### 🚀 Updates
+
+- Added an `avoidFetch` option to `useEmojiData`.
+
 # 5.0.0 - 2019-10-29
 
 #### 💥 Breaking
