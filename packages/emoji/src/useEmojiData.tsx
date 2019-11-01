@@ -40,11 +40,18 @@ function loadEmojis(locale: string, version: string, compact: boolean): Promise<
   let request: Promise<Emoji[]>;
 
   if (stubRequest) {
-    let testData = [];
+    let testData;
 
     try {
-      // eslint-disable-next-line
-      testData = require('emojibase-test-utils/test-data.json');
+      // We must use a variable here, otherwise webpack attempts to include it in the bundle.
+      // If that happens and the module does not exist, it will throw a warning.
+      // https://github.com/webpack/webpack/issues/8826
+      // https://github.com/webpack/webpack/issues/4175
+      const requireFunc =
+        // eslint-disable-next-line @typescript-eslint/camelcase
+        typeof __webpack_require__ === 'function' ? __non_webpack_require__ : require;
+
+      testData = requireFunc('emojibase-test-utils/test-data.json');
     } catch {
       testData = [];
     }

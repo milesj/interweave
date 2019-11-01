@@ -12,6 +12,9 @@ module.exports = {
       },
     ],
   },
+  optimization: {
+    minimize: true,
+  },
   output: {
     filename: 'bundle.min.js',
     path: path.resolve(__dirname, 'tests'),
