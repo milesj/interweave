@@ -191,12 +191,19 @@ export default class Parser {
 
         // Reduce the string being matched against,
         // otherwise we end up in an infinite loop!
-        matchedString = matchedString.slice(index + (length || match.length));
+        if (matcher.greedy) {
+          matchedString = tokenizedString + matchedString.slice(index + length);
+          tokenizedString = '';
+        } else {
+          matchedString = matchedString.slice(index + (length || match.length));
+        }
       }
 
       // Update the matched string with the tokenized string,
       // so that the next matcher can apply to it.
-      matchedString = tokenizedString + matchedString;
+      if (!matcher.greedy) {
+        matchedString = tokenizedString + matchedString;
+      }
     });
 
     if (elementIndex === 0) {

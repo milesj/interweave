@@ -5,6 +5,29 @@ import { SOURCE_PROP } from 'interweave/lib/testUtils';
 import EmojiMatcher from '../src/EmojiMatcher';
 
 describe('Interweave (with emoji)', () => {
+  it('renders all types', () => {
+    const { root } = render<InterweaveProps>(
+      <Interweave
+        tagName="div"
+        content={
+          'This will convert 🐱 \uD83D\uDC36 :man: :3 all 3 emoji types to PNGs and increase the size.'
+        }
+        matchers={[
+          new EmojiMatcher('emoji', {
+            convertEmoticon: true,
+            convertShortcode: true,
+            convertUnicode: true,
+          }),
+        ]}
+        emojiLargeSize="2em"
+        emojiSource={SOURCE_PROP}
+        enlargeEmoji
+      />,
+    );
+
+    expect(root.find('img')).toHaveLength(4);
+  });
+
   it('renders emoji shortcode as unicode', () => {
     const { root } = render<InterweaveProps>(
       <Interweave

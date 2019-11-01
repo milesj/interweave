@@ -2,6 +2,7 @@ import React from 'react';
 import { MatchCallback, MatchResponse, Node, ChildrenNode } from './types';
 
 export interface MatcherInterface<T> {
+  greedy?: boolean;
   inverseName: string;
   propName: string;
   asTag(): string;
@@ -13,6 +14,8 @@ export interface MatcherInterface<T> {
 
 export default abstract class Matcher<Props extends object = {}, Options extends object = {}>
   implements MatcherInterface<Props> {
+  greedy: boolean = false;
+
   options: Options;
 
   propName: string;
