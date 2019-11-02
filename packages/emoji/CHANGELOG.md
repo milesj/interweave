@@ -6,6 +6,8 @@
 
 #### 🐞 Fixes
 
+- Fixed an issue where different types of emoji patterns (hexcodes, shortcodes, unicode characters)
+  used in the same string weren't always being converted.
 - Fixed `emojibase-test-utils/test-data.json` being pulled into a Webpack bundle on accident.
 
 # 5.0.0 - 2019-10-29
