@@ -29,6 +29,8 @@ const EMOTICON_BOUNDARY_REGEX = new RegExp(
 export default class EmojiMatcher extends Matcher<EmojiProps, EmojiMatcherOptions> {
   data: EmojiDataManager | null = null;
 
+  greedy: boolean = true;
+
   constructor(
     name: string,
     options?: EmojiMatcherOptions,
@@ -60,37 +62,47 @@ export default class EmojiMatcher extends Matcher<EmojiProps, EmojiMatcherOption
   }
 
   match(string: string) {
-    const matchers = [];
     let response = null;
 
     // Should we convert emoticons to unicode?
     if (this.options.convertEmoticon) {
-      matchers.push(this.matchEmoticon);
+      response = this.matchEmoticon(string);
+
+      if (response) {
+        return response;
+      }
     }
 
     // Should we convert shortcodes to unicode?
     if (this.options.convertShortcode) {
-      matchers.push(this.matchShortcode);
+      response = this.matchShortcode(string);
+
+      if (response) {
+        return response;
+      }
     }
 
     // Should we convert unicode to SVG/PNG?
     if (this.options.convertUnicode) {
-      matchers.push(this.matchUnicode);
+      response = this.matchUnicode(string);
+
+      if (response) {
+        return response;
+      }
     }
 
-    matchers.some(matcher => {
-      response = matcher.call(this, string);
-
-      return !!response;
-    });
-
-    return response;
+    return null;
   }
 
   matchEmoticon(string: string): MatchResponse<EmojiMatch> | null {
-    const response = this.doMatch<EmojiMatch>(string, EMOTICON_BOUNDARY_REGEX, matches => ({
-      emoticon: matches[0].trim(),
-    }));
+    const response = this.doMatch<EmojiMatch>(
+      string,
+      EMOTICON_BOUNDARY_REGEX,
+      matches => ({
+        emoticon: matches[0].trim(),
+      }),
+      true,
+    );
 
     if (
       response &&
@@ -108,9 +120,14 @@ export default class EmojiMatcher extends Matcher<EmojiProps, EmojiMatcherOption
   }
 
   matchShortcode(string: string): MatchResponse<EmojiMatch> | null {
-    const response = this.doMatch<EmojiMatch>(string, SHORTCODE_REGEX, matches => ({
-      shortcode: matches[0].toLowerCase(),
-    }));
+    const response = this.doMatch<EmojiMatch>(
+      string,
+      SHORTCODE_REGEX,
+      matches => ({
+        shortcode: matches[0].toLowerCase(),
+      }),
+      true,
+    );
 
     if (
       response &&
@@ -127,9 +144,14 @@ export default class EmojiMatcher extends Matcher<EmojiProps, EmojiMatcherOption
   }
 
   matchUnicode(string: string): MatchResponse<EmojiMatch> | null {
-    const response = this.doMatch<EmojiMatch>(string, EMOJI_REGEX, matches => ({
-      unicode: matches[0],
-    }));
+    const response = this.doMatch<EmojiMatch>(
+      string,
+      EMOJI_REGEX,
+      matches => ({
+        unicode: matches[0],
+      }),
+      true,
+    );
 
     if (
       response &&

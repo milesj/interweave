@@ -1,3 +1,10 @@
+## 12.1.0 - 2019-11-01
+
+#### 🚀 Updates
+
+- Added a `greedy` option to matchers.
+- Added support for `void` elements (self closing).
+
 # 12.0.0 - 2019-10-29
 
 #### 💥 Breaking

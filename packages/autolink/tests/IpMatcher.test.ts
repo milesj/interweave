@@ -156,6 +156,7 @@ describe('matchers/IpMatcher', () => {
           fragment: '#fragment',
         },
         valid: true,
+        void: false,
       });
     });
   });

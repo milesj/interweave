@@ -49,6 +49,8 @@ object. Both approaches will require the following methods to be defined (exclud
   - `match` (`string`) - The content that was matched (is usually the 0-index in the result).
   - `valid` (`boolean`) - Whether the match is valid or not. This can be used to control false
     positives.
+  - `void` (`boolean`) - Mark the result as a void element. Cannot be nested by other matchers, nor
+    contain children (is self closing).
 - `replaceWith(children: ChildrenNode, props: object)` - Returns a React element that replaces the
   matched content in the string. The parsed children are passed as the 1st argument, and any matched
   props or parent props are passed as the 2nd argument.
@@ -141,3 +143,29 @@ new CustomMatcher('foo', {}, SomeComponent);
 
 > Elements returned from `replaceWith()` or the factory must return an HTML element with the same
 > tag name as defined by `asTag()`.
+
+## Greedy Matching
+
+By default, a matcher will continually run until it exhausts all matches. However, each iteration
+will shorten the string being matched until there is no more. This may be problematic if your
+matcher uses multiple patterns, as they can happen in any order, or can be found at any point in the
+string.
+
+To work around this, a matcher can be marked as greedy to continually run against the whole string
+each iteration, until fully exhausted. Set the `greedy` property to enable.
+
+```ts
+// Class
+class CustomMatcher extends Matcher<CustomProps> {
+  greedy: boolean = true;
+
+  // ...
+}
+
+// Object
+const matcher = {
+  greedy: true,
+
+  // ...
+};
+```

@@ -46,6 +46,7 @@ export type MatchResponse<T> = T & {
   length: number;
   match: string;
   valid: boolean;
+  void?: boolean;
 };
 
 export interface ConfigMap {

@@ -122,6 +122,7 @@ export function matchCodeTag(
     length: matches[0].length,
     match: matches[0],
     valid: true,
+    void: false,
   };
 }
 

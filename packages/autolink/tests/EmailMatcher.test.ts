@@ -133,6 +133,7 @@ describe('matchers/EmailMatcher', () => {
           host: 'domain.com',
         },
         valid: true,
+        void: false,
       });
     });
   });
