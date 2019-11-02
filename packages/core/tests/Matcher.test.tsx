@@ -70,6 +70,7 @@ describe('Matcher', () => {
         children: 'foo',
         customProp: 'foo',
         valid: true,
+        void: false,
       });
     });
 
@@ -86,6 +87,7 @@ describe('Matcher', () => {
         match: 'foo',
         pass: true,
         valid: true,
+        void: false,
       });
     });
 

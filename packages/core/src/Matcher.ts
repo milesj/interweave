@@ -68,6 +68,7 @@ export default abstract class Matcher<Props extends object = {}, Options extends
     string: string,
     pattern: string | RegExp,
     callback: MatchCallback<T>,
+    isVoid: boolean = false,
   ): MatchResponse<T> | null {
     const match = string.match(pattern instanceof RegExp ? pattern : new RegExp(pattern, 'i'));
 
@@ -77,6 +78,7 @@ export default abstract class Matcher<Props extends object = {}, Options extends
 
     return {
       match: match[0],
+      void: isVoid,
       ...callback(match),
       index: match.index!,
       length: match[0].length,

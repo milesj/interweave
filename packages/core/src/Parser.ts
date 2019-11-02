@@ -30,10 +30,11 @@ const ELEMENT_NODE = 1;
 const TEXT_NODE = 3;
 const INVALID_ROOTS = /^<(!doctype|(html|head|body)(\s|>))/i;
 const ALLOWED_ATTRS = /^(aria-|data-|\w+:)/iu;
-const OPEN_TOKEN = /\{\{\{(\w+)\}\}\}/;
+const OPEN_TOKEN = /\{\{\{(\w+)\/?\}\}\}/;
 
 interface MatcherElementsMap {
   [key: string]: {
+    children: string;
     matcher: MatcherInterface<{}>;
     props: object;
   };
@@ -164,7 +165,7 @@ export default class Parser {
       let tokenizedString = '';
 
       while (matchedString && (parts = matcher.match(matchedString))) {
-        const { index, length, match, valid, ...partProps } = parts;
+        const { index, length, match, valid, void: isVoid, ...partProps } = parts;
         const tokenName = matcher.propName + elementIndex;
 
         // Piece together a new string with interpolated tokens
@@ -173,11 +174,17 @@ export default class Parser {
         }
 
         if (valid) {
-          tokenizedString += `{{{${tokenName}}}}${match}{{{/${tokenName}}}}`;
+          if (isVoid) {
+            tokenizedString += `{{{${tokenName}/}}}`;
+          } else {
+            tokenizedString += `{{{${tokenName}}}}${match}{{{/${tokenName}}}}`;
+          }
+
           this.keyIndex += 1;
 
           elementIndex += 1;
           elements[tokenName] = {
+            children: match,
             matcher,
             props: {
               ...props,
@@ -586,6 +593,7 @@ export default class Parser {
     while ((open = text.match(OPEN_TOKEN))) {
       const [match, tokenName] = open;
       const startIndex = open.index!;
+      const isVoid = match.includes('/');
 
       if (__DEV__) {
         if (!elements[tokenName]) {
@@ -601,24 +609,34 @@ export default class Parser {
         text = text.slice(startIndex);
       }
 
-      // Find the closing tag
-      const close = text.match(new RegExp(`{{{/${tokenName}}}}`))!;
+      const { children, matcher, props: elementProps } = elements[tokenName];
+      let endIndex: number;
 
-      if (__DEV__) {
-        if (!close) {
-          throw new Error(`Closing token missing for interpolated element "${tokenName}".`);
+      // Use tag as-is if void
+      if (isVoid) {
+        endIndex = match.length;
+
+        nodes.push(matcher.createElement(children, elementProps));
+
+        // Find the closing tag if not void
+      } else {
+        const close = text.match(new RegExp(`{{{/${tokenName}}}}`))!;
+
+        if (__DEV__) {
+          if (!close) {
+            throw new Error(`Closing token missing for interpolated element "${tokenName}".`);
+          }
         }
+
+        endIndex = close.index! + close[0].length;
+
+        nodes.push(
+          matcher.createElement(
+            this.replaceTokens(text.slice(match.length, close.index!), elements),
+            elementProps,
+          ),
+        );
       }
-
-      const endIndex = close.index! + close[0].length;
-
-      // Create and append the element
-      const { matcher, props: elementProps } = elements[tokenName];
-      const innerTextWithoutTokens = text.slice(match.length, close.index!);
-
-      nodes.push(
-        matcher.createElement(this.replaceTokens(innerTextWithoutTokens, elements), elementProps),
-      );
 
       // Reduce text for the next interation
       text = text.slice(endIndex);

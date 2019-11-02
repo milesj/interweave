@@ -86,6 +86,7 @@ describe('matchers/HashtagMatcher', () => {
         match: '#hashtag',
         hashtag: '#hashtag',
         valid: true,
+        void: false,
       });
     });
   });

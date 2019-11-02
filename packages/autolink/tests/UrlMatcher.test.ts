@@ -317,6 +317,7 @@ describe('matchers/UrlMatcher', () => {
           fragment: '#fragment',
         },
         valid: true,
+        void: false,
       });
     });
   });
