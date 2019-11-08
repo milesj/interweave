@@ -28,7 +28,7 @@ describe('matchers/HashtagMatcher', () => {
 
   describe('does match valid hashtag:', () => {
     VALID_HASHTAGS.forEach(hashtag => {
-      it(hashtag, () => {
+      it(`${hashtag}`, () => {
         const expected: RegExpMatchArray = [hashtag, hashtag.slice(1)];
         expected.index = 0;
         expected.input = hashtag;
@@ -40,7 +40,7 @@ describe('matchers/HashtagMatcher', () => {
 
   describe('doesnt match invalid hashtag:', () => {
     INVALID_HASHTAGS.forEach(hashtag => {
-      it(hashtag, () => {
+      it(`${hashtag}`, () => {
         expect(hashtag.match(pattern)).toBeNull();
       });
     });

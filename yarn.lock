@@ -2323,7 +2323,7 @@
   resolved "https://registry.npmjs.org/@types/prop-types/-/prop-types-15.7.2.tgz#0e58ae66773d7fd7c372a493aff740878ec9ceaa"
   integrity sha512-f8JzJNWVhKtc9dg/dyDNfliTKNOJSLa7Oht/ElZdF/UbMUmAH3rLmAk3ODNjw0mZajDEgatA03tRjB4+Dp/tzA==
 
-"@types/react-dom@16.9.4":
+"@types/react-dom@*", "@types/react-dom@16.9.4":
   version "16.9.4"
   resolved "https://registry.npmjs.org/@types/react-dom/-/react-dom-16.9.4.tgz#0b58df09a60961dcb77f62d4f1832427513420df"
   integrity sha512-fya9xteU/n90tda0s+FtN5Ym4tbgxpq/hb/Af24dvs6uYnYn+fspaxw5USlw0R8apDNwxsqumdRoCoKitckQqw==
@@ -2338,9 +2338,9 @@
     "@types/react" "*"
 
 "@types/react-test-renderer@*":
-  version "16.9.0"
-  resolved "https://registry.npmjs.org/@types/react-test-renderer/-/react-test-renderer-16.9.0.tgz#d60f530ecf4c906721511603cca711b4fa830d41"
-  integrity sha512-bN5EyjtuTY35xX7N5j0KP1vg5MpUXHpFTX6tGsqkNOthjNvet4VQOYRxFh+NT5cDSJrATmAFK9NLeYZ4mp/o0Q==
+  version "16.9.1"
+  resolved "https://registry.npmjs.org/@types/react-test-renderer/-/react-test-renderer-16.9.1.tgz#9d432c46c515ebe50c45fa92c6fb5acdc22e39c4"
+  integrity sha512-nCXQokZN1jp+QkoDNmDZwoWpKY8HDczqevIDO4Uv9/s9rbGPbSpy8Uaxa5ixHKkcm/Wt0Y9C3wCxZivh4Al+rQ==
   dependencies:
     "@types/react" "*"
 
@@ -4011,15 +4011,10 @@ core-js-pure@3.1.4:
   resolved "https://registry.npmjs.org/core-js-pure/-/core-js-pure-3.1.4.tgz#5fa17dc77002a169a3566cc48dc774d2e13e3769"
   integrity sha512-uJ4Z7iPNwiu1foygbcZYJsJs1jiXrTTCvxfLDXNhI/I+NHbSIEyr548y4fcsCEyWY0XgfAG/qqaunJ1SThHenA==
 
-core-js@^2.4.0:
-  version "2.6.5"
-  resolved "https://registry.npmjs.org/core-js/-/core-js-2.6.5.tgz#44bc8d249e7fb2ff5d00e0341a7ffb94fbf67895"
-  integrity sha512-klh/kDpwX8hryYL14M9w/xei6vrv6sE8gTHDG7/T/+SEovB/G4ejwcfE/CBzO6Edsu+OETZMZ3wcX/EjUkrl5A==
-
-core-js@^2.5.0, core-js@^2.6.9:
-  version "2.6.9"
-  resolved "https://registry.npmjs.org/core-js/-/core-js-2.6.9.tgz#6b4b214620c834152e179323727fc19741b084f2"
-  integrity sha512-HOpZf6eXmnl7la+cUdMnLvUxKNqLUzJvgIziQ0DiF3JwSImNphIqdGqzj6hIKyX04MmV0poclQ7+wjWvxQyR2A==
+core-js@^2.4.0, core-js@^2.5.0, core-js@^2.6.9:
+  version "2.6.10"
+  resolved "https://registry.npmjs.org/core-js/-/core-js-2.6.10.tgz#8a5b8391f8cc7013da703411ce5b585706300d7f"
+  integrity sha512-I39t74+4t+zau64EN1fE5v2W31Adtc/REhzWN+gWRRXg6WH5qAsZm62DHpQ1+Yhe4047T55jvzz7MUqF/dBBlA==
 
 core-util-is@1.0.2, core-util-is@~1.0.0:
   version "1.0.2"
@@ -4740,10 +4735,10 @@ eslint-plugin-react@^7.16.0:
     prop-types "^15.7.2"
     resolve "^1.12.0"
 
-eslint-plugin-rut@^0.1.6:
-  version "0.1.6"
-  resolved "https://registry.npmjs.org/eslint-plugin-rut/-/eslint-plugin-rut-0.1.6.tgz#5575e1058eeb68a90cf65b7164382cd596f04c53"
-  integrity sha512-FyzPR/LomTjrZbiIih3B+ZxMsPg/hzDyxUeY/9mgQLAqoQE3LxJUWDMvTVbmbTVf34+7WfF3fvpcHFgJUYP6rw==
+eslint-plugin-rut@^0.1.9:
+  version "0.1.9"
+  resolved "https://registry.npmjs.org/eslint-plugin-rut/-/eslint-plugin-rut-0.1.9.tgz#b383cfd24cd855adcede49b56528f1f2a722e2cd"
+  integrity sha512-mouBwyLwFZj+vJ5lkUi6WQ60vpvi/YBkMex5F2K4lWhy+I1KX6IitOEZoz8edfW0vfk6ZzWtgz+zm/GbkAt2FQ==
 
 eslint-plugin-unicorn@^12.1.0:
   version "12.1.0"
@@ -5151,10 +5146,10 @@ fb-watchman@^2.0.0:
   dependencies:
     bser "^2.0.0"
 
-fetch-mock@^7.5.1:
-  version "7.5.1"
-  resolved "https://registry.npmjs.org/fetch-mock/-/fetch-mock-7.5.1.tgz#78fc8e4ffc7d7cdd6048b6e501f21be2db489352"
-  integrity sha512-yTb46p7y14bfyWCox50lYqs6NRSo7XPOKzsnLzrSOqRWAGLsvF+aAv0dPkTLeKaBeH3aVSVwWeXzMrctXEZVag==
+fetch-mock@^7.7.3:
+  version "7.7.3"
+  resolved "https://registry.npmjs.org/fetch-mock/-/fetch-mock-7.7.3.tgz#6a3f94cfed6e423ab7f5464912982030da605335"
+  integrity sha512-I4OkK90JFQnjH8/n3HDtWxH/I6D1wrxoAM2ri+nb444jpuH3RTcgvXx2el+G20KO873W727/66T7QhOvFxNHPg==
   dependencies:
     babel-polyfill "^6.26.0"
     core-js "^2.6.9"
@@ -6691,10 +6686,10 @@ jest-runtime@^24.9.0:
     strip-bom "^3.0.0"
     yargs "^13.3.0"
 
-jest-rut@^0.7.0:
-  version "0.7.0"
-  resolved "https://registry.npmjs.org/jest-rut/-/jest-rut-0.7.0.tgz#6c39604078357153229c4d7c69407f220f496fec"
-  integrity sha512-Q6izs2MeGZd8fbBWIcIDcx11V3x8RdYwLRMJNRlZAZK4I41HiGW6DrfgIKXJmgqJLVL/dklu+n+EQkkdsd5YUw==
+jest-rut@^0.8.1:
+  version "0.8.1"
+  resolved "https://registry.npmjs.org/jest-rut/-/jest-rut-0.8.1.tgz#ad4e5dfca480f4ef9a52f5ec64d2ca2ab0180848"
+  integrity sha512-7SvJxqlGdbfTKja+T0d4eIk2iXI0Z0gECW0Z/t7X3TAarYgeik//dy7O5dyxg2keTygC/8kkGhjmeXcEGTRlNA==
 
 jest-serializer@^24.9.0:
   version "24.9.0"
@@ -8815,12 +8810,12 @@ react-dom@^16.11.0:
     prop-types "^15.6.2"
     scheduler "^0.17.0"
 
-react-is@^16.10.2, react-is@^16.8.1, react-is@^16.8.4, react-is@^16.8.6:
+react-is@^16.11.0, react-is@^16.8.1, react-is@^16.8.4, react-is@^16.8.6:
   version "16.11.0"
   resolved "https://registry.npmjs.org/react-is/-/react-is-16.11.0.tgz#b85dfecd48ad1ce469ff558a882ca8e8313928fa"
   integrity sha512-gbBVYR2p8mnriqAwWx9LbuUrShnAuSCNnuPGyc7GJrMVQtPDAh8iLpv7FRuMPFb56KkaVZIYSz1PrjI9q0QPCw==
 
-react-test-renderer@^16.10.2, react-test-renderer@^16.11.0:
+react-test-renderer@^16.11.0:
   version "16.11.0"
   resolved "https://registry.npmjs.org/react-test-renderer/-/react-test-renderer-16.11.0.tgz#72574566496462c808ac449b0287a4c0a1a7d8f8"
   integrity sha512-nh9gDl8R4ut+ZNNb2EeKO5VMvTKxwzurbSMuGBoKtjpjbg8JK/u3eVPVNi1h1Ue+eYK9oSzJjb+K3lzLxyA4ag==
@@ -9344,18 +9339,26 @@ run-queue@^1.0.0, run-queue@^1.0.3:
   dependencies:
     aproba "^1.1.1"
 
-rut@^0.8.1:
-  version "0.8.1"
-  resolved "https://registry.npmjs.org/rut/-/rut-0.8.1.tgz#54869bb2a60d6ffd2e354620a3513e7de2388da4"
-  integrity sha512-kDEckDb/t8hwEjLRfzkBL71QBHc/hErKEf+ZpbV8nSgDVAR9M3j+cSuhhihXPvanZ8h+h7SzQ3wv+tL9r+/nrw==
+rut-dom@^0.1.1:
+  version "0.1.1"
+  resolved "https://registry.npmjs.org/rut-dom/-/rut-dom-0.1.1.tgz#51697937696e4aafa162ccf1909705f27abf6c40"
+  integrity sha512-xBS5WTFFTtAgQx/GLcEDwu/8jMSK5r+Z/PpMDsR+osxXKxPRLDWkQ1N6EzlzDIKuCcbipvpTZaFbBBe+tFZf9Q==
+  dependencies:
+    "@types/react-dom" "*"
+    rut "^0.9.1"
+
+rut@^0.9.1:
+  version "0.9.1"
+  resolved "https://registry.npmjs.org/rut/-/rut-0.9.1.tgz#0ac6b327bd01f7c8e3ff9b1923e4d2969768f19a"
+  integrity sha512-QtpN17CILcjoJ5uA6YL3EsSMWIhzDlFSuyQjpMuJrOTmu5yeJbGwpQQseJQDRWu4Q2AbsMnsaD6722eDE9sLbQ==
   dependencies:
     "@types/fetch-mock" "*"
     "@types/react" "*"
     "@types/react-is" "*"
     "@types/react-test-renderer" "*"
-    fetch-mock "^7.5.1"
-    react-is "^16.10.2"
-    react-test-renderer "^16.10.2"
+    fetch-mock "^7.7.3"
+    react-is "^16.11.0"
+    react-test-renderer "^16.11.0"
 
 rxjs@^6.4.0:
   version "6.4.0"

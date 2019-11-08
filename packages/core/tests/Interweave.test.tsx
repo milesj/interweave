@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOMServer from 'react-dom/server';
-import { render } from 'rut';
+import { render } from 'rut-dom';
 import { createHTMLDocument } from 'interweave-ssr';
 import Interweave, { InterweaveProps } from '../src/Interweave';
 import Element from '../src/Element';

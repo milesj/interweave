@@ -239,7 +239,7 @@ describe('EmojiMatcher', () => {
       expect(() => {
         // @ts-ignore
         matcher.onBeforeParse('', {});
-      }).toThrowError(
+      }).toThrow(
         'Missing emoji source data. Have you loaded with the `useEmojiData` hook and passed the `emojiSource` prop?',
       );
     });
@@ -247,7 +247,7 @@ describe('EmojiMatcher', () => {
     it('doesnt error when emojiSource is passed', () => {
       expect(() => {
         matcher.onBeforeParse('', { emojiSource: SOURCE_PROP });
-      }).not.toThrowError();
+      }).not.toThrow();
     });
   });
 

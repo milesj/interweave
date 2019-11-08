@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/camelcase */
 
 import React from 'react';
-import { render } from 'rut';
+import { render } from 'rut-dom';
 import { EmojiDataManager, Emoji } from 'interweave-emoji';
 import PreviewBar, { PreviewBarProps } from '../src/PreviewBar';
 import { CAT_EMOJI, ContextWrapper } from './mocks';

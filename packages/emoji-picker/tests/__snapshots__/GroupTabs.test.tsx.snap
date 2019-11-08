@@ -5,7 +5,6 @@ exports[`GroupTabs renders a list 1`] = `
   <ul className="interweave-picker__groups-list">
     <li>
       <Group
-        active={false}
         commonMode="frequently-used"
         group="smileys-emotion"
         onSelect={onSelect()}
@@ -22,7 +21,6 @@ exports[`GroupTabs renders a list 1`] = `
     </li>
     <li>
       <Group
-        active={false}
         commonMode="frequently-used"
         group="people-body"
         onSelect={onSelect()}
@@ -39,7 +37,6 @@ exports[`GroupTabs renders a list 1`] = `
     </li>
     <li>
       <Group
-        active={false}
         commonMode="frequently-used"
         group="animals-nature"
         onSelect={onSelect()}
@@ -56,7 +53,6 @@ exports[`GroupTabs renders a list 1`] = `
     </li>
     <li>
       <Group
-        active={false}
         commonMode="frequently-used"
         group="food-drink"
         onSelect={onSelect()}
@@ -73,7 +69,6 @@ exports[`GroupTabs renders a list 1`] = `
     </li>
     <li>
       <Group
-        active={false}
         commonMode="frequently-used"
         group="travel-places"
         onSelect={onSelect()}
@@ -90,7 +85,6 @@ exports[`GroupTabs renders a list 1`] = `
     </li>
     <li>
       <Group
-        active={false}
         commonMode="frequently-used"
         group="activities"
         onSelect={onSelect()}
@@ -106,12 +100,7 @@ exports[`GroupTabs renders a list 1`] = `
       </Group>
     </li>
     <li>
-      <Group
-        active={false}
-        commonMode="frequently-used"
-        group="objects"
-        onSelect={onSelect()}
-      >
+      <Group commonMode="frequently-used" group="objects" onSelect={onSelect()}>
         <button
           className="interweave-picker__group"
           title="Objects"
@@ -123,12 +112,7 @@ exports[`GroupTabs renders a list 1`] = `
       </Group>
     </li>
     <li>
-      <Group
-        active={false}
-        commonMode="frequently-used"
-        group="symbols"
-        onSelect={onSelect()}
-      >
+      <Group commonMode="frequently-used" group="symbols" onSelect={onSelect()}>
         <button
           className="interweave-picker__group"
           title="Symbols"
@@ -140,12 +124,7 @@ exports[`GroupTabs renders a list 1`] = `
       </Group>
     </li>
     <li>
-      <Group
-        active={false}
-        commonMode="frequently-used"
-        group="flags"
-        onSelect={onSelect()}
-      >
+      <Group commonMode="frequently-used" group="flags" onSelect={onSelect()}>
         <button
           className="interweave-picker__group"
           title="Flags"

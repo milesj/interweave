@@ -1,5 +1,5 @@
 import React from 'react';
-import { render } from 'rut';
+import { render } from 'rut-dom';
 import EmojiListHeader, { EmojiListHeaderProps } from '../src/EmojiListHeader';
 import {
   COMMON_MODE_FREQUENT,

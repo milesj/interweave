@@ -1,5 +1,5 @@
 import React from 'react';
-import { render } from 'rut';
+import { render } from 'rut-dom';
 import { SOURCE_PROP, VALID_EMOJIS } from 'interweave/lib/testUtils';
 import Emoji, { EmojiProps } from '../src/Emoji';
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import { render } from 'rut';
+import { render } from 'rut-dom';
 import Markup, { MarkupProps } from '../src/Markup';
 
 // All examples taken from MDN https://developer.mozilla.org/en-US/docs/Web/HTML/Element

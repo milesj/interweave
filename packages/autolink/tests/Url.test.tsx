@@ -1,5 +1,5 @@
 import React from 'react';
-import { render } from 'rut';
+import { render } from 'rut-dom';
 import Url, { UrlProps } from '../src/Url';
 import Link from '../src/Link';
 

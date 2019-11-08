@@ -1,5 +1,5 @@
 import React from 'react';
-import { render } from 'rut';
+import { render } from 'rut-dom';
 import Hashtag, { HashtagProps } from '../src/Hashtag';
 import Link from '../src/Link';
 

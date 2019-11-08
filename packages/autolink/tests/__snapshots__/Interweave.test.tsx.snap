@@ -10,7 +10,6 @@ exports[`Interweave (with autolinking) doesnt render anchor links within anchor 
   tagName="div"
 >
   <Markup
-    emptyContent={null}
     parsedContent={[
       "- ",
       <Url
@@ -94,7 +93,6 @@ exports[`Interweave (with autolinking) renders HTML text with all matchers 1`] =
   tagName="div"
 >
   <Markup
-    emptyContent={null}
     parsedContent={[
       <Element tagName="h1" />,
       "
@@ -241,7 +239,6 @@ exports[`Interweave (with autolinking) renders large blocks of text with all mat
   tagName="div"
 >
   <Markup
-    emptyContent={null}
     parsedContent={[
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec massa lorem, mollis non commodo quis, ultricies at elit. ",
       <Email

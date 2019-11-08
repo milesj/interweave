@@ -7,7 +7,6 @@ exports[`Interweave (with emoji) renders a single emoji enlarged 1`] = `
       enlargeEmoji
       emojiSource={{ compact: false, locale: "en", version: "latest" }}
       hexcode="1F408"
-      renderUnicode={false}
       shortcode=":cat:"
     >
       <img

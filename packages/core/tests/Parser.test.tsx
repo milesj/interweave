@@ -47,7 +47,7 @@ describe('Parser', () => {
   it('errors for a non-string value', () => {
     [123, 456.78, true, [], {}].forEach(value => {
       // @ts-ignore
-      expect(() => new Parser(value)).toThrowError('Interweave parser requires a valid string.');
+      expect(() => new Parser(value)).toThrow('Interweave parser requires a valid string.');
     });
   });
 
@@ -184,35 +184,37 @@ describe('Parser', () => {
     it('errors out for `!DOCTYPE`', () => {
       expect(() => {
         instance.createDocument('<!DOCTYPE><html><body>Foo</body></html>');
-      }).toThrowError('HTML documents as Interweave content are not supported.');
+      }).toThrow('HTML documents as Interweave content are not supported.');
     });
 
     it('errors out for `html`', () => {
       expect(() => {
         instance.createDocument('<html><body>Foo</body></html>');
-      }).toThrowError('HTML documents as Interweave content are not supported.');
+      }).toThrow('HTML documents as Interweave content are not supported.');
     });
 
     it('errors out for `head`', () => {
       expect(() => {
         instance.createDocument('<head></head><body>Foo</body>');
-      }).toThrowError('HTML documents as Interweave content are not supported.');
+      }).toThrow('HTML documents as Interweave content are not supported.');
     });
 
     it('errors out for `body`', () => {
       expect(() => {
         instance.createDocument('<body>Foo</body>');
-      }).toThrowError('HTML documents as Interweave content are not supported.');
+      }).toThrow('HTML documents as Interweave content are not supported.');
     });
 
     it('doesnt errors out for `html` in brackets', () => {
       expect(() => {
         instance.createDocument('[html]Body[/html]');
-      }).not.toThrowError();
+      }).not.toThrow();
     });
   });
 
   describe('convertLineBreaks()', () => {
+    /* eslint-disable jest/valid-title */
+
     it('it doesnt convert when HTML closing tags exist', () => {
       expect(instance.convertLineBreaks('<div>It\nwont\r\nconvert.</div>')).toBe(
         '<div>It\nwont\r\nconvert.</div>',

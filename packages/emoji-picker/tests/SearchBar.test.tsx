@@ -1,5 +1,5 @@
 import React from 'react';
-import { render } from 'rut';
+import { render } from 'rut-dom';
 import SearchBar, { SearchBarProps } from '../src/SearchBar';
 import { ContextWrapper } from './mocks';
 

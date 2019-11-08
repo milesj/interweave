@@ -1,12 +1,14 @@
 import React from 'react';
-import { render, Element } from 'rut';
+import { render, DomElement } from 'rut-dom';
 import { SKIN_TONES, SKIN_KEY_NONE, SKIN_KEY_DARK, SKIN_KEY_MEDIUM_LIGHT } from '../src/constants';
 import SkinTone from '../src/SkinTone';
 import SkinTonePalette, { SkinTonePaletteProps } from '../src/SkinTonePalette';
 import { ContextWrapper } from './mocks';
 
-function findSkinToneByKey(root: Element<typeof SkinTonePalette>, key: string) {
-  return root.query((node, fiber) => node.type === 'li' && fiber.key === key)[0].findOne(SkinTone);
+function findSkinToneByKey(root: DomElement<typeof SkinTonePalette, {}>, key: string) {
+  return root
+    .query<typeof SkinTone>((node, fiber) => node.type === 'li' && fiber.key === key)[0]
+    .findOne(SkinTone);
 }
 
 describe('SkinTonePalette', () => {

@@ -174,8 +174,9 @@ describe('matchers/UrlMatcher', () => {
 
   describe('does match valid url:', () => {
     VALID_URLS.forEach(urlParams => {
-      it(urlParams.url, () => {
-        const { url, ...params } = urlParams;
+      const { url, ...params } = urlParams;
+
+      it(`${url}`, () => {
         // @ts-ignore
         const expected: Partial<RegExpMatchArray> = [
           url,
@@ -199,8 +200,10 @@ describe('matchers/UrlMatcher', () => {
 
   describe('doesnt match invalid url:', () => {
     INVALID_URLS.forEach(urlParams => {
-      it(urlParams.url, () => {
-        expect(urlParams.url.match(pattern)).toBeNull();
+      const { url } = urlParams;
+
+      it(`${url}`, () => {
+        expect(url.match(pattern)).toBeNull();
       });
     });
   });

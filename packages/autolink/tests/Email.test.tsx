@@ -1,5 +1,5 @@
 import React from 'react';
-import { render } from 'rut';
+import { render } from 'rut-dom';
 import Email, { EmailProps } from '../src/Email';
 import Link from '../src/Link';
 

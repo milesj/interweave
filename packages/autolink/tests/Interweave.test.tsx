@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOMServer from 'react-dom/server';
-import { render } from 'rut';
+import { render } from 'rut-dom';
 import Interweave, { InterweaveProps } from 'interweave';
 import { createHTMLDocument } from 'interweave-ssr';
 import EmailMatcher from '../src/EmailMatcher';

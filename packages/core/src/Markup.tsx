@@ -35,6 +35,7 @@ export default function Markup(props: MarkupProps) {
   }
 
   if (tag === 'fragment') {
+    // eslint-disable-next-line react/jsx-no-useless-fragment
     return <React.Fragment>{mainContent}</React.Fragment>;
   }
 

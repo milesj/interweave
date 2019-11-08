@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, Element } from 'rut';
+import { render, DomElement } from 'rut-dom';
 import {
   GROUPS,
   GROUP_KEY_NONE,
@@ -12,8 +12,10 @@ import Group from '../src/Group';
 import GroupTabs, { GroupTabsProps } from '../src/GroupTabs';
 import { CAT_EMOJI, ContextWrapper } from './mocks';
 
-function findGroupByKey(root: Element<typeof GroupTabs>, key: string) {
-  return root.query((node, fiber) => node.type === 'li' && fiber.key === key)[0].findOne(Group);
+function findGroupByKey(root: DomElement<typeof GroupTabs, {}>, key: string) {
+  return root
+    .query<typeof Group>((node, fiber) => node.type === 'li' && fiber.key === key)[0]
+    .findOne(Group);
 }
 
 describe('GroupTabs', () => {

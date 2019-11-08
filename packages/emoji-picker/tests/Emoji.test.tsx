@@ -1,5 +1,5 @@
 import React from 'react';
-import { render } from 'rut';
+import { render } from 'rut-dom';
 import { EmojiDataManager, Emoji as EmojiCharacter } from 'interweave-emoji';
 import Emoji, { EmojiProps } from '../src/Emoji';
 import { CAT_EMOJI, ContextWrapper } from './mocks';

@@ -63,7 +63,7 @@ describe('matchers/EmailMatcher', () => {
 
   describe('does match valid email:', () => {
     VALID_EMAILS.forEach(email => {
-      it(email, () => {
+      it(`${email}`, () => {
         const parts = email.split('@');
         const expected: RegExpMatchArray = [email, parts[0], parts[1]];
         expected.index = 0;
@@ -76,7 +76,7 @@ describe('matchers/EmailMatcher', () => {
 
   describe('doesnt match invalid email:', () => {
     INVALID_EMAILS.forEach(email => {
-      it(email, () => {
+      it(`${email}`, () => {
         expect(email.match(pattern)).toBeNull();
       });
     });

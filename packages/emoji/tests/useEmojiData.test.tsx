@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/camelcase */
 
 import React from 'react';
-import { renderAndWait, mockFetch, MockFetchResult } from 'rut';
+import { renderAndWait, mockFetch, MockFetchResult } from 'rut-dom';
 import { resetInstances } from '../src/EmojiDataManager';
 import useEmojiData, { resetLoaded, UseEmojiDataOptions } from '../src/useEmojiData';
 import { CanonicalEmoji, Source } from '../src/types';

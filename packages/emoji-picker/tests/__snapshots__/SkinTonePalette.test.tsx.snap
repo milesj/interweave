@@ -18,7 +18,7 @@ exports[`SkinTonePalette renders a palette 1`] = `
       </SkinTone>
     </li>
     <li>
-      <SkinTone active={false} skinTone="light" onSelect={onSelect()}>
+      <SkinTone skinTone="light" onSelect={onSelect()}>
         <button
           className="interweave-picker__skin-tone"
           data-skin-color="#FADCBC"
@@ -32,7 +32,7 @@ exports[`SkinTonePalette renders a palette 1`] = `
       </SkinTone>
     </li>
     <li>
-      <SkinTone active={false} skinTone="medium-light" onSelect={onSelect()}>
+      <SkinTone skinTone="medium-light" onSelect={onSelect()}>
         <button
           className="interweave-picker__skin-tone"
           data-skin-color="#E0BB95"
@@ -46,7 +46,7 @@ exports[`SkinTonePalette renders a palette 1`] = `
       </SkinTone>
     </li>
     <li>
-      <SkinTone active={false} skinTone="medium" onSelect={onSelect()}>
+      <SkinTone skinTone="medium" onSelect={onSelect()}>
         <button
           className="interweave-picker__skin-tone"
           data-skin-color="#BF8F68"
@@ -60,7 +60,7 @@ exports[`SkinTonePalette renders a palette 1`] = `
       </SkinTone>
     </li>
     <li>
-      <SkinTone active={false} skinTone="medium-dark" onSelect={onSelect()}>
+      <SkinTone skinTone="medium-dark" onSelect={onSelect()}>
         <button
           className="interweave-picker__skin-tone"
           data-skin-color="#9B643D"
@@ -74,7 +74,7 @@ exports[`SkinTonePalette renders a palette 1`] = `
       </SkinTone>
     </li>
     <li>
-      <SkinTone active={false} skinTone="dark" onSelect={onSelect()}>
+      <SkinTone skinTone="dark" onSelect={onSelect()}>
         <button
           className="interweave-picker__skin-tone"
           data-skin-color="#5A463A"

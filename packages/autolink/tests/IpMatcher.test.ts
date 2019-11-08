@@ -64,8 +64,9 @@ describe('matchers/IpMatcher', () => {
 
   describe('does match valid ip:', () => {
     VALID_IPS.forEach(ipParams => {
-      it(ipParams.ip, () => {
-        const { ip, ...params } = ipParams;
+      const { ip, ...params } = ipParams;
+
+      it(`${ip}`, () => {
         // @ts-ignore
         const expected: Partial<RegExpMatchArray> = [
           ip,
@@ -88,8 +89,10 @@ describe('matchers/IpMatcher', () => {
 
   describe('doesnt match invalid ip:', () => {
     INVALID_IPS.forEach(ipParams => {
-      it(ipParams.ip, () => {
-        expect(ipParams.ip.match(pattern)).toBeNull();
+      const { ip } = ipParams;
+
+      it(`${ip}`, () => {
+        expect(ip.match(pattern)).toBeNull();
       });
     });
   });

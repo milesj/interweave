@@ -6,9 +6,7 @@ describe('Matcher', () => {
   const matcher = new CodeTagMatcher('foo', '1');
 
   it('errors for html name', () => {
-    expect(() => new MockMatcher('html', {})).toThrowError(
-      'The matcher name "html" is not allowed.',
-    );
+    expect(() => new MockMatcher('html', {})).toThrow('The matcher name "html" is not allowed.');
   });
 
   it('sets names', () => {
@@ -47,7 +45,7 @@ describe('Matcher', () => {
 
       expect(() => {
         customMatcher.createElement('', {});
-      }).toThrowError('Invalid React element created from MockMatcher.');
+      }).toThrow('Invalid React element created from MockMatcher.');
     });
   });
 
