@@ -31,7 +31,7 @@
     "react": "^16.8.0"
   },
   "devDependencies": {
-    "@types/lodash": "4.14.145",
+    "@types/lodash": "4.14.146",
     "emojibase": "^3.1.0",
     "react": "^16.11.0"
   }
