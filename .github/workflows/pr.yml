@@ -1,0 +1,13 @@
+name: PR
+on: pull_request
+jobs:
+  conventional:
+    name: Conventional Title
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - uses: actions/setup-node@v1
+      - run: yarn install --ignore-engines --frozen-lockfile
+      - uses: beemojs/conventional-pr-action@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

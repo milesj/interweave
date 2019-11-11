@@ -18,10 +18,11 @@
     "type": "beemo typescript --reference-workspaces --build"
   },
   "devDependencies": {
-    "@milesj/build-tools": "^0.59.0",
+    "@milesj/build-tools": "^0.59.1",
     "@types/react": "16.9.11",
     "@types/react-dom": "16.9.4",
     "babel-loader": "^8.0.6",
+    "conventional-changelog-beemo": "^1.5.1",
     "emojibase": "^3.1.0",
     "emojibase-test-utils": "^4.1.0",
     "eslint-plugin-rut": "^0.1.9",

@@ -1983,10 +1983,10 @@
     npmlog "^4.1.2"
     write-file-atomic "^2.3.0"
 
-"@milesj/build-tool-config@^0.181.0":
-  version "0.181.0"
-  resolved "https://registry.npmjs.org/@milesj/build-tool-config/-/build-tool-config-0.181.0.tgz#a1292d1e4ab00f5e3dfd7a2b9438cb0589c34a5a"
-  integrity sha512-JwBUM5r+BIa0ehcu3UMLpd7y8/3+JBx7VeJPh7ccFuA1Y2jljtdhqpT/0r7NbGuQteWJ60JpGxdC1axsdU/GBA==
+"@milesj/build-tool-config@^0.181.1":
+  version "0.181.1"
+  resolved "https://registry.npmjs.org/@milesj/build-tool-config/-/build-tool-config-0.181.1.tgz#cc7bdd72c920083c8bd7fe6beaed2de6e243f5fb"
+  integrity sha512-5V8GdgAaIeUURiZ90VyomC1BiP/AjTvlm9qJD7x5KFh54Iw908HbqCltNLNy/iV/bHmvu4YDhTFq+OhMKqKLMg==
   dependencies:
     "@babel/cli" "^7.7.0"
     "@babel/core" "^7.7.2"
@@ -2043,12 +2043,12 @@
     prettier "^1.18.2"
     typescript "^3.7.2"
 
-"@milesj/build-tools@^0.59.0":
-  version "0.59.0"
-  resolved "https://registry.npmjs.org/@milesj/build-tools/-/build-tools-0.59.0.tgz#64c68ddab62e0f833d96b0e30d83fdc92fc6ae36"
-  integrity sha512-anjNcBxEMGtUOkvPeB30XTQ41EfIGSzZpHCZLZC7R88dbdZTyHi9LJW1aaR9oKx5pYCP3/l6GzUTEOPF5SZSlg==
+"@milesj/build-tools@^0.59.1":
+  version "0.59.1"
+  resolved "https://registry.npmjs.org/@milesj/build-tools/-/build-tools-0.59.1.tgz#847aa45ef92d7904e2265283347eab894e8c4fc1"
+  integrity sha512-+9XFkTo7+Nif2znxZXDqtIfSx5YHC1jHfUJVsUsEefvsox0QnFou/qG1yz8T2rCe3repwGk4e4y1tSxl9luIAA==
   dependencies:
-    "@milesj/build-tool-config" "^0.181.0"
+    "@milesj/build-tool-config" "^0.181.1"
     "@milesj/build-tool-runtime" "^0.52.0"
 
 "@mrmlnc/readdir-enhanced@^2.2.1":
@@ -2266,15 +2266,10 @@
   resolved "https://registry.npmjs.org/@types/json5/-/json5-0.0.30.tgz#44cb52f32a809734ca562e685c6473b5754a7818"
   integrity sha512-sqm9g7mHlPY/43fcSNrCYfOeX9zkTTK+euO5E6+CVijSMm5tTjkVdwdqRkY3ljjIAf8679vps5jKUoJBCLsMDA==
 
-"@types/lodash@4.14.145", "@types/lodash@^4.14.144":
-  version "4.14.145"
-  resolved "https://registry.npmjs.org/@types/lodash/-/lodash-4.14.145.tgz#abcafe85788f1392c5d5a144142aaf8529ad6bb9"
-  integrity sha512-7lX5bZFO3YG3AG0XVIm5L1SB6wDLtuaJksTkTWrux3/XwCZgw3MPWZBt3Jgj0w98uqUXWVypT2msxo0A1t22lw==
-
-"@types/lodash@^4.14.138":
-  version "4.14.141"
-  resolved "https://registry.npmjs.org/@types/lodash/-/lodash-4.14.141.tgz#d81f4d0c562abe28713406b571ffb27692a82ae6"
-  integrity sha512-v5NYIi9qEbFEUpCyikmnOYe4YlP8BMUdTcNCAquAKzu+FA7rZ1onj9x80mbnDdOW/K5bFf3Tv5kJplP33+gAbQ==
+"@types/lodash@4.14.146", "@types/lodash@^4.14.138", "@types/lodash@^4.14.144":
+  version "4.14.146"
+  resolved "https://registry.npmjs.org/@types/lodash/-/lodash-4.14.146.tgz#de0d2c8610012f12a6a796455054cbc654f8fecf"
+  integrity sha512-JzJcmQ/ikHSv7pbvrVNKJU5j9jL9VLf3/gqs048CEnBVVVEv4kve3vLxoPHGvclutS+Il4SBIuQQ087m1eHffw==
 
 "@types/micromatch@^3.1.0":
   version "3.1.0"
@@ -3869,6 +3864,11 @@ conventional-changelog-angular@^5.0.3:
   dependencies:
     compare-func "^1.3.1"
     q "^1.5.1"
+
+conventional-changelog-beemo@^1.5.1:
+  version "1.5.1"
+  resolved "https://registry.npmjs.org/conventional-changelog-beemo/-/conventional-changelog-beemo-1.5.1.tgz#dcc1c64b0f8528ebc76e9a2ea03ad29ff55be931"
+  integrity sha512-yLuOXVcDjW4FReZsPHBo3y/cCr5ZP+VDPCc0n69X3A/ec41io24pMZp4GoSJd1/cPZXgwhUcl47CwX3GEv6JNQ==
 
 conventional-changelog-core@^3.1.6:
   version "3.1.6"

@@ -1,6 +1,6 @@
 # Interweave with Autolinking
 
-[![Build Status](https://travis-ci.org/milesj/interweave.svg?branch=master)](https://travis-ci.org/milesj/interweave)
+[![Build Status](https://github.com/milesj/interweave/workflows/Build/badge.svg)](https://github.com/milesj/interweave/actions?query=branch%3Amaster)
 [![npm version](https://badge.fury.io/js/interweave-autolink.svg)](https://www.npmjs.com/package/interweave-autolink)
 [![npm deps](https://david-dm.org/milesj/interweave.svg?path=packages/autolink)](https://www.npmjs.com/package/interweave-autolink)
 
