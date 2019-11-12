@@ -34,5 +34,9 @@
     "@types/lodash": "4.14.146",
     "emojibase": "^3.1.0",
     "react": "^16.11.0"
+  },
+  "funding": {
+    "type": "ko-fi",
+    "url": "https://ko-fi.com/milesjohnson"
   }
 }

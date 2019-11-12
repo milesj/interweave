@@ -491,7 +491,7 @@
   dependencies:
     "@babel/helper-plugin-utils" "^7.0.0"
 
-"@babel/plugin-syntax-typescript@^7.2.0":
+"@babel/plugin-syntax-typescript@^7.2.0", "@babel/plugin-syntax-typescript@^7.3.3":
   version "7.3.3"
   resolved "https://registry.npmjs.org/@babel/plugin-syntax-typescript/-/plugin-syntax-typescript-7.3.3.tgz#a7cc3f66119a9f7ebe2de5383cce193473d65991"
   integrity sha512-dGwbSMA1YhVS8+31CnPR7LB4pcbrzcV99wQzby4uAfrkZPYZlQ7ImwdpzLqi6Z6IL02b8IAL379CaMwo0x5Lag==
@@ -1983,10 +1983,10 @@
     npmlog "^4.1.2"
     write-file-atomic "^2.3.0"
 
-"@milesj/build-tool-config@^0.181.1":
-  version "0.181.1"
-  resolved "https://registry.npmjs.org/@milesj/build-tool-config/-/build-tool-config-0.181.1.tgz#cc7bdd72c920083c8bd7fe6beaed2de6e243f5fb"
-  integrity sha512-5V8GdgAaIeUURiZ90VyomC1BiP/AjTvlm9qJD7x5KFh54Iw908HbqCltNLNy/iV/bHmvu4YDhTFq+OhMKqKLMg==
+"@milesj/build-tool-config@^0.181.2":
+  version "0.181.2"
+  resolved "https://registry.npmjs.org/@milesj/build-tool-config/-/build-tool-config-0.181.2.tgz#15ca1481e872c78d8366b77dc75d77f7ed1c5c7a"
+  integrity sha512-ufN2VnJwLzgeerUJfvWQGoII4FRoHzZtCNWFsfCJ7gJIjkkVIE2N6SpJwu1DFJ5gg850osSlRpFLhV3qXui4og==
   dependencies:
     "@babel/cli" "^7.7.0"
     "@babel/core" "^7.7.2"
@@ -1999,17 +1999,17 @@
     "@babel/preset-react" "^7.7.0"
     "@babel/preset-typescript" "^7.7.2"
     "@types/jest" "^24.0.22"
-    "@typescript-eslint/eslint-plugin" "^2.6.1"
-    "@typescript-eslint/parser" "^2.6.1"
+    "@typescript-eslint/eslint-plugin" "^2.7.0"
+    "@typescript-eslint/parser" "^2.7.0"
     babel-plugin-transform-dev "^2.0.1"
-    babel-plugin-typescript-to-proptypes "^0.17.1"
+    babel-plugin-typescript-to-proptypes "^1.0.0"
     eslint "^6.6.0"
     eslint-config-airbnb "^18.0.1"
     eslint-config-prettier "^6.5.0"
     eslint-plugin-babel "^5.3.0"
     eslint-plugin-compat "^3.3.0"
     eslint-plugin-import "^2.18.2"
-    eslint-plugin-jest "^23.0.2"
+    eslint-plugin-jest "^23.0.3"
     eslint-plugin-jsx-a11y "^6.2.3"
     eslint-plugin-promise "^4.2.1"
     eslint-plugin-react "^7.16.0"
@@ -2019,16 +2019,16 @@
     fast-glob "^3.1.0"
     fs-extra "^8.1.0"
     jest "^24.9.0"
-    prettier "^1.18.2"
+    prettier "^1.19.1"
     react "^16.11.0"
     react-dom "^16.11.0"
     react-test-renderer "^16.11.0"
     typescript "^3.7.2"
 
-"@milesj/build-tool-runtime@^0.52.0":
-  version "0.52.0"
-  resolved "https://registry.npmjs.org/@milesj/build-tool-runtime/-/build-tool-runtime-0.52.0.tgz#8a6c1c75588ba9ef0d9825163a7405045182c66b"
-  integrity sha512-sIWjOhP8G30MHh6rfEgeYVfagkDaEV5Afip418Fqzvj79JxWc11keyQcCjezJCnZ/nNJvweP9BTkAip5zhmIBQ==
+"@milesj/build-tool-runtime@^0.52.1":
+  version "0.52.1"
+  resolved "https://registry.npmjs.org/@milesj/build-tool-runtime/-/build-tool-runtime-0.52.1.tgz#8cfc59ffe058a5f78837c3829b786616e388afb4"
+  integrity sha512-E6AfSUQiM74LuT+YCFWli/BJtuiy/z5xqbnWVQfjyBn/SGkwDqZBb0gre0vsH0gLotSClG6NpqI6wN+MeJuepA==
   dependencies:
     "@babel/core" "^7.7.2"
     "@beemo/cli" "^1.0.5"
@@ -2040,16 +2040,16 @@
     "@beemo/driver-typescript" "^1.1.4"
     eslint "^6.6.0"
     jest "^24.9.0"
-    prettier "^1.18.2"
+    prettier "^1.19.1"
     typescript "^3.7.2"
 
-"@milesj/build-tools@^0.59.1":
-  version "0.59.1"
-  resolved "https://registry.npmjs.org/@milesj/build-tools/-/build-tools-0.59.1.tgz#847aa45ef92d7904e2265283347eab894e8c4fc1"
-  integrity sha512-+9XFkTo7+Nif2znxZXDqtIfSx5YHC1jHfUJVsUsEefvsox0QnFou/qG1yz8T2rCe3repwGk4e4y1tSxl9luIAA==
+"@milesj/build-tools@^0.59.2":
+  version "0.59.2"
+  resolved "https://registry.npmjs.org/@milesj/build-tools/-/build-tools-0.59.2.tgz#9449f642454c0d6a53fd0dba18c5a14b9f20752d"
+  integrity sha512-Yomq3hIwOQVZSqdwV7kJeO6jI0sZkxztps9gv11euuHnQAyvag6r2T04DQAdOvN4dApAN+0BVy+sN9NhD+HPpQ==
   dependencies:
-    "@milesj/build-tool-config" "^0.181.1"
-    "@milesj/build-tool-runtime" "^0.52.0"
+    "@milesj/build-tool-config" "^0.181.2"
+    "@milesj/build-tool-runtime" "^0.52.1"
 
 "@mrmlnc/readdir-enhanced@^2.2.1":
   version "2.2.1"
@@ -2398,18 +2398,27 @@
   dependencies:
     "@types/yargs-parser" "*"
 
-"@typescript-eslint/eslint-plugin@^2.6.1":
-  version "2.6.1"
-  resolved "https://registry.npmjs.org/@typescript-eslint/eslint-plugin/-/eslint-plugin-2.6.1.tgz#e34972a24f8aba0861f9ccf7130acd74fd11e079"
-  integrity sha512-Z0rddsGqioKbvqfohg7BwkFC3PuNLsB+GE9QkFza7tiDzuHoy0y823Y+oGNDzxNZrYyLjqkZtCTl4vCqOmEN4g==
+"@typescript-eslint/eslint-plugin@^2.7.0":
+  version "2.7.0"
+  resolved "https://registry.npmjs.org/@typescript-eslint/eslint-plugin/-/eslint-plugin-2.7.0.tgz#dff176bdb73dfd7e2e43062452189bd1b9db6021"
+  integrity sha512-H5G7yi0b0FgmqaEUpzyBlVh0d9lq4cWG2ap0RKa6BkF3rpBb6IrAoubt1NWh9R2kRs/f0k6XwRDiDz3X/FqXhQ==
   dependencies:
-    "@typescript-eslint/experimental-utils" "2.6.1"
+    "@typescript-eslint/experimental-utils" "2.7.0"
     eslint-utils "^1.4.2"
     functional-red-black-tree "^1.0.1"
     regexpp "^2.0.1"
     tsutils "^3.17.1"
 
-"@typescript-eslint/experimental-utils@2.6.1", "@typescript-eslint/experimental-utils@^2.5.0":
+"@typescript-eslint/experimental-utils@2.7.0":
+  version "2.7.0"
+  resolved "https://registry.npmjs.org/@typescript-eslint/experimental-utils/-/experimental-utils-2.7.0.tgz#58d790a3884df3041b5a5e08f9e5e6b7c41864b5"
+  integrity sha512-9/L/OJh2a5G2ltgBWJpHRfGnt61AgDeH6rsdg59BH0naQseSwR7abwHq3D5/op0KYD/zFT4LS5gGvWcMmegTEg==
+  dependencies:
+    "@types/json-schema" "^7.0.3"
+    "@typescript-eslint/typescript-estree" "2.7.0"
+    eslint-scope "^5.0.0"
+
+"@typescript-eslint/experimental-utils@^2.5.0":
   version "2.6.1"
   resolved "https://registry.npmjs.org/@typescript-eslint/experimental-utils/-/experimental-utils-2.6.1.tgz#eddaca17a399ebf93a8628923233b4f93793acfd"
   integrity sha512-EVrrUhl5yBt7fC7c62lWmriq4MIc49zpN3JmrKqfiFXPXCM5ErfEcZYfKOhZXkW6MBjFcJ5kGZqu1b+lyyExUw==
@@ -2418,20 +2427,32 @@
     "@typescript-eslint/typescript-estree" "2.6.1"
     eslint-scope "^5.0.0"
 
-"@typescript-eslint/parser@^2.6.1":
-  version "2.6.1"
-  resolved "https://registry.npmjs.org/@typescript-eslint/parser/-/parser-2.6.1.tgz#3c00116baa0d696bc334ca18ac5286b34793993c"
-  integrity sha512-PDPkUkZ4c7yA+FWqigjwf3ngPUgoLaGjMlFh6TRtbjhqxFBnkElDfckSjm98q9cMr4xRzZ15VrS/xKm6QHYf0w==
+"@typescript-eslint/parser@^2.7.0":
+  version "2.7.0"
+  resolved "https://registry.npmjs.org/@typescript-eslint/parser/-/parser-2.7.0.tgz#b5e6a4944e2b68dba1e7fbfd5242e09ff552fd12"
+  integrity sha512-ctC0g0ZvYclxMh/xI+tyqP0EC2fAo6KicN9Wm2EIao+8OppLfxji7KAGJosQHSGBj3TcqUrA96AjgXuKa5ob2g==
   dependencies:
     "@types/eslint-visitor-keys" "^1.0.0"
-    "@typescript-eslint/experimental-utils" "2.6.1"
-    "@typescript-eslint/typescript-estree" "2.6.1"
+    "@typescript-eslint/experimental-utils" "2.7.0"
+    "@typescript-eslint/typescript-estree" "2.7.0"
     eslint-visitor-keys "^1.1.0"
 
 "@typescript-eslint/typescript-estree@2.6.1":
   version "2.6.1"
   resolved "https://registry.npmjs.org/@typescript-eslint/typescript-estree/-/typescript-estree-2.6.1.tgz#fb363dd4ca23384745c5ea4b7f4c867432b00d31"
   integrity sha512-+sTnssW6bcbDZKE8Ce7VV6LdzkQz2Bxk7jzk1J8H1rovoTxnm6iXvYIyncvNsaB/kBCOM63j/LNJfm27bNdUoA==
+  dependencies:
+    debug "^4.1.1"
+    glob "^7.1.4"
+    is-glob "^4.0.1"
+    lodash.unescape "4.0.1"
+    semver "^6.3.0"
+    tsutils "^3.17.1"
+
+"@typescript-eslint/typescript-estree@2.7.0":
+  version "2.7.0"
+  resolved "https://registry.npmjs.org/@typescript-eslint/typescript-estree/-/typescript-estree-2.7.0.tgz#34fd98c77a07b40d04d5b4203eddd3abeab909f4"
+  integrity sha512-vVCE/DY72N4RiJ/2f10PTyYekX2OLaltuSIBqeHYI44GQ940VCYioInIb8jKMrK9u855OEJdFC+HmWAZTnC+Ag==
   dependencies:
     debug "^4.1.1"
     glob "^7.1.4"
@@ -3075,14 +3096,14 @@ babel-plugin-transform-dev@^2.0.1:
   resolved "https://registry.npmjs.org/babel-plugin-transform-dev/-/babel-plugin-transform-dev-2.0.1.tgz#fec5bbfb6b9576cd8413df5bd0ae7aca32b0a2d4"
   integrity sha512-Otu4LeO02yk+KIsDIwOPmI40TjOLT78NKmGlBxQRyq15Gqost9meZKszdi4LIrIWYAQ3plWXTLclK+IWv1DIQg==
 
-babel-plugin-typescript-to-proptypes@^0.17.1:
-  version "0.17.1"
-  resolved "https://registry.npmjs.org/babel-plugin-typescript-to-proptypes/-/babel-plugin-typescript-to-proptypes-0.17.1.tgz#9874735be3565ba4d7fc7f3cafb04fec40f55a83"
-  integrity sha512-yREUfvDlmn6QjM0QbywXUkXBQMD/iFfLVTl+jig4X7ZLUg9lq8ZLuex8HIM2SQ4X3vcjGnWPFowodlMcXhwxdQ==
+babel-plugin-typescript-to-proptypes@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.npmjs.org/babel-plugin-typescript-to-proptypes/-/babel-plugin-typescript-to-proptypes-1.0.0.tgz#444ec0ab4cb354235d61d392d93a94e5f8116a4e"
+  integrity sha512-MmvRovMnDx3VsdhFOMBaJHCbN2Q4LPd2FCHfMEJMDBjv4t1q0BW9hVU2DkmrNKWU5JxbOaE1egUqzRWiG26Yow==
   dependencies:
-    "@babel/helper-module-imports" "^7.0.0"
+    "@babel/helper-module-imports" "^7.7.0"
     "@babel/helper-plugin-utils" "^7.0.0"
-    "@babel/plugin-syntax-typescript" "^7.2.0"
+    "@babel/plugin-syntax-typescript" "^7.3.3"
 
 babel-polyfill@^6.26.0:
   version "6.26.0"
@@ -4688,10 +4709,10 @@ eslint-plugin-import@^2.18.2:
     read-pkg-up "^2.0.0"
     resolve "^1.11.0"
 
-eslint-plugin-jest@^23.0.2:
-  version "23.0.2"
-  resolved "https://registry.npmjs.org/eslint-plugin-jest/-/eslint-plugin-jest-23.0.2.tgz#54a59bfe77245186afe13711a297067aefefff0a"
-  integrity sha512-fkxcvOJm0hC/jbJqYJjtuC9mvpTJqXd0Nixx7joVQvJoBQuXk/ws3+MtRYzD/4TcKSgvr21uuSLdwSxKJKC2cg==
+eslint-plugin-jest@^23.0.3:
+  version "23.0.3"
+  resolved "https://registry.npmjs.org/eslint-plugin-jest/-/eslint-plugin-jest-23.0.3.tgz#d3f157f7791f97713372c13259ba1dfc436eb4c1"
+  integrity sha512-9cNxr66zeOyz1S9AkQL4/ouilR6QHpYj8vKOQZ60fu9hAt5PJWS4KqWqfr1aqN5NFEZSPjFOla2Azn+KTWiGwg==
   dependencies:
     "@typescript-eslint/experimental-utils" "^2.5.0"
 
@@ -8582,10 +8603,10 @@ prelude-ls@~1.1.2:
   resolved "https://registry.npmjs.org/prelude-ls/-/prelude-ls-1.1.2.tgz#21932a549f5e52ffd9a827f570e04be62a97da54"
   integrity sha1-IZMqVJ9eUv/ZqCf1cOBL5iqX2lQ=
 
-prettier@^1.18.2:
-  version "1.18.2"
-  resolved "https://registry.npmjs.org/prettier/-/prettier-1.18.2.tgz#6823e7c5900017b4bd3acf46fe9ac4b4d7bda9ea"
-  integrity sha512-OeHeMc0JhFE9idD4ZdtNibzY0+TPHSpSSb9h8FqtP+YnoZZ1sl8Vc9b1sasjfymH3SonAF4QcA2+mzHPhMvIiw==
+prettier@^1.19.1:
+  version "1.19.1"
+  resolved "https://registry.npmjs.org/prettier/-/prettier-1.19.1.tgz#f7d7f5ff8a9cd872a7be4ca142095956a60797cb"
+  integrity sha512-s7PoyDv/II1ObgQunCbB9PdLmUcBZcnWOcxDh7O0N/UwDEsHyqkW+Qh28jW+mVuCdx7gLB0BotYI1Y6uI9iyew==
 
 pretty-format@^24.9.0:
   version "24.9.0"
