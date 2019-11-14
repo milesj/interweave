@@ -415,7 +415,7 @@ export default class Parser {
    * Verify that a node is safe from XSS and injection attacks.
    */
   isSafe(node: HTMLElement): boolean {
-    // URLs should only support HTTP and email
+    // URLs should only support HTTP, email and phone numbers
     if (typeof HTMLAnchorElement !== 'undefined' && node instanceof HTMLAnchorElement) {
       const href = node.getAttribute('href');
 
@@ -428,7 +428,7 @@ export default class Parser {
       const protocol = node.protocol.toLowerCase();
 
       return (
-        protocol === ':' || protocol === 'http:' || protocol === 'https:' || protocol === 'mailto:'
+        protocol === ':' || protocol === 'http:' || protocol === 'https:' || protocol === 'mailto:' || protocol === 'tel:'
       );
     }
 
