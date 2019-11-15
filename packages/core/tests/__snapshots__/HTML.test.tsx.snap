@@ -41,8 +41,10 @@ exports[`html a, ul, li renders 1`] = `
   
           <Element tagName="li">
             <li>
-              <Element tagName="a">
-                <a>Phone</a>
+              <Element attributes={{ href: "tel:+123456789" }} tagName="a">
+                <a href="tel:+123456789">
+                  Phone
+                </a>
               </Element>
             </li>
           </Element>
@@ -105,8 +107,10 @@ exports[`html address renders 1`] = `
           </Element>
           
   
-          <Element tagName="a">
-            <a>+311-555-2368</a>
+          <Element attributes={{ href: "tel:+311-555-2368" }} tagName="a">
+            <a href="tel:+311-555-2368">
+              +311-555-2368
+            </a>
           </Element>
           <Element selfClose tagName="br">
             <br />
