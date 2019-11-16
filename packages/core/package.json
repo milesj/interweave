@@ -1,6 +1,6 @@
 {
   "name": "interweave",
-  "version": "12.1.0",
+  "version": "12.1.1",
   "description": "React library to safely render HTML, filter attributes, autowrap text, autolink, and much more.",
   "keywords": [
     "interweave",
@@ -43,7 +43,7 @@
     "react": "^16.8.0"
   },
   "devDependencies": {
-    "interweave-ssr": "^1.0.0-alpha.0",
+    "interweave-ssr": "^1.0.0",
     "react": "^16.11.0"
   },
   "funding": {
