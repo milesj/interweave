@@ -1,3 +1,9 @@
+### 12.1.1 - 2019-11-15
+
+#### 🐞 Fixes
+
+- Add `tel:` to the list of safe protocols.
+
 ## 12.1.0 - 2019-11-01
 
 #### 🚀 Updates
