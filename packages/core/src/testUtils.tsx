@@ -58,7 +58,7 @@ export function createExpectedToken<T>(
 
   let count = -1;
   const tokens = TOKEN_LOCATIONS[index]
-    .split(/(\{token\})/)
+    .split(/({token})/)
     .map(row => {
       if (row === '{token}') {
         count += 1;

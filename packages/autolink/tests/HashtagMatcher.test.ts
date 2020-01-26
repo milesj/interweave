@@ -60,7 +60,7 @@ describe('matchers/HashtagMatcher', () => {
         it(`for: ${hashtag} - ${location}`, () => {
           parser.keyIndex = -1; // Reset for easier testing
 
-          const tokenString = location.replace(/\{token\}/g, hashtag);
+          const tokenString = location.replace(/{token}/g, hashtag);
           const actual = parser.applyMatchers(tokenString, parentConfig);
 
           // eslint-disable-next-line jest/no-if

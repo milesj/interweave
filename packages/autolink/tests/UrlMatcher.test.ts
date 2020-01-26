@@ -235,7 +235,7 @@ describe('matchers/UrlMatcher', () => {
         it(`for: ${urlParams.url} - ${location}`, () => {
           parser.keyIndex = -1; // Reset for easier testing
 
-          const tokenString = location.replace(/\{token\}/g, urlParams.url);
+          const tokenString = location.replace(/{token}/g, urlParams.url);
           const actual = parser.applyMatchers(tokenString, parentConfig);
 
           // eslint-disable-next-line jest/no-if

@@ -1,3 +1,5 @@
+/* eslint-disable unicorn/regex-shorthand */
+
 export interface CombinePatternsOptions {
   capture?: boolean;
   flags?: string;

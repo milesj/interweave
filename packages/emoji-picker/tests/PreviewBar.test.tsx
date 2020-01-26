@@ -98,7 +98,7 @@ describe('PreviewBar', () => {
     it('displays subtitle', () => {
       const { root } = render<PreviewBarProps>(<PreviewBar {...props} />);
 
-      expect(root).toContainNode(':) :pleased:');
+      expect(root).toContainNode(':) :pleased: :slight_smile:');
     });
 
     it('displays subtitle without emoticon', () => {
@@ -112,7 +112,7 @@ describe('PreviewBar', () => {
         />,
       );
 
-      expect(root).toContainNode(':pleased:');
+      expect(root).toContainNode(':pleased: :slight_smile:');
     });
 
     it('displays subtitle without shortcodes', () => {
@@ -132,7 +132,7 @@ describe('PreviewBar', () => {
     it('hides emoticon in subtitle', () => {
       const { root } = render<PreviewBarProps>(<PreviewBar {...props} hideEmoticon />);
 
-      expect(root).toContainNode(':pleased:');
+      expect(root).toContainNode(':pleased: :slight_smile:');
     });
 
     it('hides shortcodes in subtitle', () => {

@@ -156,7 +156,7 @@ describe('EmojiMatcher', () => {
         it(`for: ${unicode} - ${location}`, () => {
           parser.keyIndex = -1; // Reset for easier testing
 
-          const tokenString = location.replace(/\{token\}/g, unicode);
+          const tokenString = location.replace(/{token}/g, unicode);
           const actual = parser.applyMatchers(tokenString, parentConfig);
 
           // eslint-disable-next-line jest/no-if
@@ -170,7 +170,7 @@ describe('EmojiMatcher', () => {
         it(`for: ${shortcode} - ${location}`, () => {
           parser.keyIndex = -1; // Reset for easier testing
 
-          const tokenString = location.replace(/\{token\}/g, shortcode);
+          const tokenString = location.replace(/{token}/g, shortcode);
           const actual = parser.applyMatchers(tokenString, parentConfig);
 
           // eslint-disable-next-line jest/no-if

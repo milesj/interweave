@@ -103,7 +103,7 @@ describe('matchers/EmailMatcher', () => {
         it(`for: ${email} - ${location}`, () => {
           parser.keyIndex = -1; // Reset for easier testing
 
-          const tokenString = location.replace(/\{token\}/g, email);
+          const tokenString = location.replace(/{token}/g, email);
           const actual = parser.applyMatchers(tokenString, parentConfig);
 
           // eslint-disable-next-line jest/no-if

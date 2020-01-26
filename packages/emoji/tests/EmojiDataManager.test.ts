@@ -25,8 +25,8 @@ describe('EmojiDataManager', () => {
 
       manager.parseEmojiData(loadEmojiData());
 
-      expect(manager.getData()).toHaveLength(1724);
-      expect(manager.getFlatData()).toHaveLength(3019);
+      expect(manager.getData()).toHaveLength(1747);
+      expect(manager.getFlatData()).toHaveLength(3187);
     });
   });
 

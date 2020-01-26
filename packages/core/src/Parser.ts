@@ -30,7 +30,7 @@ const ELEMENT_NODE = 1;
 const TEXT_NODE = 3;
 const INVALID_ROOTS = /^<(!doctype|(html|head|body)(\s|>))/i;
 const ALLOWED_ATTRS = /^(aria-|data-|\w+:)/iu;
-const OPEN_TOKEN = /\{\{\{(\w+)\/?\}\}\}/;
+const OPEN_TOKEN = /{{{(\w+)\/?}}}/;
 
 interface MatcherElementsMap {
   [key: string]: {
@@ -264,7 +264,7 @@ export default class Parser {
   convertLineBreaks(markup: string): string {
     const { noHtml, disableLineBreaks } = this.props;
 
-    if (noHtml || disableLineBreaks || markup.match(/<((?:\/[a-z ]+)|(?:[a-z ]+\/))>/gi)) {
+    if (noHtml || disableLineBreaks || markup.match(/<((?:\/[ a-z]+)|(?:[ a-z]+\/))>/gi)) {
       return markup;
     }
 
@@ -331,7 +331,7 @@ export default class Parser {
           (!allowAttributes && (!filter || filter === FILTER_DENY)) ||
           // eslint-disable-next-line unicorn/prefer-starts-ends-with
           newName.match(/^on/) ||
-          value.replace(/(\s|\0|&#x0(9|A|D);)/, '').match(/(javascript|vbscript|livescript|xss):/i)
+          value.replace(/(\s|\0|&#x0([9AD]);)/, '').match(/(javascript|vbscript|livescript|xss):/i)
         ) {
           return;
         }
@@ -428,7 +428,11 @@ export default class Parser {
       const protocol = node.protocol.toLowerCase();
 
       return (
-        protocol === ':' || protocol === 'http:' || protocol === 'https:' || protocol === 'mailto:' || protocol === 'tel:'
+        protocol === ':' ||
+        protocol === 'http:' ||
+        protocol === 'https:' ||
+        protocol === 'mailto:' ||
+        protocol === 'tel:'
       );
     }
 

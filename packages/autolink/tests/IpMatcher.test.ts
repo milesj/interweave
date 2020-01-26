@@ -124,7 +124,7 @@ describe('matchers/IpMatcher', () => {
         it(`for: ${ipParams.ip} - ${location}`, () => {
           parser.keyIndex = -1; // Reset for easier testing
 
-          const tokenString = location.replace(/\{token\}/g, ipParams.ip);
+          const tokenString = location.replace(/{token}/g, ipParams.ip);
           const actual = parser.applyMatchers(tokenString, parentConfig);
 
           // eslint-disable-next-line jest/no-if

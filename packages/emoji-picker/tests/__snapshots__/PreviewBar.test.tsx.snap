@@ -21,7 +21,7 @@ exports[`PreviewBar renders a preview 1`] = `
         aria-label="slightly smiling face"
         data-emoticon=":)"
         data-hexcode="1F642"
-        data-shortcodes=":pleased:"
+        data-shortcodes=":pleased:, :slight_smile:"
         data-unicode="🙂"
         src="1F642"
         style={{ display: "inline-block", verticalAlign: "middle", width: 72, height: 72 }}
@@ -34,7 +34,7 @@ exports[`PreviewBar renders a preview 1`] = `
       Slightly smiling face
     </div>
     <div className="interweave-picker__preview-subtitle">
-      :) :pleased:
+      :) :pleased: :slight_smile:
     </div>
   </div>
 </section>
