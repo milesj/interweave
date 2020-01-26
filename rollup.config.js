@@ -2,7 +2,7 @@ import resolve from 'rollup-plugin-node-resolve';
 import babel from 'rollup-plugin-babel';
 
 const extensions = ['.js', '.jsx', '.ts', '.tsx'];
-const packages = ['autolink', 'core', 'emoji', 'emoji-picker'];
+const packages = ['autolink', 'core', 'emoji', 'emoji-picker', 'ssr'];
 
 const plugins = [
   resolve({ extensions }),
@@ -25,9 +25,12 @@ const external = [
   'lodash/chunk',
   'lodash/debounce',
   'lodash/upperFirst',
+  'parse5',
+  'parse5/lib/tree-adapters/default',
   'prop-types',
   'react-window',
   'react',
+  'style-parser',
 ];
 
 export default packages.map(pkg => ({
