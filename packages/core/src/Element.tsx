@@ -1,13 +1,5 @@
 import React from 'react';
-import { Attributes } from './types';
-
-export interface ElementProps {
-  [prop: string]: any;
-  attributes?: Attributes;
-  children?: React.ReactNode;
-  selfClose?: boolean;
-  tagName: string;
-}
+import { ElementProps } from './types';
 
 export default function Element({
   attributes = {},

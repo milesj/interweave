@@ -16,6 +16,7 @@ const external = [
   'emojibase-regex',
   'emojibase',
   'escape-html',
+  'interweave',
   'lodash',
   'prop-types',
   'react-window',

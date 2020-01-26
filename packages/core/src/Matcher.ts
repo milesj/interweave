@@ -1,16 +1,5 @@
 import React from 'react';
-import { MatchCallback, MatchResponse, Node, ChildrenNode } from './types';
-
-export interface MatcherInterface<T> {
-  greedy?: boolean;
-  inverseName: string;
-  propName: string;
-  asTag(): string;
-  createElement(children: ChildrenNode, props: T): Node;
-  match(value: string): MatchResponse<Partial<T>> | null;
-  onBeforeParse?(content: string, props: T): string;
-  onAfterParse?(content: Node[], props: T): Node[];
-}
+import { MatchCallback, MatchResponse, Node, ChildrenNode, MatcherInterface } from './types';
 
 export default abstract class Matcher<Props extends object = {}, Options extends object = {}>
   implements MatcherInterface<Props> {
