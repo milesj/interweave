@@ -1,26 +1,7 @@
 import React from 'react';
 import Parser from './Parser';
-import Markup, { MarkupProps } from './Markup';
-import { FilterInterface } from './Filter';
-import { MatcherInterface } from './Matcher';
-import { AfterParseCallback, BeforeParseCallback } from './types';
-
-export interface InterweaveProps extends MarkupProps {
-  /** Support all the props used by matchers. */
-  [prop: string]: any;
-  /** Disable all filters from running. */
-  disableFilters?: boolean;
-  /** Disable all matches from running. */
-  disableMatchers?: boolean;
-  /** List of filters to apply to the content. */
-  filters?: FilterInterface[];
-  /** List of matchers to apply to the content. */
-  matchers?: MatcherInterface<any>[];
-  /** Callback fired after parsing ends. Must return an array of React nodes. */
-  onAfterParse?: AfterParseCallback<InterweaveProps> | null;
-  /** Callback fired beore parsing begins. Must return a string. */
-  onBeforeParse?: BeforeParseCallback<InterweaveProps> | null;
-}
+import Markup from './Markup';
+import { InterweaveProps } from './types';
 
 export default function Interweave(props: InterweaveProps) {
   const {

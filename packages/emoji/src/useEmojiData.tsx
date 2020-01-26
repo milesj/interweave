@@ -1,20 +1,7 @@
 import { useEffect, useState } from 'react';
 import { fetchFromCDN, Emoji } from 'emojibase';
 import EmojiDataManager from './EmojiDataManager';
-import { CanonicalEmoji, Source } from './types';
-
-export interface UseEmojiDataOptions {
-  /** Avoid fetching emoji data. Assumes data has already been fetched. */
-  avoidFetch?: boolean;
-  /** Load compact emoji dataset instead of full dataset. */
-  compact?: boolean;
-  /** Locale to load emoji annotations in. Defaults to `en`. */
-  locale?: string;
-  /** Throw errors that occurred during a fetch. Defaults to `true`. */
-  throwErrors?: boolean;
-  /** Emojibase dataset version to load. Defaults to `latest`. */
-  version?: string;
-}
+import { CanonicalEmoji, Source, UseEmojiDataOptions } from './types';
 
 const promises: Map<string, Promise<CanonicalEmoji[]>> = new Map();
 

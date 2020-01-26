@@ -1,8 +1,9 @@
 import React from 'react';
 import { render } from 'rut-dom';
-import Markup, { MarkupProps } from '../src/Markup';
+import Markup from '../src/Markup';
 import Element from '../src/Element';
 import { MOCK_MARKUP } from '../src/testUtils';
+import { MarkupProps } from '../src/types';
 
 const options = { log: false, reactElements: false };
 

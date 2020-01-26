@@ -1,14 +1,4 @@
-import React from 'react';
-
-export type ElementAttributes = React.AllHTMLAttributes<unknown>;
-
-export interface FilterInterface {
-  attribute?<K extends keyof ElementAttributes>(
-    name: K,
-    value: ElementAttributes[K],
-  ): ElementAttributes[K] | undefined | null;
-  node?(name: string, node: HTMLElement): HTMLElement | null;
-}
+import { FilterInterface, ElementAttributes } from './types';
 
 export default class Filter implements FilterInterface {
   /**

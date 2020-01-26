@@ -1,6 +1,7 @@
 import React from 'react';
 import { render } from 'rut-dom';
-import Element, { ElementProps } from '../src/Element';
+import Element from '../src/Element';
+import { ElementProps } from '../src/types';
 
 describe('Element', () => {
   it('renders with a custom HTML tag', () => {

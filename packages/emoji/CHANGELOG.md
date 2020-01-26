@@ -1,3 +1,9 @@
+## 5.2.0 - 2019-01-25
+
+#### 🚀 Updates
+
+- Migrated build to Rollup for a smaller filesize.
+
 ## 5.1.0 - 2019-10-30
 
 #### 🚀 Updates

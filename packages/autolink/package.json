@@ -12,7 +12,7 @@
     "autolink"
   ],
   "main": "./lib/index.js",
-  "module": "./module.js",
+  "module": "./esm/index.js",
   "types": "./lib/index.d.ts",
   "sideEffects": false,
   "publishConfig": {

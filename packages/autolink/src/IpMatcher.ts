@@ -1,8 +1,8 @@
 import React from 'react';
 import { MatchResponse } from 'interweave';
-import { UrlProps } from './Url';
-import UrlMatcher, { UrlMatch, UrlMatcherOptions } from './UrlMatcher';
+import UrlMatcher, { UrlMatch } from './UrlMatcher';
 import { IP_PATTERN } from './constants';
+import { UrlMatcherOptions, UrlProps } from './types';
 
 export default class IpMatcher extends UrlMatcher {
   constructor(

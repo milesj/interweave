@@ -1,6 +1,7 @@
 import React from 'react';
 import { render } from 'rut-dom';
-import Markup, { MarkupProps } from '../src/Markup';
+import Markup from '../src/Markup';
+import { MarkupProps } from '../src/types';
 
 // All examples taken from MDN https://developer.mozilla.org/en-US/docs/Web/HTML/Element
 describe('html', () => {

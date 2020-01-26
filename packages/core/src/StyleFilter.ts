@@ -1,4 +1,5 @@
-import Filter, { ElementAttributes } from './Filter';
+import Filter from './Filter';
+import { ElementAttributes } from './types';
 
 const INVALID_STYLES = /(url|image|image-set)\(/i;
 

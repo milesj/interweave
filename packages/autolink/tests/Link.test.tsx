@@ -1,6 +1,7 @@
 import React from 'react';
 import { render, mockSyntheticEvent } from 'rut-dom';
-import Link, { LinkProps } from '../src/Link';
+import Link from '../src/Link';
+import { LinkProps } from '../src/types';
 
 describe('components/Link', () => {
   it('renders a link with href', () => {

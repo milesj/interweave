@@ -1,3 +1,9 @@
+## 12.2.0 - 2019-01-25
+
+#### 🚀 Updates
+
+- Migrated build to Rollup for a smaller filesize.
+
 ### 12.1.1 - 2019-11-15
 
 #### 🐞 Fixes
