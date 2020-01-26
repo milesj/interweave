@@ -1,7 +1,8 @@
 import React from 'react';
 import { render } from 'rut-dom';
-import Email, { EmailProps } from '../src/Email';
+import Email from '../src/Email';
 import Link from '../src/Link';
+import { EmailProps } from '../src/types';
 
 describe('components/Email', () => {
   it('can pass props to Link', () => {

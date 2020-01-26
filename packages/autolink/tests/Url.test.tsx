@@ -1,7 +1,8 @@
 import React from 'react';
 import { render } from 'rut-dom';
-import Url, { UrlProps } from '../src/Url';
+import Url from '../src/Url';
 import Link from '../src/Link';
+import { UrlProps } from '../src/types';
 
 describe('components/Url', () => {
   const baseParts = {

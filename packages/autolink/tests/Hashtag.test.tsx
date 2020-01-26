@@ -1,7 +1,8 @@
 import React from 'react';
 import { render } from 'rut-dom';
-import Hashtag, { HashtagProps } from '../src/Hashtag';
+import Hashtag from '../src/Hashtag';
 import Link from '../src/Link';
+import { HashtagProps } from '../src/types';
 
 describe('components/Hashtag', () => {
   it('can define the URL', () => {
