@@ -1,12 +1,5 @@
 import React from 'react';
-
-export interface LinkProps {
-  children: React.ReactNode;
-  href: string;
-  key?: string | number;
-  newWindow?: boolean;
-  onClick?: () => void | null;
-}
+import { LinkProps } from './types';
 
 export default function Link({ children, href, onClick, newWindow }: LinkProps) {
   return (

@@ -1,14 +1,6 @@
 import React from 'react';
-import { ChildrenNode } from 'interweave';
-import Link, { LinkProps } from './Link';
-
-export interface HashtagProps extends Partial<LinkProps> {
-  children: ChildrenNode;
-  encodeHashtag?: boolean;
-  hashtag: string;
-  hashtagUrl?: string | ((hashtag: string) => string);
-  preserveHash?: boolean;
-}
+import Link from './Link';
+import { HashtagProps } from './types';
 
 export default function Hashtag({
   children,

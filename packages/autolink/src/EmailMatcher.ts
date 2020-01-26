@@ -1,7 +1,8 @@
 import React from 'react';
 import { Matcher, MatchResponse, Node, ChildrenNode } from 'interweave';
-import Email, { EmailProps } from './Email';
+import Email from './Email';
 import { EMAIL_PATTERN } from './constants';
+import { EmailProps } from './types';
 
 export type EmailMatch = Pick<EmailProps, 'email' | 'emailParts'>;
 

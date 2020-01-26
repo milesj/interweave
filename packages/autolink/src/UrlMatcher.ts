@@ -1,14 +1,10 @@
 import React from 'react';
 import { Matcher, MatchResponse, Node, ChildrenNode } from 'interweave';
-import Url, { UrlProps } from './Url';
+import Url from './Url';
 import { URL_PATTERN, TOP_LEVEL_TLDS, EMAIL_DISTINCT_PATTERN } from './constants';
+import { UrlProps, UrlMatcherOptions } from './types';
 
 export type UrlMatch = Pick<UrlProps, 'url' | 'urlParts'>;
-
-export interface UrlMatcherOptions {
-  customTLDs?: string[];
-  validateTLD?: boolean;
-}
 
 export default class UrlMatcher extends Matcher<UrlProps, UrlMatcherOptions> {
   constructor(
