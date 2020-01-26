@@ -14,6 +14,8 @@ const plugins = [
 
 const external = [
   'emojibase-regex',
+  'emojibase-regex/emoticon',
+  'emojibase-regex/shortcode',
   'emojibase',
   'escape-html',
   'interweave',

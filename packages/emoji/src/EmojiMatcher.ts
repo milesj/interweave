@@ -3,23 +3,9 @@ import { Matcher, MatchResponse, Node, ChildrenNode } from 'interweave';
 import EMOJI_REGEX from 'emojibase-regex';
 import EMOTICON_REGEX from 'emojibase-regex/emoticon';
 import SHORTCODE_REGEX from 'emojibase-regex/shortcode';
-import Emoji, { EmojiProps } from './Emoji';
+import Emoji from './Emoji';
 import EmojiDataManager from './EmojiDataManager';
-
-export interface EmojiMatch {
-  emoticon?: string;
-  hexcode?: string;
-  shortcode?: string;
-  unicode?: string;
-}
-
-export interface EmojiMatcherOptions {
-  convertEmoticon?: boolean;
-  convertShortcode?: boolean;
-  convertUnicode?: boolean;
-  enlargeThreshold?: number;
-  renderUnicode?: boolean;
-}
+import { EmojiProps, EmojiMatcherOptions, EmojiMatch } from './types';
 
 const EMOTICON_BOUNDARY_REGEX = new RegExp(
   // eslint-disable-next-line no-useless-escape

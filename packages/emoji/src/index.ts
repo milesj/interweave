@@ -3,19 +3,11 @@
  * @license     https://opensource.org/licenses/MIT
  */
 
-import Emoji, { EmojiProps } from './Emoji';
+import Emoji from './Emoji';
 import EmojiDataManager from './EmojiDataManager';
-import EmojiMatcher, { EmojiMatcherOptions } from './EmojiMatcher';
-import useEmojiData, { UseEmojiDataOptions } from './useEmojiData';
+import EmojiMatcher from './EmojiMatcher';
+import useEmojiData from './useEmojiData';
 
-export {
-  Emoji,
-  EmojiProps,
-  EmojiMatcher,
-  EmojiMatcherOptions,
-  EmojiDataManager,
-  useEmojiData,
-  UseEmojiDataOptions,
-};
+export { Emoji, EmojiMatcher, EmojiDataManager, useEmojiData };
 
 export * from './types';
