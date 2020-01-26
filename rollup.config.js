@@ -33,18 +33,34 @@ const external = [
   'style-parser',
 ];
 
-export default packages.map(pkg => ({
-  external,
-  input: `packages/${pkg}/src/index.ts`,
-  output: [
-    {
-      file: `packages/${pkg}/lib/index.js`,
-      format: 'cjs',
-    },
-    {
-      file: `packages/${pkg}/esm/index.js`,
-      format: 'esm',
-    },
-  ],
-  plugins,
-}));
+export default packages
+  .map(pkg => ({
+    external,
+    input: `packages/${pkg}/src/index.ts`,
+    output: [
+      {
+        file: `packages/${pkg}/lib/index.js`,
+        format: 'cjs',
+      },
+      {
+        file: `packages/${pkg}/esm/index.js`,
+        format: 'esm',
+      },
+    ],
+    plugins,
+  }))
+  .concat({
+    external,
+    input: `packages/core/src/testUtils.tsx`,
+    output: [
+      {
+        file: `packages/core/lib/testUtils.js`,
+        format: 'cjs',
+      },
+      {
+        file: `packages/core/esm/testUtils.js`,
+        format: 'esm',
+      },
+    ],
+    plugins,
+  });
