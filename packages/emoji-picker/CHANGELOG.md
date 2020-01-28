@@ -1,3 +1,9 @@
+### 5.1.1 - 2019-01-27
+
+#### 🐞 Fixes
+
+- Fixed invalid prop types that are causing unintended crashes.
+
 ## 5.1.0 - 2019-01-25
 
 #### 🚀 Updates
