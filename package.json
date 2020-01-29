@@ -24,7 +24,7 @@
     "babel-loader": "^8.0.6",
     "conventional-changelog-beemo": "^1.6.0",
     "emojibase": "^3.2.0",
-    "emojibase-test-utils": "^4.2.0",
+    "emojibase-test-utils": "^4.2.1",
     "eslint-plugin-rut": "^0.1.10",
     "jest-rut": "^0.8.2",
     "lerna": "^3.20.2",

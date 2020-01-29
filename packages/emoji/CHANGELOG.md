@@ -1,3 +1,9 @@
+### 5.2.1 - 2019-01-28
+
+#### 📦 Dependencies
+
+- Updated `emojibase` to latest.
+
 ## 5.2.0 - 2019-01-25
 
 #### 🚀 Updates
