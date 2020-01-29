@@ -14,4 +14,5 @@ import UrlMatcher from './UrlMatcher';
 
 export { Email, EmailMatcher, Hashtag, HashtagMatcher, IpMatcher, Link, Url, UrlMatcher };
 
+export * from './constants';
 export * from './types';

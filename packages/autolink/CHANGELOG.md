@@ -1,3 +1,9 @@
+### 4.1.1 - 2019-01-28
+
+#### 🐞 Fixes
+
+- Re-export constants from the index.
+
 ## 4.1.0 - 2019-01-25
 
 #### 🚀 Updates
