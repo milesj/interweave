@@ -42,7 +42,7 @@ export default class Parser {
 
   blocked: Set<string>;
 
-  doc: Document;
+  container: HTMLElement;
 
   content: Node[] = [];
 
@@ -70,7 +70,7 @@ export default class Parser {
     this.matchers = matchers;
     this.filters = [...filters, new StyleFilter()];
     this.keyIndex = -1;
-    this.doc = this.createDocument(markup || '');
+    this.container = this.createContainer(markup || '');
     this.allowed = new Set(props.allowList || ALLOWED_TAG_LIST);
     this.banned = new Set(BANNED_TAG_LIST);
     this.blocked = new Set(props.blockList);
@@ -259,7 +259,7 @@ export default class Parser {
    * parsing while not triggering scripts or loading external
    * resources.
    */
-  createDocument(markup: string): Document {
+  createContainer(markup: string): HTMLElement {
     const doc = document.implementation.createHTMLDocument('Interweave');
 
     if (markup.match(INVALID_ROOTS)) {
@@ -272,7 +272,7 @@ export default class Parser {
       );
     }
 
-    return doc;
+    return doc.body;
   }
 
   /**
@@ -430,7 +430,7 @@ export default class Parser {
    * array to interpolate into JSX.
    */
   parse(): Node[] {
-    return this.parseNode(this.doc.body, this.getTagConfig('body'));
+    return this.parseNode(this.container, this.getTagConfig(this.container.nodeName.toLowerCase()));
   }
 
   /**
