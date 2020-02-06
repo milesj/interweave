@@ -262,7 +262,7 @@ export default class Parser {
   createContainer(markup: string): HTMLElement {
     const doc = document.implementation.createHTMLDocument('Interweave');
     const tag = this.props.tagName || 'body';
-    const el = tag === 'fragment' || tag.toLowerCase() === 'body' ? doc.body : doc.createElement(tag);
+    const el = tag.toLowerCase() === 'body' ? doc.body : doc.createElement(tag);
 
     if (markup.match(INVALID_ROOTS)) {
       if (__DEV__) {
