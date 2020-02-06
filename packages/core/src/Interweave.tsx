@@ -13,9 +13,9 @@ export default function Interweave(props: InterweaveProps) {
     matchers = [],
     onAfterParse = null,
     onBeforeParse = null,
-    tagName = 'span',
     ...parserProps
   } = props;
+  const tagName = parserProps.tagName || 'span';
   const allMatchers = disableMatchers ? [] : matchers;
   const allFilters = disableFilters ? [] : filters;
   const beforeCallbacks = onBeforeParse ? [onBeforeParse] : [];
