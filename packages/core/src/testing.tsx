@@ -1,11 +1,16 @@
-/* eslint-disable max-classes-per-file */
+/* eslint-disable max-classes-per-file, unicorn/import-index */
 
 import React from 'react';
-import Filter from './Filter';
-import Matcher from './Matcher';
-import Element from './Element';
-import { TAGS } from './constants';
-import { Node, NodeConfig, MatchResponse, ChildrenNode } from './types';
+import {
+  Filter,
+  Matcher,
+  Element,
+  Node,
+  NodeConfig,
+  MatchResponse,
+  ChildrenNode,
+  TAGS,
+} from './index';
 
 export const TOKEN_LOCATIONS = [
   'no tokens',

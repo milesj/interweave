@@ -50,15 +50,15 @@ export default packages
     plugins,
   }))
   .concat({
-    external,
-    input: `packages/core/src/testUtils.tsx`,
+    external: external.concat('./index'),
+    input: `packages/core/src/testing.tsx`,
     output: [
       {
-        file: `packages/core/lib/testUtils.js`,
+        file: `packages/core/lib/testing.js`,
         format: 'cjs',
       },
       {
-        file: `packages/core/esm/testUtils.js`,
+        file: `packages/core/esm/testing.js`,
         format: 'esm',
       },
     ],

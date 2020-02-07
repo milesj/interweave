@@ -1,5 +1,5 @@
 import Filter from '../src/Filter';
-import { LinkFilter } from '../src/testUtils';
+import { LinkFilter } from '../src/testing';
 
 describe('Filter', () => {
   it('runs the filter', () => {

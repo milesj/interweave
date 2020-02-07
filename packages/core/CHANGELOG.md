@@ -1,3 +1,13 @@
+### 12.2.1 - 2020-02-06
+
+#### 🐞 Fixes
+
+- Fixed an issue with testing utils where duplicate Interweave instances were being used.
+
+#### 🛠 Internals
+
+- Renamed `testUtils` to `testing`.
+
 ## 12.2.0 - 2019-01-25
 
 #### 🚀 Updates

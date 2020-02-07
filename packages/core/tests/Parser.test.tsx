@@ -15,7 +15,7 @@ import {
   parentConfig,
   TOKEN_LOCATIONS,
   MOCK_MARKUP,
-} from '../src/testUtils';
+} from '../src/testing';
 
 function createChild(tag: string, text: string | number): HTMLElement {
   const child = document.createElement(tag);

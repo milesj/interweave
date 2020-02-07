@@ -13,7 +13,7 @@ import {
   matchCodeTag,
   MarkdownBoldMatcher,
   MarkdownItalicMatcher,
-} from '../src/testUtils';
+} from '../src/testing';
 import { InterweaveProps } from '../src/types';
 
 describe('Interweave', () => {

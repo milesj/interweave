@@ -9,7 +9,7 @@ import {
   TOKEN_LOCATIONS,
   createExpectedToken,
   parentConfig,
-} from 'interweave/lib/testUtils';
+} from 'interweave/lib/testing';
 import Emoji from '../src/Emoji';
 import EmojiMatcher from '../src/EmojiMatcher';
 import EmojiData from '../src/EmojiDataManager';

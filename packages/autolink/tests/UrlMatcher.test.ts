@@ -1,5 +1,5 @@
 import { Parser } from 'interweave';
-import { TOKEN_LOCATIONS, createExpectedToken, parentConfig } from 'interweave/lib/testUtils';
+import { TOKEN_LOCATIONS, createExpectedToken, parentConfig } from 'interweave/lib/testing';
 import UrlMatcher from '../src/UrlMatcher';
 import { URL_PATTERN } from '../src/constants';
 
