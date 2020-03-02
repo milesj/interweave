@@ -18,26 +18,27 @@
     "type": "beemo typescript --reference-workspaces --build"
   },
   "devDependencies": {
-    "@milesj/build-tools": "^1.0.1",
-    "@types/react": "16.9.19",
-    "@types/react-dom": "16.9.5",
+    "@milesj/build-tools": "^1.1.0",
+    "@types/lodash": "^4.14.108",
+    "@types/react": "^16.9.23",
+    "@types/react-dom": "^16.9.5",
     "babel-loader": "^8.0.6",
     "conventional-changelog-beemo": "^1.6.0",
     "emojibase": "^3.2.0",
     "emojibase-test-utils": "^4.2.1",
-    "eslint-plugin-rut": "^0.1.10",
-    "jest-rut": "^0.8.2",
+    "eslint-plugin-rut": "^1.0.0",
+    "jest-rut": "^1.0.0",
     "lerna": "^3.20.2",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
     "regenerator-runtime": "^0.13.3",
-    "rollup": "^1.31.0",
+    "rollup": "^1.32.0",
     "rollup-plugin-babel": "^4.3.3",
     "rollup-plugin-node-resolve": "^5.2.0",
-    "rut-dom": "^0.1.2",
+    "rut-dom": "^1.0.0",
     "serve": "^11.3.0",
-    "webpack": "^4.41.5",
-    "webpack-cli": "^3.3.10"
+    "webpack": "^4.41.6",
+    "webpack-cli": "^3.3.11"
   },
   "workspaces": [
     "packages/*"
