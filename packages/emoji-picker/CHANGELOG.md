@@ -1,3 +1,9 @@
+### 5.1.2 - 2020-03-01
+
+#### 📦 Dependencies
+
+- Updated all dependencies.
+
 ### 5.1.1 - 2019-01-27
 
 #### 🐞 Fixes

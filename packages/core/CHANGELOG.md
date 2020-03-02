@@ -1,3 +1,9 @@
+### 12.2.2 - 2020-03-01
+
+#### 📦 Dependencies
+
+- Updated all dependencies.
+
 ### 12.2.1 - 2020-02-06
 
 #### 🐞 Fixes

@@ -1,3 +1,9 @@
+### 4.1.2 - 2020-03-01
+
+#### 📦 Dependencies
+
+- Updated all dependencies.
+
 ### 4.1.1 - 2019-01-28
 
 #### 🐞 Fixes

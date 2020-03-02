@@ -1,3 +1,10 @@
+### 5.2.2 - 2020-03-01
+
+#### 📦 Dependencies
+
+- Updated all dependencies.
+- Fixed in incorrect `@types/react` dependency.
+
 ### 5.2.1 - 2019-01-28
 
 #### 📦 Dependencies
