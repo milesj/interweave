@@ -34,7 +34,7 @@
   "devDependencies": {
     "@types/lodash": "*",
     "emojibase": "^3.2.0",
-    "react": "^16.12.0"
+    "react": "^16.13.0"
   },
   "funding": {
     "type": "ko-fi",
