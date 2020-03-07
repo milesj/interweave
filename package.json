@@ -1,6 +1,7 @@
 {
   "name": "interweave-root",
   "private": true,
+  "version": "0.0.0",
   "scripts": {
     "prepare": "beemo create-config --silent",
     "build": "beemo create-config babel --esm --silent && rollup --config && yarn run type",
@@ -17,8 +18,11 @@
     "release": "lerna publish",
     "type": "beemo typescript --reference-workspaces --build"
   },
+  "engines": {
+    "node": ">=10.10.0"
+  },
   "devDependencies": {
-    "@milesj/build-tools": "^1.1.0",
+    "@milesj/build-tools": "^2.0.0",
     "@types/lodash": "^4.14.108",
     "@types/react": "^16.9.23",
     "@types/react-dom": "^16.9.5",
@@ -26,18 +30,18 @@
     "conventional-changelog-beemo": "^1.6.0",
     "emojibase": "^3.2.0",
     "emojibase-test-utils": "^4.2.1",
-    "eslint-plugin-rut": "^1.0.0",
-    "jest-rut": "^1.0.0",
+    "eslint-plugin-rut": "^1.0.1",
+    "jest-rut": "^1.0.1",
     "lerna": "^3.20.2",
     "react": "^16.13.0",
     "react-dom": "^16.13.0",
     "regenerator-runtime": "^0.13.3",
-    "rollup": "^1.32.0",
+    "rollup": "^2.0.0",
     "rollup-plugin-babel": "^4.3.3",
     "rollup-plugin-node-resolve": "^5.2.0",
-    "rut-dom": "^1.0.0",
+    "rut-dom": "^1.0.1",
     "serve": "^11.3.0",
-    "webpack": "^4.41.6",
+    "webpack": "^4.42.0",
     "webpack-cli": "^3.3.11"
   },
   "workspaces": [
@@ -75,6 +79,7 @@
       "setupFilesAfterEnv": [
         "jest-rut"
       ],
+      "testEnvironment": "jsdom",
       "timers": "real"
     }
   },
