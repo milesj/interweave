@@ -6,14 +6,9 @@ import Parser from './Parser';
 import { MarkupProps } from './types';
 
 export default function Markup(props: MarkupProps) {
-  const { content, emptyContent, parsedContent, tagName } = props;
-  let tag = tagName || 'div'
-  let noWrap = props.noWrap || false;
-  // for compatibility with v8.1.0-12.2.1
-  if (tagName === 'fragment') {
-    tag = 'body';
-    noWrap = true;
-  }
+  const { containerTagName, content, emptyContent, parsedContent, tagName } = props;
+  const tag = containerTagName || tagName || 'div';
+  const noWrap = tag === 'fragment' ? true : props.noWrap;
   let mainContent;
 
   if (parsedContent) {

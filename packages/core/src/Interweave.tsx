@@ -13,15 +13,10 @@ export default function Interweave(props: InterweaveProps) {
     matchers = [],
     onAfterParse = null,
     onBeforeParse = null,
+    tagName = 'span',
+    noWrap = false,
     ...parserProps
   } = props;
-  let tagName = parserProps.tagName || 'span';
-  let noWrap = parserProps.noWrap || false;
-  // for compatibility with v8.1.0-12.2.1
-  if (tagName === 'fragment') {
-    tagName = 'body';
-    noWrap = true;
-  }
   const allMatchers = disableMatchers ? [] : matchers;
   const allFilters = disableFilters ? [] : filters;
   const beforeCallbacks = onBeforeParse ? [onBeforeParse] : [];
@@ -71,6 +66,7 @@ export default function Interweave(props: InterweaveProps) {
 
   return (
     <Markup
+      containerTagName={props.containerTagName}
       emptyContent={emptyContent}
       tagName={tagName}
       noWrap={noWrap}

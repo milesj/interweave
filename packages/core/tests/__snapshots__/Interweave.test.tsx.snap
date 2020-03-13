@@ -330,6 +330,22 @@ exports[`Interweave render() parses HTML 1`] = `
 </Element>
 `;
 
+exports[`Interweave renders using a custom container element 1`] = `
+<Element tagName="ul">
+  <ul>
+    <Element tagName="li">
+      <li>Foo</li>
+    </Element>
+    <Element tagName="li">
+      <li>Bar</li>
+    </Element>
+    <Element tagName="li">
+      <li>Baz</li>
+    </Element>
+  </ul>
+</Element>
+`;
+
 exports[`Interweave transform prop allows blocked 1`] = `
 <Element tagName="span">
   <span>

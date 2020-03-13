@@ -115,6 +115,14 @@ describe('Interweave', () => {
     expect(root.findAt(Element, 0)).toMatchSnapshot();
   });
 
+  it('renders using a custom container element', () => {
+    const { root } = render<InterweaveProps>(
+      <Interweave content="<li>Foo</li><li>Bar</li><li>Baz</li>" containerTagName="ul" />,
+    );
+
+    expect(root.findAt(Element, 0)).toMatchSnapshot();
+  });
+
   describe('parseMarkup()', () => {
     it('errors if onBeforeParse doesnt return a string', () => {
       expect(() => {

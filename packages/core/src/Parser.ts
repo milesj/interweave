@@ -261,17 +261,15 @@ export default class Parser {
    */
   createContainer(markup: string): HTMLElement {
     const doc = document.implementation.createHTMLDocument('Interweave');
-    const tag = this.props.tagName || 'body';
-    const el = tag.toLowerCase() === 'body' ? doc.body : doc.createElement(tag);
+    const tag = this.props.containerTagName || 'body';
+    const el = !tag || tag === 'body' || tag === 'fragment' ? doc.body : doc.createElement(tag);
 
     if (markup.match(INVALID_ROOTS)) {
       if (__DEV__) {
         throw new Error('HTML documents as Interweave content are not supported.');
       }
     } else {
-      el.innerHTML = this.convertLineBreaks(
-        this.props.escapeHtml ? escapeHtml(markup) : markup,
-      );
+      el.innerHTML = this.convertLineBreaks(this.props.escapeHtml ? escapeHtml(markup) : markup);
     }
 
     return el;

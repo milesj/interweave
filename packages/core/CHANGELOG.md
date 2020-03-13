@@ -2,7 +2,10 @@
 
 #### 🚀 Updates
 
-- Add a new `match` function for handling pre-defined matcher logic.
+- Added a `match` function for handling pre-defined matcher logic.
+- Added a `noWrap` prop that doesn't wrap content with an element (uses React fragments).
+- Added a `containerTagName` prop which allows content to be contextual parsed based on a specific
+  parent tag name (like parsing `li` within a `ul`).
 
 ### 12.2.2 - 2020-03-01
 
