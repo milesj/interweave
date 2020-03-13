@@ -1,3 +1,9 @@
+## 13.3.0 - 2020-03-20
+
+#### 🚀 Updates
+
+- Add a new `match` function for handling pre-defined matcher logic.
+
 ### 12.2.2 - 2020-03-01
 
 #### 📦 Dependencies

@@ -1,4 +1,5 @@
 import React from 'react';
+import match from './match';
 import { MatchCallback, MatchResponse, Node, ChildrenNode, MatcherInterface } from './types';
 
 export default abstract class Matcher<Props extends object = {}, Options extends object = {}>
@@ -59,20 +60,7 @@ export default abstract class Matcher<Props extends object = {}, Options extends
     callback: MatchCallback<T>,
     isVoid: boolean = false,
   ): MatchResponse<T> | null {
-    const match = string.match(pattern instanceof RegExp ? pattern : new RegExp(pattern, 'i'));
-
-    if (!match) {
-      return null;
-    }
-
-    return {
-      match: match[0],
-      void: isVoid,
-      ...callback(match),
-      index: match.index!,
-      length: match[0].length,
-      valid: true,
-    };
+    return match(string, pattern, callback, isVoid);
   }
 
   /**

@@ -9,8 +9,9 @@ import Filter from './Filter';
 import Matcher from './Matcher';
 import Element from './Element';
 import Parser from './Parser';
+import match from './match';
 
-export { Markup, Filter, Matcher, Element, Parser };
+export { Markup, Filter, Matcher, Element, Parser, match };
 
 export * from './constants';
 export * from './types';
