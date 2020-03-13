@@ -27,13 +27,13 @@
     "react-window": "^1.8.5"
   },
   "peerDependencies": {
-    "emojibase": "^3.0.0",
+    "emojibase": "^3.0.0 || ^4.0.0",
     "interweave-emoji": "^5.0.0",
     "react": "^16.8.0"
   },
   "devDependencies": {
     "@types/lodash": "*",
-    "emojibase": "^3.2.0",
+    "emojibase": "^4.0.0",
     "react": "^16.13.0"
   },
   "funding": {

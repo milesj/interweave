@@ -1,3 +1,9 @@
+## 5.3.0 - 2020-03-20
+
+#### 🚀 Updates
+
+- Add support for `emojibase` v4 and `emojibase-data` v5.
+
 ### 5.2.2 - 2020-03-01
 
 #### 📦 Dependencies

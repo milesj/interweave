@@ -67,7 +67,7 @@ export default function useEmojiData({
   compact = false,
   locale = 'en',
   throwErrors = false,
-  version = 'latest',
+  version = '4.2.0', // Until devices support Unicode v13
 }: UseEmojiDataOptions = {}): [CanonicalEmoji[], Source, EmojiDataManager] {
   const [emojis, setEmojis] = useState<CanonicalEmoji[]>([]);
   const [error, setError] = useState<Error>();
