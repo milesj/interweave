@@ -172,42 +172,42 @@ describe('Parser', () => {
     });
   });
 
-  describe('createDocument()', () => {
+  describe('createContainer()', () => {
     it('injects the markup into the body', () => {
-      const doc = instance.createDocument('<div>Foo<section>Bar</section><aside>Baz</aside></div>');
+      const body = instance.createContainer('<div>Foo<section>Bar</section><aside>Baz</aside></div>');
 
-      expect(doc.body.outerHTML).toBe(
+      expect(body.outerHTML).toBe(
         '<body><div>Foo<section>Bar</section><aside>Baz</aside></div></body>',
       );
     });
 
     it('errors out for `!DOCTYPE`', () => {
       expect(() => {
-        instance.createDocument('<!DOCTYPE><html><body>Foo</body></html>');
+        instance.createContainer('<!DOCTYPE><html><body>Foo</body></html>');
       }).toThrow('HTML documents as Interweave content are not supported.');
     });
 
     it('errors out for `html`', () => {
       expect(() => {
-        instance.createDocument('<html><body>Foo</body></html>');
+        instance.createContainer('<html><body>Foo</body></html>');
       }).toThrow('HTML documents as Interweave content are not supported.');
     });
 
     it('errors out for `head`', () => {
       expect(() => {
-        instance.createDocument('<head></head><body>Foo</body>');
+        instance.createContainer('<head></head><body>Foo</body>');
       }).toThrow('HTML documents as Interweave content are not supported.');
     });
 
     it('errors out for `body`', () => {
       expect(() => {
-        instance.createDocument('<body>Foo</body>');
+        instance.createContainer('<body>Foo</body>');
       }).toThrow('HTML documents as Interweave content are not supported.');
     });
 
     it('doesnt errors out for `html` in brackets', () => {
       expect(() => {
-        instance.createDocument('[html]Body[/html]');
+        instance.createContainer('[html]Body[/html]');
       }).not.toThrow();
     });
   });

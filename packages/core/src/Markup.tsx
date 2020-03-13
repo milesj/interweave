@@ -7,7 +7,13 @@ import { MarkupProps } from './types';
 
 export default function Markup(props: MarkupProps) {
   const { content, emptyContent, parsedContent, tagName } = props;
-  const tag = tagName || 'div';
+  let tag = tagName || 'div'
+  let noWrap = props.noWrap || false;
+  // for compatibility with v8.1.0-12.2.1
+  if (tagName === 'fragment') {
+    tag = 'body';
+    noWrap = true;
+  }
   let mainContent;
 
   if (parsedContent) {
@@ -24,7 +30,7 @@ export default function Markup(props: MarkupProps) {
     mainContent = emptyContent;
   }
 
-  if (tag === 'fragment') {
+  if (noWrap) {
     // eslint-disable-next-line react/jsx-no-useless-fragment
     return <React.Fragment>{mainContent}</React.Fragment>;
   }
