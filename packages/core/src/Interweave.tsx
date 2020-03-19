@@ -5,6 +5,7 @@ import { InterweaveProps } from './types';
 
 export default function Interweave(props: InterweaveProps) {
   const {
+    attributes,
     content = '',
     disableFilters = false,
     disableMatchers = false,
@@ -66,6 +67,7 @@ export default function Interweave(props: InterweaveProps) {
 
   return (
     <Markup
+      attributes={attributes}
       containerTagName={props.containerTagName}
       emptyContent={emptyContent}
       tagName={tagName}

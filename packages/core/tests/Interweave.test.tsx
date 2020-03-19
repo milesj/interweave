@@ -22,6 +22,17 @@ describe('Interweave', () => {
     expect(ALLOWED_TAG_LIST).not.toContain('iframe');
   });
 
+  it('can pass custom attributes', () => {
+    const { root } = render<InterweaveProps>(
+      <Interweave
+        attributes={{ 'aria-label': 'foo' }}
+        content={'Foo <a href="foo.com">Bar</a> Baz'}
+      />,
+    );
+
+    expect(root.findOne('span')).toHaveProp('aria-label', 'foo');
+  });
+
   it('can pass filters through props', () => {
     const { root } = render<InterweaveProps>(
       <Interweave filters={[new LinkFilter()]} content={'Foo <a href="foo.com">Bar</a> Baz'} />,

@@ -1,4 +1,11 @@
-## 13.3.0 - 2020-03-20
+## 12.4.0 - 2020-03-18
+
+#### 🚀 Updates
+
+- Added an `attributes` prop to `Interweave` and `Markup` in which custom HTML attributes can be
+  passed.
+
+## 12.3.0 - 2020-03-13
 
 #### 🚀 Updates
 

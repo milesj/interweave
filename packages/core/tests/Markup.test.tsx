@@ -20,6 +20,14 @@ describe('Markup', () => {
     expect(root).toContainNode('Foo Bar');
   });
 
+  it('can pass custom attributes', () => {
+    const { root } = render<MarkupProps>(
+      <Markup attributes={{ 'aria-label': 'foo' }} content={'Foo <a href="foo.com">Bar</a> Baz'} />,
+    );
+
+    expect(root.findOne('div')).toHaveProp('aria-label', 'foo');
+  });
+
   it('allows empty `content` to be passed', () => {
     const { root } = render<MarkupProps>(<Markup content={null} />);
 

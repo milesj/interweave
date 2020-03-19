@@ -120,13 +120,15 @@ export interface ParserProps {
 // INTERWEAVE
 
 export interface MarkupProps extends ParserProps {
+  /** HTML attributes to pass to the wrapping element. */
+  attributes?: Attributes;
   /** Content that may contain HTML to safely render. */
   content?: string | null;
   /** Content to render when the `content` prop is empty. */
   emptyContent?: React.ReactNode;
   /** @ignore Pre-parsed content to render. */
   parsedContent?: React.ReactNode;
-  /** HTML element to host the content. Also accepts 'fragment' (superseded by `noWrap`). */
+  /** HTML element to wrap the content. Also accepts 'fragment' (superseded by `noWrap`). */
   tagName?: string;
   /** Don't wrap the content in a new element specified by `tagName`. */
   noWrap?: boolean;

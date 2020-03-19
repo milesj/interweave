@@ -6,7 +6,7 @@ import Parser from './Parser';
 import { MarkupProps } from './types';
 
 export default function Markup(props: MarkupProps) {
-  const { containerTagName, content, emptyContent, parsedContent, tagName } = props;
+  const { attributes, containerTagName, content, emptyContent, parsedContent, tagName } = props;
   const tag = containerTagName || tagName || 'div';
   const noWrap = tag === 'fragment' ? true : props.noWrap;
   let mainContent;
@@ -30,5 +30,9 @@ export default function Markup(props: MarkupProps) {
     return <React.Fragment>{mainContent}</React.Fragment>;
   }
 
-  return <Element tagName={tag}>{mainContent}</Element>;
+  return (
+    <Element attributes={attributes} tagName={tag}>
+      {mainContent}
+    </Element>
+  );
 }
