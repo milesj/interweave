@@ -1,4 +1,4 @@
-/* eslint-disable unicorn/regex-shorthand */
+/* eslint-disable unicorn/better-regex */
 
 export interface CombinePatternsOptions {
   capture?: boolean;
@@ -124,7 +124,6 @@ export const URL_PATTERN = combinePatterns(
   },
 );
 
-// eslint-disable-next-line unicorn/regex-shorthand
 export const IP_V4_PART = /(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)/;
 
 export const IP_V4 = combinePatterns([IP_V4_PART, IP_V4_PART, IP_V4_PART, IP_V4_PART], {

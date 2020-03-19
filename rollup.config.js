@@ -1,9 +1,12 @@
+import path from 'path';
+import externals from 'rollup-plugin-node-externals';
 import resolve from 'rollup-plugin-node-resolve';
 import babel from 'rollup-plugin-babel';
 
-const extensions = ['.js', '.jsx', '.ts', '.tsx'];
-const packages = ['autolink', 'core', 'emoji', 'emoji-picker', 'ssr'];
+// Order is imporant!
+const packages = ['core', 'autolink', 'emoji', 'emoji-picker', 'ssr'];
 
+const extensions = ['.js', '.jsx', '.ts', '.tsx'];
 const plugins = [
   resolve({ extensions }),
   babel({
@@ -12,30 +15,8 @@ const plugins = [
   }),
 ];
 
-const external = [
-  'emojibase-regex',
-  'emojibase-regex/emoticon',
-  'emojibase-regex/shortcode',
-  'emojibase',
-  'escape-html',
-  'interweave',
-  'interweave-emoji',
-  'lodash',
-  'lodash/camelCase',
-  'lodash/chunk',
-  'lodash/debounce',
-  'lodash/upperFirst',
-  'parse5',
-  'parse5/lib/tree-adapters/default',
-  'prop-types',
-  'react-window',
-  'react',
-  'style-parser',
-];
-
 export default packages
   .map(pkg => ({
-    external,
     input: `packages/${pkg}/src/index.ts`,
     output: [
       {
@@ -47,10 +28,16 @@ export default packages
         format: 'esm',
       },
     ],
-    plugins,
+    plugins: [
+      externals({
+        deps: true,
+        packagePath: path.resolve(`packages/${pkg}/package.json`),
+      }),
+      ...plugins,
+    ],
   }))
   .concat({
-    external: external.concat('./index'),
+    external: ['react', './index'],
     input: `packages/core/src/testing.tsx`,
     output: [
       {
