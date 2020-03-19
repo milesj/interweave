@@ -319,6 +319,7 @@ export const ATTRIBUTES: FilterMap = Object.freeze({
   kind: FILTER_ALLOW,
   label: FILTER_ALLOW,
   lang: FILTER_ALLOW,
+  loading: FILTER_ALLOW,
   loop: FILTER_CAST_BOOL,
   media: FILTER_ALLOW,
   muted: FILTER_CAST_BOOL,
