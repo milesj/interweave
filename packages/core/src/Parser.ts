@@ -42,7 +42,7 @@ export default class Parser {
 
   blocked: Set<string>;
 
-  container: HTMLElement;
+  container?: HTMLElement;
 
   content: Node[] = [];
 
@@ -259,7 +259,12 @@ export default class Parser {
    * parsing while not triggering scripts or loading external
    * resources.
    */
-  createContainer(markup: string): HTMLElement {
+  createContainer(markup: string): HTMLElement | undefined {
+    // Maybe SSR? Just do nothing instead of crashing!
+    if (typeof window === 'undefined' || typeof document === 'undefined') {
+      return undefined;
+    }
+
     const doc = document.implementation.createHTMLDocument('Interweave');
     const tag = this.props.containerTagName || 'body';
     const el = !tag || tag === 'body' || tag === 'fragment' ? doc.body : doc.createElement(tag);
@@ -430,6 +435,10 @@ export default class Parser {
    * array to interpolate into JSX.
    */
   parse(): Node[] {
+    if (!this.container) {
+      return [];
+    }
+
     return this.parseNode(this.container, this.getTagConfig(this.container.nodeName.toLowerCase()));
   }
 

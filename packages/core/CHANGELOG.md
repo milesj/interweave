@@ -5,6 +5,10 @@
 - Added an `attributes` prop to `Interweave` and `Markup` in which custom HTML attributes can be
   passed.
 
+#### 🛠 Internals
+
+- Parser will now no-op during SSR if there is no document and `interweave-ssr` has not be setup.
+
 ## 12.3.0 - 2020-03-13
 
 #### 🚀 Updates

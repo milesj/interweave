@@ -174,9 +174,11 @@ describe('Parser', () => {
 
   describe('createContainer()', () => {
     it('injects the markup into the body', () => {
-      const body = instance.createContainer('<div>Foo<section>Bar</section><aside>Baz</aside></div>');
+      const body = instance.createContainer(
+        '<div>Foo<section>Bar</section><aside>Baz</aside></div>',
+      );
 
-      expect(body.outerHTML).toBe(
+      expect(body?.outerHTML).toBe(
         '<body><div>Foo<section>Bar</section><aside>Baz</aside></div></body>',
       );
     });
