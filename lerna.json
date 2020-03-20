@@ -9,6 +9,13 @@
         "*.test.ts",
         "*.test.tsx"
       ]
+    },
+    "version": {
+      "ignoreChanges": [
+        "*.md",
+        "*.test.ts",
+        "*.test.tsx"
+      ]
     }
   }
 }
