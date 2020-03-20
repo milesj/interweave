@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOMServer from 'react-dom/server';
 import { render } from 'rut-dom';
-import { createHTMLDocument } from 'interweave-ssr';
+import { polyfill } from 'interweave-ssr';
 import Interweave from '../src/Interweave';
 import Element from '../src/Element';
 import { ALLOWED_TAG_LIST } from '../src/constants';
@@ -284,12 +284,14 @@ describe('Interweave', () => {
     let implSpy: jest.SpyInstance;
 
     beforeEach(() => {
-      implSpy = jest
-        .spyOn(document.implementation, 'createHTMLDocument')
-        .mockImplementation(createHTMLDocument);
+      polyfill();
+
+      implSpy = jest.spyOn(document.implementation, 'createHTMLDocument');
     });
 
     afterEach(() => {
+      delete global.INTERWEAVE_SSR_POLYFILL;
+
       implSpy.mockRestore();
     });
 
@@ -299,6 +301,7 @@ describe('Interweave', () => {
       );
 
       expect(actual).toBe('<span>This is <b>bold</b>.</span>');
+      expect(implSpy).not.toHaveBeenCalled();
     });
 
     it('strips HTML', () => {
@@ -307,6 +310,7 @@ describe('Interweave', () => {
       );
 
       expect(actual).toBe('<span>This is bold.</span>');
+      expect(implSpy).not.toHaveBeenCalled();
     });
 
     it('supports styles', () => {
@@ -315,6 +319,7 @@ describe('Interweave', () => {
       );
 
       expect(actual).toBe('<span>This is <b style="font-weight:bold">bold</b>.</span>');
+      expect(implSpy).not.toHaveBeenCalled();
     });
 
     it('supports filters', () => {
@@ -323,6 +328,7 @@ describe('Interweave', () => {
       );
 
       expect(actual).toBe('<span>Foo <a href="bar.net" target="_blank">Bar</a> Baz</span>');
+      expect(implSpy).not.toHaveBeenCalled();
     });
 
     it('supports matchers', () => {
@@ -331,6 +337,7 @@ describe('Interweave', () => {
       );
 
       expect(actual).toBe('<span>Foo <span>B</span> Bar Baz</span>');
+      expect(implSpy).not.toHaveBeenCalled();
     });
   });
 

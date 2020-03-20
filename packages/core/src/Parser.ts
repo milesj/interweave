@@ -35,6 +35,15 @@ const INVALID_ROOTS = /^<(!doctype|(html|head|body)(\s|>))/i;
 const ALLOWED_ATTRS = /^(aria-|data-|\w+:)/iu;
 const OPEN_TOKEN = /{{{(\w+)\/?}}}/;
 
+function createDocument() {
+  // Maybe SSR? Just do nothing instead of crashing!
+  if (typeof window === 'undefined' || typeof document === 'undefined') {
+    return undefined;
+  }
+
+  return document.implementation.createHTMLDocument('Interweave');
+}
+
 export default class Parser {
   allowed: Set<string>;
 
@@ -260,14 +269,15 @@ export default class Parser {
    * resources.
    */
   createContainer(markup: string): HTMLElement | undefined {
-    // Maybe SSR? Just do nothing instead of crashing!
-    if (typeof window === 'undefined' || typeof document === 'undefined') {
+    const factory = global.INTERWEAVE_SSR_POLYFILL || createDocument;
+    const doc = factory();
+
+    if (!doc) {
       return undefined;
     }
 
-    const doc = document.implementation.createHTMLDocument('Interweave');
     const tag = this.props.containerTagName || 'body';
-    const el = !tag || tag === 'body' || tag === 'fragment' ? doc.body : doc.createElement(tag);
+    const el = tag === 'body' || tag === 'fragment' ? doc.body : doc.createElement(tag);
 
     if (markup.match(INVALID_ROOTS)) {
       if (__DEV__) {

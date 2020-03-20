@@ -12,13 +12,15 @@ polyfill, based on the [parse5](https://www.npmjs.com/package/parse5) HTML parse
 yarn add interweave-ssr --dev
 ```
 
-Begin by importing and executing the `polyfillDOMImplementation()` function before rendering React.
-This will polyfill the appropriate DOM that Interweave relies on.
+Begin by importing and executing the `polyfill()` (preferred) or `polyfillDOMImplementation()`
+functions before rendering React. The former requires Interweave v12.5+ and will intercept the
+document parser with a custom implementation, while the latter while polyfill a fake global
+`document` (which may have unintended side-effects).
 
 ```ts
-import { polyfillDOMImplementation } from 'interweave-ssr';
+import { polyfill } from 'interweave-ssr';
 
-polyfillDOMImplementation();
+polyfill();
 ```
 
 > This option is very _lightweight_ and only supports the bare minimum. For example, nodes in the

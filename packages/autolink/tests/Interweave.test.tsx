@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOMServer from 'react-dom/server';
 import { render } from 'rut-dom';
 import Interweave, { InterweaveProps } from 'interweave';
-import { createHTMLDocument } from 'interweave-ssr';
+import { polyfill } from 'interweave-ssr';
 import EmailMatcher from '../src/EmailMatcher';
 import HashtagMatcher from '../src/HashtagMatcher';
 import UrlMatcher from '../src/UrlMatcher';
@@ -77,12 +77,14 @@ Curabitur lectus odio, tempus quis velit vitae, cursus sagittis nulla. Maecenas 
     let implSpy: jest.SpyInstance;
 
     beforeEach(() => {
-      implSpy = jest
-        .spyOn(document.implementation, 'createHTMLDocument')
-        .mockImplementation(createHTMLDocument);
+      polyfill();
+
+      implSpy = jest.spyOn(document.implementation, 'createHTMLDocument');
     });
 
     afterEach(() => {
+      delete global.INTERWEAVE_SSR_POLYFILL;
+
       implSpy.mockRestore();
     });
 
@@ -104,6 +106,7 @@ Curabitur lectus odio, tempus quis velit vitae, cursus sagittis nulla. Maecenas 
         />,
       );
 
+      expect(implSpy).not.toHaveBeenCalled();
       expect(actual).toBe(
         '<div>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec massa lorem, mollis non commodo quis, ultricies at elit. <a href="mailto:email@domain.com" rel="noopener noreferrer">email@domain.com</a>. Aliquam a arcu porttitor, aliquam eros sed, convallis massa. Nunc vitae vehicula quam, in feugiat ligula. <a href="interweave" rel="noopener noreferrer">#interweave</a> Donec eu sem non nibh condimentum luctus. Vivamus pharetra feugiat blandit. Vestibulum neque velit, semper id vestibulum id, viverra a felis. Integer convallis in orci nec bibendum. Ut consequat posuere metus, <a href="http://www.domain.com" rel="noopener noreferrer">www.domain.com</a>.<br/><br/>Curabitur lectus odio, tempus quis velit vitae, cursus sagittis nulla. Maecenas sem nulla, tempor nec risus nec, ultricies ultricies magna. <a href="https://127.0.0.1/foo" rel="noopener noreferrer">https://127.0.0.1/foo</a> Nulla malesuada lacinia libero non mollis. Curabitur id lacus id dolor vestibulum ornare quis a nisi (<a href="http://domain.com/some/path?with=query" rel="noopener noreferrer">http://domain.com/some/path?with=query</a>). Pellentesque ac finibus mauris. Sed eu luctus diam. Quisque porta lectus in turpis imperdiet dapibus.<br/><br/><a href="blessed" rel="noopener noreferrer">#blessed</a> <a href="interweave" rel="noopener noreferrer">#interweave</a> <a href="milesj" rel="noopener noreferrer">#milesj</a></div>',
       );

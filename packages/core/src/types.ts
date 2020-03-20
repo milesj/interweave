@@ -2,6 +2,15 @@
 
 import React from 'react';
 
+declare global {
+  // eslint-disable-next-line @typescript-eslint/no-namespace
+  namespace NodeJS {
+    interface Global {
+      INTERWEAVE_SSR_POLYFILL: () => Document | undefined;
+    }
+  }
+}
+
 export type Node = null | string | React.ReactElement<unknown>;
 
 export type ChildrenNode = string | Node[];

@@ -14,6 +14,15 @@ import {
 import * as adapter from 'parse5/lib/tree-adapters/default';
 import parseStyle from 'style-parser';
 
+declare global {
+  // eslint-disable-next-line @typescript-eslint/no-namespace
+  namespace NodeJS {
+    interface Global {
+      INTERWEAVE_SSR_POLYFILL: () => Document | undefined;
+    }
+  }
+}
+
 declare module 'parse5' {
   interface DefaultTreeNode {
     nodeType: number;
@@ -119,7 +128,7 @@ function parseHTML(markup: string): DefaultTreeDocument {
   return parse(markup, { treeAdapter }) as DefaultTreeDocument;
 }
 
-export function createHTMLDocument(): Document {
+function createHTMLDocument(): Document {
   const doc = parseHTML('<!DOCTYPE html><html><head></head><body></body></html>');
   const html = doc.childNodes[1];
   const body = html.childNodes[1];
@@ -134,6 +143,10 @@ export function createHTMLDocument(): Document {
   });
 
   return (html as unknown) as Document;
+}
+
+export function polyfill() {
+  global.INTERWEAVE_SSR_POLYFILL = createHTMLDocument;
 }
 
 export function polyfillDOMImplementation() {

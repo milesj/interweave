@@ -1,3 +1,10 @@
+## 12.5.0 - 2020-03-19
+
+#### 🚀 Updates
+
+- Add support for an improved form of SSR.
+- Enable the `loading` attribute.
+
 ## 12.4.0 - 2020-03-18
 
 #### 🚀 Updates
