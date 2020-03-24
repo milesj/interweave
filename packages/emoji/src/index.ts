@@ -10,4 +10,5 @@ import useEmojiData from './useEmojiData';
 
 export { Emoji, EmojiMatcher, EmojiDataManager, useEmojiData };
 
+export * from './constants';
 export * from './types';

@@ -1,4 +1,5 @@
 import React from 'react';
+import { LATEST_DATASET_VERSION } from 'interweave-emoji';
 import { Context } from './types';
 import { CONTEXT_CLASSNAMES, CONTEXT_MESSAGES } from './constants';
 
@@ -11,7 +12,7 @@ export default React.createContext<Context>({
   emojiSource: {
     compact: false,
     locale: 'en',
-    version: 'latest',
+    version: LATEST_DATASET_VERSION,
   },
   messages: CONTEXT_MESSAGES,
 });

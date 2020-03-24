@@ -5,7 +5,13 @@ import ReactDOM from 'react-dom';
 import { stripHexcode } from 'emojibase';
 import BaseInterweave, { InterweaveProps } from 'interweave';
 import { EmailMatcher, HashtagMatcher, IpMatcher, UrlMatcher } from 'interweave-autolink';
-import { Emoji as BaseEmoji, EmojiProps, EmojiMatcher, useEmojiData, PathConfig } from 'interweave-emoji';
+import {
+  Emoji as BaseEmoji,
+  EmojiProps,
+  EmojiMatcher,
+  useEmojiData,
+  PathConfig,
+} from 'interweave-emoji';
 import EmojiPicker from 'interweave-emoji-picker';
 
 const contentWithNewLines = `This block has multiple new lines.
@@ -25,9 +31,9 @@ Help!`;
 
 // http://getemoji.com/
 function emojiPath(hexcode: string, { enlarged }: PathConfig) {
-  return `https://cdn.jsdelivr.net/emojione/assets/4.5/png/${enlarged ? 64 : 32}/${stripHexcode(
-    hexcode,
-  ).toLowerCase()}.png`;
+  return `https://cdn.jsdelivr.net/gh/joypixels/emoji-assets@latest/png/${
+    enlarged ? 64 : 32
+  }/${stripHexcode(hexcode).toLowerCase()}.png`;
 }
 
 function Interweave(props: InterweaveProps) {
@@ -37,7 +43,7 @@ function Interweave(props: InterweaveProps) {
     return null;
   }
 
-  return <BaseInterweave {...props} emojiSource={source} />
+  return <BaseInterweave {...props} emojiSource={source} />;
 }
 
 function Emoji(props: Omit<EmojiProps, 'emojiSource'>) {
@@ -190,7 +196,7 @@ function App() {
 
       <h1>Copy</h1>
 
-      <Interweave tagName="div" content="This has &apos; entities &quot; in it &dot;." />
+      <Interweave tagName="div" content="This has ' entities &quot; in it &dot;." />
 
       <Interweave tagName="div" content={contentWithNewLines} />
 

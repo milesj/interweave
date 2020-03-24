@@ -1,3 +1,9 @@
+### 5.2.1 - 2020-03-24
+
+#### 🐞 Fixes
+
+- Updated latest emoji version to v12 from v5 (to match dataset changes).
+
 ## 5.2.0 - 2020-03-20
 
 #### 🚀 Updates

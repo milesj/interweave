@@ -2,7 +2,12 @@
 
 import React from 'react';
 import debounce from 'lodash/debounce';
-import { useEmojiData, UseEmojiDataOptions, CanonicalEmoji } from 'interweave-emoji';
+import {
+  useEmojiData,
+  UseEmojiDataOptions,
+  CanonicalEmoji,
+  MAX_EMOJI_VERSION,
+} from 'interweave-emoji';
 import { SkinTone } from 'emojibase';
 import EmojiList from './EmojiList';
 import SkinTonePalette from './SkinTonePalette';
@@ -63,7 +68,7 @@ export class InternalPicker extends React.PureComponent<InternalPickerProps, Int
     hideGroupHeaders: false,
     hideShortcodes: false,
     maxCommonlyUsed: 30,
-    maxEmojiVersion: 5,
+    maxEmojiVersion: MAX_EMOJI_VERSION,
     messages: {},
     noPreview: null,
     noResults: null,

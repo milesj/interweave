@@ -1,3 +1,9 @@
+### 5.3.1 - 2020-03-24
+
+#### 🐞 Fixes
+
+- Updated latest data version to v4.2.1 (to match dataset changes).
+
 ## 5.3.0 - 2020-03-20
 
 #### 🚀 Updates

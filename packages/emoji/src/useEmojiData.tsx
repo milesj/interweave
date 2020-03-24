@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { fetchFromCDN, Emoji } from 'emojibase';
 import EmojiDataManager from './EmojiDataManager';
 import { CanonicalEmoji, Source, UseEmojiDataOptions } from './types';
+import { LATEST_DATASET_VERSION } from './constants';
 
 const promises: Map<string, Promise<CanonicalEmoji[]>> = new Map();
 
@@ -67,7 +68,7 @@ export default function useEmojiData({
   compact = false,
   locale = 'en',
   throwErrors = false,
-  version = '4.2.0', // Until devices support Unicode v13
+  version = LATEST_DATASET_VERSION,
 }: UseEmojiDataOptions = {}): [CanonicalEmoji[], Source, EmojiDataManager] {
   const [emojis, setEmojis] = useState<CanonicalEmoji[]>([]);
   const [error, setError] = useState<Error>();
