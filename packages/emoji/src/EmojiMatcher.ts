@@ -1,16 +1,10 @@
 import React from 'react';
 import { Matcher, MatchResponse, Node, ChildrenNode } from 'interweave';
 import EMOJI_REGEX from 'emojibase-regex';
-import EMOTICON_REGEX from 'emojibase-regex/emoticon';
 import SHORTCODE_REGEX from 'emojibase-regex/shortcode';
 import Emoji from './Emoji';
 import EmojiDataManager from './EmojiDataManager';
 import { EmojiProps, EmojiMatcherOptions, EmojiMatch } from './types';
-
-const EMOTICON_BOUNDARY_REGEX = new RegExp(
-  // eslint-disable-next-line no-useless-escape
-  `(^|\\\b|\\\s)(${EMOTICON_REGEX.source})(?=\\\s|\\\b|$)`,
-);
 
 export default class EmojiMatcher extends Matcher<EmojiProps, EmojiMatcherOptions> {
   data: EmojiDataManager | null = null;
@@ -50,15 +44,6 @@ export default class EmojiMatcher extends Matcher<EmojiProps, EmojiMatcherOption
   match(string: string) {
     let response = null;
 
-    // Should we convert emoticons to unicode?
-    if (this.options.convertEmoticon) {
-      response = this.matchEmoticon(string);
-
-      if (response) {
-        return response;
-      }
-    }
-
     // Should we convert shortcodes to unicode?
     if (this.options.convertShortcode) {
       response = this.matchShortcode(string);
@@ -75,31 +60,6 @@ export default class EmojiMatcher extends Matcher<EmojiProps, EmojiMatcherOption
       if (response) {
         return response;
       }
-    }
-
-    return null;
-  }
-
-  matchEmoticon(string: string): MatchResponse<EmojiMatch> | null {
-    const response = this.doMatch<EmojiMatch>(
-      string,
-      EMOTICON_BOUNDARY_REGEX,
-      matches => ({
-        emoticon: matches[0].trim(),
-      }),
-      true,
-    );
-
-    if (
-      response &&
-      response.emoticon &&
-      this.data &&
-      this.data.EMOTICON_TO_HEXCODE[response.emoticon]
-    ) {
-      response.hexcode = this.data.EMOTICON_TO_HEXCODE[response.emoticon];
-      response.match = String(response.emoticon); // Remove padding
-
-      return response;
     }
 
     return null;
@@ -151,21 +111,6 @@ export default class EmojiMatcher extends Matcher<EmojiProps, EmojiMatcherOption
     }
 
     return null;
-  }
-
-  /**
-   * Load emoji data before matching.
-   */
-  onBeforeParse(content: string, props: EmojiProps): string {
-    if (props.emojiSource) {
-      this.data = EmojiDataManager.getInstance(props.emojiSource.locale);
-    } else if (__DEV__) {
-      throw new Error(
-        'Missing emoji source data. Have you loaded with the `useEmojiData` hook and passed the `emojiSource` prop?',
-      );
-    }
-
-    return content;
   }
 
   /**

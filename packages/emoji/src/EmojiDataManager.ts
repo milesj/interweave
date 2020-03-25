@@ -79,7 +79,7 @@ export default class EmojiDataManager {
 
     // Make our lives easier
     if (!emoji.unicode) {
-      emoji.unicode = emoji.text && emoji.type === TEXT ? emoji.text : emoji.emoji;
+      emoji.unicode = emoji.emoji;
     }
 
     // Canonicalize the shortcodes for easy reuse

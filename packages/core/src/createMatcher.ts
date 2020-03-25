@@ -16,34 +16,37 @@ export interface MatchResult {
   void: boolean;
 }
 
-export type MatchHandler<Match> = (value: string) => (MatchResult & { params: Match }) | null;
+export type MatchHandler<Match, Props> = (
+  value: string,
+  props: Props,
+) => (MatchResult & { params: Match }) | null;
 
 export interface Matcher<Match, Props> {
   factory: ElementFactory<Match, Props>;
   greedy: boolean;
-  match: MatchHandler<Match>;
+  match: MatchHandler<Match, Props>;
 }
 
-export type OnMatch<T> = (result: MatchResult) => T | null;
+export type OnMatch<Match, Props> = (result: MatchResult, props: Props) => Match | null;
 
-export interface MatcherOptions<Match> {
+export interface MatcherOptions<Match, Props> {
   greedy?: boolean;
   tagName: string;
   void?: boolean;
   // onAfterParse?: (content: Node[], props: Props) => Node[];
-  // onBeforeParse?: (content: string, props: Props) => string;
-  onMatch: OnMatch<Match>;
+  onBeforeParse?: (content: string, props: Props) => string;
+  onMatch: OnMatch<Match, Props>;
 }
 
 export default function createMatcher<Match, Props>(
   pattern: string | RegExp,
-  options: MatcherOptions<Match>,
+  options: MatcherOptions<Match, Props>,
   factory: ElementFactory<Match, Props>,
 ): Matcher<Match, Props> {
   return {
     factory,
     greedy: options.greedy ?? false,
-    match(value) {
+    match(value, props) {
       const matches = value.match(pattern instanceof RegExp ? pattern : new RegExp(pattern, 'i'));
 
       if (!matches) {
@@ -59,7 +62,8 @@ export default function createMatcher<Match, Props>(
         value,
         void: options.void ?? false,
       };
-      const params = options.onMatch(result);
+
+      const params = options.onMatch(result, props);
 
       // Allow callback to intercept the result
       if (params === null) {

@@ -5,18 +5,18 @@ import EmojiDataManager from './EmojiDataManager';
 import { EmojiProps, Size } from './types';
 
 export default function Emoji({
-  emojiLargeSize = '3em',
-  emojiPath = '{{hexcode}}',
-  emojiSize = '1em',
-  emojiSource,
   emoticon,
-  enlargeEmoji = false,
+  enlarged = false,
   hexcode,
+  largeSize = '3em',
+  path = '{{hexcode}}',
   renderUnicode = false,
   shortcode,
+  size = '1em',
+  source,
   unicode,
 }: EmojiProps) {
-  const data = EmojiDataManager.getInstance(emojiSource.locale);
+  const data = EmojiDataManager.getInstance(source.locale);
 
   if (__DEV__) {
     if (!emoticon && !shortcode && !unicode && !hexcode) {
@@ -58,28 +58,28 @@ export default function Emoji({
   };
 
   // Handle large styles
-  if (enlargeEmoji && emojiLargeSize) {
-    styles.width = emojiLargeSize;
-    styles.height = emojiLargeSize;
+  if (enlarged && largeSize) {
+    styles.width = largeSize;
+    styles.height = largeSize;
 
     // Only apply styles if a size is defined
-  } else if (emojiSize) {
-    styles.width = emojiSize;
-    styles.height = emojiSize;
+  } else if (size) {
+    styles.width = size;
+    styles.height = size;
   }
 
   // Determine the path
-  let path = emojiPath || '{{hexcode}}';
+  let src = path || '{{hexcode}}';
 
-  if (typeof path === 'function') {
-    path = path(emoji.hexcode, {
-      enlarged: enlargeEmoji,
-      largeSize: emojiLargeSize,
-      size: enlargeEmoji ? emojiLargeSize : emojiSize,
-      smallSize: emojiSize,
+  if (typeof src === 'function') {
+    src = src(emoji.hexcode, {
+      enlarged,
+      largeSize,
+      size: enlarged ? largeSize : size,
+      smallSize: size,
     });
   } else {
-    path = path.replace('{{hexcode}}', emoji.hexcode);
+    src = src.replace('{{hexcode}}', emoji.hexcode);
   }
 
   // http://git.emojione.com/demos/latest/sprites-png.html
@@ -87,7 +87,7 @@ export default function Emoji({
   // https://css-tricks.com/using-svg/
   return (
     <img
-      src={path}
+      src={src}
       alt={emoji.unicode}
       title={emoji.annotation}
       style={styles}
