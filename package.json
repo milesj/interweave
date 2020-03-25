@@ -68,6 +68,7 @@
         "plugin:rut/recommended"
       ],
       "rules": {
+        "no-param-reassign": "off",
         "import/no-named-as-default": "off",
         "require-unicode-regexp": "off",
         "react/jsx-no-literals": "off",

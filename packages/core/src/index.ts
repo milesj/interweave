@@ -6,7 +6,6 @@
 import Interweave from './Interweave';
 import Markup from './Markup';
 import Filter from './Filter';
-import Matcher from './Matcher';
 import Element from './Element';
 import Parser from './Parser';
 import match from './match';
@@ -17,3 +16,7 @@ export * from './constants';
 export * from './types';
 
 export default Interweave;
+
+import createMatcher from './createMatcher';
+
+export { createMatcher };

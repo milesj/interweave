@@ -5,8 +5,9 @@ export default function Element({
   attributes = {},
   children = null,
   selfClose = false,
-  tagName: Tag,
+  tagName,
 }: ElementProps) {
-  // @ts-ignore BUG: https://github.com/Microsoft/TypeScript/issues/28806
+  const Tag = tagName as 'div';
+
   return selfClose ? <Tag {...attributes} /> : <Tag {...attributes}>{children}</Tag>;
 }

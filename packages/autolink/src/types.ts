@@ -1,16 +1,17 @@
 import React from 'react';
-import { ChildrenNode } from 'interweave';
 
 export interface LinkProps {
-  children: React.ReactNode;
-  href: string;
-  key?: string | number;
+  children: NonNullable<React.ReactNode>;
+  href?: string;
   newWindow?: boolean;
-  onClick?: () => void | null;
+  onClick?: React.MouseEventHandler<HTMLAnchorElement>;
 }
 
-export interface EmailProps extends Partial<LinkProps> {
-  children: ChildrenNode;
+export interface EmailProps extends LinkProps {
+  email: string;
+}
+
+export interface EmailMatch {
   email: string;
   emailParts: {
     host: string;
@@ -18,16 +19,22 @@ export interface EmailProps extends Partial<LinkProps> {
   };
 }
 
-export interface HashtagProps extends Partial<LinkProps> {
-  children: ChildrenNode;
+export interface HashtagProps extends LinkProps {
   encodeHashtag?: boolean;
   hashtag: string;
   hashtagUrl?: string | ((hashtag: string) => string);
   preserveHash?: boolean;
 }
 
-export interface UrlProps extends Partial<LinkProps> {
-  children: ChildrenNode;
+export interface HashtagMatch {
+  hashtag: string;
+}
+
+export interface UrlProps extends LinkProps {
+  href: string;
+}
+
+export interface UrlMatch {
   url: string;
   urlParts: {
     auth: string;
