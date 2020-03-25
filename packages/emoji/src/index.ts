@@ -5,10 +5,19 @@
 
 import Emoji from './Emoji';
 import EmojiDataManager from './EmojiDataManager';
-import EmojiMatcher from './EmojiMatcher';
+import emojiEmoticonMatcher from './emojiEmoticonMatcher';
+import emojiShortcodeMatcher from './emojiShortcodeMatcher';
+import emojiUnicodeMatcher from './emojiUnicodeMatcher';
 import useEmojiData from './useEmojiData';
 
-export { Emoji, EmojiMatcher, EmojiDataManager, useEmojiData };
+export {
+  Emoji,
+  EmojiDataManager,
+  emojiEmoticonMatcher,
+  emojiShortcodeMatcher,
+  emojiUnicodeMatcher,
+  useEmojiData,
+};
 
 export * from './constants';
 export * from './types';

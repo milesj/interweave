@@ -1,9 +1,7 @@
-import React from 'react';
 import createMatcher, { MatchResult } from 'interweave/src/createMatcher';
 import EMOTICON_REGEX from 'emojibase-regex/emoticon';
-import Emoji from './Emoji';
 import EmojiDataManager from './EmojiDataManager';
-import { onBeforeParse } from './helpers';
+import { factory, onBeforeParse } from './helpers';
 import { EmojiMatch, EmojiRequiredProps } from './types';
 
 const EMOTICON_BOUNDARY_REGEX = new RegExp(
@@ -32,10 +30,11 @@ function onMatch(result: MatchResult, { emojiSource }: EmojiRequiredProps): Emoj
 export default createMatcher<EmojiMatch, EmojiRequiredProps>(
   EMOTICON_BOUNDARY_REGEX,
   {
+    greedy: true,
     onBeforeParse,
     onMatch,
     tagName: 'img',
     void: true,
   },
-  (content, props, { emojiSource }) => <Emoji {...props} source={emojiSource} />,
+  factory,
 );

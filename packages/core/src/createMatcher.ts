@@ -1,7 +1,9 @@
 import React from 'react';
 
+export type Node = NonNullable<React.ReactNode>;
+
 export type ElementFactory<Match, Props> = (
-  content: NonNullable<React.ReactNode>,
+  content: Node,
   match: Match,
   props: Props,
 ) => React.ReactElement;
@@ -33,7 +35,7 @@ export interface MatcherOptions<Match, Props> {
   greedy?: boolean;
   tagName: string;
   void?: boolean;
-  // onAfterParse?: (content: Node[], props: Props) => Node[];
+  onAfterParse?: (content: Node[], props: Props) => Node[];
   onBeforeParse?: (content: string, props: Props) => string;
   onMatch: OnMatch<Match, Props>;
 }
