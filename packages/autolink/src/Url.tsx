@@ -2,15 +2,15 @@ import React from 'react';
 import Link from './Link';
 import { UrlProps } from './types';
 
-export default function Url({ children, url, urlParts, ...props }: UrlProps) {
-  let href = url;
+export default function Url({ children, href, ...props }: UrlProps) {
+  let ref = href;
 
-  if (!href.match(/^https?:\/\//)) {
-    href = `http://${href}`;
+  if (!ref.match(/^https?:\/\//)) {
+    ref = `http://${ref}`;
   }
 
   return (
-    <Link {...props} href={href}>
+    <Link {...props} href={ref}>
       {children}
     </Link>
   );

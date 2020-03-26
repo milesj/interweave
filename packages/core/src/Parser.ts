@@ -3,31 +3,33 @@
 import React from 'react';
 import escapeHtml from 'escape-html';
 import Element from './Element';
-import StyleFilter from './StyleFilter';
+import styleTransformer from './styleTransformer';
 import {
-  FILTER_DENY,
-  FILTER_CAST_NUMBER,
+  ALLOWED_TAG_LIST,
+  ATTRIBUTES_TO_PROPS,
+  ATTRIBUTES,
+  BANNED_TAG_LIST,
   FILTER_CAST_BOOL,
+  FILTER_CAST_NUMBER,
+  FILTER_DENY,
   FILTER_NO_CAST,
   TAGS,
-  BANNED_TAG_LIST,
-  ALLOWED_TAG_LIST,
-  ATTRIBUTES,
-  ATTRIBUTES_TO_PROPS,
 } from './constants';
 import {
   Attributes,
-  Node,
-  NodeConfig,
   AttributeValue,
-  ChildrenNode,
-  ParserProps,
-  MatcherElementsMap,
   ElementProps,
-  FilterInterface,
-  ElementAttributes,
-  MatcherInterface,
+  MatchedElements,
+  Matcher,
+  Node,
+  ParserProps,
+  TagConfig,
+  Transformer,
+  TagName,
 } from './types';
+
+type MatcherInterface = Matcher<object, object, object>;
+type TransformerInterface = Transformer<HTMLElement, object>;
 
 const ELEMENT_NODE = 1;
 const TEXT_NODE = 3;
@@ -45,29 +47,29 @@ function createDocument() {
 }
 
 export default class Parser {
-  allowed: Set<string>;
+  allowed: Set<TagName>;
 
-  banned: Set<string>;
+  banned: Set<TagName>;
 
-  blocked: Set<string>;
+  blocked: Set<TagName>;
 
   container?: HTMLElement;
 
-  content: Node[] = [];
+  content: Node = '';
+
+  keyIndex: number = -1;
 
   props: ParserProps;
 
-  matchers: MatcherInterface<unknown>[];
+  matchers: MatcherInterface[];
 
-  filters: FilterInterface[];
-
-  keyIndex: number;
+  transformers: TransformerInterface[];
 
   constructor(
     markup: string,
-    props: ParserProps = {},
-    matchers: MatcherInterface<unknown>[] = [],
-    filters: FilterInterface[] = [],
+    props: ParserProps,
+    matchers: MatcherInterface[] = [],
+    transformers: TransformerInterface[] = [],
   ) {
     if (__DEV__) {
       if (markup && typeof markup !== 'string') {
@@ -77,42 +79,11 @@ export default class Parser {
 
     this.props = props;
     this.matchers = matchers;
-    this.filters = [...filters, new StyleFilter()];
-    this.keyIndex = -1;
+    this.transformers = [...transformers, styleTransformer];
     this.container = this.createContainer(markup || '');
-    this.allowed = new Set(props.allowList || ALLOWED_TAG_LIST);
-    this.banned = new Set(BANNED_TAG_LIST);
-    this.blocked = new Set(props.blockList);
-  }
-
-  /**
-   * Loop through and apply all registered attribute filters.
-   */
-  applyAttributeFilters<K extends keyof ElementAttributes>(
-    name: K,
-    value: ElementAttributes[K],
-  ): ElementAttributes[K] {
-    return this.filters.reduce(
-      (nextValue, filter) =>
-        nextValue !== null && typeof filter.attribute === 'function'
-          ? filter.attribute(name, nextValue)
-          : nextValue,
-      value,
-    );
-  }
-
-  /**
-   * Loop through and apply all registered node filters.
-   */
-  applyNodeFilters(name: string, node: HTMLElement | null): HTMLElement | null {
-    // Allow null to be returned
-    return this.filters.reduce(
-      (nextNode, filter) =>
-        nextNode !== null && typeof filter.node === 'function'
-          ? filter.node(name, nextNode)
-          : nextNode,
-      node,
-    );
+    this.allowed = new Set(props.allow || (ALLOWED_TAG_LIST as TagName[]));
+    this.banned = new Set(BANNED_TAG_LIST as TagName[]);
+    this.blocked = new Set(props.block);
   }
 
   /**
@@ -120,22 +91,18 @@ export default class Parser {
    * If a match is found, create a React element, and build a new array.
    * This array allows React to interpolate and render accordingly.
    */
-  applyMatchers(string: string, parentConfig: NodeConfig): ChildrenNode {
-    const elements: MatcherElementsMap = {};
-    const { props } = this;
+  applyMatchers(string: string, parentConfig: TagConfig): Node {
+    const elements: MatchedElements = {};
     let matchedString = string;
     let elementIndex = 0;
     let parts = null;
 
     this.matchers.forEach(matcher => {
-      const tagName = matcher.asTag().toLowerCase();
+      const { tagName } = matcher;
       const config = this.getTagConfig(tagName);
 
       // Skip matchers that have been disabled from props or are not supported
-      if (
-        (props as { [key: string]: unknown })[matcher.inverseName] ||
-        !this.isTagAllowed(tagName)
-      ) {
+      if (!this.isTagAllowed(tagName)) {
         return;
       }
 
@@ -147,9 +114,9 @@ export default class Parser {
       // Continuously trigger the matcher until no matches are found
       let tokenizedString = '';
 
-      while (matchedString && (parts = matcher.match(matchedString))) {
-        const { index, length, match, valid, void: isVoid, ...partProps } = parts;
-        const tokenName = matcher.propName + elementIndex;
+      while (matchedString && (parts = matcher.match(matchedString, this.props))) {
+        const { index, length, match, valid, void: isVoid, params } = parts;
+        const tokenName = matcher.tagName + elementIndex;
 
         // Piece together a new string with interpolated tokens
         if (index > 0) {
@@ -167,13 +134,8 @@ export default class Parser {
 
           elementIndex += 1;
           elements[tokenName] = {
-            children: match,
-            matcher,
-            props: {
-              ...props,
-              ...partProps,
-              key: this.keyIndex,
-            },
+            element: matcher.factory(params, this.props, match),
+            key: this.keyIndex,
           };
         } else {
           tokenizedString += match;
@@ -204,9 +166,34 @@ export default class Parser {
   }
 
   /**
+   * Loop through and apply transformers that match the specific tag name
+   */
+  applyTransformations(
+    tagName: TagName,
+    node: HTMLElement,
+    children: unknown[],
+  ): undefined | null | React.ReactElement | HTMLElement {
+    const transformers = this.transformers.filter(
+      transformer => transformer.tagName === tagName || transformer.tagName === '*',
+    );
+
+    // eslint-disable-next-line no-restricted-syntax
+    for (const transformer of transformers) {
+      const result = transformer.factory(node, this.props, children);
+
+      // If something was returned, the node has been replaced so we cant continue
+      if (result !== undefined) {
+        return result;
+      }
+    }
+
+    return undefined;
+  }
+
+  /**
    * Determine whether the child can be rendered within the parent.
    */
-  canRenderChild(parentConfig: NodeConfig, childConfig: NodeConfig): boolean {
+  canRenderChild(parentConfig: TagConfig, childConfig: TagConfig): boolean {
     if (!parentConfig.tagName || !childConfig.tagName) {
       return false;
     }
@@ -276,8 +263,8 @@ export default class Parser {
       return undefined;
     }
 
-    const tag = this.props.containerTagName || 'body';
-    const el = tag === 'body' || tag === 'fragment' ? doc.body : doc.createElement(tag);
+    const tag = this.props.tagName || 'body';
+    const el = tag === 'body' ? doc.body : doc.createElement(tag);
 
     if (markup.match(INVALID_ROOTS)) {
       if (__DEV__) {
@@ -342,10 +329,7 @@ export default class Parser {
         newValue = String(newValue);
       }
 
-      attributes[ATTRIBUTES_TO_PROPS[newName] || newName] = this.applyAttributeFilters(
-        newName as keyof ElementAttributes,
-        newValue,
-      ) as AttributeValue;
+      attributes[ATTRIBUTES_TO_PROPS[newName] || newName] = newValue;
       count += 1;
     });
 
@@ -374,14 +358,14 @@ export default class Parser {
   /**
    * Return configuration for a specific tag.
    */
-  getTagConfig(tagName: string): NodeConfig {
-    const common = {
+  getTagConfig(tagName: TagName): TagConfig {
+    const common: TagConfig = {
       children: [],
       content: 0,
       invalid: [],
       parent: [],
       self: true,
-      tagName: '',
+      tagName,
       type: 0,
       void: false,
     };
@@ -431,7 +415,7 @@ export default class Parser {
   /**
    * Verify that an HTML tag is allowed to render.
    */
-  isTagAllowed(tagName: string): boolean {
+  isTagAllowed(tagName: TagName): boolean {
     if (this.banned.has(tagName) || this.blocked.has(tagName)) {
       return false;
     }
@@ -444,28 +428,31 @@ export default class Parser {
    * while looping over all child nodes and generating an
    * array to interpolate into JSX.
    */
-  parse(): Node[] {
+  parse(): React.ReactNode {
     if (!this.container) {
-      return [];
+      return null;
     }
 
-    return this.parseNode(this.container, this.getTagConfig(this.container.nodeName.toLowerCase()));
+    return this.parseNode(
+      this.container,
+      this.getTagConfig(this.container.tagName.toLowerCase() as TagName),
+    );
   }
 
   /**
    * Loop over the nodes children and generate a
    * list of text nodes and React elements.
    */
-  parseNode(parentNode: HTMLElement, parentConfig: NodeConfig): Node[] {
-    const { noHtml, noHtmlExceptMatchers, allowElements, transform } = this.props;
+  parseNode(parentNode: HTMLElement, parentConfig: TagConfig): Node[] {
+    const { noHtml, noHtmlExceptInternals, allowElements } = this.props;
     let content: Node[] = [];
     let mergedText = '';
 
     Array.from(parentNode.childNodes).forEach(node => {
       // Create React elements from HTML elements
       if (node.nodeType === ELEMENT_NODE) {
-        const tagName = node.nodeName.toLowerCase();
-        const config = this.getTagConfig(tagName);
+        let tagName = node.nodeName.toLowerCase() as TagName;
+        let config = this.getTagConfig(tagName);
 
         // Persist any previous text
         if (mergedText) {
@@ -473,35 +460,31 @@ export default class Parser {
           mergedText = '';
         }
 
-        // Apply node filters first
-        const nextNode = this.applyNodeFilters(tagName, node as HTMLElement);
+        // Increase key before transforming
+        this.keyIndex += 1;
+        const key = this.keyIndex;
 
-        if (!nextNode) {
+        // Must occur after key is set
+        const children = this.parseNode(node as HTMLElement, config);
+
+        // Apply transformations to element
+        let nextNode = this.applyTransformations(tagName, node as HTMLElement, children);
+
+        // Remove the node entirely
+        if (nextNode === null) {
           return;
-        }
+          // Use the node as-is
+        } else if (nextNode === undefined) {
+          nextNode = node as HTMLElement;
+          // React element, so apply the key and continue
+        } else if (React.isValidElement(nextNode)) {
+          content.push(React.cloneElement(nextNode, { key }));
 
-        // Apply transformation second
-        let children;
-
-        if (transform) {
-          this.keyIndex += 1;
-          const key = this.keyIndex;
-
-          // Must occur after key is set
-          children = this.parseNode(nextNode, config);
-
-          const transformed = transform(nextNode, children, config);
-
-          if (transformed === null) {
-            return;
-          } else if (typeof transformed !== 'undefined') {
-            content.push(React.cloneElement(transformed as React.ReactElement<unknown>, { key }));
-
-            return;
-          }
-
-          // Reset as we're not using the transformation
-          this.keyIndex = key - 1;
+          return;
+          // HTML element, so update tag and config
+        } else if (nextNode instanceof HTMLElement) {
+          tagName = nextNode.tagName.toLowerCase() as TagName;
+          config = this.getTagConfig(tagName);
         }
 
         // Never allow these tags (except via a transformer)
@@ -514,12 +497,10 @@ export default class Parser {
         //  - Tag is allowed
         //  - Child is valid within the parent
         if (
-          !(noHtml || (noHtmlExceptMatchers && tagName !== 'br')) &&
+          !(noHtml || (noHtmlExceptInternals && tagName !== 'br')) &&
           this.isTagAllowed(tagName) &&
           (allowElements || this.canRenderChild(parentConfig, config))
         ) {
-          this.keyIndex += 1;
-
           // Build the props as it makes it easier to test
           const attributes = this.extractAttributes(nextNode);
           const elementProps: ElementProps = {
@@ -537,7 +518,7 @@ export default class Parser {
           content.push(
             React.createElement(
               Element,
-              { ...elementProps, key: this.keyIndex },
+              { ...elementProps, key },
               children || this.parseNode(nextNode, config),
             ),
           );
@@ -554,7 +535,7 @@ export default class Parser {
         // Apply matchers if a text node
       } else if (node.nodeType === TEXT_NODE) {
         const text =
-          noHtml && !noHtmlExceptMatchers
+          noHtml && !noHtmlExceptInternals
             ? node.textContent
             : this.applyMatchers(node.textContent || '', parentConfig);
 
@@ -577,7 +558,7 @@ export default class Parser {
    * Deconstruct the string into an array, by replacing custom tokens with React elements,
    * so that React can render it correctly.
    */
-  replaceTokens(tokenizedString: string, elements: MatcherElementsMap): ChildrenNode {
+  replaceTokens(tokenizedString: string, elements: MatchedElements): Node {
     if (!tokenizedString.includes('{{{')) {
       return tokenizedString;
     }
@@ -606,14 +587,14 @@ export default class Parser {
         text = text.slice(startIndex);
       }
 
-      const { children, matcher, props: elementProps } = elements[tokenName];
+      const { element, key } = elements[tokenName];
       let endIndex: number;
 
       // Use tag as-is if void
       if (isVoid) {
         endIndex = match.length;
 
-        nodes.push(matcher.createElement(children, elementProps));
+        nodes.push(React.cloneElement(element, { key }));
 
         // Find the closing tag if not void
       } else {
@@ -628,9 +609,10 @@ export default class Parser {
         endIndex = close.index! + close[0].length;
 
         nodes.push(
-          matcher.createElement(
+          React.cloneElement(
+            element,
+            { key },
             this.replaceTokens(text.slice(match.length, close.index!), elements),
-            elementProps,
           ),
         );
       }

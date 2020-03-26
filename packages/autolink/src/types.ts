@@ -1,35 +1,42 @@
 import React from 'react';
-import { ChildrenNode } from 'interweave';
 
 export interface LinkProps {
-  children: React.ReactNode;
-  href: string;
-  key?: string | number;
+  children: NonNullable<React.ReactNode>;
+  href?: string;
   newWindow?: boolean;
-  onClick?: () => void | null;
+  onClick?: React.MouseEventHandler<HTMLAnchorElement>;
 }
 
-export interface EmailProps extends Partial<LinkProps> {
-  children: ChildrenNode;
+export interface EmailProps extends LinkProps {
   email: string;
-  emailParts: {
+}
+
+export interface EmailMatch {
+  email: string;
+  parts: {
     host: string;
     username: string;
   };
 }
 
-export interface HashtagProps extends Partial<LinkProps> {
-  children: ChildrenNode;
-  encodeHashtag?: boolean;
+export interface HashtagProps extends LinkProps {
+  encoded?: boolean;
   hashtag: string;
-  hashtagUrl?: string | ((hashtag: string) => string);
-  preserveHash?: boolean;
+  url?: string | ((hashtag: string) => string);
+  preserved?: boolean;
 }
 
-export interface UrlProps extends Partial<LinkProps> {
-  children: ChildrenNode;
+export interface HashtagMatch {
+  hashtag: string;
+}
+
+export interface UrlProps extends LinkProps {
+  href: string;
+}
+
+export interface UrlMatch {
   url: string;
-  urlParts: {
+  parts: {
     auth: string;
     fragment: string;
     host: string;

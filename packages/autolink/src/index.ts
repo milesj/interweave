@@ -3,16 +3,16 @@
  * @license     https://opensource.org/licenses/MIT
  */
 
+import emailMatcher from './emailMatcher';
+import hashtagMatcher from './hashtagMatcher';
+import ipMatcher from './ipMatcher';
+import urlMatcher from './urlMatcher';
 import Email from './Email';
-import EmailMatcher from './EmailMatcher';
 import Hashtag from './Hashtag';
-import HashtagMatcher from './HashtagMatcher';
-import IpMatcher from './IpMatcher';
 import Link from './Link';
 import Url from './Url';
-import UrlMatcher from './UrlMatcher';
 
-export { Email, EmailMatcher, Hashtag, HashtagMatcher, IpMatcher, Link, Url, UrlMatcher };
+export { emailMatcher, hashtagMatcher, ipMatcher, urlMatcher, Email, Hashtag, Link, Url };
 
 export * from './constants';
 export * from './types';

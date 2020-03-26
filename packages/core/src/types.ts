@@ -11,32 +11,7 @@ declare global {
   }
 }
 
-export type Node = null | string | React.ReactElement<unknown>;
-
-export type ChildrenNode = string | Node[];
-
-export interface NodeConfig {
-  // Only children
-  children: string[];
-  // Children content type
-  content: number;
-  // Invalid children
-  invalid: string[];
-  // Only parent
-  parent: string[];
-  // Can render self as a child
-  self: boolean;
-  // HTML tag name
-  tagName: string;
-  // Self content type
-  type: number;
-  // Self-closing tag
-  void: boolean;
-}
-
-export interface ConfigMap {
-  [key: string]: Partial<NodeConfig>;
-}
+export type Node = NonNullable<React.ReactNode>;
 
 export type AttributeValue = string | number | boolean | object;
 
@@ -44,86 +19,162 @@ export interface Attributes {
   [attr: string]: AttributeValue;
 }
 
-export type AfterParseCallback<T> = (content: Node[], props: T) => Node[];
+export interface ElementProps {
+  attributes?: Attributes;
+  children?: React.ReactNode;
+  selfClose?: boolean;
+  tagName: string;
+}
 
-export type BeforeParseCallback<T> = (content: string, props: T) => string;
+// CALLBACKS
 
-export type TransformCallback = (
-  node: HTMLElement,
-  children: Node[],
-  config: NodeConfig,
-) => React.ReactNode;
+export type OnAfterParse<Props> = (content: Node, props: Props) => Node;
+
+export type OnBeforeParse<Props> = (content: string, props: Props) => string;
+
+export type OnMatch<Match, Props, Options = {}> = (
+  result: MatchResult,
+  props: Props,
+  options: Partial<Options>,
+) => Match | null;
+
+export interface CommonInternals<Props, Options = {}> {
+  onAfterParse?: OnAfterParse<Props>;
+  onBeforeParse?: OnBeforeParse<Props>;
+  options: Partial<Options>;
+}
 
 // MATCHERS
 
-export type MatchCallback<T> = (matches: string[]) => T;
-
-export type MatchResponse<T> = T & {
+export interface MatchResult {
   index: number;
   length: number;
   match: string;
+  matches: string[];
   valid: boolean;
-  void?: boolean;
-};
+  value: string;
+  void: boolean;
+}
 
-export interface MatcherInterface<T> {
+export type MatchHandler<Match, Props> = (
+  value: string,
+  props: Props,
+) => (MatchResult & { params: Match }) | null;
+
+export interface MatcherOptions<Match, Props, Options = {}> {
   greedy?: boolean;
-  inverseName: string;
-  propName: string;
-  asTag(): string;
-  createElement(children: ChildrenNode, props: T): Node;
-  match(value: string): MatchResponse<Partial<T>> | null;
-  onBeforeParse?(content: string, props: T): string;
-  onAfterParse?(content: Node[], props: T): Node[];
+  tagName: TagName;
+  void?: boolean;
+  options?: Options;
+  onAfterParse?: OnAfterParse<Props>;
+  onBeforeParse?: OnBeforeParse<Props>;
+  onMatch: OnMatch<Match, Props, Options>;
 }
 
-// FILTERS
+export type MatcherFactory<Match, Props> = (
+  match: Match,
+  props: Props,
+  content: Node,
+) => React.ReactElement;
 
-export type ElementAttributes = React.AllHTMLAttributes<unknown>;
-
-export interface FilterInterface {
-  attribute?<K extends keyof ElementAttributes>(
-    name: K,
-    value: ElementAttributes[K],
-  ): ElementAttributes[K] | undefined | null;
-  node?(name: string, node: HTMLElement): HTMLElement | null;
+export interface Matcher<Match, Props, Options = {}> extends CommonInternals<Props, Options> {
+  extend: (
+    factory?: MatcherFactory<Match, Props> | null,
+    options?: Partial<MatcherOptions<Match, Props, Options>>,
+  ) => Matcher<Match, Props, Options>;
+  factory: MatcherFactory<Match, Props>;
+  greedy: boolean;
+  match: MatchHandler<Match, Props>;
+  tagName: TagName;
 }
 
-export interface FilterMap {
-  [key: string]: number;
+// TRANSFORMERS
+
+export type InferElement<K> = K extends '*'
+  ? HTMLElement
+  : K extends keyof HTMLElementTagNameMap
+  ? HTMLElementTagNameMap[K]
+  : HTMLElement;
+
+export type TransformerFactory<Element, Props> = (
+  element: Element,
+  props: Props,
+  content: Node,
+) => void | undefined | null | Element | React.ReactElement;
+
+export interface TransformerOptions<Props, Options = {}> {
+  tagName?: TagName;
+  onAfterParse?: OnAfterParse<Props>;
+  onBeforeParse?: OnBeforeParse<Props>;
+  options?: Options;
+}
+
+export interface Transformer<Element, Props, Options = {}> extends CommonInternals<Props, Options> {
+  extend: (
+    factory?: TransformerFactory<Element, Props> | null,
+    options?: Partial<TransformerOptions<Props, Options>>,
+  ) => Transformer<Element, Props, Options>;
+  factory: TransformerFactory<Element, Props>;
+  tagName: WildTagName;
 }
 
 // PARSER
 
-export interface MatcherElementsMap {
-  [key: string]: {
-    children: string;
-    matcher: MatcherInterface<{}>;
-    props: object;
-  };
-}
-
 export interface ParserProps {
-  /** Disable filtering and allow all non-banned HTML attributes. */
+  /** Allow all non-banned HTML attributes. */
   allowAttributes?: boolean;
-  /** Disable filtering and allow all non-banned/blocked HTML elements to be rendered. */
+  /** Allow all non-banned and non-blocked HTML elements. */
   allowElements?: boolean;
   /** List of HTML tag names to allow and render. Defaults to the `ALLOWED_TAG_LIST` constant. */
-  allowList?: string[];
+  allow?: TagName[];
   /** List of HTML tag names to disallow and not render. Overrides allow list. */
-  blockList?: string[];
+  block?: TagName[];
   /** Disable the conversion of new lines to `<br />` elements. */
   disableLineBreaks?: boolean;
-  /** The container element to parse content in. Applies browser semantic rules and overrides `tagName`. */
-  containerTagName?: string;
   /** Escape all HTML before parsing. */
   escapeHtml?: boolean;
   /** Strip all HTML while rendering. */
   noHtml?: boolean;
-  /** Strip all HTML, except HTML generated by matchers, while rendering. */
-  noHtmlExceptMatchers?: boolean;
-  /** Transformer ran on each HTML element. Return a new element, null to remove current element, or undefined to do nothing. */
-  transform?: TransformCallback | null;
+  /** Strip all HTML, except HTML generated by matchers or transformers, while rendering. */
+  noHtmlExceptInternals?: boolean;
+  /** The element to parse content in. Applies browser semantic rules. */
+  tagName: TagName;
+}
+
+export interface MatchedElements {
+  [token: string]: {
+    element: React.ReactElement;
+    key: number;
+  };
+}
+
+// ELEMENTS
+
+export type TagName = keyof React.ReactHTML | 'rb' | 'rtc';
+
+export type WildTagName = TagName | '*';
+
+export interface TagConfig {
+  // Only children
+  children: TagName[];
+  // Children content type
+  content: number;
+  // Invalid children
+  invalid: TagName[];
+  // Only parent
+  parent: TagName[];
+  // Can render self as a child
+  self: boolean;
+  // HTML tag name
+  tagName: TagName;
+  // Self content type
+  type: number;
+  // Self-closing tag
+  void: boolean;
+}
+
+export interface TagConfigMap {
+  [tagName: string]: Partial<TagConfig>;
 }
 
 // INTERWEAVE
@@ -137,33 +188,17 @@ export interface MarkupProps extends ParserProps {
   emptyContent?: React.ReactNode;
   /** @ignore Pre-parsed content to render. */
   parsedContent?: React.ReactNode;
-  /** HTML element to wrap the content. Also accepts 'fragment' (superseded by `noWrap`). */
-  tagName?: string;
   /** Don't wrap the content in a new element specified by `tagName`. */
   noWrap?: boolean;
 }
 
 export interface InterweaveProps extends MarkupProps {
-  /** Support all the props used by matchers. */
-  [prop: string]: any;
-  /** Disable all filters from running. */
-  disableFilters?: boolean;
-  /** Disable all matches from running. */
-  disableMatchers?: boolean;
-  /** List of filters to apply to the content. */
-  filters?: FilterInterface[];
+  /** List of transformers to apply to elements. */
+  transformers?: Transformer<HTMLElement, {}>[];
   /** List of matchers to apply to the content. */
-  matchers?: MatcherInterface<any>[];
+  matchers?: Matcher<{}, {}, {}>[];
   /** Callback fired after parsing ends. Must return an array of React nodes. */
-  onAfterParse?: AfterParseCallback<InterweaveProps> | null;
+  onAfterParse?: OnAfterParse<{}> | null;
   /** Callback fired beore parsing begins. Must return a string. */
-  onBeforeParse?: BeforeParseCallback<InterweaveProps> | null;
-}
-
-export interface ElementProps {
-  [prop: string]: any;
-  attributes?: Attributes;
-  children?: React.ReactNode;
-  selfClose?: boolean;
-  tagName: string;
+  onBeforeParse?: OnBeforeParse<{}> | null;
 }

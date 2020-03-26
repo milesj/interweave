@@ -1,6 +1,6 @@
 /* eslint-disable no-bitwise, no-magic-numbers, sort-keys */
 
-import { NodeConfig, ConfigMap, FilterMap } from './types';
+import { TagConfig, TagConfigMap } from './types';
 
 // https://developer.mozilla.org/en-US/docs/Web/Guide/HTML/Content_categories
 export const TYPE_FLOW = 1;
@@ -12,7 +12,7 @@ export const TYPE_INTERACTIVE = 1 << 5;
 export const TYPE_PALPABLE = 1 << 6;
 
 // https://developer.mozilla.org/en-US/docs/Web/HTML/Element
-const tagConfigs: { [tagName: string]: Partial<NodeConfig> } = {
+const tagConfigs: TagConfigMap = {
   a: {
     content: TYPE_FLOW | TYPE_PHRASING,
     self: false,
@@ -188,7 +188,7 @@ const tagConfigs: { [tagName: string]: Partial<NodeConfig> } = {
   },
 };
 
-function createConfigBuilder(config: Partial<NodeConfig>): (tagName: string) => void {
+function createConfigBuilder(config: Partial<TagConfig>): (tagName: string) => void {
   return (tagName: string) => {
     tagConfigs[tagName] = {
       ...config,
@@ -268,7 +268,7 @@ function createConfigBuilder(config: Partial<NodeConfig>): (tagName: string) => 
 );
 
 // Disable this map from being modified
-export const TAGS: ConfigMap = Object.freeze(tagConfigs);
+export const TAGS: TagConfigMap = Object.freeze(tagConfigs);
 
 // Tags that should never be allowed, even if the allow list is disabled
 export const BANNED_TAG_LIST = [
@@ -303,7 +303,7 @@ export const FILTER_NO_CAST = 5;
 
 // Attributes not listed here will be denied
 // https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes
-export const ATTRIBUTES: FilterMap = Object.freeze({
+export const ATTRIBUTES: { [key: string]: number } = Object.freeze({
   alt: FILTER_ALLOW,
   cite: FILTER_ALLOW,
   class: FILTER_ALLOW,
