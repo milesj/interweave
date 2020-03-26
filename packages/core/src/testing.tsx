@@ -1,16 +1,7 @@
 /* eslint-disable max-classes-per-file, unicorn/import-index */
 
 import React from 'react';
-import {
-  Filter,
-  Matcher,
-  Element,
-  Node,
-  TagConfig,
-  MatchResponse,
-  ChildrenNode,
-  TAGS,
-} from './index';
+import { Element, TagConfig, TAGS, createMatcher, createTransformer } from './index';
 
 export const TOKEN_LOCATIONS = [
   'no tokens',
@@ -56,7 +47,7 @@ export function createExpectedToken<T>(
   factory: (value: T, count: number) => React.ReactNode,
   index: number,
   join: boolean = false,
-): React.ReactNode | string {
+): React.ReactNode {
   if (index === 0) {
     return TOKEN_LOCATIONS[0];
   }
@@ -107,126 +98,79 @@ export const parentConfig: TagConfig = {
   ...TAGS.div,
 };
 
-export function matchCodeTag(
-  string: string,
-  tag: string,
-): MatchResponse<{
-  children: string;
-  customProp: string;
-}> | null {
-  const matches = string.match(new RegExp(`\\[${tag}\\]`));
+export const codeFooMatcher = createMatcher(
+  /\[foo]/,
+  (match, props, children) => <Element tagName="span">{String(children).toUpperCase()}</Element>,
+  {
+    onMatch: () => ({
+      codeTag: 'foo',
+      customProp: 'foo',
+    }),
+    tagName: 'span',
+  },
+);
 
-  if (!matches) {
-    return null;
+export const codeBarMatcher = createMatcher(
+  /\[bar]/,
+  (match, props, children) => <Element tagName="span">{String(children).toUpperCase()}</Element>,
+  {
+    onMatch: () => ({
+      codeTag: 'bar',
+      customProp: 'bar',
+    }),
+    tagName: 'span',
+  },
+);
+
+export const codeBazMatcher = createMatcher(
+  /\[baz]/,
+  (match, props, children) => <Element tagName="span">{String(children).toUpperCase()}</Element>,
+  {
+    onMatch: () => ({
+      codeTag: 'baz',
+      customProp: 'baz',
+    }),
+    tagName: 'span',
+  },
+);
+
+export const mdBoldMatcher = createMatcher(
+  /\*\*([^*]+)\*\*/u,
+  (match, props, children) => <b {...props}>{children}</b>,
+  {
+    onMatch: ({ matches }) => ({
+      match: matches[1],
+    }),
+    tagName: 'b',
+  },
+);
+
+export const mdItalicMatcher = createMatcher(
+  /_([^_]+)_/u,
+  (match, props, children) => <i {...props}>{children}</i>,
+  {
+    onMatch: ({ matches }) => ({
+      match: matches[1],
+    }),
+    tagName: 'i',
+  },
+);
+
+export const mockMatcher = createMatcher(
+  /div/,
+  (match, props, children) => <div {...props}>{children}</div>,
+  {
+    onMatch: () => null,
+    tagName: 'div',
+  },
+);
+
+export const linkTransformer = createTransformer('a', element => {
+  element.setAttribute('target', '_blank');
+
+  if (element.href) {
+    element.setAttribute('href', element.href.replace('foo.com', 'bar.net') || '');
   }
+});
 
-  return {
-    children: tag,
-    customProp: 'foo',
-    index: matches.index!,
-    length: matches[0].length,
-    match: matches[0],
-    valid: true,
-    void: false,
-  };
-}
-
-export class CodeTagMatcher extends Matcher<{}> {
-  tag: string;
-
-  key: string;
-
-  constructor(tag: string, key: string = '') {
-    super(tag, {});
-
-    this.tag = tag;
-    this.key = key;
-  }
-
-  replaceWith(match: ChildrenNode, props: { children?: string; key?: string } = {}): Node {
-    const { children } = props;
-
-    if (this.key) {
-      // eslint-disable-next-line
-      props.key = this.key;
-    }
-
-    return (
-      <Element tagName="span" {...props}>
-        {children!.toUpperCase()}
-      </Element>
-    );
-  }
-
-  asTag() {
-    return 'span';
-  }
-
-  match(string: string) {
-    return matchCodeTag(string, this.tag);
-  }
-}
-
-export class MarkdownBoldMatcher extends Matcher<any> {
-  replaceWith(children: ChildrenNode, props: object): Node {
-    return <b {...props}>{children}</b>;
-  }
-
-  asTag() {
-    return 'b';
-  }
-
-  match(value: string) {
-    return this.doMatch(value, /\*\*([^*]+)\*\*/u, matches => ({ match: matches[1] }));
-  }
-}
-
-export class MarkdownItalicMatcher extends Matcher<any> {
-  replaceWith(children: ChildrenNode, props: object): Node {
-    return <i {...props}>{children}</i>;
-  }
-
-  asTag() {
-    return 'i';
-  }
-
-  match(value: string) {
-    return this.doMatch(value, /_([^_]+)_/u, matches => ({ match: matches[1] }));
-  }
-}
-
-export class MockMatcher extends Matcher<any> {
-  replaceWith(children: ChildrenNode, props: any): Node {
-    return <div {...props}>{children}</div>;
-  }
-
-  asTag() {
-    return 'div';
-  }
-
-  match() {
-    return null;
-  }
-}
-
-export class LinkFilter extends Filter {
-  attribute(name: string, value: string): string {
-    if (name === 'href') {
-      return value.replace('foo.com', 'bar.net');
-    }
-
-    return value;
-  }
-
-  node(name: string, node: HTMLElement): HTMLElement | null {
-    if (name === 'a') {
-      node.setAttribute('target', '_blank');
-    } else if (name === 'link') {
-      return null;
-    }
-
-    return node;
-  }
-}
-
-export class MockFilter extends Filter {}
+export const mockTransformer = createTransformer('*', () => {});

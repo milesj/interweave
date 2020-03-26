@@ -55,7 +55,7 @@ export default class Parser {
 
   container?: HTMLElement;
 
-  content: Node[] = [];
+  content: Node = '';
 
   keyIndex: number = -1;
 
@@ -163,6 +163,31 @@ export default class Parser {
     }
 
     return this.replaceTokens(matchedString, elements);
+  }
+
+  /**
+   * Loop through and apply transformers that match the specific tag name
+   */
+  applyTransformations(
+    tagName: TagName,
+    node: HTMLElement,
+    children: unknown[],
+  ): undefined | null | React.ReactElement | HTMLElement {
+    const transformers = this.transformers.filter(
+      transformer => transformer.tagName === tagName || transformer.tagName === '*',
+    );
+
+    // eslint-disable-next-line no-restricted-syntax
+    for (const transformer of transformers) {
+      const result = transformer.factory(node, this.props, children);
+
+      // If something was returned, the node has been replaced so we cant continue
+      if (result !== undefined) {
+        return result;
+      }
+    }
+
+    return undefined;
   }
 
   /**
@@ -403,9 +428,9 @@ export default class Parser {
    * while looping over all child nodes and generating an
    * array to interpolate into JSX.
    */
-  parse(): Node {
+  parse(): React.ReactNode {
     if (!this.container) {
-      return [];
+      return null;
     }
 
     return this.parseNode(
@@ -419,15 +444,15 @@ export default class Parser {
    * list of text nodes and React elements.
    */
   parseNode(parentNode: HTMLElement, parentConfig: TagConfig): Node[] {
-    const { noHtml, noHtmlExceptInternals, allowElements, transform } = this.props;
+    const { noHtml, noHtmlExceptInternals, allowElements } = this.props;
     let content: Node[] = [];
     let mergedText = '';
 
     Array.from(parentNode.childNodes).forEach(node => {
       // Create React elements from HTML elements
       if (node.nodeType === ELEMENT_NODE) {
-        const tagName = node.nodeName.toLowerCase() as TagName;
-        const config = this.getTagConfig(tagName);
+        let tagName = node.nodeName.toLowerCase() as TagName;
+        let config = this.getTagConfig(tagName);
 
         // Persist any previous text
         if (mergedText) {
@@ -435,35 +460,31 @@ export default class Parser {
           mergedText = '';
         }
 
-        // Apply node filters first
-        const nextNode = this.applyNodeFilters(tagName, node as HTMLElement);
+        // Increase key before transforming
+        this.keyIndex += 1;
+        const key = this.keyIndex;
 
-        if (!nextNode) {
+        // Must occur after key is set
+        const children = this.parseNode(node as HTMLElement, config);
+
+        // Apply transformations to element
+        let nextNode = this.applyTransformations(tagName, node as HTMLElement, children);
+
+        // Remove the node entirely
+        if (nextNode === null) {
           return;
-        }
+          // Use the node as-is
+        } else if (nextNode === undefined) {
+          nextNode = node as HTMLElement;
+          // React element, so apply the key and continue
+        } else if (React.isValidElement(nextNode)) {
+          content.push(React.cloneElement(nextNode, { key }));
 
-        // Apply transformation second
-        let children;
-
-        if (transform) {
-          this.keyIndex += 1;
-          const key = this.keyIndex;
-
-          // Must occur after key is set
-          children = this.parseNode(nextNode, config);
-
-          const transformed = transform(nextNode, children, config);
-
-          if (transformed === null) {
-            return;
-          } else if (typeof transformed !== 'undefined') {
-            content.push(React.cloneElement(transformed as React.ReactElement<unknown>, { key }));
-
-            return;
-          }
-
-          // Reset as we're not using the transformation
-          this.keyIndex = key - 1;
+          return;
+          // HTML element, so update tag and config
+        } else if (nextNode instanceof HTMLElement) {
+          tagName = nextNode.tagName.toLowerCase() as TagName;
+          config = this.getTagConfig(tagName);
         }
 
         // Never allow these tags (except via a transformer)
@@ -480,8 +501,6 @@ export default class Parser {
           this.isTagAllowed(tagName) &&
           (allowElements || this.canRenderChild(parentConfig, config))
         ) {
-          this.keyIndex += 1;
-
           // Build the props as it makes it easier to test
           const attributes = this.extractAttributes(nextNode);
           const elementProps: ElementProps = {
@@ -499,7 +518,7 @@ export default class Parser {
           content.push(
             React.createElement(
               Element,
-              { ...elementProps, key: this.keyIndex },
+              { ...elementProps, key },
               children || this.parseNode(nextNode, config),
             ),
           );

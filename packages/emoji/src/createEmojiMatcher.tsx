@@ -19,10 +19,9 @@ function onBeforeParse(content: string, { emojiSource }: InterweaveEmojiProps): 
   return content;
 }
 
-function onAfterParse(
-  content: Node[],
-  { emojiEnlargeThreshold = 1 }: InterweaveEmojiProps,
-): Node[] {
+function onAfterParse(node: Node, { emojiEnlargeThreshold = 1 }: InterweaveEmojiProps): Node {
+  const content = React.Children.toArray(node);
+
   if (content.length === 0) {
     return content;
   }

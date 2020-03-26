@@ -9,12 +9,14 @@ import {
   FILTER_CAST_NUMBER,
 } from '../src/constants';
 import {
-  CodeTagMatcher,
   LinkFilter,
   createExpectedToken,
   parentConfig,
   TOKEN_LOCATIONS,
   MOCK_MARKUP,
+  codeFooMatcher,
+  codeBarMatcher,
+  codeBazMatcher,
 } from '../src/testing';
 
 function createChild(tag: string, text: string | number): HTMLElement {
@@ -31,8 +33,8 @@ describe('Parser', () => {
   beforeEach(() => {
     instance = new Parser(
       '',
-      {},
-      [new CodeTagMatcher('foo'), new CodeTagMatcher('bar'), new CodeTagMatcher('baz')],
+      { tagName: 'div' },
+      [codeFooMatcher, codeBarMatcher, codeBazMatcher],
       [new LinkFilter()],
     );
   });

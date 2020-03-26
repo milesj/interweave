@@ -1,6 +1,6 @@
 import { Matcher, MatcherOptions, MatcherFactory, MatchResult } from './types';
 
-export default function createMatcher<Match, Props, Options = {}>(
+export default function createMatcher<Match, Props = {}, Options = {}>(
   pattern: string | RegExp,
   factory: MatcherFactory<Match, Props>,
   options: MatcherOptions<Match, Props, Options>,
@@ -43,6 +43,8 @@ export default function createMatcher<Match, Props, Options = {}>(
         ...result,
       };
     },
+    onAfterParse: options.onAfterParse,
+    onBeforeParse: options.onBeforeParse,
     options: options.options || {},
     tagName: options.tagName,
   };

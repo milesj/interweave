@@ -28,7 +28,7 @@ export interface ElementProps {
 
 // CALLBACKS
 
-export type OnAfterParse<Props> = (content: Node[], props: Props) => Node[];
+export type OnAfterParse<Props> = (content: Node, props: Props) => Node;
 
 export type OnBeforeParse<Props> = (content: string, props: Props) => string;
 
@@ -37,6 +37,12 @@ export type OnMatch<Match, Props, Options = {}> = (
   props: Props,
   options: Partial<Options>,
 ) => Match | null;
+
+export interface CommonInternals<Props, Options = {}> {
+  onAfterParse?: OnAfterParse<Props>;
+  onBeforeParse?: OnBeforeParse<Props>;
+  options: Partial<Options>;
+}
 
 // MATCHERS
 
@@ -71,7 +77,7 @@ export type MatcherFactory<Match, Props> = (
   content: Node,
 ) => React.ReactElement;
 
-export interface Matcher<Match, Props, Options = {}> {
+export interface Matcher<Match, Props, Options = {}> extends CommonInternals<Props, Options> {
   extend: (
     factory?: MatcherFactory<Match, Props> | null,
     options?: Partial<MatcherOptions<Match, Props, Options>>,
@@ -79,7 +85,6 @@ export interface Matcher<Match, Props, Options = {}> {
   factory: MatcherFactory<Match, Props>;
   greedy: boolean;
   match: MatchHandler<Match, Props>;
-  options: Partial<Options>;
   tagName: TagName;
 }
 
@@ -97,7 +102,18 @@ export type TransformerFactory<Element, Props> = (
   content: Node,
 ) => void | undefined | null | Element | React.ReactElement;
 
-export interface Transformer<Element, Props> {
+export interface TransformerOptions<Props, Options = {}> {
+  tagName?: TagName;
+  onAfterParse?: OnAfterParse<Props>;
+  onBeforeParse?: OnBeforeParse<Props>;
+  options?: Options;
+}
+
+export interface Transformer<Element, Props, Options = {}> extends CommonInternals<Props, Options> {
+  extend: (
+    factory?: TransformerFactory<Element, Props> | null,
+    options?: Partial<TransformerOptions<Props, Options>>,
+  ) => Transformer<Element, Props, Options>;
   factory: TransformerFactory<Element, Props>;
   tagName: WildTagName;
 }
@@ -182,7 +198,7 @@ export interface InterweaveProps extends MarkupProps {
   /** List of matchers to apply to the content. */
   matchers?: Matcher<{}, {}, {}>[];
   /** Callback fired after parsing ends. Must return an array of React nodes. */
-  // onAfterParse?: AfterParseCallback<InterweaveProps> | null;
+  onAfterParse?: OnAfterParse<{}> | null;
   /** Callback fired beore parsing begins. Must return a string. */
-  // onBeforeParse?: BeforeParseCallback<InterweaveProps> | null;
+  onBeforeParse?: OnBeforeParse<{}> | null;
 }

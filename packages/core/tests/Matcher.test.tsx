@@ -1,9 +1,9 @@
 import React from 'react';
 import Element from '../src/Element';
-import { CodeTagMatcher, MockMatcher } from '../src/testing';
+import { MockMatcher, codeFooMatcher } from '../src/testing';
 
 describe('Matcher', () => {
-  const matcher = new CodeTagMatcher('foo', '1');
+  const matcher = codeFooMatcher;
 
   it('errors for html name', () => {
     expect(() => new MockMatcher('html', {})).toThrow('The matcher name "html" is not allowed.');

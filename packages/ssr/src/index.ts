@@ -148,20 +148,3 @@ function createHTMLDocument(): Document {
 export function polyfill() {
   global.INTERWEAVE_SSR_POLYFILL = createHTMLDocument;
 }
-
-export function polyfillDOMImplementation() {
-  if (typeof document === 'undefined') {
-    // @ts-ignore
-    global.document = {};
-  }
-
-  if (typeof document.implementation === 'undefined') {
-    // @ts-ignore
-    global.document.implementation = {};
-  }
-
-  if (typeof document.implementation.createHTMLDocument !== 'function') {
-    // @ts-ignore
-    global.document.implementation.createHTMLDocument = createHTMLDocument;
-  }
-}

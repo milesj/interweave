@@ -9,8 +9,6 @@ import {
   MOCK_MARKUP,
   MOCK_INVALID_MARKUP,
   LinkFilter,
-  CodeTagMatcher,
-  matchCodeTag,
   MarkdownBoldMatcher,
   MarkdownItalicMatcher,
 } from '../src/testing';
