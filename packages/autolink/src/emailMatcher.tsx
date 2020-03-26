@@ -10,7 +10,7 @@ export default createMatcher<EmailMatch, object>(
   {
     onMatch: ({ matches }) => ({
       email: matches[0],
-      emailParts: {
+      parts: {
         host: matches[2],
         username: matches[1],
       },

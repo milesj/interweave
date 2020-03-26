@@ -58,7 +58,7 @@ export type MatcherFactory<Match, Props> = (
 
 export interface Matcher<Match, Props, Options = {}> {
   extend: (
-    factory: MatcherFactory<Match, Props>,
+    factory?: MatcherFactory<Match, Props> | null,
     options?: Partial<MatcherOptions<Match, Props, Options>>,
   ) => Matcher<Match, Props, Options>;
   factory: MatcherFactory<Match, Props>;

@@ -50,11 +50,11 @@ export default function PreviewBar({
     <section className={classNames.preview}>
       <div className={classNames.previewEmoji}>
         <EmojiCharacter
-          emojiLargeSize={emojiLargeSize}
-          emojiPath={emojiPath}
-          emojiSource={emojiSource}
-          enlargeEmoji
+          enlarged
           hexcode={emoji.hexcode}
+          largeSize={emojiLargeSize}
+          path={emojiPath}
+          source={emojiSource}
         />
       </div>
 

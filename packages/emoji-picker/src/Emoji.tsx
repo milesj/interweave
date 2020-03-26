@@ -51,9 +51,9 @@ export default function Emoji({ active, emoji, onEnter, onLeave, onSelect }: Emo
       onMouseLeave={handleLeave}
     >
       <EmojiCharacter
-        emojiPath={emojiPath}
-        emojiSize={emojiSize}
-        emojiSource={emojiSource}
+        path={emojiPath}
+        size={emojiSize}
+        source={emojiSource}
         hexcode={emoji.hexcode}
       />
     </button>

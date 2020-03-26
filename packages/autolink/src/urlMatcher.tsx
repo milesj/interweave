@@ -11,8 +11,7 @@ export function onMatch(
 ): UrlMatch | null {
   const { matches } = result;
   const match = {
-    url: matches[0],
-    urlParts: {
+    parts: {
       auth: matches[2] ? matches[2].slice(0, -1) : '',
       fragment: matches[7] || '',
       host: matches[3],
@@ -21,6 +20,7 @@ export function onMatch(
       query: matches[6] || '',
       scheme: matches[1] ? matches[1].replace('://', '') : 'http',
     },
+    url: matches[0],
   };
 
   // False positives with URL auth scheme
@@ -30,7 +30,7 @@ export function onMatch(
 
   // Do not match if TLD is invalid
   if (validateTLD) {
-    const { host } = match.urlParts;
+    const { host } = match.parts;
     const validList = TOP_LEVEL_TLDS.concat(customTLDs);
     const tld = host.slice(host.lastIndexOf('.') + 1).toLowerCase();
 

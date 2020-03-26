@@ -4,34 +4,34 @@ import { HashtagProps } from './types';
 
 export default function Hashtag({
   children,
-  encodeHashtag = false,
+  encoded = false,
   hashtag,
-  hashtagUrl = '{{hashtag}}',
-  preserveHash = false,
+  preserved = false,
+  url = '{{hashtag}}',
   ...props
 }: HashtagProps) {
   let tag = hashtag;
 
   // Prepare the hashtag
-  if (!preserveHash && tag.charAt(0) === '#') {
+  if (!preserved && tag.charAt(0) === '#') {
     tag = tag.slice(1);
   }
 
-  if (encodeHashtag) {
+  if (encoded) {
     tag = encodeURIComponent(tag);
   }
 
   // Determine the URL
-  let url = hashtagUrl || '{{hashtag}}';
+  let href = url || '{{hashtag}}';
 
-  if (typeof url === 'function') {
-    url = url(tag);
+  if (typeof href === 'function') {
+    href = href(tag);
   } else {
-    url = url.replace('{{hashtag}}', tag);
+    href = href.replace('{{hashtag}}', tag);
   }
 
   return (
-    <Link {...props} href={url}>
+    <Link {...props} href={href}>
       {children}
     </Link>
   );

@@ -7,7 +7,7 @@ export default function createMatcher<Match, Props, Options = {}>(
 ): Matcher<Match, Props, Options> {
   return {
     extend(customFactory, customOptions) {
-      return createMatcher(pattern, customFactory, {
+      return createMatcher(pattern, customFactory || factory, {
         ...options,
         ...customOptions,
       });

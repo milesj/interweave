@@ -13,17 +13,17 @@ export interface EmailProps extends LinkProps {
 
 export interface EmailMatch {
   email: string;
-  emailParts: {
+  parts: {
     host: string;
     username: string;
   };
 }
 
 export interface HashtagProps extends LinkProps {
-  encodeHashtag?: boolean;
+  encoded?: boolean;
   hashtag: string;
-  hashtagUrl?: string | ((hashtag: string) => string);
-  preserveHash?: boolean;
+  url?: string | ((hashtag: string) => string);
+  preserved?: boolean;
 }
 
 export interface HashtagMatch {
@@ -36,7 +36,7 @@ export interface UrlProps extends LinkProps {
 
 export interface UrlMatch {
   url: string;
-  urlParts: {
+  parts: {
     auth: string;
     fragment: string;
     host: string;
