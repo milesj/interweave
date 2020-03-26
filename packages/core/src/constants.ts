@@ -303,7 +303,7 @@ export const FILTER_NO_CAST = 5;
 
 // Attributes not listed here will be denied
 // https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes
-export const ATTRIBUTES = Object.freeze({
+export const ATTRIBUTES: { [key: string]: number } = Object.freeze({
   alt: FILTER_ALLOW,
   cite: FILTER_ALLOW,
   class: FILTER_ALLOW,
@@ -341,7 +341,7 @@ export const ATTRIBUTES = Object.freeze({
 });
 
 // Attributes to camel case for React props
-export const ATTRIBUTES_TO_PROPS = Object.freeze({
+export const ATTRIBUTES_TO_PROPS: { [key: string]: string } = Object.freeze({
   class: 'className',
   colspan: 'colSpan',
   datetime: 'dateTime',
