@@ -63,7 +63,8 @@ export interface EmojiMatcherOptions {
   renderUnicode?: boolean;
 }
 
-export interface EmojiRequiredProps {
+export interface InterweaveEmojiProps {
+  emojiEnlargeThreshold?: number;
   emojiSource: Source;
 }
 

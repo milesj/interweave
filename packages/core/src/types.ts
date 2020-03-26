@@ -11,11 +11,87 @@ declare global {
   }
 }
 
-export type Node = null | string | React.ReactElement<unknown>;
+export type Node = NonNullable<React.ReactNode>;
 
-export type ChildrenNode = string | Node[];
+export type OnAfterParse<Props> = (content: Node[], props: Props) => Node[];
 
-export interface NodeConfig {
+export type OnBeforeParse<Props> = (content: string, props: Props) => string;
+
+// MATCHERS
+
+export type OnMatch<Match, Props, Options = {}> = (
+  result: MatchResult,
+  props: Props,
+  options: Partial<Options>,
+) => Match | null;
+
+export interface MatchResult {
+  index: number;
+  length: number;
+  match: string;
+  matches: string[];
+  valid: boolean;
+  value: string;
+  void: boolean;
+}
+
+export type MatchHandler<Match, Props> = (
+  value: string,
+  props: Props,
+) => (MatchResult & { params: Match }) | null;
+
+export interface MatcherOptions<Match, Props, Options = {}> {
+  greedy?: boolean;
+  tagName: string;
+  void?: boolean;
+  options?: Options;
+  onAfterParse?: OnAfterParse<Props>;
+  onBeforeParse?: OnBeforeParse<Props>;
+  onMatch: OnMatch<Match, Props, Options>;
+}
+
+export type MatcherFactory<Match, Props> = (
+  match: Match,
+  props: Props,
+  content: Node,
+) => React.ReactElement;
+
+export interface Matcher<Match, Props, Options = {}> {
+  extend: (
+    factory: MatcherFactory<Match, Props>,
+    options?: Partial<MatcherOptions<Match, Props, Options>>,
+  ) => Matcher<Match, Props, Options>;
+  factory: MatcherFactory<Match, Props>;
+  greedy: boolean;
+  match: MatchHandler<Match, Props>;
+  options: Partial<Options>;
+  tagName: string;
+}
+
+// TRANSFORMERS
+
+export type ElementName = keyof React.ReactHTML | '*';
+
+export type InferElement<K> = K extends '*'
+  ? HTMLElement
+  : K extends keyof HTMLElementTagNameMap
+  ? HTMLElementTagNameMap[K]
+  : HTMLElement;
+
+export type TransformerFactory<Element, Props> = (
+  element: Element,
+  props: Props,
+  content: Node,
+) => void | undefined | null | Element | React.ReactElement;
+
+export interface Transformer<Element, Props> {
+  factory: TransformerFactory<Element, Props>;
+  tagName: string;
+}
+
+// Elements
+
+export interface TagConfig {
   // Only children
   children: string[];
   // Children content type
@@ -34,9 +110,11 @@ export interface NodeConfig {
   void: boolean;
 }
 
-export interface ConfigMap {
-  [key: string]: Partial<NodeConfig>;
+export interface TagConfigMap {
+  [key: string]: Partial<TagConfig>;
 }
+
+// OLD
 
 export type AttributeValue = string | number | boolean | object;
 
@@ -51,47 +129,8 @@ export type BeforeParseCallback<T> = (content: string, props: T) => string;
 export type TransformCallback = (
   node: HTMLElement,
   children: Node[],
-  config: NodeConfig,
+  config: TagConfig,
 ) => React.ReactNode;
-
-// MATCHERS
-
-export type MatchCallback<T> = (matches: string[]) => T;
-
-export type MatchResponse<T> = T & {
-  index: number;
-  length: number;
-  match: string;
-  valid: boolean;
-  void?: boolean;
-};
-
-export interface MatcherInterface<T> {
-  greedy?: boolean;
-  inverseName: string;
-  propName: string;
-  asTag(): string;
-  createElement(children: ChildrenNode, props: T): Node;
-  match(value: string): MatchResponse<Partial<T>> | null;
-  onBeforeParse?(content: string, props: T): string;
-  onAfterParse?(content: Node[], props: T): Node[];
-}
-
-// FILTERS
-
-export type ElementAttributes = React.AllHTMLAttributes<unknown>;
-
-export interface FilterInterface {
-  attribute?<K extends keyof ElementAttributes>(
-    name: K,
-    value: ElementAttributes[K],
-  ): ElementAttributes[K] | undefined | null;
-  node?(name: string, node: HTMLElement): HTMLElement | null;
-}
-
-export interface FilterMap {
-  [key: string]: number;
-}
 
 // PARSER
 

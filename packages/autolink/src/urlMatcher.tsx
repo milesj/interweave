@@ -1,12 +1,13 @@
 import React from 'react';
-import createMatcher, { ElementFactory, MatchResult } from 'interweave/src/createMatcher';
+import { createMatcher, MatchResult } from 'interweave';
 import Url from './Url';
 import { URL_PATTERN, TOP_LEVEL_TLDS, EMAIL_DISTINCT_PATTERN } from './constants';
 import { UrlMatch, UrlMatcherOptions } from './types';
 
 export function onMatch(
   result: MatchResult,
-  { customTLDs = [], validateTLD = true }: UrlMatcherOptions = {},
+  props: object,
+  { customTLDs = [], validateTLD = true }: UrlMatcherOptions,
 ): UrlMatch | null {
   const { matches } = result;
   const match = {
@@ -41,16 +42,11 @@ export function onMatch(
   return match;
 }
 
-export default function createUrlMatcher<Props>(
-  options?: UrlMatcherOptions,
-  factory?: ElementFactory<UrlMatch, Props>,
-) {
-  return createMatcher<UrlMatch, Props>(
-    URL_PATTERN,
-    {
-      onMatch: result => onMatch(result, options),
-      tagName: 'a',
-    },
-    factory || ((content, { url }) => <Url href={url}>{content}</Url>),
-  );
-}
+export default createMatcher<UrlMatch, object, UrlMatcherOptions>(
+  URL_PATTERN,
+  ({ url }, props, children) => <Url href={url}>{children}</Url>,
+  {
+    onMatch,
+    tagName: 'a',
+  },
+);

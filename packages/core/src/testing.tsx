@@ -6,7 +6,7 @@ import {
   Matcher,
   Element,
   Node,
-  NodeConfig,
+  TagConfig,
   MatchResponse,
   ChildrenNode,
   TAGS,
@@ -95,7 +95,7 @@ export const MOCK_INVALID_MARKUP = `<div bgcolor="black">
   <p align="center">More text <strike>with outdated stuff</strike>.</p>
 </div>`;
 
-export const parentConfig: NodeConfig = {
+export const parentConfig: TagConfig = {
   children: [],
   content: 0,
   invalid: [],

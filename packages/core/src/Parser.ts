@@ -18,7 +18,7 @@ import {
 import {
   Attributes,
   Node,
-  NodeConfig,
+  TagConfig,
   AttributeValue,
   ChildrenNode,
   ParserProps,
@@ -120,7 +120,7 @@ export default class Parser {
    * If a match is found, create a React element, and build a new array.
    * This array allows React to interpolate and render accordingly.
    */
-  applyMatchers(string: string, parentConfig: NodeConfig): ChildrenNode {
+  applyMatchers(string: string, parentConfig: TagConfig): ChildrenNode {
     const elements: MatcherElementsMap = {};
     const { props } = this;
     let matchedString = string;
@@ -206,7 +206,7 @@ export default class Parser {
   /**
    * Determine whether the child can be rendered within the parent.
    */
-  canRenderChild(parentConfig: NodeConfig, childConfig: NodeConfig): boolean {
+  canRenderChild(parentConfig: TagConfig, childConfig: TagConfig): boolean {
     if (!parentConfig.tagName || !childConfig.tagName) {
       return false;
     }
@@ -374,7 +374,7 @@ export default class Parser {
   /**
    * Return configuration for a specific tag.
    */
-  getTagConfig(tagName: string): NodeConfig {
+  getTagConfig(tagName: string): TagConfig {
     const common = {
       children: [],
       content: 0,
@@ -456,7 +456,7 @@ export default class Parser {
    * Loop over the nodes children and generate a
    * list of text nodes and React elements.
    */
-  parseNode(parentNode: HTMLElement, parentConfig: NodeConfig): Node[] {
+  parseNode(parentNode: HTMLElement, parentConfig: TagConfig): Node[] {
     const { noHtml, noHtmlExceptMatchers, allowElements, transform } = this.props;
     let content: Node[] = [];
     let mergedText = '';

@@ -1,15 +1,15 @@
 import React from 'react';
-import { Node } from 'interweave/src/createMatcher';
+import { createMatcher, OnMatch, MatcherFactory, Node } from 'interweave';
 import Emoji from './Emoji';
-import { EmojiRequiredProps, EmojiMatch } from './types';
+import { EmojiMatch, InterweaveEmojiProps, EmojiProps } from './types';
 
-export function factory(content: unknown, match: EmojiMatch, { emojiSource }: EmojiRequiredProps) {
+function factory(match: EmojiMatch, { emojiSource }: InterweaveEmojiProps) {
   return <Emoji {...match} source={emojiSource} />;
 }
 
-export function onBeforeParse(content: string, props: EmojiRequiredProps): string {
+function onBeforeParse(content: string, { emojiSource }: InterweaveEmojiProps): string {
   if (__DEV__) {
-    if (!props.emojiSource) {
+    if (!emojiSource) {
       throw new Error(
         'Missing emoji source data. Have you loaded with the `useEmojiData` hook and passed the `emojiSource` prop?',
       );
@@ -19,7 +19,10 @@ export function onBeforeParse(content: string, props: EmojiRequiredProps): strin
   return content;
 }
 
-export function onAfterParse(content: Node[], props: EmojiRequiredProps): Node[] {
+function onAfterParse(
+  content: Node[],
+  { emojiEnlargeThreshold = 1 }: InterweaveEmojiProps,
+): Node[] {
   if (content.length === 0) {
     return content;
   }
@@ -44,7 +47,7 @@ export function onAfterParse(content: Node[], props: EmojiRequiredProps): Node[]
         count += 1;
         valid = true;
 
-        if (count > 1) {
+        if (count > emojiEnlargeThreshold) {
           valid = false;
           break;
         }
@@ -65,13 +68,28 @@ export function onAfterParse(content: Node[], props: EmojiRequiredProps): Node[]
   }
 
   return content.map(item => {
-    if (!React.isValidElement(item)) {
+    if (!React.isValidElement<EmojiProps>(item)) {
       return item;
     }
 
     return React.cloneElement(item, {
       ...item.props,
-      enlargeEmoji: true,
+      enlarged: true,
     });
+  });
+}
+
+export default function createEmojiMatcher(
+  pattern: RegExp,
+  onMatch: OnMatch<EmojiMatch, InterweaveEmojiProps>,
+  customFactory: MatcherFactory<EmojiMatch, InterweaveEmojiProps> = factory,
+) {
+  return createMatcher<EmojiMatch, InterweaveEmojiProps>(pattern, customFactory, {
+    greedy: true,
+    onAfterParse,
+    onBeforeParse,
+    onMatch,
+    tagName: 'img',
+    void: true,
   });
 }

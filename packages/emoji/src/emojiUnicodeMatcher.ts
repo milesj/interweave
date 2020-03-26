@@ -1,10 +1,8 @@
-import createMatcher, { MatchResult } from 'interweave/src/createMatcher';
 import EMOJI_REGEX from 'emojibase-regex';
 import EmojiDataManager from './EmojiDataManager';
-import { factory, onBeforeParse } from './helpers';
-import { EmojiMatch, EmojiRequiredProps } from './types';
+import createEmojiMatcher from './createEmojiMatcher';
 
-function onMatch(result: MatchResult, { emojiSource }: EmojiRequiredProps): EmojiMatch | null {
+export default createEmojiMatcher(EMOJI_REGEX, (result, { emojiSource }) => {
   const data = EmojiDataManager.getInstance(emojiSource.locale);
   const unicode = result.matches[0];
 
@@ -16,16 +14,4 @@ function onMatch(result: MatchResult, { emojiSource }: EmojiRequiredProps): Emoj
     hexcode: data.UNICODE_TO_HEXCODE[unicode],
     unicode,
   };
-}
-
-export default createMatcher<EmojiMatch, EmojiRequiredProps>(
-  EMOJI_REGEX,
-  {
-    greedy: true,
-    onBeforeParse,
-    onMatch,
-    tagName: 'img',
-    void: true,
-  },
-  factory,
-);
+});

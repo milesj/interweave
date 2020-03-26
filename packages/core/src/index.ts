@@ -5,18 +5,12 @@
 
 import Interweave from './Interweave';
 import Markup from './Markup';
-import Filter from './Filter';
 import Element from './Element';
 import Parser from './Parser';
-import match from './match';
+import createMatcher from './createMatcher';
+import createTransformer from './createTransformer';
 
-export { Markup, Filter, Matcher, Element, Parser, match };
+export { Interweave, Markup, Element, Parser, createMatcher, createTransformer };
 
 export * from './constants';
 export * from './types';
-
-export default Interweave;
-
-import createMatcher from './createMatcher';
-
-export { createMatcher };

@@ -1,51 +1,17 @@
-import React from 'react';
+import { Matcher, MatcherOptions, MatcherFactory, MatchResult } from './types';
 
-export type Node = NonNullable<React.ReactNode>;
-
-export type ElementFactory<Match, Props> = (
-  content: Node,
-  match: Match,
-  props: Props,
-) => React.ReactElement;
-
-export interface MatchResult {
-  index: number;
-  length: number;
-  match: string;
-  matches: string[];
-  valid: boolean;
-  value: string;
-  void: boolean;
-}
-
-export type MatchHandler<Match, Props> = (
-  value: string,
-  props: Props,
-) => (MatchResult & { params: Match }) | null;
-
-export interface Matcher<Match, Props> {
-  factory: ElementFactory<Match, Props>;
-  greedy: boolean;
-  match: MatchHandler<Match, Props>;
-}
-
-export type OnMatch<Match, Props> = (result: MatchResult, props: Props) => Match | null;
-
-export interface MatcherOptions<Match, Props> {
-  greedy?: boolean;
-  tagName: string;
-  void?: boolean;
-  onAfterParse?: (content: Node[], props: Props) => Node[];
-  onBeforeParse?: (content: string, props: Props) => string;
-  onMatch: OnMatch<Match, Props>;
-}
-
-export default function createMatcher<Match, Props>(
+export default function createMatcher<Match, Props, Options = {}>(
   pattern: string | RegExp,
-  options: MatcherOptions<Match, Props>,
-  factory: ElementFactory<Match, Props>,
-): Matcher<Match, Props> {
+  factory: MatcherFactory<Match, Props>,
+  options: MatcherOptions<Match, Props, Options>,
+): Matcher<Match, Props, Options> {
   return {
+    extend(customFactory, customOptions) {
+      return createMatcher(pattern, customFactory, {
+        ...options,
+        ...customOptions,
+      });
+    },
     factory,
     greedy: options.greedy ?? false,
     match(value, props) {
@@ -65,7 +31,7 @@ export default function createMatcher<Match, Props>(
         void: options.void ?? false,
       };
 
-      const params = options.onMatch(result, props);
+      const params = options.onMatch(result, props, options.options || {});
 
       // Allow callback to intercept the result
       if (params === null) {
@@ -77,5 +43,7 @@ export default function createMatcher<Match, Props>(
         ...result,
       };
     },
+    options: options.options || {},
+    tagName: options.tagName,
   };
 }
