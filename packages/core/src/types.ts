@@ -70,7 +70,7 @@ export interface MatcherInterface<T = any> {
   greedy?: boolean;
   inverseName: string;
   propName: string;
-  asTag() => string;
+  asTag: () => string;
   createElement: (children: ChildrenNode, props: T) => Node;
   match: (value: string) => MatchResponse<Partial<T>> | null;
   onBeforeParse?: (content: string, props: T) => string;
