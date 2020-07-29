@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/prefer-ts-expect-error, @typescript-eslint/no-unsafe-assignment */
 
 /**
  * @copyright   2016-2019, Miles Johnson
@@ -34,7 +34,7 @@ declare module 'parse5' {
 }
 
 function patchTextNodeInChildren(parentNode: DefaultTreeParentNode) {
-  parentNode.childNodes.forEach(node => {
+  parentNode.childNodes.forEach((node) => {
     if (node.nodeName === '#text' && !node.textContent) {
       Object.defineProperties(node, {
         nodeType: { value: 3 },
@@ -79,19 +79,19 @@ const treeAdapter: TreeAdapter = {
       ...adapter.createElement(tagName, namespace, attrs),
       attributes,
       getAttribute(name: string): string | null {
-        const result = attributes.find(attr => attr.name === name);
+        const result = attributes.find((attr) => attr.name === name);
 
         return result ? result.value : null;
       },
       hasAttribute(name: string): boolean {
-        return !!attributes.find(attr => attr.name === name);
+        return !!attributes.find((attr) => attr.name === name);
       },
       nodeType: 1,
       removeAttribute(name: string) {
-        attributes = attributes.filter(attr => attr.name !== name);
+        attributes = attributes.filter((attr) => attr.name !== name);
       },
       setAttribute(name: string, value: string) {
-        const result = attributes.find(attr => attr.name === name);
+        const result = attributes.find((attr) => attr.name === name);
 
         if (result) {
           result.value = value;
@@ -153,17 +153,17 @@ export function polyfill() {
 
 export function polyfillDOMImplementation() {
   if (typeof document === 'undefined') {
-    // @ts-expect-error
+    // @ts-ignore
     global.document = {};
   }
 
   if (typeof document.implementation === 'undefined') {
-    // @ts-expect-error
+    // @ts-ignore
     global.document.implementation = {};
   }
 
   if (typeof document.implementation.createHTMLDocument !== 'function') {
-    // @ts-expect-error
+    // @ts-ignore
     global.document.implementation.createHTMLDocument = createHTMLDocument;
   }
 }
