@@ -66,15 +66,15 @@ export type MatchResponse<T> = T & {
   void?: boolean;
 };
 
-export interface MatcherInterface<T> {
+export interface MatcherInterface<T = any> {
   greedy?: boolean;
   inverseName: string;
   propName: string;
-  asTag(): string;
-  createElement(children: ChildrenNode, props: T): Node;
-  match(value: string): MatchResponse<Partial<T>> | null;
-  onBeforeParse?(content: string, props: T): string;
-  onAfterParse?(content: Node[], props: T): Node[];
+  asTag() => string;
+  createElement: (children: ChildrenNode, props: T) => Node;
+  match: (value: string) => MatchResponse<Partial<T>> | null;
+  onBeforeParse?: (content: string, props: T) => string;
+  onAfterParse?: (content: Node[], props: T) => Node[];
 }
 
 // FILTERS
@@ -82,11 +82,11 @@ export interface MatcherInterface<T> {
 export type ElementAttributes = React.AllHTMLAttributes<unknown>;
 
 export interface FilterInterface {
-  attribute?<K extends keyof ElementAttributes>(
+  attribute?: <K extends keyof ElementAttributes>(
     name: K,
     value: ElementAttributes[K],
-  ): ElementAttributes[K] | undefined | null;
-  node?(name: string, node: HTMLElement): HTMLElement | null;
+  ) => ElementAttributes[K] | undefined | null;
+  node?: (name: string, node: HTMLElement) => HTMLElement | null;
 }
 
 export interface FilterMap {

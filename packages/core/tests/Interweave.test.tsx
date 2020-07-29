@@ -14,7 +14,7 @@ import {
   MarkdownBoldMatcher,
   MarkdownItalicMatcher,
 } from '../src/testing';
-import { InterweaveProps } from '../src/types';
+import { InterweaveProps, ChildrenNode } from '../src/types';
 
 describe('Interweave', () => {
   it('doesnt include canvas and iframe in default allow list', () => {
@@ -85,7 +85,7 @@ describe('Interweave', () => {
             inverseName: 'noB',
             propName: 'b',
             asTag: () => 'span',
-            createElement: (match: string, p: { children: string }) => (
+            createElement: (match: ChildrenNode, p: { children: string }) => (
               <Element key="0" tagName="span" {...p}>
                 {p.children.toUpperCase()}
               </Element>
@@ -137,14 +137,14 @@ describe('Interweave', () => {
   describe('parseMarkup()', () => {
     it('errors if onBeforeParse doesnt return a string', () => {
       expect(() => {
-        // @ts-ignore
+        // @ts-expect-error
         render<InterweaveProps>(<Interweave onBeforeParse={() => 123} content="Foo" />);
       }).toThrowErrorMatchingSnapshot();
     });
 
     it('errors if onAfterParse doesnt return an array', () => {
       expect(() => {
-        // @ts-ignore
+        // @ts-expect-error
         render<InterweaveProps>(<Interweave onAfterParse={() => 123} content="Foo" />);
       }).toThrowErrorMatchingSnapshot();
     });

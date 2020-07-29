@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/camelcase */
-
 import React from 'react';
 import { renderAndWait, mockFetch, MockFetchResult } from 'rut-dom';
 import { resetInstances } from '../src/EmojiDataManager';

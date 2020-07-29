@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+
 /**
  * @copyright   2016-2019, Miles Johnson
  * @license     https://opensource.org/licenses/MIT
@@ -10,7 +12,7 @@ import {
   DefaultTreeParentNode,
   DefaultTreeTextNode,
 } from 'parse5';
-// @ts-ignore
+// @ts-expect-error
 import * as adapter from 'parse5/lib/tree-adapters/default';
 import parseStyle from 'style-parser';
 
@@ -151,17 +153,17 @@ export function polyfill() {
 
 export function polyfillDOMImplementation() {
   if (typeof document === 'undefined') {
-    // @ts-ignore
+    // @ts-expect-error
     global.document = {};
   }
 
   if (typeof document.implementation === 'undefined') {
-    // @ts-ignore
+    // @ts-expect-error
     global.document.implementation = {};
   }
 
   if (typeof document.implementation.createHTMLDocument !== 'function') {
-    // @ts-ignore
+    // @ts-expect-error
     global.document.implementation.createHTMLDocument = createHTMLDocument;
   }
 }

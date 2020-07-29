@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/camelcase */
-
 import React from 'react';
 import { render } from 'rut-dom';
 import { EmojiDataManager, Emoji } from 'interweave-emoji';

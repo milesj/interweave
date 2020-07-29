@@ -465,7 +465,7 @@ export class InternalPicker extends React.PureComponent<InternalPickerProps, Int
     if (event.key === 'Escape') {
       event.preventDefault();
 
-      // @ts-ignore Allow other event
+      // @ts-expect-error Allow other event
       this.handleSearch('', event);
 
       // Select active emoji
@@ -473,7 +473,7 @@ export class InternalPicker extends React.PureComponent<InternalPickerProps, Int
       event.preventDefault();
 
       if (activeEmoji) {
-        // @ts-ignore Allow other event
+        // @ts-expect-error Allow other event
         this.handleSelectEmoji(activeEmoji, event);
       }
 
@@ -505,7 +505,7 @@ export class InternalPicker extends React.PureComponent<InternalPickerProps, Int
           activeEmojiIndex: nextIndex,
         });
 
-        // @ts-ignore Allow other event
+        // @ts-expect-error Allow other event
         this.handleEnterEmoji(emojis[nextIndex], event);
       }
     }
@@ -548,7 +548,7 @@ export class InternalPicker extends React.PureComponent<InternalPickerProps, Int
 
   private handleSearchDebounced = debounce(query => {
     this.setUpdatedState({
-      searchQuery: query,
+      searchQuery: String(query),
     });
   }, SEARCH_THROTTLE);
 

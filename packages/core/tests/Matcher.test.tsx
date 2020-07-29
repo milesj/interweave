@@ -40,7 +40,7 @@ describe('Matcher', () => {
     it('errors if not a React element', () => {
       const customMatcher = new MockMatcher('foo', {});
 
-      // @ts-ignore
+      // @ts-expect-error
       customMatcher.replaceWith = () => 123;
 
       expect(() => {

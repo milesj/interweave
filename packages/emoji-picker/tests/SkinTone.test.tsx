@@ -56,14 +56,14 @@ describe('SkinTone', () => {
   it('sets correct colors based on tone', () => {
     const { root, update } = render<SkinToneProps>(<SkinTone {...props} />);
 
-    // @ts-ignore
+    // @ts-expect-error
     expect(root.findOne('button')).toHaveProp('data-skin-tone', SKIN_KEY_DARK);
 
     update({
       skinTone: SKIN_KEY_NONE,
     });
 
-    // @ts-ignore
+    // @ts-expect-error
     expect(root.findOne('button')).toHaveProp('data-skin-tone', SKIN_KEY_NONE);
   });
 

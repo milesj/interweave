@@ -39,14 +39,14 @@ describe('Parser', () => {
 
   it('parses when passed an empty value', () => {
     [null, false, undefined, '', 0].forEach(value => {
-      // @ts-ignore
+      // @ts-expect-error
       expect(new Parser(value).parse()).toEqual([]);
     });
   });
 
   it('errors for a non-string value', () => {
     [123, 456.78, true, [], {}].forEach(value => {
-      // @ts-ignore
+      // @ts-expect-error
       expect(() => new Parser(value)).toThrow('Interweave parser requires a valid string.');
     });
   });
@@ -99,7 +99,6 @@ describe('Parser', () => {
           const tokenString = location.replace(/{token}/g, '[foo]');
           const actual = instance.applyMatchers(tokenString, parentConfig);
 
-          // eslint-disable-next-line jest/no-if
           if (i === 0) {
             expect(actual).toBe(createExpectedToken('foo', createElement, 0));
           } else {
@@ -120,7 +119,6 @@ describe('Parser', () => {
             .replace('{token}', '[baz]');
           const actual = instance.applyMatchers(tokenString, parentConfig);
 
-          // eslint-disable-next-line jest/no-if
           if (i === 0) {
             expect(actual).toBe(createExpectedToken('', createMultiElement, 0));
           } else {
@@ -144,7 +142,7 @@ describe('Parser', () => {
     describe('ignores matcher if the inverse prop is enabled', () => {
       TOKEN_LOCATIONS.forEach(location => {
         it(`for: ${location}`, () => {
-          // @ts-ignore
+          // @ts-expect-error
           instance.props.noFoo = true;
 
           const tokenString = location.replace(/{token}/g, '[foo]');
@@ -262,7 +260,7 @@ describe('Parser', () => {
     });
 
     it('returns null for invalid node', () => {
-      // @ts-ignore
+      // @ts-expect-error
       expect(instance.extractAttributes(document.createComment('Comment'))).toBeNull();
     });
 

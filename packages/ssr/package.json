@@ -21,7 +21,7 @@
     "style-parser": "^1.1.1"
   },
   "devDependencies": {
-    "@types/parse5": "^5.0.2"
+    "@types/parse5": "^5.0.3"
   },
   "funding": {
     "type": "ko-fi",

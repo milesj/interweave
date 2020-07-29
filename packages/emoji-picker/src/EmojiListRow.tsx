@@ -34,7 +34,7 @@ export default function EmojiListRow({
   onSelectEmoji,
 }: ListChildComponentProps & EmojiListRowProps) {
   const { classNames } = useContext(Context);
-  const row: VirtualRow = data[index];
+  const row = data[index] as VirtualRow;
 
   return (
     <div style={style} className={classNames.emojisRow}>

@@ -21,7 +21,7 @@ export default abstract class Matcher<Props extends object = {}, Options extends
       }
     }
 
-    // @ts-ignore
+    // @ts-expect-error
     this.options = { ...options };
     this.propName = name;
     this.inverseName = `no${name.charAt(0).toUpperCase() + name.slice(1)}`;
