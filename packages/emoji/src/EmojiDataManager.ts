@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/camelcase */
-
 import {
   fromCodepointToUnicode,
   fromHexcodeToCodepoint,
@@ -11,7 +9,7 @@ import {
 } from 'emojibase';
 import { CanonicalEmoji } from './types';
 
-const instances: Map<string, EmojiDataManager> = new Map();
+const instances = new Map<string, EmojiDataManager>();
 
 export function resetInstances() {
   if (__DEV__) {

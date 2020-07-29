@@ -177,7 +177,7 @@ describe('matchers/UrlMatcher', () => {
       const { url, ...params } = urlParams;
 
       it(`${url}`, () => {
-        // @ts-ignore
+        // @ts-expect-error
         const expected: Partial<RegExpMatchArray> = [
           url,
           // eslint-disable-next-line jest/no-if
@@ -238,7 +238,6 @@ describe('matchers/UrlMatcher', () => {
           const tokenString = location.replace(/{token}/g, urlParams.url);
           const actual = parser.applyMatchers(tokenString, parentConfig);
 
-          // eslint-disable-next-line jest/no-if
           if (i === 0) {
             expect(actual).toBe(createExpectedToken(urlParams, createUrl, 0));
           } else {

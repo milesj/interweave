@@ -21,4 +21,4 @@ jobs:
       - run: yarn run build
       - run: yarn run type
       - run: yarn run jest -w 2
-      - run: yarn run eslint
+      - run: yarn run lint

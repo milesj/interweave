@@ -1,10 +1,12 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+
 import { useEffect, useState } from 'react';
 import { fetchFromCDN, Emoji } from 'emojibase';
 import EmojiDataManager from './EmojiDataManager';
 import { CanonicalEmoji, Source, UseEmojiDataOptions } from './types';
 import { LATEST_DATASET_VERSION } from './constants';
 
-const promises: Map<string, Promise<CanonicalEmoji[]>> = new Map();
+const promises = new Map<string, Promise<CanonicalEmoji[]>>();
 
 export function resetLoaded() {
   if (__DEV__) {
@@ -28,7 +30,7 @@ function loadEmojis(locale: string, version: string, compact: boolean): Promise<
   let request: Promise<Emoji[]>;
 
   if (stubRequest) {
-    let testData;
+    let testData: Emoji[];
 
     try {
       // We must use a variable here, otherwise webpack attempts to include it in the bundle.
@@ -36,7 +38,6 @@ function loadEmojis(locale: string, version: string, compact: boolean): Promise<
       // https://github.com/webpack/webpack/issues/8826
       // https://github.com/webpack/webpack/issues/4175
       const requireFunc =
-        // eslint-disable-next-line @typescript-eslint/camelcase
         typeof __webpack_require__ === 'function' ? __non_webpack_require__ : require;
 
       testData = requireFunc('emojibase-test-utils/test-data.json');

@@ -90,12 +90,7 @@ export default class EmojiMatcher extends Matcher<EmojiProps, EmojiMatcherOption
       true,
     );
 
-    if (
-      response &&
-      response.emoticon &&
-      this.data &&
-      this.data.EMOTICON_TO_HEXCODE[response.emoticon]
-    ) {
+    if (response?.emoticon && this.data && this.data.EMOTICON_TO_HEXCODE[response.emoticon]) {
       response.hexcode = this.data.EMOTICON_TO_HEXCODE[response.emoticon];
       response.match = String(response.emoticon); // Remove padding
 
@@ -115,12 +110,7 @@ export default class EmojiMatcher extends Matcher<EmojiProps, EmojiMatcherOption
       true,
     );
 
-    if (
-      response &&
-      response.shortcode &&
-      this.data &&
-      this.data.SHORTCODE_TO_HEXCODE[response.shortcode]
-    ) {
+    if (response?.shortcode && this.data && this.data.SHORTCODE_TO_HEXCODE[response.shortcode]) {
       response.hexcode = this.data.SHORTCODE_TO_HEXCODE[response.shortcode];
 
       return response;
@@ -139,12 +129,7 @@ export default class EmojiMatcher extends Matcher<EmojiProps, EmojiMatcherOption
       true,
     );
 
-    if (
-      response &&
-      response.unicode &&
-      this.data &&
-      this.data.UNICODE_TO_HEXCODE[response.unicode]
-    ) {
+    if (response?.unicode && this.data && this.data.UNICODE_TO_HEXCODE[response.unicode]) {
       response.hexcode = this.data.UNICODE_TO_HEXCODE[response.unicode];
 
       return response;

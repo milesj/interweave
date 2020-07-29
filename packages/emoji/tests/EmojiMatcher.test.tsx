@@ -125,7 +125,7 @@ describe('EmojiMatcher', () => {
     const parser = new Parser(
       '',
       {
-        // @ts-ignore
+        // @ts-expect-error
         emojiSource: SOURCE_PROP,
       },
       [matcher],
@@ -136,7 +136,7 @@ describe('EmojiMatcher', () => {
         emojiSource: SOURCE_PROP,
         hexcode: UNICODE_TO_HEXCODE[unicode],
         unicode,
-        // @ts-ignore
+        // @ts-expect-error
         key,
       });
     }
@@ -146,7 +146,7 @@ describe('EmojiMatcher', () => {
         emojiSource: SOURCE_PROP,
         hexcode: SHORTCODE_TO_HEXCODE[shortcode],
         shortcode,
-        // @ts-ignore
+        // @ts-expect-error
         key,
       });
     }
@@ -159,7 +159,6 @@ describe('EmojiMatcher', () => {
           const tokenString = location.replace(/{token}/g, unicode);
           const actual = parser.applyMatchers(tokenString, parentConfig);
 
-          // eslint-disable-next-line jest/no-if
           if (i === 0) {
             expect(actual).toBe(createExpectedToken(unicode, createUnicode, 0));
           } else {
@@ -173,7 +172,6 @@ describe('EmojiMatcher', () => {
           const tokenString = location.replace(/{token}/g, shortcode);
           const actual = parser.applyMatchers(tokenString, parentConfig);
 
-          // eslint-disable-next-line jest/no-if
           if (i === 0) {
             expect(actual).toBe(createExpectedToken(shortcode, createShort, 0));
           } else {
@@ -237,7 +235,7 @@ describe('EmojiMatcher', () => {
   describe('onBeforeParse()', () => {
     it('errors when no emojiSource', () => {
       expect(() => {
-        // @ts-ignore
+        // @ts-expect-error
         matcher.onBeforeParse('', {});
       }).toThrow(
         'Missing emoji source data. Have you loaded with the `useEmojiData` hook and passed the `emojiSource` prop?',

@@ -63,7 +63,6 @@ describe('matchers/HashtagMatcher', () => {
           const tokenString = location.replace(/{token}/g, hashtag);
           const actual = parser.applyMatchers(tokenString, parentConfig);
 
-          // eslint-disable-next-line jest/no-if
           if (i === 0) {
             expect(actual).toBe(createExpectedToken(hashtag, createHashtag, 0));
           } else {

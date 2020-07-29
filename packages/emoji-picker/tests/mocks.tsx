@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/camelcase */
-
 import React from 'react';
 import { Presentation } from 'emojibase';
 import { CONTEXT_CLASSNAMES, CONTEXT_MESSAGES } from '../src/constants';

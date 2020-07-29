@@ -7,6 +7,6 @@ export default function Element({
   selfClose = false,
   tagName: Tag,
 }: ElementProps) {
-  // @ts-ignore BUG: https://github.com/Microsoft/TypeScript/issues/28806
+  // @ts-expect-error BUG: https://github.com/Microsoft/TypeScript/issues/28806
   return selfClose ? <Tag {...attributes} /> : <Tag {...attributes}>{children}</Tag>;
 }

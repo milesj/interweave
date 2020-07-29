@@ -57,7 +57,7 @@ export default class Parser {
 
   props: ParserProps;
 
-  matchers: MatcherInterface<unknown>[];
+  matchers: MatcherInterface[];
 
   filters: FilterInterface[];
 
@@ -66,7 +66,7 @@ export default class Parser {
   constructor(
     markup: string,
     props: ParserProps = {},
-    matchers: MatcherInterface<unknown>[] = [],
+    matchers: MatcherInterface[] = [],
     filters: FilterInterface[] = [],
   ) {
     if (__DEV__) {
@@ -335,7 +335,7 @@ export default class Parser {
 
         // Cast to number
       } else if (filter === FILTER_CAST_NUMBER) {
-        newValue = parseFloat(String(newValue));
+        newValue = Number.parseFloat(String(newValue));
 
         // Cast to string
       } else if (filter !== FILTER_NO_CAST) {
@@ -360,12 +360,14 @@ export default class Parser {
    * Extract the style attribute as an object and remove values that allow for attack vectors.
    */
   extractStyleAttribute(node: HTMLElement): object {
-    const styles: { [key: string]: string } = {};
+    const styles: { [key: string]: string | number } = {};
 
     Array.from(node.style).forEach(key => {
       const value = node.style[key as keyof CSSStyleDeclaration];
 
-      styles[key.replace(/-([a-z])/g, (match, letter) => letter.toUpperCase())] = value;
+      if (typeof value === 'string' || typeof value === 'number') {
+        styles[key.replace(/-([a-z])/g, (match, letter) => letter.toUpperCase())] = value;
+      }
     });
 
     return styles;

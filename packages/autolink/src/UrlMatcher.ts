@@ -35,7 +35,7 @@ export default class UrlMatcher extends Matcher<UrlProps, UrlMatcherOptions> {
     const response = this.doMatch(string, URL_PATTERN, this.handleMatches);
 
     // False positives with URL auth scheme
-    if (response && response.match.match(EMAIL_DISTINCT_PATTERN)) {
+    if (response?.match.match(EMAIL_DISTINCT_PATTERN)) {
       response.valid = false;
     }
 
