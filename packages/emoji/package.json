@@ -29,7 +29,7 @@
   },
   "devDependencies": {
     "emojibase": "^4.0.1",
-    "react": "^16.13.0"
+    "react": "^16.13.1"
   },
   "funding": {
     "type": "ko-fi",
