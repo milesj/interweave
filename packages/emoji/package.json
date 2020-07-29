@@ -19,7 +19,7 @@
   "license": "MIT",
   "dependencies": {
     "@types/react": "*",
-    "emojibase-regex": "^4.0.0",
+    "emojibase-regex": "^4.0.1",
     "prop-types": "^15.7.2"
   },
   "peerDependencies": {
@@ -28,7 +28,7 @@
     "react": "^16.8.0"
   },
   "devDependencies": {
-    "emojibase": "^4.0.0",
+    "emojibase": "^4.0.1",
     "react": "^16.13.0"
   },
   "funding": {

@@ -32,8 +32,7 @@
     "react": "^16.8.0"
   },
   "devDependencies": {
-    "@types/lodash": "*",
-    "emojibase": "^4.0.0",
+    "emojibase": "^4.0.1",
     "react": "^16.13.0"
   },
   "funding": {
