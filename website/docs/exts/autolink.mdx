@@ -1,4 +1,10 @@
-# Autolink Extension
+---
+title: Autolink extension
+sidebar_label: Autolinking
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
 
 Autolinking is the concept of matching patterns within a string and wrapping the matched result in
 an anchor link. This process is achieved through Interweave matchers.
@@ -16,11 +22,29 @@ an anchor link. This process is achieved through Interweave matchers.
 
 ## Installation
 
-```
+<Tabs
+  groupId="package-manager"
+  defaultValue="yarn"
+  values={[
+    { label: 'Yarn', value: 'yarn' },
+    { label: 'NPM', value: 'npm' },
+  ]}
+>
+  <TabItem value="yarn">
+
+```bash
 yarn add interweave interweave-autolink
-// Or
+```
+
+  </TabItem>
+  <TabItem value="npm">
+
+```bash
 npm install interweave interweave-autolink
 ```
+
+  </TabItem>
+</Tabs>
 
 ## URLs
 
@@ -37,7 +61,7 @@ import { UrlMatcher } from 'interweave-autolink';
 />;
 ```
 
-### TLD Support
+### TLD support
 
 By default, the `UrlMatcher` will validate top-level domains against a list of the most common TLDs
 (like .com, .net, and countries). You can disable this validation with the `validateTLD` option.
@@ -54,15 +78,15 @@ new UrlMatcher('url', { customTLDs: ['life', 'tech', 'ninja'] });
 
 ### Props
 
-The following props are available for `Url` components, all of which should be passed to an
-`Interweave` instance.
+The following props are available for `<Url />` components, all of which should be passed to an
+`<Interweave />` instance.
 
 - `newWindow` (`boolean`) - Open links in a new window. Defaults to `false`.
 - `onClick` (`func`) - Callback triggered when a link is clicked.
 
-### Match Result
+### Result
 
-If a match is found, a `Url` component will be rendered and passed the following props.
+If a match is found, a `<Url />` component will be rendered and passed the following props.
 
 - `url` (`string`) - The entire URL/IP that was matched.
 - `urlParts` (`object`) - Parts for the previous.
@@ -90,15 +114,15 @@ import { IpMatcher } from 'interweave-autolink';
 
 ### Props
 
-The following props are available for `Ip` components, all of which should be passed to an
-`Interweave` instance.
+The following props are available for `<Ip />` components, all of which should be passed to an
+`<Interweave />` instance.
 
 - `newWindow` (`boolean`) - Open links in a new window. Defaults to `false`.
 - `onClick` (`func`) - Callback triggered when a link is clicked.
 
-### Match Result
+### Result
 
-If a match is found, an `Ip` component is rendered with the same props as `Url`.
+If a match is found, an `<Ip />` component is rendered with the same props as `<Url />`.
 
 ## Emails
 
@@ -113,14 +137,14 @@ import { EmailMatcher } from 'interweave-autolink';
 
 ### Props
 
-The following props are available for `Email` components, all of which should be passed to an
-`Interweave` instance.
+The following props are available for `<Email />` components, all of which should be passed to an
+`<Interweave />` instance.
 
 - `onClick` (`func`) - Callback triggered when a link is clicked.
 
-### Match Result
+### Result
 
-If a match is found, an `Email` component will be rendered and passed the following props.
+If a match is found, an `<Email />` component will be rendered and passed the following props.
 
 - `email` (`string`) - The entire email address that was matched.
 - `emailParts` (`object`)
@@ -142,8 +166,8 @@ import { HashtagMatcher } from 'interweave-autolink';
 
 ### Props
 
-The following props are available for `Hashtag` components, all of which should be passed to an
-`Interweave` instance.
+The following props are available for `<Hashtag />` components, all of which should be passed to an
+`<Interweave />` instance.
 
 - `encodeHashtag` (`boolean`) - Encodes the hashtag using `encodeURIComponent()`. Defaults to
   `false`.
@@ -171,8 +195,8 @@ be passed, which receives the hashtag as the 1st argument.
 />
 ```
 
-### Match Result
+### Result
 
-If a match is found, a `Hashtag` component will be rendered and passed the following props.
+If a match is found, a `<Hashtag />` component will be rendered and passed the following props.
 
 - `hashtag` (`string`) - The entire hashtag that was matched (with `#`).

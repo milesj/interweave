@@ -1,4 +1,9 @@
-# Interweave
+---
+title: Getting started
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
 
 Interweave is a robust React library that can...
 
@@ -19,16 +24,37 @@ Interweave is a robust React library that can...
 
 ## Installation
 
-```
+<Tabs
+  groupId="package-manager"
+  defaultValue="yarn"
+  values={[
+    { label: 'Yarn', value: 'yarn' },
+    { label: 'NPM', value: 'npm' },
+  ]}
+>
+  <TabItem value="yarn">
+
+```bash
 yarn add interweave react
-// Or
+```
+
+  </TabItem>
+  <TabItem value="npm">
+
+```bash
 npm install interweave react
 ```
 
+  </TabItem>
+</Tabs>
+
 ## Usage
 
-Interweave can primarily be used with the `Interweave` and `Markup` components, both of which
-provide an easy, straight-forward implementation for safely [parsing and rendering HTML](parser.md).
+Interweave can primarily be used with the `<Interweave />` and `<Markup />` components, both of
+which provide an easy, straight-forward implementation for safely
+[parsing and rendering HTML](parser.md).
+
+### `<Interweave />`
 
 The `Interweave` component has the additional benefit of utilizing [filters](filters.md),
 [matchers](matchers.md), and callbacks.
@@ -37,16 +63,14 @@ The `Interweave` component has the additional benefit of utilizing [filters](fil
 import Interweave from 'interweave';
 
 <Interweave content="This string contains <b>HTML</b> and will safely be rendered!" />;
-```
 
-```tsx
 <Interweave
   content="This contains a URL, https://github.com/milesj/interweave, and a hashtag, #interweave, that will be converted to an anchor link!"
   matchers={[new UrlMatcher('url'), new HashtagMatcher('hashtag')]}
-/>
+/>;
 ```
 
-### Markup
+### `<Markup />`
 
 Unlike the `Interweave` component, the `Markup` component does not support matchers, filters, or
 callbacks. This component is preferred when rendering strings that contain HTML is the only use

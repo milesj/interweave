@@ -1,4 +1,6 @@
-# HTML Parsing
+---
+title: HTML parsing
+---
 
 Interweave doesn't rely on an HTML parser for rendering HTML safely; instead, it uses the DOM
 itself. It accomplishes this by using `DOMImplementation.createHTMLDocument` ([MDN][domhtml]), which
@@ -12,7 +14,7 @@ possible CSRF and arbitrary code execution.
 Furthermore, Interweave manages a list of both HTML tags and attributes, further increasing
 security, and reducing the risk of XSS and vulnerabilities.
 
-## Allowed Tags
+## Allowed tags
 
 Interweave keeps a mapping of renderable [HTML tags to parsing configurations][tagwl]. These
 configurations handle the following rules and processes.
@@ -41,7 +43,7 @@ The following tags and their children will never be rendered, even when the allo
 > The list of allowed tags can be customized using the `allowList` prop, which accepts a list of
 > HTML tag names.
 
-## Allowed Attributes
+## Allowed attributes
 
 Interweave takes parsing a step further, by also [filtering](./filters.md) attribute values and HTML
 nodes. Like tags, a mapping of renderable [HTML attributes to parser rules][attrwl] exist. A rule
@@ -50,7 +52,7 @@ boolean, and finally, deny.
 
 > Any attribute not found in the mapping will be ignored unless `allowAttributes` is passed.
 
-## Render Precedence
+## Render precedence
 
 There are 3 levels of rendering, in order:
 
@@ -64,7 +66,7 @@ There are 3 levels of rendering, in order:
   `allowElements` prop has a higher precedence than `allowList`, but both of which are lower than
   blocked or banned tags.
 
-## By-passing Allowed
+## By-passing allowed
 
 If need be, the allowed tag list can be disabled with the `allowElements` prop, which renders all
 HTML elements except for banned tags (hard-coded) and blocked tags (provided by `blockList`).
@@ -76,14 +78,14 @@ only be used if the markup passed to `Interweave` has been sanitized beforehand.
 
 That being said, banned tags like `script`, `applet`, and a few others are consistently removed.
 
-## Replacing Elements
+## Replacing elements
 
-By default, Interweave converts tags to an `Element` React component, which renders the appropriate
-DOM node. For custom block-level elements, the `transform` function prop can be passed.
+By default, Interweave converts tags to an `<Element />` React component, which renders the
+appropriate DOM node. For custom block-level elements, the `transform` function prop can be passed.
 
 This function receives the parsed DOM node, and can return either a React element (which is inserted
-into the React element tree), undefined to use the default `Element` component, or null to skip the
-element entirely.
+into the React element tree), undefined to use the default `<Element />` component, or null to skip
+the element entirely.
 
 For example, to replace `a` elements with a custom element:
 
@@ -105,8 +107,8 @@ tags in a controlled way. Banned tags like `script` will not be transformed.
 ## Disabling HTML
 
 The HTML parser cannot be disabled, however, a `noHtml` boolean prop can be passed to both the
-`Interweave` and `Markup` components. This prop will mark all HTML elements as pass-through, simply
-rendering text nodes recursively, including matchers.
+`<Interweave />` and `<Markup />` components. This prop will mark all HTML elements as pass-through,
+simply rendering text nodes recursively, including matchers.
 
 If you want to strip user provided HTML, but allow HTML from matchers, use the
 `noHtmlExceptMatchers` prop instead.

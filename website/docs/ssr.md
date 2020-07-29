@@ -1,4 +1,6 @@
-# Server-side Rendering
+---
+title: Server-side rendering
+---
 
 Interweave utilizes the DOM to parse and validate HTML, and as such, requires a polyfill for
 server-side rendering to work correctly. There are 2 options to solve this.
@@ -12,10 +14,8 @@ polyfill, based on the [parse5](https://www.npmjs.com/package/parse5) HTML parse
 yarn add interweave-ssr --dev
 ```
 
-Begin by importing and executing the `polyfill()` (preferred) or `polyfillDOMImplementation()`
-functions before rendering React. The former requires Interweave v12.5+ and will intercept the
-document parser with a custom implementation, while the latter while polyfill a fake global
-`document` (which may have unintended side-effects).
+Begin by importing and executing the `polyfill()` function before rendering React. This requires
+Interweave v12.5+ and will intercept the document parser with a custom implementation.
 
 ```ts
 import { polyfill } from 'interweave-ssr';

@@ -1,9 +1,14 @@
-# Filters
+---
+title: Filters
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
 
 Filters provide an easy way of cleaning HTML attributes and nodes during the
 [parsing cycle](./parser.md). This is especially useful for `src` and `href` attributes.
 
-Filters can be added to each instance of `Interweave` through the `filters` prop.
+Filters can be added to each instance of `<Interweave />` through the `filters` prop.
 
 ```tsx
 <Interweave filters={[new LinkFilter()]} />
@@ -15,16 +20,25 @@ To disable all filters, pass the `disableFilters` prop.
 <Interweave disableFilters />
 ```
 
-## Creating A Filter
+## Creating a filter
 
 Creating a custom filter is easy. Extend the base `Filter` class, or use a plain object, and define
 the `attribute` or `node` methods. These methods receive the attribute or tag name as the 1st
 argument, and the value as the 2nd, respectively.
 
-```ts
+<Tabs
+  groupId="filter-type"
+  defaultValue="class"
+  values={[
+    { label: 'Class', value: 'class' },
+    { label: 'Object', value: 'object' },
+  ]}
+>
+  <TabItem value="class">
+
+```tsx
 import { Filter } from 'interweave';
 
-// Class
 class LinkFilter extends Filter {
   attribute(name: string, value: string): string {
     if (name === 'href') {
@@ -44,13 +58,22 @@ class LinkFilter extends Filter {
 }
 
 const filter = new LinkFilter();
+```
 
-// Object
-const filter = {
+  </TabItem>
+  <TabItem value="object">
+
+```tsx
+import { FilterInterface } from 'interweave';
+
+const filter: FilterInterface = {
   attribute: (name, value) => value,
   node: (name, node) => node,
 };
 ```
+
+  </TabItem>
+</Tabs>
 
 > Attribute values and nodes must be returned from filter methods!
 
