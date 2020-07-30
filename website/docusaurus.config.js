@@ -34,7 +34,7 @@ module.exports = {
     footer: {
       style: 'dark',
       links: [],
-      copyright: `Copyright © ${new Date().getFullYear()} Interweave, Inc. Built with Docusaurus.`,
+      copyright: `Copyright © ${new Date().getFullYear()} Miles Johnson. Built with Docusaurus.`,
     },
   },
   presets: [
