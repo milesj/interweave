@@ -45,9 +45,9 @@ The following tags and their children will never be rendered, even when the allo
 
 ## Allowed attributes
 
-Interweave takes parsing a step further, by also [filtering](./filters.md) attribute values and HTML
-nodes. Like tags, a mapping of renderable [HTML attributes to parser rules][attrwl] exist. A rule
-can be one of: allow and cast to string (default), allow and cast to number, allow and cast to
+Interweave takes parsing a step further, by also [filtering](./filters.mdx) attribute values and
+HTML nodes. Like tags, a mapping of renderable [HTML attributes to parser rules][attrwl] exist. A
+rule can be one of: allow and cast to string (default), allow and cast to number, allow and cast to
 boolean, and finally, deny.
 
 > Any attribute not found in the mapping will be ignored unless `allowAttributes` is passed.
