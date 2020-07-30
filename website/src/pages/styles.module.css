@@ -21,7 +21,7 @@
   bottom: 0;
   z-index: 0;
   opacity: 0.1;
-  background-image: url('/static/img/logo-bg.svg');
+  background-image: url('/img/logo-bg.svg');
   background-repeat: no-repeat;
   background-position: 100% -100px;
   background-size: 40% auto;
