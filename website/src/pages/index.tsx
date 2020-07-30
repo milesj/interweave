@@ -6,9 +6,15 @@ import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import useBaseUrl from '@docusaurus/useBaseUrl';
 import styles from './styles.module.css';
 
-const features = [
+interface FeatureProps {
+  title: string;
+  description: React.ReactNode;
+  imageUrl: string;
+}
+
+const features: FeatureProps[] = [
   {
-    title: <>Easy to Use</>,
+    title: 'Easy to Use',
     imageUrl: 'img/undraw_docusaurus_mountain.svg',
     description: (
       <>
@@ -18,7 +24,7 @@ const features = [
     ),
   },
   {
-    title: <>Focus on What Matters</>,
+    title: 'Focus on What Matters',
     imageUrl: 'img/undraw_docusaurus_tree.svg',
     description: (
       <>
@@ -28,7 +34,7 @@ const features = [
     ),
   },
   {
-    title: <>Powered by React</>,
+    title: 'Powered by React',
     imageUrl: 'img/undraw_docusaurus_react.svg',
     description: (
       <>
@@ -39,8 +45,9 @@ const features = [
   },
 ];
 
-function Feature({ imageUrl, title, description }) {
+function Feature({ imageUrl, title, description }: FeatureProps) {
   const imgUrl = useBaseUrl(imageUrl);
+
   return (
     <div className={clsx('col col--4', styles.feature)}>
       {imgUrl && (

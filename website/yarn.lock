@@ -1149,6 +1149,11 @@
     stringify-object "^3.3.0"
     unist-util-visit "^2.0.2"
 
+"@docusaurus/module-type-aliases@^2.0.0-alpha.51":
+  version "2.0.0-alpha.51"
+  resolved "https://registry.yarnpkg.com/@docusaurus/module-type-aliases/-/module-type-aliases-2.0.0-alpha.51.tgz#7b8f9f772b315571c23db125653f4fc621abfeea"
+  integrity sha512-vBwk49W3DNvr+mbOgizLMI2TAxykqJYlcnpn4N7yvpWNteL2MfjzRf6rgJVJvlN2nrHhDyWDF9imwZpGDKSApg==
+
 "@docusaurus/plugin-content-blog@^2.0.0-alpha.60":
   version "2.0.0-alpha.60"
   resolved "https://registry.yarnpkg.com/@docusaurus/plugin-content-blog/-/plugin-content-blog-2.0.0-alpha.60.tgz#588c3a9cd0e729e1cb2429cf48a28bf5c50499fd"
