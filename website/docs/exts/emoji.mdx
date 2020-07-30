@@ -1,4 +1,10 @@
-# Emoji Extension
+---
+title: Emoji extension
+sidebar_label: Emojis
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
 
 Who loves emojis? Everyone loves emojis! This package provides support for rendering emoji, either
 their unicode character, or with SVG/PNGs. It utilizes [Emojibase][emojibase] for accurate and
@@ -23,13 +29,31 @@ up-to-date data.
 
 ## Installation
 
-```
+<Tabs
+  groupId="package-manager"
+  defaultValue="yarn"
+  values={[
+    { label: 'Yarn', value: 'yarn' },
+    { label: 'NPM', value: 'npm' },
+  ]}
+>
+  <TabItem value="yarn">
+
+```bash
 yarn add interweave interweave-emoji emojibase
-// Or
+```
+
+  </TabItem>
+  <TabItem value="npm">
+
+```bash
 npm install interweave interweave-emoji emojibase
 ```
 
-## Matching Emojis
+  </TabItem>
+</Tabs>
+
+## Matching emojis
 
 The `EmojiMatcher` makes use of complex regex patterns provided by Emojibase to find and replace
 emoji unicode sequences with SVG/PNGS.
@@ -45,8 +69,8 @@ import { EmojiMatcher } from 'interweave-emoji';
 
 ### Props
 
-The following props are available for `Emoji` components, all of which should be passed to an
-`Interweave` instance.
+The following props are available for `<Emoji />` components, all of which should be passed to an
+`<Interweave />` instance.
 
 - `emojiSize` (`string | number`) - The width and height of emojis. Defaults to `1em`.
 - `emojiLargeSize` (`string | number`) - The width and height of enlarged emojis. Defaults to `3em`.
@@ -56,17 +80,17 @@ The following props are available for `Emoji` components, all of which should be
 - `renderUnicode` (`boolean`) - Render the unicode character instead of an image. Defaults to
   `false`.
 
-### Match Result
+### Result
 
 Both unicode literal characters and escape sequences are supported when matching. If a match is
-found, an `Emoji` component will be rendered and passed some of the following props.
+found, an `<Emoji />` component will be rendered and passed some of the following props.
 
 - `emoticon` (`string`) - If applicable, an emoticon for the specific emoji character.
 - `hexcode` (`string`) - The hexcode for the specific emoji character.
 - `shortcode` (`string`) - The shortcode for the specific emoji character.
 - `unicode` (`string`) - The unicode literal character.
 
-## Loading Emoji Data
+## Loading emoji data
 
 Before emoji can be rendered, emoji data must be loaded from a CDN. To do this, the `useEmojiData()`
 hook can be used, which will fetch emoji data from Emojibase's CDN. The hook returns a tuple, with
@@ -88,12 +112,12 @@ The hook supports the following optional options.
 
 - `compact` (`boolean`) - Whether to load the compact or full dataset. Defaults to `false`.
 - `locale` (`string`) - The localized data to fetch. Defaults to `en`.
-  [View supported locales](https://github.com/milesj/emojibase#usage).
+  [View supported locales](https://github.com/milesj/emojibase/blob/master/docs/data.md#usage).
 - `throwErrors` (`boolean`) - Throw an error when the fetch fails. Defaults to `true`.
 - `version` (`string`) - The `emojibase-data` release version to fetch. Defaults to `latest`.
-  [Read more](https://github.com/milesj/emojibase#fetchfromcdn).
+  [Read more](https://github.com/milesj/emojibase/blob/master/docs/api.md#fetchfromcdn).
 
-## Converting Emoticons
+## Converting emoticons
 
 Emoticons have been around longer than emoji, but emoji are much nicer to look at. Some emoji, not
 all, have an associated emoticon that can be converted to an emoji character. For example, `:)`
@@ -110,9 +134,9 @@ option to the matcher.
 ```
 
 > A list of supported emoticons can be found in
-> [emojibase](https://github.com/milesj/emojibase/blob/master/packages/generator/src/resources/emoticons.ts).
+> [Emojibase](https://github.com/milesj/emojibase/blob/master/packages/generator/src/resources/emoticons.ts).
 
-## Converting Shortcodes
+## Converting shortcodes
 
 Shortcodes provide an easy non-unicode alternative for supporting emoji, and are represented by a
 word (or two) surrounded by two colons: `:boy:`.
@@ -168,7 +192,7 @@ Or a function can be passed, which receives the hexcode as the 1st argument, and
 Both media formats make use of the `img` tag and will require an individual file, as sprites and
 icon fonts are not supported. The following resources can be used for downloading SVG/PNG icons.
 
-- [EmojiOne](http://emojione.com/developers/)
+- [JoyPixels](http://emojione.com/developers/) (formerly EmojiOne)
 - [Twemoji](https://github.com/twitter/twemoji)
 
 > Note: SVGs require CORS to work correctly, so files will need to be stored locally, or within a
@@ -184,7 +208,7 @@ number or string. If a number is provided, it'll be passed down to React, which 
 
 > I suggest using `em` scaling as the emoji will scale relative to the text around it.
 
-## Displaying Unicode Characters
+## Displaying unicode characters
 
 To display native unicode characters as is, pass the `renderUnicode` option to the matcher
 constructor. This option will override the rendering of SVGs or PNGs, and works quite well alongside
@@ -194,7 +218,7 @@ shortcode or emoticon conversion.
 new EmojiMatcher('emoji', { renderUnicode: true });
 ```
 
-## Automatic Enlargement
+## Automatic enlargement
 
 When an emoji is the only character within the content, it will automatically be enlarged. To
 disable this functionality, set `enlargeThreshold` to 0. Inversely, if you want to increase the

@@ -1,18 +1,20 @@
-# Composition
+---
+title: Composition
+---
 
-We suggest composing around `Interweave` using a custom component. This provides more options for
-customization, like the choice between Twitter and Instagram hashtags, or PNG or SVG emojis.
+We suggest composing around `<Interweave />` using a custom component. This provides more options
+for customization, like the choice between Twitter and Instagram hashtags, or PNG or SVG emojis.
 
 ```tsx
 import React from 'react';
 import { stripHexcode } from 'emojibase';
-import BaseInterweave, { InterweaveProps, Filter, Matcher } from 'interweave';
+import BaseInterweave, { InterweaveProps, FilterInterface, MatcherInterface } from 'interweave';
 import { IpMatcher, UrlMatcher, EmailMatcher, HashtagMatcher } from 'interweave-autolink';
 import { EmojiMatcher, PathConfig } from 'interweave-emoji';
 
-const globalFilters: Filter[] = [new CustomFilter()];
+const globalFilters: FilterInterface[] = [new CustomFilter()];
 
-const globalMatchers: Matcher[] = [
+const globalMatchers: MatcherInterface[] = [
   new EmailMatcher('email'),
   new IpMatcher('ip'),
   new UrlMatcher('url'),
@@ -30,10 +32,10 @@ function getEmojiPath(hexcode: string, { enlarged }: PathConfig): string {
   ).toLowerCase()}.png`;
 }
 
-type Props = {
+interface Props extends InterweaveProps {
   instagram?: boolean;
   twitter?: boolean;
-} & InterweaveProps;
+}
 
 export default function Interweave({
   filters = [],

@@ -16,6 +16,7 @@
     "prettier": "beemo prettier",
     "prerelease": "yarn run clean && yarn run build && yarn test",
     "release": "lerna publish",
+    "release:docs": "cd website && yarn deploy",
     "type": "beemo typescript --reference-workspaces --build"
   },
   "engines": {
@@ -68,6 +69,9 @@
     "eslint": {
       "extends": [
         "plugin:rut/recommended"
+      ],
+      "ignore": [
+        "website/"
       ],
       "rules": {
         "import/no-named-as-default": "off",

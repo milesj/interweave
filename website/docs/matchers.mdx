@@ -1,4 +1,9 @@
-# Matchers
+---
+title: Matchers
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
 
 Matchers are the backbone of Interweave as they allow arbitrary insertion of React elements into
 strings, through the use of regex pattern matching. This feature is quite powerful as it opens up
@@ -13,8 +18,10 @@ github.com/milesj!", and a `UrlMatcher`, you'd get the following array.
 ['Check out my website, ', <Url>github.com/milesj</Url>, '!'];
 ```
 
-Matchers can be passed to each render of `Interweave`. When adding a matcher, a unique camel-case
-name must be passed to the constructor.
+## Usage
+
+Matchers can be passed to each render of `<Interweave />`. When adding a matcher, a unique
+camel-case name must be passed to the constructor.
 
 ```tsx
 <Interweave matchers={[new CustomMatcher('foo')]} />
@@ -34,7 +41,7 @@ name of the matcher (the one passed to the constructor). Using the example above
 <Interweave noFoo />
 ```
 
-## Creating A Matcher
+## Creating a matcher
 
 To create a custom matcher, implement a class that extends the base `Matcher` class, or use a plain
 object. Both approaches will require the following methods to be defined (excluding callbacks).
@@ -64,29 +71,34 @@ object. Both approaches will require the following methods to be defined (exclud
 
 > Using the plain object approach requires more implementation and a higher overhead.
 
+<Tabs
+  groupId="matcher-type"
+  defaultValue="class"
+  values={[
+    { label: 'Class', value: 'class' },
+    { label: 'Object', value: 'object' },
+  ]}
+>
+  <TabItem value="class">
+
 ```tsx
 import { Matcher, MatchResponse, Node } from 'interweave';
 
-function match(string: string): MatchResponse<{ extraProp: string }> | null {
-  const result = string.match(/foo/);
-
-  if (!result) {
-    return null;
-  }
-
-  return {
-    index: result.index!,
-    length: result[0].length,
-    match: result[0],
-    extraProp: 'foo', // or result[1], etc
-    valid: true,
-  };
-}
-
-// Class
 class CustomMatcher extends Matcher<CustomProps> {
   match(string: string): MatchResponse<{ extraProp: string }> | null {
-    return match(string);
+    const result = string.match(/foo/);
+
+    if (!result) {
+      return null;
+    }
+
+    return {
+      index: result.index!,
+      length: result[0].length,
+      match: result[0],
+      extraProp: 'foo', // or result[1], etc
+      valid: true,
+    };
   }
 
   replaceWith(children: ChildrenNode, props: CustomProps): Node {
@@ -99,16 +111,43 @@ class CustomMatcher extends Matcher<CustomProps> {
 }
 
 const matcher = new CustomMatcher('foo');
+```
 
-// Object
-const matcher = {
+  </TabItem>
+  <TabItem value="object">
+
+```tsx
+import { MatcherInterface } from 'interweave';
+
+const matcher: MatcherInterface<CustomProps> = {
   inverseName: 'noFoo',
   propName: 'foo',
-  asTag: () => 'span',
-  createElement: (children, props) => <span {...props}>{children}</span>,
-  match,
+  match(string) {
+    const result = string.match(/foo/);
+
+    if (!result) {
+      return null;
+    }
+
+    return {
+      index: result.index!,
+      length: result[0].length,
+      match: result[0],
+      extraProp: 'foo', // or result[1], etc
+      valid: true,
+    };
+  },
+  createElement(children, props) {
+    return <span {...props}>{children}</span>;
+  },
+  asTag() {
+    return 'span';
+  },
 };
 ```
+
+  </TabItem>
+</Tabs>
 
 To ease the matching process, there is a `doMatch()` method on `Matcher` that handles the `null` and
 object building logic. Simply pass it a regex pattern and a callback to build the object.
@@ -118,7 +157,7 @@ class CustomMatcher extends Matcher<CustomProps> {
   // ...
 
   match(string: string): MatchResponse<{ extraProp: string }> | null {
-    return this.doMatch(string, /foo/, matches => ({
+    return this.doMatch(string, /foo/, (matches) => ({
       extraProp: 'foo',
     }));
   }
@@ -130,7 +169,7 @@ class CustomMatcher extends Matcher<CustomProps> {
 > matchers, so be weary of the patterns you're attempting to match, as they may capture the
 > temporary tokens.
 
-## Rendered Elements
+## Rendered elements
 
 When a match is found, a React element is rendered (from a React component) from either the
 matcher's `replaceWith()` method, or from a factory. What's a factory you ask? Simply put, it's a
@@ -144,7 +183,7 @@ new CustomMatcher('foo', {}, SomeComponent);
 > Elements returned from `replaceWith()` or the factory must return an HTML element with the same
 > tag name as defined by `asTag()`.
 
-## Greedy Matching
+## Greedy matching
 
 By default, a matcher will continually run until it exhausts all matches. However, each iteration
 will shorten the string being matched until there is no more. This may be problematic if your
@@ -154,18 +193,38 @@ string.
 To work around this, a matcher can be marked as greedy to continually run against the whole string
 each iteration, until fully exhausted. Set the `greedy` property to enable.
 
-```ts
-// Class
+<Tabs
+  groupId="matcher-type"
+  defaultValue="class"
+  values={[
+    { label: 'Class', value: 'class' },
+    { label: 'Object', value: 'object' },
+  ]}
+>
+  <TabItem value="class">
+
+```tsx
+import { Matcher } from 'interweave';
+
 class CustomMatcher extends Matcher<CustomProps> {
   greedy: boolean = true;
 
   // ...
 }
+```
 
-// Object
-const matcher = {
+  </TabItem>
+  <TabItem value="object">
+
+```tsx
+import { MatcherInterface } from 'interweave';
+
+const matcher: MatcherInterface<CustomProps> = {
   greedy: true,
 
   // ...
 };
 ```
+
+  </TabItem>
+</Tabs>
