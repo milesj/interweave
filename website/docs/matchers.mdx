@@ -18,6 +18,8 @@ github.com/milesj!", and a `UrlMatcher`, you'd get the following array.
 ['Check out my website, ', <Url>github.com/milesj</Url>, '!'];
 ```
 
+## Usage
+
 Matchers can be passed to each render of `<Interweave />`. When adding a matcher, a unique
 camel-case name must be passed to the constructor.
 
@@ -120,9 +122,7 @@ import { MatcherInterface } from 'interweave';
 const matcher: MatcherInterface<CustomProps> = {
   inverseName: 'noFoo',
   propName: 'foo',
-  asTag: () => 'span',
-  createElement: (children, props) => <span {...props}>{children}</span>,
-  match: (string) => {
+  match(string) {
     const result = string.match(/foo/);
 
     if (!result) {
@@ -136,6 +136,12 @@ const matcher: MatcherInterface<CustomProps> = {
       extraProp: 'foo', // or result[1], etc
       valid: true,
     };
+  },
+  createElement(children, props) {
+    return <span {...props}>{children}</span>;
+  },
+  asTag() {
+    return 'span';
   },
 };
 ```

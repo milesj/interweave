@@ -12,6 +12,26 @@
   overflow: hidden;
 }
 
+.heroBanner::before {
+  content: ' ';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 0;
+  opacity: 0.1;
+  background-image: url('/static/img/logo-bg.svg');
+  background-repeat: no-repeat;
+  background-position: 100% -100px;
+  background-size: 40% auto;
+}
+
+.heroBanner > div {
+  z-index: 1;
+  position: relative;
+}
+
 @media screen and (max-width: 966px) {
   .heroBanner {
     padding: 2rem;

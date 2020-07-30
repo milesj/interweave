@@ -8,6 +8,8 @@ import TabItem from '@theme/TabItem';
 Filters provide an easy way of cleaning HTML attributes and nodes during the
 [parsing cycle](./parser.md). This is especially useful for `src` and `href` attributes.
 
+## Usage
+
 Filters can be added to each instance of `<Interweave />` through the `filters` prop.
 
 ```tsx
@@ -67,8 +69,20 @@ const filter = new LinkFilter();
 import { FilterInterface } from 'interweave';
 
 const filter: FilterInterface = {
-  attribute: (name, value) => value,
-  node: (name, node) => node,
+  attribute(name, value) {
+    if (name === 'href') {
+      return encodeURIComponent(value);
+    }
+
+    return value;
+  },
+  node(name, node) {
+    if (name === 'a') {
+      node.setAttribute('target', '_blank');
+    }
+
+    return node;
+  },
 };
 ```
 
