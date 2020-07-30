@@ -7,7 +7,7 @@ module.exports = {
   url: 'https://interweave.dev',
   baseUrl: '/',
   onBrokenLinks: 'throw',
-  favicon: 'img/logo.svg',
+  favicon: 'img/favicon.svg',
   organizationName: 'milesj',
   projectName: 'interweave',
   themeConfig: {
