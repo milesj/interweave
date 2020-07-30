@@ -37,7 +37,7 @@ npm install interweave interweave-emoji interweave-emoji-picker emojibase
 
 ## Documentation
 
-[https://milesj.gitbook.io/interweave](https://milesj.gitbook.io/interweave)
+[https://interweave.dev/docs/exts/emoji-picker](https://interweave.dev/docs/exts/emoji-picker)
 
 [interweave]: https://github.com/milesj/interweave
 [emojibase]: https://github.com/milesj/emojibase

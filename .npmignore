@@ -29,7 +29,6 @@ node_modules/
 .eslintignore
 .eslintrc.js
 .flowconfig
-.gitbook.yaml
 .prettierignore
 babel.config.js
 book.json

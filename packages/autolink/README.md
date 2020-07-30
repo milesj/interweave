@@ -24,4 +24,4 @@ npm install interweave interweave-autolink
 
 ## Documentation
 
-[https://milesj.gitbook.io/interweave](https://milesj.gitbook.io/interweave)
+[https://interweave.dev/docs/exts/autolink](https://interweave.dev/docs/exts/autolink)

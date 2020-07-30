@@ -44,4 +44,4 @@ npm install interweave react
 
 ## Documentation
 
-[https://milesj.gitbook.io/interweave](https://milesj.gitbook.io/interweave)
+[https://interweave.dev](https://interweave.dev)

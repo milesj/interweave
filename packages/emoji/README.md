@@ -33,4 +33,4 @@ npm install interweave interweave-emoji emojibase
 
 ## Documentation
 
-[https://milesj.gitbook.io/interweave](https://milesj.gitbook.io/interweave)
+[https://interweave.dev/docs/exts/emoji](https://interweave.dev/docs/exts/emoji)

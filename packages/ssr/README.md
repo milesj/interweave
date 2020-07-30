@@ -22,4 +22,4 @@ npm install interweave-ssr --save-dev
 
 ## Documentation
 
-[https://milesj.gitbook.io/interweave/ssr](https://milesj.gitbook.io/interweave/ssr)
+[https://interweave.dev/docs/ssr](https://interweave.dev/docs/ssr)
