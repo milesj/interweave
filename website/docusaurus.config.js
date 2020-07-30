@@ -1,5 +1,7 @@
 /* eslint-disable sort-keys */
 
+const pkg = require('interweave/package.json');
+
 module.exports = {
   title: 'Interweave',
   tagline:
@@ -23,6 +25,11 @@ module.exports = {
           activeBasePath: 'docs',
           label: 'Docs',
           position: 'left',
+        },
+        {
+          href: 'https://www.npmjs.com/package/interweave',
+          label: `Latest version: v${pkg.version}`,
+          position: 'right',
         },
         {
           href: 'https://github.com/milesj/interweave',

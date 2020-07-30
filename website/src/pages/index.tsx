@@ -19,7 +19,7 @@ const features: FeatureProps[] = [
     description: (
       <>
         Whether the HTML content is user submitted, third-party or tooling generated, or manual
-        written, have confidence knowing it will be safely rendered to avoid all vulnerabilities amd
+        written, have confidence knowing it will be safely rendered to avoid all vulnerabilities and
         XSS attack vectors. Never write <code>dangerouslySetInnerHTML</code> again!
       </>
     ),
@@ -40,9 +40,12 @@ const features: FeatureProps[] = [
     // imageUrl: 'img/undraw_docusaurus_react.svg',
     description: (
       <>
-        With the power of <a href="https://github.com/milesj/emojibase">Emojibase</a>, easily
-        replace emoji unicode characters and shortcodes with dynamic SVGs or PNGs. Take this a step
-        further by integrating a fully robust and feature complete emoji picker.
+        With the power of{' '}
+        <a href="https://github.com/milesj/emojibase" target="_blank">
+          Emojibase
+        </a>
+        , easily replace emoji unicode characters and shortcodes with dynamic SVGs or PNGs. Take
+        this a step further by integrating a fully robust and feature complete emoji picker.
       </>
     ),
   },
@@ -70,7 +73,7 @@ function Home() {
   const { siteConfig = {} } = context;
 
   return (
-    <Layout title="Safely render HTML in React!" description={siteConfig.tagline}>
+    <Layout title="Safely render HTML in React" description={siteConfig.tagline}>
       <header className={clsx('hero hero--primary', styles.heroBanner)}>
         <div className="container">
           <h1 className="hero__title">{siteConfig.title}</h1>
