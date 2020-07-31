@@ -21,15 +21,15 @@ module.exports = {
       },
       items: [
         {
+          href: 'https://www.npmjs.com/package/interweave',
+          label: `v${pkg.version}`,
+          position: 'left',
+        },
+        {
           to: 'docs/',
           activeBasePath: 'docs',
           label: 'Docs',
           position: 'left',
-        },
-        {
-          href: 'https://www.npmjs.com/package/interweave',
-          label: `Latest version: v${pkg.version}`,
-          position: 'right',
         },
         {
           href: 'https://github.com/milesj/interweave',

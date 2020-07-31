@@ -48,6 +48,17 @@ npm install interweave react
   </TabItem>
 </Tabs>
 
+## Why is it safe?
+
+Interweave is deemed safe as it doesn't rely on custom HTML parsers (excluding SSR) -- it relies on
+the browser and DOM itself for parsing. Because of this, we take full control of the parsing flow by
+inspecting all HTML elements and their attributes, and then filtering problematic values, avoiding
+vulnerabilities, and closing XSS holes.
+
+We also take this a step further by maintaing an explicit allow, block, and banned list of HTML
+elements and attributes. Interweave has also been penetration tested multiple times with _zero_
+issue!
+
 ## Usage
 
 Interweave can primarily be used with the `<Interweave />` and `<Markup />` components, both of
