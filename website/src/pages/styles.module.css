@@ -23,8 +23,8 @@
   opacity: 0.1;
   background-image: url('/img/logo-bg.svg');
   background-repeat: no-repeat;
-  background-position: 100% -100px;
-  background-size: 40% auto;
+  background-position: 100% 50%;
+  background-size: auto 175%;
 }
 
 .heroBanner > div {
