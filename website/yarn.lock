@@ -5144,10 +5144,8 @@ interpret@^1.0.0:
   resolved "https://registry.yarnpkg.com/interpret/-/interpret-1.4.0.tgz#665ab8bc4da27a774a40584e812e3e0fa45b1a1e"
   integrity sha512-agE4QfB2Lkp9uICn7BAqoscw4SZP9kTE2hxiFI3jBPmXJfdqiahTbUuKGsMoN2GtqL9AxhYioAcVvgsb1HvRbA==
 
-interweave@^12.5.0:
+"interweave@file:../packages/core":
   version "12.5.0"
-  resolved "https://registry.yarnpkg.com/interweave/-/interweave-12.5.0.tgz#c1c6cbda55e3d2864c94eeed8e86f4159111f493"
-  integrity sha512-R6PE+FkhexspBwBS9wa+w0ZHORsXpFgDoLTKt+kazZRZVlO9+b0bpOcimMQ77hY+UwcE3eppGqhsNUVi3EfQmQ==
   dependencies:
     "@types/react" "*"
     escape-html "^1.0.3"
