@@ -85,6 +85,13 @@ function Home() {
             >
               Get started
             </Link>
+
+            <iframe
+              src="https://ghbtns.com/github-btn.html?user=milesj&repo=interweave&type=star&count=true&size=large"
+              frameBorder="0"
+              scrolling="0"
+              title="GitHub"
+            ></iframe>
           </div>
         </div>
       </header>

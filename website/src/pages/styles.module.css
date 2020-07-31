@@ -44,6 +44,14 @@
   justify-content: center;
 }
 
+.buttons > iframe {
+  margin-left: 1rem;
+  width: 135px;
+  height: 30px;
+  overflow: hidden;
+  border: 0;
+}
+
 .features {
   display: flex;
   align-items: center;
