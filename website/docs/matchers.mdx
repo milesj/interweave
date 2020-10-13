@@ -93,7 +93,7 @@ class CustomMatcher extends Matcher<CustomProps> {
     }
 
     return {
-      index: result.index!,
+      index: result.index,
       length: result[0].length,
       match: result[0],
       extraProp: 'foo', // or result[1], etc
@@ -130,7 +130,7 @@ const matcher: MatcherInterface<CustomProps> = {
     }
 
     return {
-      index: result.index!,
+      index: result.index,
       length: result[0].length,
       match: result[0],
       extraProp: 'foo', // or result[1], etc
