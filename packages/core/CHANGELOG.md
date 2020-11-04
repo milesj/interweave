@@ -1,3 +1,9 @@
+## 12.6.0 - 2020-11-04
+
+#### 🚀 Updates
+
+- Added support for React 17.
+
 ## 12.5.0 - 2020-03-19
 
 #### 🚀 Updates

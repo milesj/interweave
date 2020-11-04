@@ -1,3 +1,9 @@
+## 5.3.0 - 2020-11-04
+
+#### 🚀 Updates
+
+- Added support for React 17.
+
 ### 5.2.1 - 2020-03-24
 
 #### 🐞 Fixes
