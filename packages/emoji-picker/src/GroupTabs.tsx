@@ -22,7 +22,7 @@ export default function GroupTabs({
   onSelect,
 }: GroupTabsProps) {
   const { classNames } = useContext(Context);
-  const groups = GROUPS.filter(group => group !== GROUP_KEY_COMPONENT);
+  const groups = GROUPS.filter((group) => group !== GROUP_KEY_COMPONENT);
 
   if (commonEmojis.length > 0) {
     groups.unshift(GROUP_KEY_COMMONLY_USED);
@@ -31,7 +31,7 @@ export default function GroupTabs({
   return (
     <nav className={classNames.groups}>
       <ul className={classNames.groupsList}>
-        {groups.map(group => (
+        {groups.map((group) => (
           <li key={group}>
             <Group
               active={group === activeGroup}

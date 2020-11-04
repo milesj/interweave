@@ -16,7 +16,7 @@ export default class HashtagMatcher extends Matcher<HashtagProps> {
   }
 
   match(string: string): MatchResponse<HashtagMatch> | null {
-    return this.doMatch(string, HASHTAG_PATTERN, matches => ({
+    return this.doMatch(string, HASHTAG_PATTERN, (matches) => ({
       hashtag: matches[0],
     }));
   }

@@ -9,7 +9,7 @@ export interface CombinePatternsOptions {
 }
 
 export function combinePatterns(patterns: RegExp[], options: CombinePatternsOptions = {}) {
-  let regex = patterns.map(pattern => pattern.source).join(options.join || '');
+  let regex = patterns.map((pattern) => pattern.source).join(options.join || '');
 
   if (options.capture) {
     regex = `(${regex})`;

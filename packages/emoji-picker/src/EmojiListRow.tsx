@@ -40,7 +40,7 @@ export default function EmojiListRow({
     <div style={style} className={classNames.emojisRow}>
       {Array.isArray(row) ? (
         <div className={classNames.emojisBody}>
-          {row.map(emoji => (
+          {row.map((emoji) => (
             <EmojiButton
               key={emoji.hexcode}
               active={activeEmoji ? activeEmoji.hexcode === emoji.hexcode : false}

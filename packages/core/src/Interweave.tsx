@@ -24,7 +24,7 @@ export default function Interweave(props: InterweaveProps) {
   const afterCallbacks = onAfterParse ? [onAfterParse] : [];
 
   // Inherit callbacks from matchers
-  allMatchers.forEach(matcher => {
+  allMatchers.forEach((matcher) => {
     if (matcher.onBeforeParse) {
       beforeCallbacks.push(matcher.onBeforeParse.bind(matcher));
     }

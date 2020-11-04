@@ -146,7 +146,7 @@ export class InternalPicker extends React.PureComponent<InternalPickerProps, Int
     }
 
     const commonEmojis = this.getCommonEmojisFromStorage();
-    const currentIndex = commonEmojis.findIndex(common => common.hexcode === hexcode);
+    const currentIndex = commonEmojis.findIndex((common) => common.hexcode === hexcode);
 
     // Add to the front of the list if it doesnt exist
     if (currentIndex === -1) {
@@ -240,7 +240,7 @@ export class InternalPicker extends React.PureComponent<InternalPickerProps, Int
     return searchQuery
       .toLowerCase()
       .split(' ')
-      .some(needle => haystack.includes(needle));
+      .some((needle) => haystack.includes(needle));
   }
 
   /**
@@ -249,8 +249,8 @@ export class InternalPicker extends React.PureComponent<InternalPickerProps, Int
    */
   generateEmojis(skinTone: SkinToneKey, searchQuery: string): CanonicalEmoji[] {
     return this.props.emojis
-      .filter(emoji => this.filterOrSearch(emoji, searchQuery))
-      .map(emoji => this.getSkinnedEmoji(emoji, skinTone));
+      .filter((emoji) => this.filterOrSearch(emoji, searchQuery))
+      .map((emoji) => this.getSkinnedEmoji(emoji, skinTone));
   }
 
   /**
@@ -259,7 +259,7 @@ export class InternalPicker extends React.PureComponent<InternalPickerProps, Int
   generateAllowBlockMap(list: string[]): AllowBlockMap {
     const map: AllowBlockMap = {};
 
-    list.forEach(hexcode => {
+    list.forEach((hexcode) => {
       if (__DEV__) {
         if (hexcode.match(SKIN_MODIFIER_PATTERN)) {
           // eslint-disable-next-line no-console
@@ -287,7 +287,7 @@ export class InternalPicker extends React.PureComponent<InternalPickerProps, Int
 
     const data = this.props.emojiData;
 
-    return commonEmojis.map(emoji => data.EMOJIS[emoji.hexcode]).filter(Boolean);
+    return commonEmojis.map((emoji) => data.EMOJIS[emoji.hexcode]).filter(Boolean);
   }
 
   /**
@@ -331,9 +331,9 @@ export class InternalPicker extends React.PureComponent<InternalPickerProps, Int
       return emoji;
     }
 
-    const toneIndex = SKIN_TONES.findIndex(tone => tone === skinTone);
+    const toneIndex = SKIN_TONES.findIndex((tone) => tone === skinTone);
     const skinnedEmoji = (emoji.skins || []).find(
-      skin =>
+      (skin) =>
         !!skin.tone &&
         (skin.tone === toneIndex ||
           (Array.isArray(skin.tone) && skin.tone.includes(toneIndex as SkinTone))),
@@ -375,7 +375,7 @@ export class InternalPicker extends React.PureComponent<InternalPickerProps, Int
     }
 
     // Partition emojis into separate groups
-    emojis.forEach(emoji => {
+    emojis.forEach((emoji) => {
       let group: GroupKey = GROUP_KEY_NONE;
 
       if (searchQuery) {
@@ -399,7 +399,7 @@ export class InternalPicker extends React.PureComponent<InternalPickerProps, Int
     });
 
     // Sort each group
-    Object.keys(groups).forEach(group => {
+    Object.keys(groups).forEach((group) => {
       if (group !== GROUP_KEY_COMMONLY_USED) {
         groups[group].emojis.sort((a, b) => (a.order || 0) - (b.order || 0));
       }
@@ -546,7 +546,7 @@ export class InternalPicker extends React.PureComponent<InternalPickerProps, Int
     this.props.onSearch!(query, event);
   };
 
-  private handleSearchDebounced = debounce(query => {
+  private handleSearchDebounced = debounce((query) => {
     this.setUpdatedState({
       searchQuery: String(query),
     });
@@ -619,7 +619,7 @@ export class InternalPicker extends React.PureComponent<InternalPickerProps, Int
    */
   setUpdatedState(nextState: Partial<InternalPickerState>, forceRebuild: boolean = false) {
     // eslint-disable-next-line complexity
-    this.setState(prevState => {
+    this.setState((prevState) => {
       const state = { ...prevState, ...nextState };
       const activeGroup = this.getActiveGroup(state.commonEmojis.length > 0);
       let rebuildEmojis = false;
@@ -770,7 +770,9 @@ export class InternalPicker extends React.PureComponent<InternalPickerProps, Int
 
     return (
       <Context.Provider value={context}>
-        <div className={context.classNames.picker}>{displayOrder.map(key => components[key])}</div>
+        <div className={context.classNames.picker}>
+          {displayOrder.map((key) => components[key])}
+        </div>
       </Context.Provider>
     );
   }

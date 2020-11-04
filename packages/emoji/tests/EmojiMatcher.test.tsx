@@ -53,7 +53,7 @@ describe('EmojiMatcher', () => {
   });
 
   describe('does match valid emoji', () => {
-    VALID_UNICODE.forEach(unicode => {
+    VALID_UNICODE.forEach((unicode) => {
       // Emoji_Tag_Sequences currently do not work
       if (unicode === '🏴󠁧󠁢󠁥󠁮󠁧󠁿' || unicode === '🏴󠁧󠁢󠁳󠁣󠁴󠁿' || unicode === '🏴󠁧󠁢󠁷󠁬󠁳󠁿') {
         return;
@@ -64,13 +64,13 @@ describe('EmojiMatcher', () => {
       });
     });
 
-    VALID_SHORTCODE.forEach(shortcode => {
+    VALID_SHORTCODE.forEach((shortcode) => {
       it(`shortcode: ${shortcode}`, () => {
         expect(shortcode.match(shortPattern)![0]).toBe(shortcode);
       });
     });
 
-    VALID_EMOTICON.forEach(emoticon => {
+    VALID_EMOTICON.forEach((emoticon) => {
       it(`emoticon: ${emoticon}`, () => {
         expect(emoticon.match(emoPattern)![0]).toBe(emoticon);
       });
@@ -78,19 +78,19 @@ describe('EmojiMatcher', () => {
   });
 
   describe('doesnt match invalid emoji', () => {
-    INVALID_UNICODE.forEach(unicode => {
+    INVALID_UNICODE.forEach((unicode) => {
       it(`unicode: ${unicode}`, () => {
         expect(unicode.match(pattern)).toBeNull();
       });
     });
 
-    INVALID_SHORTCODE.forEach(shortcode => {
+    INVALID_SHORTCODE.forEach((shortcode) => {
       it(`shortcode: ${shortcode}`, () => {
         expect(shortcode.match(shortPattern)).toBeNull();
       });
     });
 
-    INVALID_EMOTICON.forEach(emoticon => {
+    INVALID_EMOTICON.forEach((emoticon) => {
       it(`emoticon: ${emoticon}`, () => {
         expect(emoticon.match(emoPattern)).toBeNull();
       });
@@ -98,7 +98,7 @@ describe('EmojiMatcher', () => {
   });
 
   describe('doesnt match unicode when `convertUnicode` is false', () => {
-    VALID_UNICODE.forEach(unicode => {
+    VALID_UNICODE.forEach((unicode) => {
       it(`unicode: ${unicode}`, () => {
         expect(noConvertMatcher.match(unicode)).toBeNull();
       });
@@ -106,7 +106,7 @@ describe('EmojiMatcher', () => {
   });
 
   describe('doesnt match shortcode when `convertShortcode` is false', () => {
-    VALID_SHORTCODE.forEach(shortcode => {
+    VALID_SHORTCODE.forEach((shortcode) => {
       it(`shortcode: ${shortcode}`, () => {
         expect(noConvertMatcher.match(shortcode)).toBeNull();
       });
@@ -114,7 +114,7 @@ describe('EmojiMatcher', () => {
   });
 
   describe('doesnt match emoticon when `convertEmoticon` is false', () => {
-    VALID_EMOTICON.forEach(emoticon => {
+    VALID_EMOTICON.forEach((emoticon) => {
       it(`emoticon: ${emoticon}`, () => {
         expect(noConvertMatcher.match(emoticon)).toBeNull();
       });

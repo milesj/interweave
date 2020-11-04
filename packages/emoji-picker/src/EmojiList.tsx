@@ -57,7 +57,7 @@ export default function EmojiList({
       '': -1, // Handle empty scroll to's
     };
 
-    Object.keys(groupedEmojis).forEach(group => {
+    Object.keys(groupedEmojis).forEach((group) => {
       nextIndices[group] = virtualRows.length;
 
       if (group === GROUP_KEY_COMPONENT) {
@@ -92,7 +92,7 @@ export default function EmojiList({
   const handleRendered = ({ visibleStartIndex }: ListOnItemsRenderedProps) => {
     let lastGroup = '';
 
-    Object.keys(indices).some(group => {
+    Object.keys(indices).some((group) => {
       const index = indices[group];
 
       // Special case for commonly used and smileys, as they usually both render in the same view
@@ -136,7 +136,7 @@ export default function EmojiList({
         onItemsRendered={handleRendered}
         onScroll={onScroll}
       >
-        {props => <EmojiListRow {...rowProps} {...props} />}
+        {(props) => <EmojiListRow {...rowProps} {...props} />}
       </List>
 
       {stickyGroupHeader && activeGroup !== GROUP_KEY_NONE && (
