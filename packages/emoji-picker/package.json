@@ -22,9 +22,9 @@
   "dependencies": {
     "@types/react": "*",
     "@types/react-window": "*",
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.20",
     "prop-types": "^15.7.2",
-    "react-window": "^1.8.5"
+    "react-window": "^1.8.6"
   },
   "peerDependencies": {
     "emojibase": "^3.0.0 || ^4.0.0",

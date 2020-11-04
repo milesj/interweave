@@ -1,3 +1,5 @@
+/* eslint-disable react/require-default-props */
+
 import React from 'react';
 import { Presentation } from 'emojibase';
 import { CONTEXT_CLASSNAMES, CONTEXT_MESSAGES } from '../src/constants';

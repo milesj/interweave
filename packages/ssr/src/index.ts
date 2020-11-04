@@ -20,12 +20,13 @@ declare global {
   // eslint-disable-next-line @typescript-eslint/no-namespace
   namespace NodeJS {
     interface Global {
-      INTERWEAVE_SSR_POLYFILL: () => Document | undefined;
+      INTERWEAVE_SSR_POLYFILL: (() => Document | undefined) | undefined;
     }
   }
 }
 
 declare module 'parse5' {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   interface DefaultTreeNode {
     nodeType: number;
     textContent?: string;
@@ -69,7 +70,7 @@ const treeAdapter: TreeAdapter = {
   createCommentNode(data) {
     return {
       ...adapter.createCommentNode(data),
-      ndoeType: 8,
+      nodeType: 8,
     };
   },
   createElement(tagName, namespace, attrs) {

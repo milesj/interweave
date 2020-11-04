@@ -90,7 +90,7 @@ describe('Interweave', () => {
                 {p.children.toUpperCase()}
               </Element>
             ),
-            match: string => matchCodeTag(string, 'b'),
+            match: (string) => matchCodeTag(string, 'b'),
           },
         ]}
         content="Foo [b] Bar Baz"
@@ -120,7 +120,7 @@ describe('Interweave', () => {
 
   it('allows empty `content` to be passed when using callbacks', () => {
     const { root } = render<InterweaveProps>(
-      <Interweave content={null} onBeforeParse={value => value} />,
+      <Interweave content={null} onBeforeParse={(value) => value} />,
     );
 
     expect(root.findAt(Element, 0)).toMatchSnapshot();
@@ -152,7 +152,7 @@ describe('Interweave', () => {
     it('can modify the markup using onBeforeParse', () => {
       const { root } = render<InterweaveProps>(
         <Interweave
-          onBeforeParse={content => content.replace(/b>/g, 'i>')}
+          onBeforeParse={(content) => content.replace(/b>/g, 'i>')}
           content={'Foo <b>Bar</b> Baz'}
         />,
       );
@@ -163,7 +163,7 @@ describe('Interweave', () => {
     it('can modify the tree using onAfterParse', () => {
       const { root } = render<InterweaveProps>(
         <Interweave
-          onAfterParse={content => {
+          onAfterParse={(content) => {
             content.push(
               <Element tagName="u" key="1">
                 Qux
@@ -290,7 +290,7 @@ describe('Interweave', () => {
     });
 
     afterEach(() => {
-      delete global.INTERWEAVE_SSR_POLYFILL;
+      global.INTERWEAVE_SSR_POLYFILL = undefined;
 
       implSpy.mockRestore();
     });

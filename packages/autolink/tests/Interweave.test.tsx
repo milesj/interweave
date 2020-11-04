@@ -83,7 +83,7 @@ Curabitur lectus odio, tempus quis velit vitae, cursus sagittis nulla. Maecenas 
     });
 
     afterEach(() => {
-      delete global.INTERWEAVE_SSR_POLYFILL;
+      global.INTERWEAVE_SSR_POLYFILL = undefined;
 
       implSpy.mockRestore();
     });

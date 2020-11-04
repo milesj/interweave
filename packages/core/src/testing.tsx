@@ -53,7 +53,7 @@ export const VALID_EMOJIS = [
 
 export function createExpectedToken<T>(
   value: T,
-  factory: (value: T, count: number) => React.ReactNode,
+  factory: (val: T, count: number) => React.ReactNode,
   index: number,
   join: boolean = false,
 ): React.ReactNode | string {
@@ -64,7 +64,7 @@ export function createExpectedToken<T>(
   let count = -1;
   const tokens = TOKEN_LOCATIONS[index]
     .split(/({token})/)
-    .map(row => {
+    .map((row) => {
       if (row === '{token}') {
         count += 1;
 
@@ -177,7 +177,7 @@ export class MarkdownBoldMatcher extends Matcher<any> {
   }
 
   match(value: string) {
-    return this.doMatch(value, /\*\*([^*]+)\*\*/u, matches => ({ match: matches[1] }));
+    return this.doMatch(value, /\*\*([^*]+)\*\*/u, (matches) => ({ match: matches[1] }));
   }
 }
 
@@ -191,7 +191,7 @@ export class MarkdownItalicMatcher extends Matcher<any> {
   }
 
   match(value: string) {
-    return this.doMatch(value, /_([^_]+)_/u, matches => ({ match: matches[1] }));
+    return this.doMatch(value, /_([^_]+)_/u, (matches) => ({ match: matches[1] }));
   }
 }
 
