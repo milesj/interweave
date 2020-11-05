@@ -18,7 +18,7 @@ describe('components/Hashtag', () => {
 
   it('can define the URL with a function', () => {
     const { root } = render<HashtagProps>(
-      <Hashtag hashtag="#interweave" hashtagUrl={tag => `http://foo.com/${tag.toUpperCase()}`}>
+      <Hashtag hashtag="#interweave" hashtagUrl={(tag) => `http://foo.com/${tag.toUpperCase()}`}>
         #interweave
       </Hashtag>,
     );

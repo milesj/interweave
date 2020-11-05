@@ -84,7 +84,7 @@ export default class EmojiMatcher extends Matcher<EmojiProps, EmojiMatcherOption
     const response = this.doMatch<EmojiMatch>(
       string,
       EMOTICON_BOUNDARY_REGEX,
-      matches => ({
+      (matches) => ({
         emoticon: matches[0].trim(),
       }),
       true,
@@ -104,7 +104,7 @@ export default class EmojiMatcher extends Matcher<EmojiProps, EmojiMatcherOption
     const response = this.doMatch<EmojiMatch>(
       string,
       SHORTCODE_REGEX,
-      matches => ({
+      (matches) => ({
         shortcode: matches[0].toLowerCase(),
       }),
       true,
@@ -123,7 +123,7 @@ export default class EmojiMatcher extends Matcher<EmojiProps, EmojiMatcherOption
     const response = this.doMatch<EmojiMatch>(
       string,
       EMOJI_REGEX,
-      matches => ({
+      (matches) => ({
         unicode: matches[0],
       }),
       true,
@@ -201,7 +201,7 @@ export default class EmojiMatcher extends Matcher<EmojiProps, EmojiMatcherOption
       return content;
     }
 
-    return content.map(item => {
+    return content.map((item) => {
       if (!item || typeof item === 'string') {
         return item;
       }

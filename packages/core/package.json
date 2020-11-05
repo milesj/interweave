@@ -40,11 +40,11 @@
     "prop-types": "^15.7.2"
   },
   "peerDependencies": {
-    "react": "^16.8.0"
+    "react": "^16.8.0 || ^17.0.0"
   },
   "devDependencies": {
     "interweave-ssr": "^1.1.0",
-    "react": "^16.13.1"
+    "react": "^17.0.1"
   },
   "funding": {
     "type": "ko-fi",

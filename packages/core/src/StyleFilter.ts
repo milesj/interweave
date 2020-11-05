@@ -9,7 +9,7 @@ export default class StyleFilter extends Filter {
     value: ElementAttributes[K],
   ): ElementAttributes[K] {
     if (name === 'style') {
-      Object.keys(value).forEach(key => {
+      Object.keys(value).forEach((key) => {
         if (String(value[key]).match(INVALID_STYLES)) {
           // eslint-disable-next-line no-param-reassign
           delete value[key];

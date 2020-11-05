@@ -6,7 +6,7 @@ declare global {
   // eslint-disable-next-line @typescript-eslint/no-namespace
   namespace NodeJS {
     interface Global {
-      INTERWEAVE_SSR_POLYFILL: () => Document | undefined;
+      INTERWEAVE_SSR_POLYFILL: (() => Document | undefined) | undefined;
     }
   }
 }

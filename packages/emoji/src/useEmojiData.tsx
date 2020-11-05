@@ -52,7 +52,7 @@ function loadEmojis(locale: string, version: string, compact: boolean): Promise<
 
   promises.set(
     key,
-    request.then(response => {
+    request.then((response) => {
       const instance = EmojiDataManager.getInstance(locale);
 
       instance.parseEmojiData(response);
@@ -79,7 +79,7 @@ export default function useEmojiData({
 
     if (!avoidFetch) {
       loadEmojis(locale, version, compact)
-        .then(loadedEmojis => {
+        .then((loadedEmojis) => {
           if (mounted) {
             setEmojis(loadedEmojis);
           }

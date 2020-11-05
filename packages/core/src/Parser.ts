@@ -127,7 +127,7 @@ export default class Parser {
     let elementIndex = 0;
     let parts = null;
 
-    this.matchers.forEach(matcher => {
+    this.matchers.forEach((matcher) => {
       const tagName = matcher.asTag().toLowerCase();
       const config = this.getTagConfig(tagName);
 
@@ -303,7 +303,7 @@ export default class Parser {
       return null;
     }
 
-    Array.from(node.attributes).forEach(attr => {
+    Array.from(node.attributes).forEach((attr) => {
       const { name, value } = attr;
       const newName = name.toLowerCase();
       const filter = ATTRIBUTES[newName] || ATTRIBUTES[name];
@@ -362,7 +362,7 @@ export default class Parser {
   extractStyleAttribute(node: HTMLElement): object {
     const styles: { [key: string]: string | number } = {};
 
-    Array.from(node.style).forEach(key => {
+    Array.from(node.style).forEach((key) => {
       const value = node.style[key as keyof CSSStyleDeclaration];
 
       if (typeof value === 'string' || typeof value === 'number') {
@@ -463,7 +463,7 @@ export default class Parser {
     let content: Node[] = [];
     let mergedText = '';
 
-    Array.from(parentNode.childNodes).forEach(node => {
+    Array.from(parentNode.childNodes).forEach((node) => {
       // Create React elements from HTML elements
       if (node.nodeType === ELEMENT_NODE) {
         const tagName = node.nodeName.toLowerCase();

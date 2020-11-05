@@ -27,7 +27,7 @@ describe('matchers/HashtagMatcher', () => {
   const pattern = new RegExp(`^${HASHTAG_PATTERN.source}$`, 'i');
 
   describe('does match valid hashtag:', () => {
-    VALID_HASHTAGS.forEach(hashtag => {
+    VALID_HASHTAGS.forEach((hashtag) => {
       it(`${hashtag}`, () => {
         const expected: RegExpMatchArray = [hashtag, hashtag.slice(1)];
         expected.index = 0;
@@ -39,7 +39,7 @@ describe('matchers/HashtagMatcher', () => {
   });
 
   describe('doesnt match invalid hashtag:', () => {
-    INVALID_HASHTAGS.forEach(hashtag => {
+    INVALID_HASHTAGS.forEach((hashtag) => {
       it(`${hashtag}`, () => {
         expect(hashtag.match(pattern)).toBeNull();
       });
@@ -55,7 +55,7 @@ describe('matchers/HashtagMatcher', () => {
         key,
       });
 
-    VALID_HASHTAGS.forEach(hashtag => {
+    VALID_HASHTAGS.forEach((hashtag) => {
       TOKEN_LOCATIONS.forEach((location, i) => {
         it(`for: ${hashtag} - ${location}`, () => {
           parser.keyIndex = -1; // Reset for easier testing

@@ -16,7 +16,7 @@ export default class EmailMatcher extends Matcher<EmailProps> {
   }
 
   match(string: string): MatchResponse<EmailMatch> | null {
-    return this.doMatch(string, EMAIL_PATTERN, matches => ({
+    return this.doMatch(string, EMAIL_PATTERN, (matches) => ({
       email: matches[0],
       emailParts: {
         host: matches[2],

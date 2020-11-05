@@ -173,7 +173,7 @@ describe('matchers/UrlMatcher', () => {
   });
 
   describe('does match valid url:', () => {
-    VALID_URLS.forEach(urlParams => {
+    VALID_URLS.forEach((urlParams) => {
       const { url, ...params } = urlParams;
 
       it(`${url}`, () => {
@@ -199,7 +199,7 @@ describe('matchers/UrlMatcher', () => {
   });
 
   describe('doesnt match invalid url:', () => {
-    INVALID_URLS.forEach(urlParams => {
+    INVALID_URLS.forEach((urlParams) => {
       const { url } = urlParams;
 
       it(`${url}`, () => {
@@ -230,7 +230,7 @@ describe('matchers/UrlMatcher', () => {
       });
     };
 
-    VALID_URLS.forEach(urlParams => {
+    VALID_URLS.forEach((urlParams) => {
       TOKEN_LOCATIONS.forEach((location, i) => {
         it(`for: ${urlParams.url} - ${location}`, () => {
           parser.keyIndex = -1; // Reset for easier testing

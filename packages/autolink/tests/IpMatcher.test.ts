@@ -63,7 +63,7 @@ describe('matchers/IpMatcher', () => {
   });
 
   describe('does match valid ip:', () => {
-    VALID_IPS.forEach(ipParams => {
+    VALID_IPS.forEach((ipParams) => {
       const { ip, ...params } = ipParams;
 
       it(`${ip}`, () => {
@@ -88,7 +88,7 @@ describe('matchers/IpMatcher', () => {
   });
 
   describe('doesnt match invalid ip:', () => {
-    INVALID_IPS.forEach(ipParams => {
+    INVALID_IPS.forEach((ipParams) => {
       const { ip } = ipParams;
 
       it(`${ip}`, () => {
@@ -119,7 +119,7 @@ describe('matchers/IpMatcher', () => {
       });
     };
 
-    VALID_IPS.forEach(ipParams => {
+    VALID_IPS.forEach((ipParams) => {
       TOKEN_LOCATIONS.forEach((location, i) => {
         it(`for: ${ipParams.ip} - ${location}`, () => {
           parser.keyIndex = -1; // Reset for easier testing

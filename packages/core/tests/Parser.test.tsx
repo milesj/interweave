@@ -38,14 +38,14 @@ describe('Parser', () => {
   });
 
   it('parses when passed an empty value', () => {
-    [null, false, undefined, '', 0].forEach(value => {
+    [null, false, undefined, '', 0].forEach((value) => {
       // @ts-expect-error
       expect(new Parser(value).parse()).toEqual([]);
     });
   });
 
   it('errors for a non-string value', () => {
-    [123, 456.78, true, [], {}].forEach(value => {
+    [123, 456.78, true, [], {}].forEach((value) => {
       // @ts-expect-error
       expect(() => new Parser(value)).toThrow('Interweave parser requires a valid string.');
     });
@@ -134,13 +134,13 @@ describe('Parser', () => {
           const tokenString = location.replace(/{token}/g, '[qux]');
           const actual = instance.applyMatchers(tokenString, parentConfig);
 
-          expect(actual).toBe(createExpectedToken('[qux]', value => value, i, true));
+          expect(actual).toBe(createExpectedToken('[qux]', (value) => value, i, true));
         });
       });
     });
 
     describe('ignores matcher if the inverse prop is enabled', () => {
-      TOKEN_LOCATIONS.forEach(location => {
+      TOKEN_LOCATIONS.forEach((location) => {
         it(`for: ${location}`, () => {
           // @ts-expect-error
           instance.props.noFoo = true;
@@ -264,7 +264,7 @@ describe('Parser', () => {
       expect(instance.extractAttributes(document.createComment('Comment'))).toBeNull();
     });
 
-    Object.keys(ATTRIBUTES).forEach(name => {
+    Object.keys(ATTRIBUTES).forEach((name) => {
       const attrName = ATTRIBUTES_TO_PROPS[name] || name;
 
       switch (ATTRIBUTES[name]) {

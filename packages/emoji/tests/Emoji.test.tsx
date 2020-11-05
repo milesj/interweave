@@ -98,7 +98,7 @@ describe('Emoji', () => {
         emojiSource={SOURCE_PROP}
         shortcode={shortcode}
         unicode={unicode}
-        emojiPath={hex => `http://foo.com/path/to/${hex.toLowerCase()}.svg`}
+        emojiPath={(hex) => `http://foo.com/path/to/${hex.toLowerCase()}.svg`}
       />,
     );
     const img = root.findOne('img');

@@ -1,3 +1,9 @@
+## 4.3.0 - 2020-11-04
+
+#### 🚀 Updates
+
+- Added support for React 17.
+
 ### 4.1.2 - 2020-03-01
 
 #### 📦 Dependencies

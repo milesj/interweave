@@ -3,7 +3,7 @@ import { render } from 'rut-dom';
 import SearchBar, { SearchBarProps } from '../src/SearchBar';
 import { ContextWrapper } from './mocks';
 
-jest.mock('lodash/debounce', () => jest.fn(fn => fn));
+jest.mock('lodash/debounce', () => jest.fn((fn) => fn));
 
 describe('SearchBar', () => {
   const props: SearchBarProps = {

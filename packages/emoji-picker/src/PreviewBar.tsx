@@ -13,7 +13,7 @@ export interface PreviewBarProps {
 
 // Format the title using sentence case.
 function formatTitle(title: string): string {
-  return title.replace(TITLE_REGEX, token => token.toUpperCase());
+  return title.replace(TITLE_REGEX, (token) => token.toUpperCase());
 }
 
 // eslint-disable-next-line complexity

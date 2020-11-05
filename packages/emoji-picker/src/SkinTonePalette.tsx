@@ -17,7 +17,7 @@ export default function SkinTonePalette({ activeSkinTone, icons, onSelect }: Ski
   return (
     <nav className={classNames.skinTones}>
       <ul className={classNames.skinTonesList}>
-        {SKIN_TONES.map(skinTone => (
+        {SKIN_TONES.map((skinTone) => (
           <li key={skinTone}>
             <SkinTone active={activeSkinTone === skinTone} skinTone={skinTone} onSelect={onSelect}>
               {icons[skinTone] || icons[camelCase(skinTone)] || null}

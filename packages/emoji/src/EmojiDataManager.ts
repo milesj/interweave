@@ -81,19 +81,19 @@ export default class EmojiDataManager {
     }
 
     // Canonicalize the shortcodes for easy reuse
-    emoji.canonical_shortcodes = shortcodes.map(code => `:${code}:`);
+    emoji.canonical_shortcodes = shortcodes.map((code) => `:${code}:`);
 
     // eslint-disable-next-line prefer-destructuring
     emoji.primary_shortcode = emoji.canonical_shortcodes[0];
 
     // Support all shortcodes
-    emoji.canonical_shortcodes.forEach(shortcode => {
+    emoji.canonical_shortcodes.forEach((shortcode) => {
       this.SHORTCODE_TO_HEXCODE[shortcode] = hexcode;
     });
 
     // Support all emoticons
     if (emoticon) {
-      generateEmoticonPermutations(emoticon, EMOTICON_OPTIONS[emoticon]).forEach(emo => {
+      generateEmoticonPermutations(emoticon, EMOTICON_OPTIONS[emoticon]).forEach((emo) => {
         this.EMOTICON_TO_HEXCODE[emo] = hexcode;
       });
     }
@@ -114,7 +114,7 @@ export default class EmojiDataManager {
 
     // Apply same logic to all variations
     if (baseEmoji.skins) {
-      emoji.skins = baseEmoji.skins.map(skinEmoji => this.packageEmoji(skinEmoji));
+      emoji.skins = baseEmoji.skins.map((skinEmoji) => this.packageEmoji(skinEmoji));
     }
 
     return emoji;
@@ -124,7 +124,7 @@ export default class EmojiDataManager {
    * Parse and generate emoji datasets.
    */
   parseEmojiData(data: Emoji[]): CanonicalEmoji[] {
-    data.forEach(emoji => {
+    data.forEach((emoji) => {
       const packagedEmoji = this.packageEmoji(emoji);
 
       this.data.push(packagedEmoji);
@@ -132,7 +132,7 @@ export default class EmojiDataManager {
 
       // Flatten and package skins as well
       if (packagedEmoji.skins) {
-        packagedEmoji.skins.forEach(skin => {
+        packagedEmoji.skins.forEach((skin) => {
           this.flatData.push(this.packageEmoji(skin));
         });
       }
