@@ -4,6 +4,10 @@
 
 - Added support for React 17.
 
+#### 🐞 Fixes
+
+- Fix email patterns containing periods.
+
 ### 4.1.2 - 2020-03-01
 
 #### 📦 Dependencies

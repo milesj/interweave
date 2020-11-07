@@ -150,18 +150,10 @@ export const HASHTAG_PATTERN = combinePatterns(
   },
 );
 
-export const EMAIL_USERNAME_PART = /[a-z0-9!#$%&?*+=_{|}~-]+/;
+export const EMAIL_USERNAME_PART = /[.a-z0-9!#$%&?*+=_{|}~-]+/;
 
 export const EMAIL_USERNAME = combinePatterns(
-  [
-    VALID_ALNUM_CHARS,
-    EMAIL_USERNAME_PART,
-    VALID_ALNUM_CHARS,
-    combinePatterns([/\./, VALID_ALNUM_CHARS, EMAIL_USERNAME_PART, VALID_ALNUM_CHARS], {
-      match: '?',
-      nonCapture: true,
-    }),
-  ],
+  [VALID_ALNUM_CHARS, EMAIL_USERNAME_PART, VALID_ALNUM_CHARS],
   {
     capture: true,
   },

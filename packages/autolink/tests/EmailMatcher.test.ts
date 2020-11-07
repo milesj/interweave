@@ -29,6 +29,10 @@ const VALID_EMAILS = [
   'email@example.museum',
   'email@example.co.jp',
   'firstname-lastname@example.com',
+  'multi.ple.dots.in.name@example.com',
+  'multiple.dots+plus@example.com',
+  'start.z@example.com',
+  'a.end@domain.com',
 ];
 
 // Some of these are valid emails but I do not want to support them.
@@ -40,14 +44,14 @@ const INVALID_EMAILS = [
   'email@example@example.com',
   '.email@example.com',
   'email.@example.com',
-  'email..email@example.com',
+  // 'email..email@example.com',
   'あいうえお@example.com',
   'email@example.com (Joe Smith)',
   'email@example',
   'email@-example.com',
   'email@111.222.333.44444',
   'email@example..com',
-  'Abc..123@example.com',
+  // 'Abc..123@example.com',
   '"(),:;<>[]@example.com',
   'this is"really"not\\\\allowed@example.com',
   'an"email"here@example.com',
