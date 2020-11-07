@@ -11,6 +11,8 @@ const VALID_HASHTAGS = [
   '#with_multiple_underscores',
   '#with_VaryIng-casEs-and-90123-numbers',
   '#1234567',
+  '#with-trail-underscore_',
+  '#with-trail-dash-',
 ];
 
 const INVALID_HASHTAGS = [

@@ -7,6 +7,7 @@
 #### 🐞 Fixes
 
 - Fix email patterns containing periods.
+- Fix hashtag patterns to allow trailing dashes and underscores.
 
 ### 4.1.2 - 2020-03-01
 

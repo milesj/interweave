@@ -141,7 +141,7 @@ export const IP_PATTERN = combinePatterns(
 export const HASHTAG_PATTERN = combinePatterns(
   [
     /#/,
-    combinePatterns([VALID_ALNUM_CHARS, /[-a-z0-9_]*/, VALID_ALNUM_CHARS], {
+    combinePatterns([VALID_ALNUM_CHARS, /[-a-z0-9_]*/], {
       capture: true,
     }),
   ],
