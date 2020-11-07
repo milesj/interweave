@@ -14,7 +14,7 @@
     "@docusaurus/core": "^2.0.0-alpha.61",
     "@docusaurus/module-type-aliases": "^2.0.0-alpha.61",
     "@docusaurus/preset-classic": "^2.0.0-alpha.61",
-    "@mdx-js/react": "^1.5.8",
+    "@mdx-js/react": "^1.6.19",
     "clsx": "^1.1.1",
     "interweave": "file:../packages/core",
     "react": "^16.8.4",
