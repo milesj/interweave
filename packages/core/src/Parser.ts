@@ -37,7 +37,7 @@ const OPEN_TOKEN = /{{{(\w+)\/?}}}/;
 
 function createDocument() {
   // Maybe SSR? Just do nothing instead of crashing!
-  if (typeof window === 'undefined' || typeof document === 'undefined') {
+  if (typeof document === 'undefined') {
     return undefined;
   }
 
