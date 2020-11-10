@@ -7,9 +7,9 @@
 Polyfills parts of the DOM so that Interweave can be server-side rendered.
 
 ```ts
-import { polyfillDOMImplementation } from 'interweave-ssr';
+import { polyfill } from 'interweave-ssr';
 
-polyfillDOMImplementation();
+polyfill();
 ```
 
 ## Installation
