@@ -23,5 +23,12 @@
   "funding": {
     "type": "ko-fi",
     "url": "https://ko-fi.com/milesjohnson"
+  },
+  "packemon": {
+    "platform": "node"
+  },
+  "engines": {
+    "node": ">=10.3.0",
+    "npm": ">=6.1.0"
   }
 }

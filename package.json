@@ -4,6 +4,9 @@
   "version": "0.0.0",
   "scripts": {
     "prepare": "beemo create-config --silent",
+    "build": "packemon build --addEngines",
+    "pack": "NODE_ENV=production packemon pack --addEngines --declaration=standard",
+    "clean": "packemon clean",
     "coverage": "yarn run jest --coverage",
     "lint": "beemo eslint",
     "jest": "beemo jest",
@@ -12,7 +15,7 @@
     "test": "yarn run jest",
     "test:bundle": "yarn run build && beemo create-config typescript && webpack && serve ./tests/",
     "format": "beemo prettier",
-    "prerelease": "yarn run clean && yarn run build && yarn test",
+    "prerelease": "yarn run pack && yarn test",
     "release": "lerna publish",
     "release:docs": "cd website && yarn deploy",
     "type": "beemo typescript --reference-workspaces --build"
@@ -34,6 +37,7 @@
     "eslint-plugin-rut": "^2.0.0",
     "jest-rut": "^2.0.0",
     "lerna": "^3.22.1",
+    "packemon": "^0.10.1",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "regenerator-runtime": "^0.13.7",

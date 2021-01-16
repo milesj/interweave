@@ -49,5 +49,12 @@
   "funding": {
     "type": "ko-fi",
     "url": "https://ko-fi.com/milesjohnson"
+  },
+  "packemon": {
+    "inputs": {
+      "index": "src/index.ts",
+      "test": "src/testing.tsx"
+    },
+    "platform": "browser"
   }
 }
