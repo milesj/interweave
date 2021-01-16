@@ -1,7 +1,7 @@
 import { Parser } from 'interweave';
-import { TOKEN_LOCATIONS, createExpectedToken, parentConfig } from 'interweave/lib/testing';
-import UrlMatcher from '../src/UrlMatcher';
+import { createExpectedToken, parentConfig, TOKEN_LOCATIONS } from 'interweave/lib/testing';
 import { URL_PATTERN } from '../src/constants';
+import UrlMatcher from '../src/UrlMatcher';
 
 interface URLParams {
   url: string;

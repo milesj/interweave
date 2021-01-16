@@ -1,8 +1,8 @@
 import React from 'react';
-import { Matcher, MatchResponse, Node, ChildrenNode } from 'interweave';
+import { ChildrenNode, Matcher, MatchResponse, Node } from 'interweave';
+import { EMAIL_DISTINCT_PATTERN, TOP_LEVEL_TLDS, URL_PATTERN } from './constants';
+import { UrlMatcherOptions, UrlProps } from './types';
 import Url from './Url';
-import { URL_PATTERN, TOP_LEVEL_TLDS, EMAIL_DISTINCT_PATTERN } from './constants';
-import { UrlProps, UrlMatcherOptions } from './types';
 
 export type UrlMatch = Pick<UrlProps, 'url' | 'urlParts'>;
 

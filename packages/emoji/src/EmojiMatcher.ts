@@ -1,11 +1,11 @@
 import React from 'react';
-import { Matcher, MatchResponse, Node, ChildrenNode } from 'interweave';
 import EMOJI_REGEX from 'emojibase-regex';
 import EMOTICON_REGEX from 'emojibase-regex/emoticon';
 import SHORTCODE_REGEX from 'emojibase-regex/shortcode';
+import { ChildrenNode, Matcher, MatchResponse, Node } from 'interweave';
 import Emoji from './Emoji';
 import EmojiDataManager from './EmojiDataManager';
-import { EmojiProps, EmojiMatcherOptions, EmojiMatch } from './types';
+import { EmojiMatch, EmojiMatcherOptions, EmojiProps } from './types';
 
 const EMOTICON_BOUNDARY_REGEX = new RegExp(
   // eslint-disable-next-line no-useless-escape

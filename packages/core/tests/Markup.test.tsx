@@ -1,7 +1,7 @@
 import React from 'react';
 import { render } from 'rut-dom';
-import Markup from '../src/Markup';
 import Element from '../src/Element';
+import Markup from '../src/Markup';
 import { MOCK_MARKUP } from '../src/testing';
 import { MarkupProps } from '../src/types';
 

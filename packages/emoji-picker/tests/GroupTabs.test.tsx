@@ -1,12 +1,12 @@
 import React from 'react';
-import { render, DomElement } from 'rut-dom';
+import { DomElement, render } from 'rut-dom';
 import {
-  GROUPS,
-  GROUP_KEY_NONE,
   COMMON_MODE_FREQUENT,
   GROUP_KEY_ACTIVITIES,
-  GROUP_KEY_COMMONLY_USED,
   GROUP_KEY_ANIMALS_NATURE,
+  GROUP_KEY_COMMONLY_USED,
+  GROUP_KEY_NONE,
+  GROUPS,
 } from '../src/constants';
 import Group from '../src/Group';
 import GroupTabs, { GroupTabsProps } from '../src/GroupTabs';

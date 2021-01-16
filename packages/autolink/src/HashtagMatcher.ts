@@ -1,7 +1,7 @@
 import React from 'react';
-import { Matcher, MatchResponse, Node, ChildrenNode } from 'interweave';
-import Hashtag from './Hashtag';
+import { ChildrenNode, Matcher, MatchResponse, Node } from 'interweave';
 import { HASHTAG_PATTERN } from './constants';
+import Hashtag from './Hashtag';
 import { HashtagProps } from './types';
 
 export type HashtagMatch = Pick<HashtagProps, 'hashtag'>;

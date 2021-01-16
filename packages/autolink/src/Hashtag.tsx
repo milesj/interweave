@@ -24,11 +24,7 @@ export default function Hashtag({
   // Determine the URL
   let url = hashtagUrl || '{{hashtag}}';
 
-  if (typeof url === 'function') {
-    url = url(tag);
-  } else {
-    url = url.replace('{{hashtag}}', tag);
-  }
+  url = typeof url === 'function' ? url(tag) : url.replace('{{hashtag}}', tag);
 
   return (
     <Link {...props} href={url}>

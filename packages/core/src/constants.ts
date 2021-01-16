@@ -1,6 +1,6 @@
 /* eslint-disable no-bitwise, no-magic-numbers, sort-keys */
 
-import { NodeConfig, ConfigMap, FilterMap } from './types';
+import { ConfigMap, FilterMap, NodeConfig } from './types';
 
 // https://developer.mozilla.org/en-US/docs/Web/Guide/HTML/Content_categories
 export const TYPE_FLOW = 1;

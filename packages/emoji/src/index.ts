@@ -8,7 +8,7 @@ import EmojiDataManager from './EmojiDataManager';
 import EmojiMatcher from './EmojiMatcher';
 import useEmojiData from './useEmojiData';
 
-export { Emoji, EmojiMatcher, EmojiDataManager, useEmojiData };
+export { Emoji, EmojiDataManager, EmojiMatcher, useEmojiData };
 
 export * from './constants';
 export * from './types';

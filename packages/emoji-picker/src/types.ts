@@ -1,5 +1,5 @@
-import { Hexcode, GroupKey as BaseGroupKey, SkinToneKey as BaseSkinToneKey } from 'emojibase';
-import { CanonicalEmoji, Path, Source, EmojiDataManager } from 'interweave-emoji';
+import { GroupKey as BaseGroupKey, Hexcode, SkinToneKey as BaseSkinToneKey } from 'emojibase';
+import { CanonicalEmoji, EmojiDataManager, Path, Source } from 'interweave-emoji';
 
 export interface CommonEmoji {
   count: number;

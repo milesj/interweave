@@ -1,7 +1,7 @@
 import { Parser } from 'interweave';
-import { TOKEN_LOCATIONS, createExpectedToken, parentConfig } from 'interweave/lib/testing';
-import IpMatcher from '../src/IpMatcher';
+import { createExpectedToken, parentConfig, TOKEN_LOCATIONS } from 'interweave/lib/testing';
 import { IP_PATTERN } from '../src/constants';
+import IpMatcher from '../src/IpMatcher';
 
 interface IPParams {
   ip: string;

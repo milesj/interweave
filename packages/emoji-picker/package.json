@@ -20,7 +20,7 @@
   "repository": "https://github.com/milesj/interweave/tree/master/packages/emoji-picker",
   "license": "MIT",
   "dependencies": {
-    "@types/react": "*",
+    "@types/react": "17.0.0",
     "@types/react-window": "*",
     "lodash": "^4.17.20",
     "prop-types": "^15.7.2",

@@ -3,15 +3,15 @@
  * @license     https://opensource.org/licenses/MIT
  */
 
+import Element from './Element';
+import Filter from './Filter';
 import Interweave from './Interweave';
 import Markup from './Markup';
-import Filter from './Filter';
-import Matcher from './Matcher';
-import Element from './Element';
-import Parser from './Parser';
 import match from './match';
+import Matcher from './Matcher';
+import Parser from './Parser';
 
-export { Markup, Filter, Matcher, Element, Parser, match };
+export { Element, Filter, Markup, match, Matcher, Parser };
 
 export * from './constants';
 export * from './types';

@@ -1,7 +1,7 @@
 import { Parser } from 'interweave';
-import { TOKEN_LOCATIONS, createExpectedToken, parentConfig } from 'interweave/lib/testing';
-import EmailMatcher from '../src/EmailMatcher';
+import { createExpectedToken, parentConfig, TOKEN_LOCATIONS } from 'interweave/lib/testing';
 import { EMAIL_PATTERN } from '../src/constants';
+import EmailMatcher from '../src/EmailMatcher';
 
 const VALID_EMAILS = [
   'user@domain.com',

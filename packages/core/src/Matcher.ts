@@ -1,6 +1,6 @@
 import React from 'react';
 import match from './match';
-import { MatchCallback, MatchResponse, Node, ChildrenNode, MatcherInterface } from './types';
+import { ChildrenNode, MatchCallback, MatcherInterface, MatchResponse, Node } from './types';
 
 export default abstract class Matcher<Props extends object = {}, Options extends object = {}>
   implements MatcherInterface<Props> {
@@ -35,11 +35,9 @@ export default abstract class Matcher<Props extends object = {}, Options extends
   createElement(children: ChildrenNode, props: Props): Node {
     let element: Node = null;
 
-    if (this.factory) {
-      element = React.createElement(this.factory, props, children);
-    } else {
-      element = this.replaceWith(children, props);
-    }
+    element = this.factory
+      ? React.createElement(this.factory, props, children)
+      : this.replaceWith(children, props);
 
     if (__DEV__) {
       if (typeof element !== 'string' && !React.isValidElement(element)) {

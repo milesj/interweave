@@ -1,6 +1,4 @@
 import React from 'react';
-import Parser from '../src/Parser';
-import Element from '../src/Element';
 import {
   ATTRIBUTES,
   ATTRIBUTES_TO_PROPS,
@@ -8,13 +6,15 @@ import {
   FILTER_CAST_BOOL,
   FILTER_CAST_NUMBER,
 } from '../src/constants';
+import Element from '../src/Element';
+import Parser from '../src/Parser';
 import {
   CodeTagMatcher,
-  LinkFilter,
   createExpectedToken,
+  LinkFilter,
+  MOCK_MARKUP,
   parentConfig,
   TOKEN_LOCATIONS,
-  MOCK_MARKUP,
 } from '../src/testing';
 
 function createChild(tag: string, text: string | number): HTMLElement {

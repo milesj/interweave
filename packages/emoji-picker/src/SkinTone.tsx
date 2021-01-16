@@ -2,8 +2,8 @@ import React, { useContext } from 'react';
 import camelCase from 'lodash/camelCase';
 import upperFirst from 'lodash/upperFirst';
 import { SKIN_COLORS } from './constants';
-import { SkinToneKey } from './types';
 import Context from './Context';
+import { SkinToneKey } from './types';
 
 export interface SkinToneProps {
   active: boolean;

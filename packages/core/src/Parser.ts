@@ -2,31 +2,31 @@
 
 import React from 'react';
 import escapeHtml from 'escape-html';
-import Element from './Element';
-import StyleFilter from './StyleFilter';
 import {
-  FILTER_DENY,
-  FILTER_CAST_NUMBER,
-  FILTER_CAST_BOOL,
-  FILTER_NO_CAST,
-  TAGS,
-  BANNED_TAG_LIST,
   ALLOWED_TAG_LIST,
   ATTRIBUTES,
   ATTRIBUTES_TO_PROPS,
+  BANNED_TAG_LIST,
+  FILTER_CAST_BOOL,
+  FILTER_CAST_NUMBER,
+  FILTER_DENY,
+  FILTER_NO_CAST,
+  TAGS,
 } from './constants';
+import Element from './Element';
+import StyleFilter from './StyleFilter';
 import {
   Attributes,
-  Node,
-  NodeConfig,
   AttributeValue,
   ChildrenNode,
-  ParserProps,
-  MatcherElementsMap,
+  ElementAttributes,
   ElementProps,
   FilterInterface,
-  ElementAttributes,
+  MatcherElementsMap,
   MatcherInterface,
+  Node,
+  NodeConfig,
+  ParserProps,
 } from './types';
 
 const ELEMENT_NODE = 1;
@@ -157,11 +157,9 @@ export default class Parser {
         }
 
         if (valid) {
-          if (isVoid) {
-            tokenizedString += `{{{${tokenName}/}}}`;
-          } else {
-            tokenizedString += `{{{${tokenName}}}}${match}{{{/${tokenName}}}}`;
-          }
+          tokenizedString += isVoid
+            ? `{{{${tokenName}/}}}`
+            : `{{{${tokenName}}}}${match}{{{/${tokenName}}}}`;
 
           this.keyIndex += 1;
 
@@ -185,6 +183,7 @@ export default class Parser {
           matchedString = tokenizedString + matchedString.slice(index + length);
           tokenizedString = '';
         } else {
+          // eslint-disable-next-line unicorn/explicit-length-check
           matchedString = matchedString.slice(index + (length || match.length));
         }
       }
@@ -318,8 +317,7 @@ export default class Parser {
       if (!newName.match(ALLOWED_ATTRS)) {
         if (
           (!allowAttributes && (!filter || filter === FILTER_DENY)) ||
-          // eslint-disable-next-line unicorn/prefer-starts-ends-with
-          newName.match(/^on/) ||
+          newName.startsWith('on') ||
           value.replace(/(\s|\0|&#x0([9AD]);)/, '').match(/(javascript|vbscript|livescript|xss):/i)
         ) {
           return;

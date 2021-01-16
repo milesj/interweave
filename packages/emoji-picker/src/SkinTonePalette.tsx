@@ -1,9 +1,9 @@
 import React, { useContext } from 'react';
 import camelCase from 'lodash/camelCase';
-import SkinTone from './SkinTone';
 import { SKIN_TONES } from './constants';
-import { SkinToneKey } from './types';
 import Context from './Context';
+import SkinTone from './SkinTone';
+import { SkinToneKey } from './types';
 
 export interface SkinTonePaletteProps {
   activeSkinTone: SkinToneKey;

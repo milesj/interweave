@@ -1,4 +1,4 @@
-import { Emoji, Hexcode, Shortcode, Unicode, Emoticon } from 'emojibase';
+import { Emoji, Emoticon, Hexcode, Shortcode, Unicode } from 'emojibase';
 
 export interface CanonicalEmoji extends Emoji {
   canonical_shortcodes: Shortcode[];
