@@ -5121,15 +5121,15 @@ emoji-regex@^9.0.0:
   resolved "https://registry.yarnpkg.com/emoji-regex/-/emoji-regex-9.0.0.tgz#48a2309cc8a1d2e9d23bc6a67c39b63032e76ea4"
   integrity sha512-6p1NII1Vm62wni/VR/cUMauVQoxmLVb9csqQlvLz+hO2gk8U2UYDfXHQSUYIBKmZwAKz867IDqG7B+u0mj+M6w==
 
-emojibase-regex@^5.1.0:
-  version "5.1.0"
-  resolved "https://registry.yarnpkg.com/emojibase-regex/-/emojibase-regex-5.1.0.tgz#a1a4cf33dc4fc81146090c9447e91644e4f9d257"
-  integrity sha512-V/pU5d1smYqD6//J7yfrJLOmIH+oG51bUxGgdFSW6oDMghYKKFYp6+SKu3MZpWDzmKETZPka0Ah+f0ai92CN0A==
+emojibase-regex@^5.1.1:
+  version "5.1.1"
+  resolved "https://registry.yarnpkg.com/emojibase-regex/-/emojibase-regex-5.1.1.tgz#f2108121abd7b1413eab1130254d6babe0795a60"
+  integrity sha512-pMa8YszeFBQgRvZ95DRK7lVgjaRakJ1UkIdONjSY3O79kzIzDuSkZoypUvV62oYgm9AQ/7uYIKf42UGMed6oTA==
 
-emojibase-test-utils@^6.1.0:
-  version "6.1.0"
-  resolved "https://registry.yarnpkg.com/emojibase-test-utils/-/emojibase-test-utils-6.1.0.tgz#4eae0468767bcd327b807ea8c606a95e25cc5bdd"
-  integrity sha512-GU+K/pLkpzGcD0onRX0akMyELgbgE8o/OjTOkCt5P6fO0Fdcyv7dXzuPdK9pZMC4s6yJJjZhaUoTKKQPklJ4ow==
+emojibase-test-utils@^6.2.0:
+  version "6.2.0"
+  resolved "https://registry.yarnpkg.com/emojibase-test-utils/-/emojibase-test-utils-6.2.0.tgz#d0cc3b5ddb2a950ef8aa53058e66c20603b36fec"
+  integrity sha512-IvImKd6cpBUD1dqiAQmQol7kUMYfpgO+DlhOGW/7PQ6u7L7KFXTK0rkKfI/FYIMYx/+1s4RuOCA7gbuFtVxHjg==
 
 emojibase@^5.1.0:
   version "5.1.0"
@@ -9992,7 +9992,7 @@ regenerator-runtime@^0.11.0:
   resolved "https://registry.npmjs.org/regenerator-runtime/-/regenerator-runtime-0.11.1.tgz#be05ad7f9bf7d22e056f9726cee5017fbf19e2e9"
   integrity sha512-MguG95oij0fC3QV3URf4V2SDYGJhJnJGqvIIgdECeODCT98wSWDAJ94SSuVpYQUoTcGUIL6L4yNB7j1DFFHSBg==
 
-regenerator-runtime@^0.13.4, regenerator-runtime@^0.13.7:
+regenerator-runtime@^0.13.4:
   version "0.13.7"
   resolved "https://registry.yarnpkg.com/regenerator-runtime/-/regenerator-runtime-0.13.7.tgz#cac2dacc8a1ea675feaabaeb8ae833898ae46f55"
   integrity sha512-a54FxoJDIr27pgf7IgeQGxmqUNYrcV338lf/6gH456HZ/PhX+5BcwHXG9ajESmwe6WRO0tAzRUrRmNONWgkrew==

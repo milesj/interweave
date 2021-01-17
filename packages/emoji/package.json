@@ -24,7 +24,7 @@
   "license": "MIT",
   "dependencies": {
     "emojibase": "^5.1.0",
-    "emojibase-regex": "^5.1.0"
+    "emojibase-regex": "^5.1.1"
   },
   "peerDependencies": {
     "interweave": "^12.0.0",

@@ -5,6 +5,7 @@ import {
   fromHexcodeToCodepoint,
   generateEmoticonPermutations,
   Hexcode,
+  Locale,
   TEXT,
 } from 'emojibase';
 import { CanonicalEmoji } from './types';
@@ -30,16 +31,16 @@ export default class EmojiDataManager {
 
   flatData: CanonicalEmoji[] = [];
 
-  locale: string = 'en';
+  locale: Locale = 'en';
 
-  constructor(locale: string = 'en') {
+  constructor(locale: Locale = 'en') {
     this.locale = locale;
   }
 
   /**
    * Return or create a singleton instance per locale.
    */
-  static getInstance(locale: string = 'en'): EmojiDataManager {
+  static getInstance(locale: Locale = 'en'): EmojiDataManager {
     if (!instances.has(locale)) {
       instances.set(locale, new EmojiDataManager(locale));
     }
@@ -66,7 +67,7 @@ export default class EmojiDataManager {
    * while also extracting and partitioning relevant information.
    */
   packageEmoji(baseEmoji: Emoji): CanonicalEmoji {
-    const { emoticon, hexcode, shortcodes } = baseEmoji;
+    const { emoticon, hexcode, shortcodes = [] } = baseEmoji;
     const emoji: CanonicalEmoji = {
       ...baseEmoji,
       canonical_shortcodes: [],

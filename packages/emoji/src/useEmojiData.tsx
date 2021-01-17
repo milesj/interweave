@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 
-import { useEffect, useState } from 'react';
-import { Emoji, fetchFromCDN } from 'emojibase';
+import { useEffect, useMemo, useState } from 'react';
+import { fetchEmojis, Locale, ShortcodePreset } from 'emojibase';
 import { LATEST_DATASET_VERSION } from './constants';
 import EmojiDataManager from './EmojiDataManager';
 import { CanonicalEmoji, Source, UseEmojiDataOptions } from './types';
@@ -14,12 +14,13 @@ export function resetLoaded() {
   }
 }
 
-function loadEmojis(locale: string, version: string, compact: boolean): Promise<CanonicalEmoji[]> {
-  const set = compact ? 'compact' : 'data';
-  const key = `${locale}:${version}:${set}`;
-  const stubRequest =
-    (process.env.NODE_ENV === 'test' && !process.env.INTERWEAVE_ALLOW_FETCH_EMOJI) ||
-    typeof (global as any).fetch === 'undefined';
+function loadEmojis(
+  locale: Locale,
+  version: string,
+  shortcodes: (string | ShortcodePreset)[],
+  compact: boolean,
+): Promise<CanonicalEmoji[]> {
+  const key = `${locale}:${version}:${compact ? 'compact' : 'data'}`;
 
   // Return as we've already loaded or are loading data
   if (promises.has(key)) {
@@ -27,28 +28,8 @@ function loadEmojis(locale: string, version: string, compact: boolean): Promise<
   }
 
   // Otherwise, start loading emoji data from the CDN
-  let request: Promise<Emoji[]>;
-
-  if (stubRequest) {
-    let testData: Emoji[];
-
-    try {
-      // We must use a variable here, otherwise webpack attempts to include it in the bundle.
-      // If that happens and the module does not exist, it will throw a warning.
-      // https://github.com/webpack/webpack/issues/8826
-      // https://github.com/webpack/webpack/issues/4175
-      const requireFunc =
-        typeof __webpack_require__ === 'function' ? __non_webpack_require__ : require;
-
-      testData = requireFunc('emojibase-test-utils/test-data.json');
-    } catch {
-      testData = [];
-    }
-
-    request = Promise.resolve(testData);
-  } else {
-    request = fetchFromCDN<Emoji>(`${locale}/${set}.json`, version);
-  }
+  // @ts-expect-error
+  const request = fetchEmojis(locale, { compact, flat: false, shortcodes, version });
 
   promises.set(
     key,
@@ -68,9 +49,12 @@ export default function useEmojiData({
   avoidFetch = false,
   compact = false,
   locale = 'en',
+  shortcodes = ['emojibase', 'emojibase-legacy'],
   throwErrors = false,
   version = LATEST_DATASET_VERSION,
 }: UseEmojiDataOptions = {}): [CanonicalEmoji[], Source, EmojiDataManager] {
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const shortcodePresets = useMemo(() => shortcodes, shortcodes);
   const [emojis, setEmojis] = useState<CanonicalEmoji[]>([]);
   const [error, setError] = useState<Error>();
 
@@ -78,7 +62,7 @@ export default function useEmojiData({
     let mounted = true;
 
     if (!avoidFetch) {
-      loadEmojis(locale, version, compact)
+      loadEmojis(locale, version, shortcodePresets, compact)
         .then((loadedEmojis) => {
           if (mounted) {
             setEmojis(loadedEmojis);
@@ -92,7 +76,7 @@ export default function useEmojiData({
     return () => {
       mounted = false;
     };
-  }, [avoidFetch, compact, locale, version]);
+  }, [avoidFetch, compact, locale, shortcodePresets, version]);
 
   if (error && throwErrors) {
     throw error;

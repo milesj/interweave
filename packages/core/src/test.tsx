@@ -36,10 +36,10 @@ export const SOURCE_PROP = {
   compact: false,
   locale: 'en',
   version: 'latest',
-};
+} as const;
 
 export const VALID_EMOJIS = [
-  ['1F621', '😡', ':enraged:', '>:/'],
+  ['1F621', '😡', ':rage:', '>:/'],
   ['1F468-200D-1F469-200D-1F467-200D-1F466', '👨‍👩‍👧‍👦', ':family_mwgb:'],
   ['1F1FA-1F1F8', '🇺🇸', ':flag_us:'],
   ['1F63A', '😺', ':smiling_cat:'],

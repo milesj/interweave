@@ -4,6 +4,10 @@
 
 - Removed `emojibase` as a peer requirement.
 
+#### 🚀 Updates
+
+- Updated to support Emoji v13, which includes 117 new emojis.
+
 #### 📦 Dependencies
 
 - Updated `emojibase` to v5.
