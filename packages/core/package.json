@@ -40,9 +40,7 @@
   "author": "Miles Johnson",
   "license": "MIT",
   "dependencies": {
-    "@types/react": "17.0.0",
-    "escape-html": "^1.0.3",
-    "prop-types": "^15.7.2"
+    "escape-html": "^1.0.3"
   },
   "peerDependencies": {
     "react": "^16.8.0 || ^17.0.0"

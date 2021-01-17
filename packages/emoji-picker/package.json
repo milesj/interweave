@@ -25,10 +25,8 @@
   "author": "Miles Johnson",
   "license": "MIT",
   "dependencies": {
-    "@types/react": "17.0.0",
     "@types/react-window": "*",
     "lodash": "^4.17.20",
-    "prop-types": "^15.7.2",
     "react-window": "^1.8.6"
   },
   "peerDependencies": {

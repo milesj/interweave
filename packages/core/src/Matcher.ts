@@ -33,9 +33,7 @@ export default abstract class Matcher<Props extends object = {}, Options extends
    * or the default matcher factory.
    */
   createElement(children: ChildrenNode, props: Props): Node {
-    let element: Node = null;
-
-    element = this.factory
+    const element = this.factory
       ? React.createElement(this.factory, props, children)
       : this.replaceWith(children, props);
 
