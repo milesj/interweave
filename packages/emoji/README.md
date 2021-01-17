@@ -21,7 +21,7 @@ Provides emoji support for [Interweave](https://github.com/milesj/interweave).
 
 ## Requirements
 
-- [Emojibase](https://github.com/milesj/emojibase)
+- [Emojibase](https://emojibase.dev)
 
 ## Installation
 
