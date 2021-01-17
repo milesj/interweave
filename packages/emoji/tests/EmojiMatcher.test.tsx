@@ -4,15 +4,15 @@ import EMOTICON_REGEX from 'emojibase-regex/emoticon';
 import SHORTCODE_REGEX from 'emojibase-regex/shortcode';
 import { Parser } from 'interweave';
 import {
-  SOURCE_PROP,
-  VALID_EMOJIS,
-  TOKEN_LOCATIONS,
   createExpectedToken,
   parentConfig,
-} from 'interweave/lib/testing';
+  SOURCE_PROP,
+  TOKEN_LOCATIONS,
+  VALID_EMOJIS,
+} from 'interweave/test';
 import Emoji from '../src/Emoji';
-import EmojiMatcher from '../src/EmojiMatcher';
 import EmojiData from '../src/EmojiDataManager';
+import EmojiMatcher from '../src/EmojiMatcher';
 
 const INVALID_UNICODE = ['\u02A9', '\u03C6', '\u0544'];
 

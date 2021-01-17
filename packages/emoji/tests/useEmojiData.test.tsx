@@ -1,8 +1,8 @@
 import React from 'react';
-import { renderAndWait, mockFetch, MockFetchResult } from 'rut-dom';
+import { mockFetch, MockFetchResult, renderAndWait } from 'rut-dom';
 import { resetInstances } from '../src/EmojiDataManager';
-import useEmojiData, { resetLoaded } from '../src/useEmojiData';
 import { CanonicalEmoji, Source, UseEmojiDataOptions } from '../src/types';
+import useEmojiData, { resetLoaded } from '../src/useEmojiData';
 
 function cdn(locale: string, version: string = '1.0.0', compact: boolean = false) {
   return `https://cdn.jsdelivr.net/npm/emojibase-data@${version}/${locale}/${

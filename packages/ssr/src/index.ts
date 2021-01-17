@@ -5,15 +5,8 @@
  * @license     https://opensource.org/licenses/MIT
  */
 
-import {
-  parse,
-  TreeAdapter,
-  DefaultTreeDocument,
-  DefaultTreeParentNode,
-  DefaultTreeTextNode,
-} from 'parse5';
-// @ts-expect-error
-import * as adapter from 'parse5/lib/tree-adapters/default';
+import { Document as Parse5Document, Element, ParentNode, parse, TextNode } from 'parse5';
+import adapter from 'parse5/lib/tree-adapters/default';
 import parseStyle from 'style-parser';
 
 declare global {
@@ -25,22 +18,13 @@ declare global {
   }
 }
 
-declare module 'parse5' {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  interface DefaultTreeNode {
-    nodeType: number;
-    textContent?: string;
-    childNodes: DefaultTreeNode[];
-  }
-}
-
-function patchTextNodeInChildren(parentNode: DefaultTreeParentNode) {
+function patchTextNodeInChildren(parentNode: ParentNode) {
   parentNode.childNodes.forEach((node) => {
-    if (node.nodeName === '#text' && !node.textContent) {
+    if (node.nodeName === '#text' && !((node as unknown) as HTMLElement).textContent) {
       Object.defineProperties(node, {
         nodeType: { value: 3 },
         textContent: {
-          value: (node as DefaultTreeTextNode).value,
+          value: (node as TextNode).value,
           writable: true,
         },
         value: {
@@ -65,7 +49,7 @@ function createStyleDeclaration(decls: string) {
   return style;
 }
 
-const treeAdapter: TreeAdapter = {
+const treeAdapter: typeof adapter = {
   ...adapter,
   createCommentNode(data) {
     return {
@@ -85,9 +69,10 @@ const treeAdapter: TreeAdapter = {
         return result ? result.value : null;
       },
       hasAttribute(name: string): boolean {
-        return !!attributes.find((attr) => attr.name === name);
+        return attributes.some((attr) => attr.name === name);
       },
       nodeType: 1,
+      protocol: '',
       removeAttribute(name: string) {
         attributes = attributes.filter((attr) => attr.name !== name);
       },
@@ -100,7 +85,7 @@ const treeAdapter: TreeAdapter = {
           attributes.push({ name, value });
         }
       },
-      style: [],
+      style: [] as string[],
       tagName,
       textContent: '',
     };
@@ -119,28 +104,29 @@ const treeAdapter: TreeAdapter = {
   },
   insertText(parentNode, text) {
     adapter.insertText(parentNode, text);
-    patchTextNodeInChildren(parentNode as DefaultTreeParentNode);
+    patchTextNodeInChildren(parentNode);
   },
   insertTextBefore(parentNode, text, referenceNode) {
-    adapter.insertText(parentNode, text, referenceNode);
-    patchTextNodeInChildren(parentNode as DefaultTreeParentNode);
+    adapter.insertTextBefore(parentNode, text, referenceNode);
+    patchTextNodeInChildren(parentNode);
   },
 };
 
-function parseHTML(markup: string): DefaultTreeDocument {
-  return parse(markup, { treeAdapter }) as DefaultTreeDocument;
+function parseHTML(markup: string): Parse5Document {
+  return parse(markup, { treeAdapter });
 }
 
 function createHTMLDocument(): Document {
   const doc = parseHTML('<!DOCTYPE html><html><head></head><body></body></html>');
   const html = doc.childNodes[1];
-  const body = html.childNodes[1];
+  const body = (html as Element).childNodes[1];
 
   Object.defineProperty(html, 'body', { value: body });
 
   Object.defineProperty(body, 'innerHTML', {
     set(value) {
       // #document -> html -> body -> tag
+      // @ts-expect-error
       this.childNodes = parseHTML(String(value)).childNodes[0].childNodes[1].childNodes;
     },
   });

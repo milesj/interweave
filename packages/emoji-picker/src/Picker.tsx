@@ -1,46 +1,46 @@
 /* eslint-disable no-magic-numbers */
 
 import React from 'react';
-import debounce from 'lodash/debounce';
+import { SkinTone } from 'emojibase';
 import {
-  useEmojiData,
-  UseEmojiDataOptions,
   CanonicalEmoji,
   MAX_EMOJI_VERSION,
+  useEmojiData,
+  UseEmojiDataOptions,
 } from 'interweave-emoji';
-import { SkinTone } from 'emojibase';
+import debounce from 'lodash/debounce';
+import {
+  COMMON_MODE_FREQUENT,
+  COMMON_MODE_RECENT,
+  CONTEXT_CLASSNAMES,
+  CONTEXT_MESSAGES,
+  GROUP_KEY_COMMONLY_USED,
+  GROUP_KEY_NONE,
+  GROUP_KEY_SEARCH_RESULTS,
+  GROUP_KEY_SMILEYS_EMOTION,
+  GROUP_KEY_VARIATIONS,
+  GROUPS,
+  KEY_COMMONLY_USED,
+  KEY_SKIN_TONE,
+  SEARCH_THROTTLE,
+  SKIN_KEY_NONE,
+  SKIN_TONES,
+} from './constants';
+import Context from './Context';
 import EmojiList from './EmojiList';
-import SkinTonePalette from './SkinTonePalette';
 import GroupTabs from './GroupTabs';
 import PreviewBar from './PreviewBar';
 import SearchBar from './SearchBar';
-import Context from './Context';
+import SkinTonePalette from './SkinTonePalette';
 import {
-  GROUPS,
-  GROUP_KEY_COMMONLY_USED,
-  GROUP_KEY_SMILEYS_EMOTION,
-  GROUP_KEY_SEARCH_RESULTS,
-  GROUP_KEY_NONE,
-  SKIN_TONES,
-  SKIN_KEY_NONE,
-  KEY_COMMONLY_USED,
-  KEY_SKIN_TONE,
-  COMMON_MODE_RECENT,
-  COMMON_MODE_FREQUENT,
-  CONTEXT_CLASSNAMES,
-  CONTEXT_MESSAGES,
-  SEARCH_THROTTLE,
-  GROUP_KEY_VARIATIONS,
-} from './constants';
-import {
+  AllowBlockMap,
   CommonEmoji,
-  GroupKey,
-  SkinToneKey,
   GroupEmojiMap,
+  GroupKey,
   InternalPickerProps,
   InternalPickerState,
-  AllowBlockMap,
   PickerProps,
+  SkinToneKey,
 } from './types';
 
 const SKIN_MODIFIER_PATTERN = /1F3FB|1F3FC|1F3FD|1F3FE|1F3FF/g;
@@ -92,9 +92,13 @@ export class InternalPicker extends React.PureComponent<InternalPickerProps, Int
   constructor(props: InternalPickerProps) {
     super(props);
 
-    const { blockList, classNames, defaultSkinTone, messages, allowList } = props as Required<
-      InternalPickerProps
-    >;
+    const {
+      blockList,
+      classNames,
+      defaultSkinTone,
+      messages,
+      allowList,
+    } = props as Required<InternalPickerProps>;
 
     this.allowList = this.generateAllowBlockMap(allowList);
     this.blockList = this.generateAllowBlockMap(blockList);
@@ -339,7 +343,7 @@ export class InternalPicker extends React.PureComponent<InternalPickerProps, Int
           (Array.isArray(skin.tone) && skin.tone.includes(toneIndex as SkinTone))),
     );
 
-    return (skinnedEmoji || emoji) as CanonicalEmoji;
+    return skinnedEmoji || emoji!;
   }
 
   /**

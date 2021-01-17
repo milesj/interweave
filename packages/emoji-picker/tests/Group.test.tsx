@@ -1,12 +1,12 @@
 import React from 'react';
 import { render } from 'rut-dom';
-import Group, { GroupProps } from '../src/Group';
 import {
   COMMON_MODE_FREQUENT,
-  GROUP_KEY_SMILEYS_EMOTION,
   GROUP_ICONS,
   GROUP_KEY_COMMONLY_USED,
+  GROUP_KEY_SMILEYS_EMOTION,
 } from '../src/constants';
+import Group, { GroupProps } from '../src/Group';
 import { ContextWrapper } from './mocks';
 
 describe('Group', () => {

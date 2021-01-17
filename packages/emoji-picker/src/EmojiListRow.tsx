@@ -1,10 +1,10 @@
 import React, { useContext } from 'react';
 import { ListChildComponentProps } from 'react-window';
 import { CanonicalEmoji } from 'interweave-emoji';
+import Context from './Context';
 import EmojiButton from './Emoji';
 import EmojiListHeader from './EmojiListHeader';
 import { CommonMode, GroupKey } from './types';
-import Context from './Context';
 
 export type VirtualRow = string | CanonicalEmoji[];
 

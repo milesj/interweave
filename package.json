@@ -4,8 +4,9 @@
   "version": "0.0.0",
   "scripts": {
     "prepare": "beemo create-config --silent",
-    "build": "beemo create-config babel --esm --silent && rollup --config && yarn run type",
-    "clean": "rm -rf packages/*/{lib,esm,*.tsbuildinfo}",
+    "build": "packemon build --addEngines",
+    "pack": "NODE_ENV=production packemon pack --addEngines --declaration=standard",
+    "clean": "packemon clean",
     "coverage": "yarn run jest --coverage",
     "lint": "beemo eslint",
     "jest": "beemo jest",
@@ -14,35 +15,32 @@
     "test": "yarn run jest",
     "test:bundle": "yarn run build && beemo create-config typescript && webpack && serve ./tests/",
     "format": "beemo prettier",
-    "prerelease": "yarn run clean && yarn run build && yarn test",
+    "prerelease": "yarn run pack && yarn test",
     "release": "lerna publish",
     "release:docs": "cd website && yarn deploy",
     "type": "beemo typescript --reference-workspaces --build"
   },
   "engines": {
-    "node": ">=10.10.0"
+    "node": ">=10.3.0"
   },
   "devDependencies": {
-    "@milesj/build-tools": "^2.13.1",
-    "@types/lodash": "^4.14.164",
-    "@types/parse5": "^5.0.3",
-    "@types/react": "^16.9.55",
-    "@types/react-dom": "^16.9.9",
+    "@milesj/build-tools": "^2.16.1",
+    "@types/lodash": "^4.14.167",
+    "@types/parse5": "^6.0.0",
+    "@types/react": "^17.0.0",
+    "@types/react-dom": "^17.0.0",
     "@types/react-window": "^1.8.2",
-    "babel-loader": "^8.1.0",
+    "babel-loader": "^8.2.2",
     "conventional-changelog-beemo": "^2.0.0",
     "emojibase": "^4.0.1",
     "emojibase-test-utils": "^5.0.1",
     "eslint-plugin-rut": "^2.0.0",
     "jest-rut": "^2.0.0",
     "lerna": "^3.22.1",
+    "packemon": "^0.10.1",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "regenerator-runtime": "^0.13.7",
-    "rollup": "^2.33.1",
-    "rollup-plugin-babel": "^4.4.0",
-    "rollup-plugin-node-externals": "^2.2.0",
-    "rollup-plugin-node-resolve": "^5.2.0",
     "rut-dom": "^2.0.0",
     "serve": "^11.3.2",
     "webpack": "^4.44.1",
@@ -60,6 +58,7 @@
       "prettier",
       {
         "driver": "typescript",
+        "buildFolder": "dts",
         "declarationOnly": true
       }
     ],
@@ -90,8 +89,5 @@
       "testEnvironment": "jsdom",
       "timers": "real"
     }
-  },
-  "browserslist": [
-    "ie 11"
-  ]
+  }
 }

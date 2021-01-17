@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, mockSyntheticEvent } from 'rut-dom';
+import { mockSyntheticEvent, render } from 'rut-dom';
 import Link from '../src/Link';
 import { LinkProps } from '../src/types';
 

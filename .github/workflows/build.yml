@@ -22,3 +22,12 @@ jobs:
       - run: yarn run type
       - run: yarn run jest
       - run: yarn run lint
+  pack:
+    name: Pack
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2-beta
+      - run: yarn install --ignore-engines --frozen-lockfile
+      - run: yarn run type
+      - run: yarn run pack

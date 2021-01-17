@@ -1,11 +1,11 @@
-import React, { useContext, useEffect, useState, useRef } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import { FixedSizeList as List, ListOnItemsRenderedProps } from 'react-window';
 import chunk from 'lodash/chunk';
+import { GROUP_KEY_COMPONENT, GROUP_KEY_NONE } from './constants';
+import Context from './Context';
 import EmojiListHeader from './EmojiListHeader';
 import EmojiListRow, { EmojiListRowProps, VirtualRow } from './EmojiListRow';
-import { GROUP_KEY_NONE, GROUP_KEY_COMPONENT } from './constants';
-import { GroupKey, GroupEmojiMap } from './types';
-import Context from './Context';
+import { GroupEmojiMap, GroupKey } from './types';
 
 export interface IndicesMap {
   [key: string]: number;

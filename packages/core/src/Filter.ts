@@ -1,4 +1,4 @@
-import { FilterInterface, ElementAttributes } from './types';
+import { ElementAttributes, FilterInterface } from './types';
 
 export default class Filter implements FilterInterface {
   /**

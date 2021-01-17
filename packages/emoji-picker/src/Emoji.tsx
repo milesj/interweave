@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { Emoji as EmojiCharacter, CanonicalEmoji } from 'interweave-emoji';
+import { CanonicalEmoji, Emoji as EmojiCharacter } from 'interweave-emoji';
 import Context from './Context';
 
 export interface EmojiProps {

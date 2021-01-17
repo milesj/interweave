@@ -1,12 +1,12 @@
 import React from 'react';
 import ReactDOMServer from 'react-dom/server';
-import { render } from 'rut-dom';
 import Interweave, { InterweaveProps } from 'interweave';
 import { polyfill } from 'interweave-ssr';
+import { render } from 'rut-dom';
 import EmailMatcher from '../src/EmailMatcher';
 import HashtagMatcher from '../src/HashtagMatcher';
-import UrlMatcher from '../src/UrlMatcher';
 import IpMatcher from '../src/IpMatcher';
+import UrlMatcher from '../src/UrlMatcher';
 
 describe('Interweave (with autolinking)', () => {
   it('renders large blocks of text with all matchers', () => {

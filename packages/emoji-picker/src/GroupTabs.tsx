@@ -1,10 +1,10 @@
 import React, { useContext } from 'react';
-import camelCase from 'lodash/camelCase';
 import { CanonicalEmoji } from 'interweave-emoji';
-import Group from './Group';
-import { GROUPS, GROUP_KEY_COMMONLY_USED, GROUP_KEY_COMPONENT, GROUP_ICONS } from './constants';
-import { CommonMode, GroupKey } from './types';
+import camelCase from 'lodash/camelCase';
+import { GROUP_ICONS, GROUP_KEY_COMMONLY_USED, GROUP_KEY_COMPONENT, GROUPS } from './constants';
 import Context from './Context';
+import Group from './Group';
+import { CommonMode, GroupKey } from './types';
 
 export interface GroupTabsProps {
   activeGroup: GroupKey;

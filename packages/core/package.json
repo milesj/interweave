@@ -27,17 +27,20 @@
   ],
   "main": "./lib/index.js",
   "module": "./esm/index.js",
-  "types": "./lib/index.d.ts",
+  "types": "./dts/index.d.ts",
   "sideEffects": false,
   "publishConfig": {
     "access": "public"
   },
-  "repository": "https://github.com/milesj/interweave/tree/master/packages/core",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:milesj/interweave.git",
+    "directory": "packages/core"
+  },
+  "author": "Miles Johnson",
   "license": "MIT",
   "dependencies": {
-    "@types/react": "*",
-    "escape-html": "^1.0.3",
-    "prop-types": "^15.7.2"
+    "escape-html": "^1.0.3"
   },
   "peerDependencies": {
     "react": "^16.8.0 || ^17.0.0"
@@ -49,5 +52,12 @@
   "funding": {
     "type": "ko-fi",
     "url": "https://ko-fi.com/milesjohnson"
+  },
+  "packemon": {
+    "inputs": {
+      "index": "src/index.ts",
+      "test": "src/test.tsx"
+    },
+    "platform": "browser"
   }
 }

@@ -13,17 +13,18 @@
   ],
   "main": "./lib/index.js",
   "module": "./esm/index.js",
-  "types": "./lib/index.d.ts",
+  "types": "./dts/index.d.ts",
   "sideEffects": false,
   "publishConfig": {
     "access": "public"
   },
-  "repository": "https://github.com/milesj/interweave/tree/master/packages/autolink",
-  "license": "MIT",
-  "dependencies": {
-    "@types/react": "*",
-    "prop-types": "^15.7.2"
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:milesj/interweave.git",
+    "directory": "packages/autolink"
   },
+  "author": "Miles Johnson",
+  "license": "MIT",
   "peerDependencies": {
     "interweave": "^12.0.0",
     "react": "^16.8.0 || ^17.0.0"
@@ -35,5 +36,8 @@
   "funding": {
     "type": "ko-fi",
     "url": "https://ko-fi.com/milesjohnson"
+  },
+  "packemon": {
+    "platform": "browser"
   }
 }

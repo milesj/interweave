@@ -2,13 +2,13 @@ import React, { useContext } from 'react';
 import camelCase from 'lodash/camelCase';
 import {
   GROUP_KEY_COMMONLY_USED,
-  GROUP_KEY_SEARCH_RESULTS,
-  GROUP_KEY_PEOPLE_BODY,
   GROUP_KEY_NONE,
+  GROUP_KEY_PEOPLE_BODY,
+  GROUP_KEY_SEARCH_RESULTS,
   GROUP_KEY_VARIATIONS,
 } from './constants';
-import { CommonMode, GroupKey } from './types';
 import Context from './Context';
+import { CommonMode, GroupKey } from './types';
 
 export interface EmojiListHeaderProps {
   clearIcon?: React.ReactNode;

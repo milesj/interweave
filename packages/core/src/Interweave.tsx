@@ -1,6 +1,6 @@
 import React from 'react';
-import Parser from './Parser';
 import Markup from './Markup';
+import Parser from './Parser';
 import { InterweaveProps } from './types';
 
 export default function Interweave(props: InterweaveProps) {

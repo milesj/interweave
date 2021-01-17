@@ -71,16 +71,15 @@ export default function Emoji({
   // Determine the path
   let path = emojiPath || '{{hexcode}}';
 
-  if (typeof path === 'function') {
-    path = path(emoji.hexcode, {
-      enlarged: enlargeEmoji,
-      largeSize: emojiLargeSize,
-      size: enlargeEmoji ? emojiLargeSize : emojiSize,
-      smallSize: emojiSize,
-    });
-  } else {
-    path = path.replace('{{hexcode}}', emoji.hexcode);
-  }
+  path =
+    typeof path === 'function'
+      ? path(emoji.hexcode, {
+          enlarged: enlargeEmoji,
+          largeSize: emojiLargeSize,
+          size: enlargeEmoji ? emojiLargeSize : emojiSize,
+          smallSize: emojiSize,
+        })
+      : path.replace('{{hexcode}}', emoji.hexcode);
 
   // http://git.emojione.com/demos/latest/sprites-png.html
   // http://git.emojione.com/demos/latest/sprites-svg.html

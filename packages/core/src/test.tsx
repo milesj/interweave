@@ -2,13 +2,13 @@
 
 import React from 'react';
 import {
+  ChildrenNode,
+  Element,
   Filter,
   Matcher,
-  Element,
+  MatchResponse,
   Node,
   NodeConfig,
-  MatchResponse,
-  ChildrenNode,
   TAGS,
 } from './index';
 

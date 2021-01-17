@@ -1,20 +1,20 @@
 import React from 'react';
 import ReactDOMServer from 'react-dom/server';
-import { render } from 'rut-dom';
 import { polyfill } from 'interweave-ssr';
-import Interweave from '../src/Interweave';
-import Element from '../src/Element';
+import { render } from 'rut-dom';
 import { ALLOWED_TAG_LIST } from '../src/constants';
+import Element from '../src/Element';
+import Interweave from '../src/Interweave';
 import {
-  MOCK_MARKUP,
-  MOCK_INVALID_MARKUP,
-  LinkFilter,
   CodeTagMatcher,
-  matchCodeTag,
+  LinkFilter,
   MarkdownBoldMatcher,
   MarkdownItalicMatcher,
-} from '../src/testing';
-import { InterweaveProps, ChildrenNode } from '../src/types';
+  matchCodeTag,
+  MOCK_INVALID_MARKUP,
+  MOCK_MARKUP,
+} from '../src/test';
+import { ChildrenNode, InterweaveProps } from '../src/types';
 
 describe('Interweave', () => {
   it('doesnt include canvas and iframe in default allow list', () => {

@@ -8,13 +8,17 @@
     "ssr"
   ],
   "main": "./lib/index.js",
-  "module": "./esm/index.js",
-  "types": "./lib/index.d.ts",
+  "types": "./dts/index.d.ts",
   "sideEffects": false,
   "publishConfig": {
     "access": "public"
   },
-  "repository": "https://github.com/milesj/interweave/tree/master/packages/ssr",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:milesj/interweave.git",
+    "directory": "packages/ssr"
+  },
+  "author": "Miles Johnson",
   "license": "MIT",
   "dependencies": {
     "parse5": "^6.0.1",
@@ -23,5 +27,12 @@
   "funding": {
     "type": "ko-fi",
     "url": "https://ko-fi.com/milesjohnson"
+  },
+  "packemon": {
+    "platform": "node"
+  },
+  "engines": {
+    "node": ">=10.3.0",
+    "npm": ">=6.1.0"
   }
 }

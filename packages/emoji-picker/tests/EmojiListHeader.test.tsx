@@ -1,14 +1,14 @@
 import React from 'react';
 import { render } from 'rut-dom';
-import EmojiListHeader, { EmojiListHeaderProps } from '../src/EmojiListHeader';
 import {
   COMMON_MODE_FREQUENT,
-  GROUP_KEY_SMILEYS_EMOTION,
-  GROUP_KEY_PEOPLE_BODY,
   GROUP_KEY_COMMONLY_USED,
-  GROUP_KEY_SEARCH_RESULTS,
   GROUP_KEY_FLAGS,
+  GROUP_KEY_PEOPLE_BODY,
+  GROUP_KEY_SEARCH_RESULTS,
+  GROUP_KEY_SMILEYS_EMOTION,
 } from '../src/constants';
+import EmojiListHeader, { EmojiListHeaderProps } from '../src/EmojiListHeader';
 import { ContextWrapper } from './mocks';
 
 describe('EmojiListHeader', () => {

@@ -1,7 +1,7 @@
 import React from 'react';
 import { LATEST_DATASET_VERSION } from 'interweave-emoji';
-import { Context } from './types';
 import { CONTEXT_CLASSNAMES, CONTEXT_MESSAGES } from './constants';
+import { Context } from './types';
 
 export default React.createContext<Context>({
   classNames: CONTEXT_CLASSNAMES,

@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 
 import { useEffect, useState } from 'react';
-import { fetchFromCDN, Emoji } from 'emojibase';
+import { Emoji, fetchFromCDN } from 'emojibase';
+import { LATEST_DATASET_VERSION } from './constants';
 import EmojiDataManager from './EmojiDataManager';
 import { CanonicalEmoji, Source, UseEmojiDataOptions } from './types';
-import { LATEST_DATASET_VERSION } from './constants';
 
 const promises = new Map<string, Promise<CanonicalEmoji[]>>();
 

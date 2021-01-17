@@ -1,11 +1,11 @@
 import {
+  Emoji,
+  EMOTICON_OPTIONS,
   fromCodepointToUnicode,
   fromHexcodeToCodepoint,
   generateEmoticonPermutations,
-  Emoji,
   Hexcode,
   TEXT,
-  EMOTICON_OPTIONS,
 } from 'emojibase';
 import { CanonicalEmoji } from './types';
 

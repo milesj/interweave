@@ -1,8 +1,8 @@
 import React, { useContext } from 'react';
 import camelCase from 'lodash/camelCase';
 import { GROUP_KEY_COMMONLY_USED } from './constants';
-import { CommonMode, GroupKey } from './types';
 import Context from './Context';
+import { CommonMode, GroupKey } from './types';
 
 export interface GroupProps {
   active: boolean;

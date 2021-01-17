@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useContext } from 'react';
+import React, { useContext, useEffect, useRef } from 'react';
 import Context from './Context';
 
 export interface SearchBarProps {
