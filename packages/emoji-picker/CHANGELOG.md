@@ -1,3 +1,15 @@
+# 6.0.0
+
+#### 💥 Breaking
+
+- Removed `emojibase` as a peer requirement.
+
+#### 📦 Dependencies
+
+- Updated `emojibase` to v5.
+
+#### 💥 Breaking
+
 ## 5.3.0 - 2020-11-04
 
 #### 🚀 Updates
