@@ -29,4 +29,5 @@ jobs:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v2-beta
       - run: yarn install --ignore-engines --frozen-lockfile
+      - run: yarn run prepare
       - run: yarn run pack
