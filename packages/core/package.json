@@ -27,7 +27,7 @@
   ],
   "main": "./lib/index.js",
   "module": "./esm/index.js",
-  "types": "./lib/index.d.ts",
+  "types": "./dts/index.d.ts",
   "sideEffects": false,
   "publishConfig": {
     "access": "public"
@@ -53,7 +53,7 @@
   "packemon": {
     "inputs": {
       "index": "src/index.ts",
-      "test": "src/testing.tsx"
+      "test": "src/test.tsx"
     },
     "platform": "browser"
   }

@@ -1,5 +1,5 @@
 import { Parser } from 'interweave';
-import { createExpectedToken, parentConfig, TOKEN_LOCATIONS } from 'interweave/lib/testing';
+import { createExpectedToken, parentConfig, TOKEN_LOCATIONS } from 'interweave/test';
 import { EMAIL_PATTERN } from '../src/constants';
 import EmailMatcher from '../src/EmailMatcher';
 

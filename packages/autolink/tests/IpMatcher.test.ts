@@ -1,5 +1,5 @@
 import { Parser } from 'interweave';
-import { createExpectedToken, parentConfig, TOKEN_LOCATIONS } from 'interweave/lib/testing';
+import { createExpectedToken, parentConfig, TOKEN_LOCATIONS } from 'interweave/test';
 import { IP_PATTERN } from '../src/constants';
 import IpMatcher from '../src/IpMatcher';
 

@@ -21,7 +21,7 @@
     "type": "beemo typescript --reference-workspaces --build"
   },
   "engines": {
-    "node": ">=10.10.0"
+    "node": ">=10.3.0"
   },
   "devDependencies": {
     "@milesj/build-tools": "^2.16.1",
@@ -58,6 +58,7 @@
       "prettier",
       {
         "driver": "typescript",
+        "buildFolder": "dts",
         "declarationOnly": true
       }
     ],
@@ -88,8 +89,5 @@
       "testEnvironment": "jsdom",
       "timers": "real"
     }
-  },
-  "browserslist": [
-    "ie 11"
-  ]
+  }
 }

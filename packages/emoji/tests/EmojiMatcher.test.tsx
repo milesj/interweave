@@ -9,7 +9,7 @@ import {
   SOURCE_PROP,
   TOKEN_LOCATIONS,
   VALID_EMOJIS,
-} from 'interweave/lib/testing';
+} from 'interweave/test';
 import Emoji from '../src/Emoji';
 import EmojiData from '../src/EmojiDataManager';
 import EmojiMatcher from '../src/EmojiMatcher';

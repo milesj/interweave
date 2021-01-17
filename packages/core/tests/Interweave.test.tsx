@@ -13,7 +13,7 @@ import {
   matchCodeTag,
   MOCK_INVALID_MARKUP,
   MOCK_MARKUP,
-} from '../src/testing';
+} from '../src/test';
 import { ChildrenNode, InterweaveProps } from '../src/types';
 
 describe('Interweave', () => {

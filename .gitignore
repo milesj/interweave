@@ -13,6 +13,7 @@ logs/
 # Directories
 _book/
 coverage/
+dts/
 esm/
 lib/
 node_modules/
