@@ -35,7 +35,7 @@ export default function PreviewBar({
     );
   }
 
-  const title = emoji.annotation || emoji.name;
+  const title = emoji.annotation;
   const subtitle = [];
 
   if (!hideEmoticon && emoji.emoticon) {

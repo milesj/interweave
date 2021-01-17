@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useCallback, useContext } from 'react';
 import { CanonicalEmoji, Emoji as EmojiCharacter } from 'interweave-emoji';
 import Context from './Context';
 
@@ -20,20 +20,29 @@ export default function Emoji({ active, emoji, onEnter, onLeave, onSelect }: Emo
   }
 
   // Handlers
-  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-    event.stopPropagation();
-    onSelect(emoji, event);
-  };
+  const handleClick = useCallback(
+    (event: React.MouseEvent<HTMLButtonElement>) => {
+      event.stopPropagation();
+      onSelect(emoji, event);
+    },
+    [emoji, onSelect],
+  );
 
-  const handleEnter = (event: React.MouseEvent<HTMLButtonElement>) => {
-    event.stopPropagation();
-    onEnter(emoji, event);
-  };
+  const handleEnter = useCallback(
+    (event: React.MouseEvent<HTMLButtonElement>) => {
+      event.stopPropagation();
+      onEnter(emoji, event);
+    },
+    [emoji, onEnter],
+  );
 
-  const handleLeave = (event: React.MouseEvent<HTMLButtonElement>) => {
-    event.stopPropagation();
-    onLeave(emoji, event);
-  };
+  const handleLeave = useCallback(
+    (event: React.MouseEvent<HTMLButtonElement>) => {
+      event.stopPropagation();
+      onLeave(emoji, event);
+    },
+    [emoji, onLeave],
+  );
 
   return (
     <button

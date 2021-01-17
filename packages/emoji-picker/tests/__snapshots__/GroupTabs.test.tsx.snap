@@ -13,7 +13,7 @@ exports[`GroupTabs renders a list 1`] = `
           className="interweave-picker__group"
           title="Smileys & Emotion"
           type="button"
-          onClick={handleClick()}
+          onClick={func()}
         >
           😃
         </button>
@@ -29,7 +29,7 @@ exports[`GroupTabs renders a list 1`] = `
           className="interweave-picker__group"
           title="People & Bodies"
           type="button"
-          onClick={handleClick()}
+          onClick={func()}
         >
           👍
         </button>
@@ -45,7 +45,7 @@ exports[`GroupTabs renders a list 1`] = `
           className="interweave-picker__group"
           title="Animals & Nature"
           type="button"
-          onClick={handleClick()}
+          onClick={func()}
         >
           🌿
         </button>
@@ -61,7 +61,7 @@ exports[`GroupTabs renders a list 1`] = `
           className="interweave-picker__group"
           title="Food & Drink"
           type="button"
-          onClick={handleClick()}
+          onClick={func()}
         >
           🍎
         </button>
@@ -77,7 +77,7 @@ exports[`GroupTabs renders a list 1`] = `
           className="interweave-picker__group"
           title="Travel & Places"
           type="button"
-          onClick={handleClick()}
+          onClick={func()}
         >
           🗺️
         </button>
@@ -93,7 +93,7 @@ exports[`GroupTabs renders a list 1`] = `
           className="interweave-picker__group"
           title="Activities"
           type="button"
-          onClick={handleClick()}
+          onClick={func()}
         >
           ⚽️
         </button>
@@ -105,7 +105,7 @@ exports[`GroupTabs renders a list 1`] = `
           className="interweave-picker__group"
           title="Objects"
           type="button"
-          onClick={handleClick()}
+          onClick={func()}
         >
           📘
         </button>
@@ -117,7 +117,7 @@ exports[`GroupTabs renders a list 1`] = `
           className="interweave-picker__group"
           title="Symbols"
           type="button"
-          onClick={handleClick()}
+          onClick={func()}
         >
           ⛔️
         </button>
@@ -129,7 +129,7 @@ exports[`GroupTabs renders a list 1`] = `
           className="interweave-picker__group"
           title="Flags"
           type="button"
-          onClick={handleClick()}
+          onClick={func()}
         >
           🏴
         </button>

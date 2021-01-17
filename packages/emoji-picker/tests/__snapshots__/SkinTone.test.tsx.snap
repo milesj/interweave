@@ -7,7 +7,7 @@ exports[`SkinTone renders a skin tone 1`] = `
   data-skin-tone="dark"
   title="Dark skin tone"
   type="button"
-  onClick={handleClick()}
+  onClick={func()}
 >
    
 </button>

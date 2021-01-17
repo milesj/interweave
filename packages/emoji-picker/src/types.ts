@@ -9,37 +9,34 @@ export interface CommonEmoji {
 export type CommonMode = 'recently-used' | 'frequently-used';
 
 export interface Context {
-  classNames: { [name: string]: string };
+  classNames: Record<string, string>;
   emojiLargeSize: number;
   emojiPadding: number;
   emojiPath: Path;
   emojiSize: number;
   emojiSource: Source;
-  messages: { [key: string]: string };
+  messages: Record<string, string>;
 }
 
 export type DisplayOrder = 'preview' | 'emojis' | 'groups' | 'search' | 'skin-tones';
 
 export type GroupKey = BaseGroupKey | 'commonly-used' | 'search-results' | 'variations' | 'none';
 
-export interface GroupEmojiMap {
-  [group: string]: {
+export type GroupEmojiMap = Record<
+  string,
+  {
     emojis: CanonicalEmoji[];
     group: GroupKey;
-  };
-}
+  }
+>;
 
-export interface GroupIndexMap {
-  [group: string]: number;
-}
+export type GroupIndexMap = Record<string, number>;
 
 export type SkinToneKey = BaseSkinToneKey | 'none';
 
 // PICKER
 
-export interface AllowBlockMap {
-  [hexcode: string]: boolean;
-}
+export type AllowBlockMap = Record<string, boolean>;
 
 export interface PickerProps {
   /** List of emoji hexcodes to only show. */
@@ -49,7 +46,7 @@ export interface PickerProps {
   /** List of emoji hexcodes to hide. */
   blockList?: Hexcode[];
   /** Mapping of custom CSS class names. */
-  classNames?: { [key: string]: string };
+  classNames?: Record<string, string>;
   /** Icon to display within the clear commonly used button. Omit the icon to hide the button. */
   clearIcon?: React.ReactNode;
   /** Number of emojis to display horizontally. */
@@ -81,7 +78,7 @@ export interface PickerProps {
   /** Pixel size of emoji within the list. */
   emojiSize: number;
   /** Mapping of custom icons for each group tab. */
-  groupIcons?: { [key: string]: React.ReactNode };
+  groupIcons?: Record<string, React.ReactNode>;
   /** Hide emoticons within the preview bar. */
   hideEmoticon?: boolean;
   /** Hide group headers within the list. */
@@ -93,7 +90,7 @@ export interface PickerProps {
   /** Max official emoji release version to support. */
   maxEmojiVersion?: number;
   /** Mapping of custom translation messages. */
-  messages?: { [key: string]: string };
+  messages?: Record<string, string>;
   /** Content to render by default in the preview bar. */
   noPreview?: React.ReactNode;
   /** Content to render when there are no search results. */
@@ -115,7 +112,7 @@ export interface PickerProps {
   /** Number of emoji rows to display vertically. */
   rowCount?: number;
   /** Mapping of custom icons for each skin tone. */
-  skinIcons?: { [key: string]: React.ReactNode };
+  skinIcons?: Record<string, React.ReactNode>;
   /** Sticky the active group header to the top of the emoji list. */
   stickyGroupHeader?: boolean;
   /** Custom props to pass to react-window list component. */

@@ -6,9 +6,9 @@ exports[`Emoji renders an emoji 1`] = `
   style={{ height: 34, padding: 5, width: 34 }}
   title="cat"
   type="button"
-  onClick={handleClick()}
-  onMouseEnter={handleEnter()}
-  onMouseLeave={handleLeave()}
+  onClick={func()}
+  onMouseEnter={func()}
+  onMouseLeave={func()}
 >
   <Emoji
     emojiPath="{{hexcode}}"

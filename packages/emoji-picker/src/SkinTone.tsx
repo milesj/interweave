@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useCallback, useContext } from 'react';
 import camelCase from 'lodash/camelCase';
 import upperFirst from 'lodash/upperFirst';
 import { SKIN_COLORS } from './constants';
@@ -22,10 +22,13 @@ export default function SkinTone({ active, children, skinTone, onSelect }: SkinT
     className.push(classNames.skinToneActive);
   }
 
-  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-    event.stopPropagation();
-    onSelect(skinTone, event);
-  };
+  const handleClick = useCallback(
+    (event: React.MouseEvent<HTMLButtonElement>) => {
+      event.stopPropagation();
+      onSelect(skinTone, event);
+    },
+    [skinTone, onSelect],
+  );
 
   return (
     <button

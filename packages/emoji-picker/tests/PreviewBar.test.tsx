@@ -64,20 +64,6 @@ describe('PreviewBar', () => {
       expect(root).toContainNode('Slightly smiling face');
     });
 
-    it('displays title when no annotation', () => {
-      const { root } = render<PreviewBarProps>(
-        <PreviewBar
-          {...props}
-          emoji={{
-            ...props.emoji!,
-            annotation: '',
-          }}
-        />,
-      );
-
-      expect(root).toContainNode('SLIGHTLY SMILING FACE');
-    });
-
     it('doesnt display title if no annotation or name', () => {
       const { root } = render<PreviewBarProps>(
         <PreviewBar
@@ -85,7 +71,6 @@ describe('PreviewBar', () => {
           emoji={{
             ...props.emoji!,
             annotation: '',
-            name: '',
           }}
         />,
       );
@@ -96,7 +81,7 @@ describe('PreviewBar', () => {
     it('displays subtitle', () => {
       const { root } = render<PreviewBarProps>(<PreviewBar {...props} />);
 
-      expect(root).toContainNode(':) :pleased: :slight_smile:');
+      expect(root).toContainNode(':) :slightly_smiling_face:');
     });
 
     it('displays subtitle without emoticon', () => {
@@ -110,7 +95,7 @@ describe('PreviewBar', () => {
         />,
       );
 
-      expect(root).toContainNode(':pleased: :slight_smile:');
+      expect(root).toContainNode(':slightly_smiling_face:');
     });
 
     it('displays subtitle without shortcodes', () => {
@@ -130,7 +115,7 @@ describe('PreviewBar', () => {
     it('hides emoticon in subtitle', () => {
       const { root } = render<PreviewBarProps>(<PreviewBar {...props} hideEmoticon />);
 
-      expect(root).toContainNode(':pleased: :slight_smile:');
+      expect(root).toContainNode(':slightly_smiling_face:');
     });
 
     it('hides shortcodes in subtitle', () => {

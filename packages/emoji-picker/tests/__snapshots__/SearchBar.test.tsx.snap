@@ -8,7 +8,7 @@ exports[`SearchBar renders a search bar 1`] = `
     placeholder="Search"
     type="search"
     value=""
-    onChange={handleChange()}
+    onChange={func()}
     onKeyUp={onKeyUp()}
   />
 </div>

@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useCallback, useContext } from 'react';
 import camelCase from 'lodash/camelCase';
 import {
   GROUP_KEY_COMMONLY_USED,
@@ -41,10 +41,13 @@ export default function EmojiListHeader({
     className.push(classNames.emojisHeaderSticky);
   }
 
-  const handleClear = (event: React.MouseEvent<HTMLButtonElement>) => {
-    event.preventDefault();
-    onClear();
-  };
+  const handleClear = useCallback(
+    (event: React.MouseEvent<HTMLButtonElement>) => {
+      event.preventDefault();
+      onClear();
+    },
+    [onClear],
+  );
 
   return (
     <header className={className.join(' ')}>

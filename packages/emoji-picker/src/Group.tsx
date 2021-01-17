@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useCallback, useContext } from 'react';
 import camelCase from 'lodash/camelCase';
 import { GROUP_KEY_COMMONLY_USED } from './constants';
 import Context from './Context';
@@ -21,10 +21,13 @@ export default function Group({ active, children, commonMode, group, onSelect }:
     className.push(classNames.groupActive);
   }
 
-  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-    event.stopPropagation();
-    onSelect(group, event);
-  };
+  const handleClick = useCallback(
+    (event: React.MouseEvent<HTMLButtonElement>) => {
+      event.stopPropagation();
+      onSelect(group, event);
+    },
+    [group, onSelect],
+  );
 
   return (
     <button
