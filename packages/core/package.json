@@ -32,7 +32,12 @@
   "publishConfig": {
     "access": "public"
   },
-  "repository": "https://github.com/milesj/interweave/tree/master/packages/core",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:milesj/interweave.git",
+    "directory": "packages/core"
+  },
+  "author": "Miles Johnson",
   "license": "MIT",
   "dependencies": {
     "@types/react": "17.0.0",
