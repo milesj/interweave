@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useRef, useState } from 'react';
+import React, { useCallback, useContext, useEffect, useRef, useState } from 'react';
 import { FixedSizeList as List, ListOnItemsRenderedProps } from 'react-window';
 import chunk from 'lodash/chunk';
 import { GROUP_KEY_COMPONENT, GROUP_KEY_NONE } from './constants';
@@ -77,50 +77,53 @@ export default function EmojiList({
 
   // Scroll to the defined group when all data is available
   useEffect(() => {
-    if (ref.current && scrollToGroup && indices[scrollToGroup]) {
+    if (ref.current && scrollToGroup && indices[scrollToGroup] >= 0) {
       ref.current.scrollToItem(indices[scrollToGroup], 'start');
     }
   }, [scrollToGroup, indices]);
+
+  // Loop over each group section within the scrollable container
+  // and determine the active group.
+  const handleRendered = useCallback(
+    ({ visibleStartIndex }: ListOnItemsRenderedProps) => {
+      let lastGroup = '';
+
+      Object.keys(indices).some((group) => {
+        const index = indices[group];
+
+        // Special case for commonly used and smileys, as they usually both render in the same view
+        if (index === 0 && visibleStartIndex === 0) {
+          lastGroup = group;
+
+          return true;
+        }
+
+        // When we have to sticky headers, we need to change the header on the index right
+        // before the next header, otherwise the change will happen too late
+        if (stickyGroupHeader && index >= visibleStartIndex + 1) {
+          return true;
+          // Otherwise, we should update the active group when half way through the list
+        } else if (!stickyGroupHeader && index >= visibleStartIndex + rowCount / 2) {
+          return true;
+        }
+
+        lastGroup = group;
+
+        return false;
+      });
+
+      // Only update if a different group
+      if (lastGroup && lastGroup !== activeGroup) {
+        onScrollGroup(lastGroup as GroupKey);
+      }
+    },
+    [activeGroup, indices, onScrollGroup, rowCount, stickyGroupHeader],
+  );
 
   // If no items to display, just return null
   if (rows.length === 0) {
     return <div className={classNames.noResults}>{noResults || messages.noResults}</div>;
   }
-
-  // Loop over each group section within the scrollable container
-  // and determine the active group.
-  const handleRendered = ({ visibleStartIndex }: ListOnItemsRenderedProps) => {
-    let lastGroup = '';
-
-    Object.keys(indices).some((group) => {
-      const index = indices[group];
-
-      // Special case for commonly used and smileys, as they usually both render in the same view
-      if (index === 0 && visibleStartIndex === 0) {
-        lastGroup = group;
-
-        return true;
-      }
-
-      // When we have to sticky headers, we need to change the header on the index right
-      // before the next header, otherwise the change will happen too late
-      if (stickyGroupHeader && index >= visibleStartIndex + 1) {
-        return true;
-        // Otherwise, we should update the active group when half way through the list
-      } else if (!stickyGroupHeader && index >= visibleStartIndex + rowCount / 2) {
-        return true;
-      }
-
-      lastGroup = group;
-
-      return false;
-    });
-
-    // Only update if a different group
-    if (lastGroup && lastGroup !== activeGroup) {
-      onScrollGroup(lastGroup as GroupKey);
-    }
-  };
 
   return (
     <div className={classNames.emojis}>

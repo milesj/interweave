@@ -8,7 +8,7 @@ export default function useEmojiData({
   avoidFetch = false,
   compact = false,
   locale = 'en',
-  shortcodes = ['emojibase', 'emojibase-legacy'],
+  shortcodes = ['emojibase'],
   throwErrors = false,
   version = LATEST_DATASET_VERSION,
 }: UseEmojiDataOptions = {}): [CanonicalEmoji[], Source, EmojiDataManager] {

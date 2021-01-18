@@ -385,7 +385,12 @@ export class InternalPicker extends React.PureComponent<InternalPickerProps, Int
 
       if (searchQuery) {
         group = GROUP_KEY_SEARCH_RESULTS;
-      } else if (!disableGroups && typeof emoji.group !== 'undefined') {
+      } else if (!disableGroups) {
+        // Dont show hidden emojis outside of search results
+        if (emoji.group === undefined) {
+          return;
+        }
+
         group = GROUPS[emoji.group];
       }
 
@@ -786,7 +791,7 @@ export class InternalPicker extends React.PureComponent<InternalPickerProps, Int
 export default function Picker({
   compact,
   locale,
-  shortcodes = ['emojibase', 'emojibase-legacy'],
+  shortcodes = ['emojibase'],
   throwErrors,
   version,
   ...props

@@ -2,6 +2,8 @@
 
 #### 💥 Breaking
 
+- Switched from the `emojibase-legacy` shortcode preset to `emojibase` (shortcodes are now
+  different). Can customize this using the new `shortcodes` option.
 - Removed `emojibase` as a peer requirement.
 - Removed `INTERWEAVE_ALLOW_FETCH_EMOJI` constant for testing.
 

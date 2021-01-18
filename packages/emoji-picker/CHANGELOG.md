@@ -2,6 +2,8 @@
 
 #### 💥 Breaking
 
+- Switched from the `emojibase-legacy` shortcode preset to `emojibase` (shortcodes are now
+  different). Can customize this using the new `shortcodes` prop.
 - Removed `emojibase` as a peer requirement.
 
 #### 🚀 Updates
@@ -9,6 +11,10 @@
 - Updated to support Emoji v13, which includes 117 new emojis.
 - Updated to support different shortcodes using pre-defined presets.
 - Added `shortcodes` prop to `Picker`.
+
+#### 🐞 Fixes
+
+- Fixed some group scroll to edge cases.
 
 #### 📦 Dependencies
 
