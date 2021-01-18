@@ -232,4 +232,23 @@ new EmojiMatcher('emoji', { enlargeThreshold: 3 });
 
 For example, if `enlargeThreshold` is set to 3, and 3 emojis are found, all will be enlarged.
 
+## Testing utilities
+
+Since emoji data must be fetched, this can be rather tedious to mock correctly and efficiently when
+testing. To get around this, the `mockEmojiData()` function can be used, which should be called
+during your testing framework's boostrap and _not_ in a `beforeEach` event.
+
+By default this will only mock English (`en`) data. If you need to support additional locales, call
+the method again with the locale code, but do note that the actual data will still be in English (it
+just avoids a fetch).
+
+```ts
+import { mockEmojiData } from 'interweave-emoji/test';
+
+mockEmojiData();
+mockEmojiData('fr'); // For other locales
+```
+
+> Mocking requires the `emojibase-test-utils` dependency to be installed.
+
 [emojibase]: https://emojibase.dev

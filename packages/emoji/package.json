@@ -39,6 +39,10 @@
     "url": "https://ko-fi.com/milesjohnson"
   },
   "packemon": {
+    "inputs": {
+      "index": "src/index.ts",
+      "test": "src/test.ts"
+    },
     "platform": "browser"
   }
 }

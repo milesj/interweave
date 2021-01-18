@@ -17,8 +17,14 @@ export default function loadEmojis(
   compact: boolean,
 ): Promise<CanonicalEmoji[]> {
   const key = `${locale}:${version}:${compact ? 'compact' : 'data'}`;
+  const instance = EmojiDataManager.getInstance(locale);
 
-  // Return as we've already loaded or are loading data
+  // Data has been loaded elsewhere
+  if (instance.data.length > 0) {
+    return Promise.resolve(instance.getData());
+  }
+
+  // Return as we're currently loading data
   if (promises.has(key)) {
     return promises.get(key)!;
   }
@@ -33,8 +39,6 @@ export default function loadEmojis(
   promises.set(
     key,
     request.then(([emojis, messages]) => {
-      const instance = EmojiDataManager.getInstance(locale);
-
       instance.parseEmojiData(emojis);
       instance.parseMessageData(messages);
 
