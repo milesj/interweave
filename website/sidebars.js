@@ -6,6 +6,7 @@ module.exports = {
     'matchers',
     'filters',
     {
+      collapsed: false,
       type: 'category',
       label: 'Extensions',
       items: ['exts/autolink', 'exts/emoji', 'exts/emoji-picker'],

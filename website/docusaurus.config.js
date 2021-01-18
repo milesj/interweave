@@ -1,6 +1,13 @@
 /* eslint-disable sort-keys */
 
-const pkg = require('interweave/package.json');
+const pkgs = [
+  'interweave',
+  'interweave-autolink',
+  'interweave-emoji',
+  'interweave-emoji-picker',
+  'interweave-ssr',
+  // eslint-disable-next-line
+].map((name) => require(`${name}/package.json`));
 
 module.exports = {
   title: 'Interweave',
@@ -21,9 +28,12 @@ module.exports = {
       },
       items: [
         {
-          href: 'https://www.npmjs.com/package/interweave',
-          label: `v${pkg.version}`,
+          label: `v${pkgs[0].version}`,
           position: 'left',
+          items: pkgs.map((pkg) => ({
+            label: `v${pkg.version} · ${pkg.name.replace(/^interweave-?/, '') || 'core'}`,
+            href: `https://www.npmjs.com/package/${pkg.name}`,
+          })),
         },
         {
           to: 'docs/',
@@ -41,7 +51,7 @@ module.exports = {
     footer: {
       style: 'dark',
       links: [],
-      copyright: `Copyright © ${new Date().getFullYear()} Miles Johnson. Built with Docusaurus.`,
+      copyright: `Copyright © ${new Date().getFullYear()} Miles Johnson. Built with <a href="https://docusaurus.io/">Docusaurus</a>.`,
     },
   },
   presets: [
@@ -49,7 +59,6 @@ module.exports = {
       '@docusaurus/preset-classic',
       {
         docs: {
-          homePageId: 'index',
           sidebarPath: require.resolve('./sidebars.js'),
           editUrl: 'https://github.com/milesj/interweave/edit/master/website/',
         },
