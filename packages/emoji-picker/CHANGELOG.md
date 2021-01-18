@@ -5,6 +5,7 @@
 - Switched from the `emojibase-legacy` shortcode preset to `emojibase` (shortcodes are now
   different). Can customize this using the new `shortcodes` prop.
 - Removed `emojibase` as a peer requirement.
+- Removed `messages` that pertain to emoji groups (as they are provided by Emojibase now).
 
 #### 🚀 Updates
 

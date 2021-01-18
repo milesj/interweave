@@ -3,6 +3,7 @@ import camelCase from 'lodash/camelCase';
 import upperFirst from 'lodash/upperFirst';
 import { SKIN_COLORS } from './constants';
 import Context from './Context';
+import { useTitleFormat } from './hooks/useTitleFormat';
 import { SkinToneKey } from './types';
 
 export interface SkinToneProps {
@@ -17,6 +18,7 @@ export default function SkinTone({ active, children, skinTone, onSelect }: SkinT
   const className = [classNames.skinTone];
   const color = SKIN_COLORS[skinTone];
   const key = camelCase(skinTone);
+  const title = useTitleFormat(messages[`skin${upperFirst(key)}`]);
 
   if (active) {
     className.push(classNames.skinToneActive);
@@ -35,7 +37,7 @@ export default function SkinTone({ active, children, skinTone, onSelect }: SkinT
       className={className.join(' ')}
       data-skin-color={color}
       data-skin-tone={skinTone}
-      title={messages[`skin${upperFirst(key)}`]}
+      title={title}
       type="button"
       onClick={handleClick}
     >
