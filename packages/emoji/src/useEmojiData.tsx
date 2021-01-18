@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
-
 import { useEffect, useMemo, useState } from 'react';
 import { fetchEmojis, fetchMetadata, Locale, ShortcodePreset } from 'emojibase';
 import { LATEST_DATASET_VERSION } from './constants';

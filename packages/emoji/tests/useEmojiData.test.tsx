@@ -1,18 +1,20 @@
 import React from 'react';
-import { ShortcodesDataset } from 'emojibase';
+import { Locale, MetadataDataset, ShortcodesDataset } from 'emojibase';
 import { mockFetch, MockFetchResult, renderAndWait } from 'rut-dom';
 import { resetInstances } from '../src/EmojiDataManager';
 import { CanonicalEmoji, Source, UseEmojiDataOptions } from '../src/types';
 import useEmojiData, { resetLoaded } from '../src/useEmojiData';
 
-function cdnEmojis(locale: string, version: string = '1.0.0', compact: boolean = false) {
-  return `https://cdn.jsdelivr.net/npm/emojibase-data@${version}/${locale}/${
-    compact ? 'compact' : 'data'
-  }.json`;
+function cdn(locale: Locale, version: string = '1.0.0', type: string = 'data') {
+  return `https://cdn.jsdelivr.net/npm/emojibase-data@${version}/${locale}/${type}.json`;
 }
 
-function cdnShortcodes(preset: string, locale: string, version: string = '1.0.0') {
-  return `https://cdn.jsdelivr.net/npm/emojibase-data@${version}/${locale}/shortcodes/${preset}.json`;
+function cdnMeta(locale: Locale, version?: string) {
+  return cdn(locale, version, 'meta');
+}
+
+function cdnShortcodes(preset: string, locale: Locale, version?: string) {
+  return cdn(locale, version, `shortcodes/${preset}`);
 }
 
 describe('useEmojiData()', () => {
@@ -56,23 +58,36 @@ describe('useEmojiData()', () => {
     '1F600': ['gleeful'],
   };
 
+  const mockMessages: MetadataDataset = {
+    groups: [],
+    subgroups: [],
+  };
+
   let fetchSpy: MockFetchResult;
 
   beforeEach(() => {
     process.env.INTERWEAVE_ALLOW_FETCH_EMOJI = 'true';
 
     fetchSpy = mockFetch('/', 200)
-      .get(cdnEmojis('en', '1.0.0'), mockEmojis)
-      .get(cdnEmojis('en', '1.0.0', true), mockEmojis) // Compact
-      .get(cdnEmojis('it', '1.0.0'), mockEmojis)
-      .get(cdnEmojis('de', '2.0.0'), mockEmojis)
-      .get(cdnEmojis('ja', '1.2.3'), []) // No data
-      .get(cdnEmojis('fr', '1.0.0'), 404) // Not found
-      .get(cdnEmojis('fr', '2.0.0'), 404) // Not found
+      // Emojis
+      .get(cdn('en', '1.0.0'), mockEmojis)
+      .get(cdn('en', '1.0.0', 'compact'), mockEmojis) // Compact
+      .get(cdn('it', '1.0.0'), mockEmojis)
+      .get(cdn('de', '2.0.0'), mockEmojis)
+      .get(cdn('ja', '1.2.3'), []) // No data
+      .get(cdn('fr', '1.0.0'), 404) // Not found
+      .get(cdn('fr', '2.0.0'), 404) // Not found
+      // Shortcodes
       .get(cdnShortcodes('emojibase', 'en', '1.0.0'), mockShortcodes)
       .get(cdnShortcodes('emojibase', 'it', '1.0.0'), mockShortcodes)
       .get(cdnShortcodes('emojibase', 'de', '2.0.0'), mockShortcodes)
       .get(cdnShortcodes('emojibase', 'ja', '1.2.3'), mockShortcodes)
+      // Messages
+      .get(cdnMeta('en', '1.0.0'), mockMessages)
+      .get(cdnMeta('it', '1.0.0'), mockMessages)
+      .get(cdnMeta('de', '2.0.0'), mockMessages)
+      .get(cdnMeta('fr', '2.0.0'), mockMessages)
+      .get(cdnMeta('ja', '1.2.3'), mockMessages)
       .spy();
 
     // Emojibase caches requests
@@ -84,7 +99,8 @@ describe('useEmojiData()', () => {
   it('fetches data on mount', async () => {
     const result = await renderAndWait<Props>(<EmojiData />);
 
-    expect(fetchSpy.called(cdnEmojis('en'))).toBe(true);
+    expect(fetchSpy.called(cdn('en'))).toBe(true);
+    expect(fetchSpy.called(cdnMeta('en'))).toBe(true);
     expect(fetchSpy.called(cdnShortcodes('emojibase', 'en'))).toBe(true);
 
     expect(result.root.findOne(TestComp)).toHaveProp('emojis', mockEmojis);
@@ -97,7 +113,7 @@ describe('useEmojiData()', () => {
     await result.updateAndWait();
     await result.updateAndWait();
 
-    expect(fetchSpy.calls()).toHaveLength(2); // emojis + shortcodes
+    expect(fetchSpy.calls()).toHaveLength(3); // emojis + shortcodes + meta
   });
 
   it('doesnt fetch if `avoidFetch` is true', async () => {
@@ -109,7 +125,8 @@ describe('useEmojiData()', () => {
   it('re-fetches data if a prop changes', async () => {
     const result = await renderAndWait<Props>(<EmojiData locale="ja" version="1.2.3" />);
 
-    expect(fetchSpy.called(cdnEmojis('ja', '1.2.3'))).toBe(true);
+    expect(fetchSpy.called(cdn('ja', '1.2.3'))).toBe(true);
+    expect(fetchSpy.called(cdnMeta('ja', '1.2.3'))).toBe(true);
     expect(fetchSpy.called(cdnShortcodes('emojibase', 'ja', '1.2.3'))).toBe(true);
 
     await result.updateAndWait({
@@ -117,25 +134,28 @@ describe('useEmojiData()', () => {
       version: '2.0.0',
     });
 
-    expect(fetchSpy.called(cdnEmojis('de', '2.0.0'))).toBe(true);
+    expect(fetchSpy.called(cdn('de', '2.0.0'))).toBe(true);
+    expect(fetchSpy.called(cdnMeta('de', '2.0.0'))).toBe(true);
     expect(fetchSpy.called(cdnShortcodes('emojibase', 'de', '2.0.0'))).toBe(true);
   });
 
   it('supports compact datasets', async () => {
     await renderAndWait<Props>(<EmojiData compact />);
 
-    expect(fetchSpy.called(cdnEmojis('en', '1.0.0', true))).toBe(true);
+    expect(fetchSpy.called(cdn('en', '1.0.0', 'compact'))).toBe(true);
   });
 
   it('supports multiple locales', async () => {
     const result = await renderAndWait<Props>(<EmojiData locale="de" version="2.0.0" />);
 
-    expect(fetchSpy.called(cdnEmojis('de', '2.0.0'))).toBe(true);
+    expect(fetchSpy.called(cdn('de', '2.0.0'))).toBe(true);
+    expect(fetchSpy.called(cdnMeta('de', '2.0.0'))).toBe(true);
     expect(fetchSpy.called(cdnShortcodes('emojibase', 'de', '2.0.0'))).toBe(true);
 
     await result.rerenderAndWait(<EmojiData locale="it" />);
 
-    expect(fetchSpy.called(cdnEmojis('it'))).toBe(true);
+    expect(fetchSpy.called(cdn('it'))).toBe(true);
+    expect(fetchSpy.called(cdnMeta('it'))).toBe(true);
     expect(fetchSpy.called(cdnShortcodes('emojibase', 'it', '1.0.0'))).toBe(true);
   });
 
