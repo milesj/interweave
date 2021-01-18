@@ -7,6 +7,8 @@
 #### 🚀 Updates
 
 - Updated to support Emoji v13, which includes 117 new emojis.
+- Updated to support different shortcodes using pre-defined presets.
+- Added `shortcodes` option to `useEmojiData`.
 
 #### 📦 Dependencies
 

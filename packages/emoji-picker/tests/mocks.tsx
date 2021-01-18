@@ -2,6 +2,7 @@
 
 import React from 'react';
 import { Presentation } from 'emojibase';
+import { EmojiDataManager } from 'interweave-emoji';
 import { CONTEXT_CLASSNAMES, CONTEXT_MESSAGES } from '../src/constants';
 import EmojiContext from '../src/Context';
 import { Context } from '../src/types';
@@ -33,6 +34,7 @@ export function ContextWrapper({
     <EmojiContext.Provider
       value={{
         classNames: { ...CONTEXT_CLASSNAMES, ...classNames },
+        emojiData: EmojiDataManager.getInstance('en'),
         emojiLargeSize: 72,
         emojiPadding: 5,
         emojiPath: '{{hexcode}}',

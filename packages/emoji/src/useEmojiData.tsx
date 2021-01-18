@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 
 import { useEffect, useMemo, useState } from 'react';
-import { fetchEmojis, Locale, ShortcodePreset } from 'emojibase';
+import { fetchEmojis, fetchMetadata, Locale, ShortcodePreset } from 'emojibase';
 import { LATEST_DATASET_VERSION } from './constants';
 import EmojiDataManager from './EmojiDataManager';
 import { CanonicalEmoji, Source, UseEmojiDataOptions } from './types';
@@ -28,15 +28,19 @@ function loadEmojis(
   }
 
   // Otherwise, start loading emoji data from the CDN
-  // @ts-expect-error
-  const request = fetchEmojis(locale, { compact, flat: false, shortcodes, version });
+  const request = Promise.all([
+    // @ts-expect-error
+    fetchEmojis(locale, { compact, flat: false, shortcodes, version }) as CanonicalEmoji[],
+    fetchMetadata(locale, { version }),
+  ]);
 
   promises.set(
     key,
-    request.then((response) => {
+    request.then(([emojis, messages]) => {
       const instance = EmojiDataManager.getInstance(locale);
 
-      instance.parseEmojiData(response);
+      instance.parseEmojiData(emojis);
+      instance.parseMessageData(messages);
 
       return instance.getData();
     }),

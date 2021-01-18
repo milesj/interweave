@@ -10,6 +10,7 @@ export type CommonMode = 'recently-used' | 'frequently-used';
 
 export interface Context {
   classNames: Record<string, string>;
+  emojiData: EmojiDataManager;
   emojiLargeSize: number;
   emojiPadding: number;
   emojiPath: Path;

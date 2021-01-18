@@ -5,6 +5,7 @@ import { Context } from './types';
 
 export default React.createContext<Context>({
   classNames: CONTEXT_CLASSNAMES,
+  emojiData: {},
   emojiLargeSize: 0,
   emojiPadding: 0,
   emojiPath: '{{hexcode}}',
@@ -15,4 +16,4 @@ export default React.createContext<Context>({
     version: LATEST_DATASET_VERSION,
   },
   messages: CONTEXT_MESSAGES,
-});
+} as any);
