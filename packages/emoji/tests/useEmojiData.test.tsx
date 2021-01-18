@@ -2,9 +2,8 @@ import React from 'react';
 import { Locale, MetadataDataset, ShortcodesDataset } from 'emojibase';
 import { mockFetch, MockFetchResult, renderAndWait } from 'rut-dom';
 import { resetInstances } from '../src/EmojiDataManager';
-import { resetLoaded } from '../src/loadEmojis';
 import { CanonicalEmoji, Source, UseEmojiDataOptions } from '../src/types';
-import useEmojiData from '../src/useEmojiData';
+import useEmojiData, { resetLoaded } from '../src/useEmojiData';
 
 function cdn(locale: Locale, version: string = '1.0.0', type: string = 'data') {
   return `https://cdn.jsdelivr.net/npm/emojibase-data@${version}/${locale}/${type}.json`;
@@ -80,6 +79,8 @@ describe('useEmojiData()', () => {
       .get(cdn('fr', '2.0.0'), 404) // Not found
       // Shortcodes
       .get(cdnShortcodes('emojibase', 'en', '1.0.0'), mockShortcodes)
+      .get(cdnShortcodes('emojibase', 'en', '2.0.0'), mockShortcodes)
+      .get(cdnShortcodes('emojibase', 'en', '1.2.3'), mockShortcodes)
       .get(cdnShortcodes('emojibase', 'it', '1.0.0'), mockShortcodes)
       .get(cdnShortcodes('emojibase', 'de', '2.0.0'), mockShortcodes)
       .get(cdnShortcodes('emojibase', 'ja', '1.2.3'), mockShortcodes)

@@ -1,9 +1,6 @@
 import React, { useCallback, useContext } from 'react';
-import { GroupKey as BaseGroupKey } from 'emojibase';
-import camelCase from 'lodash/camelCase';
-import upperFirst from 'lodash/upperFirst';
-import { GROUP_KEY_COMMONLY_USED } from './constants';
 import Context from './Context';
+import useGroupMessage from './hooks/useGroupMessage';
 import { CommonMode, GroupKey } from './types';
 
 export interface GroupProps {
@@ -15,10 +12,9 @@ export interface GroupProps {
 }
 
 export default function Group({ active, children, commonMode, group, onSelect }: GroupProps) {
-  const { classNames, emojiData, messages } = useContext(Context);
-  const key = camelCase(group === GROUP_KEY_COMMONLY_USED ? commonMode : group);
-  const title = emojiData?.GROUPS_BY_KEY?.[group as BaseGroupKey] || messages[key];
+  const { classNames } = useContext(Context);
   const className = [classNames.group];
+  const title = useGroupMessage(group, commonMode);
 
   if (active) {
     className.push(classNames.groupActive);
@@ -33,12 +29,7 @@ export default function Group({ active, children, commonMode, group, onSelect }:
   );
 
   return (
-    <button
-      className={className.join(' ')}
-      title={upperFirst(title)}
-      type="button"
-      onClick={handleClick}
-    >
+    <button className={className.join(' ')} title={title} type="button" onClick={handleClick}>
       {children}
     </button>
   );

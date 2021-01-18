@@ -791,7 +791,7 @@ export class InternalPicker extends React.PureComponent<InternalPickerProps, Int
 export default function Picker({
   compact,
   locale,
-  shortcodes = ['emojibase'],
+  shortcodes,
   throwErrors,
   version,
   ...props

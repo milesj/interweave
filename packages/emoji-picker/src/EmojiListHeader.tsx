@@ -1,5 +1,4 @@
 import React, { useCallback, useContext } from 'react';
-import camelCase from 'lodash/camelCase';
 import {
   GROUP_KEY_COMMONLY_USED,
   GROUP_KEY_NONE,
@@ -8,6 +7,7 @@ import {
   GROUP_KEY_VARIATIONS,
 } from './constants';
 import Context from './Context';
+import useGroupMessage from './hooks/useGroupMessage';
 import { CommonMode, GroupKey } from './types';
 
 export interface EmojiListHeaderProps {
@@ -36,6 +36,7 @@ export default function EmojiListHeader({
       group === GROUP_KEY_SEARCH_RESULTS ||
       group === GROUP_KEY_NONE);
   const className = [classNames.emojisHeader];
+  const title = useGroupMessage(group, commonMode);
 
   if (sticky) {
     className.push(classNames.emojisHeaderSticky);
@@ -51,11 +52,7 @@ export default function EmojiListHeader({
 
   return (
     <header className={className.join(' ')}>
-      <span>
-        {group === GROUP_KEY_COMMONLY_USED
-          ? messages[camelCase(commonMode)]
-          : messages[camelCase(group)]}
-      </span>
+      <span>{title}</span>
 
       {showPalette && skinTonePalette}
 

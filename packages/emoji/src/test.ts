@@ -3,7 +3,7 @@ import { loadEmojiData, loadMeta, loadShortcodes } from 'emojibase-test-utils';
 // eslint-disable-next-line unicorn/import-index
 import { CanonicalEmoji, EmojiDataManager } from './index';
 
-export function mockEmojiData(locale: Locale): CanonicalEmoji[] {
+export function mockEmojiData(locale: Locale = 'en'): CanonicalEmoji[] {
   const instance = EmojiDataManager.getInstance(locale);
 
   if (instance.data.length === 0) {
