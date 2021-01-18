@@ -1,4 +1,4 @@
-# 6.0.0
+# 6.0.0 - 2021-01-18
 
 #### 💥 Breaking
 
@@ -16,6 +16,10 @@
 #### 📦 Dependencies
 
 - Updated `emojibase` to v5.
+
+#### 🛠 Internals
+
+- Switched to [Packemon](https://packemon.dev) for package building.
 
 ## 5.4.0 - 2020-11-04
 

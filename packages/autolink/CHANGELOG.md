@@ -1,3 +1,9 @@
+## 4.4.0 - 2021-01-18
+
+#### 🛠 Internals
+
+- Switched to [Packemon](https://packemon.dev) for package building.
+
 ## 4.3.0 - 2020-11-04
 
 #### 🚀 Updates

@@ -1,7 +1,8 @@
-### 12.6.1
+## 12.7.0 - 2021-01-18
 
 #### 🛠 Internals
 
+- Switched to [Packemon](https://packemon.dev) for package building.
 - Updated test data and fixtures.
 
 ## 12.6.0 - 2020-11-04

@@ -1,4 +1,4 @@
-# 6.0.0
+# 6.0.0 - 2021-01-18
 
 #### 💥 Breaking
 
@@ -23,6 +23,7 @@
 
 #### 🛠 Internals
 
+- Switched to [Packemon](https://packemon.dev) for package building.
 - Updated all component event handlers to use `useCallback`.
 
 #### 💥 Breaking

@@ -1,3 +1,9 @@
+## 1.2.0 - 2021-01-18
+
+#### 🛠 Internals
+
+- Switched to [Packemon](https://packemon.dev) for package building.
+
 ### 1.1.1 - 2020-11-04
 
 #### 🐞 Fixes
