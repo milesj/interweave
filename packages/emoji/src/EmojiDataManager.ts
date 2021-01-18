@@ -150,12 +150,16 @@ export default class EmojiDataManager {
   }
 
   parseMessageData(data: MetadataDataset) {
-    data.groups.forEach((group) => {
-      this.GROUPS_BY_KEY[group.key as GroupKey] = group.message;
-    });
+    if (data.groups) {
+      data.groups.forEach((group) => {
+        this.GROUPS_BY_KEY[group.key as GroupKey] = group.message;
+      });
+    }
 
-    data.subgroups.forEach((group) => {
-      this.SUBGROUPS_BY_KEY[group.key as SubgroupKey] = group.message;
-    });
+    if (data.subgroups) {
+      data.subgroups.forEach((group) => {
+        this.SUBGROUPS_BY_KEY[group.key as SubgroupKey] = group.message;
+      });
+    }
   }
 }

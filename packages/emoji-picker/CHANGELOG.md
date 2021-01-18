@@ -14,6 +14,10 @@
 
 - Updated `emojibase` to v5.
 
+#### 🛠 Internals
+
+- Updated all component event handlers to use `useCallback`.
+
 #### 💥 Breaking
 
 ## 5.3.0 - 2020-11-04

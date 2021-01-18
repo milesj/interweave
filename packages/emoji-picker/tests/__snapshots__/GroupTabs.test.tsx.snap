@@ -11,7 +11,7 @@ exports[`GroupTabs renders a list 1`] = `
       >
         <button
           className="interweave-picker__group"
-          title="Smileys & Emotion"
+          title="Smileys & emotion"
           type="button"
           onClick={func()}
         >
@@ -27,7 +27,7 @@ exports[`GroupTabs renders a list 1`] = `
       >
         <button
           className="interweave-picker__group"
-          title="People & Bodies"
+          title="People & body"
           type="button"
           onClick={func()}
         >
@@ -43,7 +43,7 @@ exports[`GroupTabs renders a list 1`] = `
       >
         <button
           className="interweave-picker__group"
-          title="Animals & Nature"
+          title="Animals & nature"
           type="button"
           onClick={func()}
         >
@@ -59,7 +59,7 @@ exports[`GroupTabs renders a list 1`] = `
       >
         <button
           className="interweave-picker__group"
-          title="Food & Drink"
+          title="Food & drink"
           type="button"
           onClick={func()}
         >
@@ -75,7 +75,7 @@ exports[`GroupTabs renders a list 1`] = `
       >
         <button
           className="interweave-picker__group"
-          title="Travel & Places"
+          title="Travel & places"
           type="button"
           onClick={func()}
         >

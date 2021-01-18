@@ -3,6 +3,7 @@
 #### 💥 Breaking
 
 - Removed `emojibase` as a peer requirement.
+- Removed `INTERWEAVE_ALLOW_FETCH_EMOJI` constant for testing.
 
 #### 🚀 Updates
 

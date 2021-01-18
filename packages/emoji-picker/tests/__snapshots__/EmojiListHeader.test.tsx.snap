@@ -2,6 +2,6 @@
 
 exports[`EmojiListHeader renders a group list 1`] = `
 <header className="interweave-picker__emojis-header">
-  <span>Smileys & Emotion</span>
+  <span>Smileys & emotion</span>
 </header>
 `;
