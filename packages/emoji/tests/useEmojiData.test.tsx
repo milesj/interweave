@@ -2,8 +2,9 @@ import React from 'react';
 import { Locale, MetadataDataset, ShortcodesDataset } from 'emojibase';
 import { mockFetch, MockFetchResult, renderAndWait } from 'rut-dom';
 import { resetInstances } from '../src/EmojiDataManager';
+import { mockEmojiData } from '../src/test';
 import { CanonicalEmoji, Source, UseEmojiDataOptions } from '../src/types';
-import useEmojiData, { resetLoaded } from '../src/useEmojiData';
+import useEmojiData, { determinePresets, resetLoaded } from '../src/useEmojiData';
 
 function cdn(locale: Locale, version: string = '1.0.0', type: string = 'data') {
   return `https://cdn.jsdelivr.net/npm/emojibase-data@${version}/${locale}/${type}.json`;
@@ -181,5 +182,42 @@ describe('useEmojiData()', () => {
     } catch (error) {
       expect(error).toEqual(new Error('Failed to load Emojibase dataset.'));
     }
+  });
+
+  it('reads from the data manager cache', async () => {
+    mockEmojiData('ko');
+
+    await renderAndWait<Props>(<EmojiData locale="ko" />);
+
+    expect(fetchSpy.calls()).toHaveLength(0);
+  });
+});
+
+describe('determinePresets()', () => {
+  it('returns emojibase if empty', () => {
+    expect(determinePresets('en', [])).toEqual(['emojibase']);
+  });
+
+  it('returns emojibase with english if empty and non-en', () => {
+    expect(determinePresets('fr', [])).toEqual(['emojibase', 'en/emojibase']);
+  });
+
+  it('doesnt double add english emojibase', () => {
+    expect(determinePresets('fr', ['emojibase', 'en/emojibase'])).toEqual([
+      'emojibase',
+      'en/emojibase',
+    ]);
+  });
+
+  it('returns as-is if no emojibase', () => {
+    expect(determinePresets('de', ['cldr'])).toEqual(['cldr']);
+  });
+
+  it('returns english emojibase when provided and non-en', () => {
+    expect(determinePresets('ja', ['cldr', 'emojibase'])).toEqual([
+      'cldr',
+      'emojibase',
+      'en/emojibase',
+    ]);
   });
 });

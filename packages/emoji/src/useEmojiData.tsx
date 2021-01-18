@@ -4,7 +4,7 @@ import { LATEST_DATASET_VERSION } from './constants';
 import EmojiDataManager from './EmojiDataManager';
 import { CanonicalEmoji, Source, UseEmojiDataOptions } from './types';
 
-function determinePresets(locale: string, shortcodes: string[]): string[] {
+export function determinePresets(locale: string, shortcodes: string[]): string[] {
   const presets: string[] = [];
 
   if (shortcodes.length === 0) {
@@ -41,14 +41,14 @@ function loadEmojis(
   const key = `${locale}:${version}:${compact ? 'compact' : 'data'}`;
   const instance = EmojiDataManager.getInstance(locale);
 
-  // Data has been loaded elsewhere
-  if (instance.data.length > 0) {
-    return Promise.resolve(instance.getData());
-  }
-
   // Return as we're currently loading data
   if (promises.has(key)) {
     return promises.get(key)!;
+  }
+
+  // Data has been loaded elsewhere
+  if (instance.data.length > 0) {
+    return Promise.resolve(instance.getData());
   }
 
   // Otherwise, start loading emoji data from the CDN
