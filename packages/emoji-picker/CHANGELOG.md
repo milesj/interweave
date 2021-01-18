@@ -1,3 +1,32 @@
+# 6.0.0
+
+#### 💥 Breaking
+
+- Switched from the `emojibase-legacy` shortcode preset to `emojibase` (shortcodes are now
+  different). Can customize this using the new `shortcodes` prop.
+- Removed `emojibase` as a peer requirement.
+- Removed `messages` that pertain to emoji groups (as they are provided by Emojibase now).
+
+#### 🚀 Updates
+
+- Updated to support Emoji v13.1, which includes 117+ new emojis.
+- Updated to support different shortcodes using pre-defined presets.
+- Added `shortcodes` prop to `Picker`.
+
+#### 🐞 Fixes
+
+- Fixed some group scroll to edge cases.
+
+#### 📦 Dependencies
+
+- Updated `emojibase` to v5.
+
+#### 🛠 Internals
+
+- Updated all component event handlers to use `useCallback`.
+
+#### 💥 Breaking
+
 ## 5.3.0 - 2020-11-04
 
 #### 🚀 Updates

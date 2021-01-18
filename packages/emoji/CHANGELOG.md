@@ -1,3 +1,22 @@
+# 6.0.0
+
+#### 💥 Breaking
+
+- Switched from the `emojibase-legacy` shortcode preset to `emojibase` (shortcodes are now
+  different). Can customize this using the new `shortcodes` option.
+- Removed `emojibase` as a peer requirement.
+- Removed `INTERWEAVE_ALLOW_FETCH_EMOJI` constant for testing.
+
+#### 🚀 Updates
+
+- Updated to support Emoji v13.1, which includes 117+ new emojis.
+- Updated to support different shortcodes using pre-defined presets.
+- Added `shortcodes` option to `useEmojiData`.
+
+#### 📦 Dependencies
+
+- Updated `emojibase` to v5.
+
 ## 5.4.0 - 2020-11-04
 
 #### 🚀 Updates

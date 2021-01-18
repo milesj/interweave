@@ -45,7 +45,7 @@ describe('EmojiListHeader', () => {
   it('displays group name', () => {
     const { root } = render<EmojiListHeaderProps>(<EmojiListHeader {...props} />);
 
-    expect(root.findOne('span')).toContainNode('Smileys & Emotion');
+    expect(root.findOne('span')).toContainNode('Smileys & emotion');
   });
 
   it('displays commonly used group name', () => {
@@ -53,7 +53,7 @@ describe('EmojiListHeader', () => {
       <EmojiListHeader {...props} group={GROUP_KEY_COMMONLY_USED} />,
     );
 
-    expect(root.findOne('span')).toContainNode('Frequently Used');
+    expect(root.findOne('span')).toContainNode('Frequently used');
   });
 
   it('shows palette if people group', () => {

@@ -41,7 +41,7 @@ const features: FeatureProps[] = [
     description: (
       <>
         With the power of{' '}
-        <a href="https://github.com/milesj/emojibase" target="_blank">
+        <a href="https://emojibase.dev" target="_blank">
           Emojibase
         </a>
         , easily replace emoji unicode characters and shortcodes with dynamic SVGs or PNGs. Take

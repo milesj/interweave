@@ -1,19 +1,13 @@
 import React, { useContext } from 'react';
 import { CanonicalEmoji, Emoji as EmojiCharacter } from 'interweave-emoji';
 import Context from './Context';
-
-const TITLE_REGEX = /(^|:|\.)\s?[a-z]/g;
+import { useTitleFormat } from './hooks/useTitleFormat';
 
 export interface PreviewBarProps {
   emoji?: CanonicalEmoji | null;
   hideEmoticon: boolean;
   hideShortcodes: boolean;
   noPreview?: React.ReactNode;
-}
-
-// Format the title using sentence case.
-function formatTitle(title: string): string {
-  return title.replace(TITLE_REGEX, (token) => token.toUpperCase());
 }
 
 // eslint-disable-next-line complexity
@@ -24,6 +18,8 @@ export default function PreviewBar({
   noPreview,
 }: PreviewBarProps) {
   const { classNames, emojiLargeSize, emojiPath, emojiSource, messages } = useContext(Context);
+  const title = useTitleFormat(emoji?.annotation || '');
+  const subtitle = [];
 
   if (!emoji) {
     const preview = noPreview || messages.noPreview;
@@ -34,9 +30,6 @@ export default function PreviewBar({
       </section>
     );
   }
-
-  const title = emoji.annotation || emoji.name;
-  const subtitle = [];
 
   if (!hideEmoticon && emoji.emoticon) {
     subtitle.push(emoji.emoticon);
@@ -61,7 +54,7 @@ export default function PreviewBar({
       <div className={classNames.previewContent}>
         {title && (
           <div className={classNames.previewTitle}>
-            {formatTitle(title)}
+            {title}
 
             {emoji.skins && emoji.skins.length > 0 && (
               <span className={classNames.previewShiftMore}>(+{emoji.skins.length})</span>

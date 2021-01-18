@@ -121,6 +121,7 @@ export class InternalPicker extends React.PureComponent<InternalPickerProps, Int
           ...CONTEXT_CLASSNAMES,
           ...classNames,
         },
+        emojiData: props.emojiData,
         emojiLargeSize: props.emojiLargeSize,
         emojiPadding: props.emojiPadding!,
         emojiPath: props.emojiPath,
@@ -384,7 +385,12 @@ export class InternalPicker extends React.PureComponent<InternalPickerProps, Int
 
       if (searchQuery) {
         group = GROUP_KEY_SEARCH_RESULTS;
-      } else if (!disableGroups && typeof emoji.group !== 'undefined') {
+      } else if (!disableGroups) {
+        // Dont show hidden emojis outside of search results
+        if (emoji.group === undefined) {
+          return;
+        }
+
         group = GROUPS[emoji.group];
       }
 
@@ -785,11 +791,18 @@ export class InternalPicker extends React.PureComponent<InternalPickerProps, Int
 export default function Picker({
   compact,
   locale,
+  shortcodes,
   throwErrors,
   version,
   ...props
 }: PickerProps & UseEmojiDataOptions) {
-  const [emojis, source, data] = useEmojiData({ compact, locale, throwErrors, version });
+  const [emojis, source, data] = useEmojiData({
+    compact,
+    locale,
+    shortcodes,
+    throwErrors,
+    version,
+  });
 
   if (emojis.length === 0) {
     return null;

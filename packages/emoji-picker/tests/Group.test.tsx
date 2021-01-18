@@ -27,13 +27,13 @@ describe('Group', () => {
   it('sets group title', () => {
     const { root } = render<GroupProps>(<Group {...props} />);
 
-    expect(root.findOne('button')).toHaveProp('title', 'Smileys & Emotion');
+    expect(root.findOne('button')).toHaveProp('title', 'Smileys & emotion');
   });
 
   it('sets common mode group title', () => {
     const { root } = render<GroupProps>(<Group {...props} group={GROUP_KEY_COMMONLY_USED} />);
 
-    expect(root.findOne('button')).toHaveProp('title', 'Frequently Used');
+    expect(root.findOne('button')).toHaveProp('title', 'Frequently used');
   });
 
   it('updates the active state', () => {

@@ -1,3 +1,9 @@
+### 12.6.1
+
+#### 🛠 Internals
+
+- Updated test data and fixtures.
+
 ## 12.6.0 - 2020-11-04
 
 #### 🚀 Updates

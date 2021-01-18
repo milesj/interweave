@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useRef } from 'react';
+import React, { useCallback, useContext, useEffect, useRef } from 'react';
 import Context from './Context';
 
 export interface SearchBarProps {
@@ -16,14 +16,17 @@ export default function SearchBar({ autoFocus, searchQuery, onChange, onKeyUp }:
     if (autoFocus && ref.current) {
       ref.current.focus();
     }
-  });
+  }, [autoFocus]);
 
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    // Check if were still mounted
-    if (ref.current) {
-      onChange(event.target.value.trim(), event);
-    }
-  };
+  const handleChange = useCallback(
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      // Check if were still mounted
+      if (ref.current) {
+        onChange(event.target.value.trim(), event);
+      }
+    },
+    [onChange],
+  );
 
   return (
     <div className={classNames.search}>

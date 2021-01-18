@@ -11,7 +11,7 @@ exports[`SkinTonePalette renders a palette 1`] = `
           data-skin-tone="none"
           title="No skin tone"
           type="button"
-          onClick={handleClick()}
+          onClick={func()}
         >
            
         </button>
@@ -25,7 +25,7 @@ exports[`SkinTonePalette renders a palette 1`] = `
           data-skin-tone="light"
           title="Light skin tone"
           type="button"
-          onClick={handleClick()}
+          onClick={func()}
         >
            
         </button>
@@ -39,7 +39,7 @@ exports[`SkinTonePalette renders a palette 1`] = `
           data-skin-tone="medium-light"
           title="Medium-light skin tone"
           type="button"
-          onClick={handleClick()}
+          onClick={func()}
         >
            
         </button>
@@ -53,7 +53,7 @@ exports[`SkinTonePalette renders a palette 1`] = `
           data-skin-tone="medium"
           title="Medium skin tone"
           type="button"
-          onClick={handleClick()}
+          onClick={func()}
         >
            
         </button>
@@ -67,7 +67,7 @@ exports[`SkinTonePalette renders a palette 1`] = `
           data-skin-tone="medium-dark"
           title="Medium-dark skin tone"
           type="button"
-          onClick={handleClick()}
+          onClick={func()}
         >
            
         </button>
@@ -81,7 +81,7 @@ exports[`SkinTonePalette renders a palette 1`] = `
           data-skin-tone="dark"
           title="Dark skin tone"
           type="button"
-          onClick={handleClick()}
+          onClick={func()}
         >
            
         </button>

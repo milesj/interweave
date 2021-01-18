@@ -1,4 +1,4 @@
-import { Emoji, Emoticon, Hexcode, Shortcode, Unicode } from 'emojibase';
+import { Emoji, Emoticon, Hexcode, Locale, Shortcode, ShortcodePreset, Unicode } from 'emojibase';
 
 export interface CanonicalEmoji extends Emoji {
   canonical_shortcodes: Shortcode[];
@@ -21,7 +21,7 @@ export type Size = string | number;
 export interface Source {
   compact: boolean;
   error?: Error;
-  locale: string;
+  locale: Locale;
   version: string;
 }
 
@@ -69,7 +69,9 @@ export interface UseEmojiDataOptions {
   /** Load compact emoji dataset instead of full dataset. */
   compact?: boolean;
   /** Locale to load emoji annotations in. Defaults to `en`. */
-  locale?: string;
+  locale?: Locale;
+  /** List of shortcode presets to load and join with the dataset. */
+  shortcodes?: (string | ShortcodePreset)[];
   /** Throw errors that occurred during a fetch. Defaults to `true`. */
   throwErrors?: boolean;
   /** Emojibase dataset version to load. Defaults to `latest`. */

@@ -4,7 +4,11 @@ import {
   fromCodepointToUnicode,
   fromHexcodeToCodepoint,
   generateEmoticonPermutations,
+  GroupKey,
   Hexcode,
+  Locale,
+  MetadataDataset,
+  SubgroupKey,
   TEXT,
 } from 'emojibase';
 import { CanonicalEmoji } from './types';
@@ -18,28 +22,32 @@ export function resetInstances() {
 }
 
 export default class EmojiDataManager {
-  EMOJIS: { [hexcode: string]: CanonicalEmoji } = {};
+  EMOJIS: Record<string, CanonicalEmoji> = {};
 
-  EMOTICON_TO_HEXCODE: { [emoticon: string]: Hexcode } = {};
+  EMOTICON_TO_HEXCODE: Record<string, Hexcode> = {};
 
-  SHORTCODE_TO_HEXCODE: { [shortcode: string]: Hexcode } = {};
+  SHORTCODE_TO_HEXCODE: Record<string, Hexcode> = {};
 
-  UNICODE_TO_HEXCODE: { [unicode: string]: Hexcode } = {};
+  UNICODE_TO_HEXCODE: Record<string, Hexcode> = {};
+
+  GROUPS_BY_KEY: Partial<Record<GroupKey, string>> = {};
+
+  SUBGROUPS_BY_KEY: Partial<Record<SubgroupKey, string>> = {};
 
   data: CanonicalEmoji[] = [];
 
   flatData: CanonicalEmoji[] = [];
 
-  locale: string = 'en';
+  locale: Locale = 'en';
 
-  constructor(locale: string = 'en') {
+  constructor(locale: Locale = 'en') {
     this.locale = locale;
   }
 
   /**
    * Return or create a singleton instance per locale.
    */
-  static getInstance(locale: string = 'en'): EmojiDataManager {
+  static getInstance(locale: Locale = 'en'): EmojiDataManager {
     if (!instances.has(locale)) {
       instances.set(locale, new EmojiDataManager(locale));
     }
@@ -66,7 +74,7 @@ export default class EmojiDataManager {
    * while also extracting and partitioning relevant information.
    */
   packageEmoji(baseEmoji: Emoji): CanonicalEmoji {
-    const { emoticon, hexcode, shortcodes } = baseEmoji;
+    const { emoticon, hexcode, shortcodes = [] } = baseEmoji;
     const emoji: CanonicalEmoji = {
       ...baseEmoji,
       canonical_shortcodes: [],
@@ -133,11 +141,25 @@ export default class EmojiDataManager {
       // Flatten and package skins as well
       if (packagedEmoji.skins) {
         packagedEmoji.skins.forEach((skin) => {
-          this.flatData.push(this.packageEmoji(skin));
+          this.flatData.push(skin);
         });
       }
     });
 
     return this.data;
+  }
+
+  parseMessageData(data: MetadataDataset) {
+    if (data.groups) {
+      data.groups.forEach((group) => {
+        this.GROUPS_BY_KEY[group.key as GroupKey] = group.message;
+      });
+    }
+
+    if (data.subgroups) {
+      data.subgroups.forEach((group) => {
+        this.SUBGROUPS_BY_KEY[group.key as SubgroupKey] = group.message;
+      });
+    }
   }
 }

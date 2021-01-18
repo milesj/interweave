@@ -3,6 +3,9 @@ import Interweave, { Element, InterweaveProps } from 'interweave';
 import { SOURCE_PROP } from 'interweave/test';
 import { render } from 'rut-dom';
 import EmojiMatcher from '../src/EmojiMatcher';
+import { mockEmojiData } from '../src/test';
+
+mockEmojiData();
 
 describe('Interweave (with emoji)', () => {
   it('renders all types', () => {

@@ -130,21 +130,10 @@ export const CONTEXT_CLASSNAMES = {
 };
 
 export const CONTEXT_MESSAGES = {
-  // Emoji groups
-  frequentlyUsed: 'Frequently Used',
-  recentlyUsed: 'Recently Used',
-  smileysEmotion: 'Smileys & Emotion',
-  peopleBody: 'People & Bodies',
-  animalsNature: 'Animals & Nature',
-  foodDrink: 'Food & Drink',
-  travelPlaces: 'Travel & Places',
-  activities: 'Activities',
-  objects: 'Objects',
-  symbols: 'Symbols',
-  flags: 'Flags',
-  searchResults: 'Search Results',
+  frequentlyUsed: 'Frequently used',
+  recentlyUsed: 'Recently used',
   variations: 'Variations',
-  none: 'All Emojis',
+  none: 'All emojis',
   // Skin tones
   skinNone: 'No skin tone',
   skinLight: 'Light skin tone',
@@ -155,6 +144,7 @@ export const CONTEXT_MESSAGES = {
   // Miscellaneous
   search: 'Search',
   searchA11y: 'Search for emojis by keyword',
+  searchResults: 'Search results',
   noPreview: '',
   noResults: 'No results',
   clearUsed: 'Clear used',
