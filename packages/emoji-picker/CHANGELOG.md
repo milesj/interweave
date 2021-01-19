@@ -1,3 +1,9 @@
+## 6.0.1 - 2021-01-18
+
+#### 🐞 Fixes
+
+- Fix `interweave-emoji` peer dependency requirement.
+
 # 6.0.0 - 2021-01-18
 
 #### 💥 Breaking
