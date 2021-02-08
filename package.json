@@ -51,7 +51,10 @@
   "beemo": {
     "module": "@milesj/build-tools",
     "drivers": [
-      "babel",
+      {
+        "driver": "babel",
+        "strategy": "none"
+      },
       "eslint",
       "jest",
       "prettier",
