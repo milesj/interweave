@@ -7,7 +7,7 @@ export default class Filter implements FilterInterface {
   attribute<K extends keyof ElementAttributes>(
     name: K,
     value: ElementAttributes[K],
-  ): ElementAttributes[K] | undefined | null {
+  ): ElementAttributes[K] | null | undefined {
     return value;
   }
 

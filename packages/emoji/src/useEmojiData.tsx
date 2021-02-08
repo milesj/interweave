@@ -35,7 +35,7 @@ export function resetLoaded() {
 function loadEmojis(
   locale: Locale,
   version: string,
-  shortcodes: (string | ShortcodePreset)[],
+  shortcodes: (ShortcodePreset | string)[],
   compact: boolean,
 ): Promise<CanonicalEmoji[]> {
   const key = `${locale}:${version}:${compact ? 'compact' : 'data'}`;

@@ -52,7 +52,7 @@ export default function Emoji({
     return <span>{emoji.unicode}</span>;
   }
 
-  const styles: { [name: string]: string | Size } = {
+  const styles: { [name: string]: Size | string } = {
     display: 'inline-block',
     verticalAlign: 'middle',
   };

@@ -6,7 +6,7 @@ import EmojiButton from './Emoji';
 import EmojiListHeader from './EmojiListHeader';
 import { CommonMode, GroupKey } from './types';
 
-export type VirtualRow = string | CanonicalEmoji[];
+export type VirtualRow = CanonicalEmoji[] | string;
 
 export interface EmojiListRowProps {
   activeEmoji?: CanonicalEmoji | null;
@@ -32,7 +32,7 @@ export default function EmojiListRow({
   onEnterEmoji,
   onLeaveEmoji,
   onSelectEmoji,
-}: ListChildComponentProps & EmojiListRowProps) {
+}: EmojiListRowProps & ListChildComponentProps) {
   const { classNames } = useContext(Context);
   const row = data[index] as VirtualRow;
 

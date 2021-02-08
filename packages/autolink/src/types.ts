@@ -4,9 +4,9 @@ import { ChildrenNode } from 'interweave';
 export interface LinkProps {
   children: React.ReactNode;
   href: string;
-  key?: string | number;
+  key?: number | string;
   newWindow?: boolean;
-  onClick?: () => void | null;
+  onClick?: () => null | void;
 }
 
 export interface EmailProps extends Partial<LinkProps> {
@@ -34,7 +34,7 @@ export interface UrlProps extends Partial<LinkProps> {
     fragment: string;
     host: string;
     path: string;
-    port: string | number;
+    port: number | string;
     query: string;
     scheme: string;
   };

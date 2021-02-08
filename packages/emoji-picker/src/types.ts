@@ -6,7 +6,7 @@ export interface CommonEmoji {
   hexcode: Hexcode;
 }
 
-export type CommonMode = 'recently-used' | 'frequently-used';
+export type CommonMode = 'frequently-used' | 'recently-used';
 
 export interface Context {
   classNames: Record<string, string>;
@@ -19,9 +19,9 @@ export interface Context {
   messages: Record<string, string>;
 }
 
-export type DisplayOrder = 'preview' | 'emojis' | 'groups' | 'search' | 'skin-tones';
+export type DisplayOrder = 'emojis' | 'groups' | 'preview' | 'search' | 'skin-tones';
 
-export type GroupKey = BaseGroupKey | 'commonly-used' | 'search-results' | 'variations' | 'none';
+export type GroupKey = BaseGroupKey | 'commonly-used' | 'none' | 'search-results' | 'variations';
 
 export type GroupEmojiMap = Record<
   string,

@@ -6,7 +6,7 @@ import { MatchCallback, MatchResponse } from './types';
  */
 export default function match<T>(
   string: string,
-  pattern: string | RegExp,
+  pattern: RegExp | string,
   callback: MatchCallback<T>,
   isVoid: boolean = false,
 ): MatchResponse<T> | null {

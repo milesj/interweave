@@ -358,7 +358,7 @@ export default class Parser {
    * Extract the style attribute as an object and remove values that allow for attack vectors.
    */
   extractStyleAttribute(node: HTMLElement): object {
-    const styles: { [key: string]: string | number } = {};
+    const styles: { [key: string]: number | string } = {};
 
     Array.from(node.style).forEach((key) => {
       const value = node.style[key as keyof CSSStyleDeclaration];

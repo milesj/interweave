@@ -17,7 +17,7 @@ import {
   TOKEN_LOCATIONS,
 } from '../src/test';
 
-function createChild(tag: string, text: string | number): HTMLElement {
+function createChild(tag: string, text: number | string): HTMLElement {
   const child = document.createElement(tag);
   child.append(document.createTextNode(String(text)));
 

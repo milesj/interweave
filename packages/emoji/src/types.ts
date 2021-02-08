@@ -16,7 +16,7 @@ export interface PathConfig {
 
 export type Path = string | ((hexcode: Hexcode, config: PathConfig) => string);
 
-export type Size = string | number;
+export type Size = number | string;
 
 export interface Source {
   compact: boolean;
@@ -71,7 +71,7 @@ export interface UseEmojiDataOptions {
   /** Locale to load emoji annotations in. Defaults to `en`. */
   locale?: Locale;
   /** List of shortcode presets to load and join with the dataset. */
-  shortcodes?: (string | ShortcodePreset)[];
+  shortcodes?: (ShortcodePreset | string)[];
   /** Throw errors that occurred during a fetch. Defaults to `true`. */
   throwErrors?: boolean;
   /** Emojibase dataset version to load. Defaults to `latest`. */

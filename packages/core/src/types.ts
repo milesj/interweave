@@ -11,9 +11,9 @@ declare global {
   }
 }
 
-export type Node = null | string | React.ReactElement<unknown>;
+export type Node = React.ReactElement<unknown> | string | null;
 
-export type ChildrenNode = string | Node[];
+export type ChildrenNode = Node[] | string;
 
 export interface NodeConfig {
   // Only children
@@ -38,7 +38,7 @@ export interface ConfigMap {
   [key: string]: Partial<NodeConfig>;
 }
 
-export type AttributeValue = string | number | boolean | object;
+export type AttributeValue = boolean | number | object | string;
 
 export interface Attributes {
   [attr: string]: AttributeValue;
@@ -85,7 +85,7 @@ export interface FilterInterface {
   attribute?: <K extends keyof ElementAttributes>(
     name: K,
     value: ElementAttributes[K],
-  ) => ElementAttributes[K] | undefined | null;
+  ) => ElementAttributes[K] | null | undefined;
   node?: (name: string, node: HTMLElement) => HTMLElement | null;
 }
 

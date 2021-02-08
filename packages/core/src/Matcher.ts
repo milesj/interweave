@@ -52,7 +52,7 @@ export default abstract class Matcher<Props extends object = {}, Options extends
    */
   doMatch<T>(
     string: string,
-    pattern: string | RegExp,
+    pattern: RegExp | string,
     callback: MatchCallback<T>,
     isVoid: boolean = false,
   ): MatchResponse<T> | null {
