@@ -24,11 +24,11 @@
     "node": ">=10.3.0"
   },
   "devDependencies": {
-    "@milesj/build-tools": "^2.17.0",
+    "@milesj/build-tools": "^2.17.1",
     "@types/lodash": "^4.14.168",
     "@types/parse5": "^6.0.0",
-    "@types/react": "^17.0.1",
-    "@types/react-dom": "^17.0.0",
+    "@types/react": "^17.0.2",
+    "@types/react-dom": "^17.0.1",
     "@types/react-window": "^1.8.2",
     "babel-loader": "^8.2.2",
     "conventional-changelog-beemo": "^2.1.0",
@@ -37,7 +37,7 @@
     "eslint-plugin-rut": "^2.0.0",
     "jest-rut": "^2.0.0",
     "lerna": "^3.22.1",
-    "packemon": "^0.11.1",
+    "packemon": "^0.12.0",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "rut-dom": "^2.0.0",
