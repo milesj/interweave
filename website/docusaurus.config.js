@@ -1,13 +1,13 @@
 /* eslint-disable sort-keys */
 
 const pkgs = [
-  'interweave',
-  'interweave-autolink',
-  'interweave-emoji',
-  'interweave-emoji-picker',
-  'interweave-ssr',
+  'core',
+  'autolink',
+  'emoji',
+  'emoji-picker',
+  'ssr',
   // eslint-disable-next-line
-].map((name) => require(`${name}/package.json`));
+].map((name) => require(`../packages/${name}/package.json`));
 
 module.exports = {
   title: 'Interweave',
@@ -31,7 +31,7 @@ module.exports = {
           label: `v${pkgs[0].version}`,
           position: 'left',
           items: pkgs.map((pkg) => ({
-            label: `v${pkg.version} · ${pkg.name.replace(/^interweave-?/, '') || 'core'}`,
+            label: `v${pkg.version} · ${pkg.name}`,
             href: `https://www.npmjs.com/package/${pkg.name}`,
           })),
         },

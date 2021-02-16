@@ -1027,7 +1027,7 @@
     core-js-pure "^3.0.0"
     regenerator-runtime "^0.13.4"
 
-"@babel/runtime@^7.0.0", "@babel/runtime@^7.1.2", "@babel/runtime@^7.10.3", "@babel/runtime@^7.12.5", "@babel/runtime@^7.5.5", "@babel/runtime@^7.8.4":
+"@babel/runtime@^7.1.2", "@babel/runtime@^7.10.3", "@babel/runtime@^7.12.5", "@babel/runtime@^7.5.5", "@babel/runtime@^7.8.4":
   version "7.12.5"
   resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.12.5.tgz#410e7e487441e1b360c29be715d870d9b985882e"
   integrity sha512-plcc+hbExy3McchJCEQG3knOsuh3HH+Prx1P6cLIkET/0dLuQDEnrT+s27Axgc9bqfsmNUNHfscgMUdBpC9xfg==
@@ -1087,7 +1087,7 @@
     "@docsearch/css" "3.0.0-alpha.32"
     algoliasearch "^4.0.0"
 
-"@docusaurus/core@2.0.0-alpha.70", "@docusaurus/core@^2.0.0-alpha.64":
+"@docusaurus/core@2.0.0-alpha.70", "@docusaurus/core@^2.0.0-alpha.70":
   version "2.0.0-alpha.70"
   resolved "https://registry.yarnpkg.com/@docusaurus/core/-/core-2.0.0-alpha.70.tgz#81bff8b093421a0c740fac02903dd23938806077"
   integrity sha512-ccDcr5eb5T3C6k7VoqTclBFwjVkIHK1zISdhqzRNVl8AZTql1bYMvGUJP+2WbF6RSdmsGTNWreaUlrJc00dQqw==
@@ -1204,7 +1204,7 @@
     url-loader "^4.1.1"
     webpack "^4.44.1"
 
-"@docusaurus/module-type-aliases@^2.0.0-alpha.64":
+"@docusaurus/module-type-aliases@^2.0.0-alpha.70":
   version "2.0.0-alpha.70"
   resolved "https://registry.yarnpkg.com/@docusaurus/module-type-aliases/-/module-type-aliases-2.0.0-alpha.70.tgz#2e50770c54cb465302d0a779fb76c163a1fc94e2"
   integrity sha512-ESAY5ZU7uGRhZwbyxyGdvAAP+3D/oewSmtsWdvdhc8V9PPxVJCXc06zxXunfEzutVtOd4iZkQsuWgXAhtFa63g==
@@ -1312,7 +1312,7 @@
     joi "^17.2.1"
     sitemap "^3.2.2"
 
-"@docusaurus/preset-classic@^2.0.0-alpha.64":
+"@docusaurus/preset-classic@^2.0.0-alpha.70":
   version "2.0.0-alpha.70"
   resolved "https://registry.yarnpkg.com/@docusaurus/preset-classic/-/preset-classic-2.0.0-alpha.70.tgz#7857f606eecdbaa34f8df83d62812908be02126f"
   integrity sha512-Zx98KryJjHiqzGisWKR0glXl0HXuf/YbcK9yUl6ySyS+6cIMAuGMS0HGLgbvvEmYjywz7nMLpijzGderEOihjQ==
@@ -1725,13 +1725,6 @@
   version "4.0.2"
   resolved "https://registry.yarnpkg.com/@types/react-toggle/-/react-toggle-4.0.2.tgz#46ffa5af1a55de5f25d0aa78ef0b557b5c8bf276"
   integrity sha512-sHqfoKFnL0YU2+OC4meNEC8Ptx9FE8/+nFeFvNcdBa6ANA8KpAzj3R9JN8GtrvlLgjKDoYgI7iILgXYcTPo2IA==
-  dependencies:
-    "@types/react" "*"
-
-"@types/react-window@*":
-  version "1.8.2"
-  resolved "https://registry.yarnpkg.com/@types/react-window/-/react-window-1.8.2.tgz#a5a6b2762ce73ffaab7911ee1397cf645f2459fe"
-  integrity sha512-gP1xam68Wc4ZTAee++zx6pTdDAH08rAkQrWm4B4F/y6hhmlT9Mgx2q8lTCXnrPHXsr15XjRN9+K2DLKcz44qEQ==
   dependencies:
     "@types/react" "*"
 
@@ -3920,16 +3913,6 @@ emoji-regex@^8.0.0:
   resolved "https://registry.yarnpkg.com/emoji-regex/-/emoji-regex-8.0.0.tgz#e818fd69ce5ccfcb404594f842963bf53164cc37"
   integrity sha512-MSjYzcWNOA0ewAHpz0MxpYFvwg6yjy1NG3xteoqz644VCo/RPgnr1/GGt+ic3iJTzQ8Eu3TdM14SawnVUmGE6A==
 
-emojibase-regex@^5.1.1:
-  version "5.1.1"
-  resolved "https://registry.yarnpkg.com/emojibase-regex/-/emojibase-regex-5.1.1.tgz#f2108121abd7b1413eab1130254d6babe0795a60"
-  integrity sha512-pMa8YszeFBQgRvZ95DRK7lVgjaRakJ1UkIdONjSY3O79kzIzDuSkZoypUvV62oYgm9AQ/7uYIKf42UGMed6oTA==
-
-emojibase@^5.1.0:
-  version "5.1.0"
-  resolved "https://registry.yarnpkg.com/emojibase/-/emojibase-5.1.0.tgz#91ef5531ffa1aa2f330f1fad6306738a936d75c5"
-  integrity sha512-Jj6jYwic/msP0I3Nwp9Kj7EDH1/aQ35rGrBdYC/cFtas70CK2Br95AWIjZytXYpSCKLjW6YC4IduZg74sd/tlA==
-
 emojis-list@^2.0.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/emojis-list/-/emojis-list-2.1.0.tgz#4daa4d9db00f9819880c79fa457ae5b09a1fd389"
@@ -5325,34 +5308,6 @@ interpret@^1.0.0:
   resolved "https://registry.yarnpkg.com/interpret/-/interpret-1.4.0.tgz#665ab8bc4da27a774a40584e812e3e0fa45b1a1e"
   integrity sha512-agE4QfB2Lkp9uICn7BAqoscw4SZP9kTE2hxiFI3jBPmXJfdqiahTbUuKGsMoN2GtqL9AxhYioAcVvgsb1HvRbA==
 
-"interweave-autolink@file:../packages/autolink":
-  version "4.3.0"
-
-"interweave-emoji-picker@file:../packages/emoji-picker":
-  version "5.3.0"
-  dependencies:
-    "@types/react-window" "*"
-    emojibase "^5.1.0"
-    lodash "^4.17.20"
-    react-window "^1.8.6"
-
-"interweave-emoji@file:../packages/emoji":
-  version "5.4.0"
-  dependencies:
-    emojibase "^5.1.0"
-    emojibase-regex "^5.1.1"
-
-"interweave-ssr@file:../packages/ssr":
-  version "1.1.1"
-  dependencies:
-    parse5 "^6.0.1"
-    style-parser "^1.1.1"
-
-"interweave@file:../packages/core":
-  version "12.6.0"
-  dependencies:
-    escape-html "^1.0.3"
-
 ip-regex@^2.1.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/ip-regex/-/ip-regex-2.1.0.tgz#fa78bf5d2e6913c911ce9f819ee5146bb6d844e9"
@@ -6278,11 +6233,6 @@ media-typer@0.3.0:
   resolved "https://registry.yarnpkg.com/media-typer/-/media-typer-0.3.0.tgz#8710d7af0aa626f8fffa1ce00168545263255748"
   integrity sha1-hxDXrwqmJvj/+hzgAWhUUmMlV0g=
 
-"memoize-one@>=3.1.1 <6":
-  version "5.1.1"
-  resolved "https://registry.yarnpkg.com/memoize-one/-/memoize-one-5.1.1.tgz#047b6e3199b508eaec03504de71229b8eb1d75c0"
-  integrity sha512-HKeeBpWvqiVJD57ZUAsJNm71eHTykffzcLZVYWiVfQeI1rJtuEaS7hQiEpWfVVk18donPwJEcFKIkCmPJNOhHA==
-
 memory-fs@^0.4.1:
   version "0.4.1"
   resolved "https://registry.yarnpkg.com/memory-fs/-/memory-fs-0.4.1.tgz#3a9a20b8462523e447cfbc7e8bb80ed667bfc552"
@@ -7067,7 +7017,7 @@ parse5@^5.0.0:
   resolved "https://registry.yarnpkg.com/parse5/-/parse5-5.1.1.tgz#f68e4e5ba1852ac2cadc00f4555fff6c2abb6178"
   integrity sha512-ugq4DFI0Ptb+WWjAdOK16+u/nHfiIrcE+sh8kZMaM0WllQKLI9rOUq6c2b7cwPkXdzfQESqvoqK6ug7U/Yyzug==
 
-parse5@^6.0.0, parse5@^6.0.1:
+parse5@^6.0.0:
   version "6.0.1"
   resolved "https://registry.yarnpkg.com/parse5/-/parse5-6.0.1.tgz#e1a1c085c569b3dc08321184f19a39cc27f7c30b"
   integrity sha512-Ofn/CTFzRGTTxwpNEs9PP93gXShHcTq255nzRYSKe8AkVpZY7e1fpmTfOyoIvjP5HG7Z2ZM7VS9PPhQGW2pOpw==
@@ -7076,11 +7026,6 @@ parseurl@~1.3.2, parseurl@~1.3.3:
   version "1.3.3"
   resolved "https://registry.yarnpkg.com/parseurl/-/parseurl-1.3.3.tgz#9da19e7bee8d12dff0513ed5b76957793bc2e8d4"
   integrity sha512-CiyeOxFT/JZyN5m0z9PfXw4SCBJ6Sygz1Dpl0wqjlhDEGGBP1GnsUVEL0p63hoG1fcj3fHynXi9NYO4nWOL+qQ==
-
-parsimmon@^0.7.0:
-  version "0.7.2"
-  resolved "https://registry.yarnpkg.com/parsimmon/-/parsimmon-0.7.2.tgz#805fc6d1ed52d0c9b65cbf6b4da58a161e68e7e1"
-  integrity sha1-gF/G0e1S0Mm2XL9rTaWKFh5o5+E=
 
 pascal-case@^3.1.1:
   version "3.1.1"
@@ -8313,14 +8258,6 @@ react-toggle@^4.1.1:
   dependencies:
     classnames "^2.2.5"
 
-react-window@^1.8.6:
-  version "1.8.6"
-  resolved "https://registry.yarnpkg.com/react-window/-/react-window-1.8.6.tgz#d011950ac643a994118632665aad0c6382e2a112"
-  integrity sha512-8VwEEYyjz6DCnGBsd+MgkD0KJ2/OXFULyDtorIiTz+QzwoP94tBoA7CnbtyXMm+cCeAUER5KJcPtWl9cpKbOBg==
-  dependencies:
-    "@babel/runtime" "^7.0.0"
-    memoize-one ">=3.1.1 <6"
-
 react@^16.8.4:
   version "16.13.1"
   resolved "https://registry.yarnpkg.com/react/-/react-16.13.1.tgz#2e818822f1a9743122c063d6410d85c1e3afe48e"
@@ -9338,13 +9275,6 @@ strip-json-comments@~2.0.1:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/strip-json-comments/-/strip-json-comments-2.0.1.tgz#3c531942e908c2697c0ec344858c286c7ca0a60a"
   integrity sha1-PFMZQukIwml8DsNEhYwobHygpgo=
-
-style-parser@^1.1.1:
-  version "1.1.1"
-  resolved "https://registry.yarnpkg.com/style-parser/-/style-parser-1.1.1.tgz#9deb628d75462ff07b15662a72c0d5a8e4d5ffc5"
-  integrity sha1-netijXVGL/B7FWYqcsDVqOTV/8U=
-  dependencies:
-    parsimmon "^0.7.0"
 
 style-to-object@0.3.0, style-to-object@^0.3.0:
   version "0.3.0"
