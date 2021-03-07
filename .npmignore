@@ -15,7 +15,6 @@ yarn.lock
 _book/
 coverage/
 docs/
-src/
 tests/
 types/
 node_modules/
