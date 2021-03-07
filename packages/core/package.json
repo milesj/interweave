@@ -28,6 +28,14 @@
   "main": "./lib/index.js",
   "module": "./esm/index.js",
   "types": "./dts/index.d.ts",
+  "files": [
+    "dts/**/*.d.ts",
+    "esm/**/*.{js,map}",
+    "lib/**/*.{js,map}",
+    "src/**/*.{ts,tsx,json}",
+    "test.d.ts",
+    "test.js"
+  ],
   "sideEffects": false,
   "publishConfig": {
     "access": "public"
