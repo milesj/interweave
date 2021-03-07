@@ -13,6 +13,12 @@
   "main": "./lib/index.js",
   "module": "./esm/index.js",
   "types": "./dts/index.d.ts",
+  "files": [
+    "dts/**/*.d.ts",
+    "esm/**/*.{js,map}",
+    "lib/**/*.{js,map}",
+    "src/**/*.{ts,tsx,json}"
+  ],
   "sideEffects": false,
   "publishConfig": {
     "access": "public"
@@ -27,7 +33,7 @@
   "dependencies": {
     "@types/react-window": "*",
     "emojibase": "^5.1.0",
-    "lodash": "^4.17.20",
+    "lodash": "^4.17.21",
     "react-window": "^1.8.6"
   },
   "peerDependencies": {
