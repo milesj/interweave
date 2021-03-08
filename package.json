@@ -36,7 +36,6 @@
     "emojibase-test-utils": "^6.2.0",
     "eslint-plugin-rut": "^2.0.0",
     "jest-rut": "^2.0.0",
-    "lerna": "^3.22.1",
     "packemon": "^0.14.1",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
@@ -91,5 +90,8 @@
       "testEnvironment": "jsdom",
       "timers": "real"
     }
+  },
+  "dependencies": {
+    "lerna": "^4.0.0"
   }
 }
