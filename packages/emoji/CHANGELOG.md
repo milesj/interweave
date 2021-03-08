@@ -1,3 +1,9 @@
+### 6.0.1 - 2021-03-07
+
+#### 🐞 Fixes
+
+- Include source folder for source maps work correctly.
+
 # 6.0.0 - 2021-01-18
 
 #### 💥 Breaking

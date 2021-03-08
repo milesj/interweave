@@ -1,3 +1,9 @@
+### 4.4.1 - 2021-03-07
+
+#### 🐞 Fixes
+
+- Include source folder for source maps work correctly.
+
 ## 4.4.0 - 2021-01-18
 
 #### 🛠 Internals

@@ -1,3 +1,9 @@
+### 12.7.1 - 2021-03-07
+
+#### 🐞 Fixes
+
+- Include source folder for source maps work correctly.
+
 ## 12.7.0 - 2021-01-18
 
 #### 🛠 Internals
