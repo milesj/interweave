@@ -181,6 +181,7 @@ export const TOP_LEVEL_TLDS = [
   // Sponsored
   'aero',
   'asia',
+  'biz',  
   'cat',
   'coop',
   'jobs',
