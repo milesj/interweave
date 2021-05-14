@@ -268,7 +268,8 @@ export default class Parser {
    * resources.
    */
   createContainer(markup: string): HTMLElement | undefined {
-    const factory = global.INTERWEAVE_SSR_POLYFILL || createDocument;
+    const factory =
+      (typeof global !== 'undefined' && global.INTERWEAVE_SSR_POLYFILL) || createDocument;
     const doc = factory();
 
     if (!doc) {
