@@ -1,3 +1,9 @@
+### 6.0.2 - 2021-05-13
+
+#### 📦 Dependencies
+
+- Updated `emojibase` to latest.
+
 ### 6.0.1 - 2021-03-07
 
 #### 🐞 Fixes

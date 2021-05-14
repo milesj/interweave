@@ -1,3 +1,13 @@
+### 12.7.2 - 2021-05-13
+
+#### 🐞 Fixes
+
+- Add an undefined check for `global`.
+
+#### 📦 Dependencies
+
+- Updated all dependencies.
+
 ### 12.7.1 - 2021-03-07
 
 #### 🐞 Fixes
