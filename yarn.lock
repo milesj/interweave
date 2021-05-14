@@ -2709,10 +2709,10 @@
   resolved "https://registry.yarnpkg.com/@types/json5/-/json5-0.0.29.tgz#ee28707ae94e11d2b827bcbe5270bcea7f3e71ee"
   integrity sha1-7ihweulOEdK4J7y+UnC86n8+ce4=
 
-"@types/lodash@^4.14.168":
-  version "4.14.168"
-  resolved "https://registry.yarnpkg.com/@types/lodash/-/lodash-4.14.168.tgz#fe24632e79b7ade3f132891afff86caa5e5ce008"
-  integrity sha512-oVfRvqHV/V6D1yifJbVRU3TMp8OT6o6BG+U9MkwuJ3U8/CsDHvalRpsxBqivn71ztOFZBTfJMvETbqHiaNSj7Q==
+"@types/lodash@^4.14.169":
+  version "4.14.169"
+  resolved "https://registry.yarnpkg.com/@types/lodash/-/lodash-4.14.169.tgz#83c217688f07a4d9ef8f28a3ebd1d318f6ff4cbb"
+  integrity sha512-DvmZHoHTFJ8zhVYwCLWbQ7uAbYQEk52Ev2/ZiQ7Y7gQGeV9pjBqjnQpECMHfKS1rCYAhMI7LHVxwyZLZinJgdw==
 
 "@types/micromatch@^4.0.1":
   version "4.0.1"
@@ -2766,10 +2766,10 @@
   resolved "https://registry.npmjs.org/@types/prop-types/-/prop-types-15.7.3.tgz#2ab0d5da2e5815f94b0b9d4b95d1e5f243ab2ca7"
   integrity sha512-KfRL3PuHmqQLOG+2tGpRO26Ctg+Cq1E01D2DMriKEATHgWLfeNDmq9e29Q9WIky0dQ3NPkd1mzYH8Lm936Z9qw==
 
-"@types/react-dom@*", "@types/react-dom@^17.0.1":
-  version "17.0.1"
-  resolved "https://registry.yarnpkg.com/@types/react-dom/-/react-dom-17.0.1.tgz#d92d77d020bfb083e07cc8e0ac9f933599a4d56a"
-  integrity sha512-yIVyopxQb8IDZ7SOHeTovurFq+fXiPICa+GV3gp0Xedsl+MwQlMLKmvrnEjFbQxjliH5YVAEWFh975eVNmKj7Q==
+"@types/react-dom@*", "@types/react-dom@^17.0.5":
+  version "17.0.5"
+  resolved "https://registry.yarnpkg.com/@types/react-dom/-/react-dom-17.0.5.tgz#df44eed5b8d9e0b13bb0cd38e0ea6572a1231227"
+  integrity sha512-ikqukEhH4H9gr4iJCmQVNzTB307kROe3XFfHAOTxOXPOw7lAoEXnM5KWTkzeANGL5Ce6ABfiMl/zJBYNi7ObmQ==
   dependencies:
     "@types/react" "*"
 
@@ -2787,19 +2787,20 @@
   dependencies:
     "@types/react" "*"
 
-"@types/react-window@*", "@types/react-window@^1.8.2":
-  version "1.8.2"
-  resolved "https://registry.yarnpkg.com/@types/react-window/-/react-window-1.8.2.tgz#a5a6b2762ce73ffaab7911ee1397cf645f2459fe"
-  integrity sha512-gP1xam68Wc4ZTAee++zx6pTdDAH08rAkQrWm4B4F/y6hhmlT9Mgx2q8lTCXnrPHXsr15XjRN9+K2DLKcz44qEQ==
+"@types/react-window@*", "@types/react-window@^1.8.3":
+  version "1.8.3"
+  resolved "https://registry.yarnpkg.com/@types/react-window/-/react-window-1.8.3.tgz#14f74b144b4e3df9421eb31182dc580b7ccc7617"
+  integrity sha512-Xf+IR2Zyiyh/6z1CM8kv1aQba3S3X/hBXt4tH+T9bDSIGwFhle0GZFZGTSU8nw2cUT3UNbCHDjhxVQVZPtE8cA==
   dependencies:
     "@types/react" "*"
 
-"@types/react@*", "@types/react@^17.0.2":
-  version "17.0.2"
-  resolved "https://registry.yarnpkg.com/@types/react/-/react-17.0.2.tgz#3de24c4efef902dd9795a49c75f760cbe4f7a5a8"
-  integrity sha512-Xt40xQsrkdvjn1EyWe1Bc0dJLcil/9x2vAuW7ya+PuQip4UYUaXyhzWmAbwRsdMgwOFHpfp7/FFZebDU6Y8VHA==
+"@types/react@*", "@types/react@^17.0.5":
+  version "17.0.5"
+  resolved "https://registry.yarnpkg.com/@types/react/-/react-17.0.5.tgz#3d887570c4489011f75a3fc8f965bf87d09a1bea"
+  integrity sha512-bj4biDB9ZJmGAYTWSKJly6bMr4BLUiBrx9ujiJEoP9XIDY9CTaPGxE5QWN/1WjpPLzYF7/jRNnV2nNxNe970sw==
   dependencies:
     "@types/prop-types" "*"
+    "@types/scheduler" "*"
     csstype "^3.0.2"
 
 "@types/resolve@1.17.1":
@@ -2808,6 +2809,11 @@
   integrity sha512-yy7HuzQhj0dhGpD8RLXSZWEkLsV9ibvxvi6EiJ3bkqLAO1RGo0WbkWQiwpRlSFymTJRz0d3k5LM3kkx8ArDbLw==
   dependencies:
     "@types/node" "*"
+
+"@types/scheduler@*":
+  version "0.16.1"
+  resolved "https://registry.yarnpkg.com/@types/scheduler/-/scheduler-0.16.1.tgz#18845205e86ff0038517aab7a18a62a6b9f71275"
+  integrity sha512-EaCxbanVeyxDRTQBkdLb3Bvl/HK7PBK6UJjsSixB0iHKoWxE5uu2Q/DgtpOhPIojN0Zl1whvOd7PoHs2P0s5eA==
 
 "@types/stack-utils@^2.0.0":
   version "2.0.0"
@@ -5035,20 +5041,20 @@ emoji-regex@^9.0.0:
   resolved "https://registry.yarnpkg.com/emoji-regex/-/emoji-regex-9.0.0.tgz#48a2309cc8a1d2e9d23bc6a67c39b63032e76ea4"
   integrity sha512-6p1NII1Vm62wni/VR/cUMauVQoxmLVb9csqQlvLz+hO2gk8U2UYDfXHQSUYIBKmZwAKz867IDqG7B+u0mj+M6w==
 
-emojibase-regex@^5.1.1:
-  version "5.1.1"
-  resolved "https://registry.yarnpkg.com/emojibase-regex/-/emojibase-regex-5.1.1.tgz#f2108121abd7b1413eab1130254d6babe0795a60"
-  integrity sha512-pMa8YszeFBQgRvZ95DRK7lVgjaRakJ1UkIdONjSY3O79kzIzDuSkZoypUvV62oYgm9AQ/7uYIKf42UGMed6oTA==
+emojibase-regex@^5.1.3:
+  version "5.1.3"
+  resolved "https://registry.yarnpkg.com/emojibase-regex/-/emojibase-regex-5.1.3.tgz#f0ef621ed6ec624becd2326f999fd4ea01b94554"
+  integrity sha512-gT8T9LxLA8VJdI+8KQtyykB9qKzd7WuUL3M2yw6y9tplFeufOUANg3UKVaKUvkMcRNvZsSElWhxcJrx8WPE12g==
 
-emojibase-test-utils@^6.2.0:
-  version "6.2.0"
-  resolved "https://registry.yarnpkg.com/emojibase-test-utils/-/emojibase-test-utils-6.2.0.tgz#d0cc3b5ddb2a950ef8aa53058e66c20603b36fec"
-  integrity sha512-IvImKd6cpBUD1dqiAQmQol7kUMYfpgO+DlhOGW/7PQ6u7L7KFXTK0rkKfI/FYIMYx/+1s4RuOCA7gbuFtVxHjg==
+emojibase-test-utils@^6.2.2:
+  version "6.2.2"
+  resolved "https://registry.yarnpkg.com/emojibase-test-utils/-/emojibase-test-utils-6.2.2.tgz#ca6bbadcb82cc0867ba5d0abb1e03d8455d1bcc8"
+  integrity sha512-IuW0l7lb1sFdfu2XbOXB95QsyIeCHMnSUQaZdVReMlHLW4gNnG78n3b64Bn6caX2B2s9h23PKdhrbAyUwclrog==
 
-emojibase@^5.1.0:
-  version "5.1.0"
-  resolved "https://registry.yarnpkg.com/emojibase/-/emojibase-5.1.0.tgz#91ef5531ffa1aa2f330f1fad6306738a936d75c5"
-  integrity sha512-Jj6jYwic/msP0I3Nwp9Kj7EDH1/aQ35rGrBdYC/cFtas70CK2Br95AWIjZytXYpSCKLjW6YC4IduZg74sd/tlA==
+emojibase@^5.2.0:
+  version "5.2.0"
+  resolved "https://registry.yarnpkg.com/emojibase/-/emojibase-5.2.0.tgz#3b53899f9a9f8aae1280db446c83ce28f1d286d5"
+  integrity sha512-5T02oTJaWpScAtYbukKVc8vQ1367MyfVtFHUMoOVZ9/r1kFcbYqjSktD56TICBAeyW9uc1t+7qQuXEtntM6p5A==
 
 emojis-list@^3.0.0:
   version "3.0.0"
@@ -9683,14 +9689,14 @@ react-devtools-core@^4.6.0:
     shell-quote "^1.6.1"
     ws "^7"
 
-react-dom@^17.0.1:
-  version "17.0.1"
-  resolved "https://registry.yarnpkg.com/react-dom/-/react-dom-17.0.1.tgz#1de2560474ec9f0e334285662ede52dbc5426fc6"
-  integrity sha512-6eV150oJZ9U2t9svnsspTMrWNyHc6chX0KzDeAOXftRa8bNeOKTTfCJ7KorIwenkHd2xqVTBTCZd79yk/lx/Ug==
+react-dom@^17.0.2:
+  version "17.0.2"
+  resolved "https://registry.yarnpkg.com/react-dom/-/react-dom-17.0.2.tgz#ecffb6845e3ad8dbfcdc498f0d0a939736502c23"
+  integrity sha512-s4h96KtLDUQlsENhMn1ar8t2bEa+q/YAtj8pPPdIjPDGBDIVNsrD9aXNWqspUe6AzKCIG0C1HZZLqLV7qpOBGA==
   dependencies:
     loose-envify "^1.1.0"
     object-assign "^4.1.1"
-    scheduler "^0.20.1"
+    scheduler "^0.20.2"
 
 "react-is@^16.12.0 || ^17.0.0", react-is@^17.0.1:
   version "17.0.1"
@@ -9747,10 +9753,10 @@ react@^16.14.0:
     object-assign "^4.1.1"
     prop-types "^15.6.2"
 
-react@^17.0.1:
-  version "17.0.1"
-  resolved "https://registry.yarnpkg.com/react/-/react-17.0.1.tgz#6e0600416bd57574e3f86d92edba3d9008726127"
-  integrity sha512-lG9c9UuMHdcAexXtigOZLX8exLWkW0Ku29qPRU8uhF2R9BN96dLCt0psvzPLlHc5OWkgymP3qwTRgbnw5BKx3w==
+react@^17.0.2:
+  version "17.0.2"
+  resolved "https://registry.yarnpkg.com/react/-/react-17.0.2.tgz#d0b5cc516d29eb3eee383f75b62864cfb6800037"
+  integrity sha512-gnhPt75i/dq/z3/6q/0asP78D0u592D5L1pd7M8P+dck6Fu/jJeL6iVVK23fptSUZj8Vjf++7wXA8UNclGQcbA==
   dependencies:
     loose-envify "^1.1.0"
     object-assign "^4.1.1"
@@ -10365,10 +10371,10 @@ scheduler@^0.18.0:
     loose-envify "^1.1.0"
     object-assign "^4.1.1"
 
-scheduler@^0.20.1:
-  version "0.20.1"
-  resolved "https://registry.yarnpkg.com/scheduler/-/scheduler-0.20.1.tgz#da0b907e24026b01181ecbc75efdc7f27b5a000c"
-  integrity sha512-LKTe+2xNJBNxu/QhHvDR14wUXHRQbVY5ZOYpOGWRzhydZUqrLb2JBvLPY7cAqFmqrWuDED0Mjk7013SZiOz6Bw==
+scheduler@^0.20.1, scheduler@^0.20.2:
+  version "0.20.2"
+  resolved "https://registry.yarnpkg.com/scheduler/-/scheduler-0.20.2.tgz#4baee39436e34aa93b4874bddcbf0fe8b8b50e91"
+  integrity sha512-2eWfGgAqqWFGqtdMmcL5zCMK1U8KlXv8SQFGglL3CEtd0aDVDWgeF/YoCmvln55m5zSk3J/20hTaSBeSObsQDQ==
   dependencies:
     loose-envify "^1.1.0"
     object-assign "^4.1.1"

@@ -37,7 +37,7 @@
   },
   "devDependencies": {
     "interweave-ssr": "^1.2.1",
-    "react": "^17.0.1"
+    "react": "^17.0.2"
   },
   "funding": {
     "type": "ko-fi",
