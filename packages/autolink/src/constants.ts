@@ -150,7 +150,7 @@ export const HASHTAG_PATTERN = combinePatterns(
   },
 );
 
-export const EMAIL_USERNAME_PART = /[.a-z0-9!#$%&?*+=_{|}~-]+/;
+export const EMAIL_USERNAME_PART = /[.a-z0-9!#$%&?*+=_{|}~-]*/;
 
 export const EMAIL_USERNAME = combinePatterns(
   [VALID_ALNUM_CHARS, EMAIL_USERNAME_PART, VALID_ALNUM_CHARS],
@@ -181,7 +181,7 @@ export const TOP_LEVEL_TLDS = [
   // Sponsored
   'aero',
   'asia',
-  'biz',  
+  'biz',
   'cat',
   'coop',
   'jobs',

@@ -1,3 +1,9 @@
+### 4.4.3 - 2021-07-10
+
+#### 🐞 Fixes
+
+- Allow 2 letter email usernames.
+
 ### 4.4.2 - 2021-05-13
 
 #### 📦 Dependencies

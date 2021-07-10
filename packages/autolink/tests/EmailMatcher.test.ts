@@ -33,10 +33,12 @@ const VALID_EMAILS = [
   'multiple.dots+plus@example.com',
   'start.z@example.com',
   'a.end@domain.com',
+  'ab@domain.com',
 ];
 
 // Some of these are valid emails but I do not want to support them.
 const INVALID_EMAILS = [
+  'a@domain.com',
   'plainaddress',
   '#@%^%#$@#$@#.com',
   '@example.com',
