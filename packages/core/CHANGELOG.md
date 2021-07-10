@@ -4,6 +4,11 @@
 
 - Added a `className` prop, which is passed to the wrapping element.
 
+#### 🐞 Fixes
+
+- Updated `Markup` to render a `span` by default (instead of `div`). This functionality now matches
+  `Interweave` and the docs.
+
 ### 12.7.2 - 2021-05-13
 
 #### 🐞 Fixes

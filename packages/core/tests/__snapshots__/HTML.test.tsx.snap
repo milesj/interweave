@@ -8,8 +8,8 @@ exports[`html a, ul, li renders 1`] = `
     <li><a href="tel:+123456789">Phone</a></li>
   </ul>"
 >
-  <Element tagName="div">
-    <div>
+  <Element tagName="span">
+    <span>
       <Element tagName="ul">
         <ul>
           
@@ -52,7 +52,7 @@ exports[`html a, ul, li renders 1`] = `
 
         </ul>
       </Element>
-    </div>
+    </span>
   </Element>
 </Markup>
 `;
@@ -61,8 +61,8 @@ exports[`html abbr renders 1`] = `
 <Markup
   content="You can use <abbr title="Cascading Style Sheets">CSS</abbr> to style your <abbr title="HyperText Markup Language">HTML</abbr>."
 >
-  <Element tagName="div">
-    <div>
+  <Element tagName="span">
+    <span>
       You can use 
       <Element attributes={{ title: "Cascading Style Sheets" }} tagName="abbr">
         <abbr title="Cascading Style Sheets">
@@ -79,7 +79,7 @@ exports[`html abbr renders 1`] = `
         </abbr>
       </Element>
       .
-    </div>
+    </span>
   </Element>
 </Markup>
 `;
@@ -91,8 +91,8 @@ exports[`html address renders 1`] = `
     <a href="tel:+311-555-2368">+311-555-2368</a><br/>
   </address>"
 >
-  <Element tagName="div">
-    <div>
+  <Element tagName="span">
+    <span>
       <Element tagName="address">
         <address>
           
@@ -119,7 +119,7 @@ exports[`html address renders 1`] = `
 
         </address>
       </Element>
-    </div>
+    </span>
   </Element>
 </Markup>
 `;
@@ -142,8 +142,8 @@ exports[`html article renders 1`] = `
     </article>
   </article>"
 >
-  <Element tagName="div">
-    <div>
+  <Element tagName="span">
+    <span>
       <Element attributes={{ className: "forecast" }} tagName="article">
         <article className="forecast">
           
@@ -209,7 +209,7 @@ exports[`html article renders 1`] = `
 
         </article>
       </Element>
-    </div>
+    </span>
   </Element>
 </Markup>
 `;
@@ -220,8 +220,8 @@ exports[`html aside renders 1`] = `
     <p>The Rough-skinned Newt defends itself with a deadly neurotoxin.</p>
   </aside>"
 >
-  <Element tagName="div">
-    <div>
+  <Element tagName="span">
+    <span>
       <Element tagName="aside">
         <aside>
           
@@ -233,7 +233,7 @@ exports[`html aside renders 1`] = `
 
         </aside>
       </Element>
-    </div>
+    </span>
   </Element>
 </Markup>
 `;
@@ -244,8 +244,8 @@ exports[`html audio renders 1`] = `
     Your browser does not support the <code>audio</code> element.
   </audio>"
 >
-  <Element tagName="div">
-    <div>
+  <Element tagName="span">
+    <span>
       <Element
         attributes={{ controls: true, src: "/media/examples/t-rex-roar.mp3" }}
         tagName="audio"
@@ -258,7 +258,7 @@ exports[`html audio renders 1`] = `
 
         </audio>
       </Element>
-    </div>
+    </span>
   </Element>
 </Markup>
 `;
@@ -270,8 +270,8 @@ exports[`html audio renders with source 1`] = `
     Your browser does not support the <code>audio</code> element.
   </audio>"
 >
-  <Element tagName="div">
-    <div>
+  <Element tagName="span">
+    <span>
       <Element attributes={{ controls: true }} tagName="audio">
         <audio controls>
           
@@ -290,7 +290,7 @@ exports[`html audio renders with source 1`] = `
 
         </audio>
       </Element>
-    </div>
+    </span>
   </Element>
 </Markup>
 `;
@@ -299,8 +299,8 @@ exports[`html b renders 1`] = `
 <Markup
   content="<p>The two most popular science courses offered by the school are <b class="term">chemistry</b> (the study of chemicals and the composition of substances) and <b class="term">physics</b> (the study of the nature and properties of matter and energy).</p>"
 >
-  <Element tagName="div">
-    <div>
+  <Element tagName="span">
+    <span>
       <Element tagName="p">
         <p>
           The two most popular science courses offered by the school are 
@@ -318,7 +318,7 @@ exports[`html b renders 1`] = `
            (the study of the nature and properties of matter and energy).
         </p>
       </Element>
-    </div>
+    </span>
   </Element>
 </Markup>
 `;
@@ -333,8 +333,8 @@ exports[`html bdi renders 1`] = `
     <li><span class="name" dir="auto">تیز سمی</span>: 5th place</li>
   </ul>"
 >
-  <Element tagName="div">
-    <div>
+  <Element tagName="span">
+    <span>
       <Element tagName="ul">
         <ul>
           
@@ -404,7 +404,7 @@ exports[`html bdi renders 1`] = `
 
         </ul>
       </Element>
-    </div>
+    </span>
   </Element>
 </Markup>
 `;
@@ -413,15 +413,15 @@ exports[`html bdo renders 1`] = `
 <Markup
   content="In the computer's memory, this is stored as <bdo dir="ltr">אה, אני אוהב להיות ליד חוף הים</bdo>"
 >
-  <Element tagName="div">
-    <div>
+  <Element tagName="span">
+    <span>
       In the computer's memory, this is stored as 
       <Element attributes={{ dir: "ltr" }} tagName="bdo">
         <bdo dir="ltr">
           אה, אני אוהב להיות ליד חוף הים
         </bdo>
       </Element>
-    </div>
+    </span>
   </Element>
 </Markup>
 `;
@@ -434,8 +434,8 @@ exports[`html blockquote renders 1`] = `
   
   <cite>– Aldous Huxley, Brave New World</cite>"
 >
-  <Element tagName="div">
-    <div>
+  <Element tagName="span">
+    <span>
       <Element
         attributes={{ cite: "https://www.huxley.net/bnw/four.html" }}
         tagName="blockquote"
@@ -456,19 +456,19 @@ exports[`html blockquote renders 1`] = `
       <Element tagName="cite">
         <cite>– Aldous Huxley, Brave New World</cite>
       </Element>
-    </div>
+    </span>
   </Element>
 </Markup>
 `;
 
 exports[`html button renders 1`] = `
 <Markup content="<button name="button">Click me</button>">
-  <Element tagName="div">
-    <div>
+  <Element tagName="span">
+    <span>
       <Element tagName="button">
         <button>Click me</button>
       </Element>
-    </div>
+    </span>
   </Element>
 </Markup>
 `;
@@ -480,8 +480,8 @@ exports[`html canvas renders 1`] = `
     An alternative text describing what your canvas displays.
   </canvas>"
 >
-  <Element tagName="div">
-    <div>
+  <Element tagName="span">
+    <span>
       <Element
         attributes={{ id: "canvas", width: "300", height: "300" }}
         tagName="canvas"
@@ -492,7 +492,7 @@ exports[`html canvas renders 1`] = `
 
         </canvas>
       </Element>
-    </div>
+    </span>
   </Element>
 </Markup>
 `;
@@ -503,10 +503,10 @@ exports[`html canvas renders nothing when not allowed 1`] = `
     An alternative text describing what your canvas displays.
   </canvas>"
 >
-  <Element tagName="div">
-    <div>
+  <Element tagName="span">
+    <span>
   An alternative text describing what your canvas displays.
-</div>
+</span>
   </Element>
 </Markup>
 `;
@@ -522,8 +522,8 @@ exports[`html caption renders 1`] = `
     </tr>
   </table>"
 >
-  <Element tagName="div">
-    <div>
+  <Element tagName="span">
+    <span>
       <Element tagName="table">
         <table>
           
@@ -572,7 +572,7 @@ exports[`html caption renders 1`] = `
           </Element>
         </table>
       </Element>
-    </div>
+    </span>
   </Element>
 </Markup>
 `;
@@ -586,8 +586,8 @@ exports[`html cite renders 1`] = `
     </footer>
   </blockquote>"
 >
-  <Element tagName="div">
-    <div>
+  <Element tagName="span">
+    <span>
       <Element tagName="blockquote">
         <blockquote>
           
@@ -623,7 +623,7 @@ exports[`html cite renders 1`] = `
 
         </blockquote>
       </Element>
-    </div>
+    </span>
   </Element>
 </Markup>
 `;
@@ -632,8 +632,8 @@ exports[`html code renders 1`] = `
 <Markup
   content="<p>The <code>push()</code> method adds one or more elements to the end of an array and returns the new length of the array.</p>"
 >
-  <Element tagName="div">
-    <div>
+  <Element tagName="span">
+    <span>
       <Element tagName="p">
         <p>
           The 
@@ -643,7 +643,7 @@ exports[`html code renders 1`] = `
            method adds one or more elements to the end of an array and returns the new length of the array.
         </p>
       </Element>
-    </div>
+    </span>
   </Element>
 </Markup>
 `;
@@ -659,8 +659,8 @@ exports[`html col, colgroup renders 1`] = `
     </colgroup>
   </table>"
 >
-  <Element tagName="div">
-    <div>
+  <Element tagName="span">
+    <span>
       <Element tagName="table">
         <table>
           
@@ -703,15 +703,15 @@ exports[`html col, colgroup renders 1`] = `
 
         </table>
       </Element>
-    </div>
+    </span>
   </Element>
 </Markup>
 `;
 
 exports[`html details, summary doesnt render summary when not in details 1`] = `
 <Markup content="<summary>Details</summary>">
-  <Element tagName="div">
-    <div>Details</div>
+  <Element tagName="span">
+    <span>Details</span>
   </Element>
 </Markup>
 `;
@@ -723,8 +723,8 @@ exports[`html details, summary renders 1`] = `
     Something small enough to escape casual notice.
   </details>"
 >
-  <Element tagName="div">
-    <div>
+  <Element tagName="span">
+    <span>
       <Element tagName="details">
         <details>
           
@@ -737,7 +737,7 @@ exports[`html details, summary renders 1`] = `
 
         </details>
       </Element>
-    </div>
+    </span>
   </Element>
 </Markup>
 `;
@@ -746,8 +746,8 @@ exports[`html dfn renders 1`] = `
 <Markup
   content="<p>A <dfn id="def-validator">validator</dfn> is a program that checks for syntax errors in code or documents.</p>"
 >
-  <Element tagName="div">
-    <div>
+  <Element tagName="span">
+    <span>
       <Element tagName="p">
         <p>
           A 
@@ -759,7 +759,7 @@ exports[`html dfn renders 1`] = `
            is a program that checks for syntax errors in code or documents.
         </p>
       </Element>
-    </div>
+    </span>
   </Element>
 </Markup>
 `;
@@ -771,8 +771,8 @@ exports[`html div renders 1`] = `
     <p>Beware of the leopard</p>
   </div>"
 >
-  <Element tagName="div">
-    <div>
+  <Element tagName="span">
+    <span>
       <Element attributes={{ className: "warning" }} tagName="div">
         <div className="warning">
           
@@ -796,7 +796,7 @@ exports[`html div renders 1`] = `
 
         </div>
       </Element>
-    </div>
+    </span>
   </Element>
 </Markup>
 `;
@@ -814,8 +814,8 @@ exports[`html dl, dt, dd renders 1`] = `
     <dd>A giant owl-like creature.</dd>
   </dl>"
 >
-  <Element tagName="div">
-    <div>
+  <Element tagName="span">
+    <span>
       <Element tagName="dl">
         <dl>
           
@@ -854,21 +854,21 @@ exports[`html dl, dt, dd renders 1`] = `
 
         </dl>
       </Element>
-    </div>
+    </span>
   </Element>
 </Markup>
 `;
 
 exports[`html em renders 1`] = `
 <Markup content="We <em>had</em> to do something about it.">
-  <Element tagName="div">
-    <div>
+  <Element tagName="span">
+    <span>
       We 
       <Element tagName="em">
         <em>had</em>
       </Element>
        to do something about it.
-    </div>
+    </span>
   </Element>
 </Markup>
 `;
@@ -880,8 +880,8 @@ exports[`html figure, figcaption renders 1`] = `
     <figcaption>An elephant at sunset</figcaption>
   </figure>"
 >
-  <Element tagName="div">
-    <div>
+  <Element tagName="span">
+    <span>
       <Element tagName="figure">
         <figure>
           
@@ -905,7 +905,7 @@ exports[`html figure, figcaption renders 1`] = `
 
         </figure>
       </Element>
-    </div>
+    </span>
   </Element>
 </Markup>
 `;
@@ -924,8 +924,8 @@ exports[`html footer renders 1`] = `
     </footer>
   </article>"
 >
-  <Element tagName="div">
-    <div>
+  <Element tagName="span">
+    <span>
       <Element tagName="article">
         <article>
           
@@ -973,7 +973,7 @@ exports[`html footer renders 1`] = `
 
         </article>
       </Element>
-    </div>
+    </span>
   </Element>
 </Markup>
 `;
@@ -988,8 +988,8 @@ exports[`html h1 - h6 renders 1`] = `
                 <h5>Prothorax</h5>
                 <h6>Pterothorax</h6>"
 >
-  <Element tagName="div">
-    <div>
+  <Element tagName="span">
+    <span>
       <Element tagName="h1">
         <h1>Beetles</h1>
       </Element>
@@ -1035,7 +1035,7 @@ exports[`html h1 - h6 renders 1`] = `
       <Element tagName="h6">
         <h6>Pterothorax</h6>
       </Element>
-    </div>
+    </span>
   </Element>
 </Markup>
 `;
@@ -1046,8 +1046,8 @@ exports[`html header renders 1`] = `
     <h1>Cute Puppies Express!</h1>
   </header>"
 >
-  <Element tagName="div">
-    <div>
+  <Element tagName="span">
+    <span>
       <Element attributes={{ className: "page-header" }} tagName="header">
         <header className="page-header">
           
@@ -1059,7 +1059,7 @@ exports[`html header renders 1`] = `
 
         </header>
       </Element>
-    </div>
+    </span>
   </Element>
 </Markup>
 `;
@@ -1070,8 +1070,8 @@ exports[`html hr renders 1`] = `
   <hr>
   <p>§2: The second rule of Fight Club is: Always bring cupcakes.</p>"
 >
-  <Element tagName="div">
-    <div>
+  <Element tagName="span">
+    <span>
       <Element tagName="p">
         <p>§1: The first rule of Fight Club is: You do not talk about Fight Club.</p>
       </Element>
@@ -1085,7 +1085,7 @@ exports[`html hr renders 1`] = `
       <Element tagName="p">
         <p>§2: The second rule of Fight Club is: Always bring cupcakes.</p>
       </Element>
-    </div>
+    </span>
   </Element>
 </Markup>
 `;
@@ -1094,8 +1094,8 @@ exports[`html i renders 1`] = `
 <Markup
   content="<p><i class="latin">Musa</i> is one of two or three genera in the family <i class="latin">Musaceae</i>; it includes bananas and plantains.</p>"
 >
-  <Element tagName="div">
-    <div>
+  <Element tagName="span">
+    <span>
       <Element tagName="p">
         <p>
           <Element attributes={{ className: "latin" }} tagName="i">
@@ -1112,7 +1112,7 @@ exports[`html i renders 1`] = `
           ; it includes bananas and plantains.
         </p>
       </Element>
-    </div>
+    </span>
   </Element>
 </Markup>
 `;
@@ -1122,15 +1122,15 @@ exports[`html iframe renders 1`] = `
   allowList={[ "iframe" ]}
   content="<iframe width="400" height="300" src="https://maps.google.com"></iframe>"
 >
-  <Element tagName="div">
-    <div>
+  <Element tagName="span">
+    <span>
       <Element
         attributes={{ width: "400", height: "300", src: "https://maps.google.com" }}
         tagName="iframe"
       >
         <iframe height="300" src="https://maps.google.com" width="400" />
       </Element>
-    </div>
+    </span>
   </Element>
 </Markup>
 `;
@@ -1139,8 +1139,8 @@ exports[`html iframe renders nothing when not allowed 1`] = `
 <Markup
   content="<iframe width="400" height="300" src="https://maps.google.com"></iframe>"
 >
-  <Element tagName="div">
-    <div />
+  <Element tagName="span">
+    <span />
   </Element>
 </Markup>
 `;
@@ -1149,8 +1149,8 @@ exports[`html img renders 1`] = `
 <Markup
   content="<img class="fit-picture" src="/media/examples/grapefruit-slice-332-332.jpg" alt="Grapefruit slice atop a pile of other slices" />"
 >
-  <Element tagName="div">
-    <div>
+  <Element tagName="span">
+    <span>
       <Element
         selfClose
         attributes={{
@@ -1166,7 +1166,7 @@ exports[`html img renders 1`] = `
           src="/media/examples/grapefruit-slice-332-332.jpg"
         />
       </Element>
-    </div>
+    </span>
   </Element>
 </Markup>
 `;
@@ -1177,8 +1177,8 @@ exports[`html ins renders 1`] = `
     <p>“A wizard is never late …”</p>
   </ins>"
 >
-  <Element tagName="div">
-    <div>
+  <Element tagName="span">
+    <span>
       <Element
         attributes={{ cite: "../howtobeawizard.html", dateTime: "2018-05" }}
         tagName="ins"
@@ -1191,7 +1191,7 @@ exports[`html ins renders 1`] = `
 
         </ins>
       </Element>
-    </div>
+    </span>
   </Element>
 </Markup>
 `;
@@ -1200,8 +1200,8 @@ exports[`html kbd renders 1`] = `
 <Markup
   content="Please press <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>R</kbd> to re-render an MDN page."
 >
-  <Element tagName="div">
-    <div>
+  <Element tagName="span">
+    <span>
       Please press 
       <Element tagName="kbd">
         <kbd>Ctrl</kbd>
@@ -1215,7 +1215,7 @@ exports[`html kbd renders 1`] = `
         <kbd>R</kbd>
       </Element>
        to re-render an MDN page.
-    </div>
+    </span>
   </Element>
 </Markup>
 `;
@@ -1226,8 +1226,8 @@ exports[`html main renders 1`] = `
     <p>Geckos are a group of usually small, usually nocturnal lizards. They are found on every continent except Australia.</p>
   </main>"
 >
-  <Element tagName="div">
-    <div>
+  <Element tagName="span">
+    <span>
       <Element attributes={{ role: "main" }} tagName="main">
         <main role="main">
           
@@ -1239,7 +1239,7 @@ exports[`html main renders 1`] = `
 
         </main>
       </Element>
-    </div>
+    </span>
   </Element>
 </Markup>
 `;
@@ -1248,14 +1248,14 @@ exports[`html mark renders 1`] = `
 <Markup
   content="Most <mark>salamander</mark>s are nocturnal, and hunt for insects, worms, and other small creatures."
 >
-  <Element tagName="div">
-    <div>
+  <Element tagName="span">
+    <span>
       Most 
       <Element tagName="mark">
         <mark>salamander</mark>
       </Element>
       s are nocturnal, and hunt for insects, worms, and other small creatures.
-    </div>
+    </span>
   </Element>
 </Markup>
 `;
@@ -1270,8 +1270,8 @@ exports[`html nav, ol, li renders 1`] = `
     </ol>
   </nav>"
 >
-  <Element tagName="div">
-    <div>
+  <Element tagName="span">
+    <span>
       <Element attributes={{ className: "crumbs" }} tagName="nav">
         <nav className="crumbs">
           
@@ -1315,7 +1315,7 @@ exports[`html nav, ol, li renders 1`] = `
 
         </nav>
       </Element>
-    </div>
+    </span>
   </Element>
 </Markup>
 `;
@@ -1327,8 +1327,8 @@ exports[`html picture renders 1`] = `
     <img src="/media/examples/painted-hand-298-332.jpg" />
   </picture>"
 >
-  <Element tagName="div">
-    <div>
+  <Element tagName="span">
+    <span>
       <Element tagName="picture">
         <picture>
           
@@ -1356,7 +1356,7 @@ exports[`html picture renders 1`] = `
 
         </picture>
       </Element>
-    </div>
+    </span>
   </Element>
 </Markup>
 `;
@@ -1382,8 +1382,8 @@ exports[`html pre renders 1`] = `
               RER       - Apollinaire
   </pre>"
 >
-  <Element tagName="div">
-    <div>
+  <Element tagName="span">
+    <span>
       <Element tagName="pre">
         <pre>  L          TE
     A       A
@@ -1403,7 +1403,7 @@ exports[`html pre renders 1`] = `
             RER       - Apollinaire
 </pre>
       </Element>
-    </div>
+    </span>
   </Element>
 </Markup>
 `;
@@ -1412,8 +1412,8 @@ exports[`html q renders 1`] = `
 <Markup
   content="When Dave asks HAL to open the pod bay door, HAL answers: <q cite="https://www.imdb.com/title/tt0062622/quotes/qt0396921">I'm sorry, Dave. I'm afraid I can't do that.</q>"
 >
-  <Element tagName="div">
-    <div>
+  <Element tagName="span">
+    <span>
       When Dave asks HAL to open the pod bay door, HAL answers: 
       <Element
         attributes={{ cite: "https://www.imdb.com/title/tt0062622/quotes/qt0396921" }}
@@ -1423,7 +1423,7 @@ exports[`html q renders 1`] = `
           I'm sorry, Dave. I'm afraid I can't do that.
         </q>
       </Element>
-    </div>
+    </span>
   </Element>
 </Markup>
 `;
@@ -1442,8 +1442,8 @@ exports[`html ruby, rp, rt, rtc renders 1`] = `
     </rtc>
   </ruby>"
 >
-  <Element tagName="div">
-    <div>
+  <Element tagName="span">
+    <span>
       <Element
         attributes={{ xml:lang: "zh-Hant", style: { rubyPosition: "under" } }}
         tagName="ruby"
@@ -1535,7 +1535,7 @@ exports[`html ruby, rp, rt, rtc renders 1`] = `
 
         </ruby>
       </Element>
-    </div>
+    </span>
   </Element>
 </Markup>
 `;
@@ -1544,20 +1544,20 @@ exports[`html s renders 1`] = `
 <Markup
   content="<s>There will be a few tickets available at the box office tonight.</s>"
 >
-  <Element tagName="div">
-    <div>
+  <Element tagName="span">
+    <span>
       <Element tagName="s">
         <s>There will be a few tickets available at the box office tonight.</s>
       </Element>
-    </div>
+    </span>
   </Element>
 </Markup>
 `;
 
 exports[`html samp renders 1`] = `
 <Markup content="<samp>Keyboard not found <br>Press F1 to continue</samp>">
-  <Element tagName="div">
-    <div>
+  <Element tagName="span">
+    <span>
       <Element tagName="samp">
         <samp>
           Keyboard not found 
@@ -1567,7 +1567,7 @@ exports[`html samp renders 1`] = `
           Press F1 to continue
         </samp>
       </Element>
-    </div>
+    </span>
   </Element>
 </Markup>
 `;
@@ -1579,8 +1579,8 @@ exports[`html section renders 1`] = `
     <p>People have been catching fish for food since before recorded history...</p>
   </section>"
 >
-  <Element tagName="div">
-    <div>
+  <Element tagName="span">
+    <span>
       <Element tagName="section">
         <section>
           
@@ -1597,7 +1597,7 @@ exports[`html section renders 1`] = `
 
         </section>
       </Element>
-    </div>
+    </span>
   </Element>
 </Markup>
 `;
@@ -1606,8 +1606,8 @@ exports[`html small renders 1`] = `
 <Markup
   content="<p><small>The content is licensed under a Creative Commons Attribution-ShareAlike 2.5 Generic License.</small></p>"
 >
-  <Element tagName="div">
-    <div>
+  <Element tagName="span">
+    <span>
       <Element tagName="p">
         <p>
           <Element tagName="small">
@@ -1615,15 +1615,15 @@ exports[`html small renders 1`] = `
           </Element>
         </p>
       </Element>
-    </div>
+    </span>
   </Element>
 </Markup>
 `;
 
 exports[`html source doesnt render if outside its parent 1`] = `
 <Markup content="<source src="/media/examples/flower.webm" type="video/webm">">
-  <Element tagName="div">
-    <div />
+  <Element tagName="span">
+    <span />
   </Element>
 </Markup>
 `;
@@ -1636,8 +1636,8 @@ exports[`html source renders 1`] = `
     This browser does not support the HTML5 video element.
   </video>"
 >
-  <Element tagName="div">
-    <div>
+  <Element tagName="span">
+    <span>
       <Element
         attributes={{ controls: true, width: "250", height: "200", muted: true }}
         tagName="video"
@@ -1666,7 +1666,7 @@ exports[`html source renders 1`] = `
 
         </video>
       </Element>
-    </div>
+    </span>
   </Element>
 </Markup>
 `;
@@ -1675,8 +1675,8 @@ exports[`html span renders 1`] = `
 <Markup
   content="Add the <span class="ingredient">basil</span>, <span class="ingredient">pine nuts</span> and <span class="ingredient">garlic</span> to a blender and blend into a paste."
 >
-  <Element tagName="div">
-    <div>
+  <Element tagName="span">
+    <span>
       Add the 
       <Element attributes={{ className: "ingredient" }} tagName="span">
         <span className="ingredient">
@@ -1696,7 +1696,7 @@ exports[`html span renders 1`] = `
         </span>
       </Element>
        to a blender and blend into a paste.
-    </div>
+    </span>
   </Element>
 </Markup>
 `;
@@ -1705,14 +1705,14 @@ exports[`html strong renders 1`] = `
 <Markup
   content="... the most important rule, the rule you can never forget, no matter how much he cries, no matter how much he begs: <strong>never feed him after midnight</strong>."
 >
-  <Element tagName="div">
-    <div>
+  <Element tagName="span">
+    <span>
       ... the most important rule, the rule you can never forget, no matter how much he cries, no matter how much he begs: 
       <Element tagName="strong">
         <strong>never feed him after midnight</strong>
       </Element>
       .
-    </div>
+    </span>
   </Element>
 </Markup>
 `;
@@ -1722,8 +1722,8 @@ exports[`html sub renders 1`] = `
   content="Almost every developer's favorite molecule is
             C<sub>8</sub>H<sub>10</sub>N<sub>4</sub>O<sub>2</sub>, also known as "caffeine.""
 >
-  <Element tagName="div">
-    <div>
+  <Element tagName="span">
+    <span>
       Almost every developer's favorite molecule is
           C
       <Element tagName="sub">
@@ -1742,7 +1742,7 @@ exports[`html sub renders 1`] = `
         <sub>2</sub>
       </Element>
       , also known as "caffeine."
-    </div>
+    </span>
   </Element>
 </Markup>
 `;
@@ -1751,8 +1751,8 @@ exports[`html sup renders 1`] = `
 <Markup
   content="<var>a<sup>2</sup></var> + <var>b<sup>2</sup></var> = <var>c<sup>2</sup></var>"
 >
-  <Element tagName="div">
-    <div>
+  <Element tagName="span">
+    <span>
       <Element tagName="var">
         <var>
           a
@@ -1779,7 +1779,7 @@ exports[`html sup renders 1`] = `
           </Element>
         </var>
       </Element>
-    </div>
+    </span>
   </Element>
 </Markup>
 `;
@@ -1811,8 +1811,8 @@ exports[`html table, thead, tbody, tfoot renders 1`] = `
     </tfoot>
   </table>"
 >
-  <Element tagName="div">
-    <div>
+  <Element tagName="span">
+    <span>
       <Element tagName="table">
         <table>
           
@@ -1923,7 +1923,7 @@ exports[`html table, thead, tbody, tfoot renders 1`] = `
 
         </table>
       </Element>
-    </div>
+    </span>
   </Element>
 </Markup>
 `;
@@ -1941,8 +1941,8 @@ exports[`html table, thead, tbody, tfoot renders table with direct rows 1`] = `
     </tr>
   </table>"
 >
-  <Element tagName="div">
-    <div>
+  <Element tagName="span">
+    <span>
       <Element tagName="table">
         <table>
           
@@ -1993,7 +1993,7 @@ exports[`html table, thead, tbody, tfoot renders table with direct rows 1`] = `
           </Element>
         </table>
       </Element>
-    </div>
+    </span>
   </Element>
 </Markup>
 `;
@@ -2007,21 +2007,21 @@ exports[`html tbody doesnt render outside of table 1`] = `
     </tr>
   </tbody>"
 >
-  <Element tagName="div">
-    <div>
+  <Element tagName="span">
+    <span>
   
     Donuts
     3,000
   
-</div>
+</span>
   </Element>
 </Markup>
 `;
 
 exports[`html td doesnt render outside of tr 1`] = `
 <Markup content="<td>3,000</td>">
-  <Element tagName="div">
-    <div>3,000</div>
+  <Element tagName="span">
+    <span>3,000</span>
   </Element>
 </Markup>
 `;
@@ -2035,21 +2035,21 @@ exports[`html tfoot doesnt render outside of table 1`] = `
     </tr>
   </tfoot>"
 >
-  <Element tagName="div">
-    <div>
+  <Element tagName="span">
+    <span>
   
     Totals
     21,000
   
-</div>
+</span>
   </Element>
 </Markup>
 `;
 
 exports[`html th doesnt render outside of tr 1`] = `
 <Markup content="<th scope="row">Donuts</th>">
-  <Element tagName="div">
-    <div>Donuts</div>
+  <Element tagName="span">
+    <span>Donuts</span>
   </Element>
 </Markup>
 `;
@@ -2063,13 +2063,13 @@ exports[`html thead doesnt render outside of table 1`] = `
     </tr>
   </thead>"
 >
-  <Element tagName="div">
-    <div>
+  <Element tagName="span">
+    <span>
   
     Items
     Expenditure
   
-</div>
+</span>
   </Element>
 </Markup>
 `;
@@ -2078,8 +2078,8 @@ exports[`html time renders 1`] = `
 <Markup
   content="The Cure will be celebrating their 40th anniversary on <time datetime="2018-07-07">July 7</time> in London's Hyde Park."
 >
-  <Element tagName="div">
-    <div>
+  <Element tagName="span">
+    <span>
       The Cure will be celebrating their 40th anniversary on 
       <Element attributes={{ dateTime: "2018-07-07" }} tagName="time">
         <time dateTime="2018-07-07">
@@ -2087,7 +2087,7 @@ exports[`html time renders 1`] = `
         </time>
       </Element>
        in London's Hyde Park.
-    </div>
+    </span>
   </Element>
 </Markup>
 `;
@@ -2099,11 +2099,11 @@ exports[`html tr doesnt render outside of table 1`] = `
     <td>3,000</td>
   </tr>"
 >
-  <Element tagName="div">
-    <div>
+  <Element tagName="span">
+    <span>
   Donuts
   3,000
-</div>
+</span>
   </Element>
 </Markup>
 `;
@@ -2112,8 +2112,8 @@ exports[`html track doesnt render if outside its parent 1`] = `
 <Markup
   content="<track default kind="captions" srclang="en" src="/media/examples/friday.vtt"/>"
 >
-  <Element tagName="div">
-    <div />
+  <Element tagName="span">
+    <span />
   </Element>
 </Markup>
 `;
@@ -2126,8 +2126,8 @@ exports[`html track renders 1`] = `
     Sorry, your browser doesn't support embedded videos.
   </video>"
 >
-  <Element tagName="div">
-    <div>
+  <Element tagName="span">
+    <span>
       <Element
         attributes={{ controls: true, width: "250", src: "/media/examples/friday.mp4" }}
         tagName="video"
@@ -2158,7 +2158,7 @@ exports[`html track renders 1`] = `
 
         </video>
       </Element>
-    </div>
+    </span>
   </Element>
 </Markup>
 `;
@@ -2167,8 +2167,8 @@ exports[`html u renders 1`] = `
 <Markup
   content="<p>You could use this element to highlight <u>speling</u> mistakes, so the writer can <u>corect</u> them.</p>"
 >
-  <Element tagName="div">
-    <div>
+  <Element tagName="span">
+    <span>
       <Element tagName="p">
         <p>
           You could use this element to highlight 
@@ -2182,7 +2182,7 @@ exports[`html u renders 1`] = `
            them.
         </p>
       </Element>
-    </div>
+    </span>
   </Element>
 </Markup>
 `;
@@ -2191,8 +2191,8 @@ exports[`html var renders 1`] = `
 <Markup
   content="The volume of a box is <var>l</var> × <var>w</var> × <var>h</var>, where <var>l</var> represents the length, <var>w</var> the width and <var>h</var> the height of the box."
 >
-  <Element tagName="div">
-    <div>
+  <Element tagName="span">
+    <span>
       The volume of a box is 
       <Element tagName="var">
         <var>l</var>
@@ -2218,7 +2218,7 @@ exports[`html var renders 1`] = `
         <var>h</var>
       </Element>
        the height of the box.
-    </div>
+    </span>
   </Element>
 </Markup>
 `;
@@ -2231,8 +2231,8 @@ exports[`html video renders 1`] = `
     <p>Your browser doesn't support HTML5 video. Here is a <a href="myVideo.mp4">link to the video</a> instead.</p>
   </video>"
 >
-  <Element tagName="div">
-    <div>
+  <Element tagName="span">
+    <span>
       <Element attributes={{ controls: true }} tagName="video">
         <video controls>
           
@@ -2266,15 +2266,15 @@ exports[`html video renders 1`] = `
 
         </video>
       </Element>
-    </div>
+    </span>
   </Element>
 </Markup>
 `;
 
 exports[`html wbr renders 1`] = `
 <Markup content="Fernstraßen<wbr>bau<wbr>privat<wbr>finanzierungs<wbr>gesetz">
-  <Element tagName="div">
-    <div>
+  <Element tagName="span">
+    <span>
       Fernstraßen
       <Element selfClose tagName="wbr">
         <wbr />
@@ -2292,7 +2292,7 @@ exports[`html wbr renders 1`] = `
         <wbr />
       </Element>
       gesetz
-    </div>
+    </span>
   </Element>
 </Markup>
 `;

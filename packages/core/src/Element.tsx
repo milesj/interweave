@@ -8,7 +8,7 @@ export default function Element({
   selfClose = false,
   tagName,
 }: ElementProps) {
-  const Tag = tagName as 'div';
+  const Tag = tagName as 'span';
 
   return selfClose ? (
     <Tag className={className} {...attributes} />

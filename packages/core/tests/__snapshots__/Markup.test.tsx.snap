@@ -1,31 +1,31 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Markup allows empty \`content\` to be passed 1`] = `"<div />"`;
+exports[`Markup allows empty \`content\` to be passed 1`] = `"<span />"`;
 
 exports[`Markup converts line breaks 1`] = `
-"<div>
+"<span>
   Foo
   <br />
   Bar
-</div>"
+</span>"
 `;
 
 exports[`Markup doesnt convert line breaks 1`] = `
-"<div>Foo
-Bar</div>"
+"<span>Foo
+Bar</span>"
 `;
 
 exports[`Markup doesnt convert line breaks if it contains HTML 1`] = `
-"<div>
+"<span>
   Foo
 
   <br />
   Bar
-</div>"
+</span>"
 `;
 
 exports[`Markup parses the entire document starting from the body 1`] = `
-"<div>
+"<span>
   <main role=\\"main\\">
     
   Main content
@@ -54,5 +54,5 @@ exports[`Markup parses the entire document starting from the body 1`] = `
   Sidebar content
 
   </aside>
-</div>"
+</span>"
 `;

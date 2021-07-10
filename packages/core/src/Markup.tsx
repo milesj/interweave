@@ -15,7 +15,7 @@ export default function Markup(props: MarkupProps) {
     parsedContent,
     tagName,
   } = props;
-  const tag = containerTagName || tagName || 'div';
+  const tag = containerTagName || tagName || 'span';
   const noWrap = tag === 'fragment' ? true : props.noWrap;
   let mainContent;
 
