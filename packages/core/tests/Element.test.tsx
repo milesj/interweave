@@ -71,4 +71,32 @@ describe('Element', () => {
       maxLength: 15,
     });
   });
+
+  it('renders with class name', () => {
+    const { root } = render<ElementProps>(
+      <Element tagName="div" className="foo">
+        Foo
+      </Element>,
+    );
+
+    expect(root).toHaveRendered();
+    expect(root.findOne('div')).toHaveProps({
+      children: 'Foo',
+      className: 'foo',
+    });
+  });
+
+  it('can overwrite class name with attributes', () => {
+    const { root } = render<ElementProps>(
+      <Element tagName="div" className="foo" attributes={{ className: 'bar' }}>
+        Foo
+      </Element>,
+    );
+
+    expect(root).toHaveRendered();
+    expect(root.findOne('div')).toHaveProps({
+      children: 'Foo',
+      className: 'bar',
+    });
+  });
 });

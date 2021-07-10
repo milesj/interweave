@@ -33,6 +33,14 @@ describe('Interweave', () => {
     expect(root.findOne('span')).toHaveProp('aria-label', 'foo');
   });
 
+  it('can pass class name', () => {
+    const { root } = render<InterweaveProps>(
+      <Interweave className="foo" content={'Foo <a href="foo.com">Bar</a> Baz'} />,
+    );
+
+    expect(root.findOne('span')).toHaveProp('className', 'foo');
+  });
+
   it('can pass filters through props', () => {
     const { root } = render<InterweaveProps>(
       <Interweave filters={[new LinkFilter()]} content={'Foo <a href="foo.com">Bar</a> Baz'} />,

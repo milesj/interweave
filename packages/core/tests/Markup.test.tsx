@@ -28,6 +28,14 @@ describe('Markup', () => {
     expect(root.findOne('div')).toHaveProp('aria-label', 'foo');
   });
 
+  it('can pass class name', () => {
+    const { root } = render<MarkupProps>(
+      <Markup className="foo" content={'Foo <a href="foo.com">Bar</a> Baz'} />,
+    );
+
+    expect(root.findOne('div')).toHaveProp('className', 'foo');
+  });
+
   it('allows empty `content` to be passed', () => {
     const { root } = render<MarkupProps>(<Markup content={null} />);
 

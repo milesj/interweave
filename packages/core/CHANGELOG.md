@@ -1,3 +1,9 @@
+## 12.8.0 - 2021-07-10
+
+#### 🚀 Updates
+
+- Added a `className` prop, which is passed to the wrapping element.
+
 ### 12.7.2 - 2021-05-13
 
 #### 🐞 Fixes

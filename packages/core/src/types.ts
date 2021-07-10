@@ -131,6 +131,8 @@ export interface ParserProps {
 export interface MarkupProps extends ParserProps {
   /** HTML attributes to pass to the wrapping element. */
   attributes?: Attributes;
+  /** CSS class name to pass to the wrapping element. */
+  className?: string;
   /** Content that may contain HTML to safely render. */
   content?: string | null;
   /** Content to render when the `content` prop is empty. */
@@ -163,6 +165,7 @@ export interface InterweaveProps extends MarkupProps {
 export interface ElementProps {
   [prop: string]: any;
   attributes?: Attributes;
+  className?: string;
   children?: React.ReactNode;
   selfClose?: boolean;
   tagName: string;
