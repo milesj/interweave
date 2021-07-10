@@ -25,11 +25,11 @@
   },
   "devDependencies": {
     "@milesj/build-tools": "^2.17.1",
-    "@types/lodash": "^4.14.169",
-    "@types/parse5": "^6.0.0",
-    "@types/react": "^17.0.5",
-    "@types/react-dom": "^17.0.5",
-    "@types/react-window": "^1.8.3",
+    "@types/lodash": "^4.14.171",
+    "@types/parse5": "^6.0.1",
+    "@types/react": "^17.0.14",
+    "@types/react-dom": "^17.0.9",
+    "@types/react-window": "^1.8.4",
     "babel-loader": "^8.2.2",
     "conventional-changelog-beemo": "^2.1.0",
     "emojibase": "^5.2.0",
@@ -40,9 +40,9 @@
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "rut-dom": "^2.0.0",
-    "serve": "^11.3.2",
-    "webpack": "^4.44.1",
-    "webpack-cli": "^3.3.12"
+    "serve": "^12.0.0",
+    "webpack": "^5.44.0",
+    "webpack-cli": "^4.7.2"
   },
   "workspaces": [
     "packages/*"
