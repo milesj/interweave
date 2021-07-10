@@ -301,6 +301,10 @@ describe('matchers/UrlMatcher', () => {
       expect(matcher.match('user.alias')).toBeNull();
     });
 
+    it('returns invalid match for emails that look like URLs', () => {
+      expect(matcher.match('user.1@google.com')).toEqual(expect.objectContaining({ valid: false }));
+    });
+
     it('returns object for valid match', () => {
       expect(
         matcher.match('http://user:pass@domain.com:8080/some/path?with=query#fragment'),
