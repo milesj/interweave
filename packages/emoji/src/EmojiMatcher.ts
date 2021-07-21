@@ -3,8 +3,8 @@ import EMOJI_REGEX from 'emojibase-regex';
 import EMOTICON_REGEX from 'emojibase-regex/emoticon';
 import SHORTCODE_REGEX from 'emojibase-regex/shortcode';
 import { ChildrenNode, Matcher, MatchResponse, Node } from 'interweave';
-import Emoji from './Emoji';
-import EmojiDataManager from './EmojiDataManager';
+import { Emoji } from './Emoji';
+import { EmojiDataManager } from './EmojiDataManager';
 import { EmojiMatch, EmojiMatcherOptions, EmojiProps } from './types';
 
 const EMOTICON_BOUNDARY_REGEX = new RegExp(
@@ -12,7 +12,7 @@ const EMOTICON_BOUNDARY_REGEX = new RegExp(
 	`(^|\\\b|\\\s)(${EMOTICON_REGEX.source})(?=\\\s|\\\b|$)`,
 );
 
-export default class EmojiMatcher extends Matcher<EmojiProps, EmojiMatcherOptions> {
+export class EmojiMatcher extends Matcher<EmojiProps, EmojiMatcherOptions> {
 	data: EmojiDataManager | null = null;
 
 	override greedy: boolean = true;

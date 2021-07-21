@@ -1,7 +1,7 @@
 import React from 'react';
 import { render } from 'rut-dom';
-import Hashtag from '../src/Hashtag';
-import Link from '../src/Link';
+import { Hashtag } from '../src/Hashtag';
+import { Link } from '../src/Link';
 import { HashtagProps } from '../src/types';
 
 describe('components/Hashtag', () => {
@@ -29,7 +29,7 @@ describe('components/Hashtag', () => {
 
 	it('can encode the hashtag', () => {
 		const { root } = render<HashtagProps>(
-			<Hashtag hashtag="#interweave" encodeHashtag preserveHash>
+			<Hashtag encodeHashtag preserveHash hashtag="#interweave">
 				#interweave
 			</Hashtag>,
 		);
@@ -41,7 +41,7 @@ describe('components/Hashtag', () => {
 	it('can pass props to Link', () => {
 		const func = () => {};
 		const { root } = render<HashtagProps>(
-			<Hashtag hashtag="#interweave" onClick={func} newWindow>
+			<Hashtag newWindow hashtag="#interweave" onClick={func}>
 				#interweave
 			</Hashtag>,
 		);

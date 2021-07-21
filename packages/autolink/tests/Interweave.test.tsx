@@ -3,27 +3,27 @@ import ReactDOMServer from 'react-dom/server';
 import Interweave, { InterweaveProps } from 'interweave';
 import { polyfill } from 'interweave-ssr';
 import { render } from 'rut-dom';
-import EmailMatcher from '../src/EmailMatcher';
-import HashtagMatcher from '../src/HashtagMatcher';
-import IpMatcher from '../src/IpMatcher';
-import UrlMatcher from '../src/UrlMatcher';
+import { EmailMatcher } from '../src/EmailMatcher';
+import { HashtagMatcher } from '../src/HashtagMatcher';
+import { IpMatcher } from '../src/IpMatcher';
+import { UrlMatcher } from '../src/UrlMatcher';
 
 describe('Interweave (with autolinking)', () => {
 	it('renders large blocks of text with all matchers', () => {
 		const result = render<InterweaveProps>(
 			<Interweave
-				tagName="div"
+				content={`Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec massa lorem, mollis non commodo quis, ultricies at elit. email@domain.com. Aliquam a arcu porttitor, aliquam eros sed, convallis massa. Nunc vitae vehicula quam, in feugiat ligula. #interweave Donec eu sem non nibh condimentum luctus. Vivamus pharetra feugiat blandit. Vestibulum neque velit, semper id vestibulum id, viverra a felis. Integer convallis in orci nec bibendum. Ut consequat posuere metus, www.domain.com.
+
+Curabitur lectus odio, tempus quis velit vitae, cursus sagittis nulla. Maecenas sem nulla, tempor nec risus nec, ultricies ultricies magna. https://127.0.0.1/foo Nulla malesuada lacinia libero non mollis. Curabitur id lacus id dolor vestibulum ornare quis a nisi (http://domain.com/some/path?with=query). Pellentesque ac finibus mauris. Sed eu luctus diam. Quisque porta lectus in turpis imperdiet dapibus.
+
+#blessed #interweave #milesj`}
 				matchers={[
 					new EmailMatcher('email'),
 					new HashtagMatcher('hashtag'),
 					new IpMatcher('ip'),
 					new UrlMatcher('url'),
 				]}
-				content={`Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec massa lorem, mollis non commodo quis, ultricies at elit. email@domain.com. Aliquam a arcu porttitor, aliquam eros sed, convallis massa. Nunc vitae vehicula quam, in feugiat ligula. #interweave Donec eu sem non nibh condimentum luctus. Vivamus pharetra feugiat blandit. Vestibulum neque velit, semper id vestibulum id, viverra a felis. Integer convallis in orci nec bibendum. Ut consequat posuere metus, www.domain.com.
-
-Curabitur lectus odio, tempus quis velit vitae, cursus sagittis nulla. Maecenas sem nulla, tempor nec risus nec, ultricies ultricies magna. https://127.0.0.1/foo Nulla malesuada lacinia libero non mollis. Curabitur id lacus id dolor vestibulum ornare quis a nisi (http://domain.com/some/path?with=query). Pellentesque ac finibus mauris. Sed eu luctus diam. Quisque porta lectus in turpis imperdiet dapibus.
-
-#blessed #interweave #milesj`}
+				tagName="div"
 			/>,
 		);
 
@@ -33,13 +33,6 @@ Curabitur lectus odio, tempus quis velit vitae, cursus sagittis nulla. Maecenas 
 	it('renders HTML text with all matchers', () => {
 		const result = render<InterweaveProps>(
 			<Interweave
-				tagName="div"
-				matchers={[
-					new EmailMatcher('email'),
-					new HashtagMatcher('hashtag'),
-					new IpMatcher('ip'),
-					new UrlMatcher('url'),
-				]}
 				content={`<h1>Lorem ipsum dolor sit amet</h1>
 
 <p><b>Consectetur adipiscing elit.</b> Donec massa lorem, mollis non commodo quis, ultricies at elit. email@domain.com. Aliquam a arcu porttitor, aliquam eros sed, convallis massa. Nunc vitae vehicula quam, in feugiat ligula. #interweave Donec eu sem non nibh condimentum luctus. Vivamus pharetra feugiat blandit. Vestibulum neque velit, semper id vestibulum id, viverra a felis. Integer convallis in orci nec bibendum. Ut consequat posuere metus, <a href="www.domain.com">www.domain.com</a>.</p>
@@ -47,6 +40,13 @@ Curabitur lectus odio, tempus quis velit vitae, cursus sagittis nulla. Maecenas 
 <div>Curabitur lectus odio, <em>tempus quis velit vitae, cursus sagittis nulla</em>. Maecenas sem nulla, tempor nec risus nec, ultricies ultricies magna. https://127.0.0.1/foo Nulla malesuada lacinia libero non mollis. Curabitur id lacus id dolor vestibulum ornare quis a nisi (http://domain.com/some/path?with=query). Pellentesque ac finibus mauris. Sed eu luctus diam. Quisque porta lectus in turpis imperdiet dapibus.</div>
 
 <section>#blessed #interweave #milesj</section>`}
+				matchers={[
+					new EmailMatcher('email'),
+					new HashtagMatcher('hashtag'),
+					new IpMatcher('ip'),
+					new UrlMatcher('url'),
+				]}
+				tagName="div"
 			/>,
 		);
 
@@ -56,17 +56,17 @@ Curabitur lectus odio, tempus quis velit vitae, cursus sagittis nulla. Maecenas 
 	it('doesnt render anchor links within anchor links', () => {
 		const result = render<InterweaveProps>(
 			<Interweave
-				tagName="div"
+				content={`- https://127.0.0.1/foo
+- <a href="www.domain.com">www.domain.com</a>
+- (http://domain.com/some/path?with=query)
+- <a href="http://domain.com">This text should stay</a>`}
 				matchers={[
 					new EmailMatcher('email'),
 					new HashtagMatcher('hashtag'),
 					new IpMatcher('ip'),
 					new UrlMatcher('url'),
 				]}
-				content={`- https://127.0.0.1/foo
-- <a href="www.domain.com">www.domain.com</a>
-- (http://domain.com/some/path?with=query)
-- <a href="http://domain.com">This text should stay</a>`}
+				tagName="div"
 			/>,
 		);
 
@@ -91,18 +91,18 @@ Curabitur lectus odio, tempus quis velit vitae, cursus sagittis nulla. Maecenas 
 		it('supports complex content', () => {
 			const actual = ReactDOMServer.renderToStaticMarkup(
 				<Interweave
-					tagName="div"
+					content={`Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec massa lorem, mollis non commodo quis, ultricies at elit. email@domain.com. Aliquam a arcu porttitor, aliquam eros sed, convallis massa. Nunc vitae vehicula quam, in feugiat ligula. #interweave Donec eu sem non nibh condimentum luctus. Vivamus pharetra feugiat blandit. Vestibulum neque velit, semper id vestibulum id, viverra a felis. Integer convallis in orci nec bibendum. Ut consequat posuere metus, www.domain.com.
+
+Curabitur lectus odio, tempus quis velit vitae, cursus sagittis nulla. Maecenas sem nulla, tempor nec risus nec, ultricies ultricies magna. https://127.0.0.1/foo Nulla malesuada lacinia libero non mollis. Curabitur id lacus id dolor vestibulum ornare quis a nisi (http://domain.com/some/path?with=query). Pellentesque ac finibus mauris. Sed eu luctus diam. Quisque porta lectus in turpis imperdiet dapibus.
+
+#blessed #interweave #milesj`}
 					matchers={[
 						new EmailMatcher('email'),
 						new HashtagMatcher('hashtag'),
 						new IpMatcher('ip'),
 						new UrlMatcher('url'),
 					]}
-					content={`Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec massa lorem, mollis non commodo quis, ultricies at elit. email@domain.com. Aliquam a arcu porttitor, aliquam eros sed, convallis massa. Nunc vitae vehicula quam, in feugiat ligula. #interweave Donec eu sem non nibh condimentum luctus. Vivamus pharetra feugiat blandit. Vestibulum neque velit, semper id vestibulum id, viverra a felis. Integer convallis in orci nec bibendum. Ut consequat posuere metus, www.domain.com.
-
-Curabitur lectus odio, tempus quis velit vitae, cursus sagittis nulla. Maecenas sem nulla, tempor nec risus nec, ultricies ultricies magna. https://127.0.0.1/foo Nulla malesuada lacinia libero non mollis. Curabitur id lacus id dolor vestibulum ornare quis a nisi (http://domain.com/some/path?with=query). Pellentesque ac finibus mauris. Sed eu luctus diam. Quisque porta lectus in turpis imperdiet dapibus.
-
-#blessed #interweave #milesj`}
+					tagName="div"
 				/>,
 			);
 

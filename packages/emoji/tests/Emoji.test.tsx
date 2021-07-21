@@ -1,7 +1,7 @@
 import React from 'react';
 import { SOURCE_PROP, VALID_EMOJIS } from 'interweave/test';
 import { render } from 'rut-dom';
-import Emoji from '../src/Emoji';
+import { Emoji } from '../src/Emoji';
 import { EmojiProps } from '../src/types';
 
 describe('Emoji', () => {
@@ -71,7 +71,7 @@ describe('Emoji', () => {
 
 	it('renders the unicode character', () => {
 		const { root } = render<EmojiProps>(
-			<Emoji emojiSource={SOURCE_PROP} unicode={unicode} renderUnicode />,
+			<Emoji renderUnicode emojiSource={SOURCE_PROP} unicode={unicode} />,
 		);
 
 		expect(root.findOne('span')).toMatchSnapshot();
@@ -80,10 +80,10 @@ describe('Emoji', () => {
 	it('can define the path', () => {
 		const { root } = render<EmojiProps>(
 			<Emoji
+				emojiPath="http://foo.com/path/to/{{hexcode}}.svg"
 				emojiSource={SOURCE_PROP}
 				shortcode={shortcode}
 				unicode={unicode}
-				emojiPath="http://foo.com/path/to/{{hexcode}}.svg"
 			/>,
 		);
 		const img = root.findOne('img');
@@ -95,10 +95,10 @@ describe('Emoji', () => {
 	it('can define the path with a function', () => {
 		const { root } = render<EmojiProps>(
 			<Emoji
+				emojiPath={(hex) => `http://foo.com/path/to/${hex.toLowerCase()}.svg`}
 				emojiSource={SOURCE_PROP}
 				shortcode={shortcode}
 				unicode={unicode}
-				emojiPath={(hex) => `http://foo.com/path/to/${hex.toLowerCase()}.svg`}
 			/>,
 		);
 		const img = root.findOne('img');
@@ -110,13 +110,13 @@ describe('Emoji', () => {
 	it('path function receives enlarge and size', () => {
 		const { root } = render<EmojiProps>(
 			<Emoji
+				enlargeEmoji
+				emojiLargeSize={4}
+				emojiPath={(hex, { size }) => `http://foo.com/path/to/${size}/${hex.toLowerCase()}.svg`}
+				emojiSize={2}
 				emojiSource={SOURCE_PROP}
 				shortcode={shortcode}
 				unicode={unicode}
-				emojiPath={(hex, { size }) => `http://foo.com/path/to/${size}/${hex.toLowerCase()}.svg`}
-				emojiLargeSize={4}
-				emojiSize={2}
-				enlargeEmoji
 			/>,
 		);
 
@@ -128,7 +128,7 @@ describe('Emoji', () => {
 
 	it('sets styles when size is defined', () => {
 		const { root } = render<EmojiProps>(
-			<Emoji emojiSource={SOURCE_PROP} emojiSize={1} shortcode={shortcode} unicode={unicode} />,
+			<Emoji emojiSize={1} emojiSource={SOURCE_PROP} shortcode={shortcode} unicode={unicode} />,
 		);
 
 		expect(root.findOne('img')).toHaveProp('style', {
@@ -142,12 +142,12 @@ describe('Emoji', () => {
 	it('can customize large size', () => {
 		const { root } = render<EmojiProps>(
 			<Emoji
+				enlargeEmoji
+				emojiLargeSize={5}
+				emojiSize={2}
 				emojiSource={SOURCE_PROP}
 				shortcode={shortcode}
 				unicode={unicode}
-				emojiSize={2}
-				emojiLargeSize={5}
-				enlargeEmoji
 			/>,
 		);
 
@@ -161,7 +161,7 @@ describe('Emoji', () => {
 
 	it('can use string sizes', () => {
 		const { root } = render<EmojiProps>(
-			<Emoji emojiSource={SOURCE_PROP} shortcode={shortcode} unicode={unicode} emojiSize="2em" />,
+			<Emoji emojiSize="2em" emojiSource={SOURCE_PROP} shortcode={shortcode} unicode={unicode} />,
 		);
 
 		expect(root.findOne('img')).toHaveProp('style', {

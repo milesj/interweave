@@ -1,8 +1,8 @@
 import React from 'react';
-import Link from './Link';
+import { Link } from './Link';
 import { HashtagProps } from './types';
 
-export default function Hashtag({
+export function Hashtag({
 	children,
 	encodeHashtag = false,
 	hashtag,
@@ -13,7 +13,7 @@ export default function Hashtag({
 	let tag = hashtag;
 
 	// Prepare the hashtag
-	if (!preserveHash && tag.charAt(0) === '#') {
+	if (!preserveHash && tag.startsWith('#')) {
 		tag = tag.slice(1);
 	}
 

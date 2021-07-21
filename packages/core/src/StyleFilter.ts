@@ -1,9 +1,9 @@
-import Filter from './Filter';
+import { Filter } from './Filter';
 import { ElementAttributes } from './types';
 
 const INVALID_STYLES = /(url|image|image-set)\(/i;
 
-export default class StyleFilter extends Filter {
+export class StyleFilter extends Filter {
 	override attribute<K extends keyof ElementAttributes>(
 		name: K,
 		value: ElementAttributes[K],

@@ -1,6 +1,6 @@
 import React, { useCallback, useContext } from 'react';
 import { CanonicalEmoji, Emoji as EmojiCharacter } from 'interweave-emoji';
-import Context from './Context';
+import { Context } from './Context';
 
 export interface EmojiProps {
 	active: boolean;
@@ -10,7 +10,7 @@ export interface EmojiProps {
 	onSelect: (emoji: CanonicalEmoji, event: React.MouseEvent<HTMLButtonElement>) => void;
 }
 
-export default function Emoji({ active, emoji, onEnter, onLeave, onSelect }: EmojiProps) {
+export function Emoji({ active, emoji, onEnter, onLeave, onSelect }: EmojiProps) {
 	const { classNames, emojiPadding, emojiPath, emojiSize, emojiSource } = useContext(Context);
 	const dimension = emojiPadding + emojiPadding + emojiSize;
 	const className = [classNames.emoji];
@@ -48,6 +48,7 @@ export default function Emoji({ active, emoji, onEnter, onLeave, onSelect }: Emo
 		<button
 			key={emoji.hexcode}
 			className={className.join(' ')}
+			// eslint-disable-next-line react-perf/jsx-no-new-object-as-prop
 			style={{
 				height: dimension,
 				padding: emojiPadding,

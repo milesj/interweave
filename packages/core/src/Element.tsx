@@ -1,7 +1,7 @@
 import React from 'react';
 import { ElementProps } from './types';
 
-export default function Element({
+export function Element({
 	attributes = {},
 	className,
 	children = null,

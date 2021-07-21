@@ -3,8 +3,8 @@ import ReactDOMServer from 'react-dom/server';
 import { polyfill } from 'interweave-ssr';
 import { render } from 'rut-dom';
 import { ALLOWED_TAG_LIST } from '../src/constants';
-import Element from '../src/Element';
-import Interweave from '../src/Interweave';
+import { Element } from '../src/Element';
+import { Interweave } from '../src/Interweave';
 import {
   CodeTagMatcher,
   LinkFilter,

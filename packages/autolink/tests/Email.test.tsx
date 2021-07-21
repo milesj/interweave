@@ -1,7 +1,7 @@
 import React from 'react';
 import { render } from 'rut-dom';
-import Email from '../src/Email';
-import Link from '../src/Link';
+import { Email } from '../src/Email';
+import { Link } from '../src/Link';
 import { EmailProps } from '../src/types';
 
 describe('components/Email', () => {
@@ -9,10 +9,10 @@ describe('components/Email', () => {
 		const func = () => {};
 		const { root } = render<EmailProps>(
 			<Email
+				newWindow
 				email="user@domain.com"
 				emailParts={{ host: '', username: '' }}
 				onClick={func}
-				newWindow
 			>
 				user@domain.com
 			</Email>,

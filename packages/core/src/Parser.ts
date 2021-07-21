@@ -13,8 +13,8 @@ import {
   FILTER_NO_CAST,
   TAGS,
 } from './constants';
-import Element from './Element';
-import StyleFilter from './StyleFilter';
+import { Element } from './Element';
+import { StyleFilter } from './StyleFilter';
 import {
   Attributes,
   AttributeValue,

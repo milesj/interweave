@@ -8,7 +8,7 @@ import {
 	GROUP_KEY_SEARCH_RESULTS,
 	GROUP_KEY_SMILEYS_EMOTION,
 } from '../src/constants';
-import EmojiListHeader, { EmojiListHeaderProps } from '../src/EmojiListHeader';
+import { EmojiListHeader, EmojiListHeaderProps } from '../src/EmojiListHeader';
 import { ContextWrapper } from './mocks';
 
 describe('EmojiListHeader', () => {
@@ -86,7 +86,7 @@ describe('EmojiListHeader', () => {
 	it('shows clear icon if common group', () => {
 		const icon = <div>Icon</div>;
 		const { root } = render<EmojiListHeaderProps>(
-			<EmojiListHeader {...props} group={GROUP_KEY_COMMONLY_USED} clearIcon={icon} />,
+			<EmojiListHeader {...props} clearIcon={icon} group={GROUP_KEY_COMMONLY_USED} />,
 		);
 
 		expect(root).toContainNode(icon);
@@ -95,7 +95,7 @@ describe('EmojiListHeader', () => {
 	it('doesnt show clear icon for other group', () => {
 		const icon = <div>Icon</div>;
 		const { root } = render<EmojiListHeaderProps>(
-			<EmojiListHeader {...props} group={GROUP_KEY_SEARCH_RESULTS} clearIcon={icon} />,
+			<EmojiListHeader {...props} clearIcon={icon} group={GROUP_KEY_SEARCH_RESULTS} />,
 		);
 
 		expect(root).not.toContainNode(icon);
@@ -105,7 +105,7 @@ describe('EmojiListHeader', () => {
 		const spy = jest.fn();
 		const icon = <div>Icon</div>;
 		const { root } = render<EmojiListHeaderProps>(
-			<EmojiListHeader {...props} group={GROUP_KEY_COMMONLY_USED} clearIcon={icon} onClear={spy} />,
+			<EmojiListHeader {...props} clearIcon={icon} group={GROUP_KEY_COMMONLY_USED} onClear={spy} />,
 		);
 
 		root.findOne('button').dispatch('onClick');

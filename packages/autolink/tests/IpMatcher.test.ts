@@ -1,7 +1,7 @@
 import { Parser } from 'interweave';
 import { createExpectedToken, parentConfig, TOKEN_LOCATIONS } from 'interweave/test';
 import { IP_PATTERN } from '../src/constants';
-import IpMatcher from '../src/IpMatcher';
+import { IpMatcher } from '../src/IpMatcher';
 
 interface IPParams {
 	ip: string;
@@ -67,11 +67,11 @@ describe('matchers/IpMatcher', () => {
 			const { ip, ...params } = ipParams;
 
 			it(`${ip}`, () => {
-				// @ts-expect-error
+				// @ts-expect-error Exclude undefined
 				const expected: Partial<RegExpMatchArray> = [
 					ip,
 					// eslint-disable-next-line jest/no-if
-					params.scheme === null ? undefined : params.scheme || 'http://',
+					params.scheme === null ? undefined : params.scheme ?? 'http://',
 					params.auth,
 					params.host,
 					params.port,
@@ -113,7 +113,7 @@ describe('matchers/IpMatcher', () => {
 					...params,
 					scheme: params.scheme ? params.scheme.replace('://', '') : 'http',
 					auth: params.auth ? params.auth.slice(0, -1) : '',
-					port: params.port || '',
+					port: params.port ?? '',
 				},
 				key,
 			});

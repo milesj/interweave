@@ -12,7 +12,7 @@ export const TYPE_INTERACTIVE = 1 << 5;
 export const TYPE_PALPABLE = 1 << 6;
 
 // https://developer.mozilla.org/en-US/docs/Web/HTML/Element
-const tagConfigs: { [tagName: string]: Partial<NodeConfig> } = {
+const tagConfigs: Record<string, Partial<NodeConfig>> = {
 	a: {
 		content: TYPE_FLOW | TYPE_PHRASING,
 		self: false,
@@ -341,7 +341,7 @@ export const ATTRIBUTES: FilterMap = Object.freeze({
 });
 
 // Attributes to camel case for React props
-export const ATTRIBUTES_TO_PROPS: { [key: string]: string } = Object.freeze({
+export const ATTRIBUTES_TO_PROPS: Record<string, string> = Object.freeze({
 	class: 'className',
 	colspan: 'colSpan',
 	datetime: 'dateTime',

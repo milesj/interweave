@@ -6,8 +6,8 @@ import {
 	FILTER_CAST_BOOL,
 	FILTER_CAST_NUMBER,
 } from '../src/constants';
-import Element from '../src/Element';
-import Parser from '../src/Parser';
+import { Element } from '../src/Element';
+import { Parser } from '../src/Parser';
 import {
 	CodeTagMatcher,
 	createExpectedToken,
@@ -39,14 +39,14 @@ describe('Parser', () => {
 
 	it('parses when passed an empty value', () => {
 		[null, false, undefined, '', 0].forEach((value) => {
-			// @ts-expect-error
+			// @ts-expect-error Invalid type
 			expect(new Parser(value).parse()).toEqual([]);
 		});
 	});
 
 	it('errors for a non-string value', () => {
 		[123, 456.78, true, [], {}].forEach((value) => {
-			// @ts-expect-error
+			// @ts-expect-error Invalid type
 			expect(() => new Parser(value)).toThrow('Interweave parser requires a valid string.');
 		});
 	});
@@ -73,7 +73,7 @@ describe('Parser', () => {
 	describe('applyMatchers()', () => {
 		function createElement(value: string, key: number) {
 			return (
-				<Element tagName="span" customProp="foo" key={key}>
+				<Element key={key} customProp="foo" tagName="span">
 					{value.toUpperCase()}
 				</Element>
 			);
@@ -142,7 +142,7 @@ describe('Parser', () => {
 		describe('ignores matcher if the inverse prop is enabled', () => {
 			TOKEN_LOCATIONS.forEach((location) => {
 				it(`for: ${location}`, () => {
-					// @ts-expect-error
+					// @ts-expect-error Invalid type
 					instance.props.noFoo = true;
 
 					const tokenString = location.replace(/{token}/g, '[foo]');
@@ -260,7 +260,7 @@ describe('Parser', () => {
 		});
 
 		it('returns null for invalid node', () => {
-			// @ts-expect-error
+			// @ts-expect-error Invalid type
 			expect(instance.extractAttributes(document.createComment('Comment'))).toBeNull();
 		});
 
@@ -333,7 +333,7 @@ describe('Parser', () => {
 		});
 
 		it('allows data attributes', () => {
-			element.setAttribute('data-foo', 'bar');
+			element.dataset.foo = 'bar';
 
 			expect(instance.extractAttributes(element)).toEqual({
 				'data-foo': 'bar',
@@ -710,7 +710,7 @@ describe('Parser', () => {
 
 			expect(instance.parseNode(element, instance.getTagConfig('span'))).toEqual([
 				'Foo',
-				<Element key="0" tagName="a" attributes={{ target: '_blank' }}>
+				<Element key="0" attributes={{ target: '_blank' }} tagName="a">
 					{['Bar']}
 				</Element>,
 				'Baz',
@@ -728,7 +728,7 @@ describe('Parser', () => {
 				}),
 			).toEqual([
 				'Foo',
-				<Element key="0" tagName="a" attributes={{ target: '_blank' }}>
+				<Element key="0" attributes={{ target: '_blank' }} tagName="a">
 					{['Bar']}
 				</Element>,
 				'Baz',
@@ -774,7 +774,7 @@ describe('Parser', () => {
 			element.append(acronym);
 
 			expect(instance.parseNode(element, instance.getTagConfig('span'))).toEqual([
-				<Element key="0" tagName="a" attributes={{ target: '_blank' }}>
+				<Element key="0" attributes={{ target: '_blank' }} tagName="a">
 					{['Link']}
 				</Element>,
 			]);

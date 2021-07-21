@@ -1,10 +1,8 @@
-/* eslint-disable react/require-default-props */
-
 import React from 'react';
 import { Presentation } from 'emojibase';
 import { EmojiDataManager } from 'interweave-emoji';
 import { CONTEXT_CLASSNAMES, CONTEXT_MESSAGES } from '../src/constants';
-import EmojiContext from '../src/Context';
+import { Context as EmojiContext } from '../src/Context';
 import { Context } from '../src/types';
 
 export const CAT_EMOJI = {
@@ -32,6 +30,7 @@ export function ContextWrapper({
 }: Partial<Context> & { children?: React.ReactNode }) {
 	return (
 		<EmojiContext.Provider
+			// eslint-disable-next-line react/jsx-no-constructed-context-values, react-perf/jsx-no-new-object-as-prop
 			value={{
 				classNames: { ...CONTEXT_CLASSNAMES, ...classNames },
 				emojiData: EmojiDataManager.getInstance('en'),

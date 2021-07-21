@@ -1,8 +1,8 @@
 import React from 'react';
 import { render } from 'rut-dom';
-import Link from '../src/Link';
+import { Link } from '../src/Link';
 import { UrlProps } from '../src/types';
-import Url from '../src/Url';
+import { Url } from '../src/Url';
 
 describe('components/Url', () => {
 	const baseParts = {
@@ -40,7 +40,7 @@ describe('components/Url', () => {
 	it('can pass props to Link', () => {
 		const func = () => {};
 		const { root } = render<UrlProps>(
-			<Url url="http://domain.com/some/url" urlParts={baseParts} onClick={func} newWindow>
+			<Url newWindow url="http://domain.com/some/url" urlParts={baseParts} onClick={func}>
 				{'http://domain.com/some/url'}
 			</Url>,
 		);

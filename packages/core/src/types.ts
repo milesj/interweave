@@ -3,7 +3,6 @@
 import React from 'react';
 
 declare global {
-  // eslint-disable-next-line @typescript-eslint/no-namespace
   namespace NodeJS {
     interface Global {
       INTERWEAVE_SSR_POLYFILL: (() => Document | undefined) | undefined;
@@ -34,15 +33,11 @@ export interface NodeConfig {
   void: boolean;
 }
 
-export interface ConfigMap {
-  [key: string]: Partial<NodeConfig>;
-}
+export type ConfigMap = Record<string, Partial<NodeConfig>>;
 
 export type AttributeValue = boolean | number | object | string;
 
-export interface Attributes {
-  [attr: string]: AttributeValue;
-}
+export type Attributes = Record<string, AttributeValue>;
 
 export type AfterParseCallback<T> = (content: Node[], props: T) => Node[];
 
@@ -79,7 +74,7 @@ export interface MatcherInterface<T = any> {
 
 // FILTERS
 
-export type ElementAttributes = React.AllHTMLAttributes<unknown>;
+export type ElementAttributes = Omit<React.AllHTMLAttributes<unknown>, 'download'>;
 
 export interface FilterInterface {
   attribute?: <K extends keyof ElementAttributes>(
@@ -89,19 +84,18 @@ export interface FilterInterface {
   node?: (name: string, node: HTMLElement) => HTMLElement | null;
 }
 
-export interface FilterMap {
-  [key: string]: number;
-}
+export type FilterMap = Record<string, number>;
 
 // PARSER
 
-export interface MatcherElementsMap {
-  [key: string]: {
+export type MatcherElementsMap = Record<
+  string,
+  {
     children: string;
     matcher: MatcherInterface<{}>;
     props: object;
-  };
-}
+  }
+>;
 
 export interface ParserProps {
   /** Disable filtering and allow all non-banned HTML attributes. */

@@ -1,7 +1,7 @@
 import React from 'react';
 import { render } from 'rut-dom';
-import Element from '../src/Element';
-import Markup from '../src/Markup';
+import { Element } from '../src/Element';
+import { Markup } from '../src/Markup';
 import { MOCK_MARKUP } from '../src/test';
 import { MarkupProps } from '../src/types';
 
@@ -9,13 +9,13 @@ const options = { log: false, reactElements: false };
 
 describe('Markup', () => {
 	it('can change `tagName`', () => {
-		const { root } = render<MarkupProps>(<Markup tagName="p" content="Foo Bar" />);
+		const { root } = render<MarkupProps>(<Markup content="Foo Bar" tagName="p" />);
 
 		expect(root.findOne(Element)).toHaveProp('tagName', 'p');
 	});
 
 	it('can use a fragment', () => {
-		const { root } = render<MarkupProps>(<Markup tagName="fragment" content="Foo Bar" />);
+		const { root } = render<MarkupProps>(<Markup content="Foo Bar" tagName="fragment" />);
 
 		expect(root).toContainNode('Foo Bar');
 	});
@@ -62,7 +62,7 @@ describe('Markup', () => {
 	});
 
 	it('doesnt convert line breaks', () => {
-		const { root } = render<MarkupProps>(<Markup content={'Foo\nBar'} disableLineBreaks />);
+		const { root } = render<MarkupProps>(<Markup disableLineBreaks content={'Foo\nBar'} />);
 
 		expect(root.debug(options)).toMatchSnapshot();
 	});

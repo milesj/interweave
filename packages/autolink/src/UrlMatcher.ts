@@ -2,11 +2,11 @@ import React from 'react';
 import { ChildrenNode, Matcher, MatchResponse, Node } from 'interweave';
 import { EMAIL_DISTINCT_PATTERN, TOP_LEVEL_TLDS, URL_PATTERN } from './constants';
 import { UrlMatcherOptions, UrlProps } from './types';
-import Url from './Url';
+import { Url } from './Url';
 
 export type UrlMatch = Pick<UrlProps, 'url' | 'urlParts'>;
 
-export default class UrlMatcher extends Matcher<UrlProps, UrlMatcherOptions> {
+export class UrlMatcher extends Matcher<UrlProps, UrlMatcherOptions> {
 	constructor(
 		name: string,
 		options?: UrlMatcherOptions,
@@ -41,7 +41,7 @@ export default class UrlMatcher extends Matcher<UrlProps, UrlMatcherOptions> {
 
 		if (response?.valid && this.options.validateTLD) {
 			const { host } = response.urlParts as unknown as UrlProps['urlParts'];
-			const validList = TOP_LEVEL_TLDS.concat(this.options.customTLDs || []);
+			const validList = TOP_LEVEL_TLDS.concat(this.options.customTLDs ?? []);
 			const tld = host.slice(host.lastIndexOf('.') + 1).toLowerCase();
 
 			if (!validList.includes(tld)) {

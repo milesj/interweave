@@ -1,7 +1,7 @@
 import React from 'react';
 import { Emoji, EmojiDataManager } from 'interweave-emoji';
 import { render } from 'rut-dom';
-import PreviewBar, { PreviewBarProps } from '../src/PreviewBar';
+import { PreviewBar, PreviewBarProps } from '../src/PreviewBar';
 import { CAT_EMOJI, ContextWrapper } from './mocks';
 
 describe('PreviewBar', () => {

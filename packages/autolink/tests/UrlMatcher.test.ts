@@ -1,7 +1,7 @@
 import { Parser } from 'interweave';
 import { createExpectedToken, parentConfig, TOKEN_LOCATIONS } from 'interweave/test';
 import { URL_PATTERN } from '../src/constants';
-import UrlMatcher from '../src/UrlMatcher';
+import { UrlMatcher } from '../src/UrlMatcher';
 
 interface URLParams {
 	url: string;
@@ -177,11 +177,11 @@ describe('matchers/UrlMatcher', () => {
 			const { url, ...params } = urlParams;
 
 			it(`${url}`, () => {
-				// @ts-expect-error
+				// @ts-expect-error Exclude undefined
 				const expected: Partial<RegExpMatchArray> = [
 					url,
 					// eslint-disable-next-line jest/no-if
-					params.scheme === null ? undefined : params.scheme || 'http://',
+					params.scheme === null ? undefined : params.scheme ?? 'http://',
 					params.auth,
 					// eslint-disable-next-line jest/no-if
 					typeof params.host === 'undefined' ? 'example.com' : params.host,
@@ -224,7 +224,7 @@ describe('matchers/UrlMatcher', () => {
 					...params,
 					scheme: params.scheme ? params.scheme.replace('://', '') : 'http',
 					auth: params.auth ? params.auth.slice(0, -1) : '',
-					port: params.port || '',
+					port: params.port ?? '',
 				},
 				key,
 			});

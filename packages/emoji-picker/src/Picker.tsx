@@ -1,3 +1,4 @@
+/* eslint-disable react/destructuring-assignment */
 /* eslint-disable no-magic-numbers */
 
 import React from 'react';
@@ -26,12 +27,12 @@ import {
 	SKIN_KEY_NONE,
 	SKIN_TONES,
 } from './constants';
-import Context from './Context';
-import EmojiList from './EmojiList';
-import GroupTabs from './GroupTabs';
-import PreviewBar from './PreviewBar';
-import SearchBar from './SearchBar';
-import SkinTonePalette from './SkinTonePalette';
+import { Context } from './Context';
+import { EmojiList } from './EmojiList';
+import { GroupTabs } from './GroupTabs';
+import { PreviewBar } from './PreviewBar';
+import { SearchBar } from './SearchBar';
+import { SkinTonePalette } from './SkinTonePalette';
 import {
 	AllowBlockMap,
 	CommonEmoji,
@@ -101,7 +102,7 @@ export class InternalPicker extends React.PureComponent<InternalPickerProps, Int
 		const searchQuery = '';
 		const commonEmojis = this.generateCommonEmojis(this.getCommonEmojisFromStorage());
 		const activeGroup = this.getActiveGroup(commonEmojis.length > 0);
-		const activeSkinTone = this.getSkinToneFromStorage() || defaultSkinTone;
+		const activeSkinTone = this.getSkinToneFromStorage() ?? defaultSkinTone;
 		const emojis = this.generateEmojis(activeSkinTone, searchQuery);
 		const groupedEmojis = this.groupEmojis(emojis, commonEmojis, searchQuery);
 
@@ -317,7 +318,7 @@ export class InternalPicker extends React.PureComponent<InternalPickerProps, Int
 
 		const common = localStorage.getItem(KEY_COMMONLY_USED);
 
-		return common ? JSON.parse(common) : [];
+		return common ? (JSON.parse(common) as CommonEmoji[]) : [];
 	}
 
 	/**
@@ -337,7 +338,7 @@ export class InternalPicker extends React.PureComponent<InternalPickerProps, Int
 					(Array.isArray(skin.tone) && skin.tone.includes(toneIndex as SkinTone))),
 		);
 
-		return skinnedEmoji || emoji;
+		return skinnedEmoji ?? emoji;
 	}
 
 	/**
@@ -404,7 +405,7 @@ export class InternalPicker extends React.PureComponent<InternalPickerProps, Int
 		// Sort each group
 		Object.keys(groups).forEach((group) => {
 			if (group !== GROUP_KEY_COMMONLY_USED) {
-				groups[group].emojis.sort((a, b) => (a.order || 0) - (b.order || 0));
+				groups[group].emojis.sort((a, b) => (a.order ?? 0) - (b.order ?? 0));
 			}
 
 			// Remove the group if no emojis
@@ -762,6 +763,7 @@ export class InternalPicker extends React.PureComponent<InternalPickerProps, Int
 			search: disableSearch ? null : (
 				<SearchBar
 					key="search"
+					// eslint-disable-next-line jsx-a11y/no-autofocus
 					autoFocus={autoFocus}
 					searchQuery={searchQuery}
 					onChange={this.handleSearch}
@@ -781,7 +783,7 @@ export class InternalPicker extends React.PureComponent<InternalPickerProps, Int
 	}
 }
 
-export default function Picker({
+export function Picker({
 	compact,
 	locale,
 	shortcodes,

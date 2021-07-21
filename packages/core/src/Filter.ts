@@ -1,6 +1,6 @@
 import { ElementAttributes, FilterInterface } from './types';
 
-export default class Filter implements FilterInterface {
+export class Filter implements FilterInterface {
 	/**
 	 * Filter and clean an HTML attribute value.
 	 */

@@ -10,9 +10,9 @@ import {
 	TOKEN_LOCATIONS,
 	VALID_EMOJIS,
 } from 'interweave/test';
-import Emoji from '../src/Emoji';
-import EmojiData from '../src/EmojiDataManager';
-import EmojiMatcher from '../src/EmojiMatcher';
+import { Emoji } from '../src/Emoji';
+import { EmojiDataManager } from '../src/EmojiDataManager';
+import { EmojiMatcher } from '../src/EmojiMatcher';
 
 const INVALID_UNICODE = ['\u02A9', '\u03C6', '\u0544'];
 
@@ -23,9 +23,9 @@ const INVALID_EMOTICON = ['[:', '@=', '+['];
 const MAN_EMOJI = '👨';
 
 describe('EmojiMatcher', () => {
-	let EMOTICON_TO_HEXCODE: { [key: string]: string } = {};
-	let SHORTCODE_TO_HEXCODE: { [key: string]: string } = {};
-	let UNICODE_TO_HEXCODE: { [key: string]: string } = {};
+	let EMOTICON_TO_HEXCODE: Record<string, string> = {};
+	let SHORTCODE_TO_HEXCODE: Record<string, string> = {};
+	let UNICODE_TO_HEXCODE: Record<string, string> = {};
 	let VALID_EMOTICON: string[] = [];
 	let VALID_SHORTCODE: string[] = [];
 	let VALID_UNICODE: string[] = [];
@@ -41,7 +41,7 @@ describe('EmojiMatcher', () => {
 	const shortPattern = new RegExp(`^${SHORTCODE_REGEX.source}$`);
 
 	beforeEach(() => {
-		const data = EmojiData.getInstance('en');
+		const data = EmojiDataManager.getInstance('en');
 
 		({ EMOTICON_TO_HEXCODE, SHORTCODE_TO_HEXCODE, UNICODE_TO_HEXCODE } = data);
 
@@ -125,7 +125,7 @@ describe('EmojiMatcher', () => {
 		const parser = new Parser(
 			'',
 			{
-				// @ts-expect-error
+				// @ts-expect-error Invalid shape
 				emojiSource: SOURCE_PROP,
 			},
 			[matcher],
@@ -136,7 +136,7 @@ describe('EmojiMatcher', () => {
 				emojiSource: SOURCE_PROP,
 				hexcode: UNICODE_TO_HEXCODE[unicode],
 				unicode,
-				// @ts-expect-error
+				// @ts-expect-error Invalid shape
 				key,
 			});
 		}
@@ -146,7 +146,7 @@ describe('EmojiMatcher', () => {
 				emojiSource: SOURCE_PROP,
 				hexcode: SHORTCODE_TO_HEXCODE[shortcode],
 				shortcode,
-				// @ts-expect-error
+				// @ts-expect-error Invalid shape
 				key,
 			});
 		}
@@ -235,7 +235,7 @@ describe('EmojiMatcher', () => {
 	describe('onBeforeParse()', () => {
 		it('errors when no emojiSource', () => {
 			expect(() => {
-				// @ts-expect-error
+				// @ts-expect-error Invalid type
 				matcher.onBeforeParse('', {});
 			}).toThrow(
 				'Missing emoji source data. Have you loaded with the `useEmojiData` hook and passed the `emojiSource` prop?',
@@ -260,10 +260,10 @@ describe('EmojiMatcher', () => {
 
 		it('enlarges a single <Emoji/>', () => {
 			expect(
-				matcher.onAfterParse([<Emoji key={0} shortcode=":cat:" emojiSource={SOURCE_PROP} />], {
+				matcher.onAfterParse([<Emoji key={0} emojiSource={SOURCE_PROP} shortcode=":cat:" />], {
 					emojiSource: SOURCE_PROP,
 				}),
-			).toEqual([<Emoji key={0} shortcode=":cat:" emojiSource={SOURCE_PROP} enlargeEmoji />]);
+			).toEqual([<Emoji key={0} enlargeEmoji emojiSource={SOURCE_PROP} shortcode=":cat:" />]);
 		});
 
 		it('enlarges multiple <Emoji/>s when `enlargeThreshold` is set', () => {
@@ -272,18 +272,18 @@ describe('EmojiMatcher', () => {
 			expect(
 				matcher.onAfterParse(
 					[
-						<Emoji key={0} shortcode=":cat:" emojiSource={SOURCE_PROP} />,
-						<Emoji key={1} shortcode=":dog:" emojiSource={SOURCE_PROP} />,
-						<Emoji key={2} shortcode=":man:" emojiSource={SOURCE_PROP} />,
+						<Emoji key={0} emojiSource={SOURCE_PROP} shortcode=":cat:" />,
+						<Emoji key={1} emojiSource={SOURCE_PROP} shortcode=":dog:" />,
+						<Emoji key={2} emojiSource={SOURCE_PROP} shortcode=":man:" />,
 					],
 					{
 						emojiSource: SOURCE_PROP,
 					},
 				),
 			).toEqual([
-				<Emoji key={0} shortcode=":cat:" emojiSource={SOURCE_PROP} enlargeEmoji />,
-				<Emoji key={1} shortcode=":dog:" emojiSource={SOURCE_PROP} enlargeEmoji />,
-				<Emoji key={2} shortcode=":man:" emojiSource={SOURCE_PROP} enlargeEmoji />,
+				<Emoji key={0} enlargeEmoji emojiSource={SOURCE_PROP} shortcode=":cat:" />,
+				<Emoji key={1} enlargeEmoji emojiSource={SOURCE_PROP} shortcode=":dog:" />,
+				<Emoji key={2} enlargeEmoji emojiSource={SOURCE_PROP} shortcode=":man:" />,
 			]);
 		});
 
@@ -293,23 +293,23 @@ describe('EmojiMatcher', () => {
 			expect(
 				matcher.onAfterParse(
 					[
-						<Emoji key={0} shortcode=":cat:" emojiSource={SOURCE_PROP} />,
-						<Emoji key={1} shortcode=":man:" emojiSource={SOURCE_PROP} />,
+						<Emoji key={0} emojiSource={SOURCE_PROP} shortcode=":cat:" />,
+						<Emoji key={1} emojiSource={SOURCE_PROP} shortcode=":man:" />,
 					],
 					{
 						emojiSource: SOURCE_PROP,
 					},
 				),
 			).toEqual([
-				<Emoji key={0} shortcode=":cat:" emojiSource={SOURCE_PROP} enlargeEmoji />,
-				<Emoji key={1} shortcode=":man:" emojiSource={SOURCE_PROP} enlargeEmoji />,
+				<Emoji key={0} enlargeEmoji emojiSource={SOURCE_PROP} shortcode=":cat:" />,
+				<Emoji key={1} enlargeEmoji emojiSource={SOURCE_PROP} shortcode=":man:" />,
 			]);
 
 			expect(
-				matcher.onAfterParse([<Emoji key={0} shortcode=":cat:" emojiSource={SOURCE_PROP} />], {
+				matcher.onAfterParse([<Emoji key={0} emojiSource={SOURCE_PROP} shortcode=":cat:" />], {
 					emojiSource: SOURCE_PROP,
 				}),
-			).toEqual([<Emoji key={0} shortcode=":cat:" emojiSource={SOURCE_PROP} enlargeEmoji />]);
+			).toEqual([<Emoji key={0} enlargeEmoji emojiSource={SOURCE_PROP} shortcode=":cat:" />]);
 		});
 
 		it('doesnt count whitespace in the threshold', () => {
@@ -318,22 +318,22 @@ describe('EmojiMatcher', () => {
 			expect(
 				matcher.onAfterParse(
 					[
-						<Emoji key={0} shortcode=":cat:" emojiSource={SOURCE_PROP} />,
+						<Emoji key={0} emojiSource={SOURCE_PROP} shortcode=":cat:" />,
 						' ',
-						<Emoji key={1} shortcode=":dog:" emojiSource={SOURCE_PROP} />,
+						<Emoji key={1} emojiSource={SOURCE_PROP} shortcode=":dog:" />,
 						'\n',
-						<Emoji key={2} shortcode=":man:" emojiSource={SOURCE_PROP} />,
+						<Emoji key={2} emojiSource={SOURCE_PROP} shortcode=":man:" />,
 					],
 					{
 						emojiSource: SOURCE_PROP,
 					},
 				),
 			).toEqual([
-				<Emoji key={0} shortcode=":cat:" emojiSource={SOURCE_PROP} enlargeEmoji />,
+				<Emoji key={0} enlargeEmoji emojiSource={SOURCE_PROP} shortcode=":cat:" />,
 				' ',
-				<Emoji key={1} shortcode=":dog:" emojiSource={SOURCE_PROP} enlargeEmoji />,
+				<Emoji key={1} enlargeEmoji emojiSource={SOURCE_PROP} shortcode=":dog:" />,
 				'\n',
-				<Emoji key={2} shortcode=":man:" emojiSource={SOURCE_PROP} enlargeEmoji />,
+				<Emoji key={2} enlargeEmoji emojiSource={SOURCE_PROP} shortcode=":man:" />,
 			]);
 		});
 
@@ -341,10 +341,10 @@ describe('EmojiMatcher', () => {
 			matcher.options.enlargeThreshold = 3;
 
 			const nodes = [
-				<Emoji key={0} shortcode=":cat:" emojiSource={SOURCE_PROP} />,
-				<Emoji key={1} shortcode=":dog:" emojiSource={SOURCE_PROP} />,
-				<Emoji key={2} shortcode=":man:" emojiSource={SOURCE_PROP} />,
-				<Emoji key={3} shortcode=":woman:" emojiSource={SOURCE_PROP} />,
+				<Emoji key={0} emojiSource={SOURCE_PROP} shortcode=":cat:" />,
+				<Emoji key={1} emojiSource={SOURCE_PROP} shortcode=":dog:" />,
+				<Emoji key={2} emojiSource={SOURCE_PROP} shortcode=":man:" />,
+				<Emoji key={3} emojiSource={SOURCE_PROP} shortcode=":woman:" />,
 			];
 
 			expect(
@@ -358,9 +358,9 @@ describe('EmojiMatcher', () => {
 			matcher.options.enlargeThreshold = 3;
 
 			const nodes = [
-				<Emoji key={0} shortcode=":cat:" emojiSource={SOURCE_PROP} />,
+				<Emoji key={0} emojiSource={SOURCE_PROP} shortcode=":cat:" />,
 				'Foo',
-				<Emoji key={2} shortcode=":man:" emojiSource={SOURCE_PROP} />,
+				<Emoji key={2} emojiSource={SOURCE_PROP} shortcode=":man:" />,
 			];
 
 			expect(
@@ -374,9 +374,9 @@ describe('EmojiMatcher', () => {
 			matcher.options.enlargeThreshold = 3;
 
 			const nodes = [
-				<Emoji key={0} shortcode=":cat:" emojiSource={SOURCE_PROP} />,
+				<Emoji key={0} emojiSource={SOURCE_PROP} shortcode=":cat:" />,
 				<div key="foo">Foo</div>,
-				<Emoji key={2} shortcode=":man:" emojiSource={SOURCE_PROP} />,
+				<Emoji key={2} emojiSource={SOURCE_PROP} shortcode=":man:" />,
 			];
 
 			expect(

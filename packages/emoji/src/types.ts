@@ -1,3 +1,5 @@
+/* eslint-disable camelcase */
+
 import { Emoji, Emoticon, Hexcode, Locale, Shortcode, ShortcodePreset, Unicode } from 'emojibase';
 
 export interface CanonicalEmoji extends Emoji {

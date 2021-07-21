@@ -6,7 +6,7 @@ import {
 	GROUP_KEY_COMMONLY_USED,
 	GROUP_KEY_SMILEYS_EMOTION,
 } from '../src/constants';
-import Group, { GroupProps } from '../src/Group';
+import { Group, GroupProps } from '../src/Group';
 import { ContextWrapper } from './mocks';
 
 describe('Group', () => {

@@ -1,4 +1,4 @@
-/* eslint-disable unicorn/better-regex */
+/* eslint-disable unicorn/better-regex, unicorn/no-unsafe-regex */
 
 export interface CombinePatternsOptions {
 	capture?: boolean;
@@ -9,7 +9,7 @@ export interface CombinePatternsOptions {
 }
 
 export function combinePatterns(patterns: RegExp[], options: CombinePatternsOptions = {}) {
-	let regex = patterns.map((pattern) => pattern.source).join(options.join || '');
+	let regex = patterns.map((pattern) => pattern.source).join(options.join ?? '');
 
 	if (options.capture) {
 		regex = `(${regex})`;
@@ -21,7 +21,7 @@ export function combinePatterns(patterns: RegExp[], options: CombinePatternsOpti
 		regex += options.match;
 	}
 
-	return new RegExp(regex, options.flags || '');
+	return new RegExp(regex, options.flags ?? '');
 }
 
 // https://www.ietf.org/rfc/rfc3986.txt

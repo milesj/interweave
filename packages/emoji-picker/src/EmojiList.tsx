@@ -2,14 +2,12 @@ import React, { useCallback, useContext, useEffect, useRef, useState } from 'rea
 import { FixedSizeList as List, ListOnItemsRenderedProps } from 'react-window';
 import chunk from 'lodash/chunk';
 import { GROUP_KEY_COMPONENT, GROUP_KEY_NONE } from './constants';
-import Context from './Context';
-import EmojiListHeader from './EmojiListHeader';
-import EmojiListRow, { EmojiListRowProps, VirtualRow } from './EmojiListRow';
+import { Context } from './Context';
+import { EmojiListHeader } from './EmojiListHeader';
+import { EmojiListRow, EmojiListRowProps, VirtualRow } from './EmojiListRow';
 import { GroupEmojiMap, GroupKey } from './types';
 
-export interface IndicesMap {
-	[key: string]: number;
-}
+export type IndicesMap = Record<string, number>;
 
 export interface EmojiListProps extends EmojiListRowProps {
 	activeGroup: GroupKey;
@@ -26,7 +24,7 @@ export interface EmojiListProps extends EmojiListRowProps {
 	stickyGroupHeader?: boolean;
 }
 
-export default function EmojiList({
+export function EmojiList({
 	activeGroup,
 	columnCount,
 	columnPadding = 0,
@@ -103,7 +101,8 @@ export default function EmojiList({
 				if (stickyGroupHeader && index >= visibleStartIndex + 1) {
 					return true;
 					// Otherwise, we should update the active group when half way through the list
-				} else if (!stickyGroupHeader && index >= visibleStartIndex + rowCount / 2) {
+				}
+				if (!stickyGroupHeader && index >= visibleStartIndex + rowCount / 2) {
 					return true;
 				}
 
@@ -122,7 +121,7 @@ export default function EmojiList({
 
 	// If no items to display, just return null
 	if (rows.length === 0) {
-		return <div className={classNames.noResults}>{noResults || messages.noResults}</div>;
+		return <div className={classNames.noResults}>{noResults ?? messages.noResults}</div>;
 	}
 
 	return (

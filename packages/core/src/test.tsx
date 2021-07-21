@@ -1,5 +1,3 @@
-/* eslint-disable max-classes-per-file, unicorn/import-index */
-
 import React from 'react';
 import { ChildrenNode, Element, Filter, Matcher, MatchResponse, Node, NodeConfig, TAGS } from '.';
 
@@ -138,7 +136,7 @@ export class CodeTagMatcher extends Matcher<{}> {
 		const { children } = props;
 
 		if (this.key) {
-			// eslint-disable-next-line
+			// eslint-disable-next-line no-param-reassign
 			props.key = this.key;
 		}
 

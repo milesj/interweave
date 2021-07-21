@@ -1,6 +1,6 @@
 import React from 'react';
 import { render } from 'rut-dom';
-import SearchBar, { SearchBarProps } from '../src/SearchBar';
+import { SearchBar, SearchBarProps } from '../src/SearchBar';
 import { ContextWrapper } from './mocks';
 
 jest.mock('lodash/debounce', () => jest.fn((fn) => fn));
@@ -29,6 +29,7 @@ describe('SearchBar', () => {
 
 		expect(spy).not.toHaveBeenCalled();
 
+		// eslint-disable-next-line jsx-a11y/no-autofocus
 		render<SearchBarProps>(<SearchBar {...props} autoFocus />, {
 			mockRef: () => ref,
 		});

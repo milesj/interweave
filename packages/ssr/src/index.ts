@@ -10,7 +10,6 @@ import adapter from 'parse5/lib/tree-adapters/default';
 import parseStyle from 'style-parser';
 
 declare global {
-	// eslint-disable-next-line @typescript-eslint/no-namespace
 	namespace NodeJS {
 		interface Global {
 			INTERWEAVE_SSR_POLYFILL: (() => Document | undefined) | undefined;
@@ -126,7 +125,7 @@ function createHTMLDocument(): Document {
 	Object.defineProperty(body, 'innerHTML', {
 		set(value) {
 			// #document -> html -> body -> tag
-			// @ts-expect-error
+			// @ts-expect-error Allow types
 			this.childNodes = parseHTML(String(value)).childNodes[0].childNodes[1].childNodes;
 		},
 	});
@@ -140,17 +139,16 @@ export function polyfill() {
 
 export function polyfillDOMImplementation() {
 	if (typeof document === 'undefined') {
-		// @ts-ignore
+		// @ts-expect-error Ignore check
 		global.document = {};
 	}
 
 	if (typeof document.implementation === 'undefined') {
-		// @ts-ignore
+		// @ts-expect-error Ignore check
 		global.document.implementation = {};
 	}
 
 	if (typeof document.implementation.createHTMLDocument !== 'function') {
-		// @ts-ignore
 		global.document.implementation.createHTMLDocument = createHTMLDocument;
 	}
 }

@@ -1,8 +1,8 @@
 import React from 'react';
 import { DomElement, render } from 'rut-dom';
 import { SKIN_KEY_DARK, SKIN_KEY_MEDIUM_LIGHT, SKIN_KEY_NONE, SKIN_TONES } from '../src/constants';
-import SkinTone from '../src/SkinTone';
-import SkinTonePalette, { SkinTonePaletteProps } from '../src/SkinTonePalette';
+import { SkinTone } from '../src/SkinTone';
+import { SkinTonePalette, SkinTonePaletteProps } from '../src/SkinTonePalette';
 import { ContextWrapper } from './mocks';
 
 function findSkinToneByKey(root: DomElement<typeof SkinTonePalette, {}>, key: string) {

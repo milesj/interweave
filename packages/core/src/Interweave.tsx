@@ -1,9 +1,10 @@
+/* eslint-disable promise/prefer-await-to-callbacks */
 import React from 'react';
-import Markup from './Markup';
-import Parser from './Parser';
+import { Markup } from './Markup';
+import { Parser } from './Parser';
 import { InterweaveProps } from './types';
 
-export default function Interweave(props: InterweaveProps) {
+export function Interweave(props: InterweaveProps) {
 	const {
 		attributes,
 		className,
@@ -39,14 +40,12 @@ export default function Interweave(props: InterweaveProps) {
 	const markup = beforeCallbacks.reduce((string, callback) => {
 		const nextString = callback(string, props);
 
-		if (__DEV__) {
-			if (typeof nextString !== 'string') {
-				throw new TypeError('Interweave `onBeforeParse` must return a valid HTML string.');
-			}
+		if (__DEV__ && typeof nextString !== 'string') {
+			throw new TypeError('Interweave `onBeforeParse` must return a valid HTML string.');
 		}
 
 		return nextString;
-	}, content || '');
+	}, content ?? '');
 
 	// Parse the markup
 	const parser = new Parser(markup, parserProps, allMatchers, allFilters);
@@ -55,12 +54,10 @@ export default function Interweave(props: InterweaveProps) {
 	const nodes = afterCallbacks.reduce((parserNodes, callback) => {
 		const nextNodes = callback(parserNodes, props);
 
-		if (__DEV__) {
-			if (!Array.isArray(nextNodes)) {
-				throw new TypeError(
-					'Interweave `onAfterParse` must return an array of strings and React elements.',
-				);
-			}
+		if (__DEV__ && !Array.isArray(nextNodes)) {
+			throw new TypeError(
+				'Interweave `onAfterParse` must return an array of strings and React elements.',
+			);
 		}
 
 		return nextNodes;
@@ -70,11 +67,12 @@ export default function Interweave(props: InterweaveProps) {
 		<Markup
 			attributes={attributes}
 			className={className}
+			// eslint-disable-next-line react/destructuring-assignment
 			containerTagName={props.containerTagName}
 			emptyContent={emptyContent}
-			tagName={tagName}
 			noWrap={noWrap}
 			parsedContent={nodes.length === 0 ? undefined : nodes}
+			tagName={tagName}
 		/>
 	);
 }

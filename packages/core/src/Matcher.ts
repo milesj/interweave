@@ -1,8 +1,8 @@
 import React from 'react';
-import match from './match';
+import { match } from './match';
 import { ChildrenNode, MatchCallback, MatcherInterface, MatchResponse, Node } from './types';
 
-export default abstract class Matcher<Props extends object = {}, Options extends object = {}>
+export abstract class Matcher<Props extends object = {}, Options extends object = {}>
 	implements MatcherInterface<Props>
 {
 	greedy: boolean = false;
@@ -16,17 +16,15 @@ export default abstract class Matcher<Props extends object = {}, Options extends
 	factory: React.ComponentType<Props> | null;
 
 	constructor(name: string, options?: Options, factory?: React.ComponentType<Props> | null) {
-		if (__DEV__) {
-			if (!name || name.toLowerCase() === 'html') {
-				throw new Error(`The matcher name "${name}" is not allowed.`);
-			}
+		if (__DEV__ && (!name || name.toLowerCase() === 'html')) {
+			throw new Error(`The matcher name "${name}" is not allowed.`);
 		}
 
-		// @ts-expect-error
+		// @ts-expect-error Allow override
 		this.options = { ...options };
 		this.propName = name;
 		this.inverseName = `no${name.charAt(0).toUpperCase() + name.slice(1)}`;
-		this.factory = factory || null;
+		this.factory = factory ?? null;
 	}
 
 	/**
@@ -38,10 +36,8 @@ export default abstract class Matcher<Props extends object = {}, Options extends
 			? React.createElement(this.factory, props, children)
 			: this.replaceWith(children, props);
 
-		if (__DEV__) {
-			if (typeof element !== 'string' && !React.isValidElement(element)) {
-				throw new Error(`Invalid React element created from ${this.constructor.name}.`);
-			}
+		if (__DEV__ && typeof element !== 'string' && !React.isValidElement(element)) {
+			throw new Error(`Invalid React element created from ${this.constructor.name}.`);
 		}
 
 		return element;

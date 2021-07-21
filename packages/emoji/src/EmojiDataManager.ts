@@ -21,7 +21,7 @@ export function resetInstances() {
 	}
 }
 
-export default class EmojiDataManager {
+export class EmojiDataManager {
 	EMOJIS: Record<string, CanonicalEmoji> = {};
 
 	EMOTICON_TO_HEXCODE: Record<string, Hexcode> = {};
@@ -90,8 +90,6 @@ export default class EmojiDataManager {
 
 		// Canonicalize the shortcodes for easy reuse
 		emoji.canonical_shortcodes = shortcodes.map((code) => `:${code}:`);
-
-		// eslint-disable-next-line prefer-destructuring
 		emoji.primary_shortcode = emoji.canonical_shortcodes[0];
 
 		// Support all shortcodes

@@ -2,7 +2,7 @@ import React, { useCallback, useContext } from 'react';
 import camelCase from 'lodash/camelCase';
 import upperFirst from 'lodash/upperFirst';
 import { SKIN_COLORS } from './constants';
-import Context from './Context';
+import { Context } from './Context';
 import { useTitleFormat } from './hooks/useTitleFormat';
 import { SkinToneKey } from './types';
 
@@ -13,7 +13,7 @@ export interface SkinToneProps {
 	skinTone: SkinToneKey;
 }
 
-export default function SkinTone({ active, children, skinTone, onSelect }: SkinToneProps) {
+export function SkinTone({ active, children, skinTone, onSelect }: SkinToneProps) {
 	const { classNames, messages } = useContext(Context);
 	const className = [classNames.skinTone];
 	const color = SKIN_COLORS[skinTone];
@@ -41,7 +41,7 @@ export default function SkinTone({ active, children, skinTone, onSelect }: SkinT
 			type="button"
 			onClick={handleClick}
 		>
-			{children || ' '}
+			{children ?? ' '}
 		</button>
 	);
 }

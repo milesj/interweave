@@ -1,9 +1,9 @@
 import React, { useContext } from 'react';
 import { ListChildComponentProps } from 'react-window';
 import { CanonicalEmoji } from 'interweave-emoji';
-import Context from './Context';
-import EmojiButton from './Emoji';
-import EmojiListHeader from './EmojiListHeader';
+import { Context } from './Context';
+import { Emoji as EmojiButton } from './Emoji';
+import { EmojiListHeader } from './EmojiListHeader';
 import { CommonMode, GroupKey } from './types';
 
 export type VirtualRow = CanonicalEmoji[] | string;
@@ -19,7 +19,7 @@ export interface EmojiListRowProps {
 	skinTonePalette?: React.ReactNode;
 }
 
-export default function EmojiListRow({
+export function EmojiListRow({
 	data,
 	index,
 	style,
@@ -32,12 +32,12 @@ export default function EmojiListRow({
 	onEnterEmoji,
 	onLeaveEmoji,
 	onSelectEmoji,
-}: EmojiListRowProps & ListChildComponentProps) {
+}: EmojiListRowProps & ListChildComponentProps<Record<number, VirtualRow>>) {
 	const { classNames } = useContext(Context);
-	const row = data[index] as VirtualRow;
+	const row = data[index];
 
 	return (
-		<div style={style} className={classNames.emojisRow}>
+		<div className={classNames.emojisRow} style={style}>
 			{Array.isArray(row) ? (
 				<div className={classNames.emojisBody}>
 					{row.map((emoji) => (
@@ -56,8 +56,8 @@ export default function EmojiListRow({
 					clearIcon={clearIcon}
 					commonMode={commonMode}
 					group={row as GroupKey}
-					onClear={onClear}
 					skinTonePalette={skinTonePalette}
+					onClear={onClear}
 				/>
 			)}
 		</div>

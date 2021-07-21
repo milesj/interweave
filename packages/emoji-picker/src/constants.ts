@@ -55,7 +55,7 @@ export const GROUPS: GroupKey[] = [
 	GROUP_KEY_FLAGS,
 ];
 
-export const GROUP_ICONS: { [group: string]: string } = {
+export const GROUP_ICONS: Record<string, string> = {
 	[GROUP_KEY_COMMONLY_USED]: '🕑',
 	[GROUP_KEY_SMILEYS_EMOTION]: '😃',
 	[GROUP_KEY_PEOPLE_BODY]: '👍',

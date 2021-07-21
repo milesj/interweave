@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { CanonicalEmoji, Emoji as EmojiCharacter } from 'interweave-emoji';
-import Context from './Context';
+import { Context } from './Context';
 import { useTitleFormat } from './hooks/useTitleFormat';
 
 export interface PreviewBarProps {
@@ -11,18 +11,13 @@ export interface PreviewBarProps {
 }
 
 // eslint-disable-next-line complexity
-export default function PreviewBar({
-	emoji,
-	hideEmoticon,
-	hideShortcodes,
-	noPreview,
-}: PreviewBarProps) {
+export function PreviewBar({ emoji, hideEmoticon, hideShortcodes, noPreview }: PreviewBarProps) {
 	const { classNames, emojiLargeSize, emojiPath, emojiSource, messages } = useContext(Context);
-	const title = useTitleFormat(emoji?.annotation || '');
+	const title = useTitleFormat(emoji?.annotation ?? '');
 	const subtitle = [];
 
 	if (!emoji) {
-		const preview = noPreview || messages.noPreview;
+		const preview = noPreview ?? messages.noPreview;
 
 		return (
 			<section className={classNames.preview}>
@@ -43,10 +38,10 @@ export default function PreviewBar({
 		<section className={classNames.preview}>
 			<div className={classNames.previewEmoji}>
 				<EmojiCharacter
+					enlargeEmoji
 					emojiLargeSize={emojiLargeSize}
 					emojiPath={emojiPath}
 					emojiSource={emojiSource}
-					enlargeEmoji
 					hexcode={emoji.hexcode}
 				/>
 			</div>
@@ -57,7 +52,8 @@ export default function PreviewBar({
 						{title}
 
 						{emoji.skins && emoji.skins.length > 0 && (
-							<span className={classNames.previewShiftMore}>(+{emoji.skins.length})</span>
+							// eslint-disable-next-line react/jsx-no-literals
+							<span className={classNames.previewShiftMore}>{`(+${emoji.skins.length})`}</span>
 						)}
 					</div>
 				)}

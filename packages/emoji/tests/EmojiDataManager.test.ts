@@ -1,6 +1,6 @@
 import { Presentation } from 'emojibase';
 import { loadEmojiData } from 'emojibase-test-utils';
-import EmojiDataManager from '../src/EmojiDataManager';
+import { EmojiDataManager } from '../src/EmojiDataManager';
 
 describe('EmojiDataManager', () => {
 	let manager: EmojiDataManager;

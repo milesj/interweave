@@ -1,4 +1,4 @@
-import Filter from '../src/Filter';
+import { Filter } from '../src/Filter';
 import { LinkFilter } from '../src/test';
 
 describe('Filter', () => {

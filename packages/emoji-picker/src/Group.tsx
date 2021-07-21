@@ -1,6 +1,6 @@
 import React, { useCallback, useContext } from 'react';
-import Context from './Context';
-import useGroupMessage from './hooks/useGroupMessage';
+import { Context } from './Context';
+import { useGroupMessage } from './hooks/useGroupMessage';
 import { CommonMode, GroupKey } from './types';
 
 export interface GroupProps {
@@ -11,7 +11,7 @@ export interface GroupProps {
 	onSelect: (group: GroupKey, event: React.MouseEvent<HTMLButtonElement>) => void;
 }
 
-export default function Group({ active, children, commonMode, group, onSelect }: GroupProps) {
+export function Group({ active, children, commonMode, group, onSelect }: GroupProps) {
 	const { classNames } = useContext(Context);
 	const className = [classNames.group];
 	const title = useGroupMessage(group, commonMode);

@@ -1,10 +1,10 @@
 /* eslint-disable complexity */
 
 import React from 'react';
-import EmojiDataManager from './EmojiDataManager';
+import { EmojiDataManager } from './EmojiDataManager';
 import { EmojiProps, Size } from './types';
 
-export default function Emoji({
+export function Emoji({
 	emojiLargeSize = '3em',
 	emojiPath = '{{hexcode}}',
 	emojiSize = '1em',
@@ -18,12 +18,10 @@ export default function Emoji({
 }: EmojiProps) {
 	const data = EmojiDataManager.getInstance(emojiSource.locale);
 
-	if (__DEV__) {
-		if (!emoticon && !shortcode && !unicode && !hexcode) {
-			throw new Error(
-				'Emoji component requires a `unicode` character, `emoticon`, `hexcode`, or a `shortcode`.',
-			);
-		}
+	if (__DEV__ && !emoticon && !shortcode && !unicode && !hexcode) {
+		throw new Error(
+			'Emoji component requires a `unicode` character, `emoticon`, `hexcode`, or a `shortcode`.',
+		);
 	}
 
 	// Retrieve applicable unicode character
@@ -43,7 +41,7 @@ export default function Emoji({
 
 	// Return the invalid value instead of erroring
 	if (!hex || !data.EMOJIS[hex]) {
-		return <span>{unicode || emoticon || shortcode || hex}</span>;
+		return <span>{unicode ?? emoticon ?? shortcode ?? hex}</span>;
 	}
 
 	const emoji = data.EMOJIS[hex];
@@ -52,7 +50,8 @@ export default function Emoji({
 		return <span>{emoji.unicode}</span>;
 	}
 
-	const styles: { [name: string]: Size | string } = {
+	// eslint-disable-next-line react-perf/jsx-no-new-object-as-prop
+	const styles: Record<string, Size | string> = {
 		display: 'inline-block',
 		verticalAlign: 'middle',
 	};
@@ -86,15 +85,15 @@ export default function Emoji({
 	// https://css-tricks.com/using-svg/
 	return (
 		<img
-			src={path}
 			alt={emoji.unicode}
-			title={emoji.annotation}
-			style={styles}
 			aria-label={emoji.annotation}
 			data-emoticon={emoji.emoticon}
-			data-unicode={emoji.unicode}
 			data-hexcode={emoji.hexcode}
 			data-shortcodes={emoji.canonical_shortcodes.join(', ')}
+			data-unicode={emoji.unicode}
+			src={path}
+			style={styles}
+			title={emoji.annotation}
 		/>
 	);
 }

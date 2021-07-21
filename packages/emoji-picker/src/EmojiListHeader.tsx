@@ -6,8 +6,8 @@ import {
 	GROUP_KEY_SEARCH_RESULTS,
 	GROUP_KEY_VARIATIONS,
 } from './constants';
-import Context from './Context';
-import useGroupMessage from './hooks/useGroupMessage';
+import { Context } from './Context';
+import { useGroupMessage } from './hooks/useGroupMessage';
 import { CommonMode, GroupKey } from './types';
 
 export interface EmojiListHeaderProps {
@@ -19,7 +19,7 @@ export interface EmojiListHeaderProps {
 	sticky?: boolean;
 }
 
-export default function EmojiListHeader({
+export function EmojiListHeader({
 	clearIcon,
 	commonMode,
 	group,
@@ -58,9 +58,9 @@ export default function EmojiListHeader({
 
 			{showClear && (
 				<button
-					type="button"
-					title={messages.clearUsed}
 					className={classNames.clear}
+					title={messages.clearUsed}
+					type="button"
 					onClick={handleClear}
 				>
 					{clearIcon}

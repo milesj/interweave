@@ -1,5 +1,6 @@
+/* eslint-disable react/destructuring-assignment */
 import React from 'react';
-import Element from '../src/Element';
+import { Element } from '../src/Element';
 import { CodeTagMatcher, MockMatcher } from '../src/test';
 
 describe('Matcher', () => {
@@ -19,7 +20,7 @@ describe('Matcher', () => {
 	describe('createElement()', () => {
 		it('returns a React element from factory', () => {
 			expect(matcher.replaceWith('[foo]', { children: 'foo' })).toEqual(
-				<Element tagName="span" key="1">
+				<Element key="1" tagName="span">
 					FOO
 				</Element>,
 			);
@@ -40,7 +41,7 @@ describe('Matcher', () => {
 		it('errors if not a React element', () => {
 			const customMatcher = new MockMatcher('foo', {});
 
-			// @ts-expect-error
+			// @ts-expect-error Allow override
 			customMatcher.replaceWith = () => 123;
 
 			expect(() => {
@@ -52,7 +53,7 @@ describe('Matcher', () => {
 	describe('replaceWith()', () => {
 		it('returns a React element', () => {
 			expect(matcher.replaceWith('[foo]', { children: 'foo' })).toEqual(
-				<Element tagName="span" key="1">
+				<Element key="1" tagName="span">
 					FOO
 				</Element>,
 			);

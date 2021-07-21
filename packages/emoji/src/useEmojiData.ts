@@ -1,7 +1,9 @@
+/* eslint-disable promise/prefer-await-to-then */
+
 import { useEffect, useMemo, useState } from 'react';
-import { fetchEmojis, fetchMetadata, Locale, ShortcodePreset } from 'emojibase';
+import { Emoji, fetchEmojis, fetchMetadata, Locale, ShortcodePreset } from 'emojibase';
 import { LATEST_DATASET_VERSION } from './constants';
-import EmojiDataManager from './EmojiDataManager';
+import { EmojiDataManager } from './EmojiDataManager';
 import { CanonicalEmoji, Source, UseEmojiDataOptions } from './types';
 
 export function determinePresets(locale: string, shortcodes: string[]): string[] {
@@ -32,7 +34,7 @@ export function resetLoaded() {
 	}
 }
 
-function loadEmojis(
+async function loadEmojis(
 	locale: Locale,
 	version: string,
 	shortcodes: (ShortcodePreset | string)[],
@@ -53,7 +55,7 @@ function loadEmojis(
 
 	// Otherwise, start loading emoji data from the CDN
 	const request = Promise.all([
-		// @ts-expect-error
+		// @ts-expect-error Mismatched types
 		fetchEmojis(locale, { compact, flat: false, shortcodes, version }) as Emoji[],
 		fetchMetadata(locale, { version }),
 	]);
@@ -71,7 +73,7 @@ function loadEmojis(
 	return promises.get(key)!;
 }
 
-export default function useEmojiData({
+export function useEmojiData({
 	avoidFetch = false,
 	compact = false,
 	locale = 'en',

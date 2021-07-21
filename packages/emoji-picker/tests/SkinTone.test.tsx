@@ -1,7 +1,7 @@
 import React from 'react';
 import { render } from 'rut-dom';
 import { SKIN_KEY_DARK, SKIN_KEY_NONE } from '../src/constants';
-import SkinTone, { SkinToneProps } from '../src/SkinTone';
+import { SkinTone, SkinToneProps } from '../src/SkinTone';
 import { ContextWrapper } from './mocks';
 
 describe('SkinTone', () => {
@@ -56,14 +56,14 @@ describe('SkinTone', () => {
 	it('sets correct colors based on tone', () => {
 		const { root, update } = render<SkinToneProps>(<SkinTone {...props} />);
 
-		// @ts-expect-error
+		// @ts-expect-error Prop not typed
 		expect(root.findOne('button')).toHaveProp('data-skin-tone', SKIN_KEY_DARK);
 
 		update({
 			skinTone: SKIN_KEY_NONE,
 		});
 
-		// @ts-expect-error
+		// @ts-expect-error Prop not typed
 		expect(root.findOne('button')).toHaveProp('data-skin-tone', SKIN_KEY_NONE);
 	});
 

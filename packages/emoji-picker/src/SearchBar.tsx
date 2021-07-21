@@ -1,5 +1,5 @@
 import React, { useCallback, useContext, useEffect, useRef } from 'react';
-import Context from './Context';
+import { Context } from './Context';
 
 export interface SearchBarProps {
 	autoFocus: boolean;
@@ -8,7 +8,7 @@ export interface SearchBarProps {
 	searchQuery: string;
 }
 
-export default function SearchBar({ autoFocus, searchQuery, onChange, onKeyUp }: SearchBarProps) {
+export function SearchBar({ autoFocus, searchQuery, onChange, onKeyUp }: SearchBarProps) {
 	const { classNames, messages } = useContext(Context);
 	const ref = useRef<HTMLInputElement>(null);
 

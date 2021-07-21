@@ -3,7 +3,7 @@
  * @license     https://opensource.org/licenses/MIT
  */
 
-import Picker from './Picker';
+import { Picker } from './Picker';
 
 export * from './constants';
 export * from './types';

@@ -1,6 +1,6 @@
 import React from 'react';
 import { render } from 'rut-dom';
-import Element from '../src/Element';
+import { Element } from '../src/Element';
 import { ElementProps } from '../src/types';
 
 describe('Element', () => {
@@ -37,7 +37,7 @@ describe('Element', () => {
 
 	it('renders with attributes', () => {
 		const { root } = render<ElementProps>(
-			<Element tagName="div" attributes={{ id: 'foo' }}>
+			<Element attributes={{ id: 'foo' }} tagName="div">
 				Foo
 			</Element>,
 		);
@@ -52,12 +52,12 @@ describe('Element', () => {
 	it('renders with attributes of each type', () => {
 		const { root } = render<ElementProps>(
 			<Element
-				tagName="input"
 				attributes={{
 					id: 'foo',
 					disabled: true,
 					maxLength: 15,
 				}}
+				tagName="input"
 			>
 				Foo
 			</Element>,
@@ -74,7 +74,7 @@ describe('Element', () => {
 
 	it('renders with class name', () => {
 		const { root } = render<ElementProps>(
-			<Element tagName="div" className="foo">
+			<Element className="foo" tagName="div">
 				Foo
 			</Element>,
 		);
@@ -88,7 +88,7 @@ describe('Element', () => {
 
 	it('can overwrite class name with attributes', () => {
 		const { root } = render<ElementProps>(
-			<Element tagName="div" className="foo" attributes={{ className: 'bar' }}>
+			<Element attributes={{ className: 'bar' }} className="foo" tagName="div">
 				Foo
 			</Element>,
 		);

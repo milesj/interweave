@@ -1,7 +1,6 @@
 import { Locale } from 'emojibase';
 import { loadEmojiData, loadMeta, loadShortcodes } from 'emojibase-test-utils';
-// eslint-disable-next-line unicorn/import-index
-import { CanonicalEmoji, EmojiDataManager } from './index';
+import { CanonicalEmoji, EmojiDataManager } from '.';
 
 export function mockEmojiData(locale: Locale = 'en'): CanonicalEmoji[] {
 	const instance = EmojiDataManager.getInstance(locale);

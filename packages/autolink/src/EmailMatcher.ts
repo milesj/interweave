@@ -1,12 +1,12 @@
 import React from 'react';
 import { ChildrenNode, Matcher, MatchResponse, Node } from 'interweave';
 import { EMAIL_PATTERN } from './constants';
-import Email from './Email';
+import { Email } from './Email';
 import { EmailProps } from './types';
 
 export type EmailMatch = Pick<EmailProps, 'email' | 'emailParts'>;
 
-export default class EmailMatcher extends Matcher<EmailProps> {
+export class EmailMatcher extends Matcher<EmailProps> {
 	replaceWith(children: ChildrenNode, props: EmailProps): Node {
 		return React.createElement(Email, props, children);
 	}

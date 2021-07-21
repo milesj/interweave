@@ -8,8 +8,8 @@ import {
 	GROUP_KEY_NONE,
 	GROUPS,
 } from '../src/constants';
-import Group from '../src/Group';
-import GroupTabs, { GroupTabsProps } from '../src/GroupTabs';
+import { Group } from '../src/Group';
+import { GroupTabs, GroupTabsProps } from '../src/GroupTabs';
 import { CAT_EMOJI, ContextWrapper } from './mocks';
 
 function findGroupByKey(root: DomElement<typeof GroupTabs, {}>, key: string) {
