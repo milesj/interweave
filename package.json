@@ -18,10 +18,13 @@
     "prerelease": "yarn run pack && yarn test",
     "release": "lerna publish",
     "release:docs": "cd website && yarn deploy",
-    "type": "beemo typescript --reference-workspaces --build"
+    "type": "beemo typescript --build"
   },
   "engines": {
     "node": ">=10.3.0"
+  },
+  "resolutions": {
+    "typescript": "^4.3.0"
   },
   "devDependencies": {
     "@beemo/dev": "^1.3.1",
