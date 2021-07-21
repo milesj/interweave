@@ -3,15 +3,15 @@ import Link from './Link';
 import { UrlProps } from './types';
 
 export default function Url({ children, url, urlParts, ...props }: UrlProps) {
-  let href = url;
+	let href = url;
 
-  if (!href.match(/^https?:\/\//)) {
-    href = `http://${href}`;
-  }
+	if (!href.match(/^https?:\/\//)) {
+		href = `http://${href}`;
+	}
 
-  return (
-    <Link {...props} href={href}>
-      {children}
-    </Link>
-  );
+	return (
+		<Link {...props} href={href}>
+			{children}
+		</Link>
+	);
 }

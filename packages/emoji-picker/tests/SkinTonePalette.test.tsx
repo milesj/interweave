@@ -6,81 +6,81 @@ import SkinTonePalette, { SkinTonePaletteProps } from '../src/SkinTonePalette';
 import { ContextWrapper } from './mocks';
 
 function findSkinToneByKey(root: DomElement<typeof SkinTonePalette, {}>, key: string) {
-  return root
-    .query<typeof SkinTone>((node, fiber) => node.type === 'li' && fiber.key === key)[0]
-    .findOne(SkinTone);
+	return root
+		.query<typeof SkinTone>((node, fiber) => node.type === 'li' && fiber.key === key)[0]
+		.findOne(SkinTone);
 }
 
 describe('SkinTonePalette', () => {
-  const props: SkinTonePaletteProps = {
-    activeSkinTone: SKIN_KEY_NONE,
-    icons: {},
-    onSelect() {},
-  };
+	const props: SkinTonePaletteProps = {
+		activeSkinTone: SKIN_KEY_NONE,
+		icons: {},
+		onSelect() {},
+	};
 
-  it('renders a palette', () => {
-    const { root } = render<SkinTonePaletteProps>(<SkinTonePalette {...props} />);
+	it('renders a palette', () => {
+		const { root } = render<SkinTonePaletteProps>(<SkinTonePalette {...props} />);
 
-    expect(root.findOne('nav')).toMatchSnapshot();
-  });
+		expect(root.findOne('nav')).toMatchSnapshot();
+	});
 
-  it('renders a node for each skin tone', () => {
-    const { root } = render<SkinTonePaletteProps>(<SkinTonePalette {...props} />);
+	it('renders a node for each skin tone', () => {
+		const { root } = render<SkinTonePaletteProps>(<SkinTonePalette {...props} />);
 
-    expect(root.find(SkinTone)).toHaveLength(SKIN_TONES.length);
-  });
+		expect(root.find(SkinTone)).toHaveLength(SKIN_TONES.length);
+	});
 
-  it('can customize class name', () => {
-    const { root } = render<SkinTonePaletteProps>(<SkinTonePalette {...props} />, {
-      wrapper: (
-        <ContextWrapper
-          classNames={{
-            skinTones: 'test-skin-tones',
-          }}
-        />
-      ),
-    });
+	it('can customize class name', () => {
+		const { root } = render<SkinTonePaletteProps>(<SkinTonePalette {...props} />, {
+			wrapper: (
+				<ContextWrapper
+					classNames={{
+						skinTones: 'test-skin-tones',
+					}}
+				/>
+			),
+		});
 
-    expect(root.findOne('nav')).toHaveProp('className', 'test-skin-tones');
-  });
+		expect(root.findOne('nav')).toHaveProp('className', 'test-skin-tones');
+	});
 
-  it('passes `onSelect` to skin tones', () => {
-    const { root } = render<SkinTonePaletteProps>(<SkinTonePalette {...props} />);
+	it('passes `onSelect` to skin tones', () => {
+		const { root } = render<SkinTonePaletteProps>(<SkinTonePalette {...props} />);
 
-    expect(root.findAt(SkinTone, 0)).toHaveProp('onSelect', props.onSelect);
-  });
+		expect(root.findAt(SkinTone, 0)).toHaveProp('onSelect', props.onSelect);
+	});
 
-  it('sets active skin tone', () => {
-    const { root } = render<SkinTonePaletteProps>(
-      <SkinTonePalette {...props} activeSkinTone={SKIN_KEY_DARK} />,
-    );
+	it('sets active skin tone', () => {
+		const { root } = render<SkinTonePaletteProps>(
+			<SkinTonePalette {...props} activeSkinTone={SKIN_KEY_DARK} />,
+		);
 
-    expect(findSkinToneByKey(root, SKIN_KEY_NONE)).toHaveProp('active', false);
-    expect(findSkinToneByKey(root, SKIN_KEY_DARK)).toHaveProp('active', true);
-  });
+		expect(findSkinToneByKey(root, SKIN_KEY_NONE)).toHaveProp('active', false);
+		expect(findSkinToneByKey(root, SKIN_KEY_DARK)).toHaveProp('active', true);
+	});
 
-  it('renders default icon as null', () => {
-    const { root } = render<SkinTonePaletteProps>(<SkinTonePalette {...props} />);
+	it('renders default icon as null', () => {
+		const { root } = render<SkinTonePaletteProps>(<SkinTonePalette {...props} />);
 
-    // SkinTone renders white space so the button doesnt collapse
-    expect(findSkinToneByKey(root, SKIN_KEY_MEDIUM_LIGHT)).toContainNode(' ');
-  });
+		// SkinTone renders white space so the button doesnt collapse
+		expect(findSkinToneByKey(root, SKIN_KEY_MEDIUM_LIGHT)).toContainNode(' ');
+	});
 
-  it('renders icon using kebab case', () => {
-    const icon = <b>Animal</b>;
-    const { root } = render<SkinTonePaletteProps>(
-      <SkinTonePalette {...props} icons={{ 'medium-light': icon }} />,
-    );
+	it('renders icon using kebab case', () => {
+		const icon = <b>Animal</b>;
+		const { root } = render<SkinTonePaletteProps>(
+			<SkinTonePalette {...props} icons={{ 'medium-light': icon }} />,
+		);
 
-    expect(findSkinToneByKey(root, SKIN_KEY_MEDIUM_LIGHT)).toContainNode(icon);
-  });
+		expect(findSkinToneByKey(root, SKIN_KEY_MEDIUM_LIGHT)).toContainNode(icon);
+	});
 
-  it('renders icon using camel case', () => {
-    const icon = <b>Animal</b>;
-    const { root } = render<SkinTonePaletteProps>(
-      <SkinTonePalette {...props} icons={{ mediumLight: icon }} />,
-    );
+	it('renders icon using camel case', () => {
+		const icon = <b>Animal</b>;
+		const { root } = render<SkinTonePaletteProps>(
+			<SkinTonePalette {...props} icons={{ mediumLight: icon }} />,
+		);
 
-    expect(findSkinToneByKey(root, SKIN_KEY_MEDIUM_LIGHT)).toContainNode(icon);
-  });
+		expect(findSkinToneByKey(root, SKIN_KEY_MEDIUM_LIGHT)).toContainNode(icon);
+	});
 });

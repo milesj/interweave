@@ -93,9 +93,9 @@ For example, to replace `a` elements with a custom element:
 import Interweave, { Node } from 'interweave';
 
 function transform(node: HTMLElement, children: Node[]): React.ReactNode {
-  if (node.tagName === 'a') {
-    return <Link href={node.getAttribute('href')}>{children}</Link>;
-  }
+	if (node.tagName === 'a') {
+		return <Link href={node.getAttribute('href')}>{children}</Link>;
+	}
 }
 
 <Interweave transform={transform} />;

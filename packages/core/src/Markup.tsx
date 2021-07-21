@@ -6,41 +6,34 @@ import Parser from './Parser';
 import { MarkupProps } from './types';
 
 export default function Markup(props: MarkupProps) {
-  const {
-    attributes,
-    className,
-    containerTagName,
-    content,
-    emptyContent,
-    parsedContent,
-    tagName,
-  } = props;
-  const tag = containerTagName || tagName || 'span';
-  const noWrap = tag === 'fragment' ? true : props.noWrap;
-  let mainContent;
+	const { attributes, className, containerTagName, content, emptyContent, parsedContent, tagName } =
+		props;
+	const tag = containerTagName || tagName || 'span';
+	const noWrap = tag === 'fragment' ? true : props.noWrap;
+	let mainContent;
 
-  if (parsedContent) {
-    mainContent = parsedContent;
-  } else {
-    const markup = new Parser(content || '', props).parse();
+	if (parsedContent) {
+		mainContent = parsedContent;
+	} else {
+		const markup = new Parser(content || '', props).parse();
 
-    if (markup.length > 0) {
-      mainContent = markup;
-    }
-  }
+		if (markup.length > 0) {
+			mainContent = markup;
+		}
+	}
 
-  if (!mainContent) {
-    mainContent = emptyContent;
-  }
+	if (!mainContent) {
+		mainContent = emptyContent;
+	}
 
-  if (noWrap) {
-    // eslint-disable-next-line react/jsx-no-useless-fragment
-    return <React.Fragment>{mainContent}</React.Fragment>;
-  }
+	if (noWrap) {
+		// eslint-disable-next-line react/jsx-no-useless-fragment
+		return <React.Fragment>{mainContent}</React.Fragment>;
+	}
 
-  return (
-    <Element attributes={attributes} className={className} tagName={tag}>
-      {mainContent}
-    </Element>
-  );
+	return (
+		<Element attributes={attributes} className={className} tagName={tag}>
+			{mainContent}
+		</Element>
+	);
 }

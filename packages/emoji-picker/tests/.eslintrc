@@ -1,11 +1,11 @@
 {
-  "globals": {
-    "global": true
-  },
-  "rules": {
-    "object-curly-newline": 0,
-    "react/jsx-no-literals": 0,
-    "react/jsx-curly-brace-presence": 0,
-    "unicorn/no-fn-reference-in-iterator": 0
-  }
+	"globals": {
+		"global": true
+	},
+	"rules": {
+		"object-curly-newline": 0,
+		"react/jsx-no-literals": 0,
+		"react/jsx-curly-brace-presence": 0,
+		"unicorn/no-fn-reference-in-iterator": 0
+	}
 }

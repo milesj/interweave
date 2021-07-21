@@ -12,14 +12,14 @@ up-to-date data.
 
 ```tsx
 <Interweave
-  content="This will convert emoji unicode characters (🌀), shortcodes (:cyclone:), and emoticons to SVGs! :)"
-  matchers={[
-    new EmojiMatcher('emoji', {
-      convertEmoticon: true,
-      convertShortcode: true,
-    }),
-  ]}
-  emojiPath={getSvgPathForEmoji}
+	content="This will convert emoji unicode characters (🌀), shortcodes (:cyclone:), and emoticons to SVGs! :)"
+	matchers={[
+		new EmojiMatcher('emoji', {
+			convertEmoticon: true,
+			convertShortcode: true,
+		}),
+	]}
+	emojiPath={getSvgPathForEmoji}
 />
 ```
 
@@ -102,9 +102,9 @@ import BaseInterweave, { InterweaveProps } from 'interweave';
 import { useEmojiData } from 'interweave-emoji';
 
 export default function Interweave(props: InterweaveProps) {
-  const [emojis, source, manager] = useEmojiData({ compact: false, shortcodes: ['emojibase'] });
+	const [emojis, source, manager] = useEmojiData({ compact: false, shortcodes: ['emojibase'] });
 
-  return <BaseInterweave {...props} emojiSource={source} />;
+	return <BaseInterweave {...props} emojiSource={source} />;
 }
 ```
 
@@ -130,8 +130,8 @@ option to the matcher.
 
 ```tsx
 <Interweave
-  content="Smiley faces :) ;p :>]"
-  matchers={[new EmojiMatcher('emoji', { convertEmoticon: true })]}
+	content="Smiley faces :) ;p :>]"
+	matchers={[new EmojiMatcher('emoji', { convertEmoticon: true })]}
 />
 ```
 
@@ -148,8 +148,8 @@ option to the matcher constructor.
 
 ```tsx
 <Interweave
-  content="Emoji shortcode: :cyclone:"
-  matchers={[new EmojiMatcher('emoji', { convertShortcode: true })]}
+	content="Emoji shortcode: :cyclone:"
+	matchers={[new EmojiMatcher('emoji', { convertShortcode: true })]}
 />
 ```
 
@@ -164,9 +164,9 @@ enable `convertShortcode` or `convertEmoticon` respectively.
 
 ```ts
 new EmojiMatcher('emoji', {
-  convertEmoticon: true,
-  convertShortcode: true,
-  convertUnicode: true,
+	convertEmoticon: true,
+	convertShortcode: true,
+	convertUnicode: true,
 });
 ```
 

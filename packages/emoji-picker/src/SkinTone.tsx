@@ -7,41 +7,41 @@ import { useTitleFormat } from './hooks/useTitleFormat';
 import { SkinToneKey } from './types';
 
 export interface SkinToneProps {
-  active: boolean;
-  children?: React.ReactNode;
-  onSelect: (skinTone: SkinToneKey, event: React.MouseEvent<HTMLButtonElement>) => void;
-  skinTone: SkinToneKey;
+	active: boolean;
+	children?: React.ReactNode;
+	onSelect: (skinTone: SkinToneKey, event: React.MouseEvent<HTMLButtonElement>) => void;
+	skinTone: SkinToneKey;
 }
 
 export default function SkinTone({ active, children, skinTone, onSelect }: SkinToneProps) {
-  const { classNames, messages } = useContext(Context);
-  const className = [classNames.skinTone];
-  const color = SKIN_COLORS[skinTone];
-  const key = camelCase(skinTone);
-  const title = useTitleFormat(messages[`skin${upperFirst(key)}`]);
+	const { classNames, messages } = useContext(Context);
+	const className = [classNames.skinTone];
+	const color = SKIN_COLORS[skinTone];
+	const key = camelCase(skinTone);
+	const title = useTitleFormat(messages[`skin${upperFirst(key)}`]);
 
-  if (active) {
-    className.push(classNames.skinToneActive);
-  }
+	if (active) {
+		className.push(classNames.skinToneActive);
+	}
 
-  const handleClick = useCallback(
-    (event: React.MouseEvent<HTMLButtonElement>) => {
-      event.stopPropagation();
-      onSelect(skinTone, event);
-    },
-    [skinTone, onSelect],
-  );
+	const handleClick = useCallback(
+		(event: React.MouseEvent<HTMLButtonElement>) => {
+			event.stopPropagation();
+			onSelect(skinTone, event);
+		},
+		[skinTone, onSelect],
+	);
 
-  return (
-    <button
-      className={className.join(' ')}
-      data-skin-color={color}
-      data-skin-tone={skinTone}
-      title={title}
-      type="button"
-      onClick={handleClick}
-    >
-      {children || ' '}
-    </button>
-  );
+	return (
+		<button
+			className={className.join(' ')}
+			data-skin-color={color}
+			data-skin-tone={skinTone}
+			title={title}
+			type="button"
+			onClick={handleClick}
+		>
+			{children || ' '}
+		</button>
+	);
 }

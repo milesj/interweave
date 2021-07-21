@@ -85,29 +85,29 @@ object. Both approaches will require the following methods to be defined (exclud
 import { Matcher, MatchResponse, Node } from 'interweave';
 
 class CustomMatcher extends Matcher<CustomProps> {
-  match(string: string): MatchResponse<{ extraProp: string }> | null {
-    const result = string.match(/foo/);
+	match(string: string): MatchResponse<{ extraProp: string }> | null {
+		const result = string.match(/foo/);
 
-    if (!result) {
-      return null;
-    }
+		if (!result) {
+			return null;
+		}
 
-    return {
-      index: result.index!,
-      length: result[0].length,
-      match: result[0],
-      extraProp: 'foo', // or result[1], etc
-      valid: true,
-    };
-  }
+		return {
+			index: result.index!,
+			length: result[0].length,
+			match: result[0],
+			extraProp: 'foo', // or result[1], etc
+			valid: true,
+		};
+	}
 
-  replaceWith(children: ChildrenNode, props: CustomProps): Node {
-    return <span {...props}>{children}</span>;
-  }
+	replaceWith(children: ChildrenNode, props: CustomProps): Node {
+		return <span {...props}>{children}</span>;
+	}
 
-  asTag(): string {
-    return 'span';
-  }
+	asTag(): string {
+		return 'span';
+	}
 }
 
 const matcher = new CustomMatcher('foo');
@@ -120,29 +120,29 @@ const matcher = new CustomMatcher('foo');
 import { MatcherInterface } from 'interweave';
 
 const matcher: MatcherInterface<CustomProps> = {
-  inverseName: 'noFoo',
-  propName: 'foo',
-  match(string) {
-    const result = string.match(/foo/);
+	inverseName: 'noFoo',
+	propName: 'foo',
+	match(string) {
+		const result = string.match(/foo/);
 
-    if (!result) {
-      return null;
-    }
+		if (!result) {
+			return null;
+		}
 
-    return {
-      index: result.index!,
-      length: result[0].length,
-      match: result[0],
-      extraProp: 'foo', // or result[1], etc
-      valid: true,
-    };
-  },
-  createElement(children, props) {
-    return <span {...props}>{children}</span>;
-  },
-  asTag() {
-    return 'span';
-  },
+		return {
+			index: result.index!,
+			length: result[0].length,
+			match: result[0],
+			extraProp: 'foo', // or result[1], etc
+			valid: true,
+		};
+	},
+	createElement(children, props) {
+		return <span {...props}>{children}</span>;
+	},
+	asTag() {
+		return 'span';
+	},
 };
 ```
 
@@ -154,13 +154,13 @@ object building logic. Simply pass it a regex pattern and a callback to build th
 
 ```ts
 class CustomMatcher extends Matcher<CustomProps> {
-  // ...
+	// ...
 
-  match(string: string): MatchResponse<{ extraProp: string }> | null {
-    return this.doMatch(string, /foo/, (matches) => ({
-      extraProp: 'foo',
-    }));
-  }
+	match(string: string): MatchResponse<{ extraProp: string }> | null {
+		return this.doMatch(string, /foo/, (matches) => ({
+			extraProp: 'foo',
+		}));
+	}
 }
 ```
 
@@ -207,9 +207,9 @@ each iteration, until fully exhausted. Set the `greedy` property to enable.
 import { Matcher } from 'interweave';
 
 class CustomMatcher extends Matcher<CustomProps> {
-  greedy: boolean = true;
+	greedy: boolean = true;
 
-  // ...
+	// ...
 }
 ```
 
@@ -220,9 +220,9 @@ class CustomMatcher extends Matcher<CustomProps> {
 import { MatcherInterface } from 'interweave';
 
 const matcher: MatcherInterface<CustomProps> = {
-  greedy: true,
+	greedy: true,
 
-  // ...
+	// ...
 };
 ```
 

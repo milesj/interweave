@@ -1,264 +1,264 @@
 .slack {
-  margin: 10px;
+	margin: 10px;
 }
 
 .slack .interweave-picker__picker {
-  border: 1px solid #d2d2d2;
-  border-radius: 6px;
-  background: #fff;
-  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.12);
-  color: #2c2d30;
-  font-family: 'Helvetica Neue', Helvetica, 'Segoe UI', Tahoma, Arial, sans-serif;
-  font-size: 0.95rem;
-  line-height: 1rem;
-  width: 360px;
-  position: relative;
+	border: 1px solid #d2d2d2;
+	border-radius: 6px;
+	background: #fff;
+	box-shadow: 0 5px 10px rgba(0, 0, 0, 0.12);
+	color: #2c2d30;
+	font-family: 'Helvetica Neue', Helvetica, 'Segoe UI', Tahoma, Arial, sans-serif;
+	font-size: 0.95rem;
+	line-height: 1rem;
+	width: 360px;
+	position: relative;
 }
 
 .slack .interweave-picker__groups {
-  background: #f9f9f9;
-  padding: 4px 8px 0 8px;
-  border-bottom: 1px solid #d2d2d2;
-  border-top-left-radius: 6px;
-  border-top-right-radius: 6px;
+	background: #f9f9f9;
+	padding: 4px 8px 0 8px;
+	border-bottom: 1px solid #d2d2d2;
+	border-top-left-radius: 6px;
+	border-top-right-radius: 6px;
 }
 
 .slack .interweave-picker__groups-list,
 .slack .interweave-picker__skin-tones-list {
-  display: flex;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-  justify-content: space-between;
+	display: flex;
+	margin: 0;
+	padding: 0;
+	list-style: none;
+	justify-content: space-between;
 }
 
 .slack .interweave-picker__group {
-  background: transparent;
-  border: 0;
-  border-bottom: 3px solid transparent;
-  padding: 4px 8px;
-  font-size: 18px;
-  position: relative;
-  cursor: pointer;
-  color: #a0a0a2;
+	background: transparent;
+	border: 0;
+	border-bottom: 3px solid transparent;
+	padding: 4px 8px;
+	font-size: 18px;
+	position: relative;
+	cursor: pointer;
+	color: #a0a0a2;
 }
 
 .slack .interweave-picker__group:hover {
-  color: #717274;
+	color: #717274;
 }
 
 .slack .interweave-picker__group--active {
-  border-bottom: 3px solid #2ea664;
+	border-bottom: 3px solid #2ea664;
 }
 
 .slack .interweave-picker__search {
-  padding: 8px;
+	padding: 8px;
 }
 
 .slack .interweave-picker__search-input {
-  color: #2c2d30;
-  padding: 3px 10px;
-  font-size: 15px;
-  width: 100%;
-  border: 1px solid #a0a0a2;
-  border-radius: 1rem;
-  line-height: normal;
-  outline: none;
+	color: #2c2d30;
+	padding: 3px 10px;
+	font-size: 15px;
+	width: 100%;
+	border: 1px solid #a0a0a2;
+	border-radius: 1rem;
+	line-height: normal;
+	outline: none;
 }
 
 .slack .interweave-picker__search-input::placeholder {
-  color: #a0a0a2;
+	color: #a0a0a2;
 }
 
 .slack .interweave-picker__emojis {
-  overflow-y: auto;
-  overflow-x: hidden;
-  height: auto;
-  position: relative;
-  padding: 8px;
-  padding-top: 0;
+	overflow-y: auto;
+	overflow-x: hidden;
+	height: auto;
+	position: relative;
+	padding: 8px;
+	padding-top: 0;
 }
 
 .slack .interweave-picker__emojis-body {
-  padding: 0;
+	padding: 0;
 }
 
 .slack .interweave-picker__emojis-body::after {
-  display: block;
-  content: '';
-  clear: both;
+	display: block;
+	content: '';
+	clear: both;
 }
 
 .slack .interweave-picker__emojis-header,
 .slack .interweave-picker__emojis-body {
-  display: flex;
-  align-items: center;
-  flex-direction: row;
+	display: flex;
+	align-items: center;
+	flex-direction: row;
 }
 
 .slack .interweave-picker__emojis-header {
-  justify-content: space-between;
+	justify-content: space-between;
 }
 
 .slack .interweave-picker__emojis-header--sticky {
-  position: absolute;
-  top: 0;
-  left: 8px;
-  right: 8px;
-  width: auto !important;
+	position: absolute;
+	top: 0;
+	left: 8px;
+	right: 8px;
+	width: auto !important;
 }
 
 .slack .interweave-picker__emoji {
-  background: transparent;
-  border: 0;
-  border-radius: 6px;
-  font-size: 20px;
-  position: relative;
-  z-index: 1;
-  float: left;
-  cursor: pointer;
-  transition: background 0.05s ease-out;
+	background: transparent;
+	border: 0;
+	border-radius: 6px;
+	font-size: 20px;
+	position: relative;
+	z-index: 1;
+	float: left;
+	cursor: pointer;
+	transition: background 0.05s ease-out;
 }
 
 .slack .interweave-picker__emoji img {
-  display: block !important;
+	display: block !important;
 }
 
 .slack .interweave-picker__emoji:hover {
-  background: #f3c1fd;
+	background: #f3c1fd;
 }
 
 .slack .interweave-picker__emoji--active {
-  background: #b7e887;
+	background: #b7e887;
 }
 
 .slack .interweave-picker__no-results,
 .slack .interweave-picker__emojis-header {
-  padding: 5px 6px;
-  font-size: 1rem;
-  font-weight: 700;
-  line-height: 1.5rem;
-  color: #2c2d30;
-  background: #fff;
-  width: 100%;
+	padding: 5px 6px;
+	font-size: 1rem;
+	font-weight: 700;
+	line-height: 1.5rem;
+	color: #2c2d30;
+	background: #fff;
+	width: 100%;
 }
 
 .slack .interweave-picker__preview {
-  border-top: 1px solid #d2d2d2;
-  border-bottom-left-radius: 6px;
-  border-bottom-right-radius: 6px;
-  background: #f9f9f9;
-  padding: 14px;
-  height: 76px;
-  display: flex;
-  align-items: center;
+	border-top: 1px solid #d2d2d2;
+	border-bottom-left-radius: 6px;
+	border-bottom-right-radius: 6px;
+	background: #f9f9f9;
+	padding: 14px;
+	height: 76px;
+	display: flex;
+	align-items: center;
 }
 
 .slack .interweave-picker__preview-emoji {
-  margin-right: 14px;
+	margin-right: 14px;
 }
 
 .slack .interweave-picker__preview-content {
-  line-height: 0.9rem;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  color: #717274;
+	line-height: 0.9rem;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	color: #717274;
 }
 
 .slack .interweave-picker__preview-title {
-  font-size: 0.9rem;
-  font-weight: 700;
-  padding-bottom: 5px;
+	font-size: 0.9rem;
+	font-weight: 700;
+	padding-bottom: 5px;
 }
 
 .slack .interweave-picker__preview-subtitle {
-  font-size: 0.8rem;
+	font-size: 0.8rem;
 }
 
 .slack .interweave-picker__preview-more {
-  opacity: 0.75;
-  display: inline-block;
-  margin-left: 8px;
-  font-weight: normal;
+	opacity: 0.75;
+	display: inline-block;
+	margin-left: 8px;
+	font-weight: normal;
 }
 
 .slack .interweave-picker__clear,
 .slack .interweave-picker__skin-tone {
-  background: transparent;
-  border: 0;
-  padding: 0;
-  margin-left: 4px;
-  cursor: pointer;
-  font-size: 1em;
-  opacity: 0.65;
+	background: transparent;
+	border: 0;
+	padding: 0;
+	margin-left: 4px;
+	cursor: pointer;
+	font-size: 1em;
+	opacity: 0.65;
 }
 
 .slack .interweave-picker__skin-tone[data-skin-tone='none'] {
-  color: #ffcc22;
+	color: #ffcc22;
 }
 
 .slack .interweave-picker__skin-tone[data-skin-tone='light'] {
-  color: #fadcbc;
+	color: #fadcbc;
 }
 
 .slack .interweave-picker__skin-tone[data-skin-tone='medium-light'] {
-  color: #e0bb95;
+	color: #e0bb95;
 }
 
 .slack .interweave-picker__skin-tone[data-skin-tone='medium'] {
-  color: #bf8f68;
+	color: #bf8f68;
 }
 
 .slack .interweave-picker__skin-tone[data-skin-tone='medium-dark'] {
-  color: #9b643d;
+	color: #9b643d;
 }
 
 .slack .interweave-picker__skin-tone[data-skin-tone='dark'] {
-  color: #5a463a;
+	color: #5a463a;
 }
 
 .slack .interweave-picker__skin-tone--active,
 .slack .interweave-picker__skin-tone:hover {
-  opacity: 1;
+	opacity: 1;
 }
 
 .slack .interweave-picker__clear {
-  color: #a0a0a2;
-  opacity: 1;
+	color: #a0a0a2;
+	opacity: 1;
 }
 
 .slack .interweave-picker__clear:hover {
-  color: #717274;
+	color: #717274;
 }
 
 .slack .interweave-picker__no-preview {
-  font-size: 1.2rem;
-  font-weight: 700;
-  color: #a0a0a2;
-  padding: 10px 0;
+	font-size: 1.2rem;
+	font-weight: 700;
+	color: #a0a0a2;
+	padding: 10px 0;
 }
 
 .slack .interweave-picker__no-results {
-  position: static;
+	position: static;
 }
 
 .slack .interweave-picker__emoji--loading {
-  overflow: hidden;
-  border-radius: 50%;
-  background-color: #eee;
-  animation-name: shimmer;
-  animation-duration: 1s;
-  animation-iteration-count: infinite;
+	overflow: hidden;
+	border-radius: 50%;
+	background-color: #eee;
+	animation-name: shimmer;
+	animation-duration: 1s;
+	animation-iteration-count: infinite;
 }
 
 @keyframes shimmer {
-  0% {
-    background-color: #eee;
-  }
-  50% {
-    background-color: #fff;
-  }
-  100% {
-    background-color: #eee;
-  }
+	0% {
+		background-color: #eee;
+	}
+	50% {
+		background-color: #fff;
+	}
+	100% {
+		background-color: #eee;
+	}
 }

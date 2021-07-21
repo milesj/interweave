@@ -45,7 +45,6 @@ A React based emoji picker powered by [Interweave](https://github.com/milesj/int
 >
   <TabItem value="yarn">
 
-
 ```bash
 yarn add interweave interweave-emoji interweave-emoji-picker emojibase
 ```
@@ -53,14 +52,12 @@ yarn add interweave interweave-emoji interweave-emoji-picker emojibase
   </TabItem>
   <TabItem value="npm">
 
-
 ```bash
 npm install interweave interweave-emoji interweave-emoji-picker emojibase
 ```
 
   </TabItem>
 </Tabs>
-
 
 ## Usage
 
@@ -86,10 +83,10 @@ the `blockList` prop, which accepts an array of hexcodes.
 
 ```tsx
 <EmojiPicker
-  blockList={[
-    '1F4A9', // poop
-    '1F52B', // gun
-  ]}
+	blockList={[
+		'1F4A9', // poop
+		'1F52B', // gun
+	]}
 />
 ```
 
@@ -99,13 +96,13 @@ should _only_ be used. This also accepts an array of hexcodes.
 ```tsx
 // Only trees
 <EmojiPicker
-  allowList={[
-    '1F332', // evergreen
-    '1F333', // deciduous
-    '1F334', // palm
-    '1F384', // christmas
-    '1F38B', // tanabata
-  ]}
+	allowList={[
+		'1F332', // evergreen
+		'1F333', // deciduous
+		'1F334', // palm
+		'1F384', // christmas
+		'1F38B', // tanabata
+	]}
 />
 ```
 
@@ -179,9 +176,9 @@ prop. By default the picker uses native emoji but can render React components.
 
 ```tsx
 <EmojiPicker
-  groupIcons={{
-    activities: <IconBasketball />,
-  }}
+	groupIcons={{
+		activities: <IconBasketball />,
+	}}
 />
 ```
 
@@ -194,8 +191,8 @@ follows the
 
 ```css
 .interweave-picker__picker {
-  position: 'absolute';
-  bottom: 100%;
+	position: 'absolute';
+	bottom: 100%;
 }
 ```
 
@@ -204,9 +201,9 @@ approach enables non-standard solutions, like CSS modules and CSS-in-JS.
 
 ```tsx
 <EmojiPicker
-  classNames={{
-    picker: 'picker-7sa92dsd',
-  }}
+	classNames={{
+		picker: 'picker-7sa92dsd',
+	}}
 />
 ```
 
@@ -225,10 +222,10 @@ Localization is important, and thus, all messages within the picker can be trans
 
 ```tsx
 <EmojiPicker
-  locale="ja"
-  messages={{
-    search: 'サーチ',
-  }}
+	locale="ja"
+	messages={{
+		search: 'サーチ',
+	}}
 />
 ```
 

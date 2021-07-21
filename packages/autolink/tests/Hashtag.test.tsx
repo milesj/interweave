@@ -5,48 +5,48 @@ import Link from '../src/Link';
 import { HashtagProps } from '../src/types';
 
 describe('components/Hashtag', () => {
-  it('can define the URL', () => {
-    const { root } = render<HashtagProps>(
-      <Hashtag hashtag="#interweave" hashtagUrl="http://foo.com/{{hashtag}}">
-        #interweave
-      </Hashtag>,
-    );
+	it('can define the URL', () => {
+		const { root } = render<HashtagProps>(
+			<Hashtag hashtag="#interweave" hashtagUrl="http://foo.com/{{hashtag}}">
+				#interweave
+			</Hashtag>,
+		);
 
-    expect(root).toContainNode('#interweave');
-    expect(root.findOne(Link)).toHaveProp('href', 'http://foo.com/interweave');
-  });
+		expect(root).toContainNode('#interweave');
+		expect(root.findOne(Link)).toHaveProp('href', 'http://foo.com/interweave');
+	});
 
-  it('can define the URL with a function', () => {
-    const { root } = render<HashtagProps>(
-      <Hashtag hashtag="#interweave" hashtagUrl={(tag) => `http://foo.com/${tag.toUpperCase()}`}>
-        #interweave
-      </Hashtag>,
-    );
+	it('can define the URL with a function', () => {
+		const { root } = render<HashtagProps>(
+			<Hashtag hashtag="#interweave" hashtagUrl={(tag) => `http://foo.com/${tag.toUpperCase()}`}>
+				#interweave
+			</Hashtag>,
+		);
 
-    expect(root).toContainNode('#interweave');
-    expect(root.findOne(Link)).toHaveProp('href', 'http://foo.com/INTERWEAVE');
-  });
+		expect(root).toContainNode('#interweave');
+		expect(root.findOne(Link)).toHaveProp('href', 'http://foo.com/INTERWEAVE');
+	});
 
-  it('can encode the hashtag', () => {
-    const { root } = render<HashtagProps>(
-      <Hashtag hashtag="#interweave" encodeHashtag preserveHash>
-        #interweave
-      </Hashtag>,
-    );
+	it('can encode the hashtag', () => {
+		const { root } = render<HashtagProps>(
+			<Hashtag hashtag="#interweave" encodeHashtag preserveHash>
+				#interweave
+			</Hashtag>,
+		);
 
-    expect(root).toContainNode('#interweave');
-    expect(root.findOne(Link)).toHaveProp('href', '%23interweave');
-  });
+		expect(root).toContainNode('#interweave');
+		expect(root.findOne(Link)).toHaveProp('href', '%23interweave');
+	});
 
-  it('can pass props to Link', () => {
-    const func = () => {};
-    const { root } = render<HashtagProps>(
-      <Hashtag hashtag="#interweave" onClick={func} newWindow>
-        #interweave
-      </Hashtag>,
-    );
+	it('can pass props to Link', () => {
+		const func = () => {};
+		const { root } = render<HashtagProps>(
+			<Hashtag hashtag="#interweave" onClick={func} newWindow>
+				#interweave
+			</Hashtag>,
+		);
 
-    expect(root.findOne(Link)).toHaveProp('newWindow', true);
-    expect(root.findOne(Link)).toHaveProp('onClick', func);
-  });
+		expect(root.findOne(Link)).toHaveProp('newWindow', true);
+		expect(root.findOne(Link)).toHaveProp('onClick', func);
+	});
 });

@@ -15,8 +15,8 @@ an anchor link. This process is achieved through Interweave matchers.
 
 ```tsx
 <Interweave
-  content="This contains a URL, https://github.com/milesj/interweave, and a #hashtag, that will be converted to an anchor link!"
-  matchers={[new UrlMatcher('url'), new HashtagMatcher('hashtag')]}
+	content="This contains a URL, https://github.com/milesj/interweave, and a #hashtag, that will be converted to an anchor link!"
+	matchers={[new UrlMatcher('url'), new HashtagMatcher('hashtag')]}
 />
 ```
 
@@ -56,8 +56,8 @@ import Interweave from 'interweave';
 import { UrlMatcher } from 'interweave-autolink';
 
 <Interweave
-  content="URL: https://github.com/milesj/interweave"
-  matchers={[new UrlMatcher('url')]}
+	content="URL: https://github.com/milesj/interweave"
+	matchers={[new UrlMatcher('url')]}
 />;
 ```
 
