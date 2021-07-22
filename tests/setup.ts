@@ -1,6 +1,6 @@
 import { loadEmojiData, loadMeta, loadShortcodes } from 'emojibase-test-utils';
 import { EmojiDataManager } from 'interweave-emoji';
-import EmojiDataSourceManager from '../packages/emoji/src/EmojiDataManager';
+import { EmojiDataManager as EmojiDataSourceManager } from '../packages/emoji/src/EmojiDataManager';
 
 const data = loadEmojiData([loadShortcodes()]);
 const messages = loadMeta();
