@@ -1,4 +1,4 @@
-/* eslint-disable no-bitwise, no-cond-assign, complexity */
+/* eslint-disable no-bitwise, no-cond-assign, complexity, @typescript-eslint/no-unsafe-return */
 
 import React from 'react';
 import escapeHtml from 'escape-html';
@@ -44,7 +44,7 @@ function createDocument() {
   return document.implementation.createHTMLDocument('Interweave');
 }
 
-export default class Parser {
+export class Parser {
   allowed: Set<string>;
 
   banned: Set<string>;

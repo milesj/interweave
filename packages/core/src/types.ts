@@ -74,7 +74,7 @@ export interface MatcherInterface<T = any> {
 
 // FILTERS
 
-export type ElementAttributes = Omit<React.AllHTMLAttributes<unknown>, 'download'>;
+export type ElementAttributes = React.AllHTMLAttributes<unknown>;
 
 export interface FilterInterface {
   attribute?: <K extends keyof ElementAttributes>(

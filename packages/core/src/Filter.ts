@@ -8,6 +8,7 @@ export class Filter implements FilterInterface {
 		name: K,
 		value: ElementAttributes[K],
 	): ElementAttributes[K] | null | undefined {
+		// eslint-disable-next-line @typescript-eslint/no-unsafe-return
 		return value;
 	}
 

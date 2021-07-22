@@ -3,7 +3,7 @@ declare module 'escape-html' {
 }
 
 declare module 'style-parser' {
-  export default function parse(style: string): object;
+  export default function parse(style: string): Record<string, unknown>;
 }
 
 declare const __DEV__: boolean;

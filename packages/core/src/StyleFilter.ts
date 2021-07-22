@@ -17,6 +17,7 @@ export class StyleFilter extends Filter {
 			});
 		}
 
+		// eslint-disable-next-line @typescript-eslint/no-unsafe-return
 		return value;
 	}
 }

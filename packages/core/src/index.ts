@@ -1,9 +1,9 @@
 /**
- * @copyright   2016-2019, Miles Johnson
+ * @copyright   2021, Miles Johnson
  * @license     https://opensource.org/licenses/MIT
  */
 
-import Interweave from './Interweave';
+import { Interweave } from './Interweave';
 
 export * from './constants';
 export * from './Element';

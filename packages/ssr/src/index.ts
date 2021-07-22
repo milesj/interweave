@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/prefer-ts-expect-error, @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access */
 
 /**
  * @copyright   2016-2019, Miles Johnson
@@ -28,10 +28,10 @@ function patchTextNodeInChildren(parentNode: ParentNode) {
 				},
 				value: {
 					get() {
-						return this.textContent;
+						return (this as HTMLElement).textContent;
 					},
 					set(value) {
-						this.textContent = value;
+						(this as HTMLElement).textContent = value;
 					},
 				},
 			});
@@ -126,7 +126,7 @@ function createHTMLDocument(): Document {
 		set(value) {
 			// #document -> html -> body -> tag
 			// @ts-expect-error Allow types
-			this.childNodes = parseHTML(String(value)).childNodes[0].childNodes[1].childNodes;
+			this.childNodes = parseHTML(String(value)).childNodes[0]?.childNodes[1]?.childNodes;
 		},
 	});
 

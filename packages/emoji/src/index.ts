@@ -1,14 +1,11 @@
 /**
- * @copyright   2016-2019, Miles Johnson
+ * @copyright   2021, Miles Johnson
  * @license     https://opensource.org/licenses/MIT
  */
 
-import Emoji from './Emoji';
-import EmojiDataManager from './EmojiDataManager';
-import EmojiMatcher from './EmojiMatcher';
-import useEmojiData from './useEmojiData';
-
-export { Emoji, EmojiDataManager, EmojiMatcher, useEmojiData };
-
 export * from './constants';
+export * from './Emoji';
+export * from './EmojiDataManager';
+export * from './EmojiMatcher';
 export * from './types';
+export * from './useEmojiData';
