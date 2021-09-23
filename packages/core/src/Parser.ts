@@ -490,18 +490,7 @@ export default class Parser {
         // Apply transformation second
         let children;
 
-        if (transform) {
-          if (transformOnlyAllowList && !this.isTagAllowed(tagName)) {
-            content = content.concat(
-              this.parseNode(nextNode, config.tagName ? config : parentConfig),
-            );
-            if (mergedText) {
-              content.push(mergedText);
-              mergedText = '';
-            }
-
-            return;
-          }
+        if (transform && !(transformOnlyAllowList && !this.isTagAllowed(tagName))) {
           this.keyIndex += 1;
           const key = this.keyIndex;
 
