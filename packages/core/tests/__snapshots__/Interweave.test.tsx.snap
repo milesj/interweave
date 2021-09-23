@@ -387,7 +387,7 @@ exports[`Interweave transform prop skips transforming tags outside the allowList
     <Element selfClose tagName="br">
       <br />
     </Element>
-     Proin consequat ut metus sit amet cursus. Integer tincidunt eu erat nec commodo. Duis sodales tortor vitae tempor sagittis. Aliquam semper metus ante, eget ullamcorper massa consequat sed. Curabitur a rhoncus erat, consequat consectetur metus. Nam in nunc elit. Donec varius augue sed nisl egestas consequat. Mauris tempus, magna et malesuada fermentum, quam libero egestas lorem, nec consequat augue urna nec nibh. Morbi eget nisl vel lacus porttitor semper?
+     rttitor semper?
     <Element selfClose tagName="br">
       <br />
     </Element>
@@ -489,7 +489,7 @@ exports[`Interweave transform prop skips transforming tags outside the allowList
     <Element selfClose tagName="br">
       <br />
     </Element>
-    Proin consequat ut metus sit amet cursus. Integer tincidunt eu erat nec commodo. Duis sodales tortor vitae tempor sagittis. Aliquam semper metus ante, eget ullamcorper massa consequat sed. Curabitur a rhoncus erat, consequat consectetur metus. Nam in nunc elit. Donec varius augue sed nisl egestas consequat. Mauris tempus, magna et malesuada fermentum, quam libero egestas lorem, nec consequat augue urna nec nibh. Morbi eget nisl vel lacus porttitor semper?
+    rttitor semper?
     <Element selfClose tagName="br">
       <br />
     </Element>
@@ -685,7 +685,7 @@ exports[`Interweave transform prop skips transforming tags outside the allowList
     <Element selfClose tagName="br">
       <br />
     </Element>
-    Proin consequat ut metus sit amet cursus. Integer tincidunt eu erat nec commodo. Duis sodales tortor vitae tempor sagittis. Aliquam semper metus ante, eget ullamcorper massa consequat sed. Curabitur a rhoncus erat, consequat consectetur metus. Nam in nunc elit. Donec varius augue sed nisl egestas consequat. Mauris tempus, magna et malesuada fermentum, quam libero egestas lorem, nec consequat augue urna nec nibh. Morbi eget nisl vel lacus porttitor semper.
+    rttitor semper.
     <Element selfClose tagName="br">
       <br />
     </Element>
@@ -1148,7 +1148,7 @@ exports[`Interweave transform prop skips transforming tags outside the allowList
     <Element selfClose tagName="br">
       <br />
     </Element>
-    Proin consequat ut metus sit amet cursus. Integer tincidunt eu erat nec commodo. Duis sodales tortor vitae tempor sagittis. Aliquam semper metus ante, eget ullamcorper massa consequat sed. Curabitur a rhoncus erat, consequat consectetur metus. Nam in nunc elit. Donec varius augue sed nisl egestas consequat. Mauris tempus, magna et malesuada fermentum, quam libero egestas lorem, nec consequat augue urna nec nibh. Morbi eget nisl vel lacus porttitor semper.
+    rttitor semper.
     <Element selfClose tagName="br">
       <br />
     </Element>
