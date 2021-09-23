@@ -492,6 +492,14 @@ export default class Parser {
 
         if (transform) {
           if (transformOnlyAllowList && !this.isTagAllowed(tagName)) {
+            content = content.concat(
+              this.parseNode(nextNode, config.tagName ? config : parentConfig),
+            );
+            if (mergedText) {
+              content.push(mergedText);
+              mergedText = '';
+            }
+
             return;
           }
           this.keyIndex += 1;
