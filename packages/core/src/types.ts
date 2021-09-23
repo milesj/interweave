@@ -124,6 +124,8 @@ export interface ParserProps {
   noHtmlExceptMatchers?: boolean;
   /** Transformer ran on each HTML element. Return a new element, null to remove current element, or undefined to do nothing. */
   transform?: TransformCallback | null;
+  /** Disable transformer for non-allowList tags. */
+  transformOnlyAllowList?: boolean;
 }
 
 // INTERWEAVE

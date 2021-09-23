@@ -375,3 +375,77 @@ exports[`Interweave transform prop skips the element 1`] = `
   <span>Foo  Bar</span>
 </Element>
 `;
+
+exports[`Interweave transform prop skips transforming tags outside the allowList when transformOnlyAllowList is true 1`] = `
+<Element tagName="span">
+  <span>
+    Hello, https://test.example.com 
+    <a href="http://example.com">
+      hi
+    </a>
+     test@example.com test@example.com 
+    <Element selfClose tagName="br">
+      <br />
+    </Element>
+     Proin consequat ut metus sit amet cursus. Integer tincidunt eu erat nec commodo. Duis sodales tortor vitae tempor sagittis. Aliquam semper metus ante, eget ullamcorper massa consequat sed. Curabitur a rhoncus erat, consequat consectetur metus. Nam in nunc elit. Donec varius augue sed nisl egestas consequat. Mauris tempus, magna et malesuada fermentum, quam libero egestas lorem, nec consequat augue urna nec nibh. Morbi eget nisl vel lacus porttitor semper?
+    <Element selfClose tagName="br">
+      <br />
+    </Element>
+    <Element selfClose tagName="br">
+      <br />
+    </Element>
+    <Element selfClose tagName="br">
+      <br />
+    </Element>
+    Mauris tempus, magna et malesuada fermentum, quam libero egestas lorem, nec consequat augue urna nec nibh. Morbi eget nisl vel lacus porttitor semper.
+    <Element selfClose tagName="br">
+      <br />
+    </Element>
+    <Element selfClose tagName="br">
+      <br />
+    </Element>
+    Hi Name,
+    <Element selfClose tagName="br">
+      <br />
+    </Element>
+    Mauris tempus, magna et malesuada fermentum, quam libero egestas lorem, nec consequat augue urna nec nibh. Morbi eget nisl vel lacus porttitor semper: 
+    <Element selfClose tagName="br">
+      <br />
+    </Element>
+    <Element selfClose tagName="br">
+      <br />
+    </Element>
+    READ ME
+    <Element selfClose tagName="br">
+      <br />
+    </Element>
+    Mauris tempus, magna et malesuada fermentum, quam libero egestas lorem, nec consequat augue urna nec nibh. Morbi eget nisl vel lacus porttitor semper%
+    <Element selfClose tagName="br">
+      <br />
+    </Element>
+    Mauris tempus, magna et malesuada fermentum, quam libero egestas lorem, nec consequat augue urna nec nibh. Morbi eget nisl vel lacus porttitor semper
+    <Element selfClose tagName="br">
+      <br />
+    </Element>
+    Mauris tempus, magna et malesuada fermentum, quam libero egestas lorem, nec consequat augue urna nec nibh. Morbi eget nisl vel lacus porttitor semper.
+    <Element selfClose tagName="br">
+      <br />
+    </Element>
+    Mauris tempus, magna et malesuada fermentum, quam libero egestas lorem.
+    <Element selfClose tagName="br">
+      <br />
+    </Element>
+    <Element selfClose tagName="br">
+      <br />
+    </Element>
+    Sent from my iPhone
+    <Element selfClose tagName="br">
+      <br />
+    </Element>
+    <Element selfClose tagName="br">
+      <br />
+    </Element>
+    On Jun 30, 2021, at 8:06 PM, Rental Support - Some Place 
+  </span>
+</Element>
+`;

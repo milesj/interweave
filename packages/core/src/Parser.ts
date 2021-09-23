@@ -458,7 +458,13 @@ export default class Parser {
    * list of text nodes and React elements.
    */
   parseNode(parentNode: HTMLElement, parentConfig: NodeConfig): Node[] {
-    const { noHtml, noHtmlExceptMatchers, allowElements, transform } = this.props;
+    const {
+      noHtml,
+      noHtmlExceptMatchers,
+      allowElements,
+      transform,
+      transformOnlyAllowList,
+    } = this.props;
     let content: Node[] = [];
     let mergedText = '';
 
@@ -485,6 +491,9 @@ export default class Parser {
         let children;
 
         if (transform) {
+          if (transformOnlyAllowList && !this.isTagAllowed(tagName)) {
+            return;
+          }
           this.keyIndex += 1;
           const key = this.keyIndex;
 

@@ -102,7 +102,8 @@ function transform(node: HTMLElement, children: Node[]): React.ReactNode {
 ```
 
 Note that `transform` is run before checking the allowed list, permitting you to use non-allowed
-tags in a controlled way. Banned tags like `script` will not be transformed.
+tags in a controlled way. If the `transformOnlyAllowList` prop is `true`, `transform` will not be
+ran on tags unless that are in the `allowList`. Banned tags like `script` will not be transformed.
 
 ## Disabling HTML
 
