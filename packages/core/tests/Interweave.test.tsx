@@ -408,7 +408,7 @@ describe('Interweave', () => {
         Else <br><br>(999)999-9999<br><br>On Jun 25, 2021, at 3:56 PM, Someone <someone@somedomain.dev> 
         wrote:<br><br><br>Please contact the maintenance supervisor regarding this at 19999999999 <br>
         <br>On Fri, Jun 25, 2021, 10:26 AM Someone <someone@someotherdomain.dev> wrote:<br>rttitor semper.
-        <br><br><br><br><br>On Jun 24, 2021, at 10:16 AM, Someone <someone@somedomain.dev> wrote:
+        <br><br><br><br><br>On Jun 24, 2021, at 10:16 AM, Someone <someone@somedomain.dev> wrote: 
         <br><br><br>Hello,<br><br>, . .<br><br><br>SomeDomain.dev<br>P: 999-999-9999<br>, Português, 
         Español<br><br><br>
       `;
