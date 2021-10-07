@@ -379,7 +379,8 @@ exports[`Interweave transform prop skips the element 1`] = `
 exports[`Interweave transform prop skips transforming tags outside the allowList when transformOnlyAllowList is true 1`] = `
 <Element tagName="span">
   <span>
-    Hello, https://test.example.com 
+    
+        Hello, https://test.example.com 
     <a href="http://example.com">
       hi
     </a>
@@ -387,226 +388,8 @@ exports[`Interweave transform prop skips transforming tags outside the allowList
     <Element selfClose tagName="br">
       <br />
     </Element>
-     rttitor semper?
-    <Element selfClose tagName="br">
-      <br />
-    </Element>
-    <Element selfClose tagName="br">
-      <br />
-    </Element>
-    <Element selfClose tagName="br">
-      <br />
-    </Element>
-    Mauris tempus, magna et malesuada fermentum, quam libero egestas lorem, nec consequat augue urna nec nibh. Morbi eget nisl vel lacus porttitor semper.
-    <Element selfClose tagName="br">
-      <br />
-    </Element>
-    <Element selfClose tagName="br">
-      <br />
-    </Element>
-    Hi Name,
-    <Element selfClose tagName="br">
-      <br />
-    </Element>
-    Mauris tempus, magna et malesuada fermentum, quam libero egestas lorem, nec consequat augue urna nec nibh. Morbi eget nisl vel lacus porttitor semper: 
-    <Element selfClose tagName="br">
-      <br />
-    </Element>
-    <Element selfClose tagName="br">
-      <br />
-    </Element>
-    READ ME
-    <Element selfClose tagName="br">
-      <br />
-    </Element>
-    Mauris tempus, magna et malesuada fermentum, quam libero egestas lorem, nec consequat augue urna nec nibh. Morbi eget nisl vel lacus porttitor semper%
-    <Element selfClose tagName="br">
-      <br />
-    </Element>
-    Mauris tempus, magna et malesuada fermentum, quam libero egestas lorem, nec consequat augue urna nec nibh. Morbi eget nisl vel lacus porttitor semper
-    <Element selfClose tagName="br">
-      <br />
-    </Element>
-    Mauris tempus, magna et malesuada fermentum, quam libero egestas lorem, nec consequat augue urna nec nibh. Morbi eget nisl vel lacus porttitor semper.
-    <Element selfClose tagName="br">
-      <br />
-    </Element>
-    Mauris tempus, magna et malesuada fermentum, quam libero egestas lorem.
-    <Element selfClose tagName="br">
-      <br />
-    </Element>
-    <Element selfClose tagName="br">
-      <br />
-    </Element>
-    Sent from my iPhone
-    <Element selfClose tagName="br">
-      <br />
-    </Element>
-    <Element selfClose tagName="br">
-      <br />
-    </Element>
-    On Jun 30, 2021, at 8:06 PM, Rental Support - Some Place 
-     wrote:
-    <Element selfClose tagName="br">
-      <br />
-    </Element>
-    <Element selfClose tagName="br">
-      <br />
-    </Element>
-    <Element selfClose tagName="br">
-      <br />
-    </Element>
-    Mauris tempus, magna et malesuada fermentum, quam libero egestas lorem, nec consequat augue urna nec nibh. Morbi eget nisl vel lacus porttitor semper.
-    <Element selfClose tagName="br">
-      <br />
-    </Element>
-    <Element selfClose tagName="br">
-      <br />
-    </Element>
-    <Element selfClose tagName="br">
-      <br />
-    </Element>
-    SomeExampleDomain.dev
-    <Element selfClose tagName="br">
-      <br />
-    </Element>
-    P: 999-999-9999
-    <Element selfClose tagName="br">
-      <br />
-    </Element>
-    Pick a Language:  Czech, English, Français, Português, Español
-    <Element selfClose tagName="br">
-      <br />
-    </Element>
-    <Element selfClose tagName="br">
-      <br />
-    </Element>
-    <Element selfClose tagName="br">
-      <br />
-    </Element>
-    On Wed, Jun 30, 2021 at 5:55 PM Some Person 
-     wrote:
-    <Element selfClose tagName="br">
-      <br />
-    </Element>
-    rttitor semper?
-    <Element selfClose tagName="br">
-      <br />
-    </Element>
-    <Element selfClose tagName="br">
-      <br />
-    </Element>
-    Sent from my iPhone
-    <Element selfClose tagName="br">
-      <br />
-    </Element>
-    <Element selfClose tagName="br">
-      <br />
-    </Element>
-    On Jun 30, 2021, at 4:30 PM, Rental Support - Some Place 
-     wrote:
-    <Element selfClose tagName="br">
-      <br />
-    </Element>
-    <Element selfClose tagName="br">
-      <br />
-    </Element>
-    ﻿
-    <Element selfClose tagName="br">
-      <br />
-    </Element>
-    Mauris tempus, magna et malesuada fermentum, quam libero egestas lorem.
-    <Element selfClose tagName="br">
-      <br />
-    </Element>
-    <Element selfClose tagName="br">
-      <br />
-    </Element>
-    On Wed, Jun 30, 2021, 1:15 PM Someone 
-     wrote:
-    <Element selfClose tagName="br">
-      <br />
-    </Element>
-    Hello, 
-    <Element selfClose tagName="br">
-      <br />
-    </Element>
-    Mauris tempus, magna et malesuada fermentum, quam libero egestas lorem.
-    <Element selfClose tagName="br">
-      <br />
-    </Element>
-    <Element selfClose tagName="br">
-      <br />
-    </Element>
-    <Element selfClose tagName="br">
-      <br />
-    </Element>
-    Sent from my iPhone
-    <Element selfClose tagName="br">
-      <br />
-    </Element>
-    <Element selfClose tagName="br">
-      <br />
-    </Element>
-    On Jun 30, 2021, at 10:35 AM, Rental Support - Email 
-     wrote:
-    <Element selfClose tagName="br">
-      <br />
-    </Element>
-    <Element selfClose tagName="br">
-      <br />
-    </Element>
-    ﻿
-    <Element selfClose tagName="br">
-      <br />
-    </Element>
-    Mauris tempus, magna et malesuada fermentum, quam libero egestas lorem.
-    <Element selfClose tagName="br">
-      <br />
-    </Element>
-    Mauris tempus, magna et malesuada fermentum, quam libero egestas lorem.
-    <Element selfClose tagName="br">
-      <br />
-    </Element>
-    <Element selfClose tagName="br">
-      <br />
-    </Element>
-    Mauris tempus, magna et malesuada fermentum, quam libero egestas lorem.
-    <Element selfClose tagName="br">
-      <br />
-    </Element>
-    <Element selfClose tagName="br">
-      <br />
-    </Element>
-    Mauris tempus, magna et malesuada fermentum, quam libero egestas lorem.
-    <Element selfClose tagName="br">
-      <br />
-    </Element>
-    <Element selfClose tagName="br">
-      <br />
-    </Element>
-    <Element selfClose tagName="br">
-      <br />
-    </Element>
-    SomeDomain.dev
-    <Element selfClose tagName="br">
-      <br />
-    </Element>
-    P: 999-999-9999
-    <Element selfClose tagName="br">
-      <br />
-    </Element>
-    Mauris tempus, magna et malesuada fermentum, quam libero egestas lorem:  Czech, English, Français, Português, Español
-    <Element selfClose tagName="br">
-      <br />
-    </Element>
-    <Element selfClose tagName="br">
-      <br />
-    </Element>
-    <Element selfClose tagName="br">
-      <br />
-    </Element>
-    On Wed, Jun 30, 2021 at 8:58 AM Someone 
+     
+        at 8:58 AM Someone 
      wrote:
     <Element selfClose tagName="br">
       <br />
@@ -615,7 +398,8 @@ exports[`Interweave transform prop skips transforming tags outside the allowList
     <Element selfClose tagName="br">
       <br />
     </Element>
-    Mauris tempus, magna et malesuada fermentum, quam libero egestas lorem:  Czech, English, Français, Português, Español
+    :  Czech, English, Français, 
+        Português, Español
     <Element selfClose tagName="br">
       <br />
     </Element>
@@ -629,15 +413,15 @@ exports[`Interweave transform prop skips transforming tags outside the allowList
     <Element selfClose tagName="br">
       <br />
     </Element>
-    On Jun 30, 2021, at 9:40 AM, Rental Support - Someone 
-     wrote:
+    On Jun 30, 2021, at 9:40 AM, Someone 
+    
+        wrote:
     <Element selfClose tagName="br">
       <br />
     </Element>
     <Element selfClose tagName="br">
       <br />
     </Element>
-    ﻿
     <Element selfClose tagName="br">
       <br />
     </Element>
@@ -648,11 +432,11 @@ exports[`Interweave transform prop skips transforming tags outside the allowList
     <Element selfClose tagName="br">
       <br />
     </Element>
-    Mauris tempus, magna et malesuada fermentum, quam libero egestas lorem, nec consequat augue urna nec nibh. Morbi eget nisl vel lacus porttitor semper
+    , . 
     <Element selfClose tagName="br">
       <br />
     </Element>
-    Mauris tempus, magna et malesuada fermentum, quam libero egestas lorem, nec consequat augue urna nec nibh. Morbi eget nisl vel lacus porttitor semper
+    , . 
     <Element selfClose tagName="br">
       <br />
     </Element>
@@ -670,7 +454,8 @@ exports[`Interweave transform prop skips transforming tags outside the allowList
     <Element selfClose tagName="br">
       <br />
     </Element>
-    Please, let us know what language you prefer to communicate in:  Czech, English, Français, Português, Español
+    
+        Português, Español
     <Element selfClose tagName="br">
       <br />
     </Element>
@@ -680,19 +465,9 @@ exports[`Interweave transform prop skips transforming tags outside the allowList
     <Element selfClose tagName="br">
       <br />
     </Element>
-    On Tue, Jun 29, 2021 at 2:05 PM Rental Support - Someone 
-     wrote:
-    <Element selfClose tagName="br">
-      <br />
-    </Element>
-    rttitor semper.
-    <Element selfClose tagName="br">
-      <br />
-    </Element>
-    <Element selfClose tagName="br">
-      <br />
-    </Element>
-    On Tue, Jun 29, 2021, 11:35 AM Someone 
+    On Tue, Jun 29, 2021 at 2:05 PM Someone 
+     
+        
      wrote:
     <Element selfClose tagName="br">
       <br />
@@ -701,6 +476,8 @@ exports[`Interweave transform prop skips transforming tags outside the allowList
     <Element selfClose tagName="br">
       <br />
     </Element>
+    
+        
     <Element selfClose tagName="br">
       <br />
     </Element>
@@ -714,15 +491,15 @@ exports[`Interweave transform prop skips transforming tags outside the allowList
     <Element selfClose tagName="br">
       <br />
     </Element>
-    On Jun 29, 2021, at 12:15 PM, Rental Support - Someone 
+    On Jun 29, 2021, at 12:15 PM, Someone 
      wrote:
+        
     <Element selfClose tagName="br">
       <br />
     </Element>
     <Element selfClose tagName="br">
       <br />
     </Element>
-    ﻿
     <Element selfClose tagName="br">
       <br />
     </Element>
@@ -733,7 +510,7 @@ exports[`Interweave transform prop skips transforming tags outside the allowList
     <Element selfClose tagName="br">
       <br />
     </Element>
-    Mauris tempus, magna et malesuada fermentum, quam libero egestas lorem, nec consequat augue urna nec nibh. Morbi eget nisl vel lacus porttitor semper
+    , . 
     <Element selfClose tagName="br">
       <br />
     </Element>
@@ -751,7 +528,8 @@ exports[`Interweave transform prop skips transforming tags outside the allowList
     <Element selfClose tagName="br">
       <br />
     </Element>
-    Please, let us know what language you prefer to communicate in:  Czech, English, Français, Português, Español
+    Please, let us 
+        
     <Element selfClose tagName="br">
       <br />
     </Element>
@@ -766,7 +544,8 @@ exports[`Interweave transform prop skips transforming tags outside the allowList
     <Element selfClose tagName="br">
       <br />
     </Element>
-    Mauris tempus, magna et malesuada fermentum, quam libero egestas lorem, nec consequat augue urna nec nibh. Morbi eget nisl vel lacus porttitor semper
+    , 
+        . 
     <Element selfClose tagName="br">
       <br />
     </Element>
@@ -780,65 +559,15 @@ exports[`Interweave transform prop skips transforming tags outside the allowList
     <Element selfClose tagName="br">
       <br />
     </Element>
-    Sent from my iPhone
     <Element selfClose tagName="br">
       <br />
     </Element>
     <Element selfClose tagName="br">
       <br />
     </Element>
-    On Jun 29, 2021, at 9:41 AM, Rental Support - Someone 
-     wrote:
-    <Element selfClose tagName="br">
-      <br />
-    </Element>
-    <Element selfClose tagName="br">
-      <br />
-    </Element>
-    ﻿
-    <Element selfClose tagName="br">
-      <br />
-    </Element>
-    Hello Name,
-    <Element selfClose tagName="br">
-      <br />
-    </Element>
-    <Element selfClose tagName="br">
-      <br />
-    </Element>
-    Mauris tempus, magna et malesuada fermentum, quam libero egestas lorem, nec consequat augue urna nec nibh. Morbi eget nisl vel lacus porttitor semper
-    <Element selfClose tagName="br">
-      <br />
-    </Element>
-    Mauris tempus, magna et malesuada fermentum, quam libero egestas lorem, nec consequat augue urna nec nibh. Morbi eget nisl vel lacus porttitor semper
-    <Element selfClose tagName="br">
-      <br />
-    </Element>
-    <Element selfClose tagName="br">
-      <br />
-    </Element>
-    <Element selfClose tagName="br">
-      <br />
-    </Element>
-    SomeDomain.dev
-    <Element selfClose tagName="br">
-      <br />
-    </Element>
-    P: 999-999-9999
-    <Element selfClose tagName="br">
-      <br />
-    </Element>
-    Please, let us know what language you prefer to communicate in:  Czech, English, Français, Português, Español
-    <Element selfClose tagName="br">
-      <br />
-    </Element>
-    <Element selfClose tagName="br">
-      <br />
-    </Element>
-    <Element selfClose tagName="br">
-      <br />
-    </Element>
-    On Tue, Jun 29, 2021 at 8:06 AM Someone 
+    On Jun 29, 2021, at 9:41 AM, Someone 
+    
+        
      wrote:
     <Element selfClose tagName="br">
       <br />
@@ -847,7 +576,7 @@ exports[`Interweave transform prop skips transforming tags outside the allowList
     <Element selfClose tagName="br">
       <br />
     </Element>
-    Mauris tempus, magna et malesuada fermentum, quam libero egestas lorem, nec consequat augue urna nec nibh. Morbi eget nisl vel lacus porttitor semper
+    , . 
     <Element selfClose tagName="br">
       <br />
     </Element>
@@ -861,14 +590,15 @@ exports[`Interweave transform prop skips transforming tags outside the allowList
     <Element selfClose tagName="br">
       <br />
     </Element>
-    Someone Else
+    Someone
+        Else
     <Element selfClose tagName="br">
       <br />
     </Element>
     <Element selfClose tagName="br">
       <br />
     </Element>
-    On Jun 27, 2021, at 3:56 PM, Rental Support - Someone 
+    On Jun 27, 2021, at 3:56 PM, Someone 
      wrote:
     <Element selfClose tagName="br">
       <br />
@@ -876,11 +606,11 @@ exports[`Interweave transform prop skips transforming tags outside the allowList
     <Element selfClose tagName="br">
       <br />
     </Element>
-    ﻿
     <Element selfClose tagName="br">
       <br />
     </Element>
-    Mauris tempus, magna et malesuada fermentum, quam libero egestas lorem, nec consequat augue urna nec nibh. Morbi eget nisl vel lacus porttitor semper
+    , .
+        
     <Element selfClose tagName="br">
       <br />
     </Element>
@@ -898,7 +628,7 @@ exports[`Interweave transform prop skips transforming tags outside the allowList
     <Element selfClose tagName="br">
       <br />
     </Element>
-    Please, let us know what language you prefer to communicate in:  Czech, English, Français, Português, Español
+    , Português, Español
     <Element selfClose tagName="br">
       <br />
     </Element>
@@ -908,22 +638,24 @@ exports[`Interweave transform prop skips transforming tags outside the allowList
     <Element selfClose tagName="br">
       <br />
     </Element>
-    On Sun, Jun 27, 2021 at 12:09 PM Someone 
+    On Sun, Jun 27,
+        2021 at 12:09 PM Someone 
      wrote:
     <Element selfClose tagName="br">
       <br />
     </Element>
-    ﻿
     <Element selfClose tagName="br">
       <br />
     </Element>
-    Mauris tempus, magna et malesuada fermentum, quam libero egestas lorem, nec consequat augue urna nec nibh. Morbi eget nisl vel lacus porttitor semper
+    , . 
     <Element selfClose tagName="br">
       <br />
     </Element>
     <Element selfClose tagName="br">
       <br />
     </Element>
+    
+        
     <Element selfClose tagName="br">
       <br />
     </Element>
@@ -949,11 +681,11 @@ exports[`Interweave transform prop skips transforming tags outside the allowList
     <Element selfClose tagName="br">
       <br />
     </Element>
-    Sent from my iPhone
     <Element selfClose tagName="br">
       <br />
     </Element>
-    On Jun 27, 2021, at 11:28 AM, Rental Support - Someone 
+    On Jun 27, 2021, at 
+        11:28 AM, Someone 
      wrote:
     <Element selfClose tagName="br">
       <br />
@@ -961,7 +693,6 @@ exports[`Interweave transform prop skips transforming tags outside the allowList
     <Element selfClose tagName="br">
       <br />
     </Element>
-    ﻿
     <Element selfClose tagName="br">
       <br />
     </Element>
@@ -972,7 +703,7 @@ exports[`Interweave transform prop skips transforming tags outside the allowList
     <Element selfClose tagName="br">
       <br />
     </Element>
-    Mauris tempus, magna et malesuada fermentum, quam libero egestas lorem, nec consequat augue urna nec nibh. Morbi eget nisl vel lacus porttitor semper
+    , . 
     <Element selfClose tagName="br">
       <br />
     </Element>
@@ -982,7 +713,8 @@ exports[`Interweave transform prop skips transforming tags outside the allowList
     <Element selfClose tagName="br">
       <br />
     </Element>
-    SomeDomain.dev
+    
+        SomeDomain.dev
     <Element selfClose tagName="br">
       <br />
     </Element>
@@ -990,7 +722,7 @@ exports[`Interweave transform prop skips transforming tags outside the allowList
     <Element selfClose tagName="br">
       <br />
     </Element>
-    Please, let us know what language you prefer to communicate in:  Czech, English, Français, Português, Español
+    , Português, Español
     <Element selfClose tagName="br">
       <br />
     </Element>
@@ -1000,12 +732,13 @@ exports[`Interweave transform prop skips transforming tags outside the allowList
     <Element selfClose tagName="br">
       <br />
     </Element>
-    On Sat, Jun 26, 2021 at 3:25 PM Rental Support - Someone 
+    On Sat, Jun 26, 2021 at 
+        3:25 PM Someone 
      wrote:
     <Element selfClose tagName="br">
       <br />
     </Element>
-    Mauris tempus, magna et malesuada fermentum, quam libero egestas lorem, nec consequat augue urna nec nibh. Morbi eget nisl vel lacus porttitor semper
+    , . 
     <Element selfClose tagName="br">
       <br />
     </Element>
@@ -1019,11 +752,12 @@ exports[`Interweave transform prop skips transforming tags outside the allowList
     <Element selfClose tagName="br">
       <br />
     </Element>
-    P: 999-999-9999
+    P: 
+        999-999-9999
     <Element selfClose tagName="br">
       <br />
     </Element>
-    Please, let us know what language you prefer to communicate in:  Czech, English, Français, Português, Español
+    , Português, Español
     <Element selfClose tagName="br">
       <br />
     </Element>
@@ -1033,7 +767,8 @@ exports[`Interweave transform prop skips transforming tags outside the allowList
     <Element selfClose tagName="br">
       <br />
     </Element>
-    On Sat, Jun 26, 2021 at 3:21 PM Rental Support - Someone 
+    On Sat, Jun 26, 2021 at 3:21 PM Someone 
+        
      wrote:
     <Element selfClose tagName="br">
       <br />
@@ -1045,28 +780,29 @@ exports[`Interweave transform prop skips transforming tags outside the allowList
     <Element selfClose tagName="br">
       <br />
     </Element>
-    Mauris tempus, magna et malesuada fermentum, quam libero egestas lorem, nec consequat augue urna nec nibh. Morbi eget nisl vel lacus porttitor semper
+    , . 
     <Element selfClose tagName="br">
       <br />
     </Element>
     <Element selfClose tagName="br">
       <br />
     </Element>
-    Mauris tempus, magna et malesuada fermentum, quam libero egestas lorem, nec consequat augue urna nec nibh. Morbi eget nisl vel lacus porttitor semper
+    , . 
     <Element selfClose tagName="br">
       <br />
     </Element>
     <Element selfClose tagName="br">
       <br />
     </Element>
-    Mauris tempus, magna et malesuada fermentum, quam libero egestas lorem, nec consequat augue urna nec nibh. Morbi eget nisl vel lacus porttitor semper
+    , . 
     <Element selfClose tagName="br">
       <br />
     </Element>
     <Element selfClose tagName="br">
       <br />
     </Element>
-    Mauris tempus, magna et malesuada fermentum, quam libero egestas lorem, nec consequat augue urna nec nibh. Morbi eget nisl vel lacus porttitor semper
+    , . 
+        
     <Element selfClose tagName="br">
       <br />
     </Element>
@@ -1084,7 +820,7 @@ exports[`Interweave transform prop skips transforming tags outside the allowList
     <Element selfClose tagName="br">
       <br />
     </Element>
-    Please, let us know what language you prefer to communicate in:  Czech, English, Français, Português, Español
+    , Português, Español
     <Element selfClose tagName="br">
       <br />
     </Element>
@@ -1094,7 +830,8 @@ exports[`Interweave transform prop skips transforming tags outside the allowList
     <Element selfClose tagName="br">
       <br />
     </Element>
-    On Sat, Jun 26, 2021 at 1:51 AM Someone 
+    On Sat, Jun 26, 
+        2021 at 1:51 AM Someone 
      wrote:
     <Element selfClose tagName="br">
       <br />
@@ -1103,14 +840,15 @@ exports[`Interweave transform prop skips transforming tags outside the allowList
     <Element selfClose tagName="br">
       <br />
     </Element>
-    Mauris tempus, magna et malesuada fermentum, quam libero egestas lorem, nec consequat augue urna nec nibh. Morbi eget nisl vel lacus porttitor semper
+    , . 
     <Element selfClose tagName="br">
       <br />
     </Element>
     <Element selfClose tagName="br">
       <br />
     </Element>
-    Someone Else 
+    Someone 
+        Else 
     <Element selfClose tagName="br">
       <br />
     </Element>
@@ -1124,15 +862,15 @@ exports[`Interweave transform prop skips transforming tags outside the allowList
     <Element selfClose tagName="br">
       <br />
     </Element>
-    On Jun 25, 2021, at 3:56 PM, Rental Support - Someone 
-     wrote:
+    On Jun 25, 2021, at 3:56 PM, Someone 
+     
+        wrote:
     <Element selfClose tagName="br">
       <br />
     </Element>
     <Element selfClose tagName="br">
       <br />
     </Element>
-    ﻿
     <Element selfClose tagName="br">
       <br />
     </Element>
@@ -1140,6 +878,8 @@ exports[`Interweave transform prop skips transforming tags outside the allowList
     <Element selfClose tagName="br">
       <br />
     </Element>
+    
+        
     <Element selfClose tagName="br">
       <br />
     </Element>
@@ -1149,6 +889,7 @@ exports[`Interweave transform prop skips transforming tags outside the allowList
       <br />
     </Element>
     rttitor semper.
+        
     <Element selfClose tagName="br">
       <br />
     </Element>
@@ -1158,22 +899,21 @@ exports[`Interweave transform prop skips transforming tags outside the allowList
     <Element selfClose tagName="br">
       <br />
     </Element>
-    Sent from my iPhone
     <Element selfClose tagName="br">
       <br />
     </Element>
     <Element selfClose tagName="br">
       <br />
     </Element>
-    On Jun 24, 2021, at 10:16 AM, Rental Support - Someone 
+    On Jun 24, 2021, at 10:16 AM, Someone 
      wrote:
+        
     <Element selfClose tagName="br">
       <br />
     </Element>
     <Element selfClose tagName="br">
       <br />
     </Element>
-    ﻿
     <Element selfClose tagName="br">
       <br />
     </Element>
@@ -1184,7 +924,7 @@ exports[`Interweave transform prop skips transforming tags outside the allowList
     <Element selfClose tagName="br">
       <br />
     </Element>
-    Mauris tempus, magna et malesuada fermentum, quam libero egestas lorem, nec consequat augue urna nec nibh. Morbi eget nisl vel lacus porttitor semper.
+    , . .
     <Element selfClose tagName="br">
       <br />
     </Element>
@@ -1202,7 +942,8 @@ exports[`Interweave transform prop skips transforming tags outside the allowList
     <Element selfClose tagName="br">
       <br />
     </Element>
-    Please, let us know what language you prefer to communicate in:  Czech, English, Français, Português, Español
+    , Português, 
+        Español
     <Element selfClose tagName="br">
       <br />
     </Element>
@@ -1212,7 +953,8 @@ exports[`Interweave transform prop skips transforming tags outside the allowList
     <Element selfClose tagName="br">
       <br />
     </Element>
-    Sent from my iPhone
+    
+      
   </span>
 </Element>
 `;
