@@ -906,7 +906,7 @@ exports[`Interweave transform prop skips transforming tags outside the allowList
       <br />
     </Element>
     On Jun 24, 2021, at 10:16 AM, Someone 
-     wrote:
+     wrote: 
         
     <Element selfClose tagName="br">
       <br />
