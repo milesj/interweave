@@ -118,6 +118,8 @@ _Markup & Interweave_
 - `tagName` (`string`) - The HTML element tag name to wrap the output with. Defaults to "span".
 - `transform` (`func`) - Callback that fires during parsing. Is passed the parsed DOM node, and can
   return an element, null to skip the node, or undefined to use the default element.
+- `transformOnlyAllowList` (`boolean`) - Disables the `transform` function for tags not present in
+  the `allowList`.
 
 _Interweave only_
 

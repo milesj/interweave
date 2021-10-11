@@ -375,3 +375,586 @@ exports[`Interweave transform prop skips the element 1`] = `
   <span>Foo  Bar</span>
 </Element>
 `;
+
+exports[`Interweave transform prop skips transforming tags outside the allowList when transformOnlyAllowList is true 1`] = `
+<Element tagName="span">
+  <span>
+    
+        Hello, https://test.example.com 
+    <a href="http://example.com">
+      hi
+    </a>
+     test@example.com test@example.com 
+    <Element selfClose tagName="br">
+      <br />
+    </Element>
+     
+        at 8:58 AM Someone 
+     wrote:
+    <Element selfClose tagName="br">
+      <br />
+    </Element>
+    Hi, 
+    <Element selfClose tagName="br">
+      <br />
+    </Element>
+    :  Czech, English, Français, 
+        Português, Español
+    <Element selfClose tagName="br">
+      <br />
+    </Element>
+    <Element selfClose tagName="br">
+      <br />
+    </Element>
+    Someone
+    <Element selfClose tagName="br">
+      <br />
+    </Element>
+    <Element selfClose tagName="br">
+      <br />
+    </Element>
+    On Jun 30, 2021, at 9:40 AM, Someone 
+    
+        wrote:
+    <Element selfClose tagName="br">
+      <br />
+    </Element>
+    <Element selfClose tagName="br">
+      <br />
+    </Element>
+    <Element selfClose tagName="br">
+      <br />
+    </Element>
+    Hello Name,
+    <Element selfClose tagName="br">
+      <br />
+    </Element>
+    <Element selfClose tagName="br">
+      <br />
+    </Element>
+    , . 
+    <Element selfClose tagName="br">
+      <br />
+    </Element>
+    , . 
+    <Element selfClose tagName="br">
+      <br />
+    </Element>
+    <Element selfClose tagName="br">
+      <br />
+    </Element>
+    <Element selfClose tagName="br">
+      <br />
+    </Element>
+    SomeDomain.dev
+    <Element selfClose tagName="br">
+      <br />
+    </Element>
+    P: 999-999-9999
+    <Element selfClose tagName="br">
+      <br />
+    </Element>
+    
+        Português, Español
+    <Element selfClose tagName="br">
+      <br />
+    </Element>
+    <Element selfClose tagName="br">
+      <br />
+    </Element>
+    <Element selfClose tagName="br">
+      <br />
+    </Element>
+    On Tue, Jun 29, 2021 at 2:05 PM Someone 
+     
+        
+     wrote:
+    <Element selfClose tagName="br">
+      <br />
+    </Element>
+    Proin consequat ut metus sit amet cursus.
+    <Element selfClose tagName="br">
+      <br />
+    </Element>
+    
+        
+    <Element selfClose tagName="br">
+      <br />
+    </Element>
+    <Element selfClose tagName="br">
+      <br />
+    </Element>
+    Someone
+    <Element selfClose tagName="br">
+      <br />
+    </Element>
+    <Element selfClose tagName="br">
+      <br />
+    </Element>
+    On Jun 29, 2021, at 12:15 PM, Someone 
+     wrote:
+        
+    <Element selfClose tagName="br">
+      <br />
+    </Element>
+    <Element selfClose tagName="br">
+      <br />
+    </Element>
+    <Element selfClose tagName="br">
+      <br />
+    </Element>
+    No mam,
+    <Element selfClose tagName="br">
+      <br />
+    </Element>
+    <Element selfClose tagName="br">
+      <br />
+    </Element>
+    , . 
+    <Element selfClose tagName="br">
+      <br />
+    </Element>
+    <Element selfClose tagName="br">
+      <br />
+    </Element>
+    <Element selfClose tagName="br">
+      <br />
+    </Element>
+    SomeDomain.dev
+    <Element selfClose tagName="br">
+      <br />
+    </Element>
+    P: 999-999-9999
+    <Element selfClose tagName="br">
+      <br />
+    </Element>
+    Please, let us 
+        
+    <Element selfClose tagName="br">
+      <br />
+    </Element>
+    <Element selfClose tagName="br">
+      <br />
+    </Element>
+    <Element selfClose tagName="br">
+      <br />
+    </Element>
+    On Tue, Jun 29, 2021 at 9:54 AM Someone Else 
+     wrote:
+    <Element selfClose tagName="br">
+      <br />
+    </Element>
+    , 
+        . 
+    <Element selfClose tagName="br">
+      <br />
+    </Element>
+    <Element selfClose tagName="br">
+      <br />
+    </Element>
+    Someone Else
+    <Element selfClose tagName="br">
+      <br />
+    </Element>
+    <Element selfClose tagName="br">
+      <br />
+    </Element>
+    <Element selfClose tagName="br">
+      <br />
+    </Element>
+    <Element selfClose tagName="br">
+      <br />
+    </Element>
+    On Jun 29, 2021, at 9:41 AM, Someone 
+    
+        
+     wrote:
+    <Element selfClose tagName="br">
+      <br />
+    </Element>
+    Good Morning, 
+    <Element selfClose tagName="br">
+      <br />
+    </Element>
+    , . 
+    <Element selfClose tagName="br">
+      <br />
+    </Element>
+    <Element selfClose tagName="br">
+      <br />
+    </Element>
+    Thank you, 
+    <Element selfClose tagName="br">
+      <br />
+    </Element>
+    <Element selfClose tagName="br">
+      <br />
+    </Element>
+    Someone
+        Else
+    <Element selfClose tagName="br">
+      <br />
+    </Element>
+    <Element selfClose tagName="br">
+      <br />
+    </Element>
+    On Jun 27, 2021, at 3:56 PM, Someone 
+     wrote:
+    <Element selfClose tagName="br">
+      <br />
+    </Element>
+    <Element selfClose tagName="br">
+      <br />
+    </Element>
+    <Element selfClose tagName="br">
+      <br />
+    </Element>
+    , .
+        
+    <Element selfClose tagName="br">
+      <br />
+    </Element>
+    <Element selfClose tagName="br">
+      <br />
+    </Element>
+    <Element selfClose tagName="br">
+      <br />
+    </Element>
+    SomeDomain.dev
+    <Element selfClose tagName="br">
+      <br />
+    </Element>
+    P: 999-999-9999
+    <Element selfClose tagName="br">
+      <br />
+    </Element>
+    , Português, Español
+    <Element selfClose tagName="br">
+      <br />
+    </Element>
+    <Element selfClose tagName="br">
+      <br />
+    </Element>
+    <Element selfClose tagName="br">
+      <br />
+    </Element>
+    On Sun, Jun 27,
+        2021 at 12:09 PM Someone 
+     wrote:
+    <Element selfClose tagName="br">
+      <br />
+    </Element>
+    <Element selfClose tagName="br">
+      <br />
+    </Element>
+    , . 
+    <Element selfClose tagName="br">
+      <br />
+    </Element>
+    <Element selfClose tagName="br">
+      <br />
+    </Element>
+    
+        
+    <Element selfClose tagName="br">
+      <br />
+    </Element>
+    <Element selfClose tagName="br">
+      <br />
+    </Element>
+    <Element selfClose tagName="br">
+      <br />
+    </Element>
+    <Element selfClose tagName="br">
+      <br />
+    </Element>
+    <Element selfClose tagName="br">
+      <br />
+    </Element>
+    Someone Else
+    <Element selfClose tagName="br">
+      <br />
+    </Element>
+    <Element selfClose tagName="br">
+      <br />
+    </Element>
+    <Element selfClose tagName="br">
+      <br />
+    </Element>
+    <Element selfClose tagName="br">
+      <br />
+    </Element>
+    On Jun 27, 2021, at 
+        11:28 AM, Someone 
+     wrote:
+    <Element selfClose tagName="br">
+      <br />
+    </Element>
+    <Element selfClose tagName="br">
+      <br />
+    </Element>
+    <Element selfClose tagName="br">
+      <br />
+    </Element>
+    Hello,
+    <Element selfClose tagName="br">
+      <br />
+    </Element>
+    <Element selfClose tagName="br">
+      <br />
+    </Element>
+    , . 
+    <Element selfClose tagName="br">
+      <br />
+    </Element>
+    <Element selfClose tagName="br">
+      <br />
+    </Element>
+    <Element selfClose tagName="br">
+      <br />
+    </Element>
+    
+        SomeDomain.dev
+    <Element selfClose tagName="br">
+      <br />
+    </Element>
+    P: 999-999-9999
+    <Element selfClose tagName="br">
+      <br />
+    </Element>
+    , Português, Español
+    <Element selfClose tagName="br">
+      <br />
+    </Element>
+    <Element selfClose tagName="br">
+      <br />
+    </Element>
+    <Element selfClose tagName="br">
+      <br />
+    </Element>
+    On Sat, Jun 26, 2021 at 
+        3:25 PM Someone 
+     wrote:
+    <Element selfClose tagName="br">
+      <br />
+    </Element>
+    , . 
+    <Element selfClose tagName="br">
+      <br />
+    </Element>
+    <Element selfClose tagName="br">
+      <br />
+    </Element>
+    <Element selfClose tagName="br">
+      <br />
+    </Element>
+    SomeDomain.dev
+    <Element selfClose tagName="br">
+      <br />
+    </Element>
+    P: 
+        999-999-9999
+    <Element selfClose tagName="br">
+      <br />
+    </Element>
+    , Português, Español
+    <Element selfClose tagName="br">
+      <br />
+    </Element>
+    <Element selfClose tagName="br">
+      <br />
+    </Element>
+    <Element selfClose tagName="br">
+      <br />
+    </Element>
+    On Sat, Jun 26, 2021 at 3:21 PM Someone 
+        
+     wrote:
+    <Element selfClose tagName="br">
+      <br />
+    </Element>
+    Hello Name,
+    <Element selfClose tagName="br">
+      <br />
+    </Element>
+    <Element selfClose tagName="br">
+      <br />
+    </Element>
+    , . 
+    <Element selfClose tagName="br">
+      <br />
+    </Element>
+    <Element selfClose tagName="br">
+      <br />
+    </Element>
+    , . 
+    <Element selfClose tagName="br">
+      <br />
+    </Element>
+    <Element selfClose tagName="br">
+      <br />
+    </Element>
+    , . 
+    <Element selfClose tagName="br">
+      <br />
+    </Element>
+    <Element selfClose tagName="br">
+      <br />
+    </Element>
+    , . 
+        
+    <Element selfClose tagName="br">
+      <br />
+    </Element>
+    <Element selfClose tagName="br">
+      <br />
+    </Element>
+    <Element selfClose tagName="br">
+      <br />
+    </Element>
+    SomeDomain.dev
+    <Element selfClose tagName="br">
+      <br />
+    </Element>
+    P: 999-999-9999
+    <Element selfClose tagName="br">
+      <br />
+    </Element>
+    , Português, Español
+    <Element selfClose tagName="br">
+      <br />
+    </Element>
+    <Element selfClose tagName="br">
+      <br />
+    </Element>
+    <Element selfClose tagName="br">
+      <br />
+    </Element>
+    On Sat, Jun 26, 
+        2021 at 1:51 AM Someone 
+     wrote:
+    <Element selfClose tagName="br">
+      <br />
+    </Element>
+    Hello,
+    <Element selfClose tagName="br">
+      <br />
+    </Element>
+    , . 
+    <Element selfClose tagName="br">
+      <br />
+    </Element>
+    <Element selfClose tagName="br">
+      <br />
+    </Element>
+    Someone 
+        Else 
+    <Element selfClose tagName="br">
+      <br />
+    </Element>
+    <Element selfClose tagName="br">
+      <br />
+    </Element>
+    (999)999-9999
+    <Element selfClose tagName="br">
+      <br />
+    </Element>
+    <Element selfClose tagName="br">
+      <br />
+    </Element>
+    On Jun 25, 2021, at 3:56 PM, Someone 
+     
+        wrote:
+    <Element selfClose tagName="br">
+      <br />
+    </Element>
+    <Element selfClose tagName="br">
+      <br />
+    </Element>
+    <Element selfClose tagName="br">
+      <br />
+    </Element>
+    Please contact the maintenance supervisor regarding this at 19999999999 
+    <Element selfClose tagName="br">
+      <br />
+    </Element>
+    
+        
+    <Element selfClose tagName="br">
+      <br />
+    </Element>
+    On Fri, Jun 25, 2021, 10:26 AM Someone 
+     wrote:
+    <Element selfClose tagName="br">
+      <br />
+    </Element>
+    rttitor semper.
+        
+    <Element selfClose tagName="br">
+      <br />
+    </Element>
+    <Element selfClose tagName="br">
+      <br />
+    </Element>
+    <Element selfClose tagName="br">
+      <br />
+    </Element>
+    <Element selfClose tagName="br">
+      <br />
+    </Element>
+    <Element selfClose tagName="br">
+      <br />
+    </Element>
+    On Jun 24, 2021, at 10:16 AM, Someone 
+     wrote: 
+        
+    <Element selfClose tagName="br">
+      <br />
+    </Element>
+    <Element selfClose tagName="br">
+      <br />
+    </Element>
+    <Element selfClose tagName="br">
+      <br />
+    </Element>
+    Hello,
+    <Element selfClose tagName="br">
+      <br />
+    </Element>
+    <Element selfClose tagName="br">
+      <br />
+    </Element>
+    , . .
+    <Element selfClose tagName="br">
+      <br />
+    </Element>
+    <Element selfClose tagName="br">
+      <br />
+    </Element>
+    <Element selfClose tagName="br">
+      <br />
+    </Element>
+    SomeDomain.dev
+    <Element selfClose tagName="br">
+      <br />
+    </Element>
+    P: 999-999-9999
+    <Element selfClose tagName="br">
+      <br />
+    </Element>
+    , Português, 
+        Español
+    <Element selfClose tagName="br">
+      <br />
+    </Element>
+    <Element selfClose tagName="br">
+      <br />
+    </Element>
+    <Element selfClose tagName="br">
+      <br />
+    </Element>
+    
+      
+  </span>
+</Element>
+`;
