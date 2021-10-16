@@ -1,3 +1,9 @@
+## 12.9.0 - 2021-10-16
+
+#### 🚀 Updates
+
+- Added a `transformOnlyAllowList` to filter out unknown elements when transforming.
+
 ## 12.8.0 - 2021-07-10
 
 #### 🚀 Updates
