@@ -16,7 +16,7 @@ declare global {
 
 function patchTextNodeInChildren(parentNode: ParentNode) {
 	parentNode.childNodes.forEach((node) => {
-		if (node.nodeName === '#text' && !((node as unknown) as HTMLElement).textContent) {
+		if (node.nodeName === '#text' && !(node as unknown as HTMLElement).textContent) {
 			Object.defineProperties(node, {
 				nodeType: { value: 3 },
 				textContent: {
@@ -127,25 +127,9 @@ function createHTMLDocument(): Document {
 		},
 	});
 
-	return (html as unknown) as Document;
+	return html as unknown as Document;
 }
 
 export function polyfill() {
 	global.INTERWEAVE_SSR_POLYFILL = createHTMLDocument;
-}
-
-export function polyfillDOMImplementation() {
-	if (typeof document === 'undefined') {
-		// @ts-expect-error Ignore check
-		global.document = {};
-	}
-
-	if (typeof document.implementation === 'undefined') {
-		// @ts-expect-error Ignore check
-		global.document.implementation = {};
-	}
-
-	if (typeof document.implementation.createHTMLDocument !== 'function') {
-		global.document.implementation.createHTMLDocument = createHTMLDocument;
-	}
 }

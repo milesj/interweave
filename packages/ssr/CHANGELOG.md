@@ -3,6 +3,7 @@
 #### 💥 Breaking
 
 - Dropped Node.js v10 support.
+- Removed `polyfillDOMImplementation` function.
 
 #### 📦 Dependencies
 
