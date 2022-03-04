@@ -12,7 +12,7 @@ import {
 	useEmojiData,
 	PathConfig,
 } from 'interweave-emoji';
-import EmojiPicker from 'interweave-emoji-picker';
+import { EmojiPicker } from 'interweave-emoji-picker';
 
 const contentWithNewLines = `This block has multiple new lines.
 Like how is this supposed to work.

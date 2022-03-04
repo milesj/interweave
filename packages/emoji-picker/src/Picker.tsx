@@ -783,7 +783,7 @@ export class InternalPicker extends React.PureComponent<InternalPickerProps, Int
 	}
 }
 
-export function Picker({
+export function EmojiPicker({
 	compact,
 	locale,
 	shortcodes,

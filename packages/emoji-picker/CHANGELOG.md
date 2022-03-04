@@ -1,5 +1,9 @@
 # 7.0.0
 
+#### 💥 Breaking
+
+- `EmojiPicker` is no longer a default export, and is now a named export.
+
 #### 📦 Dependencies
 
 - Updated to latest `packemon`.

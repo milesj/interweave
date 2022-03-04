@@ -3,9 +3,10 @@
  * @license     https://opensource.org/licenses/MIT
  */
 
-import { Picker } from './Picker';
+import { EmojiPicker } from './Picker';
 
 export * from './constants';
 export * from './types';
 
-export default Picker;
+// Avoid exporting internal picker
+export { EmojiPicker };
