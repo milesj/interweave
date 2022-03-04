@@ -34,3 +34,12 @@ jest.config.js
 prettier.config.js
 tsconfig.eslint.json
 *.tsbuildinfo
+
+# Yarn
+.yarn/*
+!.yarn/patches
+!.yarn/releases
+!.yarn/plugins
+!.yarn/sdks
+!.yarn/versions
+.pnp.*
