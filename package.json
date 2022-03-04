@@ -8,7 +8,7 @@
     "pack": "NODE_ENV=production packemon pack --addEngines --declaration=standard",
     "clean": "packemon clean",
     "check": "yarn run type && yarn run test && yarn run lint",
-    "coverage": "yarn run jest --coverage",
+    "coverage": "yarn run test --coverage",
     "lint": "beemo eslint",
     "test": "beemo jest",
     "test:bundle": "yarn run build && beemo create-config typescript && webpack && serve ./tests/",
