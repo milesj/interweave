@@ -1,3 +1,9 @@
+# 2.0.0
+
+#### 💥 Breaking
+
+- Dropped Node.js v10 support.
+
 ### 1.2.1 - 2021-03-07
 
 #### 🐞 Fixes
