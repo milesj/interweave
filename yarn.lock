@@ -8522,26 +8522,26 @@ __metadata:
   languageName: node
   linkType: hard
 
-"emojibase-regex@npm:^5.1.3":
-  version: 5.1.3
-  resolution: "emojibase-regex@npm:5.1.3"
-  checksum: 9f92a87a116023d6f2cac39ba3640ab5b78205be3ed4a0b600e829c2d24c08b87aa3c6d5fb4d547446a8c3969831aacd4ce0d404e60224077961789ec2100fd1
+"emojibase-regex@npm:^6.0.1":
+  version: 6.0.1
+  resolution: "emojibase-regex@npm:6.0.1"
+  checksum: 8435e8c780355d742021d546bc5ed7c80d8701f4d37d809794e6f9946b36fb0194eb9406b27fedf50dda76ff25ab239c55f9b9382806670253af705194b4aeb9
   languageName: node
   linkType: hard
 
-"emojibase-test-utils@npm:^6.2.2":
-  version: 6.2.2
-  resolution: "emojibase-test-utils@npm:6.2.2"
+"emojibase-test-utils@npm:^7.0.0":
+  version: 7.0.0
+  resolution: "emojibase-test-utils@npm:7.0.0"
   peerDependencies:
     emojibase: "*"
-  checksum: d3c5974c13bedbabae80129a134ad705baea4f4585f1f87443f88b1a8b1f0bc9e112e2670f8ce86ab468f485f9b9dc4a3fc5534726cbda81324e2af209c6cb92
+  checksum: b868f3c2199fd771f2eeff4ece4a12cb5baf1975c3d689832728657fa28640c3d3d95fc9b0658ec8c788907cd44b904f63b4191cd550f7a971e50f16099712e0
   languageName: node
   linkType: hard
 
-"emojibase@npm:^5.2.0":
-  version: 5.2.0
-  resolution: "emojibase@npm:5.2.0"
-  checksum: 1f311c9f9995343e09af4d505ff41d30a41cf3d8e41c5421fe99b476e32ce5a76b451a8951b159153519408d6fcaa130168c8f54f7e35f1a7303f39017ae0b27
+"emojibase@npm:^6.1.0":
+  version: 6.1.0
+  resolution: "emojibase@npm:6.1.0"
+  checksum: a0f975a04451dc30ddbe7dddbfab68a71d209a4003c986ca7dc0171df6cf85605b678483006ee08cc6bb48bccb414de9e1bedab8afc50755d9183794fd2b1b22
   languageName: node
   linkType: hard
 
@@ -11201,7 +11201,7 @@ __metadata:
   resolution: "interweave-emoji-picker@workspace:packages/emoji-picker"
   dependencies:
     "@types/react-window": "*"
-    emojibase: ^5.2.0
+    emojibase: ^6.1.0
     lodash: ^4.17.21
     react: ^17.0.2
     react-window: ^1.8.6
@@ -11215,9 +11215,9 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "interweave-emoji@workspace:packages/emoji"
   dependencies:
-    emojibase: ^5.2.0
-    emojibase-regex: ^5.1.3
-    emojibase-test-utils: ^6.2.2
+    emojibase: ^6.1.0
+    emojibase-regex: ^6.0.1
+    emojibase-test-utils: ^7.0.0
     react: ^17.0.2
   peerDependencies:
     interweave: ^12.0.0
@@ -11239,8 +11239,8 @@ __metadata:
     "@types/react-window": ^1.8.5
     babel-loader: ^8.2.3
     conventional-changelog-beemo: ^3.0.0
-    emojibase: ^5.2.0
-    emojibase-test-utils: ^6.2.2
+    emojibase: ^6.1.0
+    emojibase-test-utils: ^7.0.0
     eslint-plugin-rut: ^2.0.0
     jest-rut: ^2.0.0
     lerna: ^4.0.0
