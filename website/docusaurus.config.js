@@ -1,13 +1,8 @@
 /* eslint-disable sort-keys */
+const path = require('path');
 
-const pkgs = [
-	'core',
-	'autolink',
-	'emoji',
-	'emoji-picker',
-	'ssr',
-	// eslint-disable-next-line
-].map((name) => require(`../packages/${name}/package.json`));
+const pkgNames = ['core', 'autolink', 'emoji', 'emoji-picker', 'ssr'];
+const pkgs = pkgNames.map((name) => require(`../packages/${name}/package.json`));
 
 module.exports = {
 	title: 'Interweave',
@@ -42,6 +37,11 @@ module.exports = {
 					position: 'left',
 				},
 				{
+					to: 'api',
+					label: 'API',
+					position: 'left',
+				},
+				{
 					href: 'https://github.com/milesj/interweave',
 					label: 'GitHub',
 					position: 'right',
@@ -69,6 +69,17 @@ module.exports = {
 				theme: {
 					customCss: require.resolve('./src/css/custom.css'),
 				},
+			},
+		],
+	],
+	plugins: [
+		[
+			'docusaurus-plugin-typedoc-api',
+			{
+				projectRoot: path.join(__dirname, '..'),
+				packages: pkgNames.map((name) => path.join('packages', name)),
+				minimal: true,
+				readmes: true,
 			},
 		],
 	],
