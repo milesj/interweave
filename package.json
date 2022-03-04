@@ -48,7 +48,8 @@
     "lerna": "^4.0.0"
   },
   "workspaces": [
-    "packages/*"
+    "packages/*",
+    "website"
   ],
   "packageManager": "yarn@3.2.0"
 }
