@@ -1,0 +1,35 @@
+{
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "display": "Beemo",
+  "extends": "./tsconfig.options.json",
+  "files": [],
+  "references": [
+    {
+      "path": "packages/autolink"
+    },
+    {
+      "path": "packages/autolink/tests"
+    },
+    {
+      "path": "packages/core"
+    },
+    {
+      "path": "packages/core/tests"
+    },
+    {
+      "path": "packages/emoji"
+    },
+    {
+      "path": "packages/emoji/tests"
+    },
+    {
+      "path": "packages/emoji-picker"
+    },
+    {
+      "path": "packages/emoji-picker/tests"
+    },
+    {
+      "path": "packages/ssr"
+    }
+  ]
+}

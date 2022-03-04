@@ -42,21 +42,21 @@ argument, and the value as the 2nd, respectively.
 import { Filter } from 'interweave';
 
 class LinkFilter extends Filter {
-  attribute(name: string, value: string): string {
-    if (name === 'href') {
-      return encodeURIComponent(value);
-    }
+	attribute(name: string, value: string): string {
+		if (name === 'href') {
+			return encodeURIComponent(value);
+		}
 
-    return value;
-  }
+		return value;
+	}
 
-  node(name: string, node: HTMLElement): HTMLElement {
-    if (name === 'a') {
-      node.setAttribute('target', '_blank');
-    }
+	node(name: string, node: HTMLElement): HTMLElement {
+		if (name === 'a') {
+			node.setAttribute('target', '_blank');
+		}
 
-    return node;
-  }
+		return node;
+	}
 }
 
 const filter = new LinkFilter();
@@ -69,20 +69,20 @@ const filter = new LinkFilter();
 import { FilterInterface } from 'interweave';
 
 const filter: FilterInterface = {
-  attribute(name, value) {
-    if (name === 'href') {
-      return encodeURIComponent(value);
-    }
+	attribute(name, value) {
+		if (name === 'href') {
+			return encodeURIComponent(value);
+		}
 
-    return value;
-  },
-  node(name, node) {
-    if (name === 'a') {
-      node.setAttribute('target', '_blank');
-    }
+		return value;
+	},
+	node(name, node) {
+		if (name === 'a') {
+			node.setAttribute('target', '_blank');
+		}
 
-    return node;
-  },
+		return node;
+	},
 };
 ```
 

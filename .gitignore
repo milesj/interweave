@@ -32,7 +32,5 @@ tests/packages/
 .prettierignore
 jest.config.js
 prettier.config.js
-tsconfig.json
 tsconfig.eslint.json
-tsconfig.options.json
 *.tsbuildinfo

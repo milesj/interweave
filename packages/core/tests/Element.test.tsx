@@ -1,102 +1,102 @@
 import React from 'react';
 import { render } from 'rut-dom';
-import Element from '../src/Element';
+import { Element } from '../src/Element';
 import { ElementProps } from '../src/types';
 
 describe('Element', () => {
-  it('renders with a custom HTML tag', () => {
-    const { root, update } = render<ElementProps>(<Element tagName="div">Foo</Element>);
+	it('renders with a custom HTML tag', () => {
+		const { root, update } = render<ElementProps>(<Element tagName="div">Foo</Element>);
 
-    expect(root.find('div')).toHaveLength(1);
+		expect(root.find('div')).toHaveLength(1);
 
-    update({ tagName: 'span' });
+		update({ tagName: 'span' });
 
-    expect(root.find('span')).toHaveLength(1);
+		expect(root.find('span')).toHaveLength(1);
 
-    update({ tagName: 'section' });
+		update({ tagName: 'section' });
 
-    expect(root.find('section')).toHaveLength(1);
-  });
+		expect(root.find('section')).toHaveLength(1);
+	});
 
-  it('renders without children', () => {
-    const { root } = render<ElementProps>(<Element tagName="div" />);
+	it('renders without children', () => {
+		const { root } = render<ElementProps>(<Element tagName="div" />);
 
-    expect(root.findOne('div')).toHaveProps({
-      children: null,
-    });
-  });
+		expect(root.findOne('div')).toHaveProps({
+			children: null,
+		});
+	});
 
-  it('renders without attributes', () => {
-    const { root } = render<ElementProps>(<Element tagName="div">Foo</Element>);
+	it('renders without attributes', () => {
+		const { root } = render<ElementProps>(<Element tagName="div">Foo</Element>);
 
-    expect(root).toHaveRendered();
-    expect(root.findOne('div')).toHaveProps({
-      children: 'Foo',
-    });
-  });
+		expect(root).toHaveRendered();
+		expect(root.findOne('div')).toHaveProps({
+			children: 'Foo',
+		});
+	});
 
-  it('renders with attributes', () => {
-    const { root } = render<ElementProps>(
-      <Element tagName="div" attributes={{ id: 'foo' }}>
-        Foo
-      </Element>,
-    );
+	it('renders with attributes', () => {
+		const { root } = render<ElementProps>(
+			<Element attributes={{ id: 'foo' }} tagName="div">
+				Foo
+			</Element>,
+		);
 
-    expect(root).toHaveRendered();
-    expect(root.findOne('div')).toHaveProps({
-      children: 'Foo',
-      id: 'foo',
-    });
-  });
+		expect(root).toHaveRendered();
+		expect(root.findOne('div')).toHaveProps({
+			children: 'Foo',
+			id: 'foo',
+		});
+	});
 
-  it('renders with attributes of each type', () => {
-    const { root } = render<ElementProps>(
-      <Element
-        tagName="input"
-        attributes={{
-          id: 'foo',
-          disabled: true,
-          maxLength: 15,
-        }}
-      >
-        Foo
-      </Element>,
-    );
+	it('renders with attributes of each type', () => {
+		const { root } = render<ElementProps>(
+			<Element
+				attributes={{
+					id: 'foo',
+					disabled: true,
+					maxLength: 15,
+				}}
+				tagName="input"
+			>
+				Foo
+			</Element>,
+		);
 
-    expect(root).toHaveRendered();
-    expect(root.findOne('input')).toHaveProps({
-      children: 'Foo',
-      id: 'foo',
-      disabled: true,
-      maxLength: 15,
-    });
-  });
+		expect(root).toHaveRendered();
+		expect(root.findOne('input')).toHaveProps({
+			children: 'Foo',
+			id: 'foo',
+			disabled: true,
+			maxLength: 15,
+		});
+	});
 
-  it('renders with class name', () => {
-    const { root } = render<ElementProps>(
-      <Element tagName="div" className="foo">
-        Foo
-      </Element>,
-    );
+	it('renders with class name', () => {
+		const { root } = render<ElementProps>(
+			<Element className="foo" tagName="div">
+				Foo
+			</Element>,
+		);
 
-    expect(root).toHaveRendered();
-    expect(root.findOne('div')).toHaveProps({
-      children: 'Foo',
-      className: 'foo',
-    });
-  });
+		expect(root).toHaveRendered();
+		expect(root.findOne('div')).toHaveProps({
+			children: 'Foo',
+			className: 'foo',
+		});
+	});
 
-  it('can overwrite class name with attributes', () => {
-    const { root } = render<ElementProps>(
-      <Element tagName="div" className="foo" attributes={{ className: 'bar' }}>
-        Foo
-      </Element>,
-    );
+	it('can overwrite class name with attributes', () => {
+		const { root } = render<ElementProps>(
+			<Element attributes={{ className: 'bar' }} className="foo" tagName="div">
+				Foo
+			</Element>,
+		);
 
-    expect(root).toHaveRendered();
-    expect(root.findOne('div')).toHaveProps({
-      children: 'Foo',
-      className: 'bar',
-    });
-  });
+		expect(root).toHaveRendered();
+		expect(root.findOne('div')).toHaveProps({
+			children: 'Foo',
+			className: 'bar',
+		});
+	});
 });

@@ -12,6 +12,7 @@
   "files": [
     "dts/**/*.d.ts",
     "lib/**/*.{js,map}",
+    "mjs/**/*.{mjs,map}",
     "src/**/*.{ts,tsx,json}"
   ],
   "sideEffects": false,
@@ -34,10 +35,11 @@
     "url": "https://ko-fi.com/milesjohnson"
   },
   "packemon": {
+    "format": "lib",
     "platform": "node"
   },
   "engines": {
-    "node": ">=10.3.0",
-    "npm": ">=6.1.0"
+    "node": ">=12.17.0",
+    "npm": ">=6.13.0"
   }
 }
