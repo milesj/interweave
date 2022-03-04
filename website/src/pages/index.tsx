@@ -1,3 +1,6 @@
+// eslint-disable-next-line @typescript-eslint/triple-slash-reference
+/// <reference types="@docusaurus/module-type-aliases" />
+
 import React from 'react';
 import clsx from 'clsx';
 import Link from '@docusaurus/Link';
@@ -70,7 +73,7 @@ function Feature({ imageUrl, title, description }: FeatureProps) {
 
 function Home() {
 	const context = useDocusaurusContext();
-	const { siteConfig = {} } = context;
+	const { siteConfig } = context;
 
 	return (
 		<Layout description={siteConfig.tagline} title="Safely render HTML in React">
