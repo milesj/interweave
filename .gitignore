@@ -27,7 +27,7 @@ tests/packages/
 # Configs
 .babelrc
 .eslintignore
-.eslintrc.js
+/.eslintrc.js
 .flowconfig
 .prettierignore
 jest.config.js
