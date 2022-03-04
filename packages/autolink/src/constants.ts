@@ -138,11 +138,28 @@ export const IP_PATTERN = combinePatterns(
 	},
 );
 
+const NON_LATIN = [
+	// Chinese
+	/[\d_\u4E00-\u9FFF-]+/,
+	// Japanese
+	/[\d_\u3000-\u30FF-]+/,
+	// Korean
+	/[\d_\u1100-\u11FF\u3130-\u318F\uA960-\uA97F\uAC00-\uD7FF-]+/,
+	// Thai
+	/[\d_\u0E00-\u0E7F-]+/,
+	// Russian, Ukrainian
+	// eslint-disable-next-line no-misleading-character-class
+	/[\d_a-z\u0400-\u052F\u1C80-\u1C8F\u2DE0-\u2DFF\uA640-\uA69F-]+/,
+	// Latin based
+	/[\d_a-z\u0080-\u00FF\u0100-\u017F\u0180-\u024F-]+/,
+];
+
 export const HASHTAG_PATTERN = combinePatterns(
 	[
 		/#/,
-		combinePatterns([VALID_ALNUM_CHARS, /[-a-z0-9_]*/], {
+		combinePatterns(NON_LATIN, {
 			capture: true,
+			join: '|',
 		}),
 	],
 	{

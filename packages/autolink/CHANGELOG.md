@@ -1,3 +1,9 @@
+# 5.0.0
+
+#### 🚀 Updates
+
+- Hashtag matching now supports Chinese, Japanese, Korean, Russian, and other non-latin based characters.
+
 ### 4.4.3 - 2021-07-10
 
 #### 🐞 Fixes

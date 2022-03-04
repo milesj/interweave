@@ -13,6 +13,7 @@ const VALID_HASHTAGS = [
 	'#1234567',
 	'#with-trail-underscore_',
 	'#with-trail-dash-',
+	'#中文支持',
 ];
 
 const INVALID_HASHTAGS = [
@@ -20,8 +21,6 @@ const INVALID_HASHTAGS = [
 	'#with$special&#characters',
 	'#with~more@#chars',
 	'#and90-=even<>more',
-	'#-----',
-	'#_____',
 ];
 
 describe('matchers/HashtagMatcher', () => {
