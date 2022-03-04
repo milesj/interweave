@@ -10,7 +10,7 @@
     "check": "yarn run type && yarn run test && yarn run lint",
     "coverage": "yarn run jest --coverage",
     "lint": "beemo eslint",
-    "test": "yarn run jest",
+    "test": "beemo jest",
     "test:bundle": "yarn run build && beemo create-config typescript && webpack && serve ./tests/",
     "format": "beemo prettier",
     "prerelease": "yarn run pack && yarn test",

@@ -356,8 +356,8 @@ export class Parser {
 	extractStyleAttribute(node: HTMLElement): object {
 		const styles: Record<string, number | string> = {};
 
-		// @ts-expect-error Cant type iterator
-		[...node.style].forEach((key: string) => {
+		// eslint-disable-next-line unicorn/prefer-spread
+		Array.from(node.style).forEach((key) => {
 			const value = node.style[key as keyof CSSStyleDeclaration];
 
 			if (typeof value === 'string' || typeof value === 'number') {
