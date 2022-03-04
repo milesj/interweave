@@ -27,12 +27,11 @@ tests/packages/
 # Configs
 .babelrc
 .eslintignore
-.eslintrc.js
+/.eslintrc.js
 .flowconfig
 .prettierignore
 jest.config.js
 prettier.config.js
-tsconfig.eslint.json
 *.tsbuildinfo
 
 # Yarn

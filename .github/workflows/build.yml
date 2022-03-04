@@ -42,7 +42,6 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           cache: yarn
-      - run: |
-          cd website
-          yarn install --immutable
-          yarn run build
+      - run: yarn install --immutable
+      - run: yarn run pack
+      - run: cd website && yarn run build

@@ -19,8 +19,8 @@ the following features:
 - Virtualized rendering.
 - And much more!
 
-<img src="https://raw.githubusercontent.com/milesj/interweave/master/website/static/img/slack.png" height="350">
-<img src="https://raw.githubusercontent.com/milesj/interweave/master/website/static/img/twitter.png" height="350">
+<img src="https://raw.githubusercontent.com/milesj/interweave/master/website/static/img/slack.png" height="350" />
+<img src="https://raw.githubusercontent.com/milesj/interweave/master/website/static/img/twitter.png" height="350" />
 
 ## Requirements
 
