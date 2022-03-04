@@ -1,6 +1,4 @@
-/* eslint-disable camelcase */
-
-import { Emoji, Emoticon, Hexcode, Locale, Shortcode, ShortcodePreset, Unicode } from 'emojibase';
+import { Emoji, Emoticon, Hexcode, Locale, Shortcode, Unicode } from 'emojibase';
 
 export interface CanonicalEmoji extends Emoji {
 	canonical_shortcodes: Shortcode[];
@@ -73,7 +71,7 @@ export interface UseEmojiDataOptions {
 	/** Locale to load emoji annotations in. Defaults to `en`. */
 	locale?: Locale;
 	/** List of shortcode presets to load and join with the dataset. */
-	shortcodes?: (ShortcodePreset | string)[];
+	shortcodes?: string[];
 	/** Throw errors that occurred during a fetch. Defaults to `true`. */
 	throwErrors?: boolean;
 	/** Emojibase dataset version to load. Defaults to `latest`. */

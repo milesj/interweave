@@ -180,10 +180,8 @@ describe('matchers/UrlMatcher', () => {
 				// @ts-expect-error Exclude undefined
 				const expected: Partial<RegExpMatchArray> = [
 					url,
-					// eslint-disable-next-line jest/no-if
 					params.scheme === null ? undefined : params.scheme ?? 'http://',
 					params.auth,
-					// eslint-disable-next-line jest/no-if
 					typeof params.host === 'undefined' ? 'example.com' : params.host,
 					params.port,
 					params.path,

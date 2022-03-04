@@ -81,13 +81,13 @@ describe('Parser', () => {
 
 		function createMultiElement(value: string, key: number) {
 			switch (key) {
-				default:
-				case 0:
-					return createElement('foo', 0);
 				case 1:
 					return createElement('bar', 1);
 				case 2:
 					return createElement('baz', 2);
+				case 0:
+				default:
+					return createElement('foo', 0);
 			}
 		}
 

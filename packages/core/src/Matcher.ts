@@ -3,8 +3,7 @@ import { match } from './match';
 import { ChildrenNode, MatchCallback, MatcherInterface, MatchResponse, Node } from './types';
 
 export abstract class Matcher<Props extends object = {}, Options extends object = {}>
-	implements MatcherInterface<Props>
-{
+	implements MatcherInterface<Props> {
 	greedy: boolean = false;
 
 	options: Options;
@@ -84,6 +83,6 @@ export abstract class Matcher<Props extends object = {}, Options extends object 
 	 * Attempt to match against the defined string. Return `null` if no match found,
 	 * else return the `match` and any optional props to pass along.
 	 */
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-redundant-type-constituents
 	abstract match(string: string): MatchResponse<any> | null;
 }

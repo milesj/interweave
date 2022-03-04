@@ -10,16 +10,13 @@ import adapter from 'parse5/lib/tree-adapters/default';
 import parseStyle from 'style-parser';
 
 declare global {
-	namespace NodeJS {
-		interface Global {
-			INTERWEAVE_SSR_POLYFILL: (() => Document | undefined) | undefined;
-		}
-	}
+	// eslint-disable-next-line no-var, vars-on-top
+	var INTERWEAVE_SSR_POLYFILL: (() => Document | undefined) | undefined;
 }
 
 function patchTextNodeInChildren(parentNode: ParentNode) {
 	parentNode.childNodes.forEach((node) => {
-		if (node.nodeName === '#text' && !(node as unknown as HTMLElement).textContent) {
+		if (node.nodeName === '#text' && !((node as unknown) as HTMLElement).textContent) {
 			Object.defineProperties(node, {
 				nodeType: { value: 3 },
 				textContent: {
@@ -130,7 +127,7 @@ function createHTMLDocument(): Document {
 		},
 	});
 
-	return html as unknown as Document;
+	return (html as unknown) as Document;
 }
 
 export function polyfill() {

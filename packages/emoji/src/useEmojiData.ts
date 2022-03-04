@@ -1,7 +1,7 @@
 /* eslint-disable promise/prefer-await-to-then */
 
 import { useEffect, useMemo, useState } from 'react';
-import { Emoji, fetchEmojis, fetchMetadata, Locale, ShortcodePreset } from 'emojibase';
+import { Emoji, fetchEmojis, fetchMetadata, Locale } from 'emojibase';
 import { LATEST_DATASET_VERSION } from './constants';
 import { EmojiDataManager } from './EmojiDataManager';
 import { CanonicalEmoji, Source, UseEmojiDataOptions } from './types';
@@ -37,7 +37,7 @@ export function resetLoaded() {
 async function loadEmojis(
 	locale: Locale,
 	version: string,
-	shortcodes: (ShortcodePreset | string)[],
+	shortcodes: string[],
 	compact: boolean,
 ): Promise<CanonicalEmoji[]> {
 	const key = `${locale}:${version}:${compact ? 'compact' : 'data'}`;
@@ -50,7 +50,7 @@ async function loadEmojis(
 
 	// Data has been loaded elsewhere
 	if (instance.data.length > 0) {
-		return Promise.resolve(instance.getData());
+		return instance.getData();
 	}
 
 	// Otherwise, start loading emoji data from the CDN

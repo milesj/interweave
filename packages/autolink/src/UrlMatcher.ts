@@ -40,8 +40,8 @@ export class UrlMatcher extends Matcher<UrlProps, UrlMatcherOptions> {
 		}
 
 		if (response?.valid && this.options.validateTLD) {
-			const { host } = response.urlParts as unknown as UrlProps['urlParts'];
-			const validList = TOP_LEVEL_TLDS.concat(this.options.customTLDs ?? []);
+			const { host } = (response.urlParts as unknown) as UrlProps['urlParts'];
+			const validList = [...TOP_LEVEL_TLDS, ...(this.options.customTLDs ?? [])];
 			const tld = host.slice(host.lastIndexOf('.') + 1).toLowerCase();
 
 			if (!validList.includes(tld)) {

@@ -70,7 +70,6 @@ describe('matchers/IpMatcher', () => {
 				// @ts-expect-error Exclude undefined
 				const expected: Partial<RegExpMatchArray> = [
 					ip,
-					// eslint-disable-next-line jest/no-if
 					params.scheme === null ? undefined : params.scheme ?? 'http://',
 					params.auth,
 					params.host,
