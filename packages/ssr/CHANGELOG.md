@@ -4,6 +4,14 @@
 
 - Dropped Node.js v10 support.
 
+#### 📦 Dependencies
+
+- Updated to latest `packemon`.
+
+#### 🛠 Internals
+
+- Migrated to [Beemo](https://github.com/beemojs/dev) for build and developer tooling.
+
 ### 1.2.1 - 2021-03-07
 
 #### 🐞 Fixes

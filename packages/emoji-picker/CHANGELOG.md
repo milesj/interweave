@@ -1,3 +1,13 @@
+# 7.0.0
+
+#### 📦 Dependencies
+
+- Updated to latest `packemon`.
+
+#### 🛠 Internals
+
+- Migrated to [Beemo](https://github.com/beemojs/dev) for build and developer tooling.
+
 ### 6.0.3 - 2021-05-13
 
 #### 📦 Dependencies

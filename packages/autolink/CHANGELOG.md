@@ -4,6 +4,14 @@
 
 - Hashtag matching now supports Chinese, Japanese, Korean, Russian, and other non-latin based characters.
 
+#### 📦 Dependencies
+
+- Updated to latest `packemon`.
+
+#### 🛠 Internals
+
+- Migrated to [Beemo](https://github.com/beemojs/dev) for build and developer tooling.
+
 ### 4.4.3 - 2021-07-10
 
 #### 🐞 Fixes

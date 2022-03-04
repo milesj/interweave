@@ -135,6 +135,8 @@ import { EmailMatcher } from 'interweave-autolink';
 <Interweave content="Email: miles@interweave.com" matchers={[new EmailMatcher('email')]} />;
 ```
 
+> This matcher _must_ come before the URL matcher for everything to work correctly.
+
 ### Props
 
 The following props are available for `<Email />` components, all of which should be passed to an

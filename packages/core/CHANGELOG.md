@@ -4,6 +4,14 @@
 
 - Added `rel` attribute to the allow list.
 
+#### 📦 Dependencies
+
+- Updated to latest `packemon`.
+
+#### 🛠 Internals
+
+- Migrated to [Beemo](https://github.com/beemojs/dev) for build and developer tooling.
+
 ## 12.9.0 - 2021-10-16
 
 #### 🚀 Updates
