@@ -16,8 +16,9 @@ jobs:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
         with:
+          cache: yarn
           node-version: ${{ matrix.node-version }}
-      - run: yarn install --ignore-engines --frozen-lockfile
+      - run: yarn install --immutable
       - run: yarn run build
       - run: yarn run type
       - run: yarn run jest
@@ -28,7 +29,9 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
-      - run: yarn install --ignore-engines --frozen-lockfile
+        with:
+          cache: yarn
+      - run: yarn install --immutable
       - run: yarn run type
       - run: yarn run pack
   docs:
@@ -37,7 +40,9 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
+        with:
+          cache: yarn
       - run: |
           cd website
-          yarn install --ignore-engines --frozen-lockfile
+          yarn install --immutable
           yarn run build
