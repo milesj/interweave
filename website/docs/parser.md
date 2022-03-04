@@ -90,7 +90,7 @@ the element entirely.
 For example, to replace `a` elements with a custom element:
 
 ```tsx
-import Interweave, { Node } from 'interweave';
+import { Interweave, Node } from 'interweave';
 
 function transform(node: HTMLElement, children: Node[]): React.ReactNode {
 	if (node.tagName === 'a') {

@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOMServer from 'react-dom/server';
-import Interweave, { InterweaveProps } from 'interweave';
+import { Interweave, InterweaveProps } from 'interweave';
 import { polyfill } from 'interweave-ssr';
 import { render } from 'rut-dom';
 import { EmailMatcher } from '../src/EmailMatcher';

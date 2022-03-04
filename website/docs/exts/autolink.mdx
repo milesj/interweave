@@ -52,7 +52,7 @@ The `UrlMatcher` will match most variations of a URL and its segments. This incl
 user and password auth, host, port, path, query, and fragment.
 
 ```tsx
-import Interweave from 'interweave';
+import { Interweave } from 'interweave';
 import { UrlMatcher } from 'interweave-autolink';
 
 <Interweave
@@ -106,7 +106,7 @@ conform to a valid IPv4 address (IPv6 not supported). Like the `UrlMatcher`, all
 included.
 
 ```tsx
-import Interweave from 'interweave';
+import { Interweave } from 'interweave';
 import { IpMatcher } from 'interweave-autolink';
 
 <Interweave content="IP: 127.0.0.1" matchers={[new IpMatcher('ip')]} />;
@@ -129,7 +129,7 @@ If a match is found, an `<Ip />` component is rendered with the same props as `<
 The `EmailMatcher` will match an email address and link it using a "mailto:" target.
 
 ```tsx
-import Interweave from 'interweave';
+import { Interweave } from 'interweave';
 import { EmailMatcher } from 'interweave-autolink';
 
 <Interweave content="Email: miles@interweave.com" matchers={[new EmailMatcher('email')]} />;
@@ -160,7 +160,7 @@ custom URL (passed as a prop). Hashtag matching supports alpha-numeric (`a-z0-9`
 and dash (`-`) characters, and must start with a `#`.
 
 ```tsx
-import Interweave from 'interweave';
+import { Interweave } from 'interweave';
 import { HashtagMatcher } from 'interweave-autolink';
 
 <Interweave content="Hashtag: #interweave" matchers={[new HashtagMatcher('hashtag')]} />;

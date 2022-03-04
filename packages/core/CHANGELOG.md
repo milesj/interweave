@@ -1,5 +1,9 @@
 # 13.0.0
 
+#### 💥 Breaking
+
+- `Interweave` is no longer a default export, and is now a named export.
+
 #### 🚀 Updates
 
 - Added `rel` attribute to the allow list.
