@@ -1873,7 +1873,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@beemo/dev@npm:^1.3.1":
+"@beemo/dev@npm:^1.7.8":
   version: 1.7.8
   resolution: "@beemo/dev@npm:1.7.8"
   dependencies:
@@ -2189,7 +2189,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@docusaurus/core@npm:2.0.0-beta.17, @docusaurus/core@npm:^2.0.0-alpha.70":
+"@docusaurus/core@npm:2.0.0-beta.17":
   version: 2.0.0-beta.17
   resolution: "@docusaurus/core@npm:2.0.0-beta.17"
   dependencies:
@@ -2323,7 +2323,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@docusaurus/module-type-aliases@npm:2.0.0-beta.17, @docusaurus/module-type-aliases@npm:^2.0.0-alpha.70":
+"@docusaurus/module-type-aliases@npm:2.0.0-beta.17":
   version: 2.0.0-beta.17
   resolution: "@docusaurus/module-type-aliases@npm:2.0.0-beta.17"
   dependencies:
@@ -2471,7 +2471,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@docusaurus/preset-classic@npm:^2.0.0-alpha.70":
+"@docusaurus/preset-classic@npm:2.0.0-beta.17":
   version: 2.0.0-beta.17
   resolution: "@docusaurus/preset-classic@npm:2.0.0-beta.17"
   dependencies:
@@ -6047,7 +6047,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"babel-loader@npm:^8.2.2, babel-loader@npm:^8.2.3":
+"babel-loader@npm:^8.2.3":
   version: 8.2.3
   resolution: "babel-loader@npm:8.2.3"
   dependencies:
@@ -7626,20 +7626,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"cosmiconfig@npm:^7.0.0":
-  version: 7.0.0
-  resolution: "cosmiconfig@npm:7.0.0"
-  dependencies:
-    "@types/parse-json": ^4.0.0
-    import-fresh: ^3.2.1
-    parse-json: ^5.0.0
-    path-type: ^4.0.0
-    yaml: ^1.10.0
-  checksum: 6801feaa0249e9b9fdde5b3d70dc33b4f9c69095bec94d67e3fe08b66eac24dc7e2099f053597cfbc94b743de269aa5d2cfa7da3fde765433423b06bd122941a
-  languageName: node
-  linkType: hard
-
-"cosmiconfig@npm:^7.0.1":
+"cosmiconfig@npm:^7.0.0, cosmiconfig@npm:^7.0.1":
   version: 7.0.1
   resolution: "cosmiconfig@npm:7.0.1"
   dependencies:
@@ -11291,13 +11278,13 @@ __metadata:
   dependencies:
     "@beemo/cli": ^2.0.6
     "@beemo/core": ^2.1.4
-    "@beemo/dev": ^1.3.1
+    "@beemo/dev": ^1.7.8
     "@types/lodash": ^4.14.171
     "@types/parse5": ^6.0.1
     "@types/react": ^17.0.14
     "@types/react-dom": ^17.0.9
     "@types/react-window": ^1.8.4
-    babel-loader: ^8.2.2
+    babel-loader: ^8.2.3
     conventional-changelog-beemo: ^2.1.0
     emojibase: ^5.2.0
     emojibase-test-utils: ^6.2.2
@@ -11308,9 +11295,9 @@ __metadata:
     react: ^17.0.2
     react-dom: ^17.0.2
     rut-dom: ^2.0.0
-    serve: ^12.0.0
-    webpack: ^5.44.0
-    webpack-cli: ^4.7.2
+    serve: ^12.0.1
+    webpack: ^5.70.0
+    webpack-cli: ^4.9.2
   languageName: unknown
   linkType: soft
 
@@ -13965,7 +13952,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"node-fetch@npm:2.6.7":
+"node-fetch@npm:2.6.7, node-fetch@npm:^2.6.1":
   version: 2.6.7
   resolution: "node-fetch@npm:2.6.7"
   dependencies:
@@ -13976,13 +13963,6 @@ __metadata:
     encoding:
       optional: true
   checksum: 8d816ffd1ee22cab8301c7756ef04f3437f18dace86a1dae22cf81db8ef29c0bf6655f3215cb0cdb22b420b6fe141e64b26905e7f33f9377a7fa59135ea3e10b
-  languageName: node
-  linkType: hard
-
-"node-fetch@npm:^2.6.1":
-  version: 2.6.1
-  resolution: "node-fetch@npm:2.6.1"
-  checksum: 91075bedd57879117e310fbcc36983ad5d699e522edb1ebcdc4ee5294c982843982652925c3532729fdc86b2d64a8a827797a745f332040d91823c8752ee4d7c
   languageName: node
   linkType: hard
 
@@ -15976,17 +15956,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"qs@npm:6.9.7":
+"qs@npm:6.9.7, qs@npm:^6.9.4":
   version: 6.9.7
   resolution: "qs@npm:6.9.7"
   checksum: 5bbd263332ccf320a1f36d04a2019a5834dc20bcb736431eaccde2a39dcba03fb26d2fd00174f5d7bc26aaad1cad86124b18440883ac042ea2a0fca6170c1bf1
-  languageName: node
-  linkType: hard
-
-"qs@npm:^6.9.4":
-  version: 6.9.6
-  resolution: "qs@npm:6.9.6"
-  checksum: cb6df402bb8a3dbefa4bd46eba0dfca427079baca923e6b8d28a03e6bfb16a5c1dcdb96e69388f9c5813ac8ff17bb8bbca22f2ecd31fe1e344a55cb531b5fabf
   languageName: node
   linkType: hard
 
@@ -16009,14 +15982,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"querystring@npm:0.2.0, querystring@npm:^0.2.0":
+"querystring@npm:0.2.0":
   version: 0.2.0
   resolution: "querystring@npm:0.2.0"
   checksum: 8258d6734f19be27e93f601758858c299bdebe71147909e367101ba459b95446fbe5b975bf9beb76390156a592b6f4ac3a68b6087cea165c259705b8b4e56a69
   languageName: node
   linkType: hard
 
-"querystring@npm:0.2.1":
+"querystring@npm:0.2.1, querystring@npm:^0.2.0":
   version: 0.2.1
   resolution: "querystring@npm:0.2.1"
   checksum: 7b83b45d641e75fd39cd6625ddfd44e7618e741c61e95281b57bbae8fde0afcc12cf851924559e5cc1ef9baa3b1e06e22b164ea1397d65dd94b801f678d9c8ce
@@ -17482,7 +17455,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"serve@npm:^12.0.0":
+"serve@npm:^12.0.1":
   version: 12.0.1
   resolution: "serve@npm:12.0.1"
   dependencies:
@@ -17584,20 +17557,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"shelljs@npm:^0.8.3":
-  version: 0.8.4
-  resolution: "shelljs@npm:0.8.4"
-  dependencies:
-    glob: ^7.0.0
-    interpret: ^1.0.0
-    rechoir: ^0.6.2
-  bin:
-    shjs: bin/shjs
-  checksum: 27f83206ef6a4f5b74a493726c3e6b4c3e07a9c2aac94c5e692d800a61353c18a8234967bd8523b1346abe718beb563843687fb57f466529ba06db3cae6f0bb3
-  languageName: node
-  linkType: hard
-
-"shelljs@npm:^0.8.5":
+"shelljs@npm:^0.8.3, shelljs@npm:^0.8.5":
   version: 0.8.5
   resolution: "shelljs@npm:0.8.5"
   dependencies:
@@ -19616,7 +19576,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"webpack-cli@npm:^4.7.2":
+"webpack-cli@npm:^4.9.2":
   version: 4.9.2
   resolution: "webpack-cli@npm:4.9.2"
   dependencies:
@@ -19736,7 +19696,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"webpack@npm:^5.44.0, webpack@npm:^5.69.1":
+"webpack@npm:^5.69.1, webpack@npm:^5.70.0":
   version: 5.70.0
   resolution: "webpack@npm:5.70.0"
   dependencies:
@@ -19791,9 +19751,9 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "website@workspace:website"
   dependencies:
-    "@docusaurus/core": ^2.0.0-alpha.70
-    "@docusaurus/module-type-aliases": ^2.0.0-alpha.70
-    "@docusaurus/preset-classic": ^2.0.0-alpha.70
+    "@docusaurus/core": 2.0.0-beta.17
+    "@docusaurus/module-type-aliases": 2.0.0-beta.17
+    "@docusaurus/preset-classic": 2.0.0-beta.17
     "@mdx-js/react": ^1.6.22
     clsx: ^1.1.1
     react: ^17.0.2

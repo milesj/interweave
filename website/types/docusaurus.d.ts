@@ -1,1 +1,1 @@
-/// <reference types="@docusaurus/module-type-aliases" />
+import '@docusaurus/module-type-aliases';

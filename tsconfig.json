@@ -5,6 +5,9 @@
   "files": [],
   "references": [
     {
+      "path": "website"
+    },
+    {
       "path": "packages/autolink"
     },
     {

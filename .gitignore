@@ -32,7 +32,6 @@ tests/packages/
 .prettierignore
 jest.config.js
 prettier.config.js
-tsconfig.eslint.json
 *.tsbuildinfo
 
 # Yarn

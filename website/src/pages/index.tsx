@@ -1,9 +1,9 @@
 import React from 'react';
 import clsx from 'clsx';
-import Layout from '@theme/Layout';
 import Link from '@docusaurus/Link';
-import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import useBaseUrl from '@docusaurus/useBaseUrl';
+import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
+import Layout from '@theme/Layout';
 import styles from './styles.module.css';
 
 interface FeatureProps {
@@ -41,7 +41,7 @@ const features: FeatureProps[] = [
 		description: (
 			<>
 				With the power of{' '}
-				<a href="https://emojibase.dev" target="_blank">
+				<a href="https://emojibase.dev" rel="noreferrer" target="_blank">
 					Emojibase
 				</a>
 				, easily replace emoji unicode characters and shortcodes with dynamic SVGs or PNGs. Take
@@ -58,7 +58,7 @@ function Feature({ imageUrl, title, description }: FeatureProps) {
 		<div className={clsx('col col--4', styles.feature)}>
 			{imgUrl && (
 				<div className="text--center">
-					<img className={styles.featureImage} src={imgUrl} alt={title} />
+					<img alt={title} className={styles.featureImage} src={imgUrl} />
 				</div>
 			)}
 
@@ -73,7 +73,7 @@ function Home() {
 	const { siteConfig = {} } = context;
 
 	return (
-		<Layout title="Safely render HTML in React" description={siteConfig.tagline}>
+		<Layout description={siteConfig.tagline} title="Safely render HTML in React">
 			<header className={clsx('hero hero--primary', styles.heroBanner)}>
 				<div className="container">
 					<h1 className="hero__title">{siteConfig.title}</h1>
@@ -87,11 +87,11 @@ function Home() {
 						</Link>
 
 						<iframe
-							src="https://ghbtns.com/github-btn.html?user=milesj&repo=interweave&type=star&count=true&size=large"
 							frameBorder="0"
 							scrolling="0"
+							src="https://ghbtns.com/github-btn.html?user=milesj&repo=interweave&type=star&count=true&size=large"
 							title="GitHub"
-						></iframe>
+						/>
 					</div>
 				</div>
 			</header>
@@ -101,6 +101,7 @@ function Home() {
 					<div className="container">
 						<div className="row">
 							{features.map((props, idx) => (
+								// eslint-disable-next-line react/no-array-index-key
 								<Feature key={idx} {...props} />
 							))}
 						</div>
