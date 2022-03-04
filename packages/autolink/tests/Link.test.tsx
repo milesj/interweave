@@ -1,38 +1,42 @@
 import React from 'react';
-import { mockSyntheticEvent, render } from 'rut-dom';
+import { fireEvent, render } from '@testing-library/react';
 import Link from '../src/Link';
-import { LinkProps } from '../src/types';
 
 describe('components/Link', () => {
   it('renders a link with href', () => {
-    const { root } = render<LinkProps>(<Link href="/home">Foo</Link>);
+    render(<Link href="/home">Foo</Link>);
 
-    expect(root.findOne('a')).toHaveProp('href', '/home');
-    expect(root).toContainNode('Foo');
+    const el = document.querySelector('a');
+
+    expect(el).toHaveTextContent('Foo');
+    expect(el).toHaveProperty('href', 'http://localhost/home');
   });
 
   it('can set and trigger an onClick', () => {
     const spy = jest.fn();
-    const { root } = render<LinkProps>(
+
+    render(
       <Link href="/blog" onClick={spy}>
         Foo
       </Link>,
     );
 
-    expect(root.findOne('a')).toHaveProp('onClick', spy);
-
-    root.findOne('a').dispatch('onClick', {}, mockSyntheticEvent('onClick'));
+    fireEvent.click(document.querySelector('a')!);
 
     expect(spy).toHaveBeenCalled();
   });
 
   it('can set target blank via newWindow', () => {
-    const { root, update } = render<LinkProps>(<Link href="/forums">Foo</Link>);
+    const { rerender } = render(<Link href="/forums">Foo</Link>);
 
-    expect(root.findOne('a')).not.toHaveProp('target');
+    expect(document.querySelector('a')).toHaveProperty('target', '');
 
-    update({ newWindow: true });
+    rerender(
+      <Link href="/forums" newWindow>
+        Foo
+      </Link>,
+    );
 
-    expect(root.findOne('a')).toHaveProp('target', '_blank');
+    expect(document.querySelector('a')).toHaveProperty('target', '_blank');
   });
 });

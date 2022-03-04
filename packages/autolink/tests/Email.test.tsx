@@ -1,13 +1,12 @@
 import React from 'react';
-import { render } from 'rut-dom';
+import { render } from '@testing-library/react';
 import Email from '../src/Email';
-import Link from '../src/Link';
-import { EmailProps } from '../src/types';
 
 describe('components/Email', () => {
   it('can pass props to Link', () => {
     const func = () => {};
-    const { root } = render<EmailProps>(
+
+    render(
       <Email
         email="user@domain.com"
         emailParts={{ host: '', username: '' }}
@@ -18,7 +17,6 @@ describe('components/Email', () => {
       </Email>,
     );
 
-    expect(root.findOne(Link)).toHaveProp('newWindow', true);
-    expect(root.findOne(Link)).toHaveProp('onClick', func);
+    expect(document.querySelector('a')).toHaveProperty('target', '_blank');
   });
 });
