@@ -27,7 +27,11 @@ export function PreviewBar({ emoji, hideEmoticon, hideShortcodes, noPreview }: P
 	}
 
 	if (!hideEmoticon && emoji.emoticon) {
-		subtitle.push(emoji.emoticon);
+		if (Array.isArray(emoji.emoticon)) {
+			subtitle.push(...emoji.emoticon);
+		} else {
+			subtitle.push(emoji.emoticon);
+		}
 	}
 
 	if (!hideShortcodes && emoji.canonical_shortcodes) {

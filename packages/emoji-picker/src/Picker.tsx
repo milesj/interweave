@@ -232,7 +232,11 @@ export class InternalPicker extends React.PureComponent<InternalPickerProps, Int
 		}
 
 		if (emoji.emoticon) {
-			lookups.push(emoji.emoticon);
+			if (Array.isArray(emoji.emoticon)) {
+				lookups.push(...emoji.emoticon);
+			} else {
+				lookups.push(emoji.emoticon);
+			}
 		}
 
 		const haystack = lookups.join(' ').toLowerCase();
