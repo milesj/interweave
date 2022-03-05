@@ -4,10 +4,12 @@
 
 - Dropped IE 11 support. Modern browsers now required.
 - `EmojiPicker` is no longer a default export, and is now a named export.
+- Skin tone messages can no longer be customized. They now come from the emoji data source.
 
 #### 🚀 Updates
 
 - Updated to support Emoji v14, which includes 154+ new emojis.
+- Skin tone messages are now automatically translated.
 
 #### 📦 Dependencies
 

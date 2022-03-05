@@ -8,6 +8,7 @@ import {
 	Hexcode,
 	Locale,
 	MessagesDataset,
+	SkinToneKey,
 	SubgroupKey,
 	TEXT,
 } from 'emojibase';
@@ -31,6 +32,8 @@ export class EmojiDataManager {
 	UNICODE_TO_HEXCODE: Record<string, Hexcode> = {};
 
 	GROUPS_BY_KEY: Partial<Record<GroupKey, string>> = {};
+
+	SKIN_TONES_BY_KEY: Partial<Record<SkinToneKey, string>> = {};
 
 	SUBGROUPS_BY_KEY: Partial<Record<SubgroupKey, string>> = {};
 
@@ -166,6 +169,12 @@ export class EmojiDataManager {
 		if (data.subgroups) {
 			data.subgroups.forEach((group) => {
 				this.SUBGROUPS_BY_KEY[group.key] = group.message;
+			});
+		}
+
+		if (data.skinTones) {
+			data.skinTones.forEach((skinTone) => {
+				this.SKIN_TONES_BY_KEY[skinTone.key] = skinTone.message;
 			});
 		}
 	}

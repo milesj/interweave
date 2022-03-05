@@ -1,9 +1,7 @@
 import React, { useCallback, useContext } from 'react';
-import camelCase from 'lodash/camelCase';
-import upperFirst from 'lodash/upperFirst';
 import { SKIN_COLORS } from './constants';
 import { Context } from './Context';
-import { useTitleFormat } from './hooks/useTitleFormat';
+import { useSkinToneMessage } from './hooks/useSkinToneMessage';
 import { SkinToneKey } from './types';
 
 export interface SkinToneProps {
@@ -14,11 +12,10 @@ export interface SkinToneProps {
 }
 
 export function SkinTone({ active, children, skinTone, onSelect }: SkinToneProps) {
-	const { classNames, messages } = useContext(Context);
+	const { classNames } = useContext(Context);
 	const className = [classNames.skinTone];
 	const color = SKIN_COLORS[skinTone];
-	const key = camelCase(skinTone);
-	const title = useTitleFormat(messages[`skin${upperFirst(key)}`]);
+	const title = useSkinToneMessage(skinTone);
 
 	if (active) {
 		className.push(classNames.skinToneActive);
