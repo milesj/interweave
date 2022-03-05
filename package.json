@@ -15,7 +15,7 @@
     "test:bundle": "yarn run build && beemo create-config typescript && webpack && serve ./tests/",
     "format": "beemo prettier",
     "prerelease": "yarn run clean && yarn run pack && yarn run check",
-    "release": "yarn prerelease && beemo run-script lerna-release",
+    "release": "yarn prerelease && lerna publish",
     "release:docs": "cd website && yarn deploy",
     "type": "beemo typescript --build"
   },
