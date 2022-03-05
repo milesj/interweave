@@ -35,7 +35,7 @@
     "emojibase-regex": "^6.0.1"
   },
   "peerDependencies": {
-    "interweave": "^12.0.0",
+    "interweave": "^13.0.0",
     "react": "^16.8.0 || ^17.0.0"
   },
   "devDependencies": {

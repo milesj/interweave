@@ -1,4 +1,4 @@
-# 7.0.0
+# 7.0.0 - 2022-03-04
 
 #### 💥 Breaking
 
@@ -65,8 +65,6 @@
 
 - Switched to [Packemon](https://packemon.dev) for package building.
 - Updated all component event handlers to use `useCallback`.
-
-#### 💥 Breaking
 
 ## 5.3.0 - 2020-11-04
 

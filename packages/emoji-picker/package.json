@@ -37,7 +37,7 @@
     "react-window": "^1.8.6"
   },
   "peerDependencies": {
-    "interweave-emoji": "^6.0.0",
+    "interweave-emoji": "^7.0.0",
     "react": "^16.8.0 || ^17.0.0"
   },
   "devDependencies": {
