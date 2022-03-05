@@ -64,13 +64,13 @@ describe('PreviewBar', () => {
 			expect(root).toContainNode('Slightly smiling face');
 		});
 
-		it('doesnt display title if no annotation or name', () => {
+		it('doesnt display title if no label or name', () => {
 			const { root } = render<PreviewBarProps>(
 				<PreviewBar
 					{...props}
 					emoji={{
 						...props.emoji!,
-						annotation: '',
+						label: '',
 					}}
 				/>,
 			);

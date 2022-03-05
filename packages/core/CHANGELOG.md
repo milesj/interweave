@@ -2,6 +2,7 @@
 
 #### 💥 Breaking
 
+- Dropped IE 11 support. Modern browsers now required.
 - `Interweave` is no longer a default export, and is now a named export.
 
 #### 🚀 Updates

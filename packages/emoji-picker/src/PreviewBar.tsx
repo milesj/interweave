@@ -13,7 +13,7 @@ export interface PreviewBarProps {
 // eslint-disable-next-line complexity
 export function PreviewBar({ emoji, hideEmoticon, hideShortcodes, noPreview }: PreviewBarProps) {
 	const { classNames, emojiLargeSize, emojiPath, emojiSource, messages } = useContext(Context);
-	const title = useTitleFormat(emoji?.annotation ?? '');
+	const title = useTitleFormat(emoji?.label ?? '');
 	const subtitle = [];
 
 	if (!emoji) {

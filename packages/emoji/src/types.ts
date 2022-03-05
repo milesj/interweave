@@ -68,7 +68,7 @@ export interface UseEmojiDataOptions {
 	avoidFetch?: boolean;
 	/** Load compact emoji dataset instead of full dataset. */
 	compact?: boolean;
-	/** Locale to load emoji annotations in. Defaults to `en`. */
+	/** Locale to load emoji labels in. Defaults to `en`. */
 	locale?: Locale;
 	/** List of shortcode presets to load and join with the dataset. */
 	shortcodes?: string[];

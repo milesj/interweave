@@ -6,7 +6,7 @@ import { Context as EmojiContext } from '../src/Context';
 import { Context } from '../src/types';
 
 export const CAT_EMOJI = {
-	annotation: 'cat',
+	label: 'cat',
 	canonical_shortcodes: [':cat:'],
 	emoji: '🐈',
 	group: 0,

@@ -54,7 +54,7 @@ export function Emoji({ active, emoji, onEnter, onLeave, onSelect }: EmojiProps)
 				padding: emojiPadding,
 				width: dimension,
 			}}
-			title={emoji.annotation}
+			title={emoji.label}
 			type="button"
 			onClick={handleClick}
 			onMouseEnter={handleEnter}

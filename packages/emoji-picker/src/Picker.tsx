@@ -227,8 +227,8 @@ export class InternalPicker extends React.PureComponent<InternalPickerProps, Int
 			lookups.push(...emoji.tags);
 		}
 
-		if (emoji.annotation) {
-			lookups.push(emoji.annotation);
+		if (emoji.label) {
+			lookups.push(emoji.label);
 		}
 
 		if (emoji.emoticon) {

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Locale, MetadataDataset, ShortcodesDataset } from 'emojibase';
+import { Locale, MessagesDataset, ShortcodesDataset } from 'emojibase';
 import { mockFetch, MockFetchResult, renderAndWait } from 'rut-dom';
 import { resetInstances } from '../src/EmojiDataManager';
 import { mockEmojiData } from '../src/test';
@@ -37,7 +37,7 @@ describe('useEmojiData()', () => {
 
 	const mockEmojis: CanonicalEmoji[] = [
 		{
-			annotation: 'grinning face',
+			label: 'grinning face',
 			canonical_shortcodes: [':gleeful:'],
 			emoji: '😀',
 			group: 0,
@@ -59,9 +59,10 @@ describe('useEmojiData()', () => {
 		'1F600': ['gleeful'],
 	};
 
-	const mockMessages: MetadataDataset = {
+	const mockMessages: MessagesDataset = {
 		groups: [],
 		subgroups: [],
+		skinTones: [],
 	};
 
 	let fetchSpy: MockFetchResult;

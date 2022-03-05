@@ -30,7 +30,7 @@ describe('EmojiDataManager', () => {
 
 	describe('packageEmoji()', () => {
 		const cat = {
-			annotation: 'cat',
+			label: 'cat',
 			hexcode: '1F408',
 			emoji: '🐈',
 			shortcodes: ['cat'],

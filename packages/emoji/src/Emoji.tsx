@@ -86,14 +86,14 @@ export function Emoji({
 	return (
 		<img
 			alt={emoji.unicode}
-			aria-label={emoji.annotation}
+			aria-label={emoji.label}
 			data-emoticon={emoji.emoticon}
 			data-hexcode={emoji.hexcode}
 			data-shortcodes={emoji.canonical_shortcodes.join(', ')}
 			data-unicode={emoji.unicode}
 			src={path}
 			style={styles}
-			title={emoji.annotation}
+			title={emoji.label}
 		/>
 	);
 }

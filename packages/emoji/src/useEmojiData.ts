@@ -1,7 +1,7 @@
 /* eslint-disable promise/prefer-await-to-then */
 
 import { useEffect, useMemo, useState } from 'react';
-import { Emoji, fetchEmojis, fetchMetadata, Locale } from 'emojibase';
+import { Emoji, fetchEmojis, fetchMessages, Locale } from 'emojibase';
 import { LATEST_DATASET_VERSION } from './constants';
 import { EmojiDataManager } from './EmojiDataManager';
 import { CanonicalEmoji, Source, UseEmojiDataOptions } from './types';
@@ -57,7 +57,7 @@ async function loadEmojis(
 	const request = Promise.all([
 		// @ts-expect-error Mismatched types
 		fetchEmojis(locale, { compact, flat: false, shortcodes, version }) as Emoji[],
-		fetchMetadata(locale, { version }),
+		fetchMessages(locale, { version }),
 	]);
 
 	promises.set(
