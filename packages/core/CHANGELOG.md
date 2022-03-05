@@ -8,6 +8,7 @@
 #### 🚀 Updates
 
 - Added `rel` attribute to the allow list.
+- Added support for React 18.
 
 #### 📦 Dependencies
 

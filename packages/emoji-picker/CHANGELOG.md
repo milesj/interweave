@@ -10,6 +10,7 @@
 
 - Updated to support Emoji v14, which includes 154+ new emojis.
 - Skin tone messages are now automatically translated.
+- Added support for React 18.
 
 #### 📦 Dependencies
 

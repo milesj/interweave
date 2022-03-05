@@ -7,6 +7,7 @@
 #### 🚀 Updates
 
 - Hashtag matching now supports Chinese, Japanese, Korean, Russian, and other non-latin based characters.
+- Added support for React 18.
 
 #### 📦 Dependencies
 

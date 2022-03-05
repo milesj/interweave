@@ -33,7 +33,7 @@
   "license": "MIT",
   "peerDependencies": {
     "interweave": "^13.0.0",
-    "react": "^16.8.0 || ^17.0.0"
+    "react": "^16.8.0 || ^17.0.0 || ^18.0.0"
   },
   "devDependencies": {
     "interweave-ssr": "^1.2.1",

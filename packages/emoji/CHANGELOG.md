@@ -7,6 +7,7 @@
 #### 🚀 Updates
 
 - Updated to support Emoji v14, which includes 154+ new emojis.
+- Added support for React 18.
 
 #### 📦 Dependencies
 
