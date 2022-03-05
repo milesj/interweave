@@ -5,7 +5,7 @@ import { render } from 'rut-dom';
 import { EmojiMatcher } from '../src/EmojiMatcher';
 import { mockEmojiData } from '../src/test';
 
-mockEmojiData();
+mockEmojiData('en', '0.0.0');
 
 describe('Interweave (with emoji)', () => {
 	it('renders all types', () => {

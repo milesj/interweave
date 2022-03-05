@@ -41,7 +41,7 @@ export function ContextWrapper({
 				emojiSource: {
 					compact: false,
 					locale: 'en',
-					version: 'latest',
+					version: '0.0.0',
 				},
 				messages: { ...CONTEXT_MESSAGES, ...messages },
 			}}

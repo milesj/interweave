@@ -6,8 +6,10 @@ const data = loadEmojiData([loadShortcodes()]);
 const messages = loadMessages();
 
 // Bootstrap our emoji data using the official en dataset
-EmojiDataSourceManager.getInstance('en').parseEmojiData(data);
-EmojiDataSourceManager.getInstance('en').parseMessageData(messages);
+const srcData = EmojiDataSourceManager.getInstance('en', '0.0.0');
+srcData.parseEmojiData(data);
+srcData.parseMessageData(messages);
 
-EmojiDataManager.getInstance('en').parseEmojiData(data);
-EmojiDataManager.getInstance('en').parseMessageData(messages);
+const libData = EmojiDataManager.getInstance('en', '0.0.0');
+libData.parseEmojiData(data);
+libData.parseMessageData(messages);

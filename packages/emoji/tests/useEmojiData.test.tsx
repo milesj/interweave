@@ -18,7 +18,7 @@ function cdnShortcodes(preset: string, locale: Locale, version?: string) {
 	return cdn(locale, version, `shortcodes/${preset}`);
 }
 
-describe.skip('useEmojiData()', () => {
+describe('useEmojiData()', () => {
 	type Props = UseEmojiDataOptions;
 
 	function TestComp(props: { emojis: CanonicalEmoji[]; source: Source }) {
@@ -186,7 +186,7 @@ describe.skip('useEmojiData()', () => {
 	});
 
 	it('reads from the data manager cache', async () => {
-		mockEmojiData('ko');
+		mockEmojiData('ko', '1.0.0');
 
 		await renderAndWait<Props>(<EmojiData locale="ko" />);
 
