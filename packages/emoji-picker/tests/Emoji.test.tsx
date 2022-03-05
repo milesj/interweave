@@ -14,7 +14,7 @@ describe('Emoji', () => {
 	};
 
 	beforeEach(() => {
-		props.emoji = EmojiDataManager.getInstance('en').EMOJIS['1F408'];
+		props.emoji = EmojiDataManager.getInstance('en', '0.0.0').EMOJIS['1F408'];
 	});
 
 	it('renders an emoji', () => {

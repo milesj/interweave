@@ -24,7 +24,7 @@ export const TOKEN_LOCATIONS = [
 export const SOURCE_PROP = {
 	compact: false,
 	locale: 'en',
-	version: 'latest',
+	version: '0.0.0',
 } as const;
 
 export const VALID_EMOJIS = [

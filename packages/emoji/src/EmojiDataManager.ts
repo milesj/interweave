@@ -40,19 +40,24 @@ export class EmojiDataManager {
 
 	locale: Locale = 'en';
 
-	constructor(locale: Locale = 'en') {
+	version: string = '0.0.0';
+
+	constructor(locale: Locale, version: string) {
 		this.locale = locale;
+		this.version = version;
 	}
 
 	/**
 	 * Return or create a singleton instance per locale.
 	 */
-	static getInstance(locale: Locale = 'en'): EmojiDataManager {
-		if (!instances.has(locale)) {
-			instances.set(locale, new EmojiDataManager(locale));
+	static getInstance(locale: Locale, version: string): EmojiDataManager {
+		const key = `${locale}:${version}`;
+
+		if (!instances.has(key)) {
+			instances.set(key, new EmojiDataManager(locale, version));
 		}
 
-		return instances.get(locale)!;
+		return instances.get(key)!;
 	}
 
 	/**
@@ -154,13 +159,13 @@ export class EmojiDataManager {
 	parseMessageData(data: MessagesDataset) {
 		if (data.groups) {
 			data.groups.forEach((group) => {
-				this.GROUPS_BY_KEY[group.key ] = group.message;
+				this.GROUPS_BY_KEY[group.key] = group.message;
 			});
 		}
 
 		if (data.subgroups) {
 			data.subgroups.forEach((group) => {
-				this.SUBGROUPS_BY_KEY[group.key ] = group.message;
+				this.SUBGROUPS_BY_KEY[group.key] = group.message;
 			});
 		}
 	}

@@ -143,7 +143,7 @@ export class EmojiMatcher extends Matcher<EmojiProps, EmojiMatcherOptions> {
 	 */
 	override onBeforeParse(content: string, props: EmojiProps): string {
 		if (props.emojiSource) {
-			this.data = EmojiDataManager.getInstance(props.emojiSource.locale);
+			this.data = EmojiDataManager.getInstance(props.emojiSource.locale, props.emojiSource.version);
 		} else if (__DEV__) {
 			throw new Error(
 				'Missing emoji source data. Have you loaded with the `useEmojiData` hook and passed the `emojiSource` prop?',

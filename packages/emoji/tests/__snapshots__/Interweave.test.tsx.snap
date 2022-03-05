@@ -5,7 +5,7 @@ exports[`Interweave (with emoji) renders a single emoji enlarged 1`] = `
   <div>
     <Emoji
       enlargeEmoji
-      emojiSource={{ compact: false, locale: "en", version: "latest" }}
+      emojiSource={{ compact: false, locale: "en", version: "0.0.0" }}
       hexcode="1F408"
       shortcode=":cat:"
     >
@@ -30,7 +30,7 @@ exports[`Interweave (with emoji) renders emoji shortcode as unicode 1`] = `
     This has 
     <Emoji
       renderUnicode
-      emojiSource={{ compact: false, locale: "en", version: "latest" }}
+      emojiSource={{ compact: false, locale: "en", version: "0.0.0" }}
       hexcode="1F408"
       shortcode=":cat:"
     >
@@ -39,7 +39,7 @@ exports[`Interweave (with emoji) renders emoji shortcode as unicode 1`] = `
      and 
     <Emoji
       renderUnicode
-      emojiSource={{ compact: false, locale: "en", version: "latest" }}
+      emojiSource={{ compact: false, locale: "en", version: "0.0.0" }}
       hexcode="1F415"
       shortcode=":dog:"
     >
@@ -56,7 +56,7 @@ exports[`Interweave (with emoji) renders emoji unicode (escapes) as unicode 1`] 
     This has 
     <Emoji
       renderUnicode
-      emojiSource={{ compact: false, locale: "en", version: "latest" }}
+      emojiSource={{ compact: false, locale: "en", version: "0.0.0" }}
       hexcode="1F431"
       unicode="🐱"
     >
@@ -65,7 +65,7 @@ exports[`Interweave (with emoji) renders emoji unicode (escapes) as unicode 1`] 
      and 
     <Emoji
       renderUnicode
-      emojiSource={{ compact: false, locale: "en", version: "latest" }}
+      emojiSource={{ compact: false, locale: "en", version: "0.0.0" }}
       hexcode="1F436"
       unicode="🐶"
     >
@@ -82,7 +82,7 @@ exports[`Interweave (with emoji) renders emoji unicode (literals) as unicode 1`]
     This has 
     <Emoji
       renderUnicode
-      emojiSource={{ compact: false, locale: "en", version: "latest" }}
+      emojiSource={{ compact: false, locale: "en", version: "0.0.0" }}
       hexcode="1F408"
       unicode="🐈️"
     >
@@ -91,7 +91,7 @@ exports[`Interweave (with emoji) renders emoji unicode (literals) as unicode 1`]
      and 
     <Emoji
       renderUnicode
-      emojiSource={{ compact: false, locale: "en", version: "latest" }}
+      emojiSource={{ compact: false, locale: "en", version: "0.0.0" }}
       hexcode="1F415"
       unicode="🐕️"
     >

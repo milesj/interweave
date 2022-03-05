@@ -41,7 +41,7 @@ async function loadEmojis(
 	compact: boolean,
 ): Promise<CanonicalEmoji[]> {
 	const key = `${locale}:${version}:${compact ? 'compact' : 'data'}`;
-	const instance = EmojiDataManager.getInstance(locale);
+	const instance = EmojiDataManager.getInstance(locale, version);
 
 	// Return as we're currently loading data
 	if (promises.has(key)) {
@@ -54,6 +54,7 @@ async function loadEmojis(
 	}
 
 	// Otherwise, start loading emoji data from the CDN
+	// eslint-disable-next-line compat/compat
 	const request = Promise.all([
 		// @ts-expect-error Mismatched types
 		fetchEmojis(locale, { compact, flat: false, shortcodes, version }) as Emoji[],
@@ -118,6 +119,6 @@ export function useEmojiData({
 			locale,
 			version,
 		},
-		EmojiDataManager.getInstance(locale),
+		EmojiDataManager.getInstance(locale, version),
 	];
 }

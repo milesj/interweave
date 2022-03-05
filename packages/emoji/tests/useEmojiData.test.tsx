@@ -186,7 +186,7 @@ describe('useEmojiData()', () => {
 	});
 
 	it('reads from the data manager cache', async () => {
-		mockEmojiData('ko');
+		mockEmojiData('ko', '1.0.0');
 
 		await renderAndWait<Props>(<EmojiData locale="ko" />);
 

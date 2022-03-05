@@ -13,7 +13,7 @@ exports[`Emoji renders an emoji 1`] = `
   <Emoji
     emojiPath="{{hexcode}}"
     emojiSize={24}
-    emojiSource={{ compact: false, locale: "en", version: "latest" }}
+    emojiSource={{ compact: false, locale: "en", version: "0.0.0" }}
     hexcode="1F408"
   >
     <img
