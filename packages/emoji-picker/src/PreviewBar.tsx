@@ -13,7 +13,7 @@ export interface PreviewBarProps {
 // eslint-disable-next-line complexity
 export function PreviewBar({ emoji, hideEmoticon, hideShortcodes, noPreview }: PreviewBarProps) {
 	const { classNames, emojiLargeSize, emojiPath, emojiSource, messages } = useContext(Context);
-	const title = useTitleFormat(emoji?.annotation ?? '');
+	const title = useTitleFormat(emoji?.label ?? '');
 	const subtitle = [];
 
 	if (!emoji) {
@@ -27,7 +27,11 @@ export function PreviewBar({ emoji, hideEmoticon, hideShortcodes, noPreview }: P
 	}
 
 	if (!hideEmoticon && emoji.emoticon) {
-		subtitle.push(emoji.emoticon);
+		if (Array.isArray(emoji.emoticon)) {
+			subtitle.push(...emoji.emoticon);
+		} else {
+			subtitle.push(emoji.emoticon);
+		}
 	}
 
 	if (!hideShortcodes && emoji.canonical_shortcodes) {

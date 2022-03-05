@@ -1,5 +1,5 @@
 import { Locale } from 'emojibase';
-import { loadEmojiData, loadMeta, loadShortcodes } from 'emojibase-test-utils';
+import { loadEmojiData, loadMessages, loadShortcodes } from 'emojibase-test-utils';
 import { CanonicalEmoji, EmojiDataManager } from '.';
 
 export function mockEmojiData(locale: Locale = 'en'): CanonicalEmoji[] {
@@ -7,7 +7,7 @@ export function mockEmojiData(locale: Locale = 'en'): CanonicalEmoji[] {
 
 	if (instance.data.length === 0) {
 		instance.parseEmojiData(loadEmojiData([loadShortcodes()]));
-		instance.parseMessageData(loadMeta());
+		instance.parseMessageData(loadMessages());
 	}
 
 	return instance.getData();

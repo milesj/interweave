@@ -2,11 +2,17 @@
 
 #### 💥 Breaking
 
+- Dropped IE 11 support. Modern browsers now required.
 - `EmojiPicker` is no longer a default export, and is now a named export.
+
+#### 🚀 Updates
+
+- Updated to support Emoji v14, which includes 154+ new emojis.
 
 #### 📦 Dependencies
 
 - Updated to latest `packemon`.
+- Updated `emojibase` to v6.
 
 #### 🛠 Internals
 

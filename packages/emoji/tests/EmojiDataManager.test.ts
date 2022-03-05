@@ -23,14 +23,14 @@ describe('EmojiDataManager', () => {
 
 			manager.parseEmojiData(loadEmojiData());
 
-			expect(manager.getData()).toHaveLength(1847);
-			expect(manager.getFlatData()).toHaveLength(3547);
+			expect(manager.getData()).toHaveLength(1884);
+			expect(manager.getFlatData()).toHaveLength(3659);
 		});
 	});
 
 	describe('packageEmoji()', () => {
 		const cat = {
-			annotation: 'cat',
+			label: 'cat',
 			hexcode: '1F408',
 			emoji: '🐈',
 			shortcodes: ['cat'],

@@ -3,7 +3,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { stripHexcode } from 'emojibase';
-import BaseInterweave, { InterweaveProps } from 'interweave';
+import { Interweave as BaseInterweave, InterweaveProps } from 'interweave';
 import { EmailMatcher, HashtagMatcher, IpMatcher, UrlMatcher } from 'interweave-autolink';
 import {
 	Emoji as BaseEmoji,

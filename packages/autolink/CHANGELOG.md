@@ -1,5 +1,9 @@
 # 5.0.0
 
+#### 💥 Breaking
+
+- Dropped IE 11 support. Modern browsers now required.
+
 #### 🚀 Updates
 
 - Hashtag matching now supports Chinese, Japanese, Korean, Russian, and other non-latin based characters.

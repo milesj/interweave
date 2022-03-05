@@ -1,8 +1,18 @@
 # 7.0.0
 
+#### 💥 Breaking
+
+- Dropped IE 11 support. Modern browsers now required.
+
+#### 🚀 Updates
+
+- Updated to support Emoji v14, which includes 154+ new emojis.
+
 #### 📦 Dependencies
 
 - Updated to latest `packemon`.
+- Updated `emojibase` to v6.
+- Updated `emojibase-regex` to v6.
 
 #### 🛠 Internals
 

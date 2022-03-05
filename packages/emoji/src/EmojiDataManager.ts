@@ -7,7 +7,7 @@ import {
 	GroupKey,
 	Hexcode,
 	Locale,
-	MetadataDataset,
+	MessagesDataset,
 	SubgroupKey,
 	TEXT,
 } from 'emojibase';
@@ -99,8 +99,12 @@ export class EmojiDataManager {
 
 		// Support all emoticons
 		if (emoticon) {
-			generateEmoticonPermutations(emoticon, EMOTICON_OPTIONS[emoticon]).forEach((emo) => {
-				this.EMOTICON_TO_HEXCODE[emo] = hexcode;
+			const emoticons = Array.isArray(emoticon) ? emoticon : [emoticon];
+
+			emoticons.forEach((emo) => {
+				generateEmoticonPermutations(emo, EMOTICON_OPTIONS[emo]).forEach((e) => {
+					this.EMOTICON_TO_HEXCODE[e] = hexcode;
+				});
 			});
 		}
 
@@ -147,16 +151,16 @@ export class EmojiDataManager {
 		return this.data;
 	}
 
-	parseMessageData(data: MetadataDataset) {
+	parseMessageData(data: MessagesDataset) {
 		if (data.groups) {
 			data.groups.forEach((group) => {
-				this.GROUPS_BY_KEY[group.key as GroupKey] = group.message;
+				this.GROUPS_BY_KEY[group.key ] = group.message;
 			});
 		}
 
 		if (data.subgroups) {
 			data.subgroups.forEach((group) => {
-				this.SUBGROUPS_BY_KEY[group.key as SubgroupKey] = group.message;
+				this.SUBGROUPS_BY_KEY[group.key ] = group.message;
 			});
 		}
 	}

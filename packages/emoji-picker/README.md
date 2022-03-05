@@ -9,7 +9,7 @@ the following features:
 
 - Customizable theme, styles, and icons.
 - Configurable element and render order.
-- Localized emoji annotations.
+- Localized emoji labels and annotations.
 - Emoji grouping and categorization.
 - Multi-word deep search.
 - Skin tone palette selector.
