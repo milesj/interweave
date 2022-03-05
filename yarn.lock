@@ -11188,7 +11188,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "interweave-autolink@workspace:packages/autolink"
   dependencies:
-    interweave-ssr: ^1.2.1
+    interweave-ssr: ^2.0.0
     react: ^17.0.2
   peerDependencies:
     interweave: ^13.0.0
@@ -11254,7 +11254,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"interweave-ssr@^1.2.1, interweave-ssr@workspace:packages/ssr":
+"interweave-ssr@^2.0.0, interweave-ssr@workspace:packages/ssr":
   version: 0.0.0-use.local
   resolution: "interweave-ssr@workspace:packages/ssr"
   dependencies:
@@ -11268,7 +11268,7 @@ __metadata:
   resolution: "interweave@workspace:packages/core"
   dependencies:
     escape-html: ^1.0.3
-    interweave-ssr: ^1.2.1
+    interweave-ssr: ^2.0.0
     react: ^17.0.2
   peerDependencies:
     react: ^16.8.0 || ^17.0.0 || ^18.0.0
