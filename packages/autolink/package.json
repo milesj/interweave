@@ -1,6 +1,6 @@
 {
   "name": "interweave-autolink",
-  "version": "4.4.3",
+  "version": "5.0.0",
   "description": "URL, IP, email, and hashtag autolinking support for Interweave.",
   "keywords": [
     "interweave",
@@ -36,7 +36,7 @@
     "react": "^16.8.0 || ^17.0.0 || ^18.0.0"
   },
   "devDependencies": {
-    "interweave-ssr": "^1.2.1",
+    "interweave-ssr": "^2.0.0",
     "react": "^17.0.2"
   },
   "funding": {
