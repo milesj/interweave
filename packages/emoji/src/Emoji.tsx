@@ -16,7 +16,7 @@ export function Emoji({
 	shortcode,
 	unicode,
 }: EmojiProps) {
-	const data = EmojiDataManager.getInstance(emojiSource.locale);
+	const data = EmojiDataManager.getInstance(emojiSource.locale, emojiSource.version);
 
 	if (__DEV__ && !emoticon && !shortcode && !unicode && !hexcode) {
 		throw new Error(

@@ -6,13 +6,17 @@ describe('EmojiDataManager', () => {
 	let manager: EmojiDataManager;
 
 	beforeEach(() => {
-		manager = new EmojiDataManager('ja');
+		manager = new EmojiDataManager('ja', '0.0.0');
 	});
 
 	describe('getInstance()', () => {
 		it('returns different instancs', () => {
-			expect(EmojiDataManager.getInstance()).not.toBe(EmojiDataManager.getInstance('de'));
-			expect(EmojiDataManager.getInstance('fr')).not.toBe(new EmojiDataManager());
+			expect(EmojiDataManager.getInstance('en', '0.0.0')).not.toBe(
+				EmojiDataManager.getInstance('de', '0.0.0'),
+			);
+			expect(EmojiDataManager.getInstance('fr', '0.0.0')).not.toBe(
+				new EmojiDataManager('en', '0.0.0'),
+			);
 		});
 	});
 

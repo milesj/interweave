@@ -41,7 +41,7 @@ describe('EmojiMatcher', () => {
 	const shortPattern = new RegExp(`^${SHORTCODE_REGEX.source}$`);
 
 	beforeEach(() => {
-		const data = EmojiDataManager.getInstance('en');
+		const data = EmojiDataManager.getInstance('en', '0.0.0');
 
 		({ EMOTICON_TO_HEXCODE, SHORTCODE_TO_HEXCODE, UNICODE_TO_HEXCODE } = data);
 

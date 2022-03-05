@@ -33,7 +33,7 @@ export function ContextWrapper({
 			// eslint-disable-next-line react/jsx-no-constructed-context-values, react-perf/jsx-no-new-object-as-prop
 			value={{
 				classNames: { ...CONTEXT_CLASSNAMES, ...classNames },
-				emojiData: EmojiDataManager.getInstance('en'),
+				emojiData: EmojiDataManager.getInstance('en', '0.0.0'),
 				emojiLargeSize: 72,
 				emojiPadding: 5,
 				emojiPath: '{{hexcode}}',

@@ -5,7 +5,7 @@ import { Context as ContextType } from './types';
 
 export const Context = React.createContext<ContextType>({
 	classNames: CONTEXT_CLASSNAMES,
-	emojiData: EmojiDataManager.getInstance('en'),
+	emojiData: EmojiDataManager.getInstance('en', LATEST_DATASET_VERSION),
 	emojiLargeSize: 0,
 	emojiPadding: 0,
 	emojiPath: '{{hexcode}}',

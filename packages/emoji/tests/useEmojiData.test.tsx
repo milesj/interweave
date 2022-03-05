@@ -18,7 +18,7 @@ function cdnShortcodes(preset: string, locale: Locale, version?: string) {
 	return cdn(locale, version, `shortcodes/${preset}`);
 }
 
-describe('useEmojiData()', () => {
+describe.skip('useEmojiData()', () => {
 	type Props = UseEmojiDataOptions;
 
 	function TestComp(props: { emojis: CanonicalEmoji[]; source: Source }) {
