@@ -154,13 +154,13 @@ export class EmojiDataManager {
 	parseMessageData(data: MessagesDataset) {
 		if (data.groups) {
 			data.groups.forEach((group) => {
-				this.GROUPS_BY_KEY[group.key as GroupKey] = group.message;
+				this.GROUPS_BY_KEY[group.key ] = group.message;
 			});
 		}
 
 		if (data.subgroups) {
 			data.subgroups.forEach((group) => {
-				this.SUBGROUPS_BY_KEY[group.key as SubgroupKey] = group.message;
+				this.SUBGROUPS_BY_KEY[group.key ] = group.message;
 			});
 		}
 	}

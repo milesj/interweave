@@ -23,8 +23,8 @@ describe('EmojiDataManager', () => {
 
 			manager.parseEmojiData(loadEmojiData());
 
-			expect(manager.getData()).toHaveLength(1847);
-			expect(manager.getFlatData()).toHaveLength(3547);
+			expect(manager.getData()).toHaveLength(1884);
+			expect(manager.getFlatData()).toHaveLength(3659);
 		});
 	});
 

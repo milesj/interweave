@@ -10,8 +10,8 @@ function cdn(locale: Locale, version: string = '1.0.0', type: string = 'data') {
 	return `https://cdn.jsdelivr.net/npm/emojibase-data@${version}/${locale}/${type}.json`;
 }
 
-function cdnMeta(locale: Locale, version?: string) {
-	return cdn(locale, version, 'meta');
+function cdnMessages(locale: Locale, version?: string) {
+	return cdn(locale, version, 'messages');
 }
 
 function cdnShortcodes(preset: string, locale: Locale, version?: string) {
@@ -87,11 +87,11 @@ describe('useEmojiData()', () => {
 			.get(cdnShortcodes('emojibase', 'de', '2.0.0'), mockShortcodes)
 			.get(cdnShortcodes('emojibase', 'ja', '1.2.3'), mockShortcodes)
 			// Messages
-			.get(cdnMeta('en', '1.0.0'), mockMessages)
-			.get(cdnMeta('it', '1.0.0'), mockMessages)
-			.get(cdnMeta('de', '2.0.0'), mockMessages)
-			.get(cdnMeta('fr', '2.0.0'), mockMessages)
-			.get(cdnMeta('ja', '1.2.3'), mockMessages)
+			.get(cdnMessages('en', '1.0.0'), mockMessages)
+			.get(cdnMessages('it', '1.0.0'), mockMessages)
+			.get(cdnMessages('de', '2.0.0'), mockMessages)
+			.get(cdnMessages('fr', '2.0.0'), mockMessages)
+			.get(cdnMessages('ja', '1.2.3'), mockMessages)
 			.spy();
 
 		// Emojibase caches requests
@@ -104,7 +104,7 @@ describe('useEmojiData()', () => {
 		const result = await renderAndWait<Props>(<EmojiData />);
 
 		expect(fetchSpy.called(cdn('en'))).toBe(true);
-		expect(fetchSpy.called(cdnMeta('en'))).toBe(true);
+		expect(fetchSpy.called(cdnMessages('en'))).toBe(true);
 		expect(fetchSpy.called(cdnShortcodes('emojibase', 'en'))).toBe(true);
 
 		expect(result.root.findOne(TestComp)).toHaveProp('emojis', mockEmojis);
@@ -130,7 +130,7 @@ describe('useEmojiData()', () => {
 		const result = await renderAndWait<Props>(<EmojiData locale="ja" version="1.2.3" />);
 
 		expect(fetchSpy.called(cdn('ja', '1.2.3'))).toBe(true);
-		expect(fetchSpy.called(cdnMeta('ja', '1.2.3'))).toBe(true);
+		expect(fetchSpy.called(cdnMessages('ja', '1.2.3'))).toBe(true);
 		expect(fetchSpy.called(cdnShortcodes('emojibase', 'ja', '1.2.3'))).toBe(true);
 
 		await result.updateAndWait({
@@ -139,7 +139,7 @@ describe('useEmojiData()', () => {
 		});
 
 		expect(fetchSpy.called(cdn('de', '2.0.0'))).toBe(true);
-		expect(fetchSpy.called(cdnMeta('de', '2.0.0'))).toBe(true);
+		expect(fetchSpy.called(cdnMessages('de', '2.0.0'))).toBe(true);
 		expect(fetchSpy.called(cdnShortcodes('emojibase', 'de', '2.0.0'))).toBe(true);
 	});
 
@@ -153,13 +153,13 @@ describe('useEmojiData()', () => {
 		const result = await renderAndWait<Props>(<EmojiData locale="de" version="2.0.0" />);
 
 		expect(fetchSpy.called(cdn('de', '2.0.0'))).toBe(true);
-		expect(fetchSpy.called(cdnMeta('de', '2.0.0'))).toBe(true);
+		expect(fetchSpy.called(cdnMessages('de', '2.0.0'))).toBe(true);
 		expect(fetchSpy.called(cdnShortcodes('emojibase', 'de', '2.0.0'))).toBe(true);
 
 		await result.rerenderAndWait(<EmojiData locale="it" />);
 
 		expect(fetchSpy.called(cdn('it'))).toBe(true);
-		expect(fetchSpy.called(cdnMeta('it'))).toBe(true);
+		expect(fetchSpy.called(cdnMessages('it'))).toBe(true);
 		expect(fetchSpy.called(cdnShortcodes('emojibase', 'it', '1.0.0'))).toBe(true);
 	});
 

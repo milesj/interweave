@@ -7,70 +7,70 @@ exports[`Emoji renders the unicode character 1`] = `<span>😡</span>`;
 exports[`Emoji renders with both 1`] = `
 <img
   alt="😡"
-  aria-label="pouting face"
+  aria-label="enraged face"
   data-emoticon=">:/"
   data-hexcode="1F621"
   data-shortcodes=":pout:, :pouting_face:, :rage:"
   data-unicode="😡"
   src="1F621"
   style={{ display: "inline-block", verticalAlign: "middle", width: "1em", height: "1em" }}
-  title="pouting face"
+  title="enraged face"
 />
 `;
 
 exports[`Emoji renders with only the emoticon 1`] = `
 <img
   alt="😡"
-  aria-label="pouting face"
+  aria-label="enraged face"
   data-emoticon=">:/"
   data-hexcode="1F621"
   data-shortcodes=":pout:, :pouting_face:, :rage:"
   data-unicode="😡"
   src="1F621"
   style={{ display: "inline-block", verticalAlign: "middle", width: "1em", height: "1em" }}
-  title="pouting face"
+  title="enraged face"
 />
 `;
 
 exports[`Emoji renders with only the hexcode 1`] = `
 <img
   alt="😡"
-  aria-label="pouting face"
+  aria-label="enraged face"
   data-emoticon=">:/"
   data-hexcode="1F621"
   data-shortcodes=":pout:, :pouting_face:, :rage:"
   data-unicode="😡"
   src="1F621"
   style={{ display: "inline-block", verticalAlign: "middle", width: "1em", height: "1em" }}
-  title="pouting face"
+  title="enraged face"
 />
 `;
 
 exports[`Emoji renders with only the shortcode 1`] = `
 <img
   alt="😡"
-  aria-label="pouting face"
+  aria-label="enraged face"
   data-emoticon=">:/"
   data-hexcode="1F621"
   data-shortcodes=":pout:, :pouting_face:, :rage:"
   data-unicode="😡"
   src="1F621"
   style={{ display: "inline-block", verticalAlign: "middle", width: "1em", height: "1em" }}
-  title="pouting face"
+  title="enraged face"
 />
 `;
 
 exports[`Emoji renders with only the unicode 1`] = `
 <img
   alt="😡"
-  aria-label="pouting face"
+  aria-label="enraged face"
   data-emoticon=">:/"
   data-hexcode="1F621"
   data-shortcodes=":pout:, :pouting_face:, :rage:"
   data-unicode="😡"
   src="1F621"
   style={{ display: "inline-block", verticalAlign: "middle", width: "1em", height: "1em" }}
-  title="pouting face"
+  title="enraged face"
 />
 `;
 
