@@ -1,5 +1,14 @@
 import React from 'react';
-import { ElementProps } from './types';
+import { Attributes } from './types';
+
+export interface ElementProps {
+	[prop: string]: unknown;
+	attributes?: Attributes;
+	className?: string;
+	children?: React.ReactNode;
+	selfClose?: boolean;
+	tagName: string;
+}
 
 export function Element({
 	attributes = {},

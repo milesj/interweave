@@ -1,6 +1,12 @@
 import React, { useMemo } from 'react';
-import { Parser } from './Parser';
-import { MarkupProps } from './types';
+import { Parser, ParserProps } from './Parser';
+
+export interface MarkupProps extends ParserProps {
+	/** Content that may contain HTML to safely render. */
+	content?: string | null;
+	/** Content to render when the `content` prop is empty. */
+	emptyContent?: React.ReactNode;
+}
 
 export function Markup(props: MarkupProps) {
 	const { content, emptyContent } = props;

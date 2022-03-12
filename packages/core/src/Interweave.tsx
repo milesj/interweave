@@ -1,6 +1,20 @@
 import React, { useMemo } from 'react';
+import type { Matcher } from './createMatcher';
+import type { Transformer } from './createTransformer';
+import { MarkupProps } from './Markup';
 import { Parser } from './Parser';
-import { CommonInternals, InterweaveProps, OnAfterParse, OnBeforeParse } from './types';
+import { CommonInternals, OnAfterParse, OnBeforeParse } from './types';
+
+export interface InterweaveProps<Props = {}> extends MarkupProps {
+	/** List of transformers to apply to elements. */
+	transformers?: Transformer<HTMLElement, Props>[];
+	/** List of matchers to apply to the content. */
+	matchers?: Matcher<{}, Props>[];
+	/** Callback fired after parsing ends. Must return a React node. */
+	onAfterParse?: OnAfterParse<Props>;
+	/** Callback fired beore parsing begins. Must return a string. */
+	onBeforeParse?: OnBeforeParse<Props>;
+}
 
 export function Interweave<Props = {}>(props: InterweaveProps<Props>) {
 	const { content, emptyContent, matchers, onAfterParse, onBeforeParse, transformers } = props;

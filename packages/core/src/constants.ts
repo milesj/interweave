@@ -1,6 +1,6 @@
 /* eslint-disable no-bitwise, no-magic-numbers, sort-keys */
 
-import { FilterMap, TagConfig, TagConfigMap } from './types';
+import { TagConfig, TagConfigMap } from './types';
 
 // https://developer.mozilla.org/en-US/docs/Web/Guide/HTML/Content_categories
 export const TYPE_FLOW = 1;
@@ -303,7 +303,7 @@ export const FILTER_NO_CAST = 5;
 
 // Attributes not listed here will be denied
 // https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes
-export const ATTRIBUTES: FilterMap = Object.freeze({
+export const ATTRIBUTES: Record<string, number> = Object.freeze({
 	alt: FILTER_ALLOW,
 	cite: FILTER_ALLOW,
 	class: FILTER_ALLOW,
