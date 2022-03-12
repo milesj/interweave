@@ -7,6 +7,43 @@ declare global {
 	var INTERWEAVE_SSR_POLYFILL: (() => Document | undefined) | undefined;
 }
 
+export interface CommonInternals<Props, Options = {}> {
+	onAfterParse?: OnAfterParse<Props>;
+	onBeforeParse?: OnBeforeParse<Props>;
+	options: Partial<Options>;
+}
+
+// ELEMENTS
+
+export type TagName = keyof React.ReactHTML | 'rb' | 'rtc';
+
+export type WildTagName = TagName | '*';
+
+export interface TagConfig {
+	// Only children
+	children: TagName[];
+	// Children content type
+	content: number;
+	// Invalid children
+	invalid: TagName[];
+	// Only parent
+	parent: TagName[];
+	// Can render self as a child
+	self: boolean;
+	// HTML tag name
+	tagName: TagName;
+	// Self content type
+	type: number;
+	// Self-closing tag
+	void: boolean;
+}
+
+// CALLBACKS
+
+export type OnAfterParse<Props> = (content: Node, props: Props) => Node;
+
+export type OnBeforeParse<Props> = (content: string, props: Props) => string;
+
 export type Node = React.ReactElement<unknown> | string | null;
 
 export type ChildrenNode = Node[] | string;
