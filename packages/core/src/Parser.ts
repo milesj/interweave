@@ -28,9 +28,9 @@ import {
 	TagName,
 } from './types';
 
-type TransformerInterface = Transformer<HTMLElement, object>;
+type TransformerInterface<Props> = Transformer<HTMLElement, Props>;
 
-type MatcherInterface = Matcher<object, object, object>;
+type MatcherInterface<Props> = Matcher<{}, Props>;
 
 type MatchedElements = Record<
 	string,
@@ -55,7 +55,7 @@ function createDocument() {
 	return document.implementation.createHTMLDocument('Interweave');
 }
 
-export class Parser {
+export class Parser<Props> {
 	allowed: Set<TagName>;
 
 	banned: Set<TagName>;
@@ -70,15 +70,15 @@ export class Parser {
 
 	props: ParserProps;
 
-	matchers: MatcherInterface[];
+	matchers: MatcherInterface<Props>[];
 
-	transformers: TransformerInterface[];
+	transformers: TransformerInterface<Props>[];
 
 	constructor(
 		markup: string,
 		props: ParserProps,
-		matchers: MatcherInterface[] = [],
-		transformers: TransformerInterface[] = [],
+		matchers: MatcherInterface<Props>[] = [],
+		transformers: TransformerInterface<Props>[] = [],
 	) {
 		if (__DEV__ && markup && typeof markup !== 'string') {
 			throw new TypeError('Interweave parser requires a valid string.');
@@ -86,7 +86,8 @@ export class Parser {
 
 		this.props = props;
 		this.matchers = matchers;
-		this.transformers = [...transformers, styleTransformer];
+		this.transformers = transformers;
+		this.transformers.push(styleTransformer as unknown as TransformerInterface<Props>);
 		this.keyIndex = -1;
 		this.container = this.createContainer(markup || '');
 		this.allowed = new Set(props.allow ?? (ALLOWED_TAG_LIST as TagName[]));
@@ -122,7 +123,10 @@ export class Parser {
 			// Continuously trigger the matcher until no matches are found
 			let tokenizedString = '';
 
-			while (matchedString && (parts = matcher.match(matchedString, this.props))) {
+			while (
+				matchedString &&
+				(parts = matcher.match(matchedString, this.props as unknown as Props))
+			) {
 				const { index, length, match, valid, void: isVoid, params } = parts;
 				const tokenName = tagName + String(elementIndex);
 
@@ -140,7 +144,7 @@ export class Parser {
 
 					elementIndex += 1;
 					elements[tokenName] = {
-						element: matcher.factory(params, this.props, match),
+						element: matcher.factory(params, this.props as unknown as Props, match),
 						key: this.keyIndex,
 					};
 				} else {
@@ -185,7 +189,7 @@ export class Parser {
 		);
 
 		for (const transformer of transformers) {
-			const result = transformer.factory(node, this.props, children);
+			const result = transformer.factory(node, this.props as unknown as Props, children);
 
 			// If something was returned, the node has been replaced so we cant continue
 			if (result !== undefined) {
@@ -270,8 +274,8 @@ export class Parser {
 			return undefined;
 		}
 
-		const tag = this.props.containerTagName ?? 'body';
-		const el = tag === 'body' || tag === 'fragment' ? doc.body : doc.createElement(tag);
+		const tag = this.props.tagName ?? 'body';
+		const el = tag === 'body' ? doc.body : doc.createElement(tag);
 
 		if (markup.match(INVALID_ROOTS)) {
 			if (__DEV__) {
@@ -454,7 +458,7 @@ export class Parser {
 	 * list of text nodes and React elements.
 	 */
 	parseNode(parentNode: HTMLElement, parentConfig: TagConfig): Node[] {
-		const { noHtml, noHtmlExceptMatchers, allowElements } = this.props;
+		const { noHtml, noHtmlExceptInternals, allowElements } = this.props;
 		let content: Node[] = [];
 		let mergedText = '';
 
@@ -512,7 +516,7 @@ export class Parser {
 				//  - Tag is allowed
 				//  - Child is valid within the parent
 				if (
-					!(noHtml || (noHtmlExceptMatchers && tagName !== 'br')) &&
+					!(noHtml || (noHtmlExceptInternals && tagName !== 'br')) &&
 					this.isTagAllowed(tagName) &&
 					(allowElements || this.canRenderChild(parentConfig, config))
 				) {
@@ -553,7 +557,7 @@ export class Parser {
 				// Apply matchers if a text node
 			} else if (node.nodeType === TEXT_NODE) {
 				const text =
-					noHtml && !noHtmlExceptMatchers
+					noHtml && !noHtmlExceptInternals
 						? node.textContent
 						: // eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing
 						  this.applyMatchers(node.textContent || '', parentConfig);

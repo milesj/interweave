@@ -1,78 +1,72 @@
-/* eslint-disable promise/prefer-await-to-callbacks */
-import React from 'react';
-import { Markup } from './Markup';
+import React, { useMemo } from 'react';
 import { Parser } from './Parser';
-import { InterweaveProps } from './types';
+import { CommonInternals, InterweaveProps, OnAfterParse, OnBeforeParse } from './types';
 
-export function Interweave(props: InterweaveProps) {
-	const {
-		attributes,
-		className,
-		content = '',
-		disableFilters = false,
-		disableMatchers = false,
-		emptyContent = null,
-		filters = [],
-		matchers = [],
-		onAfterParse = null,
-		onBeforeParse = null,
-		tagName = 'span',
-		noWrap = false,
-		...parserProps
-	} = props;
-	const allMatchers = disableMatchers ? [] : matchers;
-	const allFilters = disableFilters ? [] : filters;
-	const beforeCallbacks = onBeforeParse ? [onBeforeParse] : [];
-	const afterCallbacks = onAfterParse ? [onAfterParse] : [];
+export function Interweave<Props = {}>(props: InterweaveProps<Props>) {
+	const { content, emptyContent, matchers, onAfterParse, onBeforeParse, transformers } = props;
 
-	// Inherit callbacks from matchers
-	allMatchers.forEach((matcher) => {
-		if (matcher.onBeforeParse) {
-			beforeCallbacks.push(matcher.onBeforeParse.bind(matcher));
+	const mainContent = useMemo(() => {
+		const beforeCallbacks: OnBeforeParse<Props>[] = [];
+		const afterCallbacks: OnAfterParse<Props>[] = [];
+
+		// Inherit all callbacks
+		function inheritCallbacks(internals: CommonInternals<Props>[]) {
+			internals.forEach((internal) => {
+				if (internal.onBeforeParse) {
+					beforeCallbacks.push(internal.onBeforeParse);
+				}
+
+				if (internal.onAfterParse) {
+					afterCallbacks.push(internal.onAfterParse);
+				}
+			});
 		}
 
-		if (matcher.onAfterParse) {
-			afterCallbacks.push(matcher.onAfterParse.bind(matcher));
-		}
-	});
-
-	// Trigger before callbacks
-	const markup = beforeCallbacks.reduce((string, callback) => {
-		const nextString = callback(string, props);
-
-		if (__DEV__ && typeof nextString !== 'string') {
-			throw new TypeError('Interweave `onBeforeParse` must return a valid HTML string.');
+		if (matchers) {
+			inheritCallbacks(matchers);
 		}
 
-		return nextString;
-	}, content ?? '');
+		if (transformers) {
+			inheritCallbacks(transformers);
+		}
 
-	// Parse the markup
-	const parser = new Parser(markup, parserProps, allMatchers, allFilters);
+		if (onBeforeParse) {
+			beforeCallbacks.push(onBeforeParse);
+		}
 
-	// Trigger after callbacks
-	const nodes = afterCallbacks.reduce((parserNodes, callback) => {
-		const nextNodes = callback(parserNodes, props);
+		if (onAfterParse) {
+			afterCallbacks.push(onAfterParse);
+		}
 
-		if (__DEV__ && !Array.isArray(nextNodes)) {
-			throw new TypeError(
-				'Interweave `onAfterParse` must return an array of strings and React elements.',
+		// Trigger before callbacks
+		const markup = beforeCallbacks.reduce((string, before) => {
+			const nextString = before(string, props as unknown as Props);
+
+			if (__DEV__ && typeof nextString !== 'string') {
+				throw new TypeError('Interweave `onBeforeParse` must return a valid HTML string.');
+			}
+
+			return nextString;
+		}, content ?? '');
+
+		// Parse the markup
+		const parser = new Parser(markup, props, matchers, transformers);
+		let nodes = parser.parse();
+
+		// Trigger after callbacks
+		if (nodes) {
+			nodes = afterCallbacks.reduce(
+				(parserNodes, after) => after(parserNodes, props as unknown as Props),
+				nodes,
 			);
 		}
 
-		return nextNodes;
-	}, parser.parse());
+		return nodes;
 
-	return (
-		<Markup
-			attributes={attributes}
-			className={className}
-			// eslint-disable-next-line react/destructuring-assignment
-			containerTagName={props.containerTagName}
-			emptyContent={emptyContent}
-			noWrap={noWrap}
-			parsedContent={nodes.length === 0 ? undefined : nodes}
-			tagName={tagName}
-		/>
-	);
+		// Do not include `props` as we only want to re-render on content changes
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [content, matchers, transformers, onBeforeParse, onAfterParse]);
+
+	// eslint-disable-next-line react/jsx-no-useless-fragment
+	return <>{mainContent ?? emptyContent}</>;
 }
