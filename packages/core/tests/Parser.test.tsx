@@ -670,7 +670,7 @@ describe('Parser', () => {
 
 			expect(instance.parseNode(element, instance.getTagConfig('span'))).toEqual([
 				'Foo',
-				<Element key="0" attributes={{ target: '_blank' }} tagName="a">
+				<Element key="0" tagName="a" target="_blank">
 					{['Bar']}
 				</Element>,
 				'Baz',
@@ -688,7 +688,7 @@ describe('Parser', () => {
 				}),
 			).toEqual([
 				'Foo',
-				<Element key="0" attributes={{ target: '_blank' }} tagName="a">
+				<Element key="0" tagName="a" target="_blank">
 					{['Bar']}
 				</Element>,
 				'Baz',

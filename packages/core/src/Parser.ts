@@ -542,12 +542,9 @@ export class Parser<Props extends object> {
 					// Build the props as it makes it easier to test
 					const attributes = this.extractAttributes(nextNode);
 					const elementProps: ElementProps = {
+						...attributes,
 						tagName,
 					};
-
-					if (attributes) {
-						elementProps.attributes = attributes;
-					}
 
 					if (config.void) {
 						elementProps.selfClose = config.void;

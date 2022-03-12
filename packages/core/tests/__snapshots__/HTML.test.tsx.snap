@@ -14,7 +14,7 @@ exports[`html a, ul, li renders 1`] = `
   
       <Element tagName="li">
         <li>
-          <Element attributes={{ href: "https://example.com" }} tagName="a">
+          <Element href="https://example.com" tagName="a">
             <a href="https://example.com">
               Website
             </a>
@@ -25,7 +25,7 @@ exports[`html a, ul, li renders 1`] = `
   
       <Element tagName="li">
         <li>
-          <Element attributes={{ href: "mailto:m.bluth@example.com" }} tagName="a">
+          <Element href="mailto:m.bluth@example.com" tagName="a">
             <a href="mailto:m.bluth@example.com">
               Email
             </a>
@@ -36,7 +36,7 @@ exports[`html a, ul, li renders 1`] = `
   
       <Element tagName="li">
         <li>
-          <Element attributes={{ href: "tel:+123456789" }} tagName="a">
+          <Element href="tel:+123456789" tagName="a">
             <a href="tel:+123456789">
               Phone
             </a>
@@ -53,13 +53,13 @@ exports[`html a, ul, li renders 1`] = `
 exports[`html abbr renders 1`] = `
 <Markup content="You can use <abbr title="Cascading Style Sheets">CSS</abbr> to style your <abbr title="HyperText Markup Language">HTML</abbr>.">
   You can use 
-  <Element attributes={{ title: "Cascading Style Sheets" }} tagName="abbr">
+  <Element tagName="abbr" title="Cascading Style Sheets">
     <abbr title="Cascading Style Sheets">
       CSS
     </abbr>
   </Element>
    to style your 
-  <Element attributes={{ title: "HyperText Markup Language" }} tagName="abbr">
+  <Element tagName="abbr" title="HyperText Markup Language">
     <abbr title="HyperText Markup Language">
       HTML
     </abbr>
@@ -79,7 +79,7 @@ exports[`html address renders 1`] = `
     <address>
       
   
-      <Element attributes={{ href: "mailto:jim@rock.com" }} tagName="a">
+      <Element href="mailto:jim@rock.com" tagName="a">
         <a href="mailto:jim@rock.com">
           jim@rock.com
         </a>
@@ -89,7 +89,7 @@ exports[`html address renders 1`] = `
       </Element>
       
   
-      <Element attributes={{ href: "tel:+311-555-2368" }} tagName="a">
+      <Element href="tel:+311-555-2368" tagName="a">
         <a href="tel:+311-555-2368">
           +311-555-2368
         </a>
@@ -122,7 +122,7 @@ exports[`html article renders 1`] = `
     </article>
   </article>"
 >
-  <Element attributes={{ className: "forecast" }} tagName="article">
+  <Element className="forecast" tagName="article">
     <article className="forecast">
       
   
@@ -131,7 +131,7 @@ exports[`html article renders 1`] = `
       </Element>
       
   
-      <Element attributes={{ className: "day-forecast" }} tagName="article">
+      <Element className="day-forecast" tagName="article">
         <article className="day-forecast">
           
     
@@ -149,7 +149,7 @@ exports[`html article renders 1`] = `
       </Element>
       
   
-      <Element attributes={{ className: "day-forecast" }} tagName="article">
+      <Element className="day-forecast" tagName="article">
         <article className="day-forecast">
           
     
@@ -167,7 +167,7 @@ exports[`html article renders 1`] = `
       </Element>
       
   
-      <Element attributes={{ className: "day-forecast" }} tagName="article">
+      <Element className="day-forecast" tagName="article">
         <article className="day-forecast">
           
     
@@ -216,7 +216,7 @@ exports[`html audio renders 1`] = `
     Your browser does not support the <code>audio</code> element.
   </audio>"
 >
-  <Element attributes={{ controls: true, src: "/media/examples/t-rex-roar.mp3" }} tagName="audio">
+  <Element controls src="/media/examples/t-rex-roar.mp3" tagName="audio">
     <audio controls src="/media/examples/t-rex-roar.mp3">
       
   Your browser does not support the 
@@ -235,11 +235,11 @@ exports[`html audio renders with source 1`] = `
     Your browser does not support the <code>audio</code> element.
   </audio>"
 >
-  <Element attributes={{ controls: true }} tagName="audio">
+  <Element controls tagName="audio">
     <audio controls>
       
   
-      <Element selfClose attributes={{ src: "foo.wav", type: "audio/wav" }} tagName="source">
+      <Element selfClose src="foo.wav" tagName="source" type="audio/wav">
         <source src="foo.wav" type="audio/wav" />
       </Element>
       
@@ -259,13 +259,13 @@ exports[`html b renders 1`] = `
   <Element tagName="p">
     <p>
       The two most popular science courses offered by the school are 
-      <Element attributes={{ className: "term" }} tagName="b">
+      <Element className="term" tagName="b">
         <b className="term">
           chemistry
         </b>
       </Element>
        (the study of chemicals and the composition of substances) and 
-      <Element attributes={{ className: "term" }} tagName="b">
+      <Element className="term" tagName="b">
         <b className="term">
           physics
         </b>
@@ -292,7 +292,7 @@ exports[`html bdi renders 1`] = `
   
       <Element tagName="li">
         <li>
-          <Element attributes={{ className: "name" }} tagName="bdi">
+          <Element className="name" tagName="bdi">
             <bdi className="name">
               Evil Steven
             </bdi>
@@ -304,7 +304,7 @@ exports[`html bdi renders 1`] = `
   
       <Element tagName="li">
         <li>
-          <Element attributes={{ className: "name" }} tagName="bdi">
+          <Element className="name" tagName="bdi">
             <bdi className="name">
               François fatale
             </bdi>
@@ -316,7 +316,7 @@ exports[`html bdi renders 1`] = `
   
       <Element tagName="li">
         <li>
-          <Element attributes={{ className: "name" }} tagName="span">
+          <Element className="name" tagName="span">
             <span className="name">
               تیز سمی
             </span>
@@ -328,7 +328,7 @@ exports[`html bdi renders 1`] = `
   
       <Element tagName="li">
         <li>
-          <Element attributes={{ className: "name" }} tagName="bdi">
+          <Element className="name" tagName="bdi">
             <bdi className="name">
               الرجل القوي إيان
             </bdi>
@@ -340,7 +340,7 @@ exports[`html bdi renders 1`] = `
   
       <Element tagName="li">
         <li>
-          <Element attributes={{ className: "name", dir: "auto" }} tagName="span">
+          <Element className="name" dir="auto" tagName="span">
             <span className="name" dir="auto">
               تیز سمی
             </span>
@@ -358,7 +358,7 @@ exports[`html bdi renders 1`] = `
 exports[`html bdo renders 1`] = `
 <Markup content="In the computer's memory, this is stored as <bdo dir="ltr">אה, אני אוהב להיות ליד חוף הים</bdo>">
   In the computer's memory, this is stored as 
-  <Element attributes={{ dir: "ltr" }} tagName="bdo">
+  <Element dir="ltr" tagName="bdo">
     <bdo dir="ltr">
       אה, אני אוהב להיות ליד חוף הים
     </bdo>
@@ -374,7 +374,7 @@ exports[`html blockquote renders 1`] = `
   
   <cite>– Aldous Huxley, Brave New World</cite>"
 >
-  <Element attributes={{ cite: "https://www.huxley.net/bnw/four.html" }} tagName="blockquote">
+  <Element cite="https://www.huxley.net/bnw/four.html" tagName="blockquote">
     <blockquote cite="https://www.huxley.net/bnw/four.html">
       
   
@@ -409,7 +409,7 @@ exports[`html canvas renders 1`] = `
     An alternative text describing what your canvas displays.
   </canvas>"
 >
-  <Element attributes={{ id: "canvas", width: "300", height: "300" }} tagName="canvas">
+  <Element height="300" id="canvas" tagName="canvas" width="300">
     <canvas height="300" id="canvas" width="300">
       
   An alternative text describing what your canvas displays.
@@ -462,14 +462,14 @@ exports[`html caption renders 1`] = `
               </Element>
               
     
-              <Element attributes={{ scope: "col", className: "heman" }} tagName="th">
+              <Element className="heman" scope="col" tagName="th">
                 <th className="heman" scope="col">
                   He-Man
                 </th>
               </Element>
               
     
-              <Element attributes={{ scope: "col", className: "skeletor" }} tagName="th">
+              <Element className="skeletor" scope="col" tagName="th">
                 <th className="skeletor" scope="col">
                   Skeletor
                 </th>
@@ -511,7 +511,7 @@ exports[`html cite renders 1`] = `
     First sentence in 
           <Element tagName="cite">
             <cite>
-              <Element attributes={{ href: "http://www.george-orwell.org/1984/0.html" }} tagName="a">
+              <Element href="http://www.george-orwell.org/1984/0.html" tagName="a">
                 <a href="http://www.george-orwell.org/1984/0.html">
                   <Element tagName="i">
                     <i>Nineteen Eighty-Four</i>
@@ -574,12 +574,12 @@ exports[`html col, colgroup renders 1`] = `
           </Element>
           
     
-          <Element selfClose attributes={{ span: 2, className: "batman" }} tagName="col">
+          <Element selfClose className="batman" span={2} tagName="col">
             <col className="batman" span={2} />
           </Element>
           
     
-          <Element selfClose attributes={{ span: 2, className: "flash" }} tagName="col">
+          <Element selfClose className="flash" span={2} tagName="col">
             <col className="flash" span={2} />
           </Element>
           
@@ -626,7 +626,7 @@ exports[`html dfn renders 1`] = `
   <Element tagName="p">
     <p>
       A 
-      <Element attributes={{ id: "def-validator" }} tagName="dfn">
+      <Element id="def-validator" tagName="dfn">
         <dfn id="def-validator">
           validator
         </dfn>
@@ -644,11 +644,11 @@ exports[`html div renders 1`] = `
     <p>Beware of the leopard</p>
   </div>"
 >
-  <Element attributes={{ className: "warning" }} tagName="div">
+  <Element className="warning" tagName="div">
     <div className="warning">
       
   
-      <Element selfClose attributes={{ src: "/media/examples/leopard.jpg", alt: "An intimidating leopard." }} tagName="img">
+      <Element selfClose alt="An intimidating leopard." src="/media/examples/leopard.jpg" tagName="img">
         <img alt="An intimidating leopard." src="/media/examples/leopard.jpg" />
       </Element>
       
@@ -738,7 +738,7 @@ exports[`html figure, figcaption renders 1`] = `
     <figure>
       
   
-      <Element selfClose attributes={{ src: "/media/examples/elephant-660-480.jpg", alt: "Elephant at sunset" }} tagName="img">
+      <Element selfClose alt="Elephant at sunset" src="/media/examples/elephant-660-480.jpg" tagName="img">
         <img alt="Elephant at sunset" src="/media/examples/elephant-660-480.jpg" />
       </Element>
       
@@ -881,7 +881,7 @@ exports[`html header renders 1`] = `
     <h1>Cute Puppies Express!</h1>
   </header>"
 >
-  <Element attributes={{ className: "page-header" }} tagName="header">
+  <Element className="page-header" tagName="header">
     <header className="page-header">
       
   
@@ -921,13 +921,13 @@ exports[`html i renders 1`] = `
 <Markup content="<p><i class="latin">Musa</i> is one of two or three genera in the family <i class="latin">Musaceae</i>; it includes bananas and plantains.</p>">
   <Element tagName="p">
     <p>
-      <Element attributes={{ className: "latin" }} tagName="i">
+      <Element className="latin" tagName="i">
         <i className="latin">
           Musa
         </i>
       </Element>
        is one of two or three genera in the family 
-      <Element attributes={{ className: "latin" }} tagName="i">
+      <Element className="latin" tagName="i">
         <i className="latin">
           Musaceae
         </i>
@@ -940,7 +940,7 @@ exports[`html i renders 1`] = `
 
 exports[`html iframe renders 1`] = `
 <Markup allow={[ "iframe" ]} content="<iframe width="400" height="300" src="https://maps.google.com"></iframe>">
-  <Element attributes={{ width: "400", height: "300", src: "https://maps.google.com" }} tagName="iframe">
+  <Element height="300" src="https://maps.google.com" tagName="iframe" width="400">
     <iframe height="300" src="https://maps.google.com" width="400" />
   </Element>
 </Markup>
@@ -950,7 +950,7 @@ exports[`html iframe renders nothing when not allowed 1`] = `<Markup content="<i
 
 exports[`html img renders 1`] = `
 <Markup content="<img class="fit-picture" src="/media/examples/grapefruit-slice-332-332.jpg" alt="Grapefruit slice atop a pile of other slices" />">
-  <Element selfClose attributes={{ className: "fit-picture", src: "/media/examples/grapefruit-slice-332-332.jpg", alt: "Grapefruit slice atop a pile of other slices" }} tagName="img">
+  <Element selfClose alt="Grapefruit slice atop a pile of other slices" className="fit-picture" src="/media/examples/grapefruit-slice-332-332.jpg" tagName="img">
     <img alt="Grapefruit slice atop a pile of other slices" className="fit-picture" src="/media/examples/grapefruit-slice-332-332.jpg" />
   </Element>
 </Markup>
@@ -962,7 +962,7 @@ exports[`html ins renders 1`] = `
     <p>“A wizard is never late …”</p>
   </ins>"
 >
-  <Element attributes={{ cite: "../howtobeawizard.html", dateTime: "2018-05" }} tagName="ins">
+  <Element cite="../howtobeawizard.html" dateTime="2018-05" tagName="ins">
     <ins cite="../howtobeawizard.html" dateTime="2018-05">
       
   
@@ -998,7 +998,7 @@ exports[`html main renders 1`] = `
     <p>Geckos are a group of usually small, usually nocturnal lizards. They are found on every continent except Australia.</p>
   </main>"
 >
-  <Element attributes={{ role: "main" }} tagName="main">
+  <Element role="main" tagName="main">
     <main role="main">
       
   
@@ -1032,7 +1032,7 @@ exports[`html nav, ol, li renders 1`] = `
     </ol>
   </nav>"
 >
-  <Element attributes={{ className: "crumbs" }} tagName="nav">
+  <Element className="crumbs" tagName="nav">
     <nav className="crumbs">
       
   
@@ -1040,9 +1040,9 @@ exports[`html nav, ol, li renders 1`] = `
         <ol>
           
     
-          <Element attributes={{ className: "crumb" }} tagName="li">
+          <Element className="crumb" tagName="li">
             <li className="crumb">
-              <Element attributes={{ href: "bikes" }} tagName="a">
+              <Element href="bikes" tagName="a">
                 <a href="bikes">
                   Bikes
                 </a>
@@ -1051,9 +1051,9 @@ exports[`html nav, ol, li renders 1`] = `
           </Element>
           
     
-          <Element attributes={{ className: "crumb" }} tagName="li">
+          <Element className="crumb" tagName="li">
             <li className="crumb">
-              <Element attributes={{ href: "bikes/bmx" }} tagName="a">
+              <Element href="bikes/bmx" tagName="a">
                 <a href="bikes/bmx">
                   BMX
                 </a>
@@ -1062,7 +1062,7 @@ exports[`html nav, ol, li renders 1`] = `
           </Element>
           
     
-          <Element attributes={{ className: "crumb" }} tagName="li">
+          <Element className="crumb" tagName="li">
             <li className="crumb">
               Jump Bike 3000
             </li>
@@ -1089,12 +1089,12 @@ exports[`html picture renders 1`] = `
     <picture>
       
   
-      <Element selfClose attributes={{ srcSet: "/media/examples/surfer-240-200.jpg", media: "(min-width: 800px)" }} tagName="source">
+      <Element selfClose media="(min-width: 800px)" srcSet="/media/examples/surfer-240-200.jpg" tagName="source">
         <source media="(min-width: 800px)" srcSet="/media/examples/surfer-240-200.jpg" />
       </Element>
       
   
-      <Element selfClose attributes={{ src: "/media/examples/painted-hand-298-332.jpg" }} tagName="img">
+      <Element selfClose src="/media/examples/painted-hand-298-332.jpg" tagName="img">
         <img src="/media/examples/painted-hand-298-332.jpg" />
       </Element>
       
@@ -1150,7 +1150,7 @@ exports[`html pre renders 1`] = `
 exports[`html q renders 1`] = `
 <Markup content="When Dave asks HAL to open the pod bay door, HAL answers: <q cite="https://www.imdb.com/title/tt0062622/quotes/qt0396921">I'm sorry, Dave. I'm afraid I can't do that.</q>">
   When Dave asks HAL to open the pod bay door, HAL answers: 
-  <Element attributes={{ cite: "https://www.imdb.com/title/tt0062622/quotes/qt0396921" }} tagName="q">
+  <Element cite="https://www.imdb.com/title/tt0062622/quotes/qt0396921" tagName="q">
     <q cite="https://www.imdb.com/title/tt0062622/quotes/qt0396921">
       I'm sorry, Dave. I'm afraid I can't do that.
     </q>
@@ -1172,39 +1172,71 @@ exports[`html ruby, rp, rt, rtc renders 1`] = `
     </rtc>
   </ruby>"
 >
-  <Element attributes={{ xml:lang: "zh-Hant", style: { rubyPosition: "under" } }} tagName="ruby">
+  <Element style={{ rubyPosition: "under" }} tagName="ruby" xml:lang="zh-Hant">
     <ruby style={{ rubyPosition: "under" }} xml:lang="zh-Hant">
       
   
       
     
-      馬
-      (
-      mǎ
-      )
+      <Element tagName="rb">
+        <rb>馬</rb>
+      </Element>
+      <Element tagName="rp">
+        <rp>(</rp>
+      </Element>
+      <Element tagName="rt">
+        <rt>mǎ</rt>
+      </Element>
+      <Element tagName="rp">
+        <rp>)</rp>
+      </Element>
       
     
-      來
-      (
-      lái
-      )
+      <Element tagName="rb">
+        <rb>來</rb>
+      </Element>
+      <Element tagName="rp">
+        <rp>(</rp>
+      </Element>
+      <Element tagName="rt">
+        <rt>lái</rt>
+      </Element>
+      <Element tagName="rp">
+        <rp>)</rp>
+      </Element>
       
     
-      西
-      (
-      xī
-      )
+      <Element tagName="rb">
+        <rb>西</rb>
+      </Element>
+      <Element tagName="rp">
+        <rp>(</rp>
+      </Element>
+      <Element tagName="rt">
+        <rt>xī</rt>
+      </Element>
+      <Element tagName="rp">
+        <rp>)</rp>
+      </Element>
       
     
-      亞
-      (
-      yà
-      )
+      <Element tagName="rb">
+        <rb>亞</rb>
+      </Element>
+      <Element tagName="rp">
+        <rp>(</rp>
+      </Element>
+      <Element tagName="rt">
+        <rt>yà</rt>
+      </Element>
+      <Element tagName="rp">
+        <rp>)</rp>
+      </Element>
       
   
       
   
-      <Element attributes={{ xml:lang: "en", style: { rubyPosition: "over" } }} tagName="rtc">
+      <Element style={{ rubyPosition: "over" }} tagName="rtc" xml:lang="en">
         <rtc style={{ rubyPosition: "over" }} xml:lang="en">
           
     
@@ -1298,16 +1330,16 @@ exports[`html source renders 1`] = `
     This browser does not support the HTML5 video element.
   </video>"
 >
-  <Element attributes={{ controls: true, width: "250", height: "200", muted: true }} tagName="video">
+  <Element controls muted height="200" tagName="video" width="250">
     <video controls muted height="200" width="250">
       
   
-      <Element selfClose attributes={{ src: "/media/examples/flower.webm", type: "video/webm" }} tagName="source">
+      <Element selfClose src="/media/examples/flower.webm" tagName="source" type="video/webm">
         <source src="/media/examples/flower.webm" type="video/webm" />
       </Element>
       
   
-      <Element selfClose attributes={{ src: "/media/examples/flower.mp4", type: "video/mp4" }} tagName="source">
+      <Element selfClose src="/media/examples/flower.mp4" tagName="source" type="video/mp4">
         <source src="/media/examples/flower.mp4" type="video/mp4" />
       </Element>
       
@@ -1321,19 +1353,19 @@ exports[`html source renders 1`] = `
 exports[`html span renders 1`] = `
 <Markup content="Add the <span class="ingredient">basil</span>, <span class="ingredient">pine nuts</span> and <span class="ingredient">garlic</span> to a blender and blend into a paste.">
   Add the 
-  <Element attributes={{ className: "ingredient" }} tagName="span">
+  <Element className="ingredient" tagName="span">
     <span className="ingredient">
       basil
     </span>
   </Element>
   , 
-  <Element attributes={{ className: "ingredient" }} tagName="span">
+  <Element className="ingredient" tagName="span">
     <span className="ingredient">
       pine nuts
     </span>
   </Element>
    and 
-  <Element attributes={{ className: "ingredient" }} tagName="span">
+  <Element className="ingredient" tagName="span">
     <span className="ingredient">
       garlic
     </span>
@@ -1453,7 +1485,7 @@ exports[`html table, thead, tbody, tfoot renders 1`] = `
               </Element>
               
       
-              <Element attributes={{ scope: "col" }} tagName="th">
+              <Element scope="col" tagName="th">
                 <th scope="col">
                   Expenditure
                 </th>
@@ -1476,7 +1508,7 @@ exports[`html table, thead, tbody, tfoot renders 1`] = `
             <tr>
               
       
-              <Element attributes={{ scope: "row" }} tagName="th">
+              <Element scope="row" tagName="th">
                 <th scope="row">
                   Donuts
                 </th>
@@ -1496,7 +1528,7 @@ exports[`html table, thead, tbody, tfoot renders 1`] = `
             <tr>
               
       
-              <Element attributes={{ scope: "row" }} tagName="th">
+              <Element scope="row" tagName="th">
                 <th scope="row">
                   Stationary
                 </th>
@@ -1524,7 +1556,7 @@ exports[`html table, thead, tbody, tfoot renders 1`] = `
             <tr>
               
       
-              <Element attributes={{ scope: "row" }} tagName="th">
+              <Element scope="row" tagName="th">
                 <th scope="row">
                   Totals
                 </th>
@@ -1572,7 +1604,7 @@ exports[`html table, thead, tbody, tfoot renders table with direct rows 1`] = `
             <tr>
               
     
-              <Element attributes={{ scope: "row" }} tagName="th">
+              <Element scope="row" tagName="th">
                 <th scope="row">
                   Donuts
                 </th>
@@ -1592,7 +1624,7 @@ exports[`html table, thead, tbody, tfoot renders table with direct rows 1`] = `
             <tr>
               
     
-              <Element attributes={{ scope: "row" }} tagName="th">
+              <Element scope="row" tagName="th">
                 <th scope="row">
                   Stationary
                 </th>
@@ -1684,7 +1716,7 @@ exports[`html thead doesnt render outside of table 1`] = `
 exports[`html time renders 1`] = `
 <Markup content="The Cure will be celebrating their 40th anniversary on <time datetime="2018-07-07">July 7</time> in London's Hyde Park.">
   The Cure will be celebrating their 40th anniversary on 
-  <Element attributes={{ dateTime: "2018-07-07" }} tagName="time">
+  <Element dateTime="2018-07-07" tagName="time">
     <time dateTime="2018-07-07">
       July 7
     </time>
@@ -1717,11 +1749,18 @@ exports[`html track renders 1`] = `
     Sorry, your browser doesn't support embedded videos.
   </video>"
 >
-  <Element attributes={{ controls: true, width: "250", src: "/media/examples/friday.mp4" }} tagName="video">
+  <Element controls src="/media/examples/friday.mp4" tagName="video" width="250">
     <video controls src="/media/examples/friday.mp4" width="250">
       
   
-      <Element selfClose attributes={{ default: true, kind: "captions", srcLang: "en", src: "/media/examples/friday.vtt" }} tagName="track">
+      <Element
+        default
+        selfClose
+        kind="captions"
+        src="/media/examples/friday.vtt"
+        srcLang="en"
+        tagName="track"
+      >
         <track default kind="captions" src="/media/examples/friday.vtt" srcLang="en" />
       </Element>
       
@@ -1789,22 +1828,22 @@ exports[`html video renders 1`] = `
     <p>Your browser doesn't support HTML5 video. Here is a <a href="myVideo.mp4">link to the video</a> instead.</p>
   </video>"
 >
-  <Element attributes={{ controls: true }} tagName="video">
+  <Element controls tagName="video">
     <video controls>
       
   
-      <Element selfClose attributes={{ src: "myVideo.mp4", type: "video/mp4" }} tagName="source">
+      <Element selfClose src="myVideo.mp4" tagName="source" type="video/mp4">
         <source src="myVideo.mp4" type="video/mp4" />
       </Element>
       
   
-      <Element selfClose attributes={{ src: "myVideo.webm", type: "video/webm" }} tagName="source">
+      <Element selfClose src="myVideo.webm" tagName="source" type="video/webm">
         <source src="myVideo.webm" type="video/webm" />
       </Element>
       
   
       Your browser doesn't support HTML5 video. Here is a 
-      <Element attributes={{ href: "myVideo.mp4" }} tagName="a">
+      <Element href="myVideo.mp4" tagName="a">
         <a href="myVideo.mp4">
           link to the video
         </a>

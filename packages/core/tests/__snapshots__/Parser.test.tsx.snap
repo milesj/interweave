@@ -54,11 +54,7 @@ Array [
 exports[`Parser parse() parses the entire document starting from the body 1`] = `
 Array [
   <Element
-    attributes={
-      Object {
-        "role": "main",
-      }
-    }
+    role="main"
     tagName="main"
   >
     
@@ -70,11 +66,7 @@ Array [
       
     
       <Element
-        attributes={
-          Object {
-            "href": "#",
-          }
-        }
+        href="#"
         tagName="a"
       >
         Link
@@ -82,11 +74,7 @@ Array [
       
     
       <Element
-        attributes={
-          Object {
-            "className": "foo",
-          }
-        }
+        className="foo"
         tagName="span"
       >
         String
@@ -100,11 +88,7 @@ Array [
   "
 ",
   <Element
-    attributes={
-      Object {
-        "id": "sidebar",
-      }
-    }
+    id="sidebar"
     tagName="aside"
   >
     
@@ -117,12 +101,8 @@ Array [
 exports[`Parser parseNode() uses parent config for unsupported elements 1`] = `
 Array [
   <Element
-    attributes={
-      Object {
-        "target": "_blank",
-      }
-    }
     tagName="a"
+    target="_blank"
   >
     Link
   </Element>,

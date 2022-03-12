@@ -1,9 +1,7 @@
-import React, { memo } from 'react';
-import { Attributes } from './types';
+import React from 'react';
 
 export interface ElementProps {
 	[prop: string]: unknown;
-	attributes?: Attributes;
 	className?: string;
 	children?: React.ReactNode;
 	selfClose?: boolean;
@@ -11,18 +9,18 @@ export interface ElementProps {
 }
 
 export function Element({
-	attributes = {},
 	className,
 	children = null,
 	selfClose = false,
 	tagName,
+	...props
 }: ElementProps) {
 	const Tag = tagName as 'span';
 
 	return selfClose ? (
-		<Tag className={className} {...attributes} />
+		<Tag className={className} {...props} />
 	) : (
-		<Tag className={className} {...attributes}>
+		<Tag className={className} {...props}>
 			{children}
 		</Tag>
 	);

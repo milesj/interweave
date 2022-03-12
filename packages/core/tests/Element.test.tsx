@@ -36,7 +36,7 @@ describe('Element', () => {
 
 	it('renders with attributes', () => {
 		const { root } = render<ElementProps>(
-			<Element attributes={{ id: 'foo' }} tagName="div">
+			<Element id="foo" tagName="div">
 				Foo
 			</Element>,
 		);
@@ -50,14 +50,7 @@ describe('Element', () => {
 
 	it('renders with attributes of each type', () => {
 		const { root } = render<ElementProps>(
-			<Element
-				attributes={{
-					id: 'foo',
-					disabled: true,
-					maxLength: 15,
-				}}
-				tagName="input"
-			>
+			<Element disabled id="foo" maxLength={15} tagName="input">
 				Foo
 			</Element>,
 		);
@@ -82,20 +75,6 @@ describe('Element', () => {
 		expect(root.findOne('div')).toHaveProps({
 			children: 'Foo',
 			className: 'foo',
-		});
-	});
-
-	it('can overwrite class name with attributes', () => {
-		const { root } = render<ElementProps>(
-			<Element attributes={{ className: 'bar' }} className="foo" tagName="div">
-				Foo
-			</Element>,
-		);
-
-		expect(root).toHaveRendered();
-		expect(root.findOne('div')).toHaveProps({
-			children: 'Foo',
-			className: 'bar',
 		});
 	});
 });
