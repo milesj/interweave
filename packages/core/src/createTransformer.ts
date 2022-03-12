@@ -9,7 +9,7 @@ export type InferElement<K> = K extends '*'
 export type TransformerFactory<Element, Props> = (
 	element: Element,
 	props: Props,
-	content: Node,
+	children: Node[],
 ) => Element | React.ReactElement | null | undefined | void;
 
 export interface TransformerOptions<Props, Options = {}> {
@@ -30,15 +30,19 @@ export interface Transformer<Element, Props, Options = {}> extends CommonInterna
 
 export function createTransformer<K extends WildTagName, Props = {}, Options = {}>(
 	tagName: K,
+	options: TransformerOptions<Props, Options>,
 	factory: TransformerFactory<InferElement<K>, Props>,
-	options: TransformerOptions<Props, Options> = {},
 ): Transformer<InferElement<K>, Props, Options> {
 	return {
 		extend(customFactory, customOptions) {
-			return createTransformer(tagName, customFactory ?? factory, {
-				...options,
-				...customOptions,
-			});
+			return createTransformer(
+				tagName,
+				{
+					...options,
+					...customOptions,
+				},
+				customFactory ?? factory,
+			);
 		},
 		factory,
 		onAfterParse: options.onAfterParse,

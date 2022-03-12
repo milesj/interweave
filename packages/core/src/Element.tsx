@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { Attributes } from './types';
 
 export interface ElementProps {

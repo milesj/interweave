@@ -1,11 +1,6 @@
 import { CommonInternals, Node, OnAfterParse, OnBeforeParse, TagName } from './types';
 
-export type OnMatch<Match, Props, Options = {}> = (
-	result: MatchResult,
-	props: Props,
-	options: Partial<Options>,
-) => Match | null;
-
+// Result from the match process
 export interface MatchResult {
 	index: number;
 	length: number;
@@ -16,12 +11,23 @@ export interface MatchResult {
 	void: boolean;
 }
 
-export type MatchHandler<Match, Props> = (
-	value: string,
-	props: Props,
-) => (MatchResult & { params: Match }) | null;
+// Params returned from `onMatch` that are passed to the factory
+export interface MatchParams {
+	[key: string]: unknown;
+	match?: string;
+}
 
-export interface MatcherOptions<Match, Props, Options = {}> {
+export type OnMatch<
+	Match extends MatchParams,
+	Props extends object,
+	Options extends object = {},
+> = (result: MatchResult, props: Props, options: Partial<Options>) => Match | null;
+
+export interface MatcherOptions<
+	Match extends MatchParams,
+	Props extends object,
+	Options extends object = {},
+> {
 	greedy?: boolean;
 	tagName: TagName;
 	void?: boolean;
@@ -31,24 +37,33 @@ export interface MatcherOptions<Match, Props, Options = {}> {
 	onMatch: OnMatch<Match, Props, Options>;
 }
 
-export type MatcherFactory<Match, Props> = (
-	match: Match,
+export type MatcherFactory<Match extends MatchParams, Props extends object> = (
+	params: Match,
 	props: Props,
-	content: Node,
+	children: Node | null,
+	key: number,
 ) => React.ReactElement;
 
-export interface Matcher<Match, Props, Options = {}> extends CommonInternals<Props, Options> {
+export interface Matcher<
+	Match extends MatchParams,
+	Props extends object,
+	Options extends object = {},
+> extends CommonInternals<Props, Options> {
 	extend: (
 		factory?: MatcherFactory<Match, Props> | null,
 		options?: Partial<MatcherOptions<Match, Props, Options>>,
 	) => Matcher<Match, Props, Options>;
 	factory: MatcherFactory<Match, Props>;
 	greedy: boolean;
-	match: MatchHandler<Match, Props>;
+	match: (value: string, props: Props) => (MatchResult & { params: Match }) | null;
 	tagName: TagName;
 }
 
-export function createMatcher<Match, Props = {}, Options = {}>(
+export function createMatcher<
+	Match extends MatchParams,
+	Props extends object = {},
+	Options extends object = {},
+>(
 	pattern: RegExp | string,
 	options: MatcherOptions<Match, Props, Options>,
 	factory: MatcherFactory<Match, Props>,
@@ -88,6 +103,11 @@ export function createMatcher<Match, Props = {}, Options = {}>(
 			// Allow callback to intercept the result
 			if (params === null) {
 				return null;
+			}
+
+			// Allow callback to replace the matched content
+			if ('match' in params && params.match) {
+				result.match = params.match;
 			}
 
 			return {

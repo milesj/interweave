@@ -2,7 +2,7 @@ import { createTransformer } from './createTransformer';
 
 const INVALID_STYLES = /(url|image|image-set)\(/i;
 
-export const styleTransformer = createTransformer('*', (element) => {
+export const styleTransformer = createTransformer('*', {}, (element) => {
 	Object.keys(element.style).forEach((k) => {
 		const key = k as keyof typeof element.style;
 

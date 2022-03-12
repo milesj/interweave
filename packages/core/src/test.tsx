@@ -100,14 +100,14 @@ export const codeFooMatcher = createMatcher(
 	/\[foo]/,
 	{
 		onMatch: () => ({
-			codeTag: 'foo',
+			match: 'foo',
 			customProp: 'foo',
 		}),
 		tagName: 'span',
 	},
-	(match, props, c) => (
-		<Element customProp={match.customProp} tagName="span">
-			{match.codeTag.toUpperCase()}
+	(params, props, children, key) => (
+		<Element key={key} customProp={params.customProp} tagName="span">
+			{children.toUpperCase()}
 		</Element>
 	),
 );
@@ -116,14 +116,14 @@ export const codeBarMatcher = createMatcher(
 	/\[bar]/,
 	{
 		onMatch: () => ({
-			codeTag: 'bar',
+			match: 'bar',
 			customProp: 'bar',
 		}),
 		tagName: 'span',
 	},
-	(match) => (
-		<Element customProp={match.customProp} tagName="span">
-			{match.codeTag.toUpperCase()}
+	(params, props, children, key) => (
+		<Element key={key} customProp={params.customProp} tagName="span">
+			{children.toUpperCase()}
 		</Element>
 	),
 );
@@ -132,14 +132,14 @@ export const codeBazMatcher = createMatcher(
 	/\[baz]/,
 	{
 		onMatch: () => ({
-			codeTag: 'baz',
+			match: 'baz',
 			customProp: 'baz',
 		}),
 		tagName: 'span',
 	},
-	(match) => (
-		<Element customProp={match.customProp} tagName="span">
-			{match.codeTag.toUpperCase()}
+	(params, props, children, key) => (
+		<Element key={key} customProp={params.customProp} tagName="span">
+			{children.toUpperCase()}
 		</Element>
 	),
 );
@@ -152,7 +152,7 @@ export const mdBoldMatcher = createMatcher(
 		}),
 		tagName: 'b',
 	},
-	(match, props, children) => <b {...props}>{children}</b>,
+	(params, props, children, key) => <b key={key}>{children}</b>,
 );
 
 export const mdItalicMatcher = createMatcher(
@@ -163,7 +163,7 @@ export const mdItalicMatcher = createMatcher(
 		}),
 		tagName: 'i',
 	},
-	(match, props, children) => <i {...props}>{children}</i>,
+	(params, props, children, key) => <i key={key}>{children}</i>,
 );
 
 export const mockMatcher = createMatcher(
@@ -172,15 +172,21 @@ export const mockMatcher = createMatcher(
 		onMatch: () => null,
 		tagName: 'div',
 	},
-	(match, props, children) => <div {...props}>{children}</div>,
+	(params, props, children, key) => (
+		<div {...props} key={key}>
+			{children}
+		</div>
+	),
 );
 
-export const linkTransformer = createTransformer('a', (element) => {
+export const linkTransformer = createTransformer('a', {}, (element, p, c) => {
 	element.setAttribute('target', '_blank');
 
-	if (element.href) {
-		element.setAttribute('href', element.href.replace('foo.com', 'bar.net') || '');
+	const href = element.getAttribute('href');
+
+	if (href) {
+		element.setAttribute('href', href.replace('foo.com', 'bar.net') || '');
 	}
 });
 
-export const mockTransformer = createTransformer('*', () => {});
+export const mockTransformer = createTransformer('*', {}, () => {});

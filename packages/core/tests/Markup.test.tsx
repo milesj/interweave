@@ -1,18 +1,11 @@
 import React from 'react';
 import { render } from 'rut-dom';
-import { Element } from '../src/Element';
 import { Markup, MarkupProps } from '../src/Markup';
 import { MOCK_MARKUP } from '../src/test';
 
 const options = { log: false, reactElements: false };
 
 describe('Markup', () => {
-	it('can change `tagName`', () => {
-		const { root } = render<MarkupProps>(<Markup content="Foo Bar" tagName="p" />);
-
-		expect(root.findOne(Element)).toHaveProp('tagName', 'p');
-	});
-
 	it('allows empty `content` to be passed', () => {
 		const { root } = render<MarkupProps>(<Markup content={null} />);
 
@@ -23,7 +16,7 @@ describe('Markup', () => {
 		const empty = <div>Foo</div>;
 		const { root } = render<MarkupProps>(<Markup content="" emptyContent={empty} />);
 
-		expect(root).toContainNode(empty);
+		expect(root.debug(options)).toMatchSnapshot();
 	});
 
 	it('parses the entire document starting from the body', () => {

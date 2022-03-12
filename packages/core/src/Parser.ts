@@ -13,21 +13,22 @@ import {
 	FILTER_NO_CAST,
 	TAGS,
 } from './constants';
-import { Matcher } from './createMatcher';
+import { Matcher, MatchParams } from './createMatcher';
 import { Transformer } from './createTransformer';
 import { Element, ElementProps } from './Element';
 import { styleTransformer } from './transformers';
 import { Attributes, AttributeValue, Node, TagConfig, TagName } from './types';
 
-type TransformerInterface<Props> = Transformer<HTMLElement, Props>;
+type TransformerInterface<Props extends object> = Transformer<HTMLElement, Props>;
 
-type MatcherInterface<Props> = Matcher<{}, Props>;
+type MatcherInterface<Props extends object> = Matcher<{}, Props>;
 
-type MatchedElements = Record<
+type MatchedElements<Props extends object> = Record<
 	string,
 	{
-		element: React.ReactElement;
 		key: number;
+		matcher: MatcherInterface<Props>;
+		params: MatchParams;
 	}
 >;
 
@@ -67,7 +68,7 @@ export interface ParserProps {
 	tagName?: TagName;
 }
 
-export class Parser<Props> {
+export class Parser<Props extends object> {
 	allowed: Set<TagName>;
 
 	banned: Set<TagName>;
@@ -113,7 +114,7 @@ export class Parser<Props> {
 	 * This array allows React to interpolate and render accordingly.
 	 */
 	applyMatchers(string: string, parentConfig: TagConfig): Node {
-		const elements: MatchedElements = {};
+		const elements: MatchedElements<Props> = {};
 		let matchedString = string;
 		let elementIndex = 0;
 		let parts = null;
@@ -156,8 +157,9 @@ export class Parser<Props> {
 
 					elementIndex += 1;
 					elements[tokenName] = {
-						element: matcher.factory(params, this.props as unknown as Props, match),
 						key: this.keyIndex,
+						matcher,
+						params,
 					};
 				} else {
 					tokenizedString += match;
@@ -185,13 +187,7 @@ export class Parser<Props> {
 			return string;
 		}
 
-		// console.log('applyMatchers', matchedString, ...Object.values(elements));
-
-		const a = this.replaceTokens(matchedString, elements);
-
-		// console.log(a);
-
-		return a;
+		return this.replaceTokens(matchedString, elements);
 	}
 
 	/**
@@ -200,14 +196,14 @@ export class Parser<Props> {
 	applyTransformers(
 		tagName: TagName,
 		node: HTMLElement,
-		children: unknown[],
+		children: Node[],
 	): HTMLElement | React.ReactElement | null | undefined {
 		const transformers = this.transformers.filter(
 			(transformer) => transformer.tagName === tagName || transformer.tagName === '*',
 		);
 
 		for (const transformer of transformers) {
-			const result = transformer.factory(node, this.props as unknown as Props, children);
+			const result = transformer.factory(node, this.getProps(), children);
 
 			// If something was returned, the node has been replaced so we cant continue
 			if (result !== undefined) {
@@ -384,6 +380,13 @@ export class Parser<Props> {
 		});
 
 		return styles;
+	}
+
+	/**
+	 * Return current props correctly typed.
+	 */
+	getProps(): Props {
+		return this.props as unknown as Props;
 	}
 
 	/**
@@ -595,7 +598,7 @@ export class Parser<Props> {
 	 * Deconstruct the string into an array, by replacing custom tokens with React elements,
 	 * so that React can render it correctly.
 	 */
-	replaceTokens(tokenizedString: string, elements: MatchedElements): Node {
+	replaceTokens(tokenizedString: string, elements: MatchedElements<Props>): Node {
 		if (!tokenizedString.includes('{{{')) {
 			return tokenizedString;
 		}
@@ -622,16 +625,16 @@ export class Parser<Props> {
 				text = text.slice(startIndex);
 			}
 
-			const { element, key } = elements[tokenName];
+			const { matcher, params, key } = elements[tokenName];
 			let endIndex: number;
-
-			// console.log('replaceTokens', text, { match, tokenName, startIndex, isVoid, key }, element);
 
 			// Use tag as-is if void
 			if (isVoid) {
 				endIndex = match.length;
 
-				nodes.push(React.cloneElement(element, { key }));
+				// nodes.push(React.cloneElement(element, { key }));
+
+				nodes.push(matcher.factory(params, this.getProps(), null, key));
 
 				// Find the closing tag if not void
 			} else {
@@ -643,12 +646,20 @@ export class Parser<Props> {
 
 				endIndex = close.index! + close[0].length;
 
+				// nodes.push(
+				// 	React.cloneElement(
+				// 		element,
+				// 		{ key },
+				// 		this.replaceTokens(text.slice(match.length, close.index), elements),
+				// 	),
+				// );
+
 				nodes.push(
-					React.cloneElement(
-						element,
-						{ key },
-						element.props.children ??
-							this.replaceTokens(text.slice(match.length, close.index), elements),
+					matcher.factory(
+						params,
+						this.getProps(),
+						this.replaceTokens(text.slice(match.length, close.index), elements),
+						key,
 					),
 				);
 			}
