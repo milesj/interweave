@@ -88,7 +88,7 @@ export class Parser<Props> {
 
 	constructor(
 		markup: string,
-		props: ParserProps,
+		props: ParserProps = {},
 		matchers: MatcherInterface<Props>[] = [],
 		transformers: TransformerInterface<Props>[] = [],
 	) {
@@ -185,7 +185,13 @@ export class Parser<Props> {
 			return string;
 		}
 
-		return this.replaceTokens(matchedString, elements);
+		// console.log('applyMatchers', matchedString, ...Object.values(elements));
+
+		const a = this.replaceTokens(matchedString, elements);
+
+		// console.log(a);
+
+		return a;
 	}
 
 	/**
@@ -390,7 +396,7 @@ export class Parser<Props> {
 			invalid: [],
 			parent: [],
 			self: true,
-			tagName,
+			tagName: null,
 			type: 0,
 			void: false,
 		};
@@ -486,9 +492,6 @@ export class Parser<Props> {
 					mergedText = '';
 				}
 
-				// Increase key before transforming
-				this.keyIndex += 1;
-
 				// Must occur after key is set
 				const key = this.keyIndex;
 				const children = this.parseNode(node as HTMLElement, config);
@@ -574,7 +577,7 @@ export class Parser<Props> {
 						  this.applyMatchers(node.textContent || '', parentConfig);
 
 				if (Array.isArray(text)) {
-					content = [...content, ...text];
+					content.push(...text);
 				} else {
 					mergedText += text;
 				}
@@ -622,6 +625,8 @@ export class Parser<Props> {
 			const { element, key } = elements[tokenName];
 			let endIndex: number;
 
+			// console.log('replaceTokens', text, { match, tokenName, startIndex, isVoid, key }, element);
+
 			// Use tag as-is if void
 			if (isVoid) {
 				endIndex = match.length;
@@ -642,7 +647,8 @@ export class Parser<Props> {
 					React.cloneElement(
 						element,
 						{ key },
-						this.replaceTokens(text.slice(match.length, close.index), elements),
+						element.props.children ??
+							this.replaceTokens(text.slice(match.length, close.index), elements),
 					),
 				);
 			}
@@ -660,6 +666,7 @@ export class Parser<Props> {
 		if (nodes.length === 0) {
 			return '';
 		}
+
 		if (nodes.length === 1 && typeof nodes[0] === 'string') {
 			return nodes[0];
 		}

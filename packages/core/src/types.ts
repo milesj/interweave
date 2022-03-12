@@ -27,7 +27,7 @@ export interface TagConfig {
 	// Can render self as a child
 	self: boolean;
 	// HTML tag name
-	tagName: TagName;
+	tagName: TagName | null;
 	// Self content type
 	type: number;
 	// Self-closing tag

@@ -13,6 +13,7 @@ import {
 	codeBazMatcher,
 	codeFooMatcher,
 	createExpectedToken,
+	linkTransformer,
 	MOCK_MARKUP,
 	parentConfig,
 	TOKEN_LOCATIONS,
@@ -32,9 +33,9 @@ describe('Parser', () => {
 	beforeEach(() => {
 		instance = new Parser(
 			'',
-			{ tagName: 'div' },
+			{},
 			[codeFooMatcher, codeBarMatcher, codeBazMatcher],
-			[], // [new LinkFilter()],
+			[linkTransformer],
 		);
 	});
 
@@ -55,7 +56,7 @@ describe('Parser', () => {
 	describe('applyMatchers()', () => {
 		function createElement(value: string, key: number) {
 			return (
-				<Element key={key} customProp="foo" tagName="span">
+				<Element key={key} customProp={value} tagName="span">
 					{value.toUpperCase()}
 				</Element>
 			);
@@ -117,22 +118,6 @@ describe('Parser', () => {
 					const actual = instance.applyMatchers(tokenString, parentConfig);
 
 					expect(actual).toBe(createExpectedToken('[qux]', (value) => value, i, true));
-				});
-			});
-		});
-
-		describe('ignores matcher if the inverse prop is enabled', () => {
-			TOKEN_LOCATIONS.forEach((location) => {
-				it(`for: ${location}`, () => {
-					// @ts-expect-error Invalid type
-					instance.props.noFoo = true;
-
-					const tokenString = location.replace(/{token}/g, '[foo]');
-					const actual = instance.applyMatchers(tokenString, parentConfig);
-
-					expect(actual).toBe(tokenString);
-
-					instance.props = {};
 				});
 			});
 		});
@@ -209,43 +194,41 @@ describe('Parser', () => {
 	});
 
 	describe('convertLineBreaks()', () => {
-		/* eslint-disable jest/valid-title */
-
-		it('it doesnt convert when HTML closing tags exist', () => {
+		it('doesnt convert when HTML closing tags exist', () => {
 			expect(instance.convertLineBreaks('<div>It\nwont\r\nconvert.</div>')).toBe(
 				'<div>It\nwont\r\nconvert.</div>',
 			);
 		});
 
-		it('it doesnt convert when HTML void tags exist', () => {
+		it('doesnt convert when HTML void tags exist', () => {
 			expect(instance.convertLineBreaks('It\n<br/>wont\r\nconvert.')).toBe(
 				'It\n<br/>wont\r\nconvert.',
 			);
 		});
 
-		it('it doesnt convert when HTML void tags with spaces exist', () => {
+		it('doesnt convert when HTML void tags with spaces exist', () => {
 			expect(instance.convertLineBreaks('It\n<br  />wont\r\nconvert.')).toBe(
 				'It\n<br  />wont\r\nconvert.',
 			);
 		});
 
-		it('it doesnt convert if `noHtml` is true', () => {
+		it('doesnt convert if `noHtml` is true', () => {
 			instance.props.noHtml = true;
 
 			expect(instance.convertLineBreaks('It\nwont\r\nconvert.')).toBe('It\nwont\r\nconvert.');
 		});
 
-		it('it doesnt convert if `disableLineBreaks` is true', () => {
+		it('doesnt convert if `disableLineBreaks` is true', () => {
 			instance.props.disableLineBreaks = true;
 
 			expect(instance.convertLineBreaks('It\nwont\r\nconvert.')).toBe('It\nwont\r\nconvert.');
 		});
 
-		it('it replaces carriage returns', () => {
+		it('replaces carriage returns', () => {
 			expect(instance.convertLineBreaks('Foo\r\nBar')).toBe('Foo<br/>Bar');
 		});
 
-		it('it replaces super long multilines', () => {
+		it('replaces super long multilines', () => {
 			expect(instance.convertLineBreaks('Foo\n\n\n\n\n\n\nBar')).toBe('Foo<br/><br/><br/>Bar');
 		});
 	});
@@ -405,14 +388,6 @@ describe('Parser', () => {
 			});
 		});
 
-		it('applies filters to attributes', () => {
-			element.setAttribute('href', 'http://foo.com/hello/world');
-
-			expect(instance.extractAttributes(element)).toEqual({
-				href: 'http://bar.net/hello/world',
-			});
-		});
-
 		it('converts `style` to an object', () => {
 			element.setAttribute('style', 'background-color: red; color: black; display: inline-block;');
 
@@ -421,19 +396,6 @@ describe('Parser', () => {
 					backgroundColor: 'red',
 					color: 'black',
 					display: 'inline-block',
-				},
-			});
-		});
-
-		it('removes problematic values from `style`', () => {
-			element.setAttribute(
-				'style',
-				'color: blue; background-image: url("foo.png"); background: image(ltr "arrow.png#xywh=0,0,16,16", red); border: image-set("cat.jpg" 1x, "dog.jpg" 1x)',
-			);
-
-			expect(instance.extractAttributes(element)).toEqual({
-				style: {
-					color: 'blue',
 				},
 			});
 		});
@@ -771,11 +733,7 @@ describe('Parser', () => {
 
 			element.append(acronym);
 
-			expect(instance.parseNode(element, instance.getTagConfig('span'))).toEqual([
-				<Element key="0" attributes={{ target: '_blank' }} tagName="a">
-					{['Link']}
-				</Element>,
-			]);
+			expect(instance.parseNode(element, instance.getTagConfig('span'))).toMatchSnapshot();
 		});
 	});
 });

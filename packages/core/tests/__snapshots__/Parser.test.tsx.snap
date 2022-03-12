@@ -113,3 +113,18 @@ Array [
   </Element>,
 ]
 `;
+
+exports[`Parser parseNode() uses parent config for unsupported elements 1`] = `
+Array [
+  <Element
+    attributes={
+      Object {
+        "target": "_blank",
+      }
+    }
+    tagName="a"
+  >
+    Link
+  </Element>,
+]
+`;

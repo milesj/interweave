@@ -98,7 +98,6 @@ export const parentConfig: TagConfig = {
 
 export const codeFooMatcher = createMatcher(
 	/\[foo]/,
-	(match, props, children) => <Element tagName="span">{String(children).toUpperCase()}</Element>,
 	{
 		onMatch: () => ({
 			codeTag: 'foo',
@@ -106,11 +105,15 @@ export const codeFooMatcher = createMatcher(
 		}),
 		tagName: 'span',
 	},
+	(match, props, c) => (
+		<Element customProp={match.customProp} tagName="span">
+			{match.codeTag.toUpperCase()}
+		</Element>
+	),
 );
 
 export const codeBarMatcher = createMatcher(
 	/\[bar]/,
-	(match, props, children) => <Element tagName="span">{String(children).toUpperCase()}</Element>,
 	{
 		onMatch: () => ({
 			codeTag: 'bar',
@@ -118,11 +121,15 @@ export const codeBarMatcher = createMatcher(
 		}),
 		tagName: 'span',
 	},
+	(match) => (
+		<Element customProp={match.customProp} tagName="span">
+			{match.codeTag.toUpperCase()}
+		</Element>
+	),
 );
 
 export const codeBazMatcher = createMatcher(
 	/\[baz]/,
-	(match, props, children) => <Element tagName="span">{String(children).toUpperCase()}</Element>,
 	{
 		onMatch: () => ({
 			codeTag: 'baz',
@@ -130,37 +137,42 @@ export const codeBazMatcher = createMatcher(
 		}),
 		tagName: 'span',
 	},
+	(match) => (
+		<Element customProp={match.customProp} tagName="span">
+			{match.codeTag.toUpperCase()}
+		</Element>
+	),
 );
 
 export const mdBoldMatcher = createMatcher(
 	/\*\*([^*]+)\*\*/u,
-	(match, props, children) => <b {...props}>{children}</b>,
 	{
 		onMatch: ({ matches }) => ({
 			match: matches[1],
 		}),
 		tagName: 'b',
 	},
+	(match, props, children) => <b {...props}>{children}</b>,
 );
 
 export const mdItalicMatcher = createMatcher(
 	/_([^_]+)_/u,
-	(match, props, children) => <i {...props}>{children}</i>,
 	{
 		onMatch: ({ matches }) => ({
 			match: matches[1],
 		}),
 		tagName: 'i',
 	},
+	(match, props, children) => <i {...props}>{children}</i>,
 );
 
 export const mockMatcher = createMatcher(
 	/div/,
-	(match, props, children) => <div {...props}>{children}</div>,
 	{
 		onMatch: () => null,
 		tagName: 'div',
 	},
+	(match, props, children) => <div {...props}>{children}</div>,
 );
 
 export const linkTransformer = createTransformer('a', (element) => {

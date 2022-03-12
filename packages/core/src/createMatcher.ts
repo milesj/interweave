@@ -50,15 +50,19 @@ export interface Matcher<Match, Props, Options = {}> extends CommonInternals<Pro
 
 export function createMatcher<Match, Props = {}, Options = {}>(
 	pattern: RegExp | string,
-	factory: MatcherFactory<Match, Props>,
 	options: MatcherOptions<Match, Props, Options>,
+	factory: MatcherFactory<Match, Props>,
 ): Matcher<Match, Props, Options> {
 	return {
 		extend(customFactory, customOptions) {
-			return createMatcher(pattern, customFactory ?? factory, {
-				...options,
-				...customOptions,
-			});
+			return createMatcher(
+				pattern,
+				{
+					...options,
+					...customOptions,
+				},
+				customFactory ?? factory,
+			);
 		},
 		factory,
 		greedy: options.greedy ?? false,
