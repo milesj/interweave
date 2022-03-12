@@ -6,33 +6,32 @@ export type InferElement<K> = K extends '*'
 	? HTMLElementTagNameMap[K]
 	: HTMLElement;
 
-export type TransformerFactory<Element, Props> = (
+export type TransformerFactory<Element> = <Props extends object>(
 	element: Element,
 	props: Props,
 	children: Node[],
 ) => Element | React.ReactElement | null | undefined | void;
 
-export interface TransformerOptions<Props, Options = {}> {
+export interface TransformerOptions {
 	tagName?: TagName;
-	onAfterParse?: OnAfterParse<Props>;
-	onBeforeParse?: OnBeforeParse<Props>;
-	options?: Options;
+	onAfterParse?: OnAfterParse;
+	onBeforeParse?: OnBeforeParse;
 }
 
-export interface Transformer<Element, Props, Options = {}> extends CommonInternals<Props, Options> {
+export interface Transformer<Element> extends CommonInternals {
 	extend: (
-		factory?: TransformerFactory<Element, Props> | null,
-		options?: Partial<TransformerOptions<Props, Options>>,
-	) => Transformer<Element, Props, Options>;
-	factory: TransformerFactory<Element, Props>;
+		factory?: TransformerFactory<Element> | null,
+		options?: Partial<TransformerOptions>,
+	) => Transformer<Element>;
+	factory: TransformerFactory<Element>;
 	tagName: WildTagName;
 }
 
-export function createTransformer<K extends WildTagName, Props = {}, Options = {}>(
+export function createTransformer<K extends WildTagName>(
 	tagName: K,
-	options: TransformerOptions<Props, Options>,
-	factory: TransformerFactory<InferElement<K>, Props>,
-): Transformer<InferElement<K>, Props, Options> {
+	options: TransformerOptions,
+	factory: TransformerFactory<InferElement<K>>,
+): Transformer<InferElement<K>> {
 	return {
 		extend(customFactory, customOptions) {
 			return createTransformer(
@@ -47,7 +46,6 @@ export function createTransformer<K extends WildTagName, Props = {}, Options = {
 		factory,
 		onAfterParse: options.onAfterParse,
 		onBeforeParse: options.onBeforeParse,
-		options: options.options ?? {},
 		tagName: options.tagName ?? tagName,
 	};
 }

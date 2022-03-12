@@ -107,7 +107,7 @@ export const codeFooMatcher = createMatcher(
 	},
 	(params, props, children, key) => (
 		<Element key={key} customprop={params.customprop} tagName="span">
-			{children.toUpperCase()}
+			{String(children).toUpperCase()}
 		</Element>
 	),
 );
@@ -123,7 +123,7 @@ export const codeBarMatcher = createMatcher(
 	},
 	(params, props, children, key) => (
 		<Element key={key} customprop={params.customprop} tagName="span">
-			{children.toUpperCase()}
+			{String(children).toUpperCase()}
 		</Element>
 	),
 );
@@ -139,7 +139,7 @@ export const codeBazMatcher = createMatcher(
 	},
 	(params, props, children, key) => (
 		<Element key={key} customprop={params.customprop} tagName="span">
-			{children.toUpperCase()}
+			{String(children).toUpperCase()}
 		</Element>
 	),
 );

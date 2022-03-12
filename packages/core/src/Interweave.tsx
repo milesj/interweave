@@ -1,30 +1,28 @@
 import React, { useMemo } from 'react';
-import type { Matcher } from './createMatcher';
-import type { Transformer } from './createTransformer';
 import { MarkupProps } from './Markup';
-import { Parser } from './Parser';
+import { MatcherInterface, Parser, TransformerInterface } from './Parser';
 import { CommonInternals, OnAfterParse, OnBeforeParse } from './types';
 
-export interface InterweaveProps<Props = {}> extends MarkupProps {
+export interface InterweaveProps extends MarkupProps {
 	/** List of transformers to apply to elements. */
-	transformers?: Transformer<HTMLElement, Props>[];
+	transformers?: TransformerInterface[];
 	/** List of matchers to apply to the content. */
-	matchers?: Matcher<{}, Props>[];
+	matchers?: MatcherInterface[];
 	/** Callback fired after parsing ends. Must return a React node. */
-	onAfterParse?: OnAfterParse<Props>;
+	onAfterParse?: OnAfterParse;
 	/** Callback fired beore parsing begins. Must return a string. */
-	onBeforeParse?: OnBeforeParse<Props>;
+	onBeforeParse?: OnBeforeParse;
 }
 
-export function Interweave<Props = {}>(props: InterweaveProps<Props>) {
+export function Interweave(props: InterweaveProps) {
 	const { content, emptyContent, matchers, onAfterParse, onBeforeParse, transformers } = props;
 
 	const mainContent = useMemo(() => {
-		const beforeCallbacks: OnBeforeParse<Props>[] = [];
-		const afterCallbacks: OnAfterParse<Props>[] = [];
+		const beforeCallbacks: OnBeforeParse[] = [];
+		const afterCallbacks: OnAfterParse[] = [];
 
 		// Inherit all callbacks
-		function inheritCallbacks(internals: CommonInternals<Props>[]) {
+		function inheritCallbacks(internals: CommonInternals[]) {
 			internals.forEach((internal) => {
 				if (internal.onBeforeParse) {
 					beforeCallbacks.push(internal.onBeforeParse);
@@ -54,7 +52,7 @@ export function Interweave<Props = {}>(props: InterweaveProps<Props>) {
 
 		// Trigger before callbacks
 		const markup = beforeCallbacks.reduce((string, before) => {
-			const nextString = before(string, props as unknown as Props);
+			const nextString = before(string, props);
 
 			if (__DEV__ && typeof nextString !== 'string') {
 				throw new TypeError('Interweave `onBeforeParse` must return a valid HTML string.');
@@ -69,10 +67,7 @@ export function Interweave<Props = {}>(props: InterweaveProps<Props>) {
 
 		// Trigger after callbacks
 		if (nodes) {
-			nodes = afterCallbacks.reduce(
-				(parserNodes, after) => after(parserNodes, props as unknown as Props),
-				nodes,
-			);
+			nodes = afterCallbacks.reduce((parserNodes, after) => after(parserNodes, props), nodes);
 		}
 
 		return nodes;

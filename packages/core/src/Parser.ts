@@ -19,15 +19,15 @@ import { Element, ElementProps } from './Element';
 import { styleTransformer } from './transformers';
 import { Attributes, AttributeValue, Node, TagConfig, TagName } from './types';
 
-type TransformerInterface<Props extends object> = Transformer<HTMLElement, Props>;
+export type TransformerInterface = Transformer<HTMLElement>;
 
-type MatcherInterface<Props extends object> = Matcher<{}, Props>;
+export type MatcherInterface = Matcher<MatchParams>;
 
-type MatchedElements<Props extends object> = Record<
+type MatchedElements = Record<
 	string,
 	{
 		key: number;
-		matcher: MatcherInterface<Props>;
+		matcher: MatcherInterface;
 		params: MatchParams;
 	}
 >;
@@ -68,7 +68,7 @@ export interface ParserProps {
 	tagName?: TagName;
 }
 
-export class Parser<Props extends object> {
+export class Parser {
 	allowed: Set<TagName>;
 
 	banned: Set<TagName>;
@@ -83,15 +83,15 @@ export class Parser<Props extends object> {
 
 	props: ParserProps;
 
-	matchers: MatcherInterface<Props>[];
+	matchers: MatcherInterface[];
 
-	transformers: TransformerInterface<Props>[];
+	transformers: TransformerInterface[];
 
 	constructor(
 		markup: string,
 		props: ParserProps = {},
-		matchers: MatcherInterface<Props>[] = [],
-		transformers: TransformerInterface<Props>[] = [],
+		matchers: MatcherInterface[] = [],
+		transformers: TransformerInterface[] = [],
 	) {
 		if (__DEV__ && markup && typeof markup !== 'string') {
 			throw new TypeError('Interweave parser requires a valid string.');
@@ -100,7 +100,7 @@ export class Parser<Props extends object> {
 		this.props = props;
 		this.matchers = matchers;
 		this.transformers = transformers;
-		this.transformers.push(styleTransformer as unknown as TransformerInterface<Props>);
+		this.transformers.push(styleTransformer);
 		this.keyIndex = -1;
 		this.container = this.createContainer(markup || '');
 		this.allowed = new Set(props.allow ?? (ALLOWED_TAG_LIST as TagName[]));
@@ -114,7 +114,7 @@ export class Parser<Props extends object> {
 	 * This array allows React to interpolate and render accordingly.
 	 */
 	applyMatchers(string: string, parentConfig: TagConfig): Node {
-		const elements: MatchedElements<Props> = {};
+		const elements: MatchedElements = {};
 		let matchedString = string;
 		let elementIndex = 0;
 		let parts = null;
@@ -136,10 +136,7 @@ export class Parser<Props extends object> {
 			// Continuously trigger the matcher until no matches are found
 			let tokenizedString = '';
 
-			while (
-				matchedString &&
-				(parts = matcher.match(matchedString, this.props as unknown as Props))
-			) {
+			while (matchedString && (parts = matcher.match(matchedString, this.props))) {
 				const { index, length, match, valid, void: isVoid, params } = parts;
 				const tokenName = tagName + String(elementIndex);
 
@@ -203,7 +200,7 @@ export class Parser<Props extends object> {
 		);
 
 		for (const transformer of transformers) {
-			const result = transformer.factory(node, this.getProps(), children);
+			const result = transformer.factory(node, this.props, children);
 
 			// If something was returned, the node has been replaced so we cant continue
 			if (result !== undefined) {
@@ -383,13 +380,6 @@ export class Parser<Props extends object> {
 	}
 
 	/**
-	 * Return current props correctly typed.
-	 */
-	getProps(): Props {
-		return this.props as unknown as Props;
-	}
-
-	/**
 	 * Return configuration for a specific tag.
 	 */
 	getTagConfig(tagName: TagName): TagConfig {
@@ -454,6 +444,7 @@ export class Parser<Props extends object> {
 			return false;
 		}
 
+		// eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing
 		return this.props.allowElements || this.allowed.has(tagName);
 	}
 
@@ -570,16 +561,17 @@ export class Parser<Props extends object> {
 
 				// Apply matchers if a text node
 			} else if (node.nodeType === TEXT_NODE) {
-				const text =
+				const text = (
 					noHtml && !noHtmlExceptInternals
 						? node.textContent
-						: // eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing
-						  this.applyMatchers(node.textContent || '', parentConfig);
+						: this.applyMatchers(node.textContent ?? '', parentConfig)
+				) as Node;
 
 				if (Array.isArray(text)) {
+					// eslint-disable-next-line @typescript-eslint/no-unsafe-argument
 					content.push(...text);
 				} else {
-					mergedText += text;
+					mergedText += String(text);
 				}
 			}
 		});
@@ -595,7 +587,7 @@ export class Parser<Props extends object> {
 	 * Deconstruct the string into an array, by replacing custom tokens with React elements,
 	 * so that React can render it correctly.
 	 */
-	replaceTokens(tokenizedString: string, elements: MatchedElements<Props>): Node {
+	replaceTokens(tokenizedString: string, elements: MatchedElements): Node {
 		if (!tokenizedString.includes('{{{')) {
 			return tokenizedString;
 		}
@@ -631,7 +623,7 @@ export class Parser<Props extends object> {
 
 				// nodes.push(React.cloneElement(element, { key }));
 
-				nodes.push(matcher.factory(params, this.getProps(), null, key));
+				nodes.push(matcher.factory(params, this.props, null, key));
 
 				// Find the closing tag if not void
 			} else {
@@ -654,7 +646,7 @@ export class Parser<Props extends object> {
 				nodes.push(
 					matcher.factory(
 						params,
-						this.getProps(),
+						this.props,
 						this.replaceTokens(text.slice(match.length, close.index), elements),
 						key,
 					),
