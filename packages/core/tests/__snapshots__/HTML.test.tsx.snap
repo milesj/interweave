@@ -51,7 +51,9 @@ exports[`html a, ul, li renders 1`] = `
 `;
 
 exports[`html abbr renders 1`] = `
-<Markup content="You can use <abbr title="Cascading Style Sheets">CSS</abbr> to style your <abbr title="HyperText Markup Language">HTML</abbr>.">
+<Markup
+  content="You can use <abbr title="Cascading Style Sheets">CSS</abbr> to style your <abbr title="HyperText Markup Language">HTML</abbr>."
+>
   You can use 
   <Element tagName="abbr" title="Cascading Style Sheets">
     <abbr title="Cascading Style Sheets">
@@ -356,7 +358,9 @@ exports[`html bdi renders 1`] = `
 `;
 
 exports[`html bdo renders 1`] = `
-<Markup content="In the computer's memory, this is stored as <bdo dir="ltr">אה, אני אוהב להיות ליד חוף הים</bdo>">
+<Markup
+  content="In the computer's memory, this is stored as <bdo dir="ltr">אה, אני אוהב להיות ליד חוף הים</bdo>"
+>
   In the computer's memory, this is stored as 
   <Element dir="ltr" tagName="bdo">
     <bdo dir="ltr">
@@ -511,7 +515,10 @@ exports[`html cite renders 1`] = `
     First sentence in 
           <Element tagName="cite">
             <cite>
-              <Element href="http://www.george-orwell.org/1984/0.html" tagName="a">
+              <Element
+                href="http://www.george-orwell.org/1984/0.html"
+                tagName="a"
+              >
                 <a href="http://www.george-orwell.org/1984/0.html">
                   <Element tagName="i">
                     <i>Nineteen Eighty-Four</i>
@@ -532,7 +539,9 @@ exports[`html cite renders 1`] = `
 `;
 
 exports[`html code renders 1`] = `
-<Markup content="<p>The <code>push()</code> method adds one or more elements to the end of an array and returns the new length of the array.</p>">
+<Markup
+  content="<p>The <code>push()</code> method adds one or more elements to the end of an array and returns the new length of the array.</p>"
+>
   <Element tagName="p">
     <p>
       The 
@@ -622,7 +631,9 @@ exports[`html details, summary renders 1`] = `
 `;
 
 exports[`html dfn renders 1`] = `
-<Markup content="<p>A <dfn id="def-validator">validator</dfn> is a program that checks for syntax errors in code or documents.</p>">
+<Markup
+  content="<p>A <dfn id="def-validator">validator</dfn> is a program that checks for syntax errors in code or documents.</p>"
+>
   <Element tagName="p">
     <p>
       A 
@@ -648,7 +659,12 @@ exports[`html div renders 1`] = `
     <div className="warning">
       
   
-      <Element selfClose alt="An intimidating leopard." src="/media/examples/leopard.jpg" tagName="img">
+      <Element
+        selfClose
+        alt="An intimidating leopard."
+        src="/media/examples/leopard.jpg"
+        tagName="img"
+      >
         <img alt="An intimidating leopard." src="/media/examples/leopard.jpg" />
       </Element>
       
@@ -738,7 +754,12 @@ exports[`html figure, figcaption renders 1`] = `
     <figure>
       
   
-      <Element selfClose alt="Elephant at sunset" src="/media/examples/elephant-660-480.jpg" tagName="img">
+      <Element
+        selfClose
+        alt="Elephant at sunset"
+        src="/media/examples/elephant-660-480.jpg"
+        tagName="img"
+      >
         <img alt="Elephant at sunset" src="/media/examples/elephant-660-480.jpg" />
       </Element>
       
@@ -918,7 +939,9 @@ exports[`html hr renders 1`] = `
 `;
 
 exports[`html i renders 1`] = `
-<Markup content="<p><i class="latin">Musa</i> is one of two or three genera in the family <i class="latin">Musaceae</i>; it includes bananas and plantains.</p>">
+<Markup
+  content="<p><i class="latin">Musa</i> is one of two or three genera in the family <i class="latin">Musaceae</i>; it includes bananas and plantains.</p>"
+>
   <Element tagName="p">
     <p>
       <Element className="latin" tagName="i">
@@ -939,19 +962,43 @@ exports[`html i renders 1`] = `
 `;
 
 exports[`html iframe renders 1`] = `
-<Markup allow={[ "iframe" ]} content="<iframe width="400" height="300" src="https://maps.google.com"></iframe>">
-  <Element height="300" src="https://maps.google.com" tagName="iframe" width="400">
+<Markup
+  allow={[ "iframe" ]}
+  content="<iframe width="400" height="300" src="https://maps.google.com"></iframe>"
+>
+  <Element
+    height="300"
+    src="https://maps.google.com"
+    tagName="iframe"
+    width="400"
+  >
     <iframe height="300" src="https://maps.google.com" width="400" />
   </Element>
 </Markup>
 `;
 
-exports[`html iframe renders nothing when not allowed 1`] = `<Markup content="<iframe width="400" height="300" src="https://maps.google.com"></iframe>" />`;
+exports[`html iframe renders nothing when not allowed 1`] = `
+<Markup
+  content="<iframe width="400" height="300" src="https://maps.google.com"></iframe>"
+/>
+`;
 
 exports[`html img renders 1`] = `
-<Markup content="<img class="fit-picture" src="/media/examples/grapefruit-slice-332-332.jpg" alt="Grapefruit slice atop a pile of other slices" />">
-  <Element selfClose alt="Grapefruit slice atop a pile of other slices" className="fit-picture" src="/media/examples/grapefruit-slice-332-332.jpg" tagName="img">
-    <img alt="Grapefruit slice atop a pile of other slices" className="fit-picture" src="/media/examples/grapefruit-slice-332-332.jpg" />
+<Markup
+  content="<img class="fit-picture" src="/media/examples/grapefruit-slice-332-332.jpg" alt="Grapefruit slice atop a pile of other slices" />"
+>
+  <Element
+    selfClose
+    alt="Grapefruit slice atop a pile of other slices"
+    className="fit-picture"
+    src="/media/examples/grapefruit-slice-332-332.jpg"
+    tagName="img"
+  >
+    <img
+      alt="Grapefruit slice atop a pile of other slices"
+      className="fit-picture"
+      src="/media/examples/grapefruit-slice-332-332.jpg"
+    />
   </Element>
 </Markup>
 `;
@@ -975,7 +1022,9 @@ exports[`html ins renders 1`] = `
 `;
 
 exports[`html kbd renders 1`] = `
-<Markup content="Please press <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>R</kbd> to re-render an MDN page.">
+<Markup
+  content="Please press <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>R</kbd> to re-render an MDN page."
+>
   Please press 
   <Element tagName="kbd">
     <kbd>Ctrl</kbd>
@@ -1013,7 +1062,9 @@ exports[`html main renders 1`] = `
 `;
 
 exports[`html mark renders 1`] = `
-<Markup content="Most <mark>salamander</mark>s are nocturnal, and hunt for insects, worms, and other small creatures.">
+<Markup
+  content="Most <mark>salamander</mark>s are nocturnal, and hunt for insects, worms, and other small creatures."
+>
   Most 
   <Element tagName="mark">
     <mark>salamander</mark>
@@ -1089,12 +1140,24 @@ exports[`html picture renders 1`] = `
     <picture>
       
   
-      <Element selfClose media="(min-width: 800px)" srcSet="/media/examples/surfer-240-200.jpg" tagName="source">
-        <source media="(min-width: 800px)" srcSet="/media/examples/surfer-240-200.jpg" />
+      <Element
+        selfClose
+        media="(min-width: 800px)"
+        srcSet="/media/examples/surfer-240-200.jpg"
+        tagName="source"
+      >
+        <source
+          media="(min-width: 800px)"
+          srcSet="/media/examples/surfer-240-200.jpg"
+        />
       </Element>
       
   
-      <Element selfClose src="/media/examples/painted-hand-298-332.jpg" tagName="img">
+      <Element
+        selfClose
+        src="/media/examples/painted-hand-298-332.jpg"
+        tagName="img"
+      >
         <img src="/media/examples/painted-hand-298-332.jpg" />
       </Element>
       
@@ -1148,9 +1211,14 @@ exports[`html pre renders 1`] = `
 `;
 
 exports[`html q renders 1`] = `
-<Markup content="When Dave asks HAL to open the pod bay door, HAL answers: <q cite="https://www.imdb.com/title/tt0062622/quotes/qt0396921">I'm sorry, Dave. I'm afraid I can't do that.</q>">
+<Markup
+  content="When Dave asks HAL to open the pod bay door, HAL answers: <q cite="https://www.imdb.com/title/tt0062622/quotes/qt0396921">I'm sorry, Dave. I'm afraid I can't do that.</q>"
+>
   When Dave asks HAL to open the pod bay door, HAL answers: 
-  <Element cite="https://www.imdb.com/title/tt0062622/quotes/qt0396921" tagName="q">
+  <Element
+    cite="https://www.imdb.com/title/tt0062622/quotes/qt0396921"
+    tagName="q"
+  >
     <q cite="https://www.imdb.com/title/tt0062622/quotes/qt0396921">
       I'm sorry, Dave. I'm afraid I can't do that.
     </q>
@@ -1261,7 +1329,9 @@ exports[`html ruby, rp, rt, rtc renders 1`] = `
 `;
 
 exports[`html s renders 1`] = `
-<Markup content="<s>There will be a few tickets available at the box office tonight.</s>">
+<Markup
+  content="<s>There will be a few tickets available at the box office tonight.</s>"
+>
   <Element tagName="s">
     <s>There will be a few tickets available at the box office tonight.</s>
   </Element>
@@ -1309,7 +1379,9 @@ exports[`html section renders 1`] = `
 `;
 
 exports[`html small renders 1`] = `
-<Markup content="<p><small>The content is licensed under a Creative Commons Attribution-ShareAlike 2.5 Generic License.</small></p>">
+<Markup
+  content="<p><small>The content is licensed under a Creative Commons Attribution-ShareAlike 2.5 Generic License.</small></p>"
+>
   <Element tagName="p">
     <p>
       <Element tagName="small">
@@ -1334,12 +1406,22 @@ exports[`html source renders 1`] = `
     <video controls muted height="200" width="250">
       
   
-      <Element selfClose src="/media/examples/flower.webm" tagName="source" type="video/webm">
+      <Element
+        selfClose
+        src="/media/examples/flower.webm"
+        tagName="source"
+        type="video/webm"
+      >
         <source src="/media/examples/flower.webm" type="video/webm" />
       </Element>
       
   
-      <Element selfClose src="/media/examples/flower.mp4" tagName="source" type="video/mp4">
+      <Element
+        selfClose
+        src="/media/examples/flower.mp4"
+        tagName="source"
+        type="video/mp4"
+      >
         <source src="/media/examples/flower.mp4" type="video/mp4" />
       </Element>
       
@@ -1351,7 +1433,9 @@ exports[`html source renders 1`] = `
 `;
 
 exports[`html span renders 1`] = `
-<Markup content="Add the <span class="ingredient">basil</span>, <span class="ingredient">pine nuts</span> and <span class="ingredient">garlic</span> to a blender and blend into a paste.">
+<Markup
+  content="Add the <span class="ingredient">basil</span>, <span class="ingredient">pine nuts</span> and <span class="ingredient">garlic</span> to a blender and blend into a paste."
+>
   Add the 
   <Element className="ingredient" tagName="span">
     <span className="ingredient">
@@ -1375,7 +1459,9 @@ exports[`html span renders 1`] = `
 `;
 
 exports[`html strong renders 1`] = `
-<Markup content="... the most important rule, the rule you can never forget, no matter how much he cries, no matter how much he begs: <strong>never feed him after midnight</strong>.">
+<Markup
+  content="... the most important rule, the rule you can never forget, no matter how much he cries, no matter how much he begs: <strong>never feed him after midnight</strong>."
+>
   ... the most important rule, the rule you can never forget, no matter how much he cries, no matter how much he begs: 
   <Element tagName="strong">
     <strong>never feed him after midnight</strong>
@@ -1411,7 +1497,9 @@ exports[`html sub renders 1`] = `
 `;
 
 exports[`html sup renders 1`] = `
-<Markup content="<var>a<sup>2</sup></var> + <var>b<sup>2</sup></var> = <var>c<sup>2</sup></var>">
+<Markup
+  content="<var>a<sup>2</sup></var> + <var>b<sup>2</sup></var> = <var>c<sup>2</sup></var>"
+>
   <Element tagName="var">
     <var>
       a
@@ -1714,7 +1802,9 @@ exports[`html thead doesnt render outside of table 1`] = `
 `;
 
 exports[`html time renders 1`] = `
-<Markup content="The Cure will be celebrating their 40th anniversary on <time datetime="2018-07-07">July 7</time> in London's Hyde Park.">
+<Markup
+  content="The Cure will be celebrating their 40th anniversary on <time datetime="2018-07-07">July 7</time> in London's Hyde Park."
+>
   The Cure will be celebrating their 40th anniversary on 
   <Element dateTime="2018-07-07" tagName="time">
     <time dateTime="2018-07-07">
@@ -1739,7 +1829,11 @@ exports[`html tr doesnt render outside of table 1`] = `
 </Markup>
 `;
 
-exports[`html track doesnt render if outside its parent 1`] = `<Markup content="<track default kind="captions" srclang="en" src="/media/examples/friday.vtt"/>" />`;
+exports[`html track doesnt render if outside its parent 1`] = `
+<Markup
+  content="<track default kind="captions" srclang="en" src="/media/examples/friday.vtt"/>"
+/>
+`;
 
 exports[`html track renders 1`] = `
 <Markup
@@ -1761,7 +1855,12 @@ exports[`html track renders 1`] = `
         srcLang="en"
         tagName="track"
       >
-        <track default kind="captions" src="/media/examples/friday.vtt" srcLang="en" />
+        <track
+          default
+          kind="captions"
+          src="/media/examples/friday.vtt"
+          srcLang="en"
+        />
       </Element>
       
 
@@ -1773,7 +1872,9 @@ exports[`html track renders 1`] = `
 `;
 
 exports[`html u renders 1`] = `
-<Markup content="<p>You could use this element to highlight <u>speling</u> mistakes, so the writer can <u>corect</u> them.</p>">
+<Markup
+  content="<p>You could use this element to highlight <u>speling</u> mistakes, so the writer can <u>corect</u> them.</p>"
+>
   <Element tagName="p">
     <p>
       You could use this element to highlight 
@@ -1791,7 +1892,9 @@ exports[`html u renders 1`] = `
 `;
 
 exports[`html var renders 1`] = `
-<Markup content="The volume of a box is <var>l</var> × <var>w</var> × <var>h</var>, where <var>l</var> represents the length, <var>w</var> the width and <var>h</var> the height of the box.">
+<Markup
+  content="The volume of a box is <var>l</var> × <var>w</var> × <var>h</var>, where <var>l</var> represents the length, <var>w</var> the width and <var>h</var> the height of the box."
+>
   The volume of a box is 
   <Element tagName="var">
     <var>l</var>

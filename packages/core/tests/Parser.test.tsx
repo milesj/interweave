@@ -56,7 +56,7 @@ describe('Parser', () => {
 	describe('applyMatchers()', () => {
 		function createElement(value: string, key: number) {
 			return (
-				<Element key={key} customProp={value} tagName="span">
+				<Element key={key} customprop={value} tagName="span">
 					{value.toUpperCase()}
 				</Element>
 			);

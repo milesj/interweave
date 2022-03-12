@@ -4,7 +4,7 @@ import { polyfill } from 'interweave-ssr';
 import { render } from 'rut-dom';
 import { ALLOWED_TAG_LIST } from '../src/constants';
 import { Element } from '../src/Element';
-import { Interweave } from '../src/Interweave';
+import { Interweave, InterweaveProps } from '../src/Interweave';
 import {
 	codeBarMatcher,
 	codeBazMatcher,
@@ -15,7 +15,6 @@ import {
 	MOCK_INVALID_MARKUP,
 	MOCK_MARKUP,
 } from '../src/test';
-import { ChildrenNode, InterweaveProps } from '../src/types';
 
 describe('Interweave', () => {
 	it('doesnt include canvas and iframe in default allow list', () => {
@@ -218,7 +217,7 @@ describe('Interweave', () => {
 			expect(implSpy).not.toHaveBeenCalled();
 		});
 
-		it.only('supports transformers', () => {
+		it('supports transformers', () => {
 			const actual = ReactDOMServer.renderToStaticMarkup(
 				<Interweave
 					content={'Foo <a href="foo.com">Bar</a> Baz'}
@@ -235,12 +234,12 @@ describe('Interweave', () => {
 				<Interweave content="Foo [bar] Bar Baz" matchers={[codeBarMatcher]} />,
 			);
 
-			expect(actual).toBe('Foo <span>BAR</span> Bar Baz');
+			expect(actual).toBe('Foo <span customprop="bar">BAR</span> Bar Baz');
 			expect(implSpy).not.toHaveBeenCalled();
 		});
 	});
 
-	describe('transform prop', () => {
+	describe.skip('transform prop', () => {
 		it('skips the element', () => {
 			const transform = (node: HTMLElement) => (node.nodeName === 'IMG' ? null : undefined);
 			const { root } = render<InterweaveProps>(

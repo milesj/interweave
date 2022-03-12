@@ -101,12 +101,12 @@ export const codeFooMatcher = createMatcher(
 	{
 		onMatch: () => ({
 			match: 'foo',
-			customProp: 'foo',
+			customprop: 'foo',
 		}),
 		tagName: 'span',
 	},
 	(params, props, children, key) => (
-		<Element key={key} customProp={params.customProp} tagName="span">
+		<Element key={key} customprop={params.customprop} tagName="span">
 			{children.toUpperCase()}
 		</Element>
 	),
@@ -117,12 +117,12 @@ export const codeBarMatcher = createMatcher(
 	{
 		onMatch: () => ({
 			match: 'bar',
-			customProp: 'bar',
+			customprop: 'bar',
 		}),
 		tagName: 'span',
 	},
 	(params, props, children, key) => (
-		<Element key={key} customProp={params.customProp} tagName="span">
+		<Element key={key} customprop={params.customprop} tagName="span">
 			{children.toUpperCase()}
 		</Element>
 	),
@@ -133,12 +133,12 @@ export const codeBazMatcher = createMatcher(
 	{
 		onMatch: () => ({
 			match: 'baz',
-			customProp: 'baz',
+			customprop: 'baz',
 		}),
 		tagName: 'span',
 	},
 	(params, props, children, key) => (
-		<Element key={key} customProp={params.customProp} tagName="span">
+		<Element key={key} customprop={params.customprop} tagName="span">
 			{children.toUpperCase()}
 		</Element>
 	),

@@ -10,11 +10,11 @@ exports[`Interweave allow list doesnt filter invalid tags and attributes when di
     <p align="center">More text <strike>with outdated stuff</strike>.</p>
   </div>"
 >
-  <Element attributes={{ bgcolor: "black" }} tagName="div">
+  <Element bgcolor="black" tagName="div">
     <div bgcolor="black">
       
   
-      <Element attributes={{ color: "red" }} tagName="font">
+      <Element color="red" tagName="font">
         <font color="red">
           Outdated font.
         </font>
@@ -23,7 +23,7 @@ exports[`Interweave allow list doesnt filter invalid tags and attributes when di
   
       
   
-      <Element attributes={{ align: "center" }} tagName="p">
+      <Element align="center" tagName="p">
         <p align="center">
           More text 
           <Element tagName="strike">
@@ -84,7 +84,7 @@ exports[`Interweave block list filters blocked tags and attributes 1`] = `
     Sidebar content
   </aside>"
 >
-  <Element attributes={{ role: "main" }} tagName="main">
+  <Element role="main" tagName="main">
     <main role="main">
       
   Main content
@@ -96,7 +96,7 @@ exports[`Interweave block list filters blocked tags and attributes 1`] = `
           Link
           
     
-          <Element attributes={{ className: "foo" }} tagName="span">
+          <Element className="foo" tagName="span">
             <span className="foo">
               String
             </span>
@@ -120,17 +120,22 @@ exports[`Interweave block list filters blocked tags and attributes 1`] = `
 exports[`Interweave can pass matchers through props 1`] = `
 <Interweave content="Foo [bar] Bar Baz" matchers={[ <span /> ]}>
   Foo 
-  <Element customProp="bar" tagName="span">
-    <span>BAR</span>
+  <Element customprop="bar" tagName="span">
+    <span customprop="bar">
+      BAR
+    </span>
   </Element>
    Bar Baz
 </Interweave>
 `;
 
 exports[`Interweave can pass transformers through props 1`] = `
-<Interweave content="Foo <a href="foo.com">Bar</a> Baz" transformers={[ <a />, <* /> ]}>
+<Interweave
+  content="Foo <a href="foo.com">Bar</a> Baz"
+  transformers={[ <a />, <* /> ]}
+>
   Foo 
-  <Element attributes={{ href: "bar.net", target: "_blank" }} tagName="a">
+  <Element href="bar.net" tagName="a" target="_blank">
     <a href="bar.net" target="_blank">
       Bar
     </a>
@@ -140,7 +145,10 @@ exports[`Interweave can pass transformers through props 1`] = `
 `;
 
 exports[`Interweave interleaving renders bold in italic 1`] = `
-<Interweave content="This should be _**bold and italic**_." matchers={[ <b />, <i /> ]}>
+<Interweave
+  content="This should be _**bold and italic**_."
+  matchers={[ <b />, <i /> ]}
+>
   This should be 
   <i>
     <b>bold and italic</b>
@@ -150,7 +158,10 @@ exports[`Interweave interleaving renders bold in italic 1`] = `
 `;
 
 exports[`Interweave interleaving renders italic in bold 1`] = `
-<Interweave content="This should be **_italic and bold_**." matchers={[ <b />, <i /> ]}>
+<Interweave
+  content="This should be **_italic and bold_**."
+  matchers={[ <b />, <i /> ]}
+>
   This should be 
   <b>
     <i>italic and bold</i>
@@ -160,7 +171,10 @@ exports[`Interweave interleaving renders italic in bold 1`] = `
 `;
 
 exports[`Interweave interleaving renders them separately 1`] = `
-<Interweave content="This should be **bold** and this _italic_." matchers={[ <b />, <i /> ]}>
+<Interweave
+  content="This should be **bold** and this _italic_."
+  matchers={[ <b />, <i /> ]}
+>
   This should be 
   <b>bold</b>
    and this 
@@ -258,7 +272,10 @@ exports[`Interweave parseMarkup() can modify the tree using onAfterParse 1`] = `
 exports[`Interweave parseMarkup() errors if onBeforeParse doesnt return a string 1`] = `"Interweave \`onBeforeParse\` must return a valid HTML string."`;
 
 exports[`Interweave parsing and rendering handles void elements correctly 1`] = `
-<Interweave content="This has line breaks.<br>Horizontal rule.<hr />An image.<img src="http://domain.com/image.jpg" />" tagName="div">
+<Interweave
+  content="This has line breaks.<br>Horizontal rule.<hr />An image.<img src="http://domain.com/image.jpg" />"
+  tagName="div"
+>
   This has line breaks.
   <Element selfClose tagName="br">
     <br />
@@ -268,7 +285,7 @@ exports[`Interweave parsing and rendering handles void elements correctly 1`] = 
     <hr />
   </Element>
   An image.
-  <Element selfClose attributes={{ src: "http://domain.com/image.jpg" }} tagName="img">
+  <Element selfClose src="http://domain.com/image.jpg" tagName="img">
     <img src="http://domain.com/image.jpg" />
   </Element>
 </Interweave>
@@ -291,7 +308,7 @@ exports[`Interweave renders using a custom container element 1`] = `
 exports[`Interweave transform prop allows blocked 1`] = `
 <Element tagName="span">
   <span>
-    Foo 
+    Foo
     <Dummy>
       <iframe title="foo" />
     </Dummy>
@@ -303,7 +320,7 @@ exports[`Interweave transform prop allows blocked 1`] = `
 exports[`Interweave transform prop replaces the element 1`] = `
 <Element tagName="span">
   <span>
-    Foo 
+    Foo
     <Dummy>
       <div />
     </Dummy>
@@ -321,22 +338,22 @@ exports[`Interweave transform prop skips the element 1`] = `
 exports[`Interweave transform prop skips transforming tags outside the allowList when transformOnlyAllowList is true 1`] = `
 <Element tagName="span">
   <span>
-    
-        Hello, https://test.example.com 
+
+        Hello, https://test.example.com
     <a href="http://example.com">
       hi
     </a>
-     test@example.com test@example.com 
+     test@example.com test@example.com
     <Element selfClose tagName="br">
       <br />
     </Element>
-    
-        at 8:58 AM Someone 
+
+        at 8:58 AM Someone
      wrote:
     <Element selfClose tagName="br">
       <br />
     </Element>
-    Hi, 
+    Hi,
     <Element selfClose tagName="br">
       <br />
     </Element>
@@ -355,8 +372,8 @@ exports[`Interweave transform prop skips transforming tags outside the allowList
     <Element selfClose tagName="br">
       <br />
     </Element>
-    On Jun 30, 2021, at 9:40 AM, Someone 
-    
+    On Jun 30, 2021, at 9:40 AM, Someone
+
         wrote:
     <Element selfClose tagName="br">
       <br />
@@ -374,11 +391,11 @@ exports[`Interweave transform prop skips transforming tags outside the allowList
     <Element selfClose tagName="br">
       <br />
     </Element>
-    , . 
+    , .
     <Element selfClose tagName="br">
       <br />
     </Element>
-    , . 
+    , .
     <Element selfClose tagName="br">
       <br />
     </Element>
@@ -396,7 +413,7 @@ exports[`Interweave transform prop skips transforming tags outside the allowList
     <Element selfClose tagName="br">
       <br />
     </Element>
-    
+
         Português, Español
     <Element selfClose tagName="br">
       <br />
@@ -407,9 +424,9 @@ exports[`Interweave transform prop skips transforming tags outside the allowList
     <Element selfClose tagName="br">
       <br />
     </Element>
-    On Tue, Jun 29, 2021 at 2:05 PM Someone 
-    
-        
+    On Tue, Jun 29, 2021 at 2:05 PM Someone
+
+
      wrote:
     <Element selfClose tagName="br">
       <br />
@@ -418,8 +435,8 @@ exports[`Interweave transform prop skips transforming tags outside the allowList
     <Element selfClose tagName="br">
       <br />
     </Element>
-    
-        
+
+
     <Element selfClose tagName="br">
       <br />
     </Element>
@@ -433,9 +450,9 @@ exports[`Interweave transform prop skips transforming tags outside the allowList
     <Element selfClose tagName="br">
       <br />
     </Element>
-    On Jun 29, 2021, at 12:15 PM, Someone 
+    On Jun 29, 2021, at 12:15 PM, Someone
      wrote:
-        
+
     <Element selfClose tagName="br">
       <br />
     </Element>
@@ -452,7 +469,7 @@ exports[`Interweave transform prop skips transforming tags outside the allowList
     <Element selfClose tagName="br">
       <br />
     </Element>
-    , . 
+    , .
     <Element selfClose tagName="br">
       <br />
     </Element>
@@ -471,7 +488,7 @@ exports[`Interweave transform prop skips transforming tags outside the allowList
       <br />
     </Element>
     Please, let us
-        
+
     <Element selfClose tagName="br">
       <br />
     </Element>
@@ -481,13 +498,13 @@ exports[`Interweave transform prop skips transforming tags outside the allowList
     <Element selfClose tagName="br">
       <br />
     </Element>
-    On Tue, Jun 29, 2021 at 9:54 AM Someone Else 
+    On Tue, Jun 29, 2021 at 9:54 AM Someone Else
      wrote:
     <Element selfClose tagName="br">
       <br />
     </Element>
     ,
-        . 
+        .
     <Element selfClose tagName="br">
       <br />
     </Element>
@@ -507,25 +524,25 @@ exports[`Interweave transform prop skips transforming tags outside the allowList
     <Element selfClose tagName="br">
       <br />
     </Element>
-    On Jun 29, 2021, at 9:41 AM, Someone 
-    
-        
+    On Jun 29, 2021, at 9:41 AM, Someone
+
+
      wrote:
     <Element selfClose tagName="br">
       <br />
     </Element>
-    Good Morning, 
+    Good Morning,
     <Element selfClose tagName="br">
       <br />
     </Element>
-    , . 
+    , .
     <Element selfClose tagName="br">
       <br />
     </Element>
     <Element selfClose tagName="br">
       <br />
     </Element>
-    Thank you, 
+    Thank you,
     <Element selfClose tagName="br">
       <br />
     </Element>
@@ -540,7 +557,7 @@ exports[`Interweave transform prop skips transforming tags outside the allowList
     <Element selfClose tagName="br">
       <br />
     </Element>
-    On Jun 27, 2021, at 3:56 PM, Someone 
+    On Jun 27, 2021, at 3:56 PM, Someone
      wrote:
     <Element selfClose tagName="br">
       <br />
@@ -552,7 +569,7 @@ exports[`Interweave transform prop skips transforming tags outside the allowList
       <br />
     </Element>
     , .
-        
+
     <Element selfClose tagName="br">
       <br />
     </Element>
@@ -581,7 +598,7 @@ exports[`Interweave transform prop skips transforming tags outside the allowList
       <br />
     </Element>
     On Sun, Jun 27,
-        2021 at 12:09 PM Someone 
+        2021 at 12:09 PM Someone
      wrote:
     <Element selfClose tagName="br">
       <br />
@@ -589,15 +606,15 @@ exports[`Interweave transform prop skips transforming tags outside the allowList
     <Element selfClose tagName="br">
       <br />
     </Element>
-    , . 
+    , .
     <Element selfClose tagName="br">
       <br />
     </Element>
     <Element selfClose tagName="br">
       <br />
     </Element>
-    
-        
+
+
     <Element selfClose tagName="br">
       <br />
     </Element>
@@ -627,7 +644,7 @@ exports[`Interweave transform prop skips transforming tags outside the allowList
       <br />
     </Element>
     On Jun 27, 2021, at
-        11:28 AM, Someone 
+        11:28 AM, Someone
      wrote:
     <Element selfClose tagName="br">
       <br />
@@ -645,7 +662,7 @@ exports[`Interweave transform prop skips transforming tags outside the allowList
     <Element selfClose tagName="br">
       <br />
     </Element>
-    , . 
+    , .
     <Element selfClose tagName="br">
       <br />
     </Element>
@@ -655,7 +672,7 @@ exports[`Interweave transform prop skips transforming tags outside the allowList
     <Element selfClose tagName="br">
       <br />
     </Element>
-    
+
         SomeDomain.dev
     <Element selfClose tagName="br">
       <br />
@@ -675,12 +692,12 @@ exports[`Interweave transform prop skips transforming tags outside the allowList
       <br />
     </Element>
     On Sat, Jun 26, 2021 at
-        3:25 PM Someone 
+        3:25 PM Someone
      wrote:
     <Element selfClose tagName="br">
       <br />
     </Element>
-    , . 
+    , .
     <Element selfClose tagName="br">
       <br />
     </Element>
@@ -710,7 +727,7 @@ exports[`Interweave transform prop skips transforming tags outside the allowList
       <br />
     </Element>
     On Sat, Jun 26, 2021 at 3:21 PM Someone
-        
+
      wrote:
     <Element selfClose tagName="br">
       <br />
@@ -722,21 +739,7 @@ exports[`Interweave transform prop skips transforming tags outside the allowList
     <Element selfClose tagName="br">
       <br />
     </Element>
-    , . 
-    <Element selfClose tagName="br">
-      <br />
-    </Element>
-    <Element selfClose tagName="br">
-      <br />
-    </Element>
-    , . 
-    <Element selfClose tagName="br">
-      <br />
-    </Element>
-    <Element selfClose tagName="br">
-      <br />
-    </Element>
-    , . 
+    , .
     <Element selfClose tagName="br">
       <br />
     </Element>
@@ -744,7 +747,21 @@ exports[`Interweave transform prop skips transforming tags outside the allowList
       <br />
     </Element>
     , .
-        
+    <Element selfClose tagName="br">
+      <br />
+    </Element>
+    <Element selfClose tagName="br">
+      <br />
+    </Element>
+    , .
+    <Element selfClose tagName="br">
+      <br />
+    </Element>
+    <Element selfClose tagName="br">
+      <br />
+    </Element>
+    , .
+
     <Element selfClose tagName="br">
       <br />
     </Element>
@@ -773,7 +790,7 @@ exports[`Interweave transform prop skips transforming tags outside the allowList
       <br />
     </Element>
     On Sat, Jun 26,
-        2021 at 1:51 AM Someone 
+        2021 at 1:51 AM Someone
      wrote:
     <Element selfClose tagName="br">
       <br />
@@ -782,7 +799,7 @@ exports[`Interweave transform prop skips transforming tags outside the allowList
     <Element selfClose tagName="br">
       <br />
     </Element>
-    , . 
+    , .
     <Element selfClose tagName="br">
       <br />
     </Element>
@@ -790,7 +807,7 @@ exports[`Interweave transform prop skips transforming tags outside the allowList
       <br />
     </Element>
     Someone
-        Else 
+        Else
     <Element selfClose tagName="br">
       <br />
     </Element>
@@ -804,8 +821,8 @@ exports[`Interweave transform prop skips transforming tags outside the allowList
     <Element selfClose tagName="br">
       <br />
     </Element>
-    On Jun 25, 2021, at 3:56 PM, Someone 
-    
+    On Jun 25, 2021, at 3:56 PM, Someone
+
         wrote:
     <Element selfClose tagName="br">
       <br />
@@ -816,22 +833,22 @@ exports[`Interweave transform prop skips transforming tags outside the allowList
     <Element selfClose tagName="br">
       <br />
     </Element>
-    Please contact the maintenance supervisor regarding this at 19999999999 
+    Please contact the maintenance supervisor regarding this at 19999999999
     <Element selfClose tagName="br">
       <br />
     </Element>
-    
-        
+
+
     <Element selfClose tagName="br">
       <br />
     </Element>
-    On Fri, Jun 25, 2021, 10:26 AM Someone 
+    On Fri, Jun 25, 2021, 10:26 AM Someone
      wrote:
     <Element selfClose tagName="br">
       <br />
     </Element>
     rttitor semper.
-        
+
     <Element selfClose tagName="br">
       <br />
     </Element>
@@ -847,9 +864,9 @@ exports[`Interweave transform prop skips transforming tags outside the allowList
     <Element selfClose tagName="br">
       <br />
     </Element>
-    On Jun 24, 2021, at 10:16 AM, Someone 
+    On Jun 24, 2021, at 10:16 AM, Someone
      wrote:
-        
+
     <Element selfClose tagName="br">
       <br />
     </Element>
@@ -895,8 +912,8 @@ exports[`Interweave transform prop skips transforming tags outside the allowList
     <Element selfClose tagName="br">
       <br />
     </Element>
-    
-      
+
+
   </span>
 </Element>
 `;
