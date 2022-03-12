@@ -9,9 +9,10 @@ import {
 import { Element } from '../src/Element';
 import { Parser } from '../src/Parser';
 import {
-	CodeTagMatcher,
+	codeBarMatcher,
+	codeBazMatcher,
+	codeFooMatcher,
 	createExpectedToken,
-	LinkFilter,
 	MOCK_MARKUP,
 	parentConfig,
 	TOKEN_LOCATIONS,
@@ -25,15 +26,15 @@ function createChild(tag: string, text: number | string): HTMLElement {
 }
 
 describe('Parser', () => {
-	let instance: Parser;
+	let instance: Parser<{}>;
 	let element: HTMLElement;
 
 	beforeEach(() => {
 		instance = new Parser(
 			'',
-			{},
-			[new CodeTagMatcher('foo'), new CodeTagMatcher('bar'), new CodeTagMatcher('baz')],
-			[new LinkFilter()],
+			{ tagName: 'div' },
+			[codeFooMatcher, codeBarMatcher, codeBazMatcher],
+			[], // [new LinkFilter()],
 		);
 	});
 
@@ -48,25 +49,6 @@ describe('Parser', () => {
 		[123, 456.78, true, [], {}].forEach((value) => {
 			// @ts-expect-error Invalid type
 			expect(() => new Parser(value)).toThrow('Interweave parser requires a valid string.');
-		});
-	});
-
-	describe('applyAttributeFilters()', () => {
-		it('applies filters for the attribute name', () => {
-			expect(instance.applyAttributeFilters('src', 'foo.com')).toBe('foo.com');
-			expect(instance.applyAttributeFilters('href', 'foo.com')).toBe('bar.net');
-		});
-	});
-
-	describe('applyNodeFilters()', () => {
-		it('applies filters to the node', () => {
-			const a = document.createElement('a');
-
-			expect(a.getAttribute('target')).toBeNull();
-
-			instance.applyNodeFilters('a', a);
-
-			expect(a.getAttribute('target')).toBe('_blank');
 		});
 	});
 
@@ -158,15 +140,29 @@ describe('Parser', () => {
 
 	describe('canRenderChild()', () => {
 		it('doesnt render if missing parent tag', () => {
-			expect(instance.canRenderChild({ ...parentConfig, tagName: '' }, { ...parentConfig })).toBe(
-				false,
-			);
+			expect(
+				instance.canRenderChild(
+					{
+						...parentConfig,
+						// @ts-expect-error Invalid
+						tagName: '',
+					},
+					{ ...parentConfig },
+				),
+			).toBe(false);
 		});
 
 		it('doesnt render if missing child tag', () => {
-			expect(instance.canRenderChild({ ...parentConfig }, { ...parentConfig, tagName: '' })).toBe(
-				false,
-			);
+			expect(
+				instance.canRenderChild(
+					{ ...parentConfig },
+					{
+						...parentConfig,
+						// @ts-expect-error Invalid
+						tagName: '',
+					},
+				),
+			).toBe(false);
 		});
 	});
 
@@ -467,8 +463,10 @@ describe('Parser', () => {
 		});
 
 		it('returns true if in allow list', () => {
+			// @ts-expect-error Invalid
 			instance.allowed.add('custom');
 
+			// @ts-expect-error Invalid
 			expect(instance.isTagAllowed('custom')).toBe(true);
 		});
 
@@ -487,7 +485,7 @@ describe('Parser', () => {
 
 	describe('parse()', () => {
 		it('parses the entire document starting from the body', () => {
-			instance = new Parser(MOCK_MARKUP);
+			instance = new Parser(MOCK_MARKUP, {});
 
 			expect(instance.parse()).toMatchSnapshot();
 		});
@@ -592,9 +590,9 @@ describe('Parser', () => {
 			]);
 		});
 
-		it('passes through elements if `noHtmlExceptMatchers` prop is set', () => {
+		it('passes through elements if `noHtmlExceptInternals` prop is set', () => {
 			instance = new Parser('', {
-				noHtmlExceptMatchers: true,
+				noHtmlExceptInternals: true,
 			});
 
 			element.append(document.createTextNode('Foo'));
@@ -622,8 +620,8 @@ describe('Parser', () => {
 			expect(instance.parseNode(element, parentConfig)).toEqual(['Foo', 'Bar', '[foo]']);
 		});
 
-		it('doesnt strip matchers HTML if `noHtmlExceptMatchers` prop is set', () => {
-			instance.props.noHtmlExceptMatchers = true;
+		it('doesnt strip matchers HTML if `noHtmlExceptInternals` prop is set', () => {
+			instance.props.noHtmlExceptInternals = true;
 
 			element.append(document.createTextNode('Foo'));
 			element.append(createChild('div', 'Bar'));

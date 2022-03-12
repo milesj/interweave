@@ -1,7 +1,6 @@
 import React from 'react';
 import { render } from 'rut-dom';
-import { Markup } from '../src/Markup';
-import { MarkupProps } from '../src/types';
+import { Markup, MarkupProps } from '../src/Markup';
 
 // All examples taken from MDN https://developer.mozilla.org/en-US/docs/Web/HTML/Element
 describe('html', () => {
@@ -187,7 +186,7 @@ describe('html', () => {
 		it('renders', () => {
 			const result = render<MarkupProps>(
 				<Markup
-					allowList={['canvas']}
+					allow={['canvas']}
 					content={`<canvas id="canvas" width="300" height="300">
   An alternative text describing what your canvas displays.
 </canvas>`}
@@ -455,7 +454,7 @@ describe('html', () => {
 		it('renders', () => {
 			const result = render<MarkupProps>(
 				<Markup
-					allowList={['iframe']}
+					allow={['iframe']}
 					content={`<iframe width="400" height="300" src="https://maps.google.com"></iframe>`}
 				/>,
 			);
