@@ -25,8 +25,9 @@ import {
 	MatcherElementsMap,
 	MatcherInterface,
 	Node,
-	NodeConfig,
 	ParserProps,
+	TagConfig,
+	TagName,
 } from './types';
 
 const ELEMENT_NODE = 1;
@@ -118,7 +119,7 @@ export class Parser {
 	 * If a match is found, create a React element, and build a new array.
 	 * This array allows React to interpolate and render accordingly.
 	 */
-	applyMatchers(string: string, parentConfig: NodeConfig): ChildrenNode {
+	applyMatchers(string: string, parentConfig: TagConfig): ChildrenNode {
 		const elements: MatcherElementsMap = {};
 		const { props } = this;
 		let matchedString = string;
@@ -200,7 +201,7 @@ export class Parser {
 	/**
 	 * Determine whether the child can be rendered within the parent.
 	 */
-	canRenderChild(parentConfig: NodeConfig, childConfig: NodeConfig): boolean {
+	canRenderChild(parentConfig: TagConfig, childConfig: TagConfig): boolean {
 		if (!parentConfig.tagName || !childConfig.tagName) {
 			return false;
 		}
@@ -371,14 +372,15 @@ export class Parser {
 	/**
 	 * Return configuration for a specific tag.
 	 */
-	getTagConfig(tagName: string): NodeConfig {
-		const common = {
+	getTagConfig(baseTagName: string): TagConfig {
+		const tagName = baseTagName as TagName;
+		const common: TagConfig = {
 			children: [],
 			content: 0,
 			invalid: [],
 			parent: [],
 			self: true,
-			tagName: '',
+			tagName: 'div',
 			type: 0,
 			void: false,
 		};
@@ -454,14 +456,9 @@ export class Parser {
 	 * Loop over the nodes children and generate a
 	 * list of text nodes and React elements.
 	 */
-	parseNode(parentNode: HTMLElement, parentConfig: NodeConfig): Node[] {
-		const {
-			noHtml,
-			noHtmlExceptMatchers,
-			allowElements,
-			transform,
-			transformOnlyAllowList,
-		} = this.props;
+	parseNode(parentNode: HTMLElement, parentConfig: TagConfig): Node[] {
+		const { noHtml, noHtmlExceptMatchers, allowElements, transform, transformOnlyAllowList } =
+			this.props;
 		let content: Node[] = [];
 		let mergedText = '';
 

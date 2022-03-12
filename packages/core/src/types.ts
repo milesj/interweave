@@ -38,6 +38,8 @@ export interface TagConfig {
 	void: boolean;
 }
 
+export type TagConfigMap = Record<string, Partial<TagConfig>>;
+
 // CALLBACKS
 
 export type OnAfterParse<Props> = (content: Node, props: Props) => Node;
@@ -47,27 +49,6 @@ export type OnBeforeParse<Props> = (content: string, props: Props) => string;
 export type Node = React.ReactElement<unknown> | string | null;
 
 export type ChildrenNode = Node[] | string;
-
-export interface NodeConfig {
-	// Only children
-	children: string[];
-	// Children content type
-	content: number;
-	// Invalid children
-	invalid: string[];
-	// Only parent
-	parent: string[];
-	// Can render self as a child
-	self: boolean;
-	// HTML tag name
-	tagName: string;
-	// Self content type
-	type: number;
-	// Self-closing tag
-	void: boolean;
-}
-
-export type ConfigMap = Record<string, Partial<NodeConfig>>;
 
 export type AttributeValue = boolean | number | object | string;
 
@@ -80,7 +61,7 @@ export type BeforeParseCallback<T> = (content: string, props: T) => string;
 export type TransformCallback = (
 	node: HTMLElement,
 	children: Node[],
-	config: NodeConfig,
+	config: TagConfig,
 ) => React.ReactNode;
 
 // MATCHERS

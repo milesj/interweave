@@ -5,10 +5,11 @@
 
 export * from './constants';
 export * from './Element';
-export * from './Filter';
 export * from './Interweave';
 export * from './Markup';
-export * from './match';
-export * from './Matcher';
 export * from './Parser';
 export * from './types';
+
+// NEW
+export * from './createMatcher';
+export * from './createTransformer';

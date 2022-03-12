@@ -1,5 +1,5 @@
 import React from 'react';
-import { ChildrenNode, Element, Filter, Matcher, MatchResponse, Node, NodeConfig, TAGS } from '.';
+import { ChildrenNode, Element, Filter, Matcher, MatchResponse, Node, TagConfig, TAGS } from '.';
 
 export const TOKEN_LOCATIONS = [
 	'no tokens',
@@ -84,7 +84,7 @@ export const MOCK_INVALID_MARKUP = `<div bgcolor="black">
   <p align="center">More text <strike>with outdated stuff</strike>.</p>
 </div>`;
 
-export const parentConfig: NodeConfig = {
+export const parentConfig: TagConfig = {
 	children: [],
 	content: 0,
 	invalid: [],
