@@ -1,4 +1,4 @@
-import { CommonInternals, OnAfterParse, OnBeforeParse, TagName } from './types';
+import { CommonInternals, Node, OnAfterParse, OnBeforeParse, TagName } from './types';
 
 export type OnMatch<Match, Props, Options = {}> = (
 	result: MatchResult,

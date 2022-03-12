@@ -46,7 +46,7 @@ export type OnAfterParse<Props> = (content: Node, props: Props) => Node;
 
 export type OnBeforeParse<Props> = (content: string, props: Props) => string;
 
-export type Node = React.ReactElement<unknown> | string | null;
+export type Node = NonNullable<React.ReactNode>;
 
 export type ChildrenNode = Node[] | string;
 
@@ -76,41 +76,11 @@ export type MatchResponse<T> = T & {
 	void?: boolean;
 };
 
-export interface MatcherInterface<T = any> {
-	greedy?: boolean;
-	inverseName: string;
-	propName: string;
-	asTag: () => string;
-	createElement: (children: ChildrenNode, props: T) => Node;
-	match: (value: string) => MatchResponse<Partial<T>> | null;
-	onBeforeParse?: (content: string, props: T) => string;
-	onAfterParse?: (content: Node[], props: T) => Node[];
-}
-
 // FILTERS
 
 export type ElementAttributes = React.AllHTMLAttributes<unknown>;
 
-export interface FilterInterface {
-	attribute?: <K extends keyof ElementAttributes>(
-		name: K,
-		value: ElementAttributes[K],
-	) => ElementAttributes[K] | null | undefined;
-	node?: (name: string, node: HTMLElement) => HTMLElement | null;
-}
-
-export type FilterMap = Record<string, number>;
-
 // PARSER
-
-export type MatcherElementsMap = Record<
-	string,
-	{
-		children: string;
-		matcher: MatcherInterface<{}>;
-		props: object;
-	}
->;
 
 export interface ParserProps {
 	/** Disable filtering and allow all non-banned HTML attributes. */
@@ -118,9 +88,9 @@ export interface ParserProps {
 	/** Disable filtering and allow all non-banned/blocked HTML elements to be rendered. */
 	allowElements?: boolean;
 	/** List of HTML tag names to allow and render. Defaults to the `ALLOWED_TAG_LIST` constant. */
-	allowList?: string[];
+	allow?: TagName[];
 	/** List of HTML tag names to disallow and not render. Overrides allow list. */
-	blockList?: string[];
+	block?: TagName[];
 	/** Disable the conversion of new lines to `<br />` elements. */
 	disableLineBreaks?: boolean;
 	/** The container element to parse content in. Applies browser semantic rules and overrides `tagName`. */

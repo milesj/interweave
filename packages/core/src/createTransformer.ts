@@ -1,4 +1,4 @@
-import { CommonInternals, OnAfterParse, OnBeforeParse, TagName, WildTagName } from './types';
+import { CommonInternals, Node, OnAfterParse, OnBeforeParse, TagName, WildTagName } from './types';
 
 export type InferElement<K> = K extends '*'
 	? HTMLElement
