@@ -179,7 +179,7 @@ export const mockMatcher = createMatcher(
 	),
 );
 
-export const linkTransformer = createTransformer('a', {}, (element, p, c) => {
+export const linkTransformer = createTransformer('a', {}, (element) => {
 	element.setAttribute('target', '_blank');
 
 	const href = element.getAttribute('href');

@@ -89,7 +89,7 @@ export function Emoji({
 			aria-label={emoji.label}
 			data-emoticon={emoji.emoticon}
 			data-hexcode={emoji.hexcode}
-			data-shortcodes={emoji.canonical_shortcodes.join(', ')}
+			data-shortcodes={emoji.canonicalShortcodes.join(', ')}
 			data-unicode={emoji.unicode}
 			src={path}
 			style={styles}

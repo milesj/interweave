@@ -1,8 +1,9 @@
 import { Emoji, Emoticon, Hexcode, Locale, Shortcode, Unicode } from 'emojibase';
+import { MatchParams } from 'interweave';
 
 export interface CanonicalEmoji extends Emoji {
-	canonical_shortcodes: Shortcode[];
-	primary_shortcode: Shortcode;
+	canonicalShortcodes: Shortcode[];
+	primaryShortcode: Shortcode;
 	skins?: CanonicalEmoji[];
 	unicode: Unicode;
 }
@@ -48,19 +49,11 @@ export interface EmojiProps {
 	unicode?: Unicode;
 }
 
-export interface EmojiMatch {
+export interface EmojiMatch extends MatchParams {
 	emoticon?: string;
 	hexcode?: string;
 	shortcode?: string;
 	unicode?: string;
-}
-
-export interface EmojiMatcherOptions {
-	convertEmoticon?: boolean;
-	convertShortcode?: boolean;
-	convertUnicode?: boolean;
-	enlargeThreshold?: number;
-	renderUnicode?: boolean;
 }
 
 export interface UseEmojiDataOptions {
@@ -76,4 +69,9 @@ export interface UseEmojiDataOptions {
 	throwErrors?: boolean;
 	/** Emojibase dataset version to load. Defaults to `latest`. */
 	version?: string;
+}
+
+export interface InterweaveEmojiProps {
+	emojiEnlargeThreshold?: number;
+	emojiSource: Source;
 }

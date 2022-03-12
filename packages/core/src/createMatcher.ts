@@ -1,4 +1,11 @@
-import { CommonInternals, Node, OnAfterParse, OnBeforeParse, TagName } from './types';
+import {
+	CommonInternals,
+	Node,
+	OnAfterParse,
+	OnBeforeParse,
+	PassthroughProps,
+	TagName,
+} from './types';
 
 // Result from the match process
 export interface MatchResult {
@@ -17,46 +24,44 @@ export interface MatchParams {
 	match?: string;
 }
 
-export type OnMatch<Match extends MatchParams> = <Props extends object>(
+export type OnMatch<Match extends MatchParams, Props extends object> = (
 	result: MatchResult,
 	props: Props,
 ) => Match | null;
 
-export interface MatcherOptions<Match extends MatchParams> {
+export interface MatcherOptions<Match extends MatchParams, Props extends object> {
 	greedy?: boolean;
 	tagName: TagName;
 	void?: boolean;
-	onAfterParse?: OnAfterParse;
-	onBeforeParse?: OnBeforeParse;
-	onMatch: OnMatch<Match>;
+	onAfterParse?: OnAfterParse<Props>;
+	onBeforeParse?: OnBeforeParse<Props>;
+	onMatch: OnMatch<Match, Props>;
 }
 
-export type MatcherFactory<Match extends MatchParams> = <Props extends object>(
+export type MatcherFactory<Match extends MatchParams, Props extends object> = (
 	params: Match,
 	props: Props,
 	children: Node | null,
 	key: number,
 ) => React.ReactElement;
 
-export interface Matcher<Match extends MatchParams> extends CommonInternals {
+export interface Matcher<Match extends MatchParams, Props extends object>
+	extends CommonInternals<Props> {
 	extend: (
-		factory?: MatcherFactory<Match> | null,
-		options?: Partial<MatcherOptions<Match>>,
-	) => Matcher<Match>;
-	factory: MatcherFactory<Match>;
+		factory?: MatcherFactory<Match, Props> | null,
+		options?: Partial<MatcherOptions<Match, Props>>,
+	) => Matcher<Match, Props>;
+	factory: MatcherFactory<Match, Props>;
 	greedy: boolean;
-	match: <Props extends object>(
-		value: string,
-		props: Props,
-	) => (MatchResult & { params: Match }) | null;
+	match: (value: string, props: Props) => (MatchResult & { params: Match }) | null;
 	tagName: TagName;
 }
 
-export function createMatcher<Match extends MatchParams>(
+export function createMatcher<Match extends MatchParams, Props extends object = PassthroughProps>(
 	pattern: RegExp | string,
-	options: MatcherOptions<Match>,
-	factory: MatcherFactory<Match>,
-): Matcher<Match> {
+	options: MatcherOptions<Match, Props>,
+	factory: MatcherFactory<Match, Props>,
+): Matcher<Match, Props> {
 	return {
 		extend(customFactory, customOptions) {
 			return createMatcher(

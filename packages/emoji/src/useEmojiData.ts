@@ -67,6 +67,8 @@ async function loadEmojis(
 			instance.parseEmojiData(emojis);
 			instance.parseMessageData(messages);
 
+			promises.delete(key);
+
 			return instance.getData();
 		}),
 	);

@@ -1,4 +1,12 @@
-import { CommonInternals, Node, OnAfterParse, OnBeforeParse, TagName, WildTagName } from './types';
+import {
+	CommonInternals,
+	Node,
+	OnAfterParse,
+	OnBeforeParse,
+	PassthroughProps,
+	TagName,
+	WildTagName,
+} from './types';
 
 export type InferElement<K> = K extends '*'
 	? HTMLElement
@@ -6,32 +14,32 @@ export type InferElement<K> = K extends '*'
 	? HTMLElementTagNameMap[K]
 	: HTMLElement;
 
-export type TransformerFactory<Element> = <Props extends object>(
+export type TransformerFactory<Element, Props extends object> = (
 	element: Element,
 	props: Props,
 	children: Node[],
 ) => Element | React.ReactElement | null | undefined | void;
 
-export interface TransformerOptions {
+export interface TransformerOptions<Props extends object> {
 	tagName?: TagName;
-	onAfterParse?: OnAfterParse;
-	onBeforeParse?: OnBeforeParse;
+	onAfterParse?: OnAfterParse<Props>;
+	onBeforeParse?: OnBeforeParse<Props>;
 }
 
-export interface Transformer<Element> extends CommonInternals {
+export interface Transformer<Element, Props extends object> extends CommonInternals<Props> {
 	extend: (
-		factory?: TransformerFactory<Element> | null,
-		options?: Partial<TransformerOptions>,
-	) => Transformer<Element>;
-	factory: TransformerFactory<Element>;
+		factory?: TransformerFactory<Element, Props> | null,
+		options?: Partial<TransformerOptions<Props>>,
+	) => Transformer<Element, Props>;
+	factory: TransformerFactory<Element, Props>;
 	tagName: WildTagName;
 }
 
-export function createTransformer<K extends WildTagName>(
+export function createTransformer<K extends WildTagName, Props extends object = PassthroughProps>(
 	tagName: K,
-	options: TransformerOptions,
-	factory: TransformerFactory<InferElement<K>>,
-): Transformer<InferElement<K>> {
+	options: TransformerOptions<Props>,
+	factory: TransformerFactory<InferElement<K>, Props>,
+): Transformer<InferElement<K>, Props> {
 	return {
 		extend(customFactory, customOptions) {
 			return createTransformer(

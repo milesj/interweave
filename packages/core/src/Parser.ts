@@ -20,10 +20,10 @@ import { styleTransformer } from './transformers';
 import { Attributes, AttributeValue, Node, TagConfig, TagName } from './types';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export type TransformerInterface = Transformer<any>;
+export type TransformerInterface = Transformer<any, any>;
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export type MatcherInterface = Matcher<any>;
+export type MatcherInterface = Matcher<any, any>;
 
 type MatchedElements = Record<
 	string,
