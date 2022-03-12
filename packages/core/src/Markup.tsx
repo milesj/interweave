@@ -1,47 +1,16 @@
-/* eslint-disable react/jsx-fragments */
-
-import React from 'react';
-import { Element } from './Element';
+import React, { useMemo } from 'react';
 import { Parser } from './Parser';
 import { MarkupProps } from './types';
 
 export function Markup(props: MarkupProps) {
-	const {
-		attributes,
-		className,
-		containerTagName,
-		content,
-		emptyContent,
-		parsedContent,
-		tagName,
-		noWrap: baseNoWrap,
-	} = props;
-	const tag = containerTagName ?? tagName ?? 'span';
-	const noWrap = tag === 'fragment' ? true : baseNoWrap;
-	let mainContent;
-
-	if (parsedContent) {
-		mainContent = parsedContent;
-	} else {
-		const markup = new Parser(content ?? '', props).parse();
-
-		if (markup.length > 0) {
-			mainContent = markup;
-		}
-	}
-
-	if (!mainContent) {
-		mainContent = emptyContent;
-	}
-
-	if (noWrap) {
-		// eslint-disable-next-line react/jsx-no-useless-fragment
-		return <React.Fragment>{mainContent}</React.Fragment>;
-	}
-
-	return (
-		<Element attributes={attributes} className={className} tagName={tag}>
-			{mainContent}
-		</Element>
+	const { content, emptyContent, parsedContent } = props;
+	const mainContent = useMemo(
+		() => parsedContent ?? new Parser(content ?? '', props).parse(),
+		// Do not include `peops` as we only want to re-render on content changes
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+		[parsedContent, content],
 	);
+
+	// eslint-disable-next-line react/jsx-no-useless-fragment
+	return <>{mainContent ?? emptyContent}</>;
 }
