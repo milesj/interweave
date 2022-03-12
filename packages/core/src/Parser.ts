@@ -19,9 +19,11 @@ import { Element, ElementProps } from './Element';
 import { styleTransformer } from './transformers';
 import { Attributes, AttributeValue, Node, TagConfig, TagName } from './types';
 
-export type TransformerInterface = Transformer<HTMLElement>;
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export type TransformerInterface = Transformer<any>;
 
-export type MatcherInterface = Matcher<MatchParams>;
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export type MatcherInterface = Matcher<any>;
 
 type MatchedElements = Record<
 	string,

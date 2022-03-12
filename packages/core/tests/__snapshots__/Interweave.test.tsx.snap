@@ -306,33 +306,33 @@ exports[`Interweave renders using a custom container element 1`] = `
 `;
 
 exports[`Interweave transform prop allows blocked 1`] = `
-<Element tagName="span">
-  <span>
-    Foo
-    <Dummy>
-      <iframe title="foo" />
-    </Dummy>
-     Bar
-  </span>
-</Element>
+<Interweave
+  content="Foo <iframe></iframe> Bar"
+  transformers={[ <iframe />, <* /> ]}
+>
+  Foo 
+  <Dummy>
+    <iframe title="foo" />
+  </Dummy>
+   Bar
+</Interweave>
 `;
 
 exports[`Interweave transform prop replaces the element 1`] = `
-<Element tagName="span">
-  <span>
-    Foo
-    <Dummy>
-      <div />
-    </Dummy>
-     Bar
-  </span>
-</Element>
+<Interweave content="Foo <img/> Bar" transformers={[ <img />, <* /> ]}>
+  Foo 
+  <Dummy>
+    <div />
+  </Dummy>
+   Bar
+</Interweave>
 `;
 
 exports[`Interweave transform prop skips the element 1`] = `
-<Element tagName="span">
-  <span>Foo  Bar</span>
-</Element>
+<Interweave content="Foo <img/> Bar" transformers={[ <img />, <* /> ]}>
+  Foo 
+   Bar
+</Interweave>
 `;
 
 exports[`Interweave transform prop skips transforming tags outside the allowList when transformOnlyAllowList is true 1`] = `

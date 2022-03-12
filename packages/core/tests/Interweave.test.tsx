@@ -3,12 +3,11 @@ import ReactDOMServer from 'react-dom/server';
 import { polyfill } from 'interweave-ssr';
 import { render } from 'rut-dom';
 import { ALLOWED_TAG_LIST } from '../src/constants';
+import { createTransformer } from '../src/createTransformer';
 import { Element } from '../src/Element';
 import { Interweave, InterweaveProps } from '../src/Interweave';
 import {
 	codeBarMatcher,
-	codeBazMatcher,
-	codeFooMatcher,
 	linkTransformer,
 	mdBoldMatcher,
 	mdItalicMatcher,
@@ -239,11 +238,12 @@ describe('Interweave', () => {
 		});
 	});
 
-	describe.skip('transform prop', () => {
+	describe('transform prop', () => {
 		it('skips the element', () => {
-			const transform = (node: HTMLElement) => (node.nodeName === 'IMG' ? null : undefined);
+			const transformer = createTransformer('img', {}, () => null);
+
 			const { root } = render<InterweaveProps>(
-				<Interweave content={'Foo <img/> Bar'} transform={transform} />,
+				<Interweave content={'Foo <img/> Bar'} transformers={[transformer]} />,
 			);
 
 			expect(root).toMatchSnapshot();
@@ -253,9 +253,11 @@ describe('Interweave', () => {
 			function Dummy() {
 				return <div />;
 			}
-			const transform = (node: HTMLElement) => (node.nodeName === 'IMG' ? <Dummy /> : undefined);
+
+			const transformer = createTransformer('img', {}, () => <Dummy />);
+
 			const { root } = render<InterweaveProps>(
-				<Interweave content={'Foo <img/> Bar'} transform={transform} />,
+				<Interweave content={'Foo <img/> Bar'} transformers={[transformer]} />,
 			);
 
 			expect(root).toMatchSnapshot();
@@ -265,17 +267,21 @@ describe('Interweave', () => {
 			function Dummy() {
 				return <iframe title="foo" />;
 			}
-			const transform = (node: HTMLElement) => (node.nodeName === 'IFRAME' ? <Dummy /> : undefined);
+
+			const transformer = createTransformer('iframe', {}, () => <Dummy />);
+
 			const { root } = render<InterweaveProps>(
-				<Interweave content={'Foo <iframe></iframe> Bar'} transform={transform} />,
+				<Interweave content={'Foo <iframe></iframe> Bar'} transformers={[transformer]} />,
 			);
 
 			expect(root).toMatchSnapshot();
 		});
 
-		it('skips transforming tags outside the allowList when transformOnlyAllowList is true', () => {
-			const transform = (node: HTMLElement) =>
-				node.nodeName.toLowerCase() === 'a' ? <a href="http://example.com">hi</a> : undefined;
+		it.skip('skips transforming tags outside the allowList when transformOnlyAllowList is true', () => {
+			const transformer = createTransformer('*', {}, (element) =>
+				element.nodeName === 'A' ? <a href="http://example.com">hi</a> : undefined,
+			);
+
 			const content = `
         Hello, https://test.example.com <a href="hi">yo</a> test@example.com test@example.com <br>
         at 8:58 AM Someone <someone@somedomain.dev> wrote:<br>Hi, <br>:  Czech, English, Français,
@@ -308,7 +314,7 @@ describe('Interweave', () => {
       `;
 
 			const { root } = render<InterweaveProps>(
-				<Interweave transformOnlyAllowList content={content} transform={transform} />,
+				<Interweave transformOnlyAllowList content={content} transformers={[transformer]} />,
 			);
 
 			expect(root).toMatchSnapshot();
