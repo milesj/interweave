@@ -27,24 +27,24 @@ export interface Source {
 }
 
 export interface EmojiProps {
-	/** Size of the emoji when it's enlarged. */
-	emojiLargeSize?: Size;
-	/** Path to an SVG/PNG. Accepts a string or a callback that is passed the hexcode. */
-	emojiPath?: Path;
-	/** Size of the emoji. Defaults to 1em. */
-	emojiSize?: Size;
-	/** Emoji datasource metadata. */
-	emojiSource: Source;
 	/** Emoticon to reference emoji from. */
 	emoticon?: Emoticon;
 	/** Enlarge emoji increasing it's size. */
-	enlargeEmoji?: boolean;
+	enlarge?: boolean;
 	/** Hexcode to reference emoji from. */
 	hexcode?: Hexcode;
+	/** Size of the emoji when it's enlarged. */
+	largeSize?: Size;
+	/** Path to an SVG/PNG. Accepts a string or a callback that is passed the hexcode. */
+	path?: Path;
 	/** Render literal unicode character instead of an SVG/PNG. */
 	renderUnicode?: boolean;
 	/** Shortcode to reference emoji from. */
 	shortcode?: Shortcode;
+	/** Size of the emoji. Defaults to 1em. */
+	size?: Size;
+	/** Emoji datasource metadata. */
+	source: Source;
 	/** Unicode character to reference emoji from. */
 	unicode?: Unicode;
 }
@@ -71,7 +71,9 @@ export interface UseEmojiDataOptions {
 	version?: string;
 }
 
-export interface InterweaveEmojiProps {
-	emojiEnlargeThreshold?: number;
-	emojiSource: Source;
+declare module 'interweave' {
+	export interface InterweaveProps {
+		emojiEnlargeThreshold?: number;
+		emojiSource: Source;
+	}
 }

@@ -51,8 +51,8 @@ describe('EmojiDataManager', () => {
 		it('creates a new emoji', () => {
 			expect(manager.packageEmoji(cat)).toEqual({
 				...cat,
-				canonical_shortcodes: [':cat:'],
-				primary_shortcode: ':cat:',
+				canonicalShortcodes: [':cat:'],
+				primaryShortcode: ':cat:',
 				skins: [],
 				unicode: '🐈',
 			});
@@ -67,8 +67,8 @@ describe('EmojiDataManager', () => {
 				}),
 			).toEqual({
 				...cat,
-				canonical_shortcodes: [':cat:'],
-				primary_shortcode: ':cat:',
+				canonicalShortcodes: [':cat:'],
+				primaryShortcode: ':cat:',
 				skins: [],
 				type: 0,
 				text: 'CAT',

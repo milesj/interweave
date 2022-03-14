@@ -5,7 +5,8 @@ declare global {
 	var INTERWEAVE_SSR_POLYFILL: (() => Document | undefined) | undefined;
 }
 
-export interface CommonInternals<Props extends object> {
+export interface CommonInternals<Props extends object, Config extends object> {
+	config?: Config;
 	onAfterParse?: OnAfterParse<Props>;
 	onBeforeParse?: OnBeforeParse<Props>;
 }

@@ -2,7 +2,7 @@ import React from 'react';
 import { Element, Interweave, InterweaveProps } from 'interweave';
 import { SOURCE_PROP } from 'interweave/test';
 import { render } from 'rut-dom';
-import { EmojiMatcher } from '../src/EmojiMatcher';
+import { emojiEmoticonMatcher, emojiShortcodeMatcher, emojiUnicodeMatcher } from '../src/matchers';
 import { mockEmojiData } from '../src/test';
 
 mockEmojiData('en', '0.0.0');
@@ -11,19 +11,13 @@ describe('Interweave (with emoji)', () => {
 	it('renders all types', () => {
 		const { root } = render<InterweaveProps>(
 			<Interweave
-				enlargeEmoji
+				emojiEnlargeThreshold="2em"
 				content={
 					'This will convert 🐱 \uD83D\uDC36 :man: :3 all 3 emoji types to PNGs and increase the size.'
 				}
 				emojiLargeSize="2em"
 				emojiSource={SOURCE_PROP}
-				matchers={[
-					new EmojiMatcher('emoji', {
-						convertEmoticon: true,
-						convertShortcode: true,
-						convertUnicode: true,
-					}),
-				]}
+				matchers={[emojiEmoticonMatcher, emojiShortcodeMatcher, emojiUnicodeMatcher]}
 				tagName="div"
 			/>,
 		);
@@ -36,7 +30,7 @@ describe('Interweave (with emoji)', () => {
 			<Interweave
 				content="This has :cat: and :dog: shortcodes."
 				emojiSource={SOURCE_PROP}
-				matchers={[new EmojiMatcher('emoji', { convertShortcode: true, renderUnicode: true })]}
+				matchers={[emojiShortcodeMatcher]}
 				tagName="div"
 			/>,
 		);
@@ -49,7 +43,7 @@ describe('Interweave (with emoji)', () => {
 			<Interweave
 				content="This has 🐈️ and 🐕️ shortcodes."
 				emojiSource={SOURCE_PROP}
-				matchers={[new EmojiMatcher('emoji', { convertUnicode: true, renderUnicode: true })]}
+				matchers={[emojiUnicodeMatcher]}
 				tagName="div"
 			/>,
 		);
@@ -62,7 +56,7 @@ describe('Interweave (with emoji)', () => {
 			<Interweave
 				content={'This has \uD83D\uDC31 and \uD83D\uDC36 shortcodes.'}
 				emojiSource={SOURCE_PROP}
-				matchers={[new EmojiMatcher('emoji', { convertUnicode: true, renderUnicode: true })]}
+				matchers={[emojiUnicodeMatcher]}
 				tagName="div"
 			/>,
 		);
@@ -75,7 +69,7 @@ describe('Interweave (with emoji)', () => {
 			<Interweave
 				content=":cat:"
 				emojiSource={SOURCE_PROP}
-				matchers={[new EmojiMatcher('emoji', { convertUnicode: true, convertShortcode: true })]}
+				matchers={[emojiShortcodeMatcher, emojiUnicodeMatcher]}
 				tagName="div"
 			/>,
 		);

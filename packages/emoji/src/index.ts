@@ -6,6 +6,6 @@
 export * from './constants';
 export * from './Emoji';
 export * from './EmojiDataManager';
-export * from './EmojiMatcher';
+export * from './matchers';
 export * from './types';
 export * from './useEmojiData';

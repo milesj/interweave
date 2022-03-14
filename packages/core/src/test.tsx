@@ -25,7 +25,7 @@ export const SOURCE_PROP = {
 	compact: false,
 	locale: 'en',
 	version: 'latest',
-};
+} as const;
 
 export const VALID_EMOJIS = [
 	['1F621', '😡', ':enraged:', '>:/'],
@@ -179,7 +179,7 @@ export const mockMatcher = createMatcher(
 	),
 );
 
-export const linkTransformer = createTransformer('a', {}, (element) => {
+export const linkTransformer = createTransformer('a', (element) => {
 	element.setAttribute('target', '_blank');
 
 	const href = element.getAttribute('href');
@@ -189,4 +189,4 @@ export const linkTransformer = createTransformer('a', {}, (element) => {
 	}
 });
 
-export const mockTransformer = createTransformer('*', {}, () => {});
+export const mockTransformer = createTransformer('*', () => {});

@@ -1,13 +1,13 @@
 import React from 'react';
-import { createMatcher, MatcherFactory, Node, OnMatch } from 'interweave';
+import { createMatcher, MatcherFactory, Node, OnMatch, InterweaveProps } from 'interweave';
 import { Emoji } from './Emoji';
-import { EmojiMatch, EmojiProps, InterweaveEmojiProps } from './types';
+import { EmojiMatch } from './types';
 
-function factory(match: EmojiMatch, { emojiSource }: InterweaveEmojiProps) {
-	return <Emoji {...match} emojiSource={emojiSource} />;
+function factory(match: EmojiMatch, { emojiSource }: InterweaveProps) {
+	return <Emoji {...match} source={emojiSource} />;
 }
 
-function onBeforeParse(content: string, { emojiSource }: InterweaveEmojiProps): string {
+function onBeforeParse(content: string, { emojiSource }: InterweaveProps): string {
 	if (__DEV__ && !emojiSource) {
 		throw new Error(
 			'Missing emoji source data. Have you loaded with the `useEmojiData` hook and passed the `emojiSource` prop?',
@@ -17,7 +17,7 @@ function onBeforeParse(content: string, { emojiSource }: InterweaveEmojiProps): 
 	return content;
 }
 
-function onAfterParse(node: Node, { emojiEnlargeThreshold = 1 }: InterweaveEmojiProps): Node {
+function onAfterParse(node: Node, { emojiEnlargeThreshold = 1 }: InterweaveProps): Node {
 	const content = React.Children.toArray(node);
 
 	if (content.length === 0) {
@@ -62,23 +62,23 @@ function onAfterParse(node: Node, { emojiEnlargeThreshold = 1 }: InterweaveEmoji
 	}
 
 	return content.map((item) => {
-		if (!React.isValidElement<EmojiProps>(item)) {
+		if (!React.isValidElement(item)) {
 			return item;
 		}
 
 		return React.cloneElement(item, {
 			...item.props,
-			emojiEnlarged: true,
+			enlarge: true,
 		});
 	});
 }
 
 export function createEmojiMatcher(
 	pattern: RegExp,
-	onMatch: OnMatch<EmojiMatch, InterweaveEmojiProps>,
-	customFactory: MatcherFactory<EmojiMatch, InterweaveEmojiProps> = factory,
+	onMatch: OnMatch<EmojiMatch, InterweaveProps>,
+	customFactory: MatcherFactory<EmojiMatch, InterweaveProps> = factory,
 ) {
-	return createMatcher<EmojiMatch, InterweaveEmojiProps>(
+	return createMatcher<EmojiMatch, InterweaveProps>(
 		pattern,
 		{
 			greedy: true,

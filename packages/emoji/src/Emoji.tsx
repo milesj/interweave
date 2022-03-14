@@ -5,18 +5,18 @@ import { EmojiDataManager } from './EmojiDataManager';
 import { EmojiProps, Size } from './types';
 
 export function Emoji({
-	emojiLargeSize = '3em',
-	emojiPath = '{{hexcode}}',
-	emojiSize = '1em',
-	emojiSource,
 	emoticon,
-	enlargeEmoji = false,
+	enlarge = false,
 	hexcode,
+	largeSize = '3em',
+	path = '{{hexcode}}',
 	renderUnicode = false,
 	shortcode,
+	size = '1em',
+	source,
 	unicode,
 }: EmojiProps) {
-	const data = EmojiDataManager.getInstance(emojiSource.locale, emojiSource.version);
+	const data = EmojiDataManager.getInstance(source.locale, source.version);
 
 	if (__DEV__ && !emoticon && !shortcode && !unicode && !hexcode) {
 		throw new Error(
@@ -57,28 +57,28 @@ export function Emoji({
 	};
 
 	// Handle large styles
-	if (enlargeEmoji && emojiLargeSize) {
-		styles.width = emojiLargeSize;
-		styles.height = emojiLargeSize;
+	if (enlarge && largeSize) {
+		styles.width = largeSize;
+		styles.height = largeSize;
 
 		// Only apply styles if a size is defined
-	} else if (emojiSize) {
-		styles.width = emojiSize;
-		styles.height = emojiSize;
+	} else if (size) {
+		styles.width = size;
+		styles.height = size;
 	}
 
 	// Determine the path
-	let path = emojiPath || '{{hexcode}}';
+	let src = path || '{{hexcode}}';
 
-	path =
-		typeof path === 'function'
-			? path(emoji.hexcode, {
-					enlarged: enlargeEmoji,
-					largeSize: emojiLargeSize,
-					size: enlargeEmoji ? emojiLargeSize : emojiSize,
-					smallSize: emojiSize,
+	src =
+		typeof src === 'function'
+			? src(emoji.hexcode, {
+					enlarged: enlarge,
+					largeSize,
+					size: enlarge ? largeSize : size,
+					smallSize: size,
 			  })
-			: path.replace('{{hexcode}}', emoji.hexcode);
+			: src.replace('{{hexcode}}', emoji.hexcode);
 
 	// http://git.emojione.com/demos/latest/sprites-png.html
 	// http://git.emojione.com/demos/latest/sprites-svg.html
@@ -91,7 +91,7 @@ export function Emoji({
 			data-hexcode={emoji.hexcode}
 			data-shortcodes={emoji.canonicalShortcodes.join(', ')}
 			data-unicode={emoji.unicode}
-			src={path}
+			src={src}
 			style={styles}
 			title={emoji.label}
 		/>

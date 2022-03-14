@@ -20,36 +20,39 @@ export type TransformerFactory<Element, Props extends object> = (
 	children: Node[],
 ) => Element | React.ReactElement | null | undefined | void;
 
-export interface TransformerOptions<Props extends object> {
+export interface TransformerOptions<Props extends object, Config extends object>
+	extends CommonInternals<Props, Config> {
 	tagName?: TagName;
-	onAfterParse?: OnAfterParse<Props>;
-	onBeforeParse?: OnBeforeParse<Props>;
 }
 
-export interface Transformer<Element, Props extends object> extends CommonInternals<Props> {
+export interface Transformer<Element, Props extends object, Config extends object>
+	extends CommonInternals<Props, Config> {
 	extend: (
-		factory?: TransformerFactory<Element, Props> | null,
-		options?: Partial<TransformerOptions<Props>>,
-	) => Transformer<Element, Props>;
+		config?: Partial<Config>,
+		factory?: TransformerFactory<Element, Props>,
+	) => Transformer<Element, Props, Config>;
 	factory: TransformerFactory<Element, Props>;
 	tagName: WildTagName;
 }
 
-export function createTransformer<K extends WildTagName, Props extends object = PassthroughProps>(
+export function createTransformer<
+	K extends WildTagName,
+	Props extends object = PassthroughProps,
+	Config extends object = {},
+>(
 	tagName: K,
-	options: TransformerOptions<Props>,
 	factory: TransformerFactory<InferElement<K>, Props>,
-): Transformer<InferElement<K>, Props> {
+	options: TransformerOptions<Props, Config> = {},
+): Transformer<InferElement<K>, Props, Config> {
 	return {
-		extend(customFactory, customOptions) {
-			return createTransformer(
-				tagName,
-				{
-					...options,
-					...customOptions,
+		extend(customConfig, customFactory) {
+			return createTransformer<K, Props, Config>(tagName, customFactory ?? factory, {
+				...options,
+				config: {
+					...(options.config as Config),
+					...customConfig,
 				},
-				customFactory ?? factory,
-			);
+			});
 		},
 		factory,
 		onAfterParse: options.onAfterParse,
