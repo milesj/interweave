@@ -240,7 +240,7 @@ describe('Interweave', () => {
 
 	describe('transform prop', () => {
 		it('skips the element', () => {
-			const transformer = createTransformer('img', {}, () => null);
+			const transformer = createTransformer('img', () => null);
 
 			const { root } = render<InterweaveProps>(
 				<Interweave content={'Foo <img/> Bar'} transformers={[transformer]} />,
@@ -254,7 +254,7 @@ describe('Interweave', () => {
 				return <div />;
 			}
 
-			const transformer = createTransformer('img', {}, () => <Dummy />);
+			const transformer = createTransformer('img', () => <Dummy />);
 
 			const { root } = render<InterweaveProps>(
 				<Interweave content={'Foo <img/> Bar'} transformers={[transformer]} />,
@@ -268,7 +268,7 @@ describe('Interweave', () => {
 				return <iframe title="foo" />;
 			}
 
-			const transformer = createTransformer('iframe', {}, () => <Dummy />);
+			const transformer = createTransformer('iframe', () => <Dummy />);
 
 			const { root } = render<InterweaveProps>(
 				<Interweave content={'Foo <iframe></iframe> Bar'} transformers={[transformer]} />,
@@ -278,7 +278,7 @@ describe('Interweave', () => {
 		});
 
 		it.skip('skips transforming tags outside the allowList when transformOnlyAllowList is true', () => {
-			const transformer = createTransformer('*', {}, (element) =>
+			const transformer = createTransformer('*', (element) =>
 				element.nodeName === 'A' ? <a href="http://example.com">hi</a> : undefined,
 			);
 

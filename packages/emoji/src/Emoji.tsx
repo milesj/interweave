@@ -1,6 +1,6 @@
 /* eslint-disable complexity */
 
-import React from 'react';
+import React, { useMemo } from 'react';
 import { EmojiDataManager } from './EmojiDataManager';
 import { EmojiProps, Size } from './types';
 
@@ -17,6 +17,25 @@ export function Emoji({
 	unicode,
 }: EmojiProps) {
 	const data = EmojiDataManager.getInstance(source.locale, source.version);
+	const styles = useMemo(() => {
+		const styles: Record<string, Size | string> = {
+			display: 'inline-block',
+			verticalAlign: 'middle',
+		};
+
+		// Handle large styles
+		if (enlarge && largeSize) {
+			styles.width = largeSize;
+			styles.height = largeSize;
+
+			// Only apply styles if a size is defined
+		} else if (size) {
+			styles.width = size;
+			styles.height = size;
+		}
+
+		return styles;
+	}, [enlarge, size, largeSize]);
 
 	if (__DEV__ && !emoticon && !shortcode && !unicode && !hexcode) {
 		throw new Error(
@@ -48,23 +67,6 @@ export function Emoji({
 
 	if (renderUnicode) {
 		return <span>{emoji.unicode}</span>;
-	}
-
-	// eslint-disable-next-line react-perf/jsx-no-new-object-as-prop
-	const styles: Record<string, Size | string> = {
-		display: 'inline-block',
-		verticalAlign: 'middle',
-	};
-
-	// Handle large styles
-	if (enlarge && largeSize) {
-		styles.width = largeSize;
-		styles.height = largeSize;
-
-		// Only apply styles if a size is defined
-	} else if (size) {
-		styles.width = size;
-		styles.height = size;
 	}
 
 	// Determine the path

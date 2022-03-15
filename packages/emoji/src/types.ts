@@ -26,23 +26,17 @@ export interface Source {
 	version: string;
 }
 
-export interface EmojiProps {
+export interface EmojiProps extends EmojiConfig {
 	/** Emoticon to reference emoji from. */
 	emoticon?: Emoticon;
 	/** Enlarge emoji increasing it's size. */
 	enlarge?: boolean;
 	/** Hexcode to reference emoji from. */
 	hexcode?: Hexcode;
-	/** Size of the emoji when it's enlarged. */
-	largeSize?: Size;
 	/** Path to an SVG/PNG. Accepts a string or a callback that is passed the hexcode. */
 	path?: Path;
-	/** Render literal unicode character instead of an SVG/PNG. */
-	renderUnicode?: boolean;
 	/** Shortcode to reference emoji from. */
 	shortcode?: Shortcode;
-	/** Size of the emoji. Defaults to 1em. */
-	size?: Size;
 	/** Emoji datasource metadata. */
 	source: Source;
 	/** Unicode character to reference emoji from. */
@@ -54,6 +48,15 @@ export interface EmojiMatch extends MatchParams {
 	hexcode?: string;
 	shortcode?: string;
 	unicode?: string;
+}
+
+export interface EmojiConfig {
+	/** Size of the emoji when it's enlarged. */
+	largeSize?: Size;
+	/** Render literal unicode character instead of an SVG/PNG. */
+	renderUnicode?: boolean;
+	/** Size of the emoji. Defaults to 1em. */
+	size?: Size;
 }
 
 export interface UseEmojiDataOptions {

@@ -11,12 +11,11 @@ describe('Interweave (with emoji)', () => {
 	it('renders all types', () => {
 		const { root } = render<InterweaveProps>(
 			<Interweave
-				emojiEnlargeThreshold="2em"
+				emojiEnlargeThreshold={2}
+				emojiSource={SOURCE_PROP}
 				content={
 					'This will convert 🐱 \uD83D\uDC36 :man: :3 all 3 emoji types to PNGs and increase the size.'
 				}
-				emojiLargeSize="2em"
-				emojiSource={SOURCE_PROP}
 				matchers={[emojiEmoticonMatcher, emojiShortcodeMatcher, emojiUnicodeMatcher]}
 				tagName="div"
 			/>,
@@ -30,12 +29,12 @@ describe('Interweave (with emoji)', () => {
 			<Interweave
 				content="This has :cat: and :dog: shortcodes."
 				emojiSource={SOURCE_PROP}
-				matchers={[emojiShortcodeMatcher]}
+				matchers={[emojiShortcodeMatcher.extend({ renderUnicode: true })]}
 				tagName="div"
 			/>,
 		);
 
-		expect(root.findAt(Element, 'first')).toMatchSnapshot();
+		expect(root).toMatchSnapshot();
 	});
 
 	it('renders emoji unicode (literals) as unicode', () => {
@@ -43,12 +42,12 @@ describe('Interweave (with emoji)', () => {
 			<Interweave
 				content="This has 🐈️ and 🐕️ shortcodes."
 				emojiSource={SOURCE_PROP}
-				matchers={[emojiUnicodeMatcher]}
+				matchers={[emojiUnicodeMatcher.extend({ renderUnicode: true })]}
 				tagName="div"
 			/>,
 		);
 
-		expect(root.findAt(Element, 'first')).toMatchSnapshot();
+		expect(root).toMatchSnapshot();
 	});
 
 	it('renders emoji unicode (escapes) as unicode', () => {
@@ -56,12 +55,12 @@ describe('Interweave (with emoji)', () => {
 			<Interweave
 				content={'This has \uD83D\uDC31 and \uD83D\uDC36 shortcodes.'}
 				emojiSource={SOURCE_PROP}
-				matchers={[emojiUnicodeMatcher]}
+				matchers={[emojiUnicodeMatcher.extend({ renderUnicode: true })]}
 				tagName="div"
 			/>,
 		);
 
-		expect(root.findAt(Element, 'first')).toMatchSnapshot();
+		expect(root).toMatchSnapshot();
 	});
 
 	it('renders a single emoji enlarged', () => {
@@ -74,6 +73,6 @@ describe('Interweave (with emoji)', () => {
 			/>,
 		);
 
-		expect(root.findAt(Element, 'first')).toMatchSnapshot();
+		expect(root).toMatchSnapshot();
 	});
 });

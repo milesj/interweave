@@ -1,10 +1,21 @@
 import React from 'react';
-import { createMatcher, MatcherFactory, Node, OnMatch, InterweaveProps } from 'interweave';
+import {
+	createMatcher,
+	MatcherFactory,
+	MatcherFactoryData,
+	Node,
+	OnMatch,
+	InterweaveProps,
+} from 'interweave';
 import { Emoji } from './Emoji';
-import { EmojiMatch } from './types';
+import { EmojiConfig, EmojiMatch } from './types';
 
-function factory(match: EmojiMatch, { emojiSource }: InterweaveProps) {
-	return <Emoji {...match} source={emojiSource} />;
+function factory({
+	config,
+	params,
+	props: { emojiSource },
+}: MatcherFactoryData<EmojiMatch, InterweaveProps, EmojiConfig>) {
+	return <Emoji {...config} {...params} source={emojiSource} />;
 }
 
 function onBeforeParse(content: string, { emojiSource }: InterweaveProps): string {
@@ -76,18 +87,19 @@ function onAfterParse(node: Node, { emojiEnlargeThreshold = 1 }: InterweaveProps
 export function createEmojiMatcher(
 	pattern: RegExp,
 	onMatch: OnMatch<EmojiMatch, InterweaveProps>,
-	customFactory: MatcherFactory<EmojiMatch, InterweaveProps> = factory,
+	customFactory: MatcherFactory<EmojiMatch, InterweaveProps, EmojiConfig> = factory,
 ) {
-	return createMatcher<EmojiMatch, InterweaveProps>(
-		pattern,
-		{
-			greedy: true,
-			onAfterParse,
-			onBeforeParse,
-			onMatch,
-			tagName: 'img',
-			void: true,
+	return createMatcher<EmojiMatch, InterweaveProps, EmojiConfig>(pattern, customFactory, {
+		config: {
+			largeSize: '3em',
+			renderUnicode: false,
+			size: '1em',
 		},
-		customFactory,
-	);
+		greedy: true,
+		onAfterParse,
+		onBeforeParse,
+		onMatch,
+		tagName: 'img',
+		void: true,
+	});
 }

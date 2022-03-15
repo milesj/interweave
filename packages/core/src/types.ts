@@ -5,7 +5,7 @@ declare global {
 	var INTERWEAVE_SSR_POLYFILL: (() => Document | undefined) | undefined;
 }
 
-export interface CommonInternals<Props extends object, Config extends object> {
+export interface CommonInternals<Props extends object = {}, Config extends object = {}> {
 	config?: Config;
 	onAfterParse?: OnAfterParse<Props>;
 	onBeforeParse?: OnBeforeParse<Props>;
@@ -42,8 +42,8 @@ export type Attributes = Record<string, AttributeValue>;
 
 export type Node = NonNullable<React.ReactNode>;
 
-export type OnAfterParse<Props extends object> = (content: Node, props: Props) => Node;
+export type OnAfterParse<Props extends object = {}> = (content: Node, props: Props) => Node;
 
-export type OnBeforeParse<Props extends object> = (content: string, props: Props) => string;
+export type OnBeforeParse<Props extends object = {}> = (content: string, props: Props) => string;
 
 export type PassthroughProps = Record<string, unknown>;

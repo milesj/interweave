@@ -20,10 +20,10 @@ import { styleTransformer } from './transformers';
 import { Attributes, AttributeValue, Node, TagConfig, TagName } from './types';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export type TransformerInterface = Transformer<any, any>;
+export type TransformerInterface = Transformer<any, any, any>;
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export type MatcherInterface = Matcher<any, any>;
+export type MatcherInterface = Matcher<any, any, any>;
 
 type MatchedElements = Record<
 	string,
@@ -623,9 +623,9 @@ export class Parser {
 			if (isVoid) {
 				endIndex = match.length;
 
-				// nodes.push(React.cloneElement(element, { key }));
-
-				nodes.push(matcher.factory(params, this.props, null, key));
+				nodes.push(
+					matcher.factory({ config: matcher.config, params, props: this.props }, null, key),
+				);
 
 				// Find the closing tag if not void
 			} else {
@@ -637,18 +637,9 @@ export class Parser {
 
 				endIndex = close.index! + close[0].length;
 
-				// nodes.push(
-				// 	React.cloneElement(
-				// 		element,
-				// 		{ key },
-				// 		this.replaceTokens(text.slice(match.length, close.index), elements),
-				// 	),
-				// );
-
 				nodes.push(
 					matcher.factory(
-						params,
-						this.props,
+						{ config: matcher.config, params, props: this.props },
 						this.replaceTokens(text.slice(match.length, close.index), elements),
 						key,
 					),

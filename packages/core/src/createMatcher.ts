@@ -29,49 +29,68 @@ export type OnMatch<Match extends MatchParams, Props extends object> = (
 	props: Props,
 ) => Match | null;
 
-export interface MatcherOptions<Match extends MatchParams, Props extends object> {
+export interface MatcherOptions<
+	Match extends MatchParams,
+	Props extends object,
+	Config extends object,
+> extends CommonInternals<Props, Config> {
 	greedy?: boolean;
 	tagName: TagName;
 	void?: boolean;
-	onAfterParse?: OnAfterParse<Props>;
-	onBeforeParse?: OnBeforeParse<Props>;
 	onMatch: OnMatch<Match, Props>;
 }
 
-export type MatcherFactory<Match extends MatchParams, Props extends object> = (
-	params: Match,
-	props: Props,
+export type MatcherFactoryData<
+	Match extends MatchParams,
+	Props extends object,
+	Config extends object,
+> = {
+	config: Config;
+	params: Match;
+	props: Props;
+};
+
+export type MatcherFactory<
+	Match extends MatchParams,
+	Props extends object,
+	Config extends object,
+> = (
+	data: MatcherFactoryData<Match, Props, Config>,
 	children: Node | null,
 	key: number,
 ) => React.ReactElement;
 
-export interface Matcher<Match extends MatchParams, Props extends object>
-	extends CommonInternals<Props> {
+export interface Matcher<Match extends MatchParams, Props extends object, Config extends object>
+	extends CommonInternals<Props, Config> {
 	extend: (
-		factory?: MatcherFactory<Match, Props> | null,
-		options?: Partial<MatcherOptions<Match, Props>>,
-	) => Matcher<Match, Props>;
-	factory: MatcherFactory<Match, Props>;
+		config?: Partial<Config>,
+		factory?: MatcherFactory<Match, Props, Config> | null,
+	) => Matcher<Match, Props, Config>;
+	factory: MatcherFactory<Match, Props, Config>;
 	greedy: boolean;
 	match: (value: string, props: Props) => (MatchResult & { params: Match }) | null;
 	tagName: TagName;
 }
 
-export function createMatcher<Match extends MatchParams, Props extends object = PassthroughProps>(
+export function createMatcher<
+	Match extends MatchParams,
+	Props extends object = PassthroughProps,
+	Config extends object = {},
+>(
 	pattern: RegExp | string,
-	options: MatcherOptions<Match, Props>,
-	factory: MatcherFactory<Match, Props>,
-): Matcher<Match, Props> {
+	factory: MatcherFactory<Match, Props, Config>,
+	options: MatcherOptions<Match, Props, Config>,
+): Matcher<Match, Props, Config> {
 	return {
-		extend(customFactory, customOptions) {
-			return createMatcher(
-				pattern,
-				{
-					...options,
-					...customOptions,
+		config: options.config,
+		extend(customConfig, customFactory) {
+			return createMatcher(pattern, customFactory ?? factory, {
+				...options,
+				config: {
+					...(options.config as Config),
+					...customConfig,
 				},
-				customFactory ?? factory,
-			);
+			});
 		},
 		factory,
 		greedy: options.greedy ?? false,

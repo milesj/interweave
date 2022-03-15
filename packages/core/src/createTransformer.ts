@@ -45,6 +45,7 @@ export function createTransformer<
 	options: TransformerOptions<Props, Config> = {},
 ): Transformer<InferElement<K>, Props, Config> {
 	return {
+		config: options.config,
 		extend(customConfig, customFactory) {
 			return createTransformer<K, Props, Config>(tagName, customFactory ?? factory, {
 				...options,

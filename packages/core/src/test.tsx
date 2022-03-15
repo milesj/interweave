@@ -24,11 +24,11 @@ export const TOKEN_LOCATIONS = [
 export const SOURCE_PROP = {
 	compact: false,
 	locale: 'en',
-	version: 'latest',
+	version: '0.0.0',
 } as const;
 
 export const VALID_EMOJIS = [
-	['1F621', '😡', ':enraged:', '>:/'],
+	['1F621', '😡', ':rage:', '>:/'],
 	['1F468-200D-1F469-200D-1F467-200D-1F466', '👨‍👩‍👧‍👦', ':family_mwgb:'],
 	['1F1FA-1F1F8', '🇺🇸', ':flag_us:'],
 	['1F63A', '😺', ':smiling_cat:'],
@@ -98,6 +98,11 @@ export const parentConfig: TagConfig = {
 
 export const codeFooMatcher = createMatcher(
 	/\[foo]/,
+	({ params }, children, key) => (
+		<Element key={key} customprop={params.customprop} tagName="span">
+			{String(children).toUpperCase()}
+		</Element>
+	),
 	{
 		onMatch: () => ({
 			match: 'foo',
@@ -105,15 +110,15 @@ export const codeFooMatcher = createMatcher(
 		}),
 		tagName: 'span',
 	},
-	(params, props, children, key) => (
-		<Element key={key} customprop={params.customprop} tagName="span">
-			{String(children).toUpperCase()}
-		</Element>
-	),
 );
 
 export const codeBarMatcher = createMatcher(
 	/\[bar]/,
+	({ params }, children, key) => (
+		<Element key={key} customprop={params.customprop} tagName="span">
+			{String(children).toUpperCase()}
+		</Element>
+	),
 	{
 		onMatch: () => ({
 			match: 'bar',
@@ -121,15 +126,15 @@ export const codeBarMatcher = createMatcher(
 		}),
 		tagName: 'span',
 	},
-	(params, props, children, key) => (
-		<Element key={key} customprop={params.customprop} tagName="span">
-			{String(children).toUpperCase()}
-		</Element>
-	),
 );
 
 export const codeBazMatcher = createMatcher(
 	/\[baz]/,
+	({ params }, children, key) => (
+		<Element key={key} customprop={params.customprop} tagName="span">
+			{String(children).toUpperCase()}
+		</Element>
+	),
 	{
 		onMatch: () => ({
 			match: 'baz',
@@ -137,46 +142,41 @@ export const codeBazMatcher = createMatcher(
 		}),
 		tagName: 'span',
 	},
-	(params, props, children, key) => (
-		<Element key={key} customprop={params.customprop} tagName="span">
-			{String(children).toUpperCase()}
-		</Element>
-	),
 );
 
 export const mdBoldMatcher = createMatcher(
 	/\*\*([^*]+)\*\*/u,
+	(params, children, key) => <b key={key}>{children}</b>,
 	{
 		onMatch: ({ matches }) => ({
 			match: matches[1],
 		}),
 		tagName: 'b',
 	},
-	(params, props, children, key) => <b key={key}>{children}</b>,
 );
 
 export const mdItalicMatcher = createMatcher(
 	/_([^_]+)_/u,
+	(params, children, key) => <i key={key}>{children}</i>,
 	{
 		onMatch: ({ matches }) => ({
 			match: matches[1],
 		}),
 		tagName: 'i',
 	},
-	(params, props, children, key) => <i key={key}>{children}</i>,
 );
 
 export const mockMatcher = createMatcher(
 	/div/,
-	{
-		onMatch: () => null,
-		tagName: 'div',
-	},
-	(params, props, children, key) => (
+	({ props }, children, key) => (
 		<div {...props} key={key}>
 			{children}
 		</div>
 	),
+	{
+		onMatch: () => null,
+		tagName: 'div',
+	},
 );
 
 export const linkTransformer = createTransformer('a', (element) => {
