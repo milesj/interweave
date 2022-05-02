@@ -11,11 +11,11 @@ describe('Interweave (with emoji)', () => {
 	it('renders all types', () => {
 		const { root } = render<InterweaveProps>(
 			<Interweave
-				emojiEnlargeThreshold={2}
-				emojiSource={SOURCE_PROP}
 				content={
 					'This will convert 🐱 \uD83D\uDC36 :man: :3 all 3 emoji types to PNGs and increase the size.'
 				}
+				emojiEnlargeThreshold={2}
+				emojiSource={SOURCE_PROP}
 				matchers={[emojiEmoticonMatcher, emojiShortcodeMatcher, emojiUnicodeMatcher]}
 				tagName="div"
 			/>,

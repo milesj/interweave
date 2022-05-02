@@ -40,15 +40,15 @@ export interface MatcherOptions<
 	onMatch: OnMatch<Match, Props>;
 }
 
-export type MatcherFactoryData<
+export interface MatcherFactoryData<
 	Match extends MatchParams,
 	Props extends object,
 	Config extends object,
-> = {
+> {
 	config: Config;
 	params: Match;
 	props: Props;
-};
+}
 
 export type MatcherFactory<
 	Match extends MatchParams,
@@ -87,7 +87,7 @@ export function createMatcher<
 			return createMatcher(pattern, customFactory ?? factory, {
 				...options,
 				config: {
-					...(options.config as Config),
+					...(options.config!),
 					...customConfig,
 				},
 			});

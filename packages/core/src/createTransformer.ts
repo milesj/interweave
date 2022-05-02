@@ -50,7 +50,7 @@ export function createTransformer<
 			return createTransformer<K, Props, Config>(tagName, customFactory ?? factory, {
 				...options,
 				config: {
-					...(options.config as Config),
+					...(options.config!),
 					...customConfig,
 				},
 			});

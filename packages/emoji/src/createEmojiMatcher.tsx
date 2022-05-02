@@ -1,11 +1,11 @@
 import React from 'react';
 import {
 	createMatcher,
+	InterweaveProps,
 	MatcherFactory,
 	MatcherFactoryData,
 	Node,
 	OnMatch,
-	InterweaveProps,
 } from 'interweave';
 import { Emoji } from './Emoji';
 import { EmojiConfig, EmojiMatch } from './types';

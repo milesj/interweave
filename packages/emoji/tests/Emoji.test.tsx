@@ -12,19 +12,19 @@ describe('Emoji', () => {
 	});
 
 	it('returns value for invalid hexcode', () => {
-		const { root } = render<EmojiProps>(<Emoji source={SOURCE_PROP} hexcode="FA" />);
+		const { root } = render<EmojiProps>(<Emoji hexcode="FA" source={SOURCE_PROP} />);
 
 		expect(root.findOne('span')).toMatchSnapshot();
 	});
 
 	it('returns value for invalid emoticon', () => {
-		const { root } = render<EmojiProps>(<Emoji source={SOURCE_PROP} emoticon="0P" />);
+		const { root } = render<EmojiProps>(<Emoji emoticon="0P" source={SOURCE_PROP} />);
 
 		expect(root.findOne('span')).toMatchSnapshot();
 	});
 
 	it('returns value for invalid shortcode', () => {
-		const { root } = render<EmojiProps>(<Emoji source={SOURCE_PROP} shortcode="fake" />);
+		const { root } = render<EmojiProps>(<Emoji shortcode="fake" source={SOURCE_PROP} />);
 
 		expect(root.findOne('span')).toMatchSnapshot();
 	});
@@ -36,19 +36,19 @@ describe('Emoji', () => {
 	});
 
 	it('renders with only the emoticon', () => {
-		const { root } = render<EmojiProps>(<Emoji source={SOURCE_PROP} emoticon={emoticon} />);
+		const { root } = render<EmojiProps>(<Emoji emoticon={emoticon} source={SOURCE_PROP} />);
 
 		expect(root.findOne('img')).toMatchSnapshot();
 	});
 
 	it('renders with only the shortcode', () => {
-		const { root } = render<EmojiProps>(<Emoji source={SOURCE_PROP} shortcode={shortcode} />);
+		const { root } = render<EmojiProps>(<Emoji shortcode={shortcode} source={SOURCE_PROP} />);
 
 		expect(root.findOne('img')).toMatchSnapshot();
 	});
 
 	it('renders with only the hexcode', () => {
-		const { root } = render<EmojiProps>(<Emoji source={SOURCE_PROP} hexcode={hexcode} />);
+		const { root } = render<EmojiProps>(<Emoji hexcode={hexcode} source={SOURCE_PROP} />);
 
 		expect(root.findOne('img')).toMatchSnapshot();
 	});
@@ -61,7 +61,7 @@ describe('Emoji', () => {
 
 	it('renders with both', () => {
 		const { root } = render<EmojiProps>(
-			<Emoji source={SOURCE_PROP} shortcode={shortcode} unicode={unicode} />,
+			<Emoji shortcode={shortcode} source={SOURCE_PROP} unicode={unicode} />,
 		);
 
 		expect(root.findOne('img')).toMatchSnapshot();
@@ -79,8 +79,8 @@ describe('Emoji', () => {
 		const { root } = render<EmojiProps>(
 			<Emoji
 				path="http://foo.com/path/to/{{hexcode}}.svg"
-				source={SOURCE_PROP}
 				shortcode={shortcode}
+				source={SOURCE_PROP}
 				unicode={unicode}
 			/>,
 		);
@@ -94,8 +94,8 @@ describe('Emoji', () => {
 		const { root } = render<EmojiProps>(
 			<Emoji
 				path={(hex) => `http://foo.com/path/to/${hex.toLowerCase()}.svg`}
-				source={SOURCE_PROP}
 				shortcode={shortcode}
+				source={SOURCE_PROP}
 				unicode={unicode}
 			/>,
 		);
@@ -111,9 +111,9 @@ describe('Emoji', () => {
 				enlarge
 				largeSize={4}
 				path={(hex, { size }) => `http://foo.com/path/to/${size}/${hex.toLowerCase()}.svg`}
+				shortcode={shortcode}
 				size={2}
 				source={SOURCE_PROP}
-				shortcode={shortcode}
 				unicode={unicode}
 			/>,
 		);
@@ -126,7 +126,7 @@ describe('Emoji', () => {
 
 	it('sets styles when size is defined', () => {
 		const { root } = render<EmojiProps>(
-			<Emoji size={1} source={SOURCE_PROP} shortcode={shortcode} unicode={unicode} />,
+			<Emoji shortcode={shortcode} size={1} source={SOURCE_PROP} unicode={unicode} />,
 		);
 
 		expect(root.findOne('img')).toHaveProp('style', {
@@ -142,9 +142,9 @@ describe('Emoji', () => {
 			<Emoji
 				enlarge
 				largeSize={5}
+				shortcode={shortcode}
 				size={2}
 				source={SOURCE_PROP}
-				shortcode={shortcode}
 				unicode={unicode}
 			/>,
 		);
@@ -159,7 +159,7 @@ describe('Emoji', () => {
 
 	it('can use string sizes', () => {
 		const { root } = render<EmojiProps>(
-			<Emoji size="2em" source={SOURCE_PROP} shortcode={shortcode} unicode={unicode} />,
+			<Emoji shortcode={shortcode} size="2em" source={SOURCE_PROP} unicode={unicode} />,
 		);
 
 		expect(root.findOne('img')).toHaveProp('style', {
