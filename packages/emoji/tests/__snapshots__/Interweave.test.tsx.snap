@@ -1,7 +1,12 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Interweave (with emoji) renders a single emoji enlarged 1`] = `
-<Interweave content=":cat:" emojiSource={{ compact: false, locale: "en", version: "0.0.0" }} matchers={[ <img />, <img /> ]} tagName="div">
+<Interweave
+  content=":cat:"
+  emojiSource={{ compact: false, locale: "en", version: "0.0.0" }}
+  matchers={[ <img />, <img /> ]}
+  tagName="div"
+>
   <Emoji
     enlarge
     hexcode="1F408"
@@ -25,7 +30,12 @@ exports[`Interweave (with emoji) renders a single emoji enlarged 1`] = `
 `;
 
 exports[`Interweave (with emoji) renders emoji shortcode as unicode 1`] = `
-<Interweave content="This has :cat: and :dog: shortcodes." emojiSource={{ compact: false, locale: "en", version: "0.0.0" }} matchers={[ <img /> ]} tagName="div">
+<Interweave
+  content="This has :cat: and :dog: shortcodes."
+  emojiSource={{ compact: false, locale: "en", version: "0.0.0" }}
+  matchers={[ <img /> ]}
+  tagName="div"
+>
   This has 
   <Emoji
     renderUnicode
@@ -53,7 +63,12 @@ exports[`Interweave (with emoji) renders emoji shortcode as unicode 1`] = `
 `;
 
 exports[`Interweave (with emoji) renders emoji unicode (escapes) as unicode 1`] = `
-<Interweave content="This has 🐱 and 🐶 shortcodes." emojiSource={{ compact: false, locale: "en", version: "0.0.0" }} matchers={[ <img /> ]} tagName="div">
+<Interweave
+  content="This has 🐱 and 🐶 shortcodes."
+  emojiSource={{ compact: false, locale: "en", version: "0.0.0" }}
+  matchers={[ <img /> ]}
+  tagName="div"
+>
   This has 
   <Emoji
     renderUnicode
@@ -81,7 +96,12 @@ exports[`Interweave (with emoji) renders emoji unicode (escapes) as unicode 1`] 
 `;
 
 exports[`Interweave (with emoji) renders emoji unicode (literals) as unicode 1`] = `
-<Interweave content="This has 🐈️ and 🐕️ shortcodes." emojiSource={{ compact: false, locale: "en", version: "0.0.0" }} matchers={[ <img /> ]} tagName="div">
+<Interweave
+  content="This has 🐈️ and 🐕️ shortcodes."
+  emojiSource={{ compact: false, locale: "en", version: "0.0.0" }}
+  matchers={[ <img /> ]}
+  tagName="div"
+>
   This has 
   <Emoji
     renderUnicode

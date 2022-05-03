@@ -1,11 +1,4 @@
-import {
-	CommonInternals,
-	Node,
-	OnAfterParse,
-	OnBeforeParse,
-	PassthroughProps,
-	TagName,
-} from './types';
+import { CommonInternals, Node, PassthroughProps, TagName } from './types';
 
 // Result from the match process
 export interface MatchResult {
@@ -86,8 +79,9 @@ export function createMatcher<
 		extend(customConfig, customFactory) {
 			return createMatcher(pattern, customFactory ?? factory, {
 				...options,
+				// @ts-expect-error Allow generics merge
 				config: {
-					...(options.config!),
+					...options.config,
 					...customConfig,
 				},
 			});

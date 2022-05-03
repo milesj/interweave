@@ -1,0 +1,255 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`EmojiMatcher onAfterParse doesnt count whitespace in the threshold 1`] = `
+Array [
+  <Emoji
+    enlarge={true}
+    shortcode=":cat:"
+    source={
+      Object {
+        "compact": false,
+        "locale": "en",
+        "version": "0.0.0",
+      }
+    }
+  />,
+  " ",
+  <Emoji
+    enlarge={true}
+    shortcode=":dog:"
+    source={
+      Object {
+        "compact": false,
+        "locale": "en",
+        "version": "0.0.0",
+      }
+    }
+  />,
+  "
+",
+  <Emoji
+    enlarge={true}
+    shortcode=":man:"
+    source={
+      Object {
+        "compact": false,
+        "locale": "en",
+        "version": "0.0.0",
+      }
+    }
+  />,
+]
+`;
+
+exports[`EmojiMatcher onAfterParse doesnt enlarge when non-<Emoji/> are found 1`] = `
+Array [
+  <Emoji
+    shortcode=":cat:"
+    source={
+      Object {
+        "compact": false,
+        "locale": "en",
+        "version": "0.0.0",
+      }
+    }
+  />,
+  <div>
+    Foo
+  </div>,
+  <Emoji
+    shortcode=":man:"
+    source={
+      Object {
+        "compact": false,
+        "locale": "en",
+        "version": "0.0.0",
+      }
+    }
+  />,
+]
+`;
+
+exports[`EmojiMatcher onAfterParse doesnt enlarge when strings are found 1`] = `
+Array [
+  <Emoji
+    shortcode=":cat:"
+    source={
+      Object {
+        "compact": false,
+        "locale": "en",
+        "version": "0.0.0",
+      }
+    }
+  />,
+  "Foo",
+  <Emoji
+    shortcode=":man:"
+    source={
+      Object {
+        "compact": false,
+        "locale": "en",
+        "version": "0.0.0",
+      }
+    }
+  />,
+]
+`;
+
+exports[`EmojiMatcher onAfterParse doesnt enlarge when too many <Emoji/> 1`] = `
+Array [
+  <Emoji
+    shortcode=":cat:"
+    source={
+      Object {
+        "compact": false,
+        "locale": "en",
+        "version": "0.0.0",
+      }
+    }
+  />,
+  <Emoji
+    shortcode=":dog:"
+    source={
+      Object {
+        "compact": false,
+        "locale": "en",
+        "version": "0.0.0",
+      }
+    }
+  />,
+  <Emoji
+    shortcode=":man:"
+    source={
+      Object {
+        "compact": false,
+        "locale": "en",
+        "version": "0.0.0",
+      }
+    }
+  />,
+  <Emoji
+    shortcode=":woman:"
+    source={
+      Object {
+        "compact": false,
+        "locale": "en",
+        "version": "0.0.0",
+      }
+    }
+  />,
+]
+`;
+
+exports[`EmojiMatcher onAfterParse enlarge when <Emoji/> count is below \`enlargeThreshold\` 1`] = `
+Array [
+  <Emoji
+    enlarge={true}
+    shortcode=":cat:"
+    source={
+      Object {
+        "compact": false,
+        "locale": "en",
+        "version": "0.0.0",
+      }
+    }
+  />,
+  <Emoji
+    enlarge={true}
+    shortcode=":man:"
+    source={
+      Object {
+        "compact": false,
+        "locale": "en",
+        "version": "0.0.0",
+      }
+    }
+  />,
+]
+`;
+
+exports[`EmojiMatcher onAfterParse enlarge when <Emoji/> count is below \`enlargeThreshold\` 2`] = `
+Array [
+  <Emoji
+    enlarge={true}
+    shortcode=":cat:"
+    source={
+      Object {
+        "compact": false,
+        "locale": "en",
+        "version": "0.0.0",
+      }
+    }
+  />,
+]
+`;
+
+exports[`EmojiMatcher onAfterParse enlarges a single <Emoji/> 1`] = `
+Array [
+  <Emoji
+    enlarge={true}
+    shortcode=":cat:"
+    source={
+      Object {
+        "compact": false,
+        "locale": "en",
+        "version": "0.0.0",
+      }
+    }
+  />,
+]
+`;
+
+exports[`EmojiMatcher onAfterParse enlarges multiple <Emoji/>s when \`enlargeThreshold\` is set 1`] = `
+Array [
+  <Emoji
+    enlarge={true}
+    shortcode=":cat:"
+    source={
+      Object {
+        "compact": false,
+        "locale": "en",
+        "version": "0.0.0",
+      }
+    }
+  />,
+  <Emoji
+    enlarge={true}
+    shortcode=":dog:"
+    source={
+      Object {
+        "compact": false,
+        "locale": "en",
+        "version": "0.0.0",
+      }
+    }
+  />,
+  <Emoji
+    enlarge={true}
+    shortcode=":man:"
+    source={
+      Object {
+        "compact": false,
+        "locale": "en",
+        "version": "0.0.0",
+      }
+    }
+  />,
+]
+`;
+
+exports[`EmojiMatcher onAfterParse ignores content longer than 1 1`] = `
+Array [
+  <div>
+    Foo
+  </div>,
+  "Bar",
+]
+`;
+
+exports[`EmojiMatcher onAfterParse ignores non-<Emoji/> 1`] = `
+Array [
+  <div>
+    Foo
+  </div>,
+]
+`;

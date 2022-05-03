@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable no-bitwise, no-cond-assign, complexity */
 
 import React from 'react';
@@ -20,10 +21,10 @@ import { styleTransformer } from './transformers';
 import { Attributes, AttributeValue, Node, TagConfig, TagName } from './types';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export type TransformerInterface = Transformer<any, any, any>;
+export type TransformerInterface = Transformer<any, any, {}>;
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export type MatcherInterface = Matcher<any, any, any>;
+export type MatcherInterface = Matcher<any, any, {}>;
 
 type MatchedElements = Record<
 	string,
@@ -206,7 +207,7 @@ export class Parser {
 
 			// If something was returned, the node has been replaced so we cant continue
 			if (result !== undefined) {
-				return result;
+				return result as React.ReactElement;
 			}
 		}
 
@@ -460,10 +461,16 @@ export class Parser {
 			return null;
 		}
 
-		return this.parseNode(
+		const result = this.parseNode(
 			this.container,
 			this.getTagConfig(this.container.nodeName.toLowerCase() as TagName),
 		);
+
+		if (Array.isArray(result) && result.length === 0) {
+			return null;
+		}
+
+		return result;
 	}
 
 	/**
@@ -624,7 +631,7 @@ export class Parser {
 				endIndex = match.length;
 
 				nodes.push(
-					matcher.factory({ config: matcher.config, params, props: this.props }, null, key),
+					matcher.factory({ config: matcher.config ?? {}, params, props: this.props }, null, key),
 				);
 
 				// Find the closing tag if not void
@@ -639,7 +646,7 @@ export class Parser {
 
 				nodes.push(
 					matcher.factory(
-						{ config: matcher.config, params, props: this.props },
+						{ config: matcher.config ?? {}, params, props: this.props },
 						this.replaceTokens(text.slice(match.length, close.index), elements),
 						key,
 					),

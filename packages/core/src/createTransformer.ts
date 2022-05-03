@@ -1,12 +1,4 @@
-import {
-	CommonInternals,
-	Node,
-	OnAfterParse,
-	OnBeforeParse,
-	PassthroughProps,
-	TagName,
-	WildTagName,
-} from './types';
+import { CommonInternals, Node, PassthroughProps, TagName, WildTagName } from './types';
 
 export type InferElement<K> = K extends '*'
 	? HTMLElement
@@ -50,7 +42,7 @@ export function createTransformer<
 			return createTransformer<K, Props, Config>(tagName, customFactory ?? factory, {
 				...options,
 				config: {
-					...(options.config!),
+					...options.config!,
 					...customConfig,
 				},
 			});

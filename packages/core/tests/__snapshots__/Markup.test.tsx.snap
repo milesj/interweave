@@ -51,4 +51,4 @@ exports[`Markup parses the entire document starting from the body 1`] = `
 </aside>"
 `;
 
-exports[`Markup will render the \`emptyContent\` if no content exists 1`] = `""`;
+exports[`Markup will render the \`emptyContent\` if no content exists 1`] = `"<div>Foo</div>"`;

@@ -7,6 +7,7 @@ import {
 	Node,
 	OnMatch,
 } from 'interweave';
+import { DEFAULT_CONFIG } from './constants';
 import { Emoji } from './Emoji';
 import { EmojiConfig, EmojiMatch } from './types';
 
@@ -78,7 +79,7 @@ function onAfterParse(node: Node, { emojiEnlargeThreshold = 1 }: InterweaveProps
 		}
 
 		return React.cloneElement(item, {
-			...item.props,
+			...(item.props as {}),
 			enlarge: true,
 		});
 	});
@@ -90,11 +91,7 @@ export function createEmojiMatcher(
 	customFactory: MatcherFactory<EmojiMatch, InterweaveProps, EmojiConfig> = factory,
 ) {
 	return createMatcher<EmojiMatch, InterweaveProps, EmojiConfig>(pattern, customFactory, {
-		config: {
-			largeSize: '3em',
-			renderUnicode: false,
-			size: '1em',
-		},
+		config: DEFAULT_CONFIG,
 		greedy: true,
 		onAfterParse,
 		onBeforeParse,

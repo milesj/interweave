@@ -27,7 +27,7 @@ function createChild(tag: string, text: number | string): HTMLElement {
 }
 
 describe('Parser', () => {
-	let instance: Parser<{}>;
+	let instance: Parser;
 	let element: HTMLElement;
 
 	beforeEach(() => {
@@ -42,7 +42,7 @@ describe('Parser', () => {
 	it('parses when passed an empty value', () => {
 		[null, false, undefined, '', 0].forEach((value) => {
 			// @ts-expect-error Invalid type
-			expect(new Parser(value).parse()).toEqual([]);
+			expect(new Parser(value).parse()).toBeNull();
 		});
 	});
 
@@ -68,7 +68,6 @@ describe('Parser', () => {
 					return createElement('bar', 1);
 				case 2:
 					return createElement('baz', 2);
-				case 0:
 				default:
 					return createElement('foo', 0);
 			}
