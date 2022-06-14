@@ -3,7 +3,7 @@ import { ChildrenNode, Matcher, Node } from 'interweave';
 import { Mention } from './Mention';
 import { MentionProps } from './types';
 
-const MENTION_PATTERN = new RegExp(`(^@[A-z0-9_-]+$)`);
+const MENTION_PATTERN = /(^@[\dA-z-]+$)/;
 
 export class MentionMatcher extends Matcher<MentionProps> {
 	replaceWith(children: ChildrenNode, props: MentionProps): Node {
