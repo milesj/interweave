@@ -49,7 +49,7 @@ describe('components/Mention', () => {
 
 	it('when mentionUrl not passed returns null', () => {
 		const result = render<MentionProps>(
-			<Mention newWindow mention="@interweave">
+			<Mention newWindow mention="@interweave" mentionUrl={undefined as never}>
 				@interweave
 			</Mention>,
 		);

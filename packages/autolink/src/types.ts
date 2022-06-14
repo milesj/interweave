@@ -48,5 +48,5 @@ export interface UrlMatcherOptions {
 export interface MentionProps extends Partial<LinkProps> {
 	children: ChildrenNode;
 	mention: string;
-	mentionUrl?: string | ((hashtag: string) => string);
+	mentionUrl: string | ((hashtag: string) => string);
 }
