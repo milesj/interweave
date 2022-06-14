@@ -47,13 +47,13 @@ describe('components/Mention', () => {
 		expect(root.findOne(Link)).toHaveProp('onClick', func);
 	});
 
-	it('when mentionUrl not passed returns null', () => {
+	it('when mentionUrl not passed returns raw mention', () => {
 		const result = render<MentionProps>(
 			<Mention newWindow mention="@interweave" mentionUrl={undefined as never}>
 				@interweave
 			</Mention>,
 		);
 
-		expect(result.toTree()?.rendered).toBeNull();
+		expect(result.toTree()?.rendered).toBe('@interweave');
 	});
 });
