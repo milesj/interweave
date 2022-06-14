@@ -33,12 +33,27 @@ describe('components/Mention', () => {
 	it('can pass props to Link', () => {
 		const func = () => {};
 		const { root } = render<MentionProps>(
-			<Mention newWindow mention="@interweave" onClick={func}>
+			<Mention
+				newWindow
+				mention="@interweave"
+				mentionUrl="http://foo.com/{{mention}}"
+				onClick={func}
+			>
 				@interweave
 			</Mention>,
 		);
 
 		expect(root.findOne(Link)).toHaveProp('newWindow', true);
 		expect(root.findOne(Link)).toHaveProp('onClick', func);
+	});
+
+	it('when mentionUrl not passed returns null', () => {
+		const result = render<MentionProps>(
+			<Mention newWindow mention="@interweave">
+				@interweave
+			</Mention>,
+		);
+
+		expect(result.toTree()?.rendered).toBeNull();
 	});
 });
