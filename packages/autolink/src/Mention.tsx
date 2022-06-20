@@ -4,6 +4,7 @@ import { MentionProps } from './types';
 
 export function Mention({ children, mention, mentionUrl, ...props }: MentionProps) {
 	if (!mentionUrl) {
+		// eslint-disable-next-line react/jsx-no-useless-fragment
 		return <>{children}</>;
 	}
 
