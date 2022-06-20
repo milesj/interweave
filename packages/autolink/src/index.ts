@@ -10,6 +10,8 @@ export * from './Hashtag';
 export * from './HashtagMatcher';
 export * from './IpMatcher';
 export * from './Link';
+export * from './Mention';
+export * from './MentionMatcher';
 export * from './types';
 export * from './Url';
 export * from './UrlMatcher';
