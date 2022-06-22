@@ -1,9 +1,8 @@
 import React from 'react';
 import { ChildrenNode, Matcher, Node } from 'interweave';
+import { MENTION_PATTERN } from './constants';
 import { Mention } from './Mention';
 import { MentionProps } from './types';
-
-const MENTION_PATTERN = /(^@[\dA-z-]+$)/;
 
 export class MentionMatcher extends Matcher<MentionProps> {
 	replaceWith(children: ChildrenNode, props: MentionProps): Node {
@@ -20,7 +19,7 @@ export class MentionMatcher extends Matcher<MentionProps> {
 
 	handleMatches(matches: string[]): { mention: string } {
 		return {
-			mention: matches[0],
+			mention: matches[1],
 		};
 	}
 }

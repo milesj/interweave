@@ -1,3 +1,9 @@
+## 5.1.0 - 2022-06-21
+
+#### 🚀 Updates
+
+- Added a new `MentionMatcher` and associated `Mention` component. Will replace `@username` with links.
+
 # 5.0.0 - 2022-03-04
 
 #### 💥 Breaking

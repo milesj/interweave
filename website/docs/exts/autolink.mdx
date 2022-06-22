@@ -202,3 +202,55 @@ be passed, which receives the hashtag as the 1st argument.
 If a match is found, a `<Hashtag />` component will be rendered and passed the following props.
 
 - `hashtag` (`string`) - The entire hashtag that was matched (with `#`).
+
+## Mentions
+
+The `MentionMatcher` will match an `@username` to a custom URL (passed as a prop). Mention matching
+supports alpha-numeric (`a-z0-9`), underscore (`_`), and dash (`-`) characters, and must start with
+a `@`.
+
+```tsx
+import { Interweave } from 'interweave';
+import { MentionMatcher } from 'interweave-autolink';
+
+<Interweave
+	content="Hello @username"
+	matchers={[new MentionMatcher('mention')]}
+	mentionUrl="http://domain.com/user/{{mention}}"
+/>;
+```
+
+### Props
+
+The following props are available for `<Mention />` components, all of which should be passed to an
+`<Interweave />` instance.
+
+- `mentionUrl` (`string | func`) - The URL to interpolate the matched mention with.
+- `newWindow` (`boolean`) - Open links in a new window. Defaults to `false`.
+- `onClick` (`func`) - Callback triggered when a link is clicked.
+
+Mentions _require_ a URL to link to, which is defined by the `mentionUrl` prop. If the prop is not
+defined, the mention will be rendered as-is without being linked.
+
+The URL must declare the following token, `{{mention}}`, which will be replaced by the matched
+username (without @). Or a function can be passed, which receives the mention as the 1st argument.
+
+```tsx
+<Interweave
+  matchers={[new MentionMatcher('mention')]}
+  mentionUrl="http://domain.com/user/{{mention}}"
+/>
+
+// OR
+
+<Interweave
+  matchers={[new MentionMatcher('mention')]}
+  mentionUrl={mention => `http://domain.com/user/${mention}`}
+/>
+```
+
+### Result
+
+If a match is found, a `<Mention />` component will be rendered and passed the following props.
+
+- `mention` (`string`) - The mention that was matched (without `@`).

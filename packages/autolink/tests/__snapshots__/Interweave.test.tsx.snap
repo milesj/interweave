@@ -84,12 +84,19 @@ exports[`Interweave (with autolinking) renders HTML text with all matchers 1`] =
 <Interweave
   content="<h1>Lorem ipsum dolor sit amet</h1>
   
-  <p><b>Consectetur adipiscing elit.</b> Donec massa lorem, mollis non commodo quis, ultricies at elit. email@domain.com. Aliquam a arcu porttitor, aliquam eros sed, convallis massa. Nunc vitae vehicula quam, in feugiat ligula. #interweave Donec eu sem non nibh condimentum luctus. Vivamus pharetra feugiat blandit. Vestibulum neque velit, semper id vestibulum id, viverra a felis. Integer convallis in orci nec bibendum. Ut consequat posuere metus, <a href="www.domain.com">www.domain.com</a>.</p>
+  <p><b>Consectetur adipiscing elit.</b> Donec massa lorem, mollis non commodo quis, ultricies at elit. email@domain.com. Aliquam a arcu porttitor, aliquam eros sed, convallis massa. Nunc vitae vehicula quam, in feugiat ligula. #interweave Donec eu sem non nibh condimentum luctus. Vivamus pharetra feugiat blandit. Vestibulum neque velit, semper id vestibulum id, viverra a felis. Integer convallis in orci nec bibendum. Ut consequat posuere metus, <a href="www.domain.com">www.domain.com</a> @username.</p>
   
   <div>Curabitur lectus odio, <em>tempus quis velit vitae, cursus sagittis nulla</em>. Maecenas sem nulla, tempor nec risus nec, ultricies ultricies magna. https://127.0.0.1/foo Nulla malesuada lacinia libero non mollis. Curabitur id lacus id dolor vestibulum ornare quis a nisi (http://domain.com/some/path?with=query). Pellentesque ac finibus mauris. Sed eu luctus diam. Quisque porta lectus in turpis imperdiet dapibus.</div>
   
   <section>#blessed #interweave #milesj</section>"
-  matchers={[ new EmailMatcher(), new HashtagMatcher(), new IpMatcher(), new UrlMatcher() ]}
+  matchers={[
+    new EmailMatcher(),
+    new HashtagMatcher(),
+    new IpMatcher(),
+    new UrlMatcher(),
+    new MentionMatcher(),
+  ]}
+  mentionUrl="http://test.com/{{mention}}"
   tagName="div"
 >
   <Markup
@@ -124,16 +131,34 @@ exports[`Interweave (with autolinking) renders HTML text with all matchers 1`] =
             <Email
               email="email@domain.com"
               emailParts={{ host: "domain.com", username: "email" }}
+              mentionUrl="http://test.com/{{mention}}"
             >
-              <Link href="mailto:email@domain.com">
+              <Link
+                href="mailto:email@domain.com"
+                mentionUrl="http://test.com/{{mention}}"
+              >
                 <a href="mailto:email@domain.com" rel="noopener noreferrer">
-                  email@domain.com
+                  email
+                  <Mention
+                    mention="domain"
+                    mentionUrl="http://test.com/{{mention}}"
+                  >
+                    <Link href="http://test.com/domain">
+                      <a href="http://test.com/domain" rel="noopener noreferrer">
+                        @domain
+                      </a>
+                    </Link>
+                  </Mention>
+                  .com
                 </a>
               </Link>
             </Email>
             . Aliquam a arcu porttitor, aliquam eros sed, convallis massa. Nunc vitae vehicula quam, in feugiat ligula. 
-            <Hashtag hashtag="#interweave">
-              <Link href="interweave">
+            <Hashtag
+              hashtag="#interweave"
+              mentionUrl="http://test.com/{{mention}}"
+            >
+              <Link href="interweave" mentionUrl="http://test.com/{{mention}}">
                 <a href="interweave" rel="noopener noreferrer">
                   #interweave
                 </a>
@@ -145,6 +170,14 @@ exports[`Interweave (with autolinking) renders HTML text with all matchers 1`] =
                 www.domain.com
               </a>
             </Element>
+             
+            <Mention mention="username" mentionUrl="http://test.com/{{mention}}">
+              <Link href="http://test.com/username">
+                <a href="http://test.com/username" rel="noopener noreferrer">
+                  @username
+                </a>
+              </Link>
+            </Mention>
             .
           </p>
         </Element>
@@ -159,10 +192,14 @@ exports[`Interweave (with autolinking) renders HTML text with all matchers 1`] =
             </Element>
             . Maecenas sem nulla, tempor nec risus nec, ultricies ultricies magna. 
             <Url
+              mentionUrl="http://test.com/{{mention}}"
               url="https://127.0.0.1/foo"
               urlParts={{ auth: "", fragment: "", host: "127.0.0.1", path: "/foo", port: "", ... 2 more }}
             >
-              <Link href="https://127.0.0.1/foo">
+              <Link
+                href="https://127.0.0.1/foo"
+                mentionUrl="http://test.com/{{mention}}"
+              >
                 <a href="https://127.0.0.1/foo" rel="noopener noreferrer">
                   https://127.0.0.1/foo
                 </a>
@@ -170,6 +207,7 @@ exports[`Interweave (with autolinking) renders HTML text with all matchers 1`] =
             </Url>
              Nulla malesuada lacinia libero non mollis. Curabitur id lacus id dolor vestibulum ornare quis a nisi (
             <Url
+              mentionUrl="http://test.com/{{mention}}"
               url="http://domain.com/some/path?with=query"
               urlParts={{
                 auth: "",
@@ -180,7 +218,10 @@ exports[`Interweave (with autolinking) renders HTML text with all matchers 1`] =
                 ... 2 more,
               }}
             >
-              <Link href="http://domain.com/some/path?with=query">
+              <Link
+                href="http://domain.com/some/path?with=query"
+                mentionUrl="http://test.com/{{mention}}"
+              >
                 <a
                   href="http://domain.com/some/path?with=query"
                   rel="noopener noreferrer"
@@ -197,24 +238,27 @@ exports[`Interweave (with autolinking) renders HTML text with all matchers 1`] =
 
         <Element tagName="section">
           <section>
-            <Hashtag hashtag="#blessed">
-              <Link href="blessed">
+            <Hashtag hashtag="#blessed" mentionUrl="http://test.com/{{mention}}">
+              <Link href="blessed" mentionUrl="http://test.com/{{mention}}">
                 <a href="blessed" rel="noopener noreferrer">
                   #blessed
                 </a>
               </Link>
             </Hashtag>
              
-            <Hashtag hashtag="#interweave">
-              <Link href="interweave">
+            <Hashtag
+              hashtag="#interweave"
+              mentionUrl="http://test.com/{{mention}}"
+            >
+              <Link href="interweave" mentionUrl="http://test.com/{{mention}}">
                 <a href="interweave" rel="noopener noreferrer">
                   #interweave
                 </a>
               </Link>
             </Hashtag>
              
-            <Hashtag hashtag="#milesj">
-              <Link href="milesj">
+            <Hashtag hashtag="#milesj" mentionUrl="http://test.com/{{mention}}">
+              <Link href="milesj" mentionUrl="http://test.com/{{mention}}">
                 <a href="milesj" rel="noopener noreferrer">
                   #milesj
                 </a>
@@ -230,12 +274,19 @@ exports[`Interweave (with autolinking) renders HTML text with all matchers 1`] =
 
 exports[`Interweave (with autolinking) renders large blocks of text with all matchers 1`] = `
 <Interweave
-  content="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec massa lorem, mollis non commodo quis, ultricies at elit. email@domain.com. Aliquam a arcu porttitor, aliquam eros sed, convallis massa. Nunc vitae vehicula quam, in feugiat ligula. #interweave Donec eu sem non nibh condimentum luctus. Vivamus pharetra feugiat blandit. Vestibulum neque velit, semper id vestibulum id, viverra a felis. Integer convallis in orci nec bibendum. Ut consequat posuere metus, www.domain.com.
+  content="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec massa lorem, mollis non commodo quis, ultricies at elit. email@domain.com. Aliquam a arcu porttitor, aliquam eros sed, convallis massa. Nunc vitae vehicula quam, in feugiat ligula. #interweave Donec eu sem non nibh condimentum luctus. Vivamus pharetra feugiat blandit. Vestibulum neque velit, semper id vestibulum id, viverra a felis. Integer convallis in orci nec bibendum. Ut consequat posuere metus, www.domain.com. @username
   
   Curabitur lectus odio, tempus quis velit vitae, cursus sagittis nulla. Maecenas sem nulla, tempor nec risus nec, ultricies ultricies magna. https://127.0.0.1/foo Nulla malesuada lacinia libero non mollis. Curabitur id lacus id dolor vestibulum ornare quis a nisi (http://domain.com/some/path?with=query). Pellentesque ac finibus mauris. Sed eu luctus diam. Quisque porta lectus in turpis imperdiet dapibus.
   
   #blessed #interweave #milesj"
-  matchers={[ new EmailMatcher(), new HashtagMatcher(), new IpMatcher(), new UrlMatcher() ]}
+  matchers={[
+    new EmailMatcher(),
+    new HashtagMatcher(),
+    new IpMatcher(),
+    new UrlMatcher(),
+    new MentionMatcher(),
+  ]}
+  mentionUrl="http://test.com/{{mention}}"
   tagName="div"
 >
   <Markup
@@ -244,11 +295,12 @@ exports[`Interweave (with autolinking) renders large blocks of text with all mat
       <Email
       email="email@domain.com"
       emailParts={{ host: "domain.com", username: "email" }}
+      mentionUrl="http://test.com/{{mention}}"
     />,
       ". Aliquam a arcu porttitor, aliquam eros sed, convallis massa. Nunc vitae vehicula quam, in feugiat ligula. ",
-      <Hashtag hashtag="#interweave" />,
+      <Hashtag hashtag="#interweave" mentionUrl="http://test.com/{{mention}}" />,
       " Donec eu sem non nibh condimentum luctus. Vivamus pharetra feugiat blandit. Vestibulum neque velit, semper id vestibulum id, viverra a felis. Integer convallis in orci nec bibendum. Ut consequat posuere metus, ",
-      ... 16 more,
+      ... 17 more,
     ]}
     tagName="div"
   >
@@ -258,16 +310,28 @@ exports[`Interweave (with autolinking) renders large blocks of text with all mat
         <Email
           email="email@domain.com"
           emailParts={{ host: "domain.com", username: "email" }}
+          mentionUrl="http://test.com/{{mention}}"
         >
-          <Link href="mailto:email@domain.com">
+          <Link
+            href="mailto:email@domain.com"
+            mentionUrl="http://test.com/{{mention}}"
+          >
             <a href="mailto:email@domain.com" rel="noopener noreferrer">
-              email@domain.com
+              email
+              <Mention mention="domain" mentionUrl="http://test.com/{{mention}}">
+                <Link href="http://test.com/domain">
+                  <a href="http://test.com/domain" rel="noopener noreferrer">
+                    @domain
+                  </a>
+                </Link>
+              </Mention>
+              .com
             </a>
           </Link>
         </Email>
         . Aliquam a arcu porttitor, aliquam eros sed, convallis massa. Nunc vitae vehicula quam, in feugiat ligula. 
-        <Hashtag hashtag="#interweave">
-          <Link href="interweave">
+        <Hashtag hashtag="#interweave" mentionUrl="http://test.com/{{mention}}">
+          <Link href="interweave" mentionUrl="http://test.com/{{mention}}">
             <a href="interweave" rel="noopener noreferrer">
               #interweave
             </a>
@@ -275,16 +339,27 @@ exports[`Interweave (with autolinking) renders large blocks of text with all mat
         </Hashtag>
          Donec eu sem non nibh condimentum luctus. Vivamus pharetra feugiat blandit. Vestibulum neque velit, semper id vestibulum id, viverra a felis. Integer convallis in orci nec bibendum. Ut consequat posuere metus, 
         <Url
+          mentionUrl="http://test.com/{{mention}}"
           url="www.domain.com"
           urlParts={{ auth: "", fragment: "", host: "www.domain.com", path: "", port: "", ... 2 more }}
         >
-          <Link href="http://www.domain.com">
+          <Link
+            href="http://www.domain.com"
+            mentionUrl="http://test.com/{{mention}}"
+          >
             <a href="http://www.domain.com" rel="noopener noreferrer">
               www.domain.com
             </a>
           </Link>
         </Url>
-        .
+        . 
+        <Mention mention="username" mentionUrl="http://test.com/{{mention}}">
+          <Link href="http://test.com/username">
+            <a href="http://test.com/username" rel="noopener noreferrer">
+              @username
+            </a>
+          </Link>
+        </Mention>
         <Element selfClose tagName="br">
           <br />
         </Element>
@@ -293,10 +368,14 @@ exports[`Interweave (with autolinking) renders large blocks of text with all mat
         </Element>
         Curabitur lectus odio, tempus quis velit vitae, cursus sagittis nulla. Maecenas sem nulla, tempor nec risus nec, ultricies ultricies magna. 
         <Url
+          mentionUrl="http://test.com/{{mention}}"
           url="https://127.0.0.1/foo"
           urlParts={{ auth: "", fragment: "", host: "127.0.0.1", path: "/foo", port: "", ... 2 more }}
         >
-          <Link href="https://127.0.0.1/foo">
+          <Link
+            href="https://127.0.0.1/foo"
+            mentionUrl="http://test.com/{{mention}}"
+          >
             <a href="https://127.0.0.1/foo" rel="noopener noreferrer">
               https://127.0.0.1/foo
             </a>
@@ -304,6 +383,7 @@ exports[`Interweave (with autolinking) renders large blocks of text with all mat
         </Url>
          Nulla malesuada lacinia libero non mollis. Curabitur id lacus id dolor vestibulum ornare quis a nisi (
         <Url
+          mentionUrl="http://test.com/{{mention}}"
           url="http://domain.com/some/path?with=query"
           urlParts={{
             auth: "",
@@ -314,7 +394,10 @@ exports[`Interweave (with autolinking) renders large blocks of text with all mat
             ... 2 more,
           }}
         >
-          <Link href="http://domain.com/some/path?with=query">
+          <Link
+            href="http://domain.com/some/path?with=query"
+            mentionUrl="http://test.com/{{mention}}"
+          >
             <a
               href="http://domain.com/some/path?with=query"
               rel="noopener noreferrer"
@@ -330,24 +413,24 @@ exports[`Interweave (with autolinking) renders large blocks of text with all mat
         <Element selfClose tagName="br">
           <br />
         </Element>
-        <Hashtag hashtag="#blessed">
-          <Link href="blessed">
+        <Hashtag hashtag="#blessed" mentionUrl="http://test.com/{{mention}}">
+          <Link href="blessed" mentionUrl="http://test.com/{{mention}}">
             <a href="blessed" rel="noopener noreferrer">
               #blessed
             </a>
           </Link>
         </Hashtag>
          
-        <Hashtag hashtag="#interweave">
-          <Link href="interweave">
+        <Hashtag hashtag="#interweave" mentionUrl="http://test.com/{{mention}}">
+          <Link href="interweave" mentionUrl="http://test.com/{{mention}}">
             <a href="interweave" rel="noopener noreferrer">
               #interweave
             </a>
           </Link>
         </Hashtag>
          
-        <Hashtag hashtag="#milesj">
-          <Link href="milesj">
+        <Hashtag hashtag="#milesj" mentionUrl="http://test.com/{{mention}}">
+          <Link href="milesj" mentionUrl="http://test.com/{{mention}}">
             <a href="milesj" rel="noopener noreferrer">
               #milesj
             </a>
