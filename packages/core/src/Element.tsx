@@ -1,19 +1,26 @@
 import React from 'react';
-import { ElementProps } from './types';
+
+export interface ElementProps {
+	[prop: string]: unknown;
+	className?: string;
+	children?: React.ReactNode;
+	selfClose?: boolean;
+	tagName: string;
+}
 
 export function Element({
-	attributes = {},
 	className,
 	children = null,
 	selfClose = false,
 	tagName,
+	...props
 }: ElementProps) {
 	const Tag = tagName as 'span';
 
 	return selfClose ? (
-		<Tag className={className} {...attributes} />
+		<Tag className={className} {...props} />
 	) : (
-		<Tag className={className} {...attributes}>
+		<Tag className={className} {...props}>
 			{children}
 		</Tag>
 	);

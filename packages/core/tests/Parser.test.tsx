@@ -9,9 +9,11 @@ import {
 import { Element } from '../src/Element';
 import { Parser } from '../src/Parser';
 import {
-	CodeTagMatcher,
+	codeBarMatcher,
+	codeBazMatcher,
+	codeFooMatcher,
 	createExpectedToken,
-	LinkFilter,
+	linkTransformer,
 	MOCK_MARKUP,
 	parentConfig,
 	TOKEN_LOCATIONS,
@@ -32,15 +34,15 @@ describe('Parser', () => {
 		instance = new Parser(
 			'',
 			{},
-			[new CodeTagMatcher('foo'), new CodeTagMatcher('bar'), new CodeTagMatcher('baz')],
-			[new LinkFilter()],
+			[codeFooMatcher, codeBarMatcher, codeBazMatcher],
+			[linkTransformer],
 		);
 	});
 
 	it('parses when passed an empty value', () => {
 		[null, false, undefined, '', 0].forEach((value) => {
 			// @ts-expect-error Invalid type
-			expect(new Parser(value).parse()).toEqual([]);
+			expect(new Parser(value).parse()).toBeNull();
 		});
 	});
 
@@ -51,29 +53,10 @@ describe('Parser', () => {
 		});
 	});
 
-	describe('applyAttributeFilters()', () => {
-		it('applies filters for the attribute name', () => {
-			expect(instance.applyAttributeFilters('src', 'foo.com')).toBe('foo.com');
-			expect(instance.applyAttributeFilters('href', 'foo.com')).toBe('bar.net');
-		});
-	});
-
-	describe('applyNodeFilters()', () => {
-		it('applies filters to the node', () => {
-			const a = document.createElement('a');
-
-			expect(a.getAttribute('target')).toBeNull();
-
-			instance.applyNodeFilters('a', a);
-
-			expect(a.getAttribute('target')).toBe('_blank');
-		});
-	});
-
 	describe('applyMatchers()', () => {
 		function createElement(value: string, key: number) {
 			return (
-				<Element key={key} customProp="foo" tagName="span">
+				<Element key={key} customprop={value} tagName="span">
 					{value.toUpperCase()}
 				</Element>
 			);
@@ -85,7 +68,6 @@ describe('Parser', () => {
 					return createElement('bar', 1);
 				case 2:
 					return createElement('baz', 2);
-				case 0:
 				default:
 					return createElement('foo', 0);
 			}
@@ -138,35 +120,33 @@ describe('Parser', () => {
 				});
 			});
 		});
-
-		describe('ignores matcher if the inverse prop is enabled', () => {
-			TOKEN_LOCATIONS.forEach((location) => {
-				it(`for: ${location}`, () => {
-					// @ts-expect-error Invalid type
-					instance.props.noFoo = true;
-
-					const tokenString = location.replace(/{token}/g, '[foo]');
-					const actual = instance.applyMatchers(tokenString, parentConfig);
-
-					expect(actual).toBe(tokenString);
-
-					instance.props = {};
-				});
-			});
-		});
 	});
 
 	describe('canRenderChild()', () => {
 		it('doesnt render if missing parent tag', () => {
-			expect(instance.canRenderChild({ ...parentConfig, tagName: '' }, { ...parentConfig })).toBe(
-				false,
-			);
+			expect(
+				instance.canRenderChild(
+					{
+						...parentConfig,
+						// @ts-expect-error Invalid
+						tagName: '',
+					},
+					{ ...parentConfig },
+				),
+			).toBe(false);
 		});
 
 		it('doesnt render if missing child tag', () => {
-			expect(instance.canRenderChild({ ...parentConfig }, { ...parentConfig, tagName: '' })).toBe(
-				false,
-			);
+			expect(
+				instance.canRenderChild(
+					{ ...parentConfig },
+					{
+						...parentConfig,
+						// @ts-expect-error Invalid
+						tagName: '',
+					},
+				),
+			).toBe(false);
 		});
 	});
 
@@ -213,43 +193,41 @@ describe('Parser', () => {
 	});
 
 	describe('convertLineBreaks()', () => {
-		/* eslint-disable jest/valid-title */
-
-		it('it doesnt convert when HTML closing tags exist', () => {
+		it('doesnt convert when HTML closing tags exist', () => {
 			expect(instance.convertLineBreaks('<div>It\nwont\r\nconvert.</div>')).toBe(
 				'<div>It\nwont\r\nconvert.</div>',
 			);
 		});
 
-		it('it doesnt convert when HTML void tags exist', () => {
+		it('doesnt convert when HTML void tags exist', () => {
 			expect(instance.convertLineBreaks('It\n<br/>wont\r\nconvert.')).toBe(
 				'It\n<br/>wont\r\nconvert.',
 			);
 		});
 
-		it('it doesnt convert when HTML void tags with spaces exist', () => {
+		it('doesnt convert when HTML void tags with spaces exist', () => {
 			expect(instance.convertLineBreaks('It\n<br  />wont\r\nconvert.')).toBe(
 				'It\n<br  />wont\r\nconvert.',
 			);
 		});
 
-		it('it doesnt convert if `noHtml` is true', () => {
+		it('doesnt convert if `noHtml` is true', () => {
 			instance.props.noHtml = true;
 
 			expect(instance.convertLineBreaks('It\nwont\r\nconvert.')).toBe('It\nwont\r\nconvert.');
 		});
 
-		it('it doesnt convert if `disableLineBreaks` is true', () => {
+		it('doesnt convert if `disableLineBreaks` is true', () => {
 			instance.props.disableLineBreaks = true;
 
 			expect(instance.convertLineBreaks('It\nwont\r\nconvert.')).toBe('It\nwont\r\nconvert.');
 		});
 
-		it('it replaces carriage returns', () => {
+		it('replaces carriage returns', () => {
 			expect(instance.convertLineBreaks('Foo\r\nBar')).toBe('Foo<br/>Bar');
 		});
 
-		it('it replaces super long multilines', () => {
+		it('replaces super long multilines', () => {
 			expect(instance.convertLineBreaks('Foo\n\n\n\n\n\n\nBar')).toBe('Foo<br/><br/><br/>Bar');
 		});
 	});
@@ -409,14 +387,6 @@ describe('Parser', () => {
 			});
 		});
 
-		it('applies filters to attributes', () => {
-			element.setAttribute('href', 'http://foo.com/hello/world');
-
-			expect(instance.extractAttributes(element)).toEqual({
-				href: 'http://bar.net/hello/world',
-			});
-		});
-
 		it('converts `style` to an object', () => {
 			element.setAttribute('style', 'background-color: red; color: black; display: inline-block;');
 
@@ -425,19 +395,6 @@ describe('Parser', () => {
 					backgroundColor: 'red',
 					color: 'black',
 					display: 'inline-block',
-				},
-			});
-		});
-
-		it('removes problematic values from `style`', () => {
-			element.setAttribute(
-				'style',
-				'color: blue; background-image: url("foo.png"); background: image(ltr "arrow.png#xywh=0,0,16,16", red); border: image-set("cat.jpg" 1x, "dog.jpg" 1x)',
-			);
-
-			expect(instance.extractAttributes(element)).toEqual({
-				style: {
-					color: 'blue',
 				},
 			});
 		});
@@ -467,8 +424,10 @@ describe('Parser', () => {
 		});
 
 		it('returns true if in allow list', () => {
+			// @ts-expect-error Invalid
 			instance.allowed.add('custom');
 
+			// @ts-expect-error Invalid
 			expect(instance.isTagAllowed('custom')).toBe(true);
 		});
 
@@ -487,7 +446,7 @@ describe('Parser', () => {
 
 	describe('parse()', () => {
 		it('parses the entire document starting from the body', () => {
-			instance = new Parser(MOCK_MARKUP);
+			instance = new Parser(MOCK_MARKUP, {});
 
 			expect(instance.parse()).toMatchSnapshot();
 		});
@@ -592,9 +551,9 @@ describe('Parser', () => {
 			]);
 		});
 
-		it('passes through elements if `noHtmlExceptMatchers` prop is set', () => {
+		it('passes through elements if `noHtmlExceptInternals` prop is set', () => {
 			instance = new Parser('', {
-				noHtmlExceptMatchers: true,
+				noHtmlExceptInternals: true,
 			});
 
 			element.append(document.createTextNode('Foo'));
@@ -622,8 +581,8 @@ describe('Parser', () => {
 			expect(instance.parseNode(element, parentConfig)).toEqual(['Foo', 'Bar', '[foo]']);
 		});
 
-		it('doesnt strip matchers HTML if `noHtmlExceptMatchers` prop is set', () => {
-			instance.props.noHtmlExceptMatchers = true;
+		it('doesnt strip matchers HTML if `noHtmlExceptInternals` prop is set', () => {
+			instance.props.noHtmlExceptInternals = true;
 
 			element.append(document.createTextNode('Foo'));
 			element.append(createChild('div', 'Bar'));
@@ -710,7 +669,7 @@ describe('Parser', () => {
 
 			expect(instance.parseNode(element, instance.getTagConfig('span'))).toEqual([
 				'Foo',
-				<Element key="0" attributes={{ target: '_blank' }} tagName="a">
+				<Element key="0" tagName="a" target="_blank">
 					{['Bar']}
 				</Element>,
 				'Baz',
@@ -728,7 +687,7 @@ describe('Parser', () => {
 				}),
 			).toEqual([
 				'Foo',
-				<Element key="0" attributes={{ target: '_blank' }} tagName="a">
+				<Element key="0" tagName="a" target="_blank">
 					{['Bar']}
 				</Element>,
 				'Baz',
@@ -773,11 +732,7 @@ describe('Parser', () => {
 
 			element.append(acronym);
 
-			expect(instance.parseNode(element, instance.getTagConfig('span'))).toEqual([
-				<Element key="0" attributes={{ target: '_blank' }} tagName="a">
-					{['Link']}
-				</Element>,
-			]);
+			expect(instance.parseNode(element, instance.getTagConfig('span'))).toMatchSnapshot();
 		});
 	});
 });

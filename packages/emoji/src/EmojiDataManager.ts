@@ -85,8 +85,8 @@ export class EmojiDataManager {
 		const { emoticon, hexcode, shortcodes = [] } = baseEmoji;
 		const emoji: CanonicalEmoji = {
 			...baseEmoji,
-			canonical_shortcodes: [],
-			primary_shortcode: '',
+			canonicalShortcodes: [],
+			primaryShortcode: '',
 			skins: [],
 			unicode: '',
 		};
@@ -97,11 +97,11 @@ export class EmojiDataManager {
 		}
 
 		// Canonicalize the shortcodes for easy reuse
-		emoji.canonical_shortcodes = shortcodes.map((code) => `:${code}:`);
-		emoji.primary_shortcode = emoji.canonical_shortcodes[0];
+		emoji.canonicalShortcodes = shortcodes.map((code) => `:${code}:`);
+		emoji.primaryShortcode = emoji.canonicalShortcodes[0];
 
 		// Support all shortcodes
-		emoji.canonical_shortcodes.forEach((shortcode) => {
+		emoji.canonicalShortcodes.forEach((shortcode) => {
 			this.SHORTCODE_TO_HEXCODE[shortcode] = hexcode;
 		});
 

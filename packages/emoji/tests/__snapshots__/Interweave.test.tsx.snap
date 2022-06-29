@@ -1,103 +1,129 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Interweave (with emoji) renders a single emoji enlarged 1`] = `
-<Element tagName="div">
-  <div>
-    <Emoji
-      enlargeEmoji
-      emojiSource={{ compact: false, locale: "en", version: "0.0.0" }}
-      hexcode="1F408"
-      shortcode=":cat:"
-    >
-      <img
-        alt="🐈️"
-        aria-label="cat"
-        data-hexcode="1F408"
-        data-shortcodes=":cat:"
-        data-unicode="🐈️"
-        src="1F408"
-        style={{ display: "inline-block", verticalAlign: "middle", width: "3em", height: "3em" }}
-        title="cat"
-      />
-    </Emoji>
-  </div>
-</Element>
+<Interweave
+  content=":cat:"
+  emojiSource={{ compact: false, locale: "en", version: "0.0.0" }}
+  matchers={[ <img />, <img /> ]}
+  tagName="div"
+>
+  <Emoji
+    enlarge
+    hexcode="1F408"
+    largeSize="3em"
+    shortcode=":cat:"
+    size="1em"
+    source={{ compact: false, locale: "en", version: "0.0.0" }}
+  >
+    <img
+      alt="🐈️"
+      aria-label="cat"
+      data-hexcode="1F408"
+      data-shortcodes=":cat:"
+      data-unicode="🐈️"
+      src="1F408"
+      style={{ display: "inline-block", verticalAlign: "middle", width: "3em", height: "3em" }}
+      title="cat"
+    />
+  </Emoji>
+</Interweave>
 `;
 
 exports[`Interweave (with emoji) renders emoji shortcode as unicode 1`] = `
-<Element tagName="div">
-  <div>
-    This has 
-    <Emoji
-      renderUnicode
-      emojiSource={{ compact: false, locale: "en", version: "0.0.0" }}
-      hexcode="1F408"
-      shortcode=":cat:"
-    >
-      <span>🐈️</span>
-    </Emoji>
-     and 
-    <Emoji
-      renderUnicode
-      emojiSource={{ compact: false, locale: "en", version: "0.0.0" }}
-      hexcode="1F415"
-      shortcode=":dog:"
-    >
-      <span>🐕️</span>
-    </Emoji>
-     shortcodes.
-  </div>
-</Element>
+<Interweave
+  content="This has :cat: and :dog: shortcodes."
+  emojiSource={{ compact: false, locale: "en", version: "0.0.0" }}
+  matchers={[ <img /> ]}
+  tagName="div"
+>
+  This has 
+  <Emoji
+    renderUnicode
+    hexcode="1F408"
+    largeSize="3em"
+    shortcode=":cat:"
+    size="1em"
+    source={{ compact: false, locale: "en", version: "0.0.0" }}
+  >
+    <span>🐈️</span>
+  </Emoji>
+   and 
+  <Emoji
+    renderUnicode
+    hexcode="1F415"
+    largeSize="3em"
+    shortcode=":dog:"
+    size="1em"
+    source={{ compact: false, locale: "en", version: "0.0.0" }}
+  >
+    <span>🐕️</span>
+  </Emoji>
+   shortcodes.
+</Interweave>
 `;
 
 exports[`Interweave (with emoji) renders emoji unicode (escapes) as unicode 1`] = `
-<Element tagName="div">
-  <div>
-    This has 
-    <Emoji
-      renderUnicode
-      emojiSource={{ compact: false, locale: "en", version: "0.0.0" }}
-      hexcode="1F431"
-      unicode="🐱"
-    >
-      <span>🐱</span>
-    </Emoji>
-     and 
-    <Emoji
-      renderUnicode
-      emojiSource={{ compact: false, locale: "en", version: "0.0.0" }}
-      hexcode="1F436"
-      unicode="🐶"
-    >
-      <span>🐶</span>
-    </Emoji>
-     shortcodes.
-  </div>
-</Element>
+<Interweave
+  content="This has 🐱 and 🐶 shortcodes."
+  emojiSource={{ compact: false, locale: "en", version: "0.0.0" }}
+  matchers={[ <img /> ]}
+  tagName="div"
+>
+  This has 
+  <Emoji
+    renderUnicode
+    hexcode="1F431"
+    largeSize="3em"
+    size="1em"
+    source={{ compact: false, locale: "en", version: "0.0.0" }}
+    unicode="🐱"
+  >
+    <span>🐱</span>
+  </Emoji>
+   and 
+  <Emoji
+    renderUnicode
+    hexcode="1F436"
+    largeSize="3em"
+    size="1em"
+    source={{ compact: false, locale: "en", version: "0.0.0" }}
+    unicode="🐶"
+  >
+    <span>🐶</span>
+  </Emoji>
+   shortcodes.
+</Interweave>
 `;
 
 exports[`Interweave (with emoji) renders emoji unicode (literals) as unicode 1`] = `
-<Element tagName="div">
-  <div>
-    This has 
-    <Emoji
-      renderUnicode
-      emojiSource={{ compact: false, locale: "en", version: "0.0.0" }}
-      hexcode="1F408"
-      unicode="🐈️"
-    >
-      <span>🐈️</span>
-    </Emoji>
-     and 
-    <Emoji
-      renderUnicode
-      emojiSource={{ compact: false, locale: "en", version: "0.0.0" }}
-      hexcode="1F415"
-      unicode="🐕️"
-    >
-      <span>🐕️</span>
-    </Emoji>
-     shortcodes.
-  </div>
-</Element>
+<Interweave
+  content="This has 🐈️ and 🐕️ shortcodes."
+  emojiSource={{ compact: false, locale: "en", version: "0.0.0" }}
+  matchers={[ <img /> ]}
+  tagName="div"
+>
+  This has 
+  <Emoji
+    renderUnicode
+    hexcode="1F408"
+    largeSize="3em"
+    size="1em"
+    source={{ compact: false, locale: "en", version: "0.0.0" }}
+    unicode="🐈️"
+  >
+    <span>🐈️</span>
+  </Emoji>
+   and 
+  <Emoji
+    renderUnicode
+    hexcode="1F415"
+    largeSize="3em"
+    size="1em"
+    source={{ compact: false, locale: "en", version: "0.0.0" }}
+    unicode="🐕️"
+  >
+    <span>🐕️</span>
+  </Emoji>
+   shortcodes.
+</Interweave>
 `;

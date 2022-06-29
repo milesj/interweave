@@ -38,12 +38,12 @@ describe('useEmojiData()', () => {
 	const mockEmojis: CanonicalEmoji[] = [
 		{
 			label: 'grinning face',
-			canonical_shortcodes: [':gleeful:'],
+			canonicalShortcodes: [':gleeful:'],
 			emoji: '😀',
 			group: 0,
 			hexcode: '1F600',
 			order: 1,
-			primary_shortcode: ':gleeful:',
+			primaryShortcode: ':gleeful:',
 			shortcodes: ['gleeful'],
 			skins: [],
 			subgroup: 0,

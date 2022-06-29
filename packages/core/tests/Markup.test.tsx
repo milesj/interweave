@@ -1,41 +1,11 @@
 import React from 'react';
 import { render } from 'rut-dom';
-import { Element } from '../src/Element';
-import { Markup } from '../src/Markup';
+import { Markup, MarkupProps } from '../src/Markup';
 import { MOCK_MARKUP } from '../src/test';
-import { MarkupProps } from '../src/types';
 
 const options = { log: false, reactElements: false };
 
 describe('Markup', () => {
-	it('can change `tagName`', () => {
-		const { root } = render<MarkupProps>(<Markup content="Foo Bar" tagName="p" />);
-
-		expect(root.findOne(Element)).toHaveProp('tagName', 'p');
-	});
-
-	it('can use a fragment', () => {
-		const { root } = render<MarkupProps>(<Markup content="Foo Bar" tagName="fragment" />);
-
-		expect(root).toContainNode('Foo Bar');
-	});
-
-	it('can pass custom attributes', () => {
-		const { root } = render<MarkupProps>(
-			<Markup attributes={{ 'aria-label': 'foo' }} content={'Foo <a href="foo.com">Bar</a> Baz'} />,
-		);
-
-		expect(root.findOne('span')).toHaveProp('aria-label', 'foo');
-	});
-
-	it('can pass class name', () => {
-		const { root } = render<MarkupProps>(
-			<Markup className="foo" content={'Foo <a href="foo.com">Bar</a> Baz'} />,
-		);
-
-		expect(root.findOne('span')).toHaveProp('className', 'foo');
-	});
-
 	it('allows empty `content` to be passed', () => {
 		const { root } = render<MarkupProps>(<Markup content={null} />);
 
@@ -46,7 +16,7 @@ describe('Markup', () => {
 		const empty = <div>Foo</div>;
 		const { root } = render<MarkupProps>(<Markup content="" emptyContent={empty} />);
 
-		expect(root).toContainNode(empty);
+		expect(root.debug(options)).toMatchSnapshot();
 	});
 
 	it('parses the entire document starting from the body', () => {

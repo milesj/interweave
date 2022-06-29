@@ -1,8 +1,9 @@
 import { Emoji, Emoticon, Hexcode, Locale, Shortcode, Unicode } from 'emojibase';
+import { MatchParams } from 'interweave';
 
 export interface CanonicalEmoji extends Emoji {
-	canonical_shortcodes: Shortcode[];
-	primary_shortcode: Shortcode;
+	canonicalShortcodes: Shortcode[];
+	primaryShortcode: Shortcode;
 	skins?: CanonicalEmoji[];
 	unicode: Unicode;
 }
@@ -25,42 +26,37 @@ export interface Source {
 	version: string;
 }
 
-export interface EmojiProps {
-	/** Size of the emoji when it's enlarged. */
-	emojiLargeSize?: Size;
-	/** Path to an SVG/PNG. Accepts a string or a callback that is passed the hexcode. */
-	emojiPath?: Path;
-	/** Size of the emoji. Defaults to 1em. */
-	emojiSize?: Size;
-	/** Emoji datasource metadata. */
-	emojiSource: Source;
+export interface EmojiProps extends EmojiConfig {
 	/** Emoticon to reference emoji from. */
 	emoticon?: Emoticon;
 	/** Enlarge emoji increasing it's size. */
-	enlargeEmoji?: boolean;
+	enlarge?: boolean;
 	/** Hexcode to reference emoji from. */
 	hexcode?: Hexcode;
-	/** Render literal unicode character instead of an SVG/PNG. */
-	renderUnicode?: boolean;
+	/** Path to an SVG/PNG. Accepts a string or a callback that is passed the hexcode. */
+	path?: Path;
 	/** Shortcode to reference emoji from. */
 	shortcode?: Shortcode;
+	/** Emoji datasource metadata. */
+	source: Source;
 	/** Unicode character to reference emoji from. */
 	unicode?: Unicode;
 }
 
-export interface EmojiMatch {
+export interface EmojiMatch extends MatchParams {
 	emoticon?: string;
 	hexcode?: string;
 	shortcode?: string;
 	unicode?: string;
 }
 
-export interface EmojiMatcherOptions {
-	convertEmoticon?: boolean;
-	convertShortcode?: boolean;
-	convertUnicode?: boolean;
-	enlargeThreshold?: number;
+export interface EmojiConfig {
+	/** Size of the emoji when it's enlarged. */
+	largeSize?: Size;
+	/** Render literal unicode character instead of an SVG/PNG. */
 	renderUnicode?: boolean;
+	/** Size of the emoji. Defaults to 1em. */
+	size?: Size;
 }
 
 export interface UseEmojiDataOptions {
@@ -76,4 +72,11 @@ export interface UseEmojiDataOptions {
 	throwErrors?: boolean;
 	/** Emojibase dataset version to load. Defaults to `latest`. */
 	version?: string;
+}
+
+declare module 'interweave' {
+	export interface InterweaveProps {
+		emojiEnlargeThreshold?: number;
+		emojiSource: Source;
+	}
 }

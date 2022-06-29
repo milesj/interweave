@@ -8,51 +8,44 @@ exports[`html a, ul, li renders 1`] = `
     <li><a href="tel:+123456789">Phone</a></li>
   </ul>"
 >
-  <Element tagName="span">
-    <span>
-      <Element tagName="ul">
-        <ul>
-          
+  <Element tagName="ul">
+    <ul>
+      
   
-          <Element tagName="li">
-            <li>
-              <Element attributes={{ href: "https://example.com" }} tagName="a">
-                <a href="https://example.com">
-                  Website
-                </a>
-              </Element>
-            </li>
+      <Element tagName="li">
+        <li>
+          <Element href="https://example.com" tagName="a">
+            <a href="https://example.com">
+              Website
+            </a>
           </Element>
-          
-  
-          <Element tagName="li">
-            <li>
-              <Element
-                attributes={{ href: "mailto:m.bluth@example.com" }}
-                tagName="a"
-              >
-                <a href="mailto:m.bluth@example.com">
-                  Email
-                </a>
-              </Element>
-            </li>
-          </Element>
-          
-  
-          <Element tagName="li">
-            <li>
-              <Element attributes={{ href: "tel:+123456789" }} tagName="a">
-                <a href="tel:+123456789">
-                  Phone
-                </a>
-              </Element>
-            </li>
-          </Element>
-          
-
-        </ul>
+        </li>
       </Element>
-    </span>
+      
+  
+      <Element tagName="li">
+        <li>
+          <Element href="mailto:m.bluth@example.com" tagName="a">
+            <a href="mailto:m.bluth@example.com">
+              Email
+            </a>
+          </Element>
+        </li>
+      </Element>
+      
+  
+      <Element tagName="li">
+        <li>
+          <Element href="tel:+123456789" tagName="a">
+            <a href="tel:+123456789">
+              Phone
+            </a>
+          </Element>
+        </li>
+      </Element>
+      
+
+    </ul>
   </Element>
 </Markup>
 `;
@@ -61,26 +54,19 @@ exports[`html abbr renders 1`] = `
 <Markup
   content="You can use <abbr title="Cascading Style Sheets">CSS</abbr> to style your <abbr title="HyperText Markup Language">HTML</abbr>."
 >
-  <Element tagName="span">
-    <span>
-      You can use 
-      <Element attributes={{ title: "Cascading Style Sheets" }} tagName="abbr">
-        <abbr title="Cascading Style Sheets">
-          CSS
-        </abbr>
-      </Element>
-       to style your 
-      <Element
-        attributes={{ title: "HyperText Markup Language" }}
-        tagName="abbr"
-      >
-        <abbr title="HyperText Markup Language">
-          HTML
-        </abbr>
-      </Element>
-      .
-    </span>
+  You can use 
+  <Element tagName="abbr" title="Cascading Style Sheets">
+    <abbr title="Cascading Style Sheets">
+      CSS
+    </abbr>
   </Element>
+   to style your 
+  <Element tagName="abbr" title="HyperText Markup Language">
+    <abbr title="HyperText Markup Language">
+      HTML
+    </abbr>
+  </Element>
+  .
 </Markup>
 `;
 
@@ -91,35 +77,31 @@ exports[`html address renders 1`] = `
     <a href="tel:+311-555-2368">+311-555-2368</a><br/>
   </address>"
 >
-  <Element tagName="span">
-    <span>
-      <Element tagName="address">
-        <address>
-          
+  <Element tagName="address">
+    <address>
+      
   
-          <Element attributes={{ href: "mailto:jim@rock.com" }} tagName="a">
-            <a href="mailto:jim@rock.com">
-              jim@rock.com
-            </a>
-          </Element>
-          <Element selfClose tagName="br">
-            <br />
-          </Element>
-          
-  
-          <Element attributes={{ href: "tel:+311-555-2368" }} tagName="a">
-            <a href="tel:+311-555-2368">
-              +311-555-2368
-            </a>
-          </Element>
-          <Element selfClose tagName="br">
-            <br />
-          </Element>
-          
-
-        </address>
+      <Element href="mailto:jim@rock.com" tagName="a">
+        <a href="mailto:jim@rock.com">
+          jim@rock.com
+        </a>
       </Element>
-    </span>
+      <Element selfClose tagName="br">
+        <br />
+      </Element>
+      
+  
+      <Element href="tel:+311-555-2368" tagName="a">
+        <a href="tel:+311-555-2368">
+          +311-555-2368
+        </a>
+      </Element>
+      <Element selfClose tagName="br">
+        <br />
+      </Element>
+      
+
+    </address>
   </Element>
 </Markup>
 `;
@@ -142,74 +124,70 @@ exports[`html article renders 1`] = `
     </article>
   </article>"
 >
-  <Element tagName="span">
-    <span>
-      <Element attributes={{ className: "forecast" }} tagName="article">
-        <article className="forecast">
-          
+  <Element className="forecast" tagName="article">
+    <article className="forecast">
+      
   
-          <Element tagName="h1">
-            <h1>Weather forecast for Seattle</h1>
+      <Element tagName="h1">
+        <h1>Weather forecast for Seattle</h1>
+      </Element>
+      
+  
+      <Element className="day-forecast" tagName="article">
+        <article className="day-forecast">
+          
+    
+          <Element tagName="h2">
+            <h2>03 March 2018</h2>
+          </Element>
+          
+    
+          <Element tagName="p">
+            <p>Rain.</p>
           </Element>
           
   
-          <Element attributes={{ className: "day-forecast" }} tagName="article">
-            <article className="day-forecast">
-              
-    
-              <Element tagName="h2">
-                <h2>03 March 2018</h2>
-              </Element>
-              
-    
-              <Element tagName="p">
-                <p>Rain.</p>
-              </Element>
-              
-  
-            </article>
-          </Element>
-          
-  
-          <Element attributes={{ className: "day-forecast" }} tagName="article">
-            <article className="day-forecast">
-              
-    
-              <Element tagName="h2">
-                <h2>04 March 2018</h2>
-              </Element>
-              
-    
-              <Element tagName="p">
-                <p>Periods of rain.</p>
-              </Element>
-              
-  
-            </article>
-          </Element>
-          
-  
-          <Element attributes={{ className: "day-forecast" }} tagName="article">
-            <article className="day-forecast">
-              
-    
-              <Element tagName="h2">
-                <h2>05 March 2018</h2>
-              </Element>
-              
-    
-              <Element tagName="p">
-                <p>Heavy rain.</p>
-              </Element>
-              
-  
-            </article>
-          </Element>
-          
-
         </article>
       </Element>
-    </span>
+      
+  
+      <Element className="day-forecast" tagName="article">
+        <article className="day-forecast">
+          
+    
+          <Element tagName="h2">
+            <h2>04 March 2018</h2>
+          </Element>
+          
+    
+          <Element tagName="p">
+            <p>Periods of rain.</p>
+          </Element>
+          
+  
+        </article>
+      </Element>
+      
+  
+      <Element className="day-forecast" tagName="article">
+        <article className="day-forecast">
+          
+    
+          <Element tagName="h2">
+            <h2>05 March 2018</h2>
+          </Element>
+          
+    
+          <Element tagName="p">
+            <p>Heavy rain.</p>
+          </Element>
+          
+  
+        </article>
+      </Element>
+      
+
+    </article>
   </Element>
 </Markup>
 `;
@@ -220,20 +198,16 @@ exports[`html aside renders 1`] = `
     <p>The Rough-skinned Newt defends itself with a deadly neurotoxin.</p>
   </aside>"
 >
-  <Element tagName="span">
-    <span>
-      <Element tagName="aside">
-        <aside>
-          
+  <Element tagName="aside">
+    <aside>
+      
   
-          <Element tagName="p">
-            <p>The Rough-skinned Newt defends itself with a deadly neurotoxin.</p>
-          </Element>
-          
-
-        </aside>
+      <Element tagName="p">
+        <p>The Rough-skinned Newt defends itself with a deadly neurotoxin.</p>
       </Element>
-    </span>
+      
+
+    </aside>
   </Element>
 </Markup>
 `;
@@ -244,21 +218,14 @@ exports[`html audio renders 1`] = `
     Your browser does not support the <code>audio</code> element.
   </audio>"
 >
-  <Element tagName="span">
-    <span>
-      <Element
-        attributes={{ controls: true, src: "/media/examples/t-rex-roar.mp3" }}
-        tagName="audio"
-      >
-        <audio controls src="/media/examples/t-rex-roar.mp3">
-          
+  <Element controls src="/media/examples/t-rex-roar.mp3" tagName="audio">
+    <audio controls src="/media/examples/t-rex-roar.mp3">
+      
   Your browser does not support the 
-          audio
-           element.
+      audio
+       element.
 
-        </audio>
-      </Element>
-    </span>
+    </audio>
   </Element>
 </Markup>
 `;
@@ -270,27 +237,19 @@ exports[`html audio renders with source 1`] = `
     Your browser does not support the <code>audio</code> element.
   </audio>"
 >
-  <Element tagName="span">
-    <span>
-      <Element attributes={{ controls: true }} tagName="audio">
-        <audio controls>
-          
+  <Element controls tagName="audio">
+    <audio controls>
+      
   
-          <Element
-            selfClose
-            attributes={{ src: "foo.wav", type: "audio/wav" }}
-            tagName="source"
-          >
-            <source src="foo.wav" type="audio/wav" />
-          </Element>
-          
-  Your browser does not support the 
-          audio
-           element.
-
-        </audio>
+      <Element selfClose src="foo.wav" tagName="source" type="audio/wav">
+        <source src="foo.wav" type="audio/wav" />
       </Element>
-    </span>
+      
+  Your browser does not support the 
+      audio
+       element.
+
+    </audio>
   </Element>
 </Markup>
 `;
@@ -299,26 +258,22 @@ exports[`html b renders 1`] = `
 <Markup
   content="<p>The two most popular science courses offered by the school are <b class="term">chemistry</b> (the study of chemicals and the composition of substances) and <b class="term">physics</b> (the study of the nature and properties of matter and energy).</p>"
 >
-  <Element tagName="span">
-    <span>
-      <Element tagName="p">
-        <p>
-          The two most popular science courses offered by the school are 
-          <Element attributes={{ className: "term" }} tagName="b">
-            <b className="term">
-              chemistry
-            </b>
-          </Element>
-           (the study of chemicals and the composition of substances) and 
-          <Element attributes={{ className: "term" }} tagName="b">
-            <b className="term">
-              physics
-            </b>
-          </Element>
-           (the study of the nature and properties of matter and energy).
-        </p>
+  <Element tagName="p">
+    <p>
+      The two most popular science courses offered by the school are 
+      <Element className="term" tagName="b">
+        <b className="term">
+          chemistry
+        </b>
       </Element>
-    </span>
+       (the study of chemicals and the composition of substances) and 
+      <Element className="term" tagName="b">
+        <b className="term">
+          physics
+        </b>
+      </Element>
+       (the study of the nature and properties of matter and energy).
+    </p>
   </Element>
 </Markup>
 `;
@@ -333,78 +288,71 @@ exports[`html bdi renders 1`] = `
     <li><span class="name" dir="auto">تیز سمی</span>: 5th place</li>
   </ul>"
 >
-  <Element tagName="span">
-    <span>
-      <Element tagName="ul">
-        <ul>
-          
+  <Element tagName="ul">
+    <ul>
+      
   
-          <Element tagName="li">
-            <li>
-              <Element attributes={{ className: "name" }} tagName="bdi">
-                <bdi className="name">
-                  Evil Steven
-                </bdi>
-              </Element>
-              : 1st place
-            </li>
+      <Element tagName="li">
+        <li>
+          <Element className="name" tagName="bdi">
+            <bdi className="name">
+              Evil Steven
+            </bdi>
           </Element>
-          
-  
-          <Element tagName="li">
-            <li>
-              <Element attributes={{ className: "name" }} tagName="bdi">
-                <bdi className="name">
-                  François fatale
-                </bdi>
-              </Element>
-              : 2nd place
-            </li>
-          </Element>
-          
-  
-          <Element tagName="li">
-            <li>
-              <Element attributes={{ className: "name" }} tagName="span">
-                <span className="name">
-                  تیز سمی
-                </span>
-              </Element>
-              : 3rd place
-            </li>
-          </Element>
-          
-  
-          <Element tagName="li">
-            <li>
-              <Element attributes={{ className: "name" }} tagName="bdi">
-                <bdi className="name">
-                  الرجل القوي إيان
-                </bdi>
-              </Element>
-              : 4th place
-            </li>
-          </Element>
-          
-  
-          <Element tagName="li">
-            <li>
-              <Element
-                attributes={{ className: "name", dir: "auto" }}
-                tagName="span"
-              >
-                <span className="name" dir="auto">
-                  تیز سمی
-                </span>
-              </Element>
-              : 5th place
-            </li>
-          </Element>
-          
-
-        </ul>
+          : 1st place
+        </li>
       </Element>
-    </span>
+      
+  
+      <Element tagName="li">
+        <li>
+          <Element className="name" tagName="bdi">
+            <bdi className="name">
+              François fatale
+            </bdi>
+          </Element>
+          : 2nd place
+        </li>
+      </Element>
+      
+  
+      <Element tagName="li">
+        <li>
+          <Element className="name" tagName="span">
+            <span className="name">
+              تیز سمی
+            </span>
+          </Element>
+          : 3rd place
+        </li>
+      </Element>
+      
+  
+      <Element tagName="li">
+        <li>
+          <Element className="name" tagName="bdi">
+            <bdi className="name">
+              الرجل القوي إيان
+            </bdi>
+          </Element>
+          : 4th place
+        </li>
+      </Element>
+      
+  
+      <Element tagName="li">
+        <li>
+          <Element className="name" dir="auto" tagName="span">
+            <span className="name" dir="auto">
+              تیز سمی
+            </span>
+          </Element>
+          : 5th place
+        </li>
+      </Element>
+      
+
+    </ul>
   </Element>
 </Markup>
 `;
@@ -413,15 +361,11 @@ exports[`html bdo renders 1`] = `
 <Markup
   content="In the computer's memory, this is stored as <bdo dir="ltr">אה, אני אוהב להיות ליד חוף הים</bdo>"
 >
-  <Element tagName="span">
-    <span>
-      In the computer's memory, this is stored as 
-      <Element attributes={{ dir: "ltr" }} tagName="bdo">
-        <bdo dir="ltr">
-          אה, אני אוהב להיות ליד חוף הים
-        </bdo>
-      </Element>
-    </span>
+  In the computer's memory, this is stored as 
+  <Element dir="ltr" tagName="bdo">
+    <bdo dir="ltr">
+      אה, אני אוהב להיות ליד חוף הים
+    </bdo>
   </Element>
 </Markup>
 `;
@@ -434,65 +378,47 @@ exports[`html blockquote renders 1`] = `
   
   <cite>– Aldous Huxley, Brave New World</cite>"
 >
-  <Element tagName="span">
-    <span>
-      <Element
-        attributes={{ cite: "https://www.huxley.net/bnw/four.html" }}
-        tagName="blockquote"
-      >
-        <blockquote cite="https://www.huxley.net/bnw/four.html">
-          
+  <Element cite="https://www.huxley.net/bnw/four.html" tagName="blockquote">
+    <blockquote cite="https://www.huxley.net/bnw/four.html">
+      
   
-          <Element tagName="p">
-            <p>Words can be like X-rays, if you use them properly – they'll go through anything. You read and you're pierced.</p>
-          </Element>
-          
-
-        </blockquote>
+      <Element tagName="p">
+        <p>Words can be like X-rays, if you use them properly – they'll go through anything. You read and you're pierced.</p>
       </Element>
       
 
+    </blockquote>
+  </Element>
+  
 
-      <Element tagName="cite">
-        <cite>– Aldous Huxley, Brave New World</cite>
-      </Element>
-    </span>
+
+  <Element tagName="cite">
+    <cite>– Aldous Huxley, Brave New World</cite>
   </Element>
 </Markup>
 `;
 
 exports[`html button renders 1`] = `
 <Markup content="<button name="button">Click me</button>">
-  <Element tagName="span">
-    <span>
-      <Element tagName="button">
-        <button>Click me</button>
-      </Element>
-    </span>
+  <Element tagName="button">
+    <button>Click me</button>
   </Element>
 </Markup>
 `;
 
 exports[`html canvas renders 1`] = `
 <Markup
-  allowList={[ "canvas" ]}
+  allow={[ "canvas" ]}
   content="<canvas id="canvas" width="300" height="300">
     An alternative text describing what your canvas displays.
   </canvas>"
 >
-  <Element tagName="span">
-    <span>
-      <Element
-        attributes={{ id: "canvas", width: "300", height: "300" }}
-        tagName="canvas"
-      >
-        <canvas height="300" id="canvas" width="300">
-          
+  <Element height="300" id="canvas" tagName="canvas" width="300">
+    <canvas height="300" id="canvas" width="300">
+      
   An alternative text describing what your canvas displays.
 
-        </canvas>
-      </Element>
-    </span>
+    </canvas>
   </Element>
 </Markup>
 `;
@@ -503,11 +429,9 @@ exports[`html canvas renders nothing when not allowed 1`] = `
     An alternative text describing what your canvas displays.
   </canvas>"
 >
-  <Element tagName="span">
-    <span>
+  
   An alternative text describing what your canvas displays.
-</span>
-  </Element>
+
 </Markup>
 `;
 
@@ -522,57 +446,47 @@ exports[`html caption renders 1`] = `
     </tr>
   </table>"
 >
-  <Element tagName="span">
-    <span>
-      <Element tagName="table">
-        <table>
-          
+  <Element tagName="table">
+    <table>
+      
   
-          <Element tagName="caption">
-            <caption>He-Man and Skeletor facts</caption>
-          </Element>
-          
+      <Element tagName="caption">
+        <caption>He-Man and Skeletor facts</caption>
+      </Element>
+      
   
-          <Element tagName="tbody">
-            <tbody>
-              <Element tagName="tr">
-                <tr>
-                  
+      <Element tagName="tbody">
+        <tbody>
+          <Element tagName="tr">
+            <tr>
+              
     
-                  <Element tagName="td">
-                    <td> </td>
-                  </Element>
-                  
-    
-                  <Element
-                    attributes={{ scope: "col", className: "heman" }}
-                    tagName="th"
-                  >
-                    <th className="heman" scope="col">
-                      He-Man
-                    </th>
-                  </Element>
-                  
-    
-                  <Element
-                    attributes={{ scope: "col", className: "skeletor" }}
-                    tagName="th"
-                  >
-                    <th className="skeletor" scope="col">
-                      Skeletor
-                    </th>
-                  </Element>
-                  
-  
-                </tr>
+              <Element tagName="td">
+                <td> </td>
               </Element>
               
-
-            </tbody>
+    
+              <Element className="heman" scope="col" tagName="th">
+                <th className="heman" scope="col">
+                  He-Man
+                </th>
+              </Element>
+              
+    
+              <Element className="skeletor" scope="col" tagName="th">
+                <th className="skeletor" scope="col">
+                  Skeletor
+                </th>
+              </Element>
+              
+  
+            </tr>
           </Element>
-        </table>
+          
+
+        </tbody>
       </Element>
-    </span>
+    </table>
   </Element>
 </Markup>
 `;
@@ -586,44 +500,40 @@ exports[`html cite renders 1`] = `
     </footer>
   </blockquote>"
 >
-  <Element tagName="span">
-    <span>
-      <Element tagName="blockquote">
-        <blockquote>
-          
+  <Element tagName="blockquote">
+    <blockquote>
+      
   
-          <Element tagName="p">
-            <p>It was a bright cold day in April, and the clocks were striking thirteen.</p>
-          </Element>
-          
-  
-          <Element tagName="footer">
-            <footer>
-              
-    First sentence in 
-              <Element tagName="cite">
-                <cite>
-                  <Element
-                    attributes={{ href: "http://www.george-orwell.org/1984/0.html" }}
-                    tagName="a"
-                  >
-                    <a href="http://www.george-orwell.org/1984/0.html">
-                      <Element tagName="i">
-                        <i>Nineteen Eighty-Four</i>
-                      </Element>
-                    </a>
-                  </Element>
-                </cite>
-              </Element>
-               by George Orwell (Part 1, Chapter 1).
-  
-            </footer>
-          </Element>
-          
-
-        </blockquote>
+      <Element tagName="p">
+        <p>It was a bright cold day in April, and the clocks were striking thirteen.</p>
       </Element>
-    </span>
+      
+  
+      <Element tagName="footer">
+        <footer>
+          
+    First sentence in 
+          <Element tagName="cite">
+            <cite>
+              <Element
+                href="http://www.george-orwell.org/1984/0.html"
+                tagName="a"
+              >
+                <a href="http://www.george-orwell.org/1984/0.html">
+                  <Element tagName="i">
+                    <i>Nineteen Eighty-Four</i>
+                  </Element>
+                </a>
+              </Element>
+            </cite>
+          </Element>
+           by George Orwell (Part 1, Chapter 1).
+  
+        </footer>
+      </Element>
+      
+
+    </blockquote>
   </Element>
 </Markup>
 `;
@@ -632,18 +542,14 @@ exports[`html code renders 1`] = `
 <Markup
   content="<p>The <code>push()</code> method adds one or more elements to the end of an array and returns the new length of the array.</p>"
 >
-  <Element tagName="span">
-    <span>
-      <Element tagName="p">
-        <p>
-          The 
-          <Element tagName="code">
-            <code>push()</code>
-          </Element>
-           method adds one or more elements to the end of an array and returns the new length of the array.
-        </p>
+  <Element tagName="p">
+    <p>
+      The 
+      <Element tagName="code">
+        <code>push()</code>
       </Element>
-    </span>
+       method adds one or more elements to the end of an array and returns the new length of the array.
+    </p>
   </Element>
 </Markup>
 `;
@@ -659,60 +565,46 @@ exports[`html col, colgroup renders 1`] = `
     </colgroup>
   </table>"
 >
-  <Element tagName="span">
-    <span>
-      <Element tagName="table">
-        <table>
-          
+  <Element tagName="table">
+    <table>
+      
   
-          <Element tagName="caption">
-            <caption>Superheros and sidekicks</caption>
-          </Element>
-          
-  
-          <Element tagName="colgroup">
-            <colgroup>
-              
-    
-              <Element selfClose tagName="col">
-                <col />
-              </Element>
-              
-    
-              <Element
-                selfClose
-                attributes={{ span: 2, className: "batman" }}
-                tagName="col"
-              >
-                <col className="batman" span={2} />
-              </Element>
-              
-    
-              <Element
-                selfClose
-                attributes={{ span: 2, className: "flash" }}
-                tagName="col"
-              >
-                <col className="flash" span={2} />
-              </Element>
-              
-  
-            </colgroup>
-          </Element>
-          
-
-        </table>
+      <Element tagName="caption">
+        <caption>Superheros and sidekicks</caption>
       </Element>
-    </span>
+      
+  
+      <Element tagName="colgroup">
+        <colgroup>
+          
+    
+          <Element selfClose tagName="col">
+            <col />
+          </Element>
+          
+    
+          <Element selfClose className="batman" span={2} tagName="col">
+            <col className="batman" span={2} />
+          </Element>
+          
+    
+          <Element selfClose className="flash" span={2} tagName="col">
+            <col className="flash" span={2} />
+          </Element>
+          
+  
+        </colgroup>
+      </Element>
+      
+
+    </table>
   </Element>
 </Markup>
 `;
 
 exports[`html details, summary doesnt render summary when not in details 1`] = `
 <Markup content="<summary>Details</summary>">
-  <Element tagName="span">
-    <span>Details</span>
-  </Element>
+  Details
 </Markup>
 `;
 
@@ -723,21 +615,17 @@ exports[`html details, summary renders 1`] = `
     Something small enough to escape casual notice.
   </details>"
 >
-  <Element tagName="span">
-    <span>
-      <Element tagName="details">
-        <details>
-          
+  <Element tagName="details">
+    <details>
+      
   
-          <Element tagName="summary">
-            <summary>Details</summary>
-          </Element>
-          
+      <Element tagName="summary">
+        <summary>Details</summary>
+      </Element>
+      
   Something small enough to escape casual notice.
 
-        </details>
-      </Element>
-    </span>
+    </details>
   </Element>
 </Markup>
 `;
@@ -746,20 +634,16 @@ exports[`html dfn renders 1`] = `
 <Markup
   content="<p>A <dfn id="def-validator">validator</dfn> is a program that checks for syntax errors in code or documents.</p>"
 >
-  <Element tagName="span">
-    <span>
-      <Element tagName="p">
-        <p>
-          A 
-          <Element attributes={{ id: "def-validator" }} tagName="dfn">
-            <dfn id="def-validator">
-              validator
-            </dfn>
-          </Element>
-           is a program that checks for syntax errors in code or documents.
-        </p>
+  <Element tagName="p">
+    <p>
+      A 
+      <Element id="def-validator" tagName="dfn">
+        <dfn id="def-validator">
+          validator
+        </dfn>
       </Element>
-    </span>
+       is a program that checks for syntax errors in code or documents.
+    </p>
   </Element>
 </Markup>
 `;
@@ -771,32 +655,26 @@ exports[`html div renders 1`] = `
     <p>Beware of the leopard</p>
   </div>"
 >
-  <Element tagName="span">
-    <span>
-      <Element attributes={{ className: "warning" }} tagName="div">
-        <div className="warning">
-          
+  <Element className="warning" tagName="div">
+    <div className="warning">
+      
   
-          <Element
-            selfClose
-            attributes={{ src: "/media/examples/leopard.jpg", alt: "An intimidating leopard." }}
-            tagName="img"
-          >
-            <img
-              alt="An intimidating leopard."
-              src="/media/examples/leopard.jpg"
-            />
-          </Element>
-          
-  
-          <Element tagName="p">
-            <p>Beware of the leopard</p>
-          </Element>
-          
-
-        </div>
+      <Element
+        selfClose
+        alt="An intimidating leopard."
+        src="/media/examples/leopard.jpg"
+        tagName="img"
+      >
+        <img alt="An intimidating leopard." src="/media/examples/leopard.jpg" />
       </Element>
-    </span>
+      
+  
+      <Element tagName="p">
+        <p>Beware of the leopard</p>
+      </Element>
+      
+
+    </div>
   </Element>
 </Markup>
 `;
@@ -814,62 +692,54 @@ exports[`html dl, dt, dd renders 1`] = `
     <dd>A giant owl-like creature.</dd>
   </dl>"
 >
-  <Element tagName="span">
-    <span>
-      <Element tagName="dl">
-        <dl>
-          
+  <Element tagName="dl">
+    <dl>
+      
   
-          <Element tagName="dt">
-            <dt>Beast of Bodmin</dt>
-          </Element>
-          
-  
-          <Element tagName="dd">
-            <dd>A large feline inhabiting Bodmin Moor.</dd>
-          </Element>
-          
-
-  
-          <Element tagName="dt">
-            <dt>Morgawr</dt>
-          </Element>
-          
-  
-          <Element tagName="dd">
-            <dd>A sea serpent.</dd>
-          </Element>
-          
-
-  
-          <Element tagName="dt">
-            <dt>Owlman</dt>
-          </Element>
-          
-  
-          <Element tagName="dd">
-            <dd>A giant owl-like creature.</dd>
-          </Element>
-          
-
-        </dl>
+      <Element tagName="dt">
+        <dt>Beast of Bodmin</dt>
       </Element>
-    </span>
+      
+  
+      <Element tagName="dd">
+        <dd>A large feline inhabiting Bodmin Moor.</dd>
+      </Element>
+      
+
+  
+      <Element tagName="dt">
+        <dt>Morgawr</dt>
+      </Element>
+      
+  
+      <Element tagName="dd">
+        <dd>A sea serpent.</dd>
+      </Element>
+      
+
+  
+      <Element tagName="dt">
+        <dt>Owlman</dt>
+      </Element>
+      
+  
+      <Element tagName="dd">
+        <dd>A giant owl-like creature.</dd>
+      </Element>
+      
+
+    </dl>
   </Element>
 </Markup>
 `;
 
 exports[`html em renders 1`] = `
 <Markup content="We <em>had</em> to do something about it.">
-  <Element tagName="span">
-    <span>
-      We 
-      <Element tagName="em">
-        <em>had</em>
-      </Element>
-       to do something about it.
-    </span>
+  We 
+  <Element tagName="em">
+    <em>had</em>
   </Element>
+   to do something about it.
 </Markup>
 `;
 
@@ -880,32 +750,26 @@ exports[`html figure, figcaption renders 1`] = `
     <figcaption>An elephant at sunset</figcaption>
   </figure>"
 >
-  <Element tagName="span">
-    <span>
-      <Element tagName="figure">
-        <figure>
-          
+  <Element tagName="figure">
+    <figure>
+      
   
-          <Element
-            selfClose
-            attributes={{ src: "/media/examples/elephant-660-480.jpg", alt: "Elephant at sunset" }}
-            tagName="img"
-          >
-            <img
-              alt="Elephant at sunset"
-              src="/media/examples/elephant-660-480.jpg"
-            />
-          </Element>
-          
-  
-          <Element tagName="figcaption">
-            <figcaption>An elephant at sunset</figcaption>
-          </Element>
-          
-
-        </figure>
+      <Element
+        selfClose
+        alt="Elephant at sunset"
+        src="/media/examples/elephant-660-480.jpg"
+        tagName="img"
+      >
+        <img alt="Elephant at sunset" src="/media/examples/elephant-660-480.jpg" />
       </Element>
-    </span>
+      
+  
+      <Element tagName="figcaption">
+        <figcaption>An elephant at sunset</figcaption>
+      </Element>
+      
+
+    </figure>
   </Element>
 </Markup>
 `;
@@ -924,56 +788,52 @@ exports[`html footer renders 1`] = `
     </footer>
   </article>"
 >
-  <Element tagName="span">
-    <span>
-      <Element tagName="article">
-        <article>
-          
+  <Element tagName="article">
+    <article>
+      
   
-          <Element tagName="h1">
-            <h1>How to be a wizard</h1>
-          </Element>
-          
-  
-          <Element tagName="ol">
-            <ol>
-              
-    
-              <Element tagName="li">
-                <li>Grow a long, majestic beard.</li>
-              </Element>
-              
-    
-              <Element tagName="li">
-                <li>Wear a tall pointed hat.</li>
-              </Element>
-              
-    
-              <Element tagName="li">
-                <li>Have I mentioned the beard?</li>
-              </Element>
-              
-  
-            </ol>
-          </Element>
-          
-  
-          <Element tagName="footer">
-            <footer>
-              
-    
-              <Element tagName="p">
-                <p>© 2018 Gandalf</p>
-              </Element>
-              
-  
-            </footer>
-          </Element>
-          
-
-        </article>
+      <Element tagName="h1">
+        <h1>How to be a wizard</h1>
       </Element>
-    </span>
+      
+  
+      <Element tagName="ol">
+        <ol>
+          
+    
+          <Element tagName="li">
+            <li>Grow a long, majestic beard.</li>
+          </Element>
+          
+    
+          <Element tagName="li">
+            <li>Wear a tall pointed hat.</li>
+          </Element>
+          
+    
+          <Element tagName="li">
+            <li>Have I mentioned the beard?</li>
+          </Element>
+          
+  
+        </ol>
+      </Element>
+      
+  
+      <Element tagName="footer">
+        <footer>
+          
+    
+          <Element tagName="p">
+            <p>© 2018 Gandalf</p>
+          </Element>
+          
+  
+        </footer>
+      </Element>
+      
+
+    </article>
   </Element>
 </Markup>
 `;
@@ -988,54 +848,50 @@ exports[`html h1 - h6 renders 1`] = `
                 <h5>Prothorax</h5>
                 <h6>Pterothorax</h6>"
 >
-  <Element tagName="span">
-    <span>
-      <Element tagName="h1">
-        <h1>Beetles</h1>
-      </Element>
-      <Element selfClose tagName="br">
-        <br />
-      </Element>
+  <Element tagName="h1">
+    <h1>Beetles</h1>
+  </Element>
+  <Element selfClose tagName="br">
+    <br />
+  </Element>
+        
+  <Element tagName="h2">
+    <h2>External morphology</h2>
+  </Element>
+  <Element selfClose tagName="br">
+    <br />
+  </Element>
             
-      <Element tagName="h2">
-        <h2>External morphology</h2>
-      </Element>
-      <Element selfClose tagName="br">
-        <br />
-      </Element>
+  <Element tagName="h3">
+    <h3>Head</h3>
+  </Element>
+  <Element selfClose tagName="br">
+    <br />
+  </Element>
                 
-      <Element tagName="h3">
-        <h3>Head</h3>
-      </Element>
-      <Element selfClose tagName="br">
-        <br />
-      </Element>
-                    
-      <Element tagName="h4">
-        <h4>Mouthparts</h4>
-      </Element>
-      <Element selfClose tagName="br">
-        <br />
-      </Element>
+  <Element tagName="h4">
+    <h4>Mouthparts</h4>
+  </Element>
+  <Element selfClose tagName="br">
+    <br />
+  </Element>
+            
+  <Element tagName="h3">
+    <h3>Thorax</h3>
+  </Element>
+  <Element selfClose tagName="br">
+    <br />
+  </Element>
                 
-      <Element tagName="h3">
-        <h3>Thorax</h3>
-      </Element>
-      <Element selfClose tagName="br">
-        <br />
-      </Element>
-                    
-      <Element tagName="h5">
-        <h5>Prothorax</h5>
-      </Element>
-      <Element selfClose tagName="br">
-        <br />
-      </Element>
-                    
-      <Element tagName="h6">
-        <h6>Pterothorax</h6>
-      </Element>
-    </span>
+  <Element tagName="h5">
+    <h5>Prothorax</h5>
+  </Element>
+  <Element selfClose tagName="br">
+    <br />
+  </Element>
+                
+  <Element tagName="h6">
+    <h6>Pterothorax</h6>
   </Element>
 </Markup>
 `;
@@ -1046,20 +902,16 @@ exports[`html header renders 1`] = `
     <h1>Cute Puppies Express!</h1>
   </header>"
 >
-  <Element tagName="span">
-    <span>
-      <Element attributes={{ className: "page-header" }} tagName="header">
-        <header className="page-header">
-          
+  <Element className="page-header" tagName="header">
+    <header className="page-header">
+      
   
-          <Element tagName="h1">
-            <h1>Cute Puppies Express!</h1>
-          </Element>
-          
-
-        </header>
+      <Element tagName="h1">
+        <h1>Cute Puppies Express!</h1>
       </Element>
-    </span>
+      
+
+    </header>
   </Element>
 </Markup>
 `;
@@ -1070,22 +922,18 @@ exports[`html hr renders 1`] = `
   <hr>
   <p>§2: The second rule of Fight Club is: Always bring cupcakes.</p>"
 >
-  <Element tagName="span">
-    <span>
-      <Element tagName="p">
-        <p>§1: The first rule of Fight Club is: You do not talk about Fight Club.</p>
-      </Element>
-      
+  <Element tagName="p">
+    <p>§1: The first rule of Fight Club is: You do not talk about Fight Club.</p>
+  </Element>
+  
 
-      <Element selfClose tagName="hr">
-        <hr />
-      </Element>
-      
+  <Element selfClose tagName="hr">
+    <hr />
+  </Element>
+  
 
-      <Element tagName="p">
-        <p>§2: The second rule of Fight Club is: Always bring cupcakes.</p>
-      </Element>
-    </span>
+  <Element tagName="p">
+    <p>§2: The second rule of Fight Club is: Always bring cupcakes.</p>
   </Element>
 </Markup>
 `;
@@ -1094,43 +942,37 @@ exports[`html i renders 1`] = `
 <Markup
   content="<p><i class="latin">Musa</i> is one of two or three genera in the family <i class="latin">Musaceae</i>; it includes bananas and plantains.</p>"
 >
-  <Element tagName="span">
-    <span>
-      <Element tagName="p">
-        <p>
-          <Element attributes={{ className: "latin" }} tagName="i">
-            <i className="latin">
-              Musa
-            </i>
-          </Element>
-           is one of two or three genera in the family 
-          <Element attributes={{ className: "latin" }} tagName="i">
-            <i className="latin">
-              Musaceae
-            </i>
-          </Element>
-          ; it includes bananas and plantains.
-        </p>
+  <Element tagName="p">
+    <p>
+      <Element className="latin" tagName="i">
+        <i className="latin">
+          Musa
+        </i>
       </Element>
-    </span>
+       is one of two or three genera in the family 
+      <Element className="latin" tagName="i">
+        <i className="latin">
+          Musaceae
+        </i>
+      </Element>
+      ; it includes bananas and plantains.
+    </p>
   </Element>
 </Markup>
 `;
 
 exports[`html iframe renders 1`] = `
 <Markup
-  allowList={[ "iframe" ]}
+  allow={[ "iframe" ]}
   content="<iframe width="400" height="300" src="https://maps.google.com"></iframe>"
 >
-  <Element tagName="span">
-    <span>
-      <Element
-        attributes={{ width: "400", height: "300", src: "https://maps.google.com" }}
-        tagName="iframe"
-      >
-        <iframe height="300" src="https://maps.google.com" width="400" />
-      </Element>
-    </span>
+  <Element
+    height="300"
+    src="https://maps.google.com"
+    tagName="iframe"
+    width="400"
+  >
+    <iframe height="300" src="https://maps.google.com" width="400" />
   </Element>
 </Markup>
 `;
@@ -1138,35 +980,25 @@ exports[`html iframe renders 1`] = `
 exports[`html iframe renders nothing when not allowed 1`] = `
 <Markup
   content="<iframe width="400" height="300" src="https://maps.google.com"></iframe>"
->
-  <Element tagName="span">
-    <span />
-  </Element>
-</Markup>
+/>
 `;
 
 exports[`html img renders 1`] = `
 <Markup
   content="<img class="fit-picture" src="/media/examples/grapefruit-slice-332-332.jpg" alt="Grapefruit slice atop a pile of other slices" />"
 >
-  <Element tagName="span">
-    <span>
-      <Element
-        selfClose
-        attributes={{
-          className: "fit-picture",
-          src: "/media/examples/grapefruit-slice-332-332.jpg",
-          alt: "Grapefruit slice atop a pile of other slices",
-        }}
-        tagName="img"
-      >
-        <img
-          alt="Grapefruit slice atop a pile of other slices"
-          className="fit-picture"
-          src="/media/examples/grapefruit-slice-332-332.jpg"
-        />
-      </Element>
-    </span>
+  <Element
+    selfClose
+    alt="Grapefruit slice atop a pile of other slices"
+    className="fit-picture"
+    src="/media/examples/grapefruit-slice-332-332.jpg"
+    tagName="img"
+  >
+    <img
+      alt="Grapefruit slice atop a pile of other slices"
+      className="fit-picture"
+      src="/media/examples/grapefruit-slice-332-332.jpg"
+    />
   </Element>
 </Markup>
 `;
@@ -1177,21 +1009,14 @@ exports[`html ins renders 1`] = `
     <p>“A wizard is never late …”</p>
   </ins>"
 >
-  <Element tagName="span">
-    <span>
-      <Element
-        attributes={{ cite: "../howtobeawizard.html", dateTime: "2018-05" }}
-        tagName="ins"
-      >
-        <ins cite="../howtobeawizard.html" dateTime="2018-05">
-          
+  <Element cite="../howtobeawizard.html" dateTime="2018-05" tagName="ins">
+    <ins cite="../howtobeawizard.html" dateTime="2018-05">
+      
   
-          “A wizard is never late …”
-          
+      “A wizard is never late …”
+      
 
-        </ins>
-      </Element>
-    </span>
+    </ins>
   </Element>
 </Markup>
 `;
@@ -1200,23 +1025,19 @@ exports[`html kbd renders 1`] = `
 <Markup
   content="Please press <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>R</kbd> to re-render an MDN page."
 >
-  <Element tagName="span">
-    <span>
-      Please press 
-      <Element tagName="kbd">
-        <kbd>Ctrl</kbd>
-      </Element>
-       + 
-      <Element tagName="kbd">
-        <kbd>Shift</kbd>
-      </Element>
-       + 
-      <Element tagName="kbd">
-        <kbd>R</kbd>
-      </Element>
-       to re-render an MDN page.
-    </span>
+  Please press 
+  <Element tagName="kbd">
+    <kbd>Ctrl</kbd>
   </Element>
+   + 
+  <Element tagName="kbd">
+    <kbd>Shift</kbd>
+  </Element>
+   + 
+  <Element tagName="kbd">
+    <kbd>R</kbd>
+  </Element>
+   to re-render an MDN page.
 </Markup>
 `;
 
@@ -1226,20 +1047,16 @@ exports[`html main renders 1`] = `
     <p>Geckos are a group of usually small, usually nocturnal lizards. They are found on every continent except Australia.</p>
   </main>"
 >
-  <Element tagName="span">
-    <span>
-      <Element attributes={{ role: "main" }} tagName="main">
-        <main role="main">
-          
+  <Element role="main" tagName="main">
+    <main role="main">
+      
   
-          <Element tagName="p">
-            <p>Geckos are a group of usually small, usually nocturnal lizards. They are found on every continent except Australia.</p>
-          </Element>
-          
-
-        </main>
+      <Element tagName="p">
+        <p>Geckos are a group of usually small, usually nocturnal lizards. They are found on every continent except Australia.</p>
       </Element>
-    </span>
+      
+
+    </main>
   </Element>
 </Markup>
 `;
@@ -1248,15 +1065,11 @@ exports[`html mark renders 1`] = `
 <Markup
   content="Most <mark>salamander</mark>s are nocturnal, and hunt for insects, worms, and other small creatures."
 >
-  <Element tagName="span">
-    <span>
-      Most 
-      <Element tagName="mark">
-        <mark>salamander</mark>
-      </Element>
-      s are nocturnal, and hunt for insects, worms, and other small creatures.
-    </span>
+  Most 
+  <Element tagName="mark">
+    <mark>salamander</mark>
   </Element>
+  s are nocturnal, and hunt for insects, worms, and other small creatures.
 </Markup>
 `;
 
@@ -1270,52 +1083,48 @@ exports[`html nav, ol, li renders 1`] = `
     </ol>
   </nav>"
 >
-  <Element tagName="span">
-    <span>
-      <Element attributes={{ className: "crumbs" }} tagName="nav">
-        <nav className="crumbs">
+  <Element className="crumbs" tagName="nav">
+    <nav className="crumbs">
+      
+  
+      <Element tagName="ol">
+        <ol>
           
-  
-          <Element tagName="ol">
-            <ol>
-              
     
-              <Element attributes={{ className: "crumb" }} tagName="li">
-                <li className="crumb">
-                  <Element attributes={{ href: "bikes" }} tagName="a">
-                    <a href="bikes">
-                      Bikes
-                    </a>
-                  </Element>
-                </li>
+          <Element className="crumb" tagName="li">
+            <li className="crumb">
+              <Element href="bikes" tagName="a">
+                <a href="bikes">
+                  Bikes
+                </a>
               </Element>
-              
-    
-              <Element attributes={{ className: "crumb" }} tagName="li">
-                <li className="crumb">
-                  <Element attributes={{ href: "bikes/bmx" }} tagName="a">
-                    <a href="bikes/bmx">
-                      BMX
-                    </a>
-                  </Element>
-                </li>
-              </Element>
-              
-    
-              <Element attributes={{ className: "crumb" }} tagName="li">
-                <li className="crumb">
-                  Jump Bike 3000
-                </li>
-              </Element>
-              
-  
-            </ol>
+            </li>
           </Element>
           
-
-        </nav>
+    
+          <Element className="crumb" tagName="li">
+            <li className="crumb">
+              <Element href="bikes/bmx" tagName="a">
+                <a href="bikes/bmx">
+                  BMX
+                </a>
+              </Element>
+            </li>
+          </Element>
+          
+    
+          <Element className="crumb" tagName="li">
+            <li className="crumb">
+              Jump Bike 3000
+            </li>
+          </Element>
+          
+  
+        </ol>
       </Element>
-    </span>
+      
+
+    </nav>
   </Element>
 </Markup>
 `;
@@ -1327,36 +1136,33 @@ exports[`html picture renders 1`] = `
     <img src="/media/examples/painted-hand-298-332.jpg" />
   </picture>"
 >
-  <Element tagName="span">
-    <span>
-      <Element tagName="picture">
-        <picture>
-          
+  <Element tagName="picture">
+    <picture>
+      
   
-          <Element
-            selfClose
-            attributes={{ srcSet: "/media/examples/surfer-240-200.jpg", media: "(min-width: 800px)" }}
-            tagName="source"
-          >
-            <source
-              media="(min-width: 800px)"
-              srcSet="/media/examples/surfer-240-200.jpg"
-            />
-          </Element>
-          
-  
-          <Element
-            selfClose
-            attributes={{ src: "/media/examples/painted-hand-298-332.jpg" }}
-            tagName="img"
-          >
-            <img src="/media/examples/painted-hand-298-332.jpg" />
-          </Element>
-          
-
-        </picture>
+      <Element
+        selfClose
+        media="(min-width: 800px)"
+        srcSet="/media/examples/surfer-240-200.jpg"
+        tagName="source"
+      >
+        <source
+          media="(min-width: 800px)"
+          srcSet="/media/examples/surfer-240-200.jpg"
+        />
       </Element>
-    </span>
+      
+  
+      <Element
+        selfClose
+        src="/media/examples/painted-hand-298-332.jpg"
+        tagName="img"
+      >
+        <img src="/media/examples/painted-hand-298-332.jpg" />
+      </Element>
+      
+
+    </picture>
   </Element>
 </Markup>
 `;
@@ -1382,10 +1188,8 @@ exports[`html pre renders 1`] = `
               RER       - Apollinaire
   </pre>"
 >
-  <Element tagName="span">
-    <span>
-      <Element tagName="pre">
-        <pre>  L          TE
+  <Element tagName="pre">
+    <pre>  L          TE
     A       A
       C    V
         R A
@@ -1402,8 +1206,6 @@ exports[`html pre renders 1`] = `
     SI      RESPI
             RER       - Apollinaire
 </pre>
-      </Element>
-    </span>
   </Element>
 </Markup>
 `;
@@ -1412,18 +1214,14 @@ exports[`html q renders 1`] = `
 <Markup
   content="When Dave asks HAL to open the pod bay door, HAL answers: <q cite="https://www.imdb.com/title/tt0062622/quotes/qt0396921">I'm sorry, Dave. I'm afraid I can't do that.</q>"
 >
-  <Element tagName="span">
-    <span>
-      When Dave asks HAL to open the pod bay door, HAL answers: 
-      <Element
-        attributes={{ cite: "https://www.imdb.com/title/tt0062622/quotes/qt0396921" }}
-        tagName="q"
-      >
-        <q cite="https://www.imdb.com/title/tt0062622/quotes/qt0396921">
-          I'm sorry, Dave. I'm afraid I can't do that.
-        </q>
-      </Element>
-    </span>
+  When Dave asks HAL to open the pod bay door, HAL answers: 
+  <Element
+    cite="https://www.imdb.com/title/tt0062622/quotes/qt0396921"
+    tagName="q"
+  >
+    <q cite="https://www.imdb.com/title/tt0062622/quotes/qt0396921">
+      I'm sorry, Dave. I'm afraid I can't do that.
+    </q>
   </Element>
 </Markup>
 `;
@@ -1442,100 +1240,90 @@ exports[`html ruby, rp, rt, rtc renders 1`] = `
     </rtc>
   </ruby>"
 >
-  <Element tagName="span">
-    <span>
-      <Element
-        attributes={{ xml:lang: "zh-Hant", style: { rubyPosition: "under" } }}
-        tagName="ruby"
-      >
-        <ruby style={{ rubyPosition: "under" }} xml:lang="zh-Hant">
-          
+  <Element style={{ rubyPosition: "under" }} tagName="ruby" xml:lang="zh-Hant">
+    <ruby style={{ rubyPosition: "under" }} xml:lang="zh-Hant">
+      
   
-          
+      
     
-          <Element tagName="rb">
-            <rb>馬</rb>
-          </Element>
-          <Element tagName="rp">
-            <rp>(</rp>
-          </Element>
-          <Element tagName="rt">
-            <rt>mǎ</rt>
-          </Element>
-          <Element tagName="rp">
-            <rp>)</rp>
-          </Element>
-          
-    
-          <Element tagName="rb">
-            <rb>來</rb>
-          </Element>
-          <Element tagName="rp">
-            <rp>(</rp>
-          </Element>
-          <Element tagName="rt">
-            <rt>lái</rt>
-          </Element>
-          <Element tagName="rp">
-            <rp>)</rp>
-          </Element>
-          
-    
-          <Element tagName="rb">
-            <rb>西</rb>
-          </Element>
-          <Element tagName="rp">
-            <rp>(</rp>
-          </Element>
-          <Element tagName="rt">
-            <rt>xī</rt>
-          </Element>
-          <Element tagName="rp">
-            <rp>)</rp>
-          </Element>
-          
-    
-          <Element tagName="rb">
-            <rb>亞</rb>
-          </Element>
-          <Element tagName="rp">
-            <rp>(</rp>
-          </Element>
-          <Element tagName="rt">
-            <rt>yà</rt>
-          </Element>
-          <Element tagName="rp">
-            <rp>)</rp>
-          </Element>
-          
-  
-          
-  
-          <Element
-            attributes={{ xml:lang: "en", style: { rubyPosition: "over" } }}
-            tagName="rtc"
-          >
-            <rtc style={{ rubyPosition: "over" }} xml:lang="en">
-              
-    
-              <Element tagName="rp">
-                <rp>(</rp>
-              </Element>
-              <Element tagName="rt">
-                <rt>Malaysia</rt>
-              </Element>
-              <Element tagName="rp">
-                <rp>)</rp>
-              </Element>
-              
-  
-            </rtc>
-          </Element>
-          
-
-        </ruby>
+      <Element tagName="rb">
+        <rb>馬</rb>
       </Element>
-    </span>
+      <Element tagName="rp">
+        <rp>(</rp>
+      </Element>
+      <Element tagName="rt">
+        <rt>mǎ</rt>
+      </Element>
+      <Element tagName="rp">
+        <rp>)</rp>
+      </Element>
+      
+    
+      <Element tagName="rb">
+        <rb>來</rb>
+      </Element>
+      <Element tagName="rp">
+        <rp>(</rp>
+      </Element>
+      <Element tagName="rt">
+        <rt>lái</rt>
+      </Element>
+      <Element tagName="rp">
+        <rp>)</rp>
+      </Element>
+      
+    
+      <Element tagName="rb">
+        <rb>西</rb>
+      </Element>
+      <Element tagName="rp">
+        <rp>(</rp>
+      </Element>
+      <Element tagName="rt">
+        <rt>xī</rt>
+      </Element>
+      <Element tagName="rp">
+        <rp>)</rp>
+      </Element>
+      
+    
+      <Element tagName="rb">
+        <rb>亞</rb>
+      </Element>
+      <Element tagName="rp">
+        <rp>(</rp>
+      </Element>
+      <Element tagName="rt">
+        <rt>yà</rt>
+      </Element>
+      <Element tagName="rp">
+        <rp>)</rp>
+      </Element>
+      
+  
+      
+  
+      <Element style={{ rubyPosition: "over" }} tagName="rtc" xml:lang="en">
+        <rtc style={{ rubyPosition: "over" }} xml:lang="en">
+          
+    
+          <Element tagName="rp">
+            <rp>(</rp>
+          </Element>
+          <Element tagName="rt">
+            <rt>Malaysia</rt>
+          </Element>
+          <Element tagName="rp">
+            <rp>)</rp>
+          </Element>
+          
+  
+        </rtc>
+      </Element>
+      
+
+    </ruby>
   </Element>
 </Markup>
 `;
@@ -1544,30 +1332,22 @@ exports[`html s renders 1`] = `
 <Markup
   content="<s>There will be a few tickets available at the box office tonight.</s>"
 >
-  <Element tagName="span">
-    <span>
-      <Element tagName="s">
-        <s>There will be a few tickets available at the box office tonight.</s>
-      </Element>
-    </span>
+  <Element tagName="s">
+    <s>There will be a few tickets available at the box office tonight.</s>
   </Element>
 </Markup>
 `;
 
 exports[`html samp renders 1`] = `
 <Markup content="<samp>Keyboard not found <br>Press F1 to continue</samp>">
-  <Element tagName="span">
-    <span>
-      <Element tagName="samp">
-        <samp>
-          Keyboard not found 
-          <Element selfClose tagName="br">
-            <br />
-          </Element>
-          Press F1 to continue
-        </samp>
+  <Element tagName="samp">
+    <samp>
+      Keyboard not found 
+      <Element selfClose tagName="br">
+        <br />
       </Element>
-    </span>
+      Press F1 to continue
+    </samp>
   </Element>
 </Markup>
 `;
@@ -1579,25 +1359,21 @@ exports[`html section renders 1`] = `
     <p>People have been catching fish for food since before recorded history...</p>
   </section>"
 >
-  <Element tagName="span">
-    <span>
-      <Element tagName="section">
-        <section>
-          
+  <Element tagName="section">
+    <section>
+      
   
-          <Element tagName="h1">
-            <h1>Introduction</h1>
-          </Element>
-          
-  
-          <Element tagName="p">
-            <p>People have been catching fish for food since before recorded history...</p>
-          </Element>
-          
-
-        </section>
+      <Element tagName="h1">
+        <h1>Introduction</h1>
       </Element>
-    </span>
+      
+  
+      <Element tagName="p">
+        <p>People have been catching fish for food since before recorded history...</p>
+      </Element>
+      
+
+    </section>
   </Element>
 </Markup>
 `;
@@ -1606,27 +1382,17 @@ exports[`html small renders 1`] = `
 <Markup
   content="<p><small>The content is licensed under a Creative Commons Attribution-ShareAlike 2.5 Generic License.</small></p>"
 >
-  <Element tagName="span">
-    <span>
-      <Element tagName="p">
-        <p>
-          <Element tagName="small">
-            <small>The content is licensed under a Creative Commons Attribution-ShareAlike 2.5 Generic License.</small>
-          </Element>
-        </p>
+  <Element tagName="p">
+    <p>
+      <Element tagName="small">
+        <small>The content is licensed under a Creative Commons Attribution-ShareAlike 2.5 Generic License.</small>
       </Element>
-    </span>
+    </p>
   </Element>
 </Markup>
 `;
 
-exports[`html source doesnt render if outside its parent 1`] = `
-<Markup content="<source src="/media/examples/flower.webm" type="video/webm">">
-  <Element tagName="span">
-    <span />
-  </Element>
-</Markup>
-`;
+exports[`html source doesnt render if outside its parent 1`] = `<Markup content="<source src="/media/examples/flower.webm" type="video/webm">" />`;
 
 exports[`html source renders 1`] = `
 <Markup
@@ -1636,37 +1402,32 @@ exports[`html source renders 1`] = `
     This browser does not support the HTML5 video element.
   </video>"
 >
-  <Element tagName="span">
-    <span>
+  <Element controls muted height="200" tagName="video" width="250">
+    <video controls muted height="200" width="250">
+      
+  
       <Element
-        attributes={{ controls: true, width: "250", height: "200", muted: true }}
-        tagName="video"
+        selfClose
+        src="/media/examples/flower.webm"
+        tagName="source"
+        type="video/webm"
       >
-        <video controls muted height="200" width="250">
-          
+        <source src="/media/examples/flower.webm" type="video/webm" />
+      </Element>
+      
   
-          <Element
-            selfClose
-            attributes={{ src: "/media/examples/flower.webm", type: "video/webm" }}
-            tagName="source"
-          >
-            <source src="/media/examples/flower.webm" type="video/webm" />
-          </Element>
-          
-  
-          <Element
-            selfClose
-            attributes={{ src: "/media/examples/flower.mp4", type: "video/mp4" }}
-            tagName="source"
-          >
-            <source src="/media/examples/flower.mp4" type="video/mp4" />
-          </Element>
-          
+      <Element
+        selfClose
+        src="/media/examples/flower.mp4"
+        tagName="source"
+        type="video/mp4"
+      >
+        <source src="/media/examples/flower.mp4" type="video/mp4" />
+      </Element>
+      
   This browser does not support the HTML5 video element.
 
-        </video>
-      </Element>
-    </span>
+    </video>
   </Element>
 </Markup>
 `;
@@ -1675,29 +1436,25 @@ exports[`html span renders 1`] = `
 <Markup
   content="Add the <span class="ingredient">basil</span>, <span class="ingredient">pine nuts</span> and <span class="ingredient">garlic</span> to a blender and blend into a paste."
 >
-  <Element tagName="span">
-    <span>
-      Add the 
-      <Element attributes={{ className: "ingredient" }} tagName="span">
-        <span className="ingredient">
-          basil
-        </span>
-      </Element>
-      , 
-      <Element attributes={{ className: "ingredient" }} tagName="span">
-        <span className="ingredient">
-          pine nuts
-        </span>
-      </Element>
-       and 
-      <Element attributes={{ className: "ingredient" }} tagName="span">
-        <span className="ingredient">
-          garlic
-        </span>
-      </Element>
-       to a blender and blend into a paste.
+  Add the 
+  <Element className="ingredient" tagName="span">
+    <span className="ingredient">
+      basil
     </span>
   </Element>
+  , 
+  <Element className="ingredient" tagName="span">
+    <span className="ingredient">
+      pine nuts
+    </span>
+  </Element>
+   and 
+  <Element className="ingredient" tagName="span">
+    <span className="ingredient">
+      garlic
+    </span>
+  </Element>
+   to a blender and blend into a paste.
 </Markup>
 `;
 
@@ -1705,15 +1462,11 @@ exports[`html strong renders 1`] = `
 <Markup
   content="... the most important rule, the rule you can never forget, no matter how much he cries, no matter how much he begs: <strong>never feed him after midnight</strong>."
 >
-  <Element tagName="span">
-    <span>
-      ... the most important rule, the rule you can never forget, no matter how much he cries, no matter how much he begs: 
-      <Element tagName="strong">
-        <strong>never feed him after midnight</strong>
-      </Element>
-      .
-    </span>
+  ... the most important rule, the rule you can never forget, no matter how much he cries, no matter how much he begs: 
+  <Element tagName="strong">
+    <strong>never feed him after midnight</strong>
   </Element>
+  .
 </Markup>
 `;
 
@@ -1722,28 +1475,24 @@ exports[`html sub renders 1`] = `
   content="Almost every developer's favorite molecule is
             C<sub>8</sub>H<sub>10</sub>N<sub>4</sub>O<sub>2</sub>, also known as "caffeine.""
 >
-  <Element tagName="span">
-    <span>
-      Almost every developer's favorite molecule is
+  Almost every developer's favorite molecule is
           C
-      <Element tagName="sub">
-        <sub>8</sub>
-      </Element>
-      H
-      <Element tagName="sub">
-        <sub>10</sub>
-      </Element>
-      N
-      <Element tagName="sub">
-        <sub>4</sub>
-      </Element>
-      O
-      <Element tagName="sub">
-        <sub>2</sub>
-      </Element>
-      , also known as "caffeine."
-    </span>
+  <Element tagName="sub">
+    <sub>8</sub>
   </Element>
+  H
+  <Element tagName="sub">
+    <sub>10</sub>
+  </Element>
+  N
+  <Element tagName="sub">
+    <sub>4</sub>
+  </Element>
+  O
+  <Element tagName="sub">
+    <sub>2</sub>
+  </Element>
+  , also known as "caffeine."
 </Markup>
 `;
 
@@ -1751,35 +1500,31 @@ exports[`html sup renders 1`] = `
 <Markup
   content="<var>a<sup>2</sup></var> + <var>b<sup>2</sup></var> = <var>c<sup>2</sup></var>"
 >
-  <Element tagName="span">
-    <span>
-      <Element tagName="var">
-        <var>
-          a
-          <Element tagName="sup">
-            <sup>2</sup>
-          </Element>
-        </var>
+  <Element tagName="var">
+    <var>
+      a
+      <Element tagName="sup">
+        <sup>2</sup>
       </Element>
-       + 
-      <Element tagName="var">
-        <var>
-          b
-          <Element tagName="sup">
-            <sup>2</sup>
-          </Element>
-        </var>
+    </var>
+  </Element>
+   + 
+  <Element tagName="var">
+    <var>
+      b
+      <Element tagName="sup">
+        <sup>2</sup>
       </Element>
-       = 
-      <Element tagName="var">
-        <var>
-          c
-          <Element tagName="sup">
-            <sup>2</sup>
-          </Element>
-        </var>
+    </var>
+  </Element>
+   = 
+  <Element tagName="var">
+    <var>
+      c
+      <Element tagName="sup">
+        <sup>2</sup>
       </Element>
-    </span>
+    </var>
   </Element>
 </Markup>
 `;
@@ -1811,119 +1556,115 @@ exports[`html table, thead, tbody, tfoot renders 1`] = `
     </tfoot>
   </table>"
 >
-  <Element tagName="span">
-    <span>
-      <Element tagName="table">
-        <table>
-          
+  <Element tagName="table">
+    <table>
+      
   
-          <Element tagName="thead">
-            <thead>
+      <Element tagName="thead">
+        <thead>
+          
+    
+          <Element tagName="tr">
+            <tr>
               
-    
-              <Element tagName="tr">
-                <tr>
-                  
       
-                  <Element tagName="th">
-                    <th>Items</th>
-                  </Element>
-                  
-      
-                  <Element attributes={{ scope: "col" }} tagName="th">
-                    <th scope="col">
-                      Expenditure
-                    </th>
-                  </Element>
-                  
-    
-                </tr>
+              <Element tagName="th">
+                <th>Items</th>
               </Element>
               
-  
-            </thead>
+      
+              <Element scope="col" tagName="th">
+                <th scope="col">
+                  Expenditure
+                </th>
+              </Element>
+              
+    
+            </tr>
           </Element>
           
   
-          <Element tagName="tbody">
-            <tbody>
-              
-    
-              <Element tagName="tr">
-                <tr>
-                  
-      
-                  <Element attributes={{ scope: "row" }} tagName="th">
-                    <th scope="row">
-                      Donuts
-                    </th>
-                  </Element>
-                  
-      
-                  <Element tagName="td">
-                    <td>3,000</td>
-                  </Element>
-                  
-    
-                </tr>
-              </Element>
-              
-    
-              <Element tagName="tr">
-                <tr>
-                  
-      
-                  <Element attributes={{ scope: "row" }} tagName="th">
-                    <th scope="row">
-                      Stationary
-                    </th>
-                  </Element>
-                  
-      
-                  <Element tagName="td">
-                    <td>18,000</td>
-                  </Element>
-                  
-    
-                </tr>
-              </Element>
-              
-  
-            </tbody>
-          </Element>
-          
-  
-          <Element tagName="tfoot">
-            <tfoot>
-              
-    
-              <Element tagName="tr">
-                <tr>
-                  
-      
-                  <Element attributes={{ scope: "row" }} tagName="th">
-                    <th scope="row">
-                      Totals
-                    </th>
-                  </Element>
-                  
-      
-                  <Element tagName="td">
-                    <td>21,000</td>
-                  </Element>
-                  
-    
-                </tr>
-              </Element>
-              
-  
-            </tfoot>
-          </Element>
-          
-
-        </table>
+        </thead>
       </Element>
-    </span>
+      
+  
+      <Element tagName="tbody">
+        <tbody>
+          
+    
+          <Element tagName="tr">
+            <tr>
+              
+      
+              <Element scope="row" tagName="th">
+                <th scope="row">
+                  Donuts
+                </th>
+              </Element>
+              
+      
+              <Element tagName="td">
+                <td>3,000</td>
+              </Element>
+              
+    
+            </tr>
+          </Element>
+          
+    
+          <Element tagName="tr">
+            <tr>
+              
+      
+              <Element scope="row" tagName="th">
+                <th scope="row">
+                  Stationary
+                </th>
+              </Element>
+              
+      
+              <Element tagName="td">
+                <td>18,000</td>
+              </Element>
+              
+    
+            </tr>
+          </Element>
+          
+  
+        </tbody>
+      </Element>
+      
+  
+      <Element tagName="tfoot">
+        <tfoot>
+          
+    
+          <Element tagName="tr">
+            <tr>
+              
+      
+              <Element scope="row" tagName="th">
+                <th scope="row">
+                  Totals
+                </th>
+              </Element>
+              
+      
+              <Element tagName="td">
+                <td>21,000</td>
+              </Element>
+              
+    
+            </tr>
+          </Element>
+          
+  
+        </tfoot>
+      </Element>
+      
+
+    </table>
   </Element>
 </Markup>
 `;
@@ -1941,59 +1682,55 @@ exports[`html table, thead, tbody, tfoot renders table with direct rows 1`] = `
     </tr>
   </table>"
 >
-  <Element tagName="span">
-    <span>
-      <Element tagName="table">
-        <table>
+  <Element tagName="table">
+    <table>
+      
+  
+      <Element tagName="tbody">
+        <tbody>
+          <Element tagName="tr">
+            <tr>
+              
+    
+              <Element scope="row" tagName="th">
+                <th scope="row">
+                  Donuts
+                </th>
+              </Element>
+              
+    
+              <Element tagName="td">
+                <td>3,000</td>
+              </Element>
+              
+  
+            </tr>
+          </Element>
           
   
-          <Element tagName="tbody">
-            <tbody>
-              <Element tagName="tr">
-                <tr>
-                  
+          <Element tagName="tr">
+            <tr>
+              
     
-                  <Element attributes={{ scope: "row" }} tagName="th">
-                    <th scope="row">
-                      Donuts
-                    </th>
-                  </Element>
-                  
+              <Element scope="row" tagName="th">
+                <th scope="row">
+                  Stationary
+                </th>
+              </Element>
+              
     
-                  <Element tagName="td">
-                    <td>3,000</td>
-                  </Element>
-                  
-  
-                </tr>
+              <Element tagName="td">
+                <td>18,000</td>
               </Element>
               
   
-              <Element tagName="tr">
-                <tr>
-                  
-    
-                  <Element attributes={{ scope: "row" }} tagName="th">
-                    <th scope="row">
-                      Stationary
-                    </th>
-                  </Element>
-                  
-    
-                  <Element tagName="td">
-                    <td>18,000</td>
-                  </Element>
-                  
-  
-                </tr>
-              </Element>
-              
-
-            </tbody>
+            </tr>
           </Element>
-        </table>
+          
+
+        </tbody>
       </Element>
-    </span>
+    </table>
   </Element>
 </Markup>
 `;
@@ -2007,22 +1744,18 @@ exports[`html tbody doesnt render outside of table 1`] = `
     </tr>
   </tbody>"
 >
-  <Element tagName="span">
-    <span>
+  
   
     Donuts
     3,000
   
-</span>
-  </Element>
+
 </Markup>
 `;
 
 exports[`html td doesnt render outside of tr 1`] = `
 <Markup content="<td>3,000</td>">
-  <Element tagName="span">
-    <span>3,000</span>
-  </Element>
+  3,000
 </Markup>
 `;
 
@@ -2035,22 +1768,18 @@ exports[`html tfoot doesnt render outside of table 1`] = `
     </tr>
   </tfoot>"
 >
-  <Element tagName="span">
-    <span>
+  
   
     Totals
     21,000
   
-</span>
-  </Element>
+
 </Markup>
 `;
 
 exports[`html th doesnt render outside of tr 1`] = `
 <Markup content="<th scope="row">Donuts</th>">
-  <Element tagName="span">
-    <span>Donuts</span>
-  </Element>
+  Donuts
 </Markup>
 `;
 
@@ -2063,14 +1792,12 @@ exports[`html thead doesnt render outside of table 1`] = `
     </tr>
   </thead>"
 >
-  <Element tagName="span">
-    <span>
+  
   
     Items
     Expenditure
   
-</span>
-  </Element>
+
 </Markup>
 `;
 
@@ -2078,17 +1805,13 @@ exports[`html time renders 1`] = `
 <Markup
   content="The Cure will be celebrating their 40th anniversary on <time datetime="2018-07-07">July 7</time> in London's Hyde Park."
 >
-  <Element tagName="span">
-    <span>
-      The Cure will be celebrating their 40th anniversary on 
-      <Element attributes={{ dateTime: "2018-07-07" }} tagName="time">
-        <time dateTime="2018-07-07">
-          July 7
-        </time>
-      </Element>
-       in London's Hyde Park.
-    </span>
+  The Cure will be celebrating their 40th anniversary on 
+  <Element dateTime="2018-07-07" tagName="time">
+    <time dateTime="2018-07-07">
+      July 7
+    </time>
   </Element>
+   in London's Hyde Park.
 </Markup>
 `;
 
@@ -2099,23 +1822,17 @@ exports[`html tr doesnt render outside of table 1`] = `
     <td>3,000</td>
   </tr>"
 >
-  <Element tagName="span">
-    <span>
+  
   Donuts
   3,000
-</span>
-  </Element>
+
 </Markup>
 `;
 
 exports[`html track doesnt render if outside its parent 1`] = `
 <Markup
   content="<track default kind="captions" srclang="en" src="/media/examples/friday.vtt"/>"
->
-  <Element tagName="span">
-    <span />
-  </Element>
-</Markup>
+/>
 `;
 
 exports[`html track renders 1`] = `
@@ -2126,39 +1843,30 @@ exports[`html track renders 1`] = `
     Sorry, your browser doesn't support embedded videos.
   </video>"
 >
-  <Element tagName="span">
-    <span>
-      <Element
-        attributes={{ controls: true, width: "250", src: "/media/examples/friday.mp4" }}
-        tagName="video"
-      >
-        <video controls src="/media/examples/friday.mp4" width="250">
-          
+  <Element controls src="/media/examples/friday.mp4" tagName="video" width="250">
+    <video controls src="/media/examples/friday.mp4" width="250">
+      
   
-          <Element
-            selfClose
-            attributes={{
-              default: true,
-              kind: "captions",
-              srcLang: "en",
-              src: "/media/examples/friday.vtt",
-            }}
-            tagName="track"
-          >
-            <track
-              default
-              kind="captions"
-              src="/media/examples/friday.vtt"
-              srcLang="en"
-            />
-          </Element>
-          
+      <Element
+        default
+        selfClose
+        kind="captions"
+        src="/media/examples/friday.vtt"
+        srcLang="en"
+        tagName="track"
+      >
+        <track
+          default
+          kind="captions"
+          src="/media/examples/friday.vtt"
+          srcLang="en"
+        />
+      </Element>
+      
 
   Sorry, your browser doesn't support embedded videos.
 
-        </video>
-      </Element>
-    </span>
+    </video>
   </Element>
 </Markup>
 `;
@@ -2167,22 +1875,18 @@ exports[`html u renders 1`] = `
 <Markup
   content="<p>You could use this element to highlight <u>speling</u> mistakes, so the writer can <u>corect</u> them.</p>"
 >
-  <Element tagName="span">
-    <span>
-      <Element tagName="p">
-        <p>
-          You could use this element to highlight 
-          <Element tagName="u">
-            <u>speling</u>
-          </Element>
-           mistakes, so the writer can 
-          <Element tagName="u">
-            <u>corect</u>
-          </Element>
-           them.
-        </p>
+  <Element tagName="p">
+    <p>
+      You could use this element to highlight 
+      <Element tagName="u">
+        <u>speling</u>
       </Element>
-    </span>
+       mistakes, so the writer can 
+      <Element tagName="u">
+        <u>corect</u>
+      </Element>
+       them.
+    </p>
   </Element>
 </Markup>
 `;
@@ -2191,35 +1895,31 @@ exports[`html var renders 1`] = `
 <Markup
   content="The volume of a box is <var>l</var> × <var>w</var> × <var>h</var>, where <var>l</var> represents the length, <var>w</var> the width and <var>h</var> the height of the box."
 >
-  <Element tagName="span">
-    <span>
-      The volume of a box is 
-      <Element tagName="var">
-        <var>l</var>
-      </Element>
-       × 
-      <Element tagName="var">
-        <var>w</var>
-      </Element>
-       × 
-      <Element tagName="var">
-        <var>h</var>
-      </Element>
-      , where 
-      <Element tagName="var">
-        <var>l</var>
-      </Element>
-       represents the length, 
-      <Element tagName="var">
-        <var>w</var>
-      </Element>
-       the width and 
-      <Element tagName="var">
-        <var>h</var>
-      </Element>
-       the height of the box.
-    </span>
+  The volume of a box is 
+  <Element tagName="var">
+    <var>l</var>
   </Element>
+   × 
+  <Element tagName="var">
+    <var>w</var>
+  </Element>
+   × 
+  <Element tagName="var">
+    <var>h</var>
+  </Element>
+  , where 
+  <Element tagName="var">
+    <var>l</var>
+  </Element>
+   represents the length, 
+  <Element tagName="var">
+    <var>w</var>
+  </Element>
+   the width and 
+  <Element tagName="var">
+    <var>h</var>
+  </Element>
+   the height of the box.
 </Markup>
 `;
 
@@ -2231,68 +1931,52 @@ exports[`html video renders 1`] = `
     <p>Your browser doesn't support HTML5 video. Here is a <a href="myVideo.mp4">link to the video</a> instead.</p>
   </video>"
 >
-  <Element tagName="span">
-    <span>
-      <Element attributes={{ controls: true }} tagName="video">
-        <video controls>
-          
+  <Element controls tagName="video">
+    <video controls>
+      
   
-          <Element
-            selfClose
-            attributes={{ src: "myVideo.mp4", type: "video/mp4" }}
-            tagName="source"
-          >
-            <source src="myVideo.mp4" type="video/mp4" />
-          </Element>
-          
-  
-          <Element
-            selfClose
-            attributes={{ src: "myVideo.webm", type: "video/webm" }}
-            tagName="source"
-          >
-            <source src="myVideo.webm" type="video/webm" />
-          </Element>
-          
-  
-          Your browser doesn't support HTML5 video. Here is a 
-          <Element attributes={{ href: "myVideo.mp4" }} tagName="a">
-            <a href="myVideo.mp4">
-              link to the video
-            </a>
-          </Element>
-           instead.
-          
-
-        </video>
+      <Element selfClose src="myVideo.mp4" tagName="source" type="video/mp4">
+        <source src="myVideo.mp4" type="video/mp4" />
       </Element>
-    </span>
+      
+  
+      <Element selfClose src="myVideo.webm" tagName="source" type="video/webm">
+        <source src="myVideo.webm" type="video/webm" />
+      </Element>
+      
+  
+      Your browser doesn't support HTML5 video. Here is a 
+      <Element href="myVideo.mp4" tagName="a">
+        <a href="myVideo.mp4">
+          link to the video
+        </a>
+      </Element>
+       instead.
+      
+
+    </video>
   </Element>
 </Markup>
 `;
 
 exports[`html wbr renders 1`] = `
 <Markup content="Fernstraßen<wbr>bau<wbr>privat<wbr>finanzierungs<wbr>gesetz">
-  <Element tagName="span">
-    <span>
-      Fernstraßen
-      <Element selfClose tagName="wbr">
-        <wbr />
-      </Element>
-      bau
-      <Element selfClose tagName="wbr">
-        <wbr />
-      </Element>
-      privat
-      <Element selfClose tagName="wbr">
-        <wbr />
-      </Element>
-      finanzierungs
-      <Element selfClose tagName="wbr">
-        <wbr />
-      </Element>
-      gesetz
-    </span>
+  Fernstraßen
+  <Element selfClose tagName="wbr">
+    <wbr />
   </Element>
+  bau
+  <Element selfClose tagName="wbr">
+    <wbr />
+  </Element>
+  privat
+  <Element selfClose tagName="wbr">
+    <wbr />
+  </Element>
+  finanzierungs
+  <Element selfClose tagName="wbr">
+    <wbr />
+  </Element>
+  gesetz
 </Markup>
 `;
