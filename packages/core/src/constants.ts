@@ -335,6 +335,7 @@ export const ATTRIBUTES: FilterMap = Object.freeze({
 	src: FILTER_ALLOW,
 	srclang: FILTER_ALLOW,
 	srcset: FILTER_ALLOW,
+	tabindex: FILTER_ALLOW,
 	target: FILTER_ALLOW,
 	title: FILTER_ALLOW,
 	type: FILTER_ALLOW,
@@ -349,4 +350,5 @@ export const ATTRIBUTES_TO_PROPS: Record<string, string> = Object.freeze({
 	rowspan: 'rowSpan',
 	srclang: 'srcLang',
 	srcset: 'srcSet',
+	tabindex: 'tabIndex',
 });
