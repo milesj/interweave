@@ -211,6 +211,7 @@ export const TOP_LEVEL_TLDS = [
 	'travel',
 	'xxx',
 	// Misc
+	'app',
 	'arpa',
 	'test',
 	// Countries
