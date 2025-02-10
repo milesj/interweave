@@ -11192,7 +11192,7 @@ __metadata:
     react: ^17.0.2
   peerDependencies:
     interweave: ^13.0.0
-    react: ^16.8.0 || ^17.0.0 || ^18.0.0
+    react: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
   languageName: unknown
   linkType: soft
 
@@ -11207,7 +11207,7 @@ __metadata:
     react-window: ^1.8.6
   peerDependencies:
     interweave-emoji: ^7.0.0
-    react: ^16.8.0 || ^17.0.0 || ^18.0.0
+    react: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
   languageName: unknown
   linkType: soft
 
@@ -11221,7 +11221,7 @@ __metadata:
     react: ^17.0.2
   peerDependencies:
     interweave: ^13.0.0
-    react: ^16.8.0 || ^17.0.0 || ^18.0.0
+    react: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
   languageName: unknown
   linkType: soft
 
@@ -11271,7 +11271,7 @@ __metadata:
     interweave-ssr: ^2.0.0
     react: ^17.0.2
   peerDependencies:
-    react: ^16.8.0 || ^17.0.0 || ^18.0.0
+    react: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
   languageName: unknown
   linkType: soft
 
